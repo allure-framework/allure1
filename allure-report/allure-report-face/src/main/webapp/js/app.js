@@ -1,0 +1,66 @@
+/*global angular */
+angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
+        'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.charts',
+        'allure.testcase.controllers', 'allure.xUnit.controllers', 'allure.table'])
+    .config(function($tooltipProvider) {
+        $tooltipProvider.options({appendToBody:true})
+    })
+    .config(function ($stateProvider, $urlRouterProvider) {
+        'use strict';
+        function processResponse(response) {
+            return response.data;
+        }
+        function testcasesResolve($http) {
+            return $http.get('data/testcases-pack.json').then(processResponse);
+        }
+        $urlRouterProvider.otherwise("/home");
+        $stateProvider
+            .state('home', {
+                url: "/home",
+                templateUrl: "templates/home.html",
+                controller: 'HomeCtrl',
+                resolve: {
+                    testcases: testcasesResolve,
+                    testsuites: function($http) {
+                        return $http.get('data/testsuites-pack.json').then(processResponse);
+                    }
+                }
+            })
+            .state('home.testsuite', {
+                url: "/:testsuiteUid"
+            })
+            .state('home.testsuite.expanded', {
+                url: '/expanded'
+            })
+            .state('home.testsuite.testcase', {
+                url: "/:testcaseUid"
+            })
+            .state('home.testsuite.testcase.expanded', {
+                url: '/expanded'
+            })
+            .state('home.testsuite.testcase.attachment', {
+                url: '/:attachmentUid'
+            })
+            .state('home.testsuite.testcase.attachment.expanded', {
+                url: '/expanded'
+            })
+            .state('graph', {
+                url: '/graph',
+                templateUrl: "templates/graph.html",
+                controller: 'GraphCtrl',
+                resolve: {
+                    testcases: testcasesResolve
+                }
+            })
+            .state('timeline', {
+                url: '/timeline',
+                templateUrl: "templates/timeline.html",
+                controller: 'TimelineCtrl',
+                resolve: {
+                    testcases: testcasesResolve,
+                    testsuites: function($http) {
+                        return $http.get('data/testsuites-pack.json').then(processResponse);
+                    }
+                }
+            })
+    });

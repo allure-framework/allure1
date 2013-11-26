@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               schemaLocation="report-data.xsd"
+               jaxb:version="2.1">
+
+    <jaxb:bindings node="//xsd:complexType[@name='status']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.Status"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='failure']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.Failure"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='attachment']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.Attachment"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='attachment-type']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.AttachmentType"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='severity-level']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.SeverityLevel"/>
+    </jaxb:bindings>
+
+</jaxb:bindings>

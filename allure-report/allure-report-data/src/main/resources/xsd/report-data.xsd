@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:alr="urn:data.allure.qatools.yandex.ru"
+            targetNamespace="urn:data.allure.qatools.yandex.ru">
+
+    <xsd:element name="test-suites-pack" type="alr:test-suites-pack"/>
+    <xsd:element name="test-cases-pack" type="alr:test-cases-pack"/>
+    <xsd:element name="allure-test-suite" type="alr:allure-test-suite"/>
+    <xsd:element name="list-files" type="alr:list-files"/>
+
+    <xsd:complexType name="test-suites-pack">
+        <xsd:sequence>
+            <xsd:element name="time" type="alr:time"/>
+            <xsd:element name="test-suites" type="alr:allure-test-suite" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="test-cases-pack">
+        <xsd:sequence>
+            <xsd:element name="test-cases" type="alr:allure-test-case" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="allure-test-suite">
+        <xsd:sequence>
+            <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="time" type="alr:time"/>
+            <xsd:element name="statistic" type="alr:statistic"/>
+            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="classname" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="test-cases" type="alr:allure-test-case" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="allure-test-case">
+        <xsd:sequence>
+            <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="suite-uid" type="xsd:string"/>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="time" type="alr:time"/>
+            <xsd:element name="summary" type="alr:summary"/>
+            <xsd:element name="failure" type="alr:failure" minOccurs="0"/>
+            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="tags" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="steps" type="alr:allure-test-step" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="attachments" type="alr:attachment" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="severity" type="alr:severity-level"/>
+            <xsd:element name="status" type="alr:status"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="allure-test-step">
+        <xsd:sequence>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="time" type="alr:time"/>
+            <xsd:element name="summary" type="alr:summary"/>
+            <xsd:element name="attachments" type="alr:attachment" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="steps" type="alr:allure-test-step" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="status" type="alr:status"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="statistic">
+        <xsd:attribute name="total" type="xsd:long" default="0"/>
+        <xsd:attribute name="passed" type="xsd:long" default="0"/>
+        <xsd:attribute name="skipped" type="xsd:long" default="0"/>
+        <xsd:attribute name="failed" type="xsd:long" default="0"/>
+        <xsd:attribute name="broken" type="xsd:long" default="0"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="time">
+        <xsd:attribute name="start" type="xsd:long" default="0"/>
+        <xsd:attribute name="stop" type="xsd:long" default="0"/>
+        <xsd:attribute name="duration" type="xsd:long" default="0"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="summary">
+        <xsd:attribute name="attachments" type="xsd:long" default="0"/>
+        <xsd:attribute name="steps" type="xsd:long" default="0"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="list-files">
+        <xsd:sequence>
+            <xsd:element name="files" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="status"/>
+    <xsd:complexType name="attachment"/>
+    <xsd:complexType name="attachment-type"/>
+    <xsd:complexType name="severity-level"/>
+    <xsd:complexType name="failure"/>
+
+</xsd:schema>

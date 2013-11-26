@@ -1,0 +1,46 @@
+<div class="b-island__title">Testsuite</div>
+<div class="xunit_header">
+    <h3>
+        <div class="xunit_header_controls pull-right">
+            <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('home.testsuite.expanded')" ui-sref="home.testsuite.expanded"></span>
+            <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('home.testsuite.expanded')" ui-sref="home.testsuite"></span>
+            <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="home"></span>
+        </div>
+        {{testsuite.title}}
+    </h3>
+    <div ng-show="testsuite.classname">
+        <span class="text-muted">{{testsuite.classname}}</span> <copy-button text="testsuite.classname"></copy-button>
+    </div>
+</div>
+<div class="alert alert-bordered" ng-show="testsuite.description">
+    <b>Description:</b><span class="preformated-text" text-cut="testsuite.description"></span>
+</div>
+<div ng-controller="TestCasesCtrl">
+    <div status-switcher statuses="showStatuses" class="pull-right" statistic="testsuite.statistic"></div>
+    <h4>Test Cases ({{testcases.length}} total<span ng-hide="getVisibleCount() == testcases.length">, {{getVisibleCount()}} shown</span>)</h4>
+    <div ng-show="(testcases | filter:statusFilter).length > 0">
+        <table allure-table class="table table-hover table-condensed" sorting="sorting">
+            <tbody>
+            <tr ng-repeat="testcase in testcases | orderBy:sorting.predicate:sorting.reverse | filter:statusFilter | limitTo:testcasesLimit"
+                class="clickable" ng-click="setTestcase(testcase.uid)" ng-class="{active:testcase==$parent.testcase}">
+                <td allure-table-col="{heading:'#', predicate: 'order', flex: 0.5}">{{testcase.order}}</td>
+                <td allure-table-col="{heading:'Title', predicate: 'title', flex: 3}" class="line-ellipsis" title="{{testcase.title}}">
+                    <span tooltip="{{testcase.severity}}" tooltip-placement="left" class="icon-severity-{{testcase.severity|lowercase}}"></span>
+                    {{testcase.title}}
+                </td>
+                <td allure-table-col="{heading:'Duration', predicate: 'time.duration', class:'text-right', flex: 1.5, reverse: true}"  class="line-ellipsis text-right" title="{{testsuite.time.duration | time}}">
+                    {{testcase.time.duration | time}}
+                </td>
+                <td allure-table-col="{heading:'Status', predicate: byStatusAndSeverity}">
+                    <span class="label label-status-{{testcase.status | lowercase}}">{{testcase.status}}</span>
+                </td>
+            </tr>
+            <tr ng-show="(testcases | filter:statusFilter).length > testcasesLimit">
+                <td colspan="4" class="text-center clickable" ng-click="testcasesLimit = testcasesLimit+100">
+                    <a>Show more tescases</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

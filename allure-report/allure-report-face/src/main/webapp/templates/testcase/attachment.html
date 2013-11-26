@@ -1,0 +1,28 @@
+<div class="b-island__title">Attachment</div>
+<div ng-controller="AttachmentPreviewCtrl" class="attachment">
+    <div class="xunit_header">
+        <h3>
+            <div class="xunit_header_controls pull-right">
+                <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('home.testsuite.testcase.attachment.expanded')" ui-sref="home.testsuite.testcase.attachment.expanded"></span>
+                <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('home.testsuite.testcase.attachment.expanded')" ui-sref="home.testsuite.testcase.attachment"></span>
+                <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="home.testsuite.testcase"></span>
+            </div>
+            {{attachment.title}}
+        </h3>
+        <a class="text-muted" ng-href="{{getSourceUrl(attachment)}}">{{attachment.source}}</a>
+    </div>
+    <div class="attachment_body" ng-switch="type">
+        <div ng-switch-when="image" class="text-center">
+            <img ng-src="{{getSourceUrl(attachment)}}" alt="Attachment image" ng-class="{'zoom-in': !isExpanded(), 'zoom-out': isExpanded()}" ng-click="toggleExpanded()" />
+        </div>
+        <div ng-switch-when="text">
+            <pre>{{attachText}}</pre>
+        </div>
+        <div ng-switch-when="code">
+            <pre><code data-language="{{attachment.type | lowercase}}" rainbow-highlight="attachText"></code></pre>
+        </div>
+        <div ng-switch-default>
+            <iframe style="width: 100%; min-height: 600px;" frameborder="0" ng-src="{{getSourceUrl(attachment)}}"></iframe>
+        </div>
+    </div>
+</div>
