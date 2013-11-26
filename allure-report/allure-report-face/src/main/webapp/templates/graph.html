@@ -1,0 +1,17 @@
+<div class="charts">
+    <div class="chart b-island">
+        <div class="chart_header b-island__title">
+            <span ng-show="testsPassed">All Done. Good job!</span>
+            <span ng-hide="testsPassed">Some Problems Here...</span>
+        </div>
+        <div class="chart_box pie-chart" pie-chart selected="currentStatus" data="chartData"></div>
+    </div>
+    <div class="chart b-island">
+        <div class="chart_header b-island__title">Severity</div>
+        <div severity-map class="chart_box severity-map" data="testcases"></div>
+    </div>
+    <div class="chart b-island">
+        <div class="chart_header b-island__title">Durations</div>
+        <div duration class="chart_box severity-map" data="testcases"></div>
+    </div>
+</div>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:ns2="urn:model.allure.qatools.yandex.ru"
+            targetNamespace="urn:model.allure.qatools.yandex.ru">
+
+    <xsd:element name="test-suite" type="ns2:test-suite-result"/>
+
+    <xsd:complexType name="test-suite-result">
+        <xsd:sequence>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="classname" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="test-cases" type="ns2:test-case-result" maxOccurs="unbounded" minOccurs="0"/>
+        </xsd:sequence>
+        <xsd:attribute name="start" type="xsd:long" default="0"/>
+        <xsd:attribute name="stop" type="xsd:long" default="0"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="test-case-result">
+        <xsd:sequence>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="failure" type="ns2:failure" minOccurs="0"/>
+            <xsd:element name="tags" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="steps" type="ns2:test-step-result" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="attachments" type="ns2:attachment" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="start" type="xsd:long" default="0"/>
+        <xsd:attribute name="stop" type="xsd:long" default="0"/>
+        <xsd:attribute name="status" type="ns2:status" default="passed"/>
+        <xsd:attribute name="severity" type="ns2:severity-level" default="normal"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="test-step-result">
+        <xsd:sequence>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="attachments" type="ns2:attachment" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="steps" type="ns2:test-step-result" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+        <xsd:attribute name="start" type="xsd:long" default="0"/>
+        <xsd:attribute name="stop" type="xsd:long" default="0"/>
+        <xsd:attribute name="status" type="ns2:status" default="passed"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="failure">
+        <xsd:sequence>
+            <xsd:element name="message" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="stack-trace" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="attachment">
+        <xsd:attribute name="title" type="xsd:string"/>
+        <xsd:attribute name="source" type="xsd:string"/>
+        <xsd:attribute name="type" type="ns2:attachment-type"/>
+    </xsd:complexType>
+
+    <xsd:simpleType name="attachment-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="txt"/>
+            <xsd:enumeration value="html"/>
+            <xsd:enumeration value="xml"/>
+            <xsd:enumeration value="png"/>
+            <xsd:enumeration value="jpg"/>
+            <xsd:enumeration value="json"/>
+            <xsd:enumeration value="other"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="status">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="failed"/>
+            <xsd:enumeration value="broken"/>
+            <xsd:enumeration value="passed"/>
+            <xsd:enumeration value="skipped"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:simpleType name="severity-level">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="blocker"/>
+            <xsd:enumeration value="critical"/>
+            <xsd:enumeration value="normal"/>
+            <xsd:enumeration value="minor"/>
+            <xsd:enumeration value="trivial"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

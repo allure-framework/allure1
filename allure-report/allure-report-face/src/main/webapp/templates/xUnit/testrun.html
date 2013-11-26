@@ -1,0 +1,59 @@
+<div class="b-island__title">Summary</div>
+<div class="xunit_header">
+    <h3>Test run
+        (<span ng-pluralize count="testsuites.length" when="{one: '{} testsuite', other: '{} testsuites'}"></span>,
+        <span ng-pluralize count="statistic.total" when="{one: '{} testcase', other: '{} testcases'}"></span>)
+    </h3>
+
+    <div class="text-muted">Started {{time.start | date:'mediumDate'}} at {{time.start | date:'HH:mm:ss'}}
+        ({{time.duration | time}})
+    </div>
+</div>
+<div ng-controller="TestSuitesCtrl">
+    <div status-switcher statuses="showStatuses" class="pull-right"></div>
+    <h4>Test Suites</h4>
+    <table allure-table class="table table-hover table-condensed" sorting="sorting">
+        <tbody>
+        <tr ng-repeat="testsuite in testsuites | filter:statusFilter | orderBy:sorting.predicate:sorting.reverse"
+            class="testsuite-row clickable"
+            ng-class="{'active':testsuite == $parent.testsuite}" ng-click="setTestsuite(testsuite.uid)">
+            <td allure-table-col="{heading:'Title', predicate: 'title', flex: 6}" class="line-ellipsis" title="{{testsuite.title}}">
+                {{testsuite.title}}
+            </td>
+            <td allure-table-col="{heading: 'Duration', predicate: 'time.duration', flex: 2, reverse: true}" class="line-ellipsis" title="{{testsuite.time.duration | time}}">
+                {{testsuite.time.duration | time}}
+            </td>
+            <td allure-table-col="{heading: 'Skipped', predicate: 'statistic.skipped', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-default" ng-show="testsuite.statistic.skipped > 0">{{testsuite.statistic.skipped}}</span>
+            </td>
+            <td allure-table-col="{heading: 'Broken', predicate: 'statistic.broken', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-warning" ng-show="testsuite.statistic.broken > 0">{{testsuite.statistic.broken}}</span>
+            </td>
+            <td allure-table-col="{heading: 'Failed', predicate: 'statistic.failed', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-danger" ng-show="testsuite.statistic.failed > 0">{{testsuite.statistic.failed}}</span>
+            </td>
+            <td allure-table-col="{heading: 'Total', predicate: 'statistic.total', class:'text-center', reverse: true}" class="text-center">
+                {{testsuite.statistic.total}}
+            </td>
+        </tr>
+        <tr class="total-row">
+            <td class="line-ellipsis">
+                <b>Total {{testsuites.length}} suites <span ng-hide="testsuites.length == (testsuites | filter:statusFilter).length">({{(testsuites | filter:statusFilter).length}} shown)</span></b>
+            </td>
+            <td class="line-nobreak">{{time.duration | time}}</td>
+            <td class="text-center">
+                <span class="label label-default" ng-show="statistic.skipped > 0">{{statistic.skipped}}</span>
+            </td>
+            <td class="text-center">
+                <span class="label label-warning" ng-show="statistic.broken > 0">{{statistic.broken}}</span>
+            </td>
+            <td class="text-center">
+                <span class="label label-danger" ng-show="statistic.failed > 0">{{statistic.failed}}</span>
+            </td>
+            <td class="text-center">
+                {{statistic.total}}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

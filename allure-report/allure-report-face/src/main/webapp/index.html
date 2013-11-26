@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" ng-app="allure">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <title>Allure Dashboard</title>
+    <link rel="stylesheet" href="css/app.css"/>
+
+    <script src="lib/jquery/jquery-2.0.3.min.js"></script>
+    <script src="lib/d3/d3.v3.min.js"></script>
+
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular/plugins/angular-ui-router.min.js"></script>
+    <script src="lib/angular/plugins/localstorageprovider.js"></script>
+    <script src="lib/angular/plugins/ui-bootstrap-tpls-0.6.0.js"></script>
+
+    <script src="lib/rainbow/rainbow.min.js"></script>
+    <script src="lib/rainbow/rainbow-xml.js"></script>
+    <script src="lib/rainbow/rainbow-json.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/directives.js"></script>
+    <script src="js/table/table.js"></script>
+    <script src="js/xUnit/statusSwitcher.js"></script>
+    <script src="js/xUnit/controllers.js"></script>
+    <script src="js/testcase/controllers.js"></script>
+    <script src="js/charts/charts.js"></script>
+    <script src="js/charts/pie.js"></script>
+    <script src="js/charts/timeline.js"></script>
+    <script src="js/charts/duration.js"></script>
+    <script src="js/charts/severityMap.js"></script>
+</head>
+<body class="b-page">
+<header class="b-page__nav navbar navbar-static-top" role="navigation">
+    <div class="nav navbar-header">
+        <a class="navbar-brand" href="#">Allure Dashboard</a>
+    </div>
+    <div class="nav navbar-text navbar-right">
+        Version: ${project.version}
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown feedback">
+            <a class="clickable" dropdown-toggle>Provide Feedback <b class="caret"></b></a>
+            <div class="b-popup b-island b-island_mode_fly b-popup_show_bottom-center" role="menu">
+                <div class="b-popup__content">
+                    <a class="feedback_item" target="_blank" href="https://github.com/allure-framework/allure/issues/new">GitHub</a>
+                    <a class="feedback_item" href="mailto:allure@yandex-team.ru">Mail list</a>
+                </div>
+                <div class="b-popup__tail"></div>
+            </div>
+        </li>
+    </ul>
+</header>
+<div class="dashboard" ng-controller="TabsController">
+    <ul class="b-vert list-unstyled">
+        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('home')}"><div class="b-vert__title" ui-sref="home">
+            <div class="b-vert__icon glyphicon glyphicon-briefcase"></div>
+            xUnit
+        </div></li>
+        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('graph')}"><div class="b-vert__title" ui-sref="graph">
+            <div class="b-vert__icon glyphicon glyphicon-stats"></div>
+            Graph
+        </div></li>
+        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('timeline')}"><div class="b-vert__title" ui-sref="timeline">
+            <div class="b-vert__icon glyphicon glyphicon-time"></div>
+            Timeline
+        </div></li>
+    </ul>
+    <div ui-view class="tab-content"></div>
+</div>
+</body>
+</html>

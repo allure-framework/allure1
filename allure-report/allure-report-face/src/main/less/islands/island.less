@@ -1,0 +1,78 @@
+.b-island {
+  background: none repeat scroll 0 0 #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .1), 0 6px 6px -4px rgba(0, 0, 0, .14);
+  border-radius: 0;
+}
+
+.b-island.b-island_mode_fly {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 8px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.b-page, .b-island {
+  font: 15px/22px arial, sans-serif;
+  text-align: left;
+}
+
+.b-island > h1:first-child,
+.b-island > h2:first-child,
+.b-island > h3:first-child,
+.b-island > h4:first-child {
+  margin-top: 0;
+}
+
+.b-island.inline {
+  display: inline-block;
+  width: auto;
+  min-width: inherit;
+}
+
+.b-island.clear {
+  clear: both;
+}
+
+.b-island__title {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.b-island:not(.b-island_chain) {
+  margin-bottom: 10px;
+}
+
+.b-island a:hover {
+  color: red;
+}
+
+td.b-island {
+  display: table-cell;
+  vertical-align: top;
+  min-width: inherit;
+}
+
+.b-island_container {
+  position: relative;
+}
+
+.b-island__arrow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: 45px;
+  overflow: hidden;
+}
+
+.b-island__arrow:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 100%;
+  height: 70.7%;
+  width: 200%;
+  background-color: white;
+  box-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.1);
+  -webkit-transform-origin: top right;
+  -webkit-transform: scaleX(0.6) rotate(-45deg);
+  transform-origin: top right;
+  transform: scaleX(0.6) rotate(-45deg);
+}

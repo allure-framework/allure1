@@ -1,0 +1,21 @@
+<div class="timeline b-island">
+    <div class="page-header b-island__title">
+        <h3>Timeline</h3>
+    </div>
+    <form class="form-inline row timeline_controls" role="form">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Testsuite:
+                    <select class="form-control" ng-model="testsuite"
+                            ng-options="testsuite.uid as testsuite.title for testsuite in testsuites | orderBy:'title'">
+                        <option value="">All testsuites</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+    </form>
+    <div timeline>
+        <timestamp data="testcase" ng-repeat="testcase in testcases | filter:{suiteUid:testsuite||''}"></timestamp>
+    </div>
+</div>
+

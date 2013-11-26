@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>ru.yandex.qatools.allure</groupId>
+        <artifactId>allure-report</artifactId>
+        <version>1.2.2-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>allure-report-face</artifactId>
+    <packaging>war</packaging>
+
+    <name>Allure Report Face</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mortbay.jetty</groupId>
+            <artifactId>jetty-maven-plugin</artifactId>
+            <version>8.1.12.v20130726</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.lesscss</groupId>
+                <artifactId>lesscss-maven-plugin</artifactId>
+                <version>1.3.3</version>
+                <configuration>
+                    <sourceDirectory>${project.basedir}/src/main/less</sourceDirectory>
+                    <outputDirectory>${project.basedir}/src/main/webapp/css</outputDirectory>
+                    <compress>true</compress>
+                    <includes>
+                        <include>app.less</include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <webResources>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <excludes>
+                                <exclude>index.html</exclude>
+                            </excludes>
+                        </resource>
+                        <resource>
+                            <directory>src/main/webapp</directory>
+                            <includes>
+                                <include>index.html</include>
+                            </includes>
+                            <filtering>true</filtering>
+                        </resource>
+                    </webResources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.mortbay.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>8.1.12.v20130726</version>
+                <configuration>
+                    <scanIntervalSeconds>3</scanIntervalSeconds>
+                    <contextHandlers>
+                        <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
+                            <contextPath>/main</contextPath>
+                            <resourceBase>src/main/webapp</resourceBase>
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                        </contextHandler>
+                        <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
+                            <contextPath>/main/data</contextPath>
+                            <resourceBase>src/main/site/data</resourceBase>
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                        </contextHandler>
+                        <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
+                            <contextPath>/test</contextPath>
+                            <resourceBase>src/test/webapp/e2e/</resourceBase>
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                        </contextHandler>
+                        <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
+                            <contextPath>/test/lib</contextPath>
+                            <resourceBase>src/test/webapp/lib</resourceBase>
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                        </contextHandler>
+                    </contextHandlers>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.searls</groupId>
+                <artifactId>jasmine-maven-plugin</artifactId>
+                <version>1.3.1.2</version>
+                <executions>
+                    <execution>
+                        <id>unit-test-running</id>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <jsSrcDir>src/main/webapp/js</jsSrcDir>
+                    <jsTestSrcDir>src/test/webapp/unit</jsTestSrcDir>
+                    <jasmineTargetDir>${project.build.directory}/surefire-reports</jasmineTargetDir>
+                    <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+                    <preloadSources>
+                        <source>src/main/webapp/lib/jquery/jquery-2.0.3.min.js</source>
+                        <source>src/main/webapp/lib/d3/d3.v3.min.js</source>
+                        <source>src/main/webapp/lib/angular/angular.js</source>
+                        <source>src/main/webapp/lib/angular/angular-route.min.js</source>
+                        <source>src/main/webapp/lib/angular/angular-animate.min.js</source>
+                        <source>src/test/webapp/lib/angular/angular-mocks.js</source>
+                        <source>src/test/webapp/lib/qatools-jasmine.js</source>
+                    </preloadSources>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>generate-report</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <id>copy-resources</id>
+                                <phase>compile</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/target/site/allure-reports/</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/main/webapp</directory>
+                                            <excludes>
+                                                <exclude>index.html</exclude>
+                                            </excludes>
+                                        </resource>
+                                        <resource>
+                                            <directory>src/main/webapp</directory>
+                                            <includes>
+                                                <include>index.html</include>
+                                            </includes>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                        <resource>
+                                            <directory>src/main/site</directory>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

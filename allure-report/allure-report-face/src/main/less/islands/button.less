@@ -1,0 +1,191 @@
+/* Button */
+
+.b-button-group,
+.b-button,
+.b-button__content {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.b-button,
+.b-button__content {
+  padding: 4px 15px;
+  font: 15px/22px arial, sans-serif;
+  font-weight: normal;
+
+  text-align: center;
+  cursor: default;
+  white-space: nowrap;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #AAAAAA;
+  border-color: rgba(0, 0, 0, 0.2) rgba(0, 0, 0, 0.3) rgba(0, 0, 0, 0.38);
+}
+
+.b-button, .b-button__content {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
+}
+
+button.b-button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.b-button,
+.b-button__content {
+  background-color: #EEE;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF), color-stop(1, #EEEEEE));
+  background-image: -moz-linear-gradient(center top, #FFFFFF 0px, #EEEEEE 100%);
+  background-image: -o-linear-gradient(top, #FFFFFF 0px, #EEEEEE 100%);
+  background-image: linear-gradient(to bottom, #FFFFFF, #EEEEEE);
+}
+
+.b-button.b-button_type_action {
+  background-color: #FFCC00;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFDF60), color-stop(1, #FFCC00));
+  background-image: -moz-linear-gradient(center top, #FFDF60 0px, #FFCC00 100%);
+  background-image: -o-linear-gradient(top, #FFDF60 0px, #FFCC00 100%);
+  background-image: linear-gradient(to bottom, #FFDF60, #FFCC00);
+}
+
+.b-button.b-button_type_pseudo,
+.b-button_type_pseudo > .b-button__content {
+  background: white none;
+}
+
+a.b-button {
+  cursor: default;
+}
+
+.b-button,
+a.b-button,
+a.b-button:visited,
+a.b-button.b-button:hover {
+  color: #333333;
+  text-decoration: none;
+}
+
+.b-button:disabled,
+input:disabled + .b-button__content {
+  color: #BBB;
+  text-shadow: 1px 1px white;
+}
+
+.b-button:disabled {
+  opacity: .6;
+}
+
+.b-button_focus.b-button_focus,
+.b-button:focus,
+.b-button-group_focus {
+  box-shadow: 0 0 6px 2px rgba(255, 204, 0, 0.7), 0 0 3px rgba(255, 204, 0, 0.7) inset;
+  outline: medium none;
+}
+
+.b-button_focus.b-button_focus.b-button_active,
+.b-button:focus:active {
+  box-shadow: 0 0 6px 2px rgba(255, 204, 0, 0.7), 0 0 3px rgba(255, 204, 0, 0.7) inset, 0 1px 2px rgba(0, 0, 0, 0.5) inset;
+}
+
+.b-button_active.b-button_active,
+.b-button:active:not(:disabled),
+input:active:not(:disabled) + .b-button__content {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25) inset;
+}
+
+.b-button_active.b-button_active,
+.b-button:active:not(:disabled),
+:not(:disabled) + .b-button__content:active,
+:checked + .b-button__content {
+  border-color: rgba(0, 0, 0, 0.38) rgba(0, 0, 0, 0.33) rgba(0, 0, 0, 0.38);
+}
+
+.b-button:before, .b-button:after,
+.b-button__content:before, .b-button__content:after {
+  display: block;
+  content: '';
+  width: 1px;
+  height: 1px;
+}
+
+.b-button_active.b-button_active:before,
+.b-button_checked.b-button_checked:before,
+.b-button:active:not(:disabled):before,
+:not(:disabled) + .b-button__content:active:before,
+:checked + .b-button__content:before {
+  height: 2px;
+}
+
+.b-button_active.b-button_active:after,
+.b-button_checked.b-button_checked:after,
+.b-button:active:not(:disabled):after,
+:not(:disabled) + .b-button__content:active:after,
+:checked + .b-button__content:after {
+  height: 0;
+}
+
+.b-button_checked.b-button_checked,
+:checked + .b-button__content {
+  background-color: #FFF6D5;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFECA6), color-stop(1, #FFF7D5));
+  background-image: -moz-linear-gradient(center top, #FFECA6 0px, #FFF6D5 100%);
+  background-image: -o-linear-gradient(top, #FFECA6 0px, #FFF6D5 100%);
+  background-image: linear-gradient(to bottom, #FFECA6 0px, #FFF6D5 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) inset;
+}
+
+.b-button-group > .b-button,
+.b-button-group > .b-button-input {
+  margin: 0 !important;
+}
+
+.b-button-group > * + .b-button,
+.b-button-group > * + * > .b-button__content {
+  border-left: none;
+}
+
+.b-button-group > .b-button:not(:first-child),
+.b-button-group > :not(:first-child) > .b-button__content {
+  -webkit-border-top-left-radius: 0;
+  -webkit-border-bottom-left-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  -moz-border-radius-topleft: 0;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.b-button-group > .b-button:not(:last-child),
+.b-button-group > :not(:last-child) > .b-button__content {
+  -webkit-border-top-right-radius: 0;
+  -webkit-border-bottom-right-radius: 0;
+  -moz-border-radius-topright: 0;
+  -moz-border-radius-bottomright: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.b-button-input {
+  background: transparent none;
+  position: relative;
+  display: inline-block;
+}
+
+.b-button__input {
+  position: absolute;
+  visibility: hidden;
+}
+
+.b-button.small,
+.small > .b-button__content,
+.b-button-group.small > .b-button,
+.b-button-group:not(.large) > * > .b-button__content {
+  font-size: 13px;
+  line-height: 18px;
+  padding: 2px 8px;
+}

@@ -1,0 +1,113 @@
+.label-status-skipped {
+  .label-variant(@label-default-bg);
+}
+
+.label-status-passed {
+  .label-variant(@label-success-bg);
+}
+
+.label-status-broken {
+  .label-variant(@label-warning-bg);
+}
+
+.label-status-failed {
+  .label-variant(@label-danger-bg)
+}
+
+@alert-default-bg: #ddd;
+@alert-default-text: #666;
+.alert-status-skipped {
+  .alert-variant(@alert-default-bg, darken(spin(@alert-default-bg, -10), 5%), @alert-default-text);
+}
+
+.alert-status-passed {
+  .alert-variant(@alert-success-bg, @alert-success-border, @alert-success-text);
+}
+
+.alert-status-broken {
+  .alert-variant(@alert-warning-bg, @alert-warning-border, @alert-warning-text);
+}
+
+.alert-status-failed {
+  .alert-variant(@alert-danger-bg, @alert-danger-border, @alert-danger-text);
+}
+
+.icon-status-skipped {
+  color: @gray-light;
+  .glyphicon;
+  .glyphicon-question-sign;
+}
+
+.icon-status-passed {
+  color: @brand-success;
+  .glyphicon;
+  .glyphicon-ok-sign;
+}
+
+.icon-status-broken {
+  color: @brand-warning;
+  .glyphicon;
+  .glyphicon-exclamation-sign;
+}
+
+.icon-status-failed {
+  color: @brand-danger;
+  .glyphicon;
+  .glyphicon-remove-sign;
+}
+
+.btn-status-variant(@bg-color) {
+  color: @bg-color;
+  &.active {
+    color: darken(@bg-color, 5%);
+  }
+  &:hover {
+    color: @bg-color;
+  }
+}
+
+.btn-status-passed {
+  .btn-status-variant(@label-success-bg);
+}
+
+.btn-status-skipped {
+  .btn-status-variant(@label-default-bg);
+}
+
+.btn-status-broken {
+  .btn-status-variant(@label-warning-bg);
+}
+
+.btn-status-failed {
+  .btn-status-variant(@label-danger-bg);
+}
+
+.icon-severity-blocker {
+  color: @brand-danger;
+  .glyphicon;
+  .glyphicon-warning-sign;
+}
+
+.icon-severity-critical {
+  color: @brand-danger;
+  .glyphicon;
+  .glyphicon-arrow-up;
+}
+
+.icon-severity-normal {
+  color: @brand-success;
+  .glyphicon;
+  .glyphicon-arrow-up;
+}
+
+.icon-severity-minor {
+  color: @brand-success;
+  .glyphicon;
+  .glyphicon-arrow-down;
+}
+
+.icon-severity-trivial {
+  color: @brand-success;
+  .glyphicon;
+  .glyphicon-chevron-down;
+}

@@ -1,0 +1,94 @@
+<div class="b-island__title">Testcase</div>
+<div class="xunit_header">
+    <h3>
+        <div class="xunit_header_controls pull-right">
+            <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('home.testsuite.testcase.expanded')" ui-sref="home.testsuite.testcase.expanded"></span>
+            <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('home.testsuite.testcase.expanded')" ui-sref="home.testsuite.testcase"></span>
+            <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="home.testsuite"></span>
+        </div>
+        <span class="icon-status-{{testcase.status | lowercase}}"></span>
+        {{testcase.title}}
+    </h3>
+    <div class="text-muted">Severity: {{testcase.severity}}</div>
+</div>
+<div class="alert alert-bordered" ng-show="testcase.description">
+    <b>Description:</b>
+    <div class="preformated-text" text-cut="testcase.description"></div>
+</div>
+<div class="page-header">
+    <h4 ng-pluralize count="testcase.summary.steps" when="{0: 'No steps', one: '{} step', other: '{} steps'}"></h4>
+</div>
+<div class="step" ng-repeat="step in testcase.steps">
+    <ng-include src="'testcaseStep.tpl'"></ng-include>
+</div>
+<script type="text/ng-template" id="testcaseStep.tpl">
+    <div class="panel panel-default" ng-controller="StepCtrl">
+        <div class="panel-heading" ng-class="{'clickable has-content': hasContent}" ng-click="expanded=!expanded && hasContent">
+            <div class="pull-right">
+                <span title="Test duration" class="counter text-muted">
+                    <span class="glyphicon glyphicon-time"></span>
+                    {{step.time.duration}} ms
+                </span>
+                <span title="Substeps count" class="counter text-muted">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                    {{step.summary.steps}}
+                </span>
+                <span class="glyphicon glyphicon-chevron-down"></span>
+            </div>
+            <h3 class="panel-title">
+                <i class="icon-status-{{step.status | lowercase}}"></i>
+                {{step.title}}
+            </h3>
+        </div>
+        <div class="panel-body" ng-show="expanded">
+            <div ng-show="step.attachments.length > 0">
+                <table allure-table class="table table-hover table-condensed" sorting="sorting">
+                    <tbody>
+                    <tr ng-repeat="attachment in step.attachments | orderBy:sorting.predicate:sorting.reverse"
+                        class="clickable" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+                        <td allure-table-col="{heading: 'Title', predicate: 'title', flex: 3}" class="long-line line-ellipsis" title="{{attachment.title}}">{{attachment.title}}</td>
+                        <td allure-table-col="'Type'">{{attachment.type}}</td>
+                        <td allure-table-col="''" class="line-nobreak text-right">
+                            <a target="_blank" ng-href="{{'data/'+attachment.source}}">View raw</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="step" ng-repeat="step in step.steps">
+                <ng-include src="'testcaseStep.tpl'"></ng-include>
+            </div>
+        </div>
+    </div>
+</script>
+<div class="alert alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status == 'FAILED' || testcase.status == 'BROKEN'">
+    <h4>{{testcase.failure.title}}</h4>
+
+    <div class="preformated-text">{{testcase.failure.message}}</div>
+    <div class="text-right"><span ng-click="show =! show" ng-show="testcase.failure.stackTrace"
+                                  class="clickable">show stacktrace...</span></div>
+    <div ng-show="show" class="preformated-text"><hr>{{testcase.failure.stackTrace}}</div>
+</div>
+<div class="alert alert-status-passed" ng-show="testcase.status == 'PASSED'">
+    The test is passed right!
+</div>
+<div class="alert alert-status-skipped" ng-show="testcase.status == 'SKIPPED'">
+    This test has been skipped
+</div>
+<div class="page-header">
+    <h4 ng-pluralize count="testcase.summary.attachments" when="{0: 'No attachments', one: '{} attachment', other: '{} attachments'}"></h4>
+</div>
+<div ng-show="testcase.attachments.length > 0">
+    <table allure-table class="table table-hover table-condensed" sorting="sorting">
+        <tbody>
+        <tr ng-repeat="attachment in testcase.attachments | orderBy:sorting.predicate:sorting.reverse"
+            class="clickable" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+            <td allure-table-col="{heading: 'Title', predicate: 'title', flex: 3}" class="long-line line-ellipsis" title="{{attachment.title}}">{{attachment.title}}</td>
+            <td allure-table-col="'Type'">{{attachment.type}}</td>
+            <td allure-table-col="''" class="line-nobreak text-right">
+                <a target="_blank" ng-href="{{'data/'+attachment.source}}">View raw</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

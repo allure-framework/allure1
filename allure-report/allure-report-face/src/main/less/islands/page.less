@@ -1,0 +1,41 @@
+.b-page {
+  background-color: #F6F5F3;
+}
+
+.b-page__body {
+  padding: 28px;
+}
+
+.b-page__nav {
+  height: 50px;
+  background-color: white;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+}
+
+.b-page__nav .active {
+  position: relative;
+  color: black;
+}
+
+.b-page__nav .active:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background-color: black;
+}
+
+.b-page__user {
+  background: none no-repeat scroll 50% 50% / cover #F6F5F3;
+  border-radius: 100% 100% 100% 100%;
+  box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.2) inset;
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+}
+
+.b-page__nav > .b-page__user {
+  margin: 9px;
+}

@@ -1,0 +1,17 @@
+<div class="xunit b-island">
+    <div class="xunit_col" ng-class="{'xunit_col-overlay': isState('home.testsuite.*')}">
+        <div class="xunit_overlay clickable" ui-sref="home.testsuite"></div>
+        <ng-include src="'templates/xUnit/testrun.html'"></ng-include>
+    </div>
+    <div class="xunit_col" ng-if="testsuite" ng-class="{'xunit_col-expanded': isState('home.testsuite.expanded'), 'xunit_col-overlay': isState('home.testsuite.testcase.*')}">
+        <div class="xunit_overlay clickable" ui-sref="home.testsuite.testcase"></div>
+        <ng-include src="'templates/xUnit/testsuite.html'"></ng-include>
+    </div>
+    <div class="xunit_col" ng-if="testcase"  ng-class="{'xunit_col-expanded': isState('home.testsuite.testcase.expanded'), 'xunit_col-overlay': isState('home.testsuite.testcase.attachment.*')}">
+        <div class="xunit_overlay clickable" ui-sref="home.testsuite.testcase.attachment"></div>
+        <ng-include src="'templates/testcase/testcase.html'"></ng-include>
+    </div>
+    <div class="xunit_col" ng-if="attachment"  ng-class="{'xunit_col-expanded': isState('home.testsuite.testcase.attachment.expanded')}">
+        <ng-include src="'templates/testcase/attachment.html'"></ng-include>
+    </div>
+</div>

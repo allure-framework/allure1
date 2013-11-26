@@ -1,0 +1,83 @@
+/* base styles and bootstrap overrides */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.pseudolink {
+  cursor: pointer;
+  color: #428bca;
+  border-bottom: 1px dashed #428bca;
+}
+
+.long-line {
+  word-break: break-all;
+}
+
+.line-nobreak {
+  white-space: nowrap;
+}
+
+.line-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.btn-block.text-left {
+  text-align: left;
+  padding: 6px 12px;
+}
+
+.btn-labeled .label {
+  top: -2px;
+  position: relative;
+}
+
+.alert-bordered {
+  border: 1px solid #ccc;
+}
+
+.preformated-text {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.zoom-in {
+  cursor: zoom-in;
+  cursor: -webkit-zoom-in;
+}
+
+.zoom-out {
+  cursor: zoom-out;
+  cursor: -webkit-zoom-out;
+}
+
+.modal {
+  display: block;
+}
+
+.modal-dialog {
+  max-width: 1200px;
+  width: auto;
+}
+
+.modal-body {
+  overflow: auto;
+}
+
+.b-popup {
+  display: block;
+  opacity: 0;
+  margin-top: 0;
+  transition: opacity .3s ease-out, margin .3s ease-out;
+  .dropdown.open & {
+    opacity: 1;
+    margin-top: 4px;
+  }
+}

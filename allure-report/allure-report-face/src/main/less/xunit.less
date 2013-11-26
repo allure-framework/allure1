@@ -1,0 +1,202 @@
+/* styles for xUnit tab */
+.xunit.b-island {
+  overflow: hidden;
+  position: absolute;
+  top: 20px;
+  left: 1px;
+  bottom: 20px;
+  right: 20px;
+}
+
+.xunit_col_nth(@index) when (@index > 0) {
+  .xunit_col:nth-child(@{index}) {
+    @left-offset: 5%*(@index - 1);
+    left: @left-offset;
+    width: 50% - @left-offset;
+    &:last-child {
+      left: 50%;
+      width: 50%;
+      @media (max-width: @screen-desktop) {
+        @left: @left-offset + 25%;
+        left: @left;
+        width: 100% - @left;
+      }
+      &.xunit_col-expanded {
+        left: @left-offset;
+        width: 100% - @left-offset;
+      }
+    }
+  }
+  .xunit_col_nth(@index - 1);
+}
+
+.xunit_col_nth(5);
+
+
+.xunit_col {
+  position: absolute;
+  width: 40%;
+  left: 0;
+  padding: 0 15px;
+  height: 100%;
+  overflow: auto;
+  background: #fff;
+  z-index: 1;
+  transition-property: width, left;
+  transition-duration: 0.3s;
+  &:first-child:last-child {
+    width: 100%;
+    left: 0;
+  }
+  & + .xunit_col {
+    border-left: 1px solid #ccc;
+  }
+  .xunit_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: none;
+    &:hover {
+      background: #f4f4f4;
+      opacity: 0.4;
+    }
+  }
+  &-overlay {
+    overflow: hidden;
+    .xunit_overlay {
+      display: block;
+    }
+  }
+}
+
+.xunit .table {
+  table-layout: fixed;
+  .xunit_table_column {
+    cursor: pointer;
+    .user-select(none);
+    white-space: nowrap;
+    &:hover {
+      background: @table-bg-hover;
+    }
+    .xunit_table_heading {
+      overflow: hidden;
+    }
+  }
+  .total-row>td{
+    border-top: 2px solid #dddddd;
+    background: #eee;
+  }
+  tr.active>td {
+    color: #fff;
+    background: #428bca;
+    a {
+      color: #fff;
+    }
+  }
+}
+
+.xunit .b-island__title {
+  padding: 10px 0;
+}
+
+.xunit_header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+  &_controls {
+    display: none;
+    .xunit_col:last-child & {
+      display: block;
+    }
+    opacity: 0.5;
+    transition: opacity 0.5s;
+    padding-right: 20px;
+    .glyphicon:hover {
+      opacity: 0.8;
+    }
+  }
+  &:hover &_controls {
+    opacity: 1;
+  }
+}
+
+.xunit_header h3 {
+  min-height: 30px;
+  margin-bottom: 0;
+}
+
+.badge-justified {
+  text-align: justify;
+  font-size: 0;
+}
+
+.badge-justified:after{
+  content: "";
+  width: 100%;
+  display: inline-block;
+}
+
+.badge-justified .badge-widget {
+  background: white;
+  display: inline-block;
+  float: none;
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
+.badge-widget {
+  text-align: center;
+  border-radius: 5px;
+  float: left;
+  width: 8em;
+  margin: 0 10px 10px;
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
+.status_switcher {
+  margin-top: -5px;
+  .btn.btn-default {
+    font-size: 85%;
+    padding: 4px 8px;
+    text-transform: capitalize;
+  }
+}
+
+.arrow-up:before {
+  content: '\25B2';
+}
+
+.arrow-down:before {
+  content: '\25BC';
+}
+
+.step:last-child .panel {
+  margin-bottom: 0;
+}
+
+.step .counter {
+  min-width: 55px;
+  margin-right: 5px;
+}
+
+.step .has-content {
+  background-color: #ebebeb;
+}
+
+.step .glyphicon-chevron-down {
+  visibility: hidden;
+}
+
+.step .has-content .glyphicon-chevron-down {
+  visibility: visible;
+}
+
+.attachment {
+  img {
+    max-width: 100%;
+  }
+}

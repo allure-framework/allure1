@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1385043562863" stop="1385043562864">
+    <title>Passed tests</title>
+    <description>This testsuite has tests what always are passing</description>
+    <classname>my.company.TestPassedTests</classname>
+    <test-cases start="1385043562863" stop="1385043562864" status="passed" severity="trivial">
+        <title>Trivial test</title>
+    </test-cases>
+    <test-cases start="1385043562863" stop="1385043562864" status="passed" severity="normal">
+        <title>Another passed test</title>
+    </test-cases>
+    <test-cases start="1385043562864" stop="1385043562864" status="passed" severity="normal">
+        <title>Test what do nothing and always passed right, but have a very long title, over 100 symbols, seriously</title>
+        <description>I hate descriptions! See the title!</description>
+    </test-cases>
+</ns2:test-suite>
