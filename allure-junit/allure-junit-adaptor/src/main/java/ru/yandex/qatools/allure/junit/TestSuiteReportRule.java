@@ -8,9 +8,6 @@ import ru.yandex.qatools.allure.events.TestRunStartedEvent;
 
 import java.util.UUID;
 
-import static ru.yandex.qatools.allure.Controller.ALLURE_LIFECYCLE;
-import static ru.yandex.qatools.allure.utils.AllureWriteUtils.generateUid;
-
 
 /**
  * @author Artem Eroshenko eroshenkoam
@@ -24,7 +21,7 @@ public class TestSuiteReportRule extends TestWatcher {
 	}
 
 	protected void starting(Description description) {
-		uid = generateUid(UUID.randomUUID().toString());
+		uid = UUID.randomUUID().toString();
         Allure.LIFECYCLE.fire(new TestRunStartedEvent(
                 uid,
                 description.getTestClass().getName(),

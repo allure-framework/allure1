@@ -11,8 +11,6 @@ import ru.yandex.qatools.allure.events.TestStartedEvent;
 
 import java.util.UUID;
 
-import static ru.yandex.qatools.allure.utils.AllureWriteUtils.generateUid;
-
 /**
  * @author Artem Eroshenko eroshenkoam
  *         5/21/13, 2:16 PM
@@ -25,7 +23,7 @@ public class TestCaseReportRule extends TestWatcher {
 	private String runUid;
 
 	public TestCaseReportRule(TestSuiteReportRule testSuite) {
-        this.uid = generateUid(UUID.randomUUID().toString());
+        this.uid = UUID.randomUUID().toString();
 		this.runUid = testSuite.getUid();
 	}
 

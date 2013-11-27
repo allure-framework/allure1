@@ -1,7 +1,7 @@
 [xUnit]: http://en.wikipedia.org/wiki/XUnit
 ## Allure glossary
 
-Allure represents extended [xUnit] schema with following additions.
+Allure represents extended [xUnit] schema with some additions.
 
 **Test suite** - test class, includes test methods (test cases)
 

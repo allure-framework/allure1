@@ -1,7 +1,6 @@
 package ru.yandex.qatools.allure.utils;
 
 import org.apache.commons.io.FileUtils;
-import org.modeshape.common.text.Inflector;
 import ru.yandex.qatools.allure.exceptions.AllureException;
 import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.ObjectFactory;
@@ -10,10 +9,7 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.charset.Charset;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
 
 /**
@@ -24,8 +20,6 @@ import java.util.UUID;
 public final class AllureWriteUtils {
 
     private static final String FAQ = "https://github.com/allure-framework/allure/allure-core/blob/master/docs/FAQ.md";
-
-    private static final int RADIX = 16;
 
     private static final String XML = ".xml";
 
@@ -43,22 +37,15 @@ public final class AllureWriteUtils {
         return (tag.startsWith("#") ? "" : "#") + tag;
     }
 
-    public static String generateTitle(String name) {
-        return new Inflector().humanize(new Inflector().underscore(name));
-    }
-
-    public static String generateUid(String name) {
-        return generateUid(name, "MD5");
-    }
-
-    public static String generateUid(String name, String algorithm) {
-        try {
-            MessageDigest md = MessageDigest.getInstance(algorithm);
-            md.update(name.getBytes(Charset.forName("UTF-8")));
-            return new BigInteger(1, md.digest()).toString(RADIX);
-        } catch (NoSuchAlgorithmException e) {
-            throw new AllureException("Uid generation problems:", e);
-        }
+    public static String humanizeCamelCase(String camelCaseString) {
+        return camelCaseString.replaceAll(
+                String.format("%s|%s|%s",
+                        "(?<=[A-Z])(?=[A-Z][a-z])",
+                        "(?<=[^A-Z])(?=[A-Z])",
+                        "(?<=[A-Za-z])(?=[^A-Za-z])"
+                ),
+                " "
+        );
     }
 
     public static void copyAttachment(String from, File to) {

@@ -1,5 +1,5 @@
 [allure-junit-pom-example]: https://github.com/allure-framework/allure/blob/master/docs/allure-junit-pom-example.md
-[steps-and-attachments]: #
+[steps-and-attachments]: https://github.com/allure-framework/allure/blob/master/docs/steps-and-attachments.md
 
 ## Allure JUnit integration module
 
@@ -58,7 +58,7 @@ You can add steps to your tests just annotate step-methods with
 **@ru.yandex.qatools.allure.annotations.Step** annotation:
 
 ```java
-@Step("Open \"{0}\" page")
+@Step
 public void openPageByAddress(String pageAddress) {
      ...
  }
@@ -71,8 +71,8 @@ return **java.lang.String** or **java.io.File**.
 Returned value will be copied and added to your Allure Report as attachment.
 
 ```java
-@Attach(name = "My Screenshot", type = AttachmentType.JPG)
-public File saveScreenshot(WebDriver driver) {
+@Attach
+public String saveLog(Logger logger) {
     ...
 }
 ```
