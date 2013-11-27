@@ -1,5 +1,5 @@
 [how-it-works]: https://github.com/allure-framework/allure/blob/master/docs/how-it-works.md
-[dictionary]: https://github.com/allure-framework/allure/blob/master/docs/dictionary.md
+[glossary]: https://github.com/allure-framework/allure/blob/master/docs/dictionary.md
 [changelog]: #
 [charlie-man]: mailto:charlie@yandex-team.ru
 [faq]: https://github.com/allure-framework/allure/blob/master/docs/FAQ.md
@@ -21,7 +21,7 @@ store attachments, such as screenshots, logs etc.
 
 * How to use Allure with [JUnit][junit-usage] | [TestNG][testng-usage]
 * [How it works][how-it-works]
-* [Dictionary][dictionary]
+* [Glossary][glossary]
 * Report example
 * [FAQ][faq]
 
