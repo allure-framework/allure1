@@ -63,7 +63,7 @@ public final class AllureReportUtils {
     public static String applyXslTransformation(Source xslSource, Source xmlSource) {
         try {
 
-            Transformer transformer = TransformerFactoryImpl.newInstance().newTransformer(xslSource);
+            Transformer transformer = new TransformerFactoryImpl().newTransformer(xslSource);
             StringWriter resultWriter = new StringWriter();
             Result result = new StreamResult(resultWriter);
             transformer.transform(xmlSource, result);
