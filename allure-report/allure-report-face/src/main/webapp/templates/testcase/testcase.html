@@ -79,7 +79,7 @@
     <h4 ng-pluralize count="testcase.summary.attachments" when="{0: 'No attachments', one: '{} attachment', other: '{} attachments'}"></h4>
 </div>
 <div ng-show="testcase.attachments.length > 0">
-    <table allure-table class="table table-hover table-condensed" sorting="sorting">
+    <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
         <tbody>
         <tr ng-repeat="attachment in testcase.attachments | orderBy:sorting.predicate:sorting.reverse"
             class="clickable" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">

@@ -29,6 +29,7 @@
     <script src="js/xUnit/statusSwitcher.js"></script>
     <script src="js/xUnit/controllers.js"></script>
     <script src="js/testcase/controllers.js"></script>
+    <script src="js/features/FeaturesCtrl.js"></script>
     <script src="js/charts/charts.js"></script>
     <script src="js/charts/pie.js"></script>
     <script src="js/charts/timeline.js"></script>
@@ -61,6 +62,10 @@
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('home')}"><div class="b-vert__title" ui-sref="home">
             <div class="b-vert__icon glyphicon glyphicon-briefcase"></div>
             xUnit
+        </div></li>
+        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('features')}"><div class="b-vert__title" ui-sref="features">
+            <div class="b-vert__icon glyphicon glyphicon-list"></div>
+            Behaviors
         </div></li>
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('graph')}"><div class="b-vert__title" ui-sref="graph">
             <div class="b-vert__icon glyphicon glyphicon-stats"></div>

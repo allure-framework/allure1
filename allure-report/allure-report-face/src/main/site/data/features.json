@@ -1,0 +1,224 @@
+{
+    "features": [{
+        "title": "Super feature",
+        "statistic": {
+            "failed": 2,
+            "passed": 2,
+            "skipped": 8,
+            "total": 12
+        },
+        "stories": [{
+            "uid": "story1",
+            "title": "Open page",
+            "statistic": {
+                "failed": 0,
+                "passed": 2,
+                "broken": 0,
+                "skipped": 0,
+                "total": 2
+            },
+            "testcases": [{
+                "uid": "de596c4b-a8fe-4b87-adf2-5fcaedb251fd",
+                "suiteUid": "8615947f-c262-4024-aaec-d292f5853035",
+                "status": "PASSED",
+                "severity": "TRIVIAL",
+                "title": "Test what do nothing and always passed right, but have a very long title, over 100 symbols, seriously",
+                "time": {
+                    "start": 1385043541855,
+                    "stop": 1385043542201,
+                    "duration": 346
+                }
+            }, {
+                "uid": "4b075d3d-47ba-4be1-9333-9f1385e0026a",
+                "suiteUid": "8615947f-c262-4024-aaec-d292f5853035",
+                "status": "PASSED",
+                "severity": "NORMAL",
+                "title": "Another passed test",
+                "time": {
+                    "start": 1385043541862,
+                    "stop": 1385043542298,
+                    "duration": 436
+                }
+            }]
+        }, {
+            "uid": "story2",
+            "title": "Cool Story",
+            "statistic": {
+                "failed": 2,
+                "passed": 0,
+                "total": 2
+            },
+            "testcases": [{
+                "uid": "72a59fc2-bfa9-4358-abad-bbb1147c0938",
+                "suiteUid": "cbfaf8ce-42eb-457f-9ff0-f81319fff656",
+                "status": "FAILED",
+                "severity": "CRITICAL",
+                "title": "Attachments test",
+                "time": {
+                    "start": 1385043541888,
+                    "stop": 1385043542495,
+                    "duration": 607
+                }
+            }, {
+                "uid": "952d6e47-c508-4894-acf7-670eea0e4196",
+                "suiteUid": "cbfaf8ce-42eb-457f-9ff0-f81319fff656",
+                "status": "BROKEN",
+                "severity": "BLOCKER",
+                "title": "Lot of steps test",
+                "time": {
+                    "start": 1385043541833,
+                    "stop": 1385043542540,
+                    "duration": 707
+                }
+            }]
+        }]
+    }, {
+        "title": "Search Form",
+        "statistic": {
+            "failed": 3,
+            "passed": 7,
+            "total": 10
+        },
+        "stories": [{
+            "uid": "story3",
+            "title": "Appearance",
+            "statistic": {
+                "failed": 0,
+                "passed": 2,
+                "broken": 0,
+                "skipped": 0,
+                "total": 2
+            },
+            "testcases": [{
+                "uid": "cfcb9b31-7020-413f-93c6-93e8270c48d2",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "PASSED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 85]",
+                "time": {
+                    "start": 1385043541837,
+                    "stop": 1385043542574,
+                    "duration": 737
+                }
+            }, {
+                "uid": "9ec82c49-68e2-4a75-82ae-7597f37803ad",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "PASSED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 25]",
+                "time": {
+                    "start": 1385043542582,
+                    "stop": 1385043542847,
+                    "duration": 265
+                }
+            }]
+        }, {
+            "uid": "story4",
+            "title": "Request",
+            "statistic": {
+                "failed": 0,
+                "broken": 1,
+                "passed": 4,
+                "total": 5
+            },
+            "testcases": [{
+                "uid": "f419e671-f583-4385-b227-92351562aed4",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "BROKEN",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 201]",
+                "time": {
+                    "start": 1385043541838,
+                    "stop": 1385043542880,
+                    "duration": 1042
+                }
+            }, {
+                "uid": "6e75a344-a1a7-4ca1-b5bb-8ee98b468e65",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "PASSED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 297]",
+                "time": {
+                    "start": 1385043542849,
+                    "stop": 1385043543093,
+                    "duration": 244
+                }
+            }, {
+                "uid": "e7cc6f48-7da9-4cf6-8635-5d87a3340e9a",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "PASSED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 222]",
+                "time": {
+                    "start": 1385043543095,
+                    "stop": 1385043543138,
+                    "duration": 43
+                }
+            }, {
+                "uid": "6e03db12-a48b-4a42-baa2-f1a250c27394",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "PASSED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 6]",
+                "time": {
+                    "start": 1385043541846,
+                    "stop": 1385043543159,
+                    "duration": 1313
+                }
+            }, {
+                "uid": "8de2af95-3d34-433f-ad62-916ba827aae4",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "PASSED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 65]",
+                "time": {
+                    "start": 1385043541889,
+                    "stop": 1385043543168,
+                    "duration": 1279
+                }
+            }]
+        }, {
+            "uid": "story5",
+            "title": "Suggest",
+            "statistic": {
+                "failed": 2,
+                "passed": 1,
+                "total": 3
+            },
+            "testcases": [{
+                "uid": "042def6a-5b57-4034-b8f3-49c856f46bc7",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "FAILED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 149]",
+                "time": {
+                    "start": 1385043541888,
+                    "stop": 1385043543198,
+                    "duration": 1310
+                }
+            }, {
+                "uid": "aaec57d3-0793-4d2e-be4e-2994ebd0f8d6",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "PASSED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 103]",
+                "time": {
+                    "start": 1385043543139,
+                    "stop": 1385043543253,
+                    "duration": 114
+                }
+            }, {
+                "uid": "5613efc9-2e48-4e26-882d-eb809a24f6fe",
+                "suiteUid": "f4ec5825-ea91-4eed-94aa-463523e2d260",
+                "status": "FAILED",
+                "severity": "NORMAL",
+                "title": "Test name[multiple test 289]",
+                "time": {
+                    "start": 1385043543203,
+                    "stop": 1385043543276,
+                    "duration": 73
+                }
+            }]
+        }]
+    }]
+}

@@ -1,0 +1,79 @@
+<div class="features b-island tab-content-fill">
+    <div class="features__pane features__list">
+        <div class="features__title b-island__title">Functional requirements</div>
+        <div class="feature" ng-repeat="feature in features">
+            <div class="item" ng-click="expandFeature(feature, !feature.expanded)">
+                <div class="item__icon" ng-class="feature.expanded ? 'arrow-down' : 'glyphicon glyphicon-play'"></div>
+                {{feature.title}}
+                <div class="progress percents pull-right">
+                    <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in feature.percents"
+                         tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
+                    </div>
+                </div>
+                <div class="pull-right text-muted"><i ng-pluralize count="feature.stories.length" when="{one: '{} story', other: '{} stories'}"></i>&nbsp;</div>
+            </div>
+            <ul ng-if="feature.expanded" class="list-unstyled item__subitems">
+                <li class="item" ng-repeat="story in feature.stories" ng-click="setStory(story)" ng-class="{item_active: story == $parent.story}">
+                    {{story.title}}
+                    <div class="progress percents pull-right">
+                        <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
+                             tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
+                        </div>
+                    </div>
+                    <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="features__pane features__info">
+        <div class="features__title b-island__title">Info</div>
+        <h3 class="features__pane__header" ng-bind="summaryText"></h3>
+        <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData"></div>
+        <hr>
+        <h4>There are 5 stories, {{unstableStories.length}} unstable</h4>
+        <ul class="list-unstyled">
+            <li class="item" ng-repeat="story in unstableStories" ng-click="setStory(story)">
+                {{story.title}}
+                <div class="progress percents pull-right">
+                    <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
+                         tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
+                    </div>
+                </div>
+                <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
+            </li>
+        </ul>
+    </div>
+    <div class="features__pane features__view" ng-class="story && 'features__view_visible'">
+        <div class="features__title b-island__title">Story</div>
+        <h3 class="features__pane__header">{{story.title}}</h3>
+        <div ng-controller="TestCasesCtrl" ng-if="testcases">
+            <div status-switcher statuses="showStatuses" class="pull-right" statistic="testsuite.statistic"></div>
+            <h4>Test Cases ({{testcases.length}} total<span ng-hide="getVisibleCount() == testcases.length">, {{getVisibleCount()}} shown</span>)</h4>
+            <div ng-show="(testcases | filter:statusFilter).length > 0">
+                <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
+                    <tbody>
+                    <tr ng-repeat="testcase in testcases | orderBy:sorting.predicate:sorting.reverse | filter:statusFilter | limitTo:testcasesLimit"
+                        class="clickable" ng-click="setTestcase(testcase)" ng-class="{active:testcase==$parent.testcase}">
+                        <td allure-table-col="{heading:'#', predicate: 'order', flex: 0.5}">{{testcase.order}}</td>
+                        <td allure-table-col="{heading:'Title', predicate: 'title', flex: 3}" class="line-ellipsis" title="{{testcase.title}}">
+                            <span tooltip="{{testcase.severity}}" tooltip-placement="left" class="icon-severity-{{testcase.severity|lowercase}}"></span>
+                            {{testcase.title}}
+                        </td>
+                        <td allure-table-col="{heading:'Duration', predicate: 'time.duration', class:'text-right', flex: 1.5, reverse: true}"  class="line-ellipsis text-right" title="{{testsuite.time.duration | time}}">
+                            {{testcase.time.duration | time}}
+                        </td>
+                        <td allure-table-col="{heading:'Status', predicate: byStatusAndSeverity}">
+                            <span class="label label-status-{{testcase.status | lowercase}}">{{testcase.status}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="(testcases | filter:statusFilter).length > testcasesLimit">
+                        <td colspan="4" class="text-center clickable" ng-click="testcasesLimit = testcasesLimit+100">
+                            <a>Show more tescases</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
