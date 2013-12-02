@@ -37,24 +37,6 @@ public class ReportDataTest {
         );
     }
 
-    @Test
-    public void createListFilesTest() throws Exception {
-        assertEquals(
-                "Not all test suites files are found",
-                5,
-                AllureReportGenerator.createListFiles(getTestDataDirs()).getFiles().size()
-        );
-    }
-
-    @Test
-    public void createTestSuitesPackFromEmptyListFilesTest() throws Exception {
-        assertEquals(
-                "Error while create test suites pack from empty list files.",
-                0,
-                AllureReportGenerator.createTestSuitesPack(new ListFiles()).getTestSuites().size()
-        );
-    }
-
     public static File[] getTestDataDirs() {
         return new File[]{
                 new File(ClassLoader.getSystemResource("testdata1").getFile()),

@@ -19,8 +19,8 @@
     <!--</xsd:sequence>-->
     <!--</xsd:complexType>-->
     <xsl:template match="alr:list-files">
-        <xsl:element name="alr:test-suites-pack">
-            <xsl:call-template name="add-time-node-for-test-suite-pack"/>
+        <xsl:element name="alr:allure-test-run">
+            <xsl:call-template name="add-time-node-for-allure-test-run"/>
             <xsl:apply-templates/>
         </xsl:element>
     </xsl:template>
@@ -33,27 +33,19 @@
     <!--Join point for test-suite xml-->
     <xsl:template match="ns2:test-suite">
         <xsl:element name="test-suites" inherit-namespaces="yes">
-            <xsl:variable name="uid">
-                <xsl:value-of select="uuid:randomUUID()"/>
-            </xsl:variable>
+           <xsl:element name="uid">
+               <xsl:value-of select="uuid:randomUUID()"/>
+           </xsl:element>
 
-            <xsl:call-template name="add-uid-node">
-                <xsl:with-param name="uid" select="$uid"/>
-            </xsl:call-template>
-            <xsl:apply-templates select="@*|node()">
-                <xsl:with-param name="suite-uid" select="$uid"/>
-            </xsl:apply-templates>
+            <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
     </xsl:template>
 
     <!--After test-suites title node add time and statistic nodes-->
     <xsl:template match="ns2:test-suite/title">
-        <xsl:param name="suite-uid"/>
 
         <xsl:copy copy-namespaces="no">
-            <xsl:apply-templates select="@*|node()">
-                <xsl:with-param name="suite-uid" select="$suite-uid"/>
-            </xsl:apply-templates>
+            <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
 
         <xsl:call-template name="add-time-node"/>
@@ -63,19 +55,10 @@
     <!--Before test-cases title node add suite uid-->
     <!--After test-cases title node add time and summary nodes-->
     <xsl:template match="test-cases/title">
-        <xsl:param name="suite-uid"/>
 
-        <xsl:variable name="uid">
+        <xsl:element name="uid">
             <xsl:value-of select="uuid:randomUUID()"/>
-        </xsl:variable>
-
-        <xsl:call-template name="add-uid-node">
-            <xsl:with-param name="uid" select="$uid"/>
-        </xsl:call-template>
-
-        <xsl:call-template name="add-suite-uid-node">
-            <xsl:with-param name="suite-uid" select="$suite-uid"/>
-        </xsl:call-template>
+        </xsl:element>
 
         <xsl:call-template name="copy-all-without-namespace"/>
         <xsl:call-template name="add-time-node"/>
@@ -95,12 +78,9 @@
 
     <!--Match test-cases node-->
     <xsl:template match="test-cases">
-        <xsl:param name="suite-uid"/>
         <xsl:element name="test-cases">
             <!--Modify content inside test-cases node-->
-            <xsl:apply-templates select="@*|node()">
-                <xsl:with-param name="suite-uid" select="$suite-uid"/>
-            </xsl:apply-templates>
+            <xsl:apply-templates select="@*|node()"/>
 
             <!--Add severity and status-->
             <xsl:call-template name="add-severity-node"/>
@@ -121,22 +101,6 @@
         <xsl:copy copy-namespaces="no">
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
-    </xsl:template>
-
-    <xsl:template name="add-uid-node">
-        <xsl:param name="uid"/>
-        <xsl:element name="uid">
-            <xsl:value-of select="$uid"/>
-        </xsl:element>
-    </xsl:template>
-
-    <!--Add Suite Uid node-->
-    <!--<xsd:element name="suite-uid" type="xsd:string"/>-->
-    <xsl:template name="add-suite-uid-node">
-        <xsl:param name="suite-uid"/>
-        <xsl:element name="suite-uid">
-            <xsl:value-of select="$suite-uid"/>
-        </xsl:element>
     </xsl:template>
 
     <!--Add Time node-->
@@ -251,7 +215,7 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template name="add-time-node-for-test-suite-pack">
+    <xsl:template name="add-time-node-for-allure-test-run">
         <xsl:element name="time">
             <xsl:variable name="start">
                 <xsl:choose>
