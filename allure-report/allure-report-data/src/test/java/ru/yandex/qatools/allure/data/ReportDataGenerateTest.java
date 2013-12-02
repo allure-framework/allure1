@@ -19,11 +19,9 @@ import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.listFiles;
 */
 public class ReportDataGenerateTest {
 
-    private static final String TEST_CASES_PACK_FILE_NAME = "testcases-pack.json";
+    private static final String GRAPH_FILE_NAME = "graph.json";
 
-    private static final String TEST_SUITES_PACK_FILE_NAME = "testsuites-pack.json";
-
-    private static final String LIST_FILES_FILE_NAME = "list-files.json";
+    private static final String XUNIT_FILE_NAME = "xunit.json";
 
     private static final String ATTACHMENT_FILE_NAME = "example-uid-attachment.xml";
 
@@ -34,7 +32,7 @@ public class ReportDataGenerateTest {
 
     @Before
     public void generate() throws Exception {
-        outputDirectory = folder.newFolder();
+        outputDirectory = new File("/Users/charlie/IdeaProjects/allure-core/allure-report/allure-report-data/src/test/tmp");
         AllureReportGenerator reportGenerator = new AllureReportGenerator(
                 new File(ClassLoader.getSystemResource("testdata3").getFile())
         );
@@ -44,28 +42,28 @@ public class ReportDataGenerateTest {
 
     @Test
     public void testCasesPackCreatedTest() throws Exception {
-        File[] files = listFiles(outputDirectory, TEST_CASES_PACK_FILE_NAME);
+        File[] files = listFiles(outputDirectory, GRAPH_FILE_NAME);
         assertEquals(
-                String.format("There is no \"%s\" file.", TEST_CASES_PACK_FILE_NAME),
+                String.format("There is no \"%s\" file.", GRAPH_FILE_NAME),
                 1,
                 files.length
         );
 
-        TestCasesPack testCasesPack = new ObjectMapper().readValue(files[0], TestCasesPack.class);
-        assertEquals("There is no test cases in pack.", 2, testCasesPack.getTestCases().size());
+        AllureGraph allureGraph = new ObjectMapper().readValue(files[0], AllureGraph.class);
+        assertEquals("There is no test cases in pack.", 2, allureGraph.getTestCases().size());
     }
 
     @Test
-    public void testSuitesPackCreatedTest() throws Exception {
-        File[] files = listFiles(outputDirectory, TEST_SUITES_PACK_FILE_NAME);
+    public void allureXUnitCreatedTest() throws Exception {
+        File[] files = listFiles(outputDirectory, XUNIT_FILE_NAME);
         assertEquals(
-                String.format("There is no \"%s\" file.", TEST_SUITES_PACK_FILE_NAME),
+                String.format("There is no \"%s\" file.", XUNIT_FILE_NAME),
                 1,
                 files.length
         );
 
-        TestSuitesPack testSuitesPack = new ObjectMapper().readValue(files[0], TestSuitesPack.class);
-        assertEquals("There is no test suites in pack", 2, testSuitesPack.getTestSuites().size());
+        AllureXUnit allureXUnit = new ObjectMapper().readValue(files[0], AllureXUnit.class);
+        assertEquals("There is no test suites in pack", 2, allureXUnit.getTestSuites().size());
     }
 
     @Test
@@ -84,41 +82,24 @@ public class ReportDataGenerateTest {
     }
 
     @Test
-    public void listFilesCreatedTest() throws Exception {
-        File[] files = listFiles(outputDirectory, LIST_FILES_FILE_NAME);
-        assertEquals(
-                String.format("There is no \"%s\" file.", LIST_FILES_FILE_NAME),
-                1,
-                files.length
-        );
-
-        ListFiles listFiles = new ObjectMapper().readValue(files[0], ListFiles.class);
-        assertEquals(
-                String.format("Wrong list files created."),
-                2,
-                listFiles.getFiles().size()
-        );
-    }
-
-    @Test
-    public void testSuiteTimeTest() throws Exception {
-        File[] files = listFiles(outputDirectory, TEST_SUITES_PACK_FILE_NAME);
-        TestSuitesPack testSuitesPack = new ObjectMapper().readValue(files[0], TestSuitesPack.class);
+    public void allureXUnitTimeTest() throws Exception {
+        File[] files = listFiles(outputDirectory, XUNIT_FILE_NAME);
+        AllureXUnit allureXUnit = new ObjectMapper().readValue(files[0], AllureXUnit.class);
         assertThat(
                 "Wrong test suites pack start time.",
-                testSuitesPack.getTime().getStart(),
+                allureXUnit.getTime().getStart(),
                 is(Long.valueOf("1384780017376"))
         );
 
         assertThat(
                 "Wrong test suites pack stop time.",
-                testSuitesPack.getTime().getStop(),
+                allureXUnit.getTime().getStop(),
                 is(Long.valueOf("1384780017556"))
         );
 
         assertThat(
                 "Wrong test suites pack duration.",
-                testSuitesPack.getTime().getDuration(),
+                allureXUnit.getTime().getDuration(),
                 is((long) 180)
         );
     }

@@ -3,7 +3,6 @@ package ru.yandex.qatools.allure.data;
 import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
-import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.SeverityLevel;
 import ru.yandex.qatools.allure.model.Status;
 
@@ -23,7 +22,7 @@ public class TestSuiteXslTransformationTest {
 
     private final static String XML_FILE_NAME = "testdata3/example-uid-testsuite.xml";
 
-    private final static String XSL_FILE_NAME = "xsl/create-test-pack.xsl";
+    private final static String XSL_FILE_NAME = "xsl/concat-suite-files.xsl";
 
     private AllureTestSuite allureTestSuite;
 
@@ -106,34 +105,5 @@ public class TestSuiteXslTransformationTest {
     @Test
     public void testSuiteTestCasesSeverityTest() throws Exception {
         assertThat(allureTestSuite.getTestCases().get(0).getSeverity(), is(SeverityLevel.CRITICAL));
-    }
-
-    @Test
-    public void testSuiteTestCasesAttachmentTest() throws Exception {
-        assertThat(allureTestSuite.getTestCases().get(0).getAttachments().size(), is(1));
-        assertThat(allureTestSuite.getTestCases().get(0).getAttachments().get(0).getSource(), is("example-attach-source"));
-        assertThat(allureTestSuite.getTestCases().get(0).getAttachments().get(0).getTitle(), is("example-attach-title"));
-        assertThat(allureTestSuite.getTestCases().get(0).getAttachments().get(0).getType(), is(AttachmentType.JSON));
-
-    }
-
-    @Test
-    public void testSuiteTestCasesFailureTest() throws Exception {
-        assertThat(allureTestSuite.getTestCases().get(0).getFailure().getMessage(), is("example-message"));
-        assertThat(allureTestSuite.getTestCases().get(0).getFailure().getStackTrace(), is("example-stack-trace"));
-    }
-
-    @Test
-    public void testSuiteTestCasesStepsTest() throws Exception {
-        assertThat(allureTestSuite.getTestCases().get(0).getSteps().size(), is(1));
-        assertThat(allureTestSuite.getTestCases().get(0).getSteps().get(0).getTitle(), is("example-step-title"));
-    }
-
-    @Test
-    public void suiteSuiteTest() throws Exception {
-
-        for (AllureTestCase testCase : allureTestSuite.getTestCases()) {
-            assertThat(testCase.getSuiteUid(), is(allureTestSuite.getUid()));
-        }
     }
 }

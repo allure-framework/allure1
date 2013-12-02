@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:alr="urn:data.allure.qatools.yandex.ru"
+            targetNamespace="urn:data.allure.qatools.yandex.ru">
+
+    <xsd:include schemaLocation="report-data.xsd"/>
+
+    <xsd:element name="allure-x-unit" type="alr:allure-x-unit"/>
+    <xsd:element name="allure-graph" type="alr:allure-graph"/>
+    <xsd:element name="allure-features" type="alr:allure-features"/>
+
+    <!--Data for xUnit tab-->
+    <xsd:complexType name="allure-x-unit">
+        <xsd:sequence>
+            <xsd:element name="time" type="alr:time"/>
+            <xsd:element name="test-suites" type="alr:allure-test-suite" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!--Data for graph and time line tabs-->
+    <xsd:complexType name="allure-graph">
+        <xsd:sequence>
+            <xsd:element name="test-cases" type="alr:allure-test-case-info" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!--Data for features tab-->
+    <xsd:complexType name="allure-features">
+        <xsd:sequence>
+            <xsd:element name="features" type="alr:allure-feature" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+</xsd:schema>

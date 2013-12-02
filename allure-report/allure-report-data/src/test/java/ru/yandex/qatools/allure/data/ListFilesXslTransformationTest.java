@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.data;
 
 import org.junit.Test;
+import ru.yandex.qatools.allure.data.generators.TestSuiteFiles;
 
 import java.io.File;
 
@@ -15,33 +16,32 @@ public class ListFilesXslTransformationTest {
 
     @Test
     public void notEmptyListFilesTest() throws Exception {
-        TestSuitesPack testSuitesPack = getTestSuitesPack(
+        TestSuiteFiles testdata3 = new TestSuiteFiles(
                 getFileFromResources("testdata3")
         );
 
-        assertThat(testSuitesPack.getTestSuites(), is(notNullValue()));
-        assertThat(testSuitesPack.getTestSuites().size(), is(2));
-        checkTime(testSuitesPack.getTime(), Long.valueOf("1384780017376"), Long.valueOf("1384780017556"), 180);
+        AllureTestRun testRun = testdata3.generateTestRun().getAllureTestRun();
+
+        assertThat(testRun.getTestSuites(), is(notNullValue()));
+        assertThat(testRun.getTestSuites().size(), is(2));
+        checkTime(testRun.getTime(), Long.valueOf("1384780017376"), Long.valueOf("1384780017556"), 180);
     }
 
     @Test
     public void emptyListFilesTest() throws Exception {
-        TestSuitesPack testSuitesPack = getTestSuitesPack(
+        TestSuiteFiles testdata4 = new TestSuiteFiles(
                 getFileFromResources("testdata4")
         );
 
-        assertThat(testSuitesPack.getTestSuites(), is(notNullValue()));
-        assertThat(testSuitesPack.getTestSuites().size(), is(0));
-        checkTime(testSuitesPack.getTime(), 0, 0, 0);
+        AllureTestRun testRun = testdata4.generateTestRun().getAllureTestRun();
+
+        assertThat(testRun.getTestSuites(), is(notNullValue()));
+        assertThat(testRun.getTestSuites().size(), is(0));
+        checkTime(testRun.getTime(), 0, 0, 0);
     }
 
     private static File getFileFromResources(String name) {
         return new File(ClassLoader.getSystemResource(name).getFile());
-    }
-
-    private static TestSuitesPack getTestSuitesPack(File... dirs) {
-        ListFiles listFiles = AllureReportGenerator.createListFiles(dirs);
-        return AllureReportGenerator.createTestSuitesPack(listFiles);
     }
 
     private static void checkTime(Time time, long start, long stop, long duration) {
