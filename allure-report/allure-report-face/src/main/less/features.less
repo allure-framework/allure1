@@ -1,0 +1,81 @@
+.features {
+  overflow: hidden;
+  position: relative;
+  &__title {
+    margin-bottom: 10px;
+  }
+  &__pane {
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    transition: left 0.3s;
+    background: #fff;
+    border-width: 0 1px 0 0;
+    border-style: solid;
+    border-color: #c2c2c2;
+    padding: 10px 15px;
+    &__header {
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+  }
+  &__list {
+    z-index: 2;
+  }
+  &__info {
+    left: 50%;
+    z-index: 0;
+    &__chart {
+      width: 70%;
+      margin: 0 auto;
+    }
+  }
+  &__view {
+    z-index: 1;
+    &_visible {
+      left: 50%;
+    }
+  }
+  .item {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #c2c2c2;
+    margin-top: 10px;
+    &:hover {
+      background: #eee;
+    }
+    &_active {
+      color: #fff;
+      background: #428bca;
+      .text-muted {
+        color: #fff;
+      }
+      &:hover {
+        background: #428bca;
+      }
+    }
+    &__subitems {
+      margin-left: 40px;
+    }
+    &__icon {
+      display: inline-block;
+      position: absolute;
+      left: -25px;
+      top: 50%;
+      .translate(0, -50%);
+      &:not(.glyphicon) {
+        font-size: 120%
+      }
+    }
+    .percents {
+      width: 30%;
+    }
+  }
+}
+
+.feature {
+  margin: 20px 0 20px 20px;
+}

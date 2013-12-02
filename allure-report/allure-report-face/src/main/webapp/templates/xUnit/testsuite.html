@@ -19,7 +19,7 @@
     <div status-switcher statuses="showStatuses" class="pull-right" statistic="testsuite.statistic"></div>
     <h4>Test Cases ({{testcases.length}} total<span ng-hide="getVisibleCount() == testcases.length">, {{getVisibleCount()}} shown</span>)</h4>
     <div ng-show="(testcases | filter:statusFilter).length > 0">
-        <table allure-table class="table table-hover table-condensed" sorting="sorting">
+        <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
             <tbody>
             <tr ng-repeat="testcase in testcases | orderBy:sorting.predicate:sorting.reverse | filter:statusFilter | limitTo:testcasesLimit"
                 class="clickable" ng-click="setTestcase(testcase.uid)" ng-class="{active:testcase==$parent.testcase}">

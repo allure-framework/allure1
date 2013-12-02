@@ -1,7 +1,7 @@
 /*global angular */
 angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
         'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.charts',
-        'allure.testcase.controllers', 'allure.xUnit.controllers', 'allure.table'])
+        'allure.testcase.controllers', 'allure.xUnit.controllers', 'allure.table', 'allure.features'])
     .config(function($tooltipProvider) {
         $tooltipProvider.options({appendToBody:true})
     })
@@ -62,5 +62,18 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
                         return $http.get('data/testsuites-pack.json').then(processResponse);
                     }
                 }
+            })
+            .state('features', {
+                url: '/features',
+                templateUrl: "templates/features.html",
+                controller: 'FeaturesCtrl',
+                resolve: {
+                    features: function($http) {
+                        return $http.get('data/features.json').then(processResponse);
+                    }
+                }
+            })
+            .state('features.story', {
+                url: '/:storyUid'
             })
     });

@@ -5,6 +5,7 @@
 @import "base";
 @import "statuses";
 @import "charts";
+@import "features";
 @import "xunit";
 
 .dashboard {
@@ -34,6 +35,14 @@
   overflow: auto;
   position: relative;
   padding-left: 1px;
+  &>.tab-content-fill {
+    overflow: hidden;
+    position: absolute;
+    top: 20px;
+    left: 1px;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 
 .feedback {

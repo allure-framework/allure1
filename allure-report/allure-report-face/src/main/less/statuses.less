@@ -1,36 +1,14 @@
-.label-status-skipped {
-  .label-variant(@label-default-bg);
-}
-
-.label-status-passed {
-  .label-variant(@label-success-bg);
-}
-
-.label-status-broken {
-  .label-variant(@label-warning-bg);
-}
-
-.label-status-failed {
-  .label-variant(@label-danger-bg)
-}
+.label-status-skipped { .label-variant(@label-default-bg); }
+.label-status-passed  { .label-variant(@label-success-bg); }
+.label-status-broken  { .label-variant(@label-warning-bg); }
+.label-status-failed  { .label-variant(@label-danger-bg) }
 
 @alert-default-bg: #ddd;
 @alert-default-text: #666;
-.alert-status-skipped {
-  .alert-variant(@alert-default-bg, darken(spin(@alert-default-bg, -10), 5%), @alert-default-text);
-}
-
-.alert-status-passed {
-  .alert-variant(@alert-success-bg, @alert-success-border, @alert-success-text);
-}
-
-.alert-status-broken {
-  .alert-variant(@alert-warning-bg, @alert-warning-border, @alert-warning-text);
-}
-
-.alert-status-failed {
-  .alert-variant(@alert-danger-bg, @alert-danger-border, @alert-danger-text);
-}
+.alert-status-skipped { .alert-variant(@alert-default-bg, darken(spin(@alert-default-bg, -10), 5%), @alert-default-text); }
+.alert-status-passed  { .alert-variant(@alert-success-bg, @alert-success-border, @alert-success-text); }
+.alert-status-broken  { .alert-variant(@alert-warning-bg, @alert-warning-border, @alert-warning-text); }
+.alert-status-failed  { .alert-variant(@alert-danger-bg, @alert-danger-border, @alert-danger-text); }
 
 .icon-status-skipped {
   color: @gray-light;
@@ -65,22 +43,15 @@
     color: @bg-color;
   }
 }
+.btn-status-passed  { .btn-status-variant(@label-success-bg); }
+.btn-status-skipped { .btn-status-variant(@label-default-bg); }
+.btn-status-broken  { .btn-status-variant(@label-warning-bg); }
+.btn-status-failed  { .btn-status-variant(@label-danger-bg); }
 
-.btn-status-passed {
-  .btn-status-variant(@label-success-bg);
-}
-
-.btn-status-skipped {
-  .btn-status-variant(@label-default-bg);
-}
-
-.btn-status-broken {
-  .btn-status-variant(@label-warning-bg);
-}
-
-.btn-status-failed {
-  .btn-status-variant(@label-danger-bg);
-}
+.progress-bar-passed  { .progress-bar-variant(@progress-bar-success-bg);}
+.progress-bar-skipped { .progress-bar-variant(#999); }
+.progress-bar-broken  { .progress-bar-variant(@progress-bar-warning-bg); }
+.progress-bar-failed  { .progress-bar-variant(@progress-bar-danger-bg); }
 
 .icon-severity-blocker {
   color: @brand-danger;
