@@ -32,7 +32,7 @@ public class ReportDataGenerateTest {
 
     @Before
     public void generate() throws Exception {
-        outputDirectory = new File("/Users/charlie/IdeaProjects/allure-core/allure-report/allure-report-data/src/test/tmp");
+        outputDirectory = folder.newFolder();
         AllureReportGenerator reportGenerator = new AllureReportGenerator(
                 new File(ClassLoader.getSystemResource("testdata3").getFile())
         );
