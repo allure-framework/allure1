@@ -61,7 +61,7 @@ public enum Allure {
         TestSuiteResult testSuite = TestRunStorage.getTestRun(event.getUid());
         testSuite.setStart(System.currentTimeMillis());
         String simpleName = event.getTestRunName().replaceAll(".*\\.(\\S+)", "$1");
-        testSuite.setTitle(AllureWriteUtils.humanizeCamelCase(simpleName));
+        testSuite.setTitle(AllureWriteUtils.humanize(simpleName));
         testSuite.setClassname(event.getTestRunName());
 
         for (Annotation annotation : event.getAnnotations()) {
@@ -83,7 +83,7 @@ public enum Allure {
     private void fireTestStartedEvent(TestStartedEvent event) {
         TestCaseResult testCase = TestStorage.getTest(event.getUid());
         testCase.setStart(System.currentTimeMillis());
-        testCase.setTitle(humanizeCamelCase(event.getTestName()));
+        testCase.setTitle(humanize(event.getTestName()));
         testCase.setSeverity(SeverityLevel.NORMAL);
         testCase.setStatus(Status.PASSED);
 
