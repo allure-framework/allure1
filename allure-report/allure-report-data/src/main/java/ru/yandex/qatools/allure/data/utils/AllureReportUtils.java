@@ -6,6 +6,7 @@ import org.apache.commons.io.filefilter.AndFileFilter;
 import org.apache.commons.io.filefilter.CanReadFileFilter;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
+import org.codehaus.jackson.map.ObjectMapper;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
 import javax.xml.transform.*;
@@ -48,6 +49,13 @@ public final class AllureReportUtils {
         return new AndFileFilter(CanReadFileFilter.CAN_READ, new RegexFileFilter(regex));
     }
 
+    public static String applyXslTransformation(String xslFilePath, String xmlFileBody) {
+        return applyXslTransformation(
+                AllureReportUtils.class.getClassLoader().getResourceAsStream(xslFilePath),
+                new StringReader(xmlFileBody)
+        );
+    }
+
     public static String applyXslTransformation(InputStream xslFile, InputStream xmlFile) {
         Source xslSource = new StreamSource(xslFile);
         Source xmlSource = new StreamSource(xmlFile);
@@ -63,12 +71,20 @@ public final class AllureReportUtils {
     public static String applyXslTransformation(Source xslSource, Source xmlSource) {
         try {
 
-            Transformer transformer = TransformerFactoryImpl.newInstance().newTransformer(xslSource);
+            Transformer transformer = new TransformerFactoryImpl().newTransformer(xslSource);
             StringWriter resultWriter = new StringWriter();
             Result result = new StreamResult(resultWriter);
             transformer.transform(xmlSource, result);
             return resultWriter.toString();
         } catch (TransformerException e) {
+            throw new ReportGenerationException(e);
+        }
+    }
+
+    public static void serialize(final File directory, String name, Object obj) {
+        try {
+            new ObjectMapper().writeValue(new File(directory, name), obj);
+        } catch (IOException e) {
             throw new ReportGenerationException(e);
         }
     }
