@@ -11,7 +11,7 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
             return response.data;
         }
         function testcasesResolve($http) {
-            return $http.get('data/testcases-pack.json').then(processResponse);
+            return $http.get('data/graph.json').then(processResponse);
         }
         $urlRouterProvider.otherwise("/home");
         $stateProvider
@@ -20,9 +20,8 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
                 templateUrl: "templates/home.html",
                 controller: 'HomeCtrl',
                 resolve: {
-                    testcases: testcasesResolve,
                     testsuites: function($http) {
-                        return $http.get('data/testsuites-pack.json').then(processResponse);
+                        return $http.get('data/xunit.json').then(processResponse);
                     }
                 }
             })
@@ -57,10 +56,7 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
                 templateUrl: "templates/timeline.html",
                 controller: 'TimelineCtrl',
                 resolve: {
-                    testcases: testcasesResolve,
-                    testsuites: function($http) {
-                        return $http.get('data/testsuites-pack.json').then(processResponse);
-                    }
+                    testcases: testcasesResolve
                 }
             })
             .state('features', {

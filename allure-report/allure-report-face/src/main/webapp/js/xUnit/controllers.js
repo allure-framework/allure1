@@ -1,5 +1,5 @@
 angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
-    .controller('HomeCtrl', function ($scope, $state, testcases, testsuites, treeUtils) {
+    .controller('HomeCtrl', function ($scope, $state, testsuites, treeUtils) {
         'use strict';
         function setTestsuite(testsuiteUid) {
             var testsuite = $scope.testsuites.filter(function(testsuite) {
@@ -7,9 +7,7 @@ angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
             })[0];
             if($scope.testsuite !== testsuite) {
                 $scope.testsuite = testsuite;
-                $scope.testcases = testcases.filter(function(testcase) {
-                    return testcase.suiteUid === $scope.testsuite.uid;
-                });
+                $scope.testcases = testsuite.testCases;
             }
         }
         function setTestcase(testcaseUid) {
@@ -47,7 +45,6 @@ angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
             }
             return $state.is(statename);
         };
-        testcases = testcases.testCases;
         $scope.testsuites = testsuites.testSuites;
         $scope.time = testsuites.time;
         $scope.statistic = $scope.testsuites.reduce(function(statistic, testsuite) {
