@@ -21,7 +21,7 @@ import java.util.List;
  */
 public abstract class AbstractPlugin extends AbstractMojo {
 
-    protected static final String FAQ = "https://github.com/allure-framework/allure/blob/master/docs/FAQ.md";
+    protected static final String FAQ = "https://github.com/allure-framework/allure-core/blob/master/docs/FAQ.md";
 
     protected static final String ALLURE_TEAM = "mailto:charlie@yandex-team.ru";
 

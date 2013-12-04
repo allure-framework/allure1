@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public final class AllureWriteUtils {
 
-    private static final String FAQ = "https://github.com/allure-framework/allure/allure-core/blob/master/docs/FAQ.md";
+    private static final String FAQ = "https://github.com/allure-framework/allure-core/allure-core/blob/master/docs/FAQ.md";
 
     private static final String XML = ".xml";
 

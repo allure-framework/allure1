@@ -1,10 +1,10 @@
-[how-it-works]: https://github.com/allure-framework/allure/blob/master/docs/how-it-works.md
-[glossary]: https://github.com/allure-framework/allure/blob/master/docs/dictionary.md
+[how-it-works]: https://github.com/allure-framework/allure-core/blob/master/docs/how-it-works.md
+[glossary]: https://github.com/allure-framework/allure-core/blob/master/docs/dictionary.md
 [changelog]: #
 [charlie-man]: mailto:charlie@yandex-team.ru
-[faq]: https://github.com/allure-framework/allure/blob/master/docs/FAQ.md
-[junit-usage]: https://github.com/allure-framework/allure/blob/master/allure-junit/README.md
-[testng-usage]: https://github.com/allure-framework/allure/blob/master/allure-testng/README.md
+[faq]: https://github.com/allure-framework/allure-core/blob/master/docs/FAQ.md
+[junit-usage]: https://github.com/allure-framework/allure-core/blob/master/allure-junit/README.md
+[testng-usage]: https://github.com/allure-framework/allure-core/blob/master/allure-testng/README.md
 
 ## Allure
 
