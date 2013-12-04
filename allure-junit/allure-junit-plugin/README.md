@@ -1,5 +1,5 @@
-[maven-aspectj-plugin]: https://github.com/allure-framework/allure/blob/master/allure-java/allure-java-aspects/README.md
-[allure-junit-adaptor]: https://github.com/allure-framework/allure/blob/master/allure-junit/allure-junit-adaptor/README.md
+[maven-aspectj-plugin]: https://github.com/allure-framework/allure-core/blob/master/allure-java/allure-java-aspects/README.md
+[allure-junit-adaptor]: https://github.com/allure-framework/allure-core/blob/master/allure-junit/allure-junit-adaptor/README.md
 
 ## Allure Junit Plugin
 
