@@ -14,20 +14,18 @@
                     <xsl:apply-templates select="@*|node()"/>
                 </xsl:element>
             </xsl:for-each>
-            <xsl:for-each select="test-suites/test-cases">
-                <xsl:copy-of select="."/>
+            <xsl:for-each select="test-suites/test-cases/test-case">
+                <xsl:element name="test-cases">
+                    <xsl:copy-of select="child::*"/>
+                </xsl:element>
             </xsl:for-each>
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="summary | failure | steps | attachments"/>
+    <xsl:template match="summary | failure | steps | attachments | labels"/>
 
     <xsl:template match="@*|node()">
-        <xsl:call-template name="copy-all-without-namespace"/>
-    </xsl:template>
-
-    <xsl:template name="copy-all-without-namespace">
-        <xsl:copy copy-namespaces="no">
+        <xsl:copy>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:copy>
     </xsl:template>

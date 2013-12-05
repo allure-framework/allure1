@@ -34,8 +34,10 @@
 
     <xsd:complexType name="status"/>
     <xsd:complexType name="attachment"/>
+    <xsd:complexType name="attachments"/>
     <xsd:complexType name="attachment-type"/>
     <xsd:complexType name="severity-level"/>
     <xsd:complexType name="failure"/>
+    <xsd:complexType name="labels"/>
 
 </xsd:schema>

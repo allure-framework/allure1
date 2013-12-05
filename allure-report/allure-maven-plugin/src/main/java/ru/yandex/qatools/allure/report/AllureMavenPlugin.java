@@ -31,7 +31,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
     private static final String TEST_CASE_FILES_REGEXP = ".*-testcase\\.xml";
 
-    private static final String FAQ = "https://github.com/allure-framework/allure/blob/master/docs/FAQ.md";
+    private static final String FAQ = "https://github.com/allure-framework/allure-core/blob/master/docs/FAQ.md";
 
     private static final String ALLURE_TEAM = "mailto:charlie@yandex-team.ru";
 

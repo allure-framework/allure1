@@ -1,0 +1,53 @@
+{
+  "testCases" : [ {
+    "uid" : "d6fdfd42ac420296da726828a34ab5fc",
+    "title" : "Simple test with steps",
+    "time" : {
+      "start" : 1386463101842,
+      "stop" : 1386463101855,
+      "duration" : 13
+    },
+    "severity" : "NORMAL",
+    "status" : "PASSED"
+  }, {
+    "uid" : "eb8e4ca2761d8f23962df89f0c98e722",
+    "title" : "Simple test",
+    "time" : {
+      "start" : 1386463101855,
+      "stop" : 1386463101857,
+      "duration" : 2
+    },
+    "severity" : "NORMAL",
+    "status" : "PASSED"
+  }, {
+    "uid" : "9051a2dac33abb1b4c43a0e72c847254",
+    "title" : "Simple test with attachments",
+    "time" : {
+      "start" : 1386463101857,
+      "stop" : 1386463101875,
+      "duration" : 18
+    },
+    "severity" : "NORMAL",
+    "status" : "PASSED"
+  }, {
+    "uid" : "1155fcc5e23d3e4358cc9a811acd943c",
+    "title" : "Parameterized test[0]",
+    "time" : {
+      "start" : 1386463101587,
+      "stop" : 1386463101595,
+      "duration" : 8
+    },
+    "severity" : "NORMAL",
+    "status" : "PASSED"
+  }, {
+    "uid" : "90151ae515bb91b1efab7d57a08d15a9",
+    "title" : "Parameterized test[1]",
+    "time" : {
+      "start" : 1386463101600,
+      "stop" : 1386463101600,
+      "duration" : 0
+    },
+    "severity" : "NORMAL",
+    "status" : "PASSED"
+  } ]
+}

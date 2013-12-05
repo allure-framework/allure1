@@ -1,7 +1,7 @@
 [aspect-j]: http://eclipse.org/aspectj/
-[allure-junit-plugin]: https://github.com/allure-framework/allure/blob/master/allure-junit/allure-junit-plugin/README.md
+[allure-junit-plugin]: https://github.com/allure-framework/allure-core/blob/master/allure-junit/allure-junit-plugin/README.md
 [junit-rules]: https://github.com/junit-team/junit/wiki/Rules
-[allure-java-aspects]: https://github.com/allure-framework/allure/blob/master/allure-java/allure-java-aspects/README.md
+[allure-java-aspects]: https://github.com/allure-framework/allure-core/blob/master/allure-java/allure-java-aspects/README.md
 
 ##Allure-junit-adaptor
 

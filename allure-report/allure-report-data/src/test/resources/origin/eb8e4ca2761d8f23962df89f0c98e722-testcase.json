@@ -1,0 +1,28 @@
+{
+  "uid" : "eb8e4ca2761d8f23962df89f0c98e722",
+  "title" : "Simple test",
+  "time" : {
+    "start" : 1386463101855,
+    "stop" : 1386463101857,
+    "duration" : 2
+  },
+  "summary" : {
+    "attachments" : 1,
+    "steps" : 1
+  },
+  "failure" : null,
+  "description" : null,
+  "steps" : null,
+  "attachments" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "labels" : {
+    "label" : [ {
+      "name" : "Story",
+      "value" : "MyAmazingStory"
+    }, {
+      "name" : "Feature",
+      "value" : "MySecondFeature"
+    } ]
+  }
+}

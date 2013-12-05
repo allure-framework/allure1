@@ -1,17 +1,16 @@
 package ru.yandex.qatools.allure.data.utils;
 
-import net.sf.saxon.TransformerFactoryImpl;
+import com.fasterxml.jackson.databind.AnnotationIntrospector;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.AndFileFilter;
 import org.apache.commons.io.filefilter.CanReadFileFilter;
 import org.apache.commons.io.filefilter.IOFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
-import org.codehaus.jackson.map.ObjectMapper;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
-import javax.xml.transform.*;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,41 +48,12 @@ public final class AllureReportUtils {
         return new AndFileFilter(CanReadFileFilter.CAN_READ, new RegexFileFilter(regex));
     }
 
-    public static String applyXslTransformation(String xslFilePath, String xmlFileBody) {
-        return applyXslTransformation(
-                AllureReportUtils.class.getClassLoader().getResourceAsStream(xslFilePath),
-                new StringReader(xmlFileBody)
-        );
-    }
-
-    public static String applyXslTransformation(InputStream xslFile, InputStream xmlFile) {
-        Source xslSource = new StreamSource(xslFile);
-        Source xmlSource = new StreamSource(xmlFile);
-        return applyXslTransformation(xslSource, xmlSource);
-    }
-
-    public static String applyXslTransformation(InputStream xslFile, StringReader xmlFile) {
-        Source xslSource = new StreamSource(xslFile);
-        Source xmlSource = new StreamSource(xmlFile);
-        return applyXslTransformation(xslSource, xmlSource);
-    }
-
-    public static String applyXslTransformation(Source xslSource, Source xmlSource) {
-        try {
-
-            Transformer transformer = new TransformerFactoryImpl().newTransformer(xslSource);
-            StringWriter resultWriter = new StringWriter();
-            Result result = new StreamResult(resultWriter);
-            transformer.transform(xmlSource, result);
-            return resultWriter.toString();
-        } catch (TransformerException e) {
-            throw new ReportGenerationException(e);
-        }
-    }
-
     public static void serialize(final File directory, String name, Object obj) {
         try {
-            new ObjectMapper().writeValue(new File(directory, name), obj);
+            ObjectMapper mapper = new ObjectMapper();
+            AnnotationIntrospector introspector = new JaxbAnnotationIntrospector(TypeFactory.defaultInstance());
+            mapper.getSerializationConfig().with(introspector);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(new File(directory, name), obj);
         } catch (IOException e) {
             throw new ReportGenerationException(e);
         }

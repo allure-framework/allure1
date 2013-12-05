@@ -7,46 +7,75 @@
     <xsd:element name="test-suite" type="ns2:test-suite-result"/>
 
     <xsd:complexType name="test-suite-result">
-        <xsd:sequence>
+        <xsd:all>
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="description" type="xsd:string" minOccurs="0"/>
             <xsd:element name="classname" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="test-cases" type="ns2:test-case-result" maxOccurs="unbounded" minOccurs="0"/>
-        </xsd:sequence>
+            <xsd:element name="test-cases" type="ns2:test-cases-result" minOccurs="0"/>
+        </xsd:all>
         <xsd:attribute name="start" type="xsd:long" default="0"/>
         <xsd:attribute name="stop" type="xsd:long" default="0"/>
     </xsd:complexType>
 
-    <xsd:complexType name="test-case-result">
+    <xsd:complexType name="test-cases-result">
         <xsd:sequence>
+            <xsd:element name="test-case" type="ns2:test-case-result" maxOccurs="unbounded" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="test-case-result">
+        <xsd:all>
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="description" type="xsd:string" minOccurs="0"/>
             <xsd:element name="failure" type="ns2:failure" minOccurs="0"/>
-            <xsd:element name="tags" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="steps" type="ns2:test-step-result" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="attachments" type="ns2:attachment" minOccurs="0" maxOccurs="unbounded"/>
-        </xsd:sequence>
+            <xsd:element name="steps" type="ns2:steps" minOccurs="0"/>
+            <xsd:element name="attachments" type="ns2:attachments" minOccurs="0"/>
+            <xsd:element name="labels" type="ns2:labels" minOccurs="0"/>
+        </xsd:all>
         <xsd:attribute name="start" type="xsd:long" default="0"/>
         <xsd:attribute name="stop" type="xsd:long" default="0"/>
         <xsd:attribute name="status" type="ns2:status" default="passed"/>
         <xsd:attribute name="severity" type="ns2:severity-level" default="normal"/>
     </xsd:complexType>
 
-    <xsd:complexType name="test-step-result">
+    <xsd:complexType name="steps">
         <xsd:sequence>
-            <xsd:element name="title" type="xsd:string"/>
-            <xsd:element name="attachments" type="ns2:attachment" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="steps" type="ns2:test-step-result" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="step" type="ns2:step" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="step">
+        <xsd:all>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="attachments" type="ns2:attachments" minOccurs="0"/>
+            <xsd:element name="steps" type="ns2:steps" minOccurs="0"/>
+        </xsd:all>
         <xsd:attribute name="start" type="xsd:long" default="0"/>
         <xsd:attribute name="stop" type="xsd:long" default="0"/>
         <xsd:attribute name="status" type="ns2:status" default="passed"/>
     </xsd:complexType>
 
     <xsd:complexType name="failure">
-        <xsd:sequence>
+        <xsd:all>
             <xsd:element name="message" type="xsd:string" minOccurs="0"/>
             <xsd:element name="stack-trace" type="xsd:string" minOccurs="0"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="labels">
+        <xsd:sequence>
+            <xsd:element name="label" type="ns2:label" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="label">
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="value" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="attachments">
+        <xsd:sequence>
+            <xsd:element name="attachment" type="ns2:attachment" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 

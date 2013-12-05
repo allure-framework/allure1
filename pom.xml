@@ -15,7 +15,7 @@
 
     <groupId>ru.yandex.qatools.allure</groupId>
     <artifactId>allure-core</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.2.4-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -50,7 +50,7 @@
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/allure-framework/allure/issues</url>
+        <url>https://github.com/allure-framework/allure-core/issues</url>
     </issueManagement>
 
     <developers>
