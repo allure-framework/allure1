@@ -26,19 +26,20 @@ angular.module('allure.charts.util', [],function ($provide) {
             };
         }
     })
-    .factory('d3Util', function (d3, $window) {
+    .factory('d3Util', function (d3, $window, $rootScope) {
         function SvgViewport(elm, config) {
             // explicitly declare height of element, because chrome can't do it itself
             function updateSize() {
+                $svg.remove();
                 var width = $element.width(),
                     height = $element.height(),
                     elmRatio = width/height;
-                if(elmRatio > ratio && height) {
-                    width = height*ratio;
+                if (!height || elmRatio < ratio) {
+                    height = width / ratio;
+                } else {
+                    width = height * ratio;
                 }
-                else {
-                    height = width/ratio;
-                }
+                $svg.appendTo($element);
                 $svg.css({width: width, height: height});
             }
             config = angular.extend({}, config);
@@ -52,7 +53,9 @@ angular.module('allure.charts.util', [],function ($provide) {
                     viewBox: "0 0 " + viewportWidth + " " + viewportHeight
                 }),
                 $svg = angular.element(svg.node());
-            updateSize();
+            $rootScope.$watch(function() {
+                return $element.width();
+            }, updateSize);
             angular.element($window).on('resize', updateSize);
 
             var container = svg.append('g').classed('container-group', true).attr({transform: 'translate(' + config.margin.left + ',' + config.margin.top + ')'});

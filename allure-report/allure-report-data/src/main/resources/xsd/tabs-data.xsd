@@ -28,7 +28,7 @@
     <!--Data for features tab-->
     <xsd:complexType name="allure-features">
         <xsd:sequence>
-            <xsd:element name="features" type="alr:allure-feature" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="feature" type="alr:allure-feature" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 

@@ -1,11 +1,16 @@
 package ru.yandex.qatools.allure.data;
 
 import org.apache.commons.io.FileUtils;
-import ru.yandex.qatools.allure.data.generators.TestRun;
-import ru.yandex.qatools.allure.data.generators.TestSuiteFiles;
+import ru.yandex.qatools.allure.data.transform.TestRunTransformer;
+import ru.yandex.qatools.allure.data.transform.GraphTransformer;
+import ru.yandex.qatools.allure.data.transform.TestCasesTransformer;
+import ru.yandex.qatools.allure.data.transform.XUnitTransformer;
 import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
@@ -16,19 +21,32 @@ public class AllureReportGenerator extends ReportGenerator {
 
     private static final String ATTACHMENTS_MASK = ".+-attachment\\.\\w+";
 
+    private List<TestRunTransformer> transformers = new ArrayList<>();
+
     public AllureReportGenerator(File... inputDirectories) {
         super(inputDirectories);
     }
 
     @Override
     public void generate(File outputDirectory) {
+        registerTransformers(
+                new XUnitTransformer(),
+                new GraphTransformer(),
+                new TestCasesTransformer()
+        );
+
         copyAttachments(inputDirectories, outputDirectory);
 
-        TestRun testRun = new TestSuiteFiles(inputDirectories).generateTestRun();
+        String testRun = new TestSuiteFiles(inputDirectories).generateTestRun();
 
-        testRun.generateXUnitData().serialize(outputDirectory);
-        testRun.generateTestCasesData().serialize(outputDirectory);
-        testRun.generateGraphData().serialize(outputDirectory);
+        for (TestRunTransformer transformer : transformers) {
+            transformer.transform(testRun, outputDirectory);
+        }
+
+    }
+
+    public void registerTransformers(TestRunTransformer... ts) {
+        Collections.addAll(transformers, ts);
     }
 
     public static File[] getAttachmentsFiles(File... dirs) {

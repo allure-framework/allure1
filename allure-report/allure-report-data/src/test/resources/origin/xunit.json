@@ -1,0 +1,60 @@
+{
+  "time" : {
+    "start" : 1384780017376,
+    "stop" : 1384780017556,
+    "duration" : 180
+  },
+  "testSuites" : [ {
+    "uid" : "9b32936027cea0ea6fa2b778920309a6",
+    "title" : "example-title",
+    "time" : {
+      "start" : 1384780017376,
+      "stop" : 1384780017556,
+      "duration" : 180
+    },
+    "statistic" : {
+      "total" : 1,
+      "passed" : 0,
+      "skipped" : 0,
+      "failed" : 1,
+      "broken" : 0
+    },
+    "description" : null,
+    "classname" : "class.example",
+    "testCases" : {
+      "testCase" : [ {
+        "uid" : "a5c7427d6c728240a0ba5846f676eb6a",
+        "title" : "example-testcase-title",
+        "time" : null,
+        "severity" : "CRITICAL",
+        "status" : "FAILED"
+      } ]
+    }
+  }, {
+    "uid" : "4573bed9c83b811088d9db15a25dc6b8",
+    "title" : "example-title2",
+    "time" : {
+      "start" : 1384780017555,
+      "stop" : 1384780017556,
+      "duration" : 1
+    },
+    "statistic" : {
+      "total" : 1,
+      "passed" : 0,
+      "skipped" : 0,
+      "failed" : 1,
+      "broken" : 0
+    },
+    "description" : null,
+    "classname" : "class.example2",
+    "testCases" : {
+      "testCase" : [ {
+        "uid" : "c1864ab0f58587dbbd4426da25b72343",
+        "title" : "example-testcase-title2",
+        "time" : null,
+        "severity" : "CRITICAL",
+        "status" : "FAILED"
+      } ]
+    }
+  } ]
+}

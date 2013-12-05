@@ -1,0 +1,15 @@
+{
+  "testCases" : [ {
+    "uid" : "a5c7427d6c728240a0ba5846f676eb6a",
+    "title" : "example-testcase-title",
+    "time" : null,
+    "severity" : "CRITICAL",
+    "status" : "FAILED"
+  }, {
+    "uid" : "c1864ab0f58587dbbd4426da25b72343",
+    "title" : "example-testcase-title2",
+    "time" : null,
+    "severity" : "CRITICAL",
+    "status" : "FAILED"
+  } ]
+}

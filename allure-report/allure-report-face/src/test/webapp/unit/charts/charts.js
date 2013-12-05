@@ -1,12 +1,12 @@
 /*global describe, it, beforeEach, afterEach, expect, spyOn, jasmine, angular, inject, module, d3 */
 describe('Allure chart directives', function () {
     'use strict';
+    beforeEach(module('allure.charts.util'));
     describe('Tooltip', function() {
         var $document,
             d3,
             tooltip,
             Tooltip;
-        beforeEach(module('allure.charts.util'));
         beforeEach(inject(function (_$document_, _d3_, d3Tooltip) {
             Tooltip = d3Tooltip;
             d3 = _d3_;
@@ -50,6 +50,72 @@ describe('Allure chart directives', function () {
         afterEach(function() {
             tooltip.destroy();
             expect($document.find('.d3-tooltip').length).toBe(0);
+        });
+    });
+
+    describe('SvgViewport', function() {
+        var $rootScope,
+            d3Util,
+            wrapper;
+        beforeEach(inject(function (_$rootScope_, _d3Util_) {
+            d3Util = _d3Util_;
+            $rootScope = _$rootScope_;
+        }));
+
+        beforeEach(function() {
+            wrapper = angular.element('<div></div>');
+            wrapper.appendTo('body');
+        });
+        afterEach(function() {
+            wrapper.remove();
+        });
+
+        function createViewport(wrapper, config) {
+            var viewport = new d3Util.SvgViewport(wrapper[0], config);
+            $rootScope.$apply();
+            return angular.element(viewport.node());
+        }
+
+        function resizeWrapper(width, height) {
+            wrapper.width(width);
+            wrapper.height(height);
+            $rootScope.$apply();
+        }
+
+        it('should create viewport with margins', function() {
+            var viewport = createViewport(wrapper, {width: 100, height: 100}),
+                container = viewport.find('.container-group');
+            expect(container.attr('transform')).toBe('translate(20,20)');
+        });
+
+        it('should fit size in wrapper', function() {
+            var viewport = createViewport(wrapper, {width: 160, height: 110});
+            resizeWrapper(200, null);
+            expect(viewport.width()).toBe(200);
+            expect(viewport.height()).toBe(150);
+        });
+
+        it("should fit to height when viewport is vertical", function() {
+            var viewport = createViewport(wrapper, {width: 110, height: 160});
+            resizeWrapper(200, 200);
+            expect(viewport.width()).toBe(150);
+            expect(viewport.height()).toBe(200);
+        });
+
+        it('should handle element resizing', function() {
+            var viewport = createViewport(wrapper, {width: 160, height: 110});
+            resizeWrapper(200, null);
+            resizeWrapper(400, null);
+            expect(viewport.width()).toBe(400);
+            expect(viewport.height()).toBe(300);
+        });
+
+        it('it should handle size reducing', function() {
+            var viewport = createViewport(wrapper, {width: 160, height: 110});
+            resizeWrapper(200, null);
+            resizeWrapper(100, null);
+            expect(viewport.width()).toBe(100);
+            expect(viewport.height()).toBe(75);
         });
     });
 });

@@ -9,7 +9,6 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +20,7 @@ import java.util.regex.Pattern;
 
 public final class AllureWriteUtils {
 
-    private static final String FAQ = "https://github.com/allure-framework/allure/allure-core/blob/master/docs/FAQ.md";
+    private static final String FAQ = "https://github.com/allure-framework/allure-core/allure-core/blob/master/docs/FAQ.md";
 
     private static final String XML = ".xml";
 
@@ -29,20 +28,16 @@ public final class AllureWriteUtils {
 
     private static final String ATTACHMENT = "-attachment";
 
-    private AllureWriteUtils() {
-        throw new IllegalStateException();
-    }
-
     private static final File OUTPUT = new File("target/site/allure-maven-plugin/data");
 
-    public static String generateTag(String tag) {
-        return (tag.startsWith("#") ? "" : "#") + tag;
+    private AllureWriteUtils() {
+        throw new IllegalStateException();
     }
 
     public static String humanize(String text) {
         String result = text.trim();
         result = splitCamelCase(result);
-        result = result.replaceAll("(_|-)+", " ");
+        result = result.replaceAll("(_)+", " ");
         result = underscoreCapFirstWords(result);
         result = capitalize(result);
 
@@ -54,7 +49,7 @@ public final class AllureWriteUtils {
     }
 
     public static String underscoreCapFirstWords(String text) {
-        Matcher matcher = Pattern.compile("([A-Z])([a-z]+)").matcher(text);
+        Matcher matcher = Pattern.compile("(^|\\w|\\s)([A-Z]+)([a-z]+)").matcher(text);
 
         StringBuffer stringBuffer = new StringBuffer();
         while (matcher.find()) {
@@ -69,8 +64,8 @@ public final class AllureWriteUtils {
         return camelCaseString.replaceAll(
                 String.format("%s|%s|%s",
                         "(?<=[A-Z])(?=[A-Z][a-z])",
-                        "(?<=[^A-Z])(?=[A-Z])",
-                        "(?<=[A-Za-z])(?=[^A-Za-z])"
+                        "(?<=[a-z0-9])(?=[A-Z])",
+                        "(?<=[A-Za-z])(?=[0-9])"
                 ),
                 "_"
         );
@@ -78,7 +73,7 @@ public final class AllureWriteUtils {
 
     public static void copyAttachment(String from, File to) {
         try {
-            FileUtils.writeStringToFile(to, from, Charset.defaultCharset().name());
+            FileUtils.writeStringToFile(to, from, "UTF-8");
         } catch (IOException e) {
             throw new AllureException("Can't write to file " + to.getAbsolutePath(), e);
         } catch (Exception e) {

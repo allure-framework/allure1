@@ -1,0 +1,44 @@
+{
+  "uid" : "a5c7427d6c728240a0ba5846f676eb6a",
+  "title" : "example-testcase-title",
+  "time" : null,
+  "summary" : null,
+  "failure" : {
+    "message" : "example-message",
+    "stackTrace" : "example-stack-trace2"
+  },
+  "description" : null,
+  "steps" : {
+    "step" : [ {
+      "title" : "example-step-title",
+      "time" : {
+        "start" : 1384780017555,
+        "stop" : 1384780017556,
+        "duration" : 1
+      },
+      "summary" : {
+        "attachments" : 1,
+        "steps" : 0
+      },
+      "attachments" : {
+        "attachment" : [ {
+          "title" : "example-attach-title",
+          "source" : "example-attach-source",
+          "type" : "JSON"
+        } ]
+      },
+      "steps" : null,
+      "status" : "FAILED"
+    } ]
+  },
+  "attachments" : {
+    "attachment" : [ {
+      "title" : "example-attach-title",
+      "source" : "example-attach-source",
+      "type" : "JSON"
+    } ]
+  },
+  "severity" : "CRITICAL",
+  "status" : "FAILED",
+  "labels" : null
+}
