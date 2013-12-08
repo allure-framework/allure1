@@ -12,29 +12,25 @@
   },
   "failure" : null,
   "description" : null,
-  "steps" : null,
-  "attachments" : {
-    "attachment" : [ {
-      "title" : "makeAttach",
-      "source" : "a9852d34-96aa-43f1-b0e1-ee69d104900e-attachment.txt",
-      "type" : "TXT"
-    } ]
-  },
   "severity" : "NORMAL",
   "status" : "PASSED",
-  "labels" : {
-    "label" : [ {
-      "name" : "Story",
-      "value" : "MyAmazingStory"
-    }, {
-      "name" : "Feature",
-      "value" : "MySecondFeature"
-    }, {
-      "name" : "Story",
-      "value" : "MyHorrorStory"
-    }, {
-      "name" : "Feature",
-      "value" : "MySecondFeature"
-    } ]
-  }
+  "steps" : [ ],
+  "attachments" : [ {
+    "title" : "makeAttach",
+    "source" : "a9852d34-96aa-43f1-b0e1-ee69d104900e-attachment.txt",
+    "type" : "TXT"
+  } ],
+  "labels" : [ {
+    "name" : "Story",
+    "value" : "MyAmazingStory"
+  }, {
+    "name" : "Feature",
+    "value" : "MySecondFeature"
+  }, {
+    "name" : "Story",
+    "value" : "MyHorrorStory"
+  }, {
+    "name" : "Feature",
+    "value" : "MySecondFeature"
+  } ]
 }

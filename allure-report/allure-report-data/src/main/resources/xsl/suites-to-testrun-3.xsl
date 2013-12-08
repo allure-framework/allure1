@@ -9,16 +9,22 @@
         <xsl:element name="alr:allure-test-run">
             <xsl:copy-of select="time"/>
 
-            <xsl:for-each select="test-suites">
-                <xsl:element name="test-suites">
-                    <xsl:apply-templates select="@*|node()"/>
-                </xsl:element>
-            </xsl:for-each>
-            <xsl:for-each select="test-suites/test-cases/test-case">
-                <xsl:element name="test-cases">
-                    <xsl:copy-of select="child::*"/>
-                </xsl:element>
-            </xsl:for-each>
+            <xsl:element name="test-suites">
+                <xsl:for-each select="test-suites/test-suite">
+                    <xsl:element name="test-suite">
+                        <xsl:apply-templates select="@*|node()"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:element>
+
+            <xsl:element name="test-cases">
+                <xsl:for-each select="test-suites/test-suite/test-cases/test-case">
+                    <xsl:element name="test-case">
+                        <xsl:copy-of select="child::*"/>
+                    </xsl:element>
+                </xsl:for-each>
+            </xsl:element>
+
         </xsl:element>
     </xsl:template>
 

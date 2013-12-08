@@ -15,8 +15,8 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="test-suites">
-        <xsl:element name="test-suites">
+    <xsl:template match="test-suite">
+        <xsl:element name="test-suite">
             <xsl:call-template name="add-uid-node">
                 <xsl:with-param name="title" select="title/text()"/>
             </xsl:call-template>
@@ -53,8 +53,8 @@
 
     <xsl:template name="add-time-node-for-test-run">
         <xsl:call-template name="add-time-node-params">
-            <xsl:with-param name="start" select="min(//test-suites/@start)"/>
-            <xsl:with-param name="stop" select="max(//test-suites/@stop)"/>
+            <xsl:with-param name="start" select="min(//test-suite/@start)"/>
+            <xsl:with-param name="stop" select="max(//test-suite/@stop)"/>
         </xsl:call-template>
     </xsl:template>
 

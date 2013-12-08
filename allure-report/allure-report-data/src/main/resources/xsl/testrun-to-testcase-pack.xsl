@@ -6,9 +6,9 @@
     <xsl:strip-space elements="*"/>
 
     <xsl:template match="alr:allure-test-run">
-        <xsl:element name="alr:allure-graph">
+        <xsl:element name="alr:allure-test-case-pack">
             <xsl:element name="test-cases">
-                <xsl:for-each select="test-suites//test-case">
+                <xsl:for-each select="test-cases/test-case">
                     <xsl:element name="test-case">
                         <xsl:copy-of select="./*"/>
                     </xsl:element>

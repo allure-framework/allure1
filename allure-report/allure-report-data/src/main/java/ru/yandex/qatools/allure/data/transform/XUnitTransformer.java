@@ -1,12 +1,12 @@
 package ru.yandex.qatools.allure.data.transform;
 
 import ru.yandex.qatools.allure.data.AllureXUnit;
-import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.StringReader;
 
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
 import static ru.yandex.qatools.allure.data.utils.XslTransformationUtil.applyTransformation;
 
 /**
@@ -20,14 +20,14 @@ public class XUnitTransformer implements TestRunTransformer {
     public static final String XUNIT_JSON = "xunit.json";
 
     @Override
-    public void transform(String xml, File outputDirectory) {
-        String allureXUnitBody = applyTransformation(xml, TEST_RUN_TO_XUNIT_XSL);
+    public void transform(String testPackXml, File outputDirectory) {
+        String allureXUnitBody = applyTransformation(testPackXml, TEST_RUN_TO_XUNIT_XSL);
 
         AllureXUnit allureXUnit = JAXB.unmarshal(
                 new StringReader(allureXUnitBody),
                 AllureXUnit.class
         );
 
-        AllureReportUtils.serialize(outputDirectory, XUNIT_JSON, allureXUnit);
+        serialize(outputDirectory, XUNIT_JSON, allureXUnit);
     }
 }

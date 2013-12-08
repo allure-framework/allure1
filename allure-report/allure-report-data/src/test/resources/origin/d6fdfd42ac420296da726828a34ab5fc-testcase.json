@@ -12,33 +12,29 @@
   },
   "failure" : null,
   "description" : null,
-  "steps" : {
-    "step" : [ {
-      "title" : "checkThat2is2",
-      "time" : {
-        "start" : 1386463101854,
-        "stop" : 1386463101855,
-        "duration" : 1
-      },
-      "summary" : {
-        "attachments" : 0,
-        "steps" : 0
-      },
-      "attachments" : null,
-      "steps" : null,
-      "status" : "PASSED"
-    } ]
-  },
-  "attachments" : null,
   "severity" : "NORMAL",
   "status" : "PASSED",
-  "labels" : {
-    "label" : [ {
-      "name" : "Story",
-      "value" : "MyFirstStory"
-    }, {
-      "name" : "Feature",
-      "value" : "MyFirstFeature"
-    } ]
-  }
+  "steps" : [ {
+    "title" : "checkThat2is2",
+    "time" : {
+      "start" : 1386463101854,
+      "stop" : 1386463101855,
+      "duration" : 1
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachment" : [ ],
+    "steps" : [ ]
+  } ],
+  "attachments" : [ ],
+  "labels" : [ {
+    "name" : "Story",
+    "value" : "MyFirstStory"
+  }, {
+    "name" : "Feature",
+    "value" : "MyFirstFeature"
+  } ]
 }

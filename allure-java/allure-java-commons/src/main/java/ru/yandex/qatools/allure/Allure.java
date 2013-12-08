@@ -5,7 +5,6 @@ import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.exceptions.UnknownEventException;
 import ru.yandex.qatools.allure.model.*;
 import ru.yandex.qatools.allure.model.Step;
-import ru.yandex.qatools.allure.model.Steps;
 import ru.yandex.qatools.allure.storages.TestRunStorage;
 import ru.yandex.qatools.allure.storages.TestStepStorage;
 import ru.yandex.qatools.allure.storages.TestStorage;
@@ -14,6 +13,7 @@ import ru.yandex.qatools.allure.utils.AllureWriteUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 
 import static ru.yandex.qatools.allure.utils.AllureWriteUtils.*;
 
@@ -108,11 +108,8 @@ public enum Allure {
                         Label labelFeature = new Label();
                         labelFeature.setName("Feature");
                         labelFeature.setValue(clazz.getDeclaringClass().getSimpleName());
-                        if (testCase.getLabels() == null) {
-                            testCase.setLabels(new Labels());
-                        }
-                        testCase.getLabels().getLabel().add(labelStory);
-                        testCase.getLabels().getLabel().add(labelFeature);
+                        testCase.getLabels().add(labelStory);
+                        testCase.getLabels().add(labelFeature);
                     }
                 }
             }
@@ -129,13 +126,8 @@ public enum Allure {
 
         TestSuiteResult testSuiteResult = TestRunStorage.getTestRun(event.getRunUid());
         synchronized (LOCK) {
-            if (testSuiteResult.getTestCases() == null) {
-                TestCasesResult testCasesResult = new TestCasesResult();
-                testCasesResult.getTestCase().add(testCase);
-                testSuiteResult.setTestCases(testCasesResult);
-            } else {
-                testSuiteResult.getTestCases().getTestCase().add(testCase);
-            }
+            testSuiteResult.getTestCases().add(testCase);
+
         }
     }
 
@@ -165,13 +157,8 @@ public enum Allure {
         step.setStop(System.currentTimeMillis());
 
         Step parentStep = TestStepStorage.getTestStep();
-        if (parentStep.getSteps() == null) {
-            Steps steps = new Steps();
-            steps.getStep().add(step);
-            parentStep.setSteps(steps);
-        } else {
-            parentStep.getSteps().getStep().add(step);
-        }
+        parentStep.getSteps().add(step);
+
     }
 
     private void fireStepFailureEvent(StepFailureEvent event) {
@@ -191,12 +178,10 @@ public enum Allure {
 
         Step step = TestStepStorage.getTestStep();
         if (step.getAttachments() == null) {
-            Attachments attachments = new Attachments();
-            attachments.getAttachment().add(attachment);
-            step.setAttachments(attachments);
-        } else {
-            step.getAttachments().getAttachment().add(attachment);
+            step.setAttachments(new ArrayList<Attachment>());
         }
+        step.getAttachments().add(attachment);
+
     }
 
     private static Status getStatusByThrowable(Throwable throwable) {

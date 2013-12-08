@@ -12,9 +12,9 @@
   },
   "failure" : null,
   "description" : null,
-  "steps" : null,
-  "attachments" : null,
   "severity" : "NORMAL",
   "status" : "PASSED",
-  "labels" : null
+  "steps" : [ ],
+  "attachments" : [ ],
+  "labels" : [ ]
 }

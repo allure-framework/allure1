@@ -13,13 +13,19 @@
     </xsl:template>
 
     <xsl:template match="files">
-        <xsl:apply-templates select="document(.)"/>
+        <xsl:element name="test-suites">
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:element>
+    </xsl:template>
+
+    <xsl:template match="file">
+        <xsl:element name="test-suite" inherit-namespaces="yes">
+            <xsl:apply-templates select="document(.)"/>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template match="ns2:test-suite">
-        <xsl:element name="test-suites" inherit-namespaces="yes">
-            <xsl:apply-templates select="@*|node()"/>
-        </xsl:element>
+        <xsl:apply-templates select="@*|node()"/>
     </xsl:template>
 
     <xsl:template match="@*|node()">

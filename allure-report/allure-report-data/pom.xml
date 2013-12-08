@@ -33,7 +33,27 @@
                     <removeOldOutput>true</removeOldOutput>
                     <verbose>true</verbose>
                     <extension>true</extension>
+                    <args>
+                        <arg>-no-header</arg>
+                        <arg>-Xxew</arg>
+                        <arg>-Xxew:instantiate lazy</arg>
+                        <arg>-Xxew:delete</arg>
+                    </args>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.github.jaxb-xew-plugin</groupId>
+                            <artifactId>jaxb-xew-plugin</artifactId>
+                            <version>1.0</version>
+                        </plugin>
+                    </plugins>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>ru.yandex.qatools.allure</groupId>
+                        <artifactId>allure-model</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

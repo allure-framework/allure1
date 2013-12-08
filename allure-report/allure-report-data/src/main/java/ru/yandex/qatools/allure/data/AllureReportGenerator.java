@@ -30,7 +30,7 @@ public class AllureReportGenerator extends ReportGenerator {
                 new XUnitTransformer(),
                 new GraphTransformer(),
                 new TestCasesTransformer(),
-                new FeaturesTransformer()
+                new BehaviorTransformer()
         );
 
         copyAttachments(inputDirectories, outputDirectory);

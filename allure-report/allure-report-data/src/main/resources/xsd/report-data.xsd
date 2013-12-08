@@ -14,17 +14,23 @@
     <xsd:complexType name="allure-test-run">
         <xsd:sequence>
             <xsd:element name="time" type="alr:time"/>
-            <xsd:element name="test-suites" type="alr:allure-test-suite" minOccurs="0" maxOccurs="unbounded"/>
-            <xsd:element name="test-cases" type="alr:allure-test-case" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="test-suites" type="alr:allure-test-suites" minOccurs="0"/>
+            <xsd:element name="test-cases" type="alr:allure-test-cases" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
 
     <!--Features and Stories-->
+    <xsd:complexType name="allure-features">
+        <xsd:sequence>
+            <xsd:element name="feature" type="alr:allure-feature" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="allure-feature">
         <xsd:all>
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="statistic" type="alr:statistic"/>
-            <xsd:element name="stories" type="alr:allure-stories"/>
+            <xsd:element name="stories" type="alr:allure-stories" minOccurs="0"/>
         </xsd:all>
     </xsd:complexType>
 
@@ -44,6 +50,12 @@
     </xsd:complexType>
 
     <!--Info about Test Suite-->
+    <xsd:complexType name="allure-test-suites">
+        <xsd:sequence>
+            <xsd:element name="test-suite" type="alr:allure-test-suite" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="allure-test-suite">
         <xsd:all>
             <xsd:element name="uid" type="xsd:string"/>
@@ -57,6 +69,12 @@
     </xsd:complexType>
 
     <!--Info about Test Case-->
+    <xsd:complexType name="allure-test-cases">
+        <xsd:sequence>
+            <xsd:element name="test-case" type="alr:allure-test-case" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="allure-test-case">
         <xsd:all>
             <xsd:element name="uid" type="xsd:string"/>
@@ -69,7 +87,7 @@
             <xsd:element name="attachments" type="alr:attachments" minOccurs="0"/>
             <xsd:element name="severity" type="alr:severity-level"/>
             <xsd:element name="status" type="alr:status"/>
-            <xsd:element name="labels" type="alr:labels"/>
+            <xsd:element name="labels" type="alr:labels" minOccurs="0"/>
         </xsd:all>
     </xsd:complexType>
 
@@ -102,7 +120,7 @@
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="time" type="alr:time"/>
             <xsd:element name="summary" type="alr:summary"/>
-            <xsd:element name="attachments" type="alr:attachments" minOccurs="0"/>
+            <xsd:element name="attachment" type="alr:attachments" minOccurs="0"/>
             <xsd:element name="steps" type="alr:allure-steps" minOccurs="0"/>
             <xsd:element name="status" type="alr:status"/>
         </xsd:all>

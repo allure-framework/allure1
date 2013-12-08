@@ -12,17 +12,15 @@
   },
   "failure" : null,
   "description" : null,
-  "steps" : null,
-  "attachments" : null,
   "severity" : "NORMAL",
   "status" : "PASSED",
-  "labels" : {
-    "label" : [ {
-      "name" : "Story",
-      "value" : "MyAmazingStory"
-    }, {
-      "name" : "Feature",
-      "value" : "MySecondFeature"
-    } ]
-  }
+  "steps" : [ ],
+  "attachments" : [ ],
+  "labels" : [ {
+    "name" : "Story",
+    "value" : "MyAmazingStory"
+  }, {
+    "name" : "Feature",
+    "value" : "MySecondFeature"
+  } ]
 }

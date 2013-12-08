@@ -9,7 +9,13 @@
     <!--Information about files.-->
     <xsd:complexType name="list-files">
         <xsd:sequence>
-            <xsd:element name="files" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="files" type="alr:files" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="files">
+        <xsd:sequence>
+            <xsd:element name="file" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 
@@ -32,12 +38,23 @@
         <xsd:attribute name="steps" type="xsd:long" default="0"/>
     </xsd:complexType>
 
+    <xsd:complexType name="attachments">
+        <xsd:sequence>
+            <xsd:element name="attachment" type="alr:attachment" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="labels">
+        <xsd:sequence>
+            <xsd:element name="label" type="alr:label" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="status"/>
     <xsd:complexType name="attachment"/>
-    <xsd:complexType name="attachments"/>
     <xsd:complexType name="attachment-type"/>
     <xsd:complexType name="severity-level"/>
     <xsd:complexType name="failure"/>
-    <xsd:complexType name="labels"/>
+    <xsd:complexType name="label"/>
 
 </xsd:schema>
