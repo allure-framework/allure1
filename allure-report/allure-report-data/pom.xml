@@ -4,7 +4,7 @@
     <parent>
         <groupId>ru.yandex.qatools.allure</groupId>
         <artifactId>allure-report</artifactId>
-        <version>1.2.4-SNAPSHOT</version>
+        <version>1.3.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>allure-report-data</artifactId>
@@ -33,7 +33,27 @@
                     <removeOldOutput>true</removeOldOutput>
                     <verbose>true</verbose>
                     <extension>true</extension>
+                    <args>
+                        <arg>-no-header</arg>
+                        <arg>-Xxew</arg>
+                        <arg>-Xxew:instantiate lazy</arg>
+                        <arg>-Xxew:delete</arg>
+                    </args>
+                    <plugins>
+                        <plugin>
+                            <groupId>com.github.jaxb-xew-plugin</groupId>
+                            <artifactId>jaxb-xew-plugin</artifactId>
+                            <version>1.0</version>
+                        </plugin>
+                    </plugins>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>ru.yandex.qatools.allure</groupId>
+                        <artifactId>allure-model</artifactId>
+                        <version>${project.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
@@ -55,9 +75,14 @@
             <version>2.4</version>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.jackson</groupId>
-            <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.5.5</version>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-jaxb-annotations</artifactId>
+            <version>2.3.0</version>
         </dependency>
         <dependency>
             <groupId>net.sourceforge.saxon</groupId>

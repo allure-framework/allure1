@@ -1,34 +1,54 @@
 package ru.yandex.qatools.allure.data;
 
 import org.apache.commons.io.FileUtils;
-import ru.yandex.qatools.allure.data.generators.TestRun;
-import ru.yandex.qatools.allure.data.generators.TestSuiteFiles;
+import ru.yandex.qatools.allure.data.transform.*;
 import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 31.10.13
  */
-public class AllureReportGenerator extends ReportGenerator {
+public class AllureReportGenerator {
 
     private static final String ATTACHMENTS_MASK = ".+-attachment\\.\\w+";
 
+    private List<DataProvider> dataProviders = new ArrayList<>();
+
+    protected File[] inputDirectories;
+
     public AllureReportGenerator(File... inputDirectories) {
-        super(inputDirectories);
+        this.inputDirectories = inputDirectories;
+        registerDataProviders(defaultProviders());
     }
 
-    @Override
     public void generate(File outputDirectory) {
         copyAttachments(inputDirectories, outputDirectory);
 
-        TestRun testRun = new TestSuiteFiles(inputDirectories).generateTestRun();
+        String testRun = new TestSuiteFiles(inputDirectories).generateTestRun();
 
-        testRun.generateXUnitData().serialize(outputDirectory);
-        testRun.generateTestCasesData().serialize(outputDirectory);
-        testRun.generateGraphData().serialize(outputDirectory);
+        for (DataProvider provider : dataProviders) {
+            provider.provide(testRun, outputDirectory);
+        }
+
+    }
+
+    public void registerDataProviders(DataProvider... ts) {
+        Collections.addAll(dataProviders, ts);
+    }
+
+    public static DataProvider[] defaultProviders() {
+        return new DataProvider[]{
+                new XUnitDataProvider(),
+                new GraphDataProvider(),
+                new TestCasesDataProvider(),
+                new BehaviorDataProvider()
+        };
     }
 
     public static File[] getAttachmentsFiles(File... dirs) {

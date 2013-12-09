@@ -10,7 +10,7 @@
 
 ##### Release Version: 1.2.3
 
-##### Development Version: 1.2.4-SNAPSHOT
+##### Development Version: 1.3.0-SNAPSHOT
 
 ### Allure
 

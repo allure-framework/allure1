@@ -1,0 +1,40 @@
+{
+  "uid" : "d6fdfd42ac420296da726828a34ab5fc",
+  "title" : "Simple test with steps",
+  "time" : {
+    "start" : 1386463101842,
+    "stop" : 1386463101855,
+    "duration" : 13
+  },
+  "summary" : {
+    "attachments" : 1,
+    "steps" : 1
+  },
+  "failure" : null,
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "steps" : [ {
+    "title" : "checkThat2is2",
+    "time" : {
+      "start" : 1386463101854,
+      "stop" : 1386463101855,
+      "duration" : 1
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachment" : [ ],
+    "steps" : [ ]
+  } ],
+  "attachments" : [ ],
+  "labels" : [ {
+    "name" : "Story",
+    "value" : "MyFirstStory"
+  }, {
+    "name" : "Feature",
+    "value" : "MyFirstFeature"
+  } ]
+}

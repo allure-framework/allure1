@@ -1,0 +1,20 @@
+{
+  "uid" : "1155fcc5e23d3e4358cc9a811acd943c",
+  "title" : "Parameterized test[0]",
+  "time" : {
+    "start" : 1386463101587,
+    "stop" : 1386463101595,
+    "duration" : 8
+  },
+  "summary" : {
+    "attachments" : 0,
+    "steps" : 0
+  },
+  "failure" : null,
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "steps" : [ ],
+  "attachments" : [ ],
+  "labels" : [ ]
+}

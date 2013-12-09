@@ -12,13 +12,13 @@ import static org.junit.Assert.assertEquals;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 21.10.13
  */
-public class ReportDataTest {
+public class AttachmentsTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
-    public void attachmentsListTest() throws Exception {
+    public void attachmentsCountTest() throws Exception {
         assertEquals(
                 "Not all attachment files are found.",
                 3,
@@ -27,7 +27,7 @@ public class ReportDataTest {
     }
 
     @Test
-    public void copyAttachmentsTest() throws Exception {
+    public void attachmentsCopiedTest() throws Exception {
         File outputDirectory = folder.newFolder();
         AllureReportGenerator.copyAttachments(getTestDataDirs(), outputDirectory);
         assertEquals(

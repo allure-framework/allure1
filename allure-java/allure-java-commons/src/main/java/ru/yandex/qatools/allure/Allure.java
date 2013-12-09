@@ -1,12 +1,10 @@
 package ru.yandex.qatools.allure;
 
-import ru.yandex.qatools.allure.annotations.Description;
-import ru.yandex.qatools.allure.annotations.Severity;
-import ru.yandex.qatools.allure.annotations.Tags;
-import ru.yandex.qatools.allure.annotations.Title;
+import ru.yandex.qatools.allure.annotations.*;
 import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.exceptions.UnknownEventException;
 import ru.yandex.qatools.allure.model.*;
+import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.storages.TestRunStorage;
 import ru.yandex.qatools.allure.storages.TestStepStorage;
 import ru.yandex.qatools.allure.storages.TestStorage;
@@ -15,6 +13,7 @@ import ru.yandex.qatools.allure.utils.AllureWriteUtils;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 
 import static ru.yandex.qatools.allure.utils.AllureWriteUtils.*;
 
@@ -61,7 +60,7 @@ public enum Allure {
         TestSuiteResult testSuite = TestRunStorage.getTestRun(event.getUid());
         testSuite.setStart(System.currentTimeMillis());
         String simpleName = event.getTestRunName().replaceAll(".*\\.(\\S+)", "$1");
-        testSuite.setTitle(AllureWriteUtils.humanizeCamelCase(simpleName));
+        testSuite.setTitle(AllureWriteUtils.humanize(simpleName));
         testSuite.setClassname(event.getTestRunName());
 
         for (Annotation annotation : event.getAnnotations()) {
@@ -83,7 +82,7 @@ public enum Allure {
     private void fireTestStartedEvent(TestStartedEvent event) {
         TestCaseResult testCase = TestStorage.getTest(event.getUid());
         testCase.setStart(System.currentTimeMillis());
-        testCase.setTitle(humanizeCamelCase(event.getTestName()));
+        testCase.setTitle(humanize(event.getTestName()));
         testCase.setSeverity(SeverityLevel.NORMAL);
         testCase.setStatus(Status.PASSED);
 
@@ -94,13 +93,25 @@ public enum Allure {
             if (annotation instanceof Description) {
                 testCase.setDescription(((Description) annotation).value());
             }
-            if (annotation instanceof Tags) {
-                for (String tag : ((Tags) annotation).value()) {
-                    testCase.getTags().add(generateTag(tag));
-                }
-            }
             if (annotation instanceof Severity) {
                 testCase.setSeverity(((Severity) annotation).value());
+            }
+            if (annotation instanceof Story) {
+                Story story = (Story) annotation;
+                for (Class<?> clazz : story.value()) {
+                    if (clazz.isAnnotationPresent(StoryClass.class)
+                            && clazz.getDeclaringClass().isAnnotationPresent(FeatureClass.class)) {
+                        Label labelStory = new Label();
+                        labelStory.setName("Story");
+                        labelStory.setValue(clazz.getSimpleName());
+
+                        Label labelFeature = new Label();
+                        labelFeature.setName("Feature");
+                        labelFeature.setValue(clazz.getDeclaringClass().getSimpleName());
+                        testCase.getLabels().add(labelStory);
+                        testCase.getLabels().add(labelFeature);
+                    }
+                }
             }
         }
     }
@@ -109,12 +120,14 @@ public enum Allure {
         TestCaseResult testCase = TestStorage.pollTest(event.getUid());
         testCase.setStop(System.currentTimeMillis());
 
-        TestStepResult rootStep = TestStepStorage.pollTestStep();
-        testCase.getSteps().addAll(rootStep.getSteps());
-        testCase.getAttachments().addAll(rootStep.getAttachments());
+        Step rootStep = TestStepStorage.pollTestStep();
+        testCase.setSteps(rootStep.getSteps());
+        testCase.setAttachments(rootStep.getAttachments());
 
+        TestSuiteResult testSuiteResult = TestRunStorage.getTestRun(event.getRunUid());
         synchronized (LOCK) {
-            TestRunStorage.getTestRun(event.getRunUid()).getTestCases().add(testCase);
+            testSuiteResult.getTestCases().add(testCase);
+
         }
     }
 
@@ -131,7 +144,7 @@ public enum Allure {
     }
 
     private void fireStepStartEvent(StepStartEvent event) {
-        TestStepResult step = new TestStepResult();
+        Step step = new Step();
         step.setTitle(event.getStepTitle());
         step.setStatus(Status.PASSED);
         step.setStart(System.currentTimeMillis());
@@ -140,13 +153,16 @@ public enum Allure {
 
     @SuppressWarnings("unused")
     private void fireStepStopEvent(StepStopEvent event) {
-        TestStepResult step = TestStepStorage.pollTestStep();
+        Step step = TestStepStorage.pollTestStep();
         step.setStop(System.currentTimeMillis());
-        TestStepStorage.getTestStep().getSteps().add(step);
+
+        Step parentStep = TestStepStorage.getTestStep();
+        parentStep.getSteps().add(step);
+
     }
 
     private void fireStepFailureEvent(StepFailureEvent event) {
-        TestStepResult step = TestStepStorage.getTestStep();
+        Step step = TestStepStorage.getTestStep();
         step.setStatus(getStatusByThrowable(event.getThrowable()));
     }
 
@@ -159,7 +175,13 @@ public enum Allure {
                 event.getAttachmentType(),
                 ".attach")
         );
-        TestStepStorage.getTestStep().getAttachments().add(attachment);
+
+        Step step = TestStepStorage.getTestStep();
+        if (step.getAttachments() == null) {
+            step.setAttachments(new ArrayList<Attachment>());
+        }
+        step.getAttachments().add(attachment);
+
     }
 
     private static Status getStatusByThrowable(Throwable throwable) {

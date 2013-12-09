@@ -1,0 +1,94 @@
+{
+  "time" : {
+    "start" : 1386463101570,
+    "stop" : 1386463101875,
+    "duration" : 305
+  },
+  "testSuites" : [ {
+    "uid" : "f8000b87eee30d3906f763adfa621f71",
+    "title" : "Simple test",
+    "time" : {
+      "start" : 1386463101840,
+      "stop" : 1386463101875,
+      "duration" : 35
+    },
+    "statistic" : {
+      "total" : 3,
+      "passed" : 3,
+      "skipped" : 0,
+      "failed" : 0,
+      "broken" : 0
+    },
+    "description" : null,
+    "classname" : "my.company.tests.SimpleTest",
+    "testCases" : [ {
+      "uid" : "d6fdfd42ac420296da726828a34ab5fc",
+      "title" : "Simple test with steps",
+      "time" : {
+        "start" : 1386463101842,
+        "stop" : 1386463101855,
+        "duration" : 13
+      },
+      "severity" : "NORMAL",
+      "status" : "PASSED"
+    }, {
+      "uid" : "eb8e4ca2761d8f23962df89f0c98e722",
+      "title" : "Simple test",
+      "time" : {
+        "start" : 1386463101855,
+        "stop" : 1386463101857,
+        "duration" : 2
+      },
+      "severity" : "NORMAL",
+      "status" : "PASSED"
+    }, {
+      "uid" : "9051a2dac33abb1b4c43a0e72c847254",
+      "title" : "Simple test with attachments",
+      "time" : {
+        "start" : 1386463101857,
+        "stop" : 1386463101875,
+        "duration" : 18
+      },
+      "severity" : "NORMAL",
+      "status" : "PASSED"
+    } ]
+  }, {
+    "uid" : "ecb454d16dc38def6ec1ff6cc6a44159",
+    "title" : "Parameterized test",
+    "time" : {
+      "start" : 1386463101570,
+      "stop" : 1386463101600,
+      "duration" : 30
+    },
+    "statistic" : {
+      "total" : 2,
+      "passed" : 2,
+      "skipped" : 0,
+      "failed" : 0,
+      "broken" : 0
+    },
+    "description" : null,
+    "classname" : "my.company.tests.ParameterizedTest",
+    "testCases" : [ {
+      "uid" : "1155fcc5e23d3e4358cc9a811acd943c",
+      "title" : "Parameterized test[0]",
+      "time" : {
+        "start" : 1386463101587,
+        "stop" : 1386463101595,
+        "duration" : 8
+      },
+      "severity" : "NORMAL",
+      "status" : "PASSED"
+    }, {
+      "uid" : "90151ae515bb91b1efab7d57a08d15a9",
+      "title" : "Parameterized test[1]",
+      "time" : {
+        "start" : 1386463101600,
+        "stop" : 1386463101600,
+        "duration" : 0
+      },
+      "severity" : "NORMAL",
+      "status" : "PASSED"
+    } ]
+  } ]
+}

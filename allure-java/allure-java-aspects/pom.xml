@@ -4,7 +4,7 @@
     <parent>
         <groupId>ru.yandex.qatools.allure</groupId>
         <artifactId>allure-java</artifactId>
-        <version>1.2.4-SNAPSHOT</version>
+        <version>1.3.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -12,7 +12,7 @@
     <name>Allure Java Aspects</name>
 
     <properties>
-        <aspectj.version>1.7.3</aspectj.version>
+        <aspectj.version>1.7.4</aspectj.version>
     </properties>
 
     <dependencies>

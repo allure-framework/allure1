@@ -8,27 +8,34 @@
 
     <xsd:element name="allure-x-unit" type="alr:allure-x-unit"/>
     <xsd:element name="allure-graph" type="alr:allure-graph"/>
-    <xsd:element name="allure-features" type="alr:allure-features"/>
+    <xsd:element name="allure-behavior" type="alr:allure-behavior"/>
+    <xsd:element name="allure-test-case-pack" type="alr:allure-test-case-pack"/>
 
     <!--Data for xUnit tab-->
     <xsd:complexType name="allure-x-unit">
         <xsd:sequence>
             <xsd:element name="time" type="alr:time"/>
-            <xsd:element name="test-suites" type="alr:allure-test-suite" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="test-suites" type="alr:allure-test-suites" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
 
     <!--Data for graph and time line tabs-->
     <xsd:complexType name="allure-graph">
         <xsd:sequence>
-            <xsd:element name="test-cases" type="alr:allure-test-case-info" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="test-cases" type="alr:allure-test-cases-info" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
 
     <!--Data for features tab-->
-    <xsd:complexType name="allure-features">
+    <xsd:complexType name="allure-behavior">
         <xsd:sequence>
-            <xsd:element name="features" type="alr:allure-feature" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="features" type="alr:allure-features" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="allure-test-case-pack">
+        <xsd:sequence>
+            <xsd:element name="test-cases" type="alr:allure-test-cases" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
 
