@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.StringReader;
 
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
-import static ru.yandex.qatools.allure.data.utils.XslTransformationUtil.applyTransformations;
+import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
