@@ -14,15 +14,15 @@ import static ru.yandex.qatools.allure.data.utils.XslTransformationUtil.applyTra
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.12.13
  */
-public class TestCasesTransformer implements TestRunTransformer {
+public class TestCasesDataProvider implements DataProvider {
 
     private static final String TESTRUN_TO_TESTCASE_PACK_XSL = "xsl/testrun-to-testcase-pack.xsl";
 
     private static final String TESTCASE_JSON_SUFFIX = "-testcase.json";
 
     @Override
-    public void transform(String testPackXml, File outputDirectory) {
-        String allureTestCasePackBody = applyTransformation(testPackXml, TESTRUN_TO_TESTCASE_PACK_XSL);
+    public void provide(String testPack, File outputDirectory) {
+        String allureTestCasePackBody = applyTransformation(testPack, TESTRUN_TO_TESTCASE_PACK_XSL);
 
         AllureTestCasePack allureTestCasePack = JAXB.unmarshal(
                 new StringReader(allureTestCasePackBody),

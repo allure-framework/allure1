@@ -18,13 +18,13 @@ public class AllureReportGenerator {
 
     private static final String ATTACHMENTS_MASK = ".+-attachment\\.\\w+";
 
-    private List<TestRunTransformer> transformers = new ArrayList<>();
+    private List<DataProvider> dataProviders = new ArrayList<>();
 
     protected File[] inputDirectories;
 
     public AllureReportGenerator(File... inputDirectories) {
         this.inputDirectories = inputDirectories;
-        registerTransformers(defaultTransformers());
+        registerDataProviders(defaultProviders());
     }
 
     public void generate(File outputDirectory) {
@@ -32,22 +32,22 @@ public class AllureReportGenerator {
 
         String testRun = new TestSuiteFiles(inputDirectories).generateTestRun();
 
-        for (TestRunTransformer transformer : transformers) {
-            transformer.transform(testRun, outputDirectory);
+        for (DataProvider provider : dataProviders) {
+            provider.provide(testRun, outputDirectory);
         }
 
     }
 
-    public void registerTransformers(TestRunTransformer... ts) {
-        Collections.addAll(transformers, ts);
+    public void registerDataProviders(DataProvider... ts) {
+        Collections.addAll(dataProviders, ts);
     }
 
-    public static TestRunTransformer[] defaultTransformers() {
-        return new TestRunTransformer[]{
-                new XUnitTransformer(),
-                new GraphTransformer(),
-                new TestCasesTransformer(),
-                new BehaviorTransformer()
+    public static DataProvider[] defaultProviders() {
+        return new DataProvider[]{
+                new XUnitDataProvider(),
+                new GraphDataProvider(),
+                new TestCasesDataProvider(),
+                new BehaviorDataProvider()
         };
     }
 

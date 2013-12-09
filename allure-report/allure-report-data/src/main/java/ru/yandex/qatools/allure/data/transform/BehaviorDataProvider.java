@@ -13,7 +13,7 @@ import static ru.yandex.qatools.allure.data.utils.XslTransformationUtil.applyTra
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 08.12.13
  */
-public class BehaviorTransformer implements TestRunTransformer {
+public class BehaviorDataProvider implements DataProvider {
 
     private static final String TEST_RUN_TO_FEATURES_1_XSL = "xsl/testrun-to-behavior-1.xsl";
 
@@ -22,9 +22,9 @@ public class BehaviorTransformer implements TestRunTransformer {
     private static final String BEHAVIOR_JSON = "behavior.json";
 
     @Override
-    public void transform(String testPackXml, File outputDirectory) {
+    public void provide(String testPack, File outputDirectory) {
         String allureFeaturesBody = applyTransformations(
-                testPackXml,
+                testPack,
                 TEST_RUN_TO_FEATURES_1_XSL,
                 TEST_RUN_TO_FEATURES_2_XSL
         );

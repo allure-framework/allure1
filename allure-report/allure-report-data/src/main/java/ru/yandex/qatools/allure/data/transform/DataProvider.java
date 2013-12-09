@@ -6,8 +6,8 @@ import java.io.File;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.12.13
  */
-public interface TestRunTransformer {
+public interface DataProvider {
 
-    public void transform(String xml, File outputDirectory);
+    public void provide(String testPack, File outputDirectory);
 
 }
