@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure.report;
 
-import org.apache.maven.artifact.DependencyResolutionRequiredException;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -10,14 +9,12 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
-import ru.yandex.qatools.allure.data.ReportGenerator;
+import ru.yandex.qatools.allure.data.AllureReportGenerator;
 
-import java.net.MalformedURLException;
 import java.util.*;
 import java.io.*;
 
 import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
-import static ru.yandex.qatools.allure.report.ReportUtils.getReportGeneratorClass;
 
 /**
  * @author Artem Eroshenko eroshenkoam
@@ -44,9 +41,6 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             "${allure.version}",
             "war"
     );
-
-    @Parameter(defaultValue = "ru.yandex.qatools.allure.data.AllureReportGenerator")
-    private String reportGenerator;
 
     @Parameter(defaultValue = "${project.build.directory}")
     private String outputDirectory;
@@ -118,18 +112,9 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
     private boolean generateData(File reportDirectory) {
         try {
-            ReportGenerator generator = createReportGeneratorInstance(reportDirectory);
-            generator.generate(reportDirectory);
-
-        } catch (ReflectiveOperationException e) {
-            getLog().error(String.format(
-                    "Can't create instance of report generator %s. %s",
-                    reportGenerator,
-                    getErrorMessage(e)
-            ));
-            printStackTrace(e);
-            return false;
-        } catch (DependencyResolutionRequiredException | MalformedURLException e) {
+            AllureReportGenerator reportGenerator = new AllureReportGenerator();
+            reportGenerator.generate(reportDirectory);
+        } catch (Exception e) {
             getLog().error(getErrorMessage(e));
             printStackTrace(e);
             return false;
@@ -186,14 +171,4 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
                 )
         );
     }
-
-    private ReportGenerator createReportGeneratorInstance(File reportDirectory)
-            throws MalformedURLException, DependencyResolutionRequiredException, ReflectiveOperationException {
-
-        Class<?> clazz = getReportGeneratorClass(project, reportGenerator);
-        return (ReportGenerator) clazz.getDeclaredConstructor(File[].class).newInstance(
-                new Object[]{new File[]{reportDirectory}}
-        );
-    }
-
 }

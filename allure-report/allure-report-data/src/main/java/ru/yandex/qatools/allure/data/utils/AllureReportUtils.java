@@ -51,8 +51,8 @@ public final class AllureReportUtils {
     public static void serialize(final File directory, String name, Object obj) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            AnnotationIntrospector introspector = new JaxbAnnotationIntrospector(TypeFactory.defaultInstance());
-            mapper.getSerializationConfig().with(introspector);
+            AnnotationIntrospector ai = new JaxbAnnotationIntrospector(TypeFactory.defaultInstance());
+            mapper.getSerializationConfig().with(ai);
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(directory, name), obj);
         } catch (IOException e) {
             throw new ReportGenerationException(e);

@@ -14,25 +14,20 @@ import java.util.List;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 31.10.13
  */
-public class AllureReportGenerator extends ReportGenerator {
+public class AllureReportGenerator {
 
     private static final String ATTACHMENTS_MASK = ".+-attachment\\.\\w+";
 
     private List<TestRunTransformer> transformers = new ArrayList<>();
 
+    protected File[] inputDirectories;
+
     public AllureReportGenerator(File... inputDirectories) {
-        super(inputDirectories);
+        this.inputDirectories = inputDirectories;
+        registerTransformers(defaultTransformers());
     }
 
-    @Override
     public void generate(File outputDirectory) {
-        registerTransformers(
-                new XUnitTransformer(),
-                new GraphTransformer(),
-                new TestCasesTransformer(),
-                new BehaviorTransformer()
-        );
-
         copyAttachments(inputDirectories, outputDirectory);
 
         String testRun = new TestSuiteFiles(inputDirectories).generateTestRun();
@@ -45,6 +40,15 @@ public class AllureReportGenerator extends ReportGenerator {
 
     public void registerTransformers(TestRunTransformer... ts) {
         Collections.addAll(transformers, ts);
+    }
+
+    public static TestRunTransformer[] defaultTransformers() {
+        return new TestRunTransformer[]{
+                new XUnitTransformer(),
+                new GraphTransformer(),
+                new TestCasesTransformer(),
+                new BehaviorTransformer()
+        };
     }
 
     public static File[] getAttachmentsFiles(File... dirs) {

@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 08.12.13
  */
+@SuppressWarnings("unused")
 public class UidGenerationUtil {
 
     private static final String ALGORITHM = "MD5";
