@@ -121,8 +121,9 @@ public enum Allure {
         testCase.setStop(System.currentTimeMillis());
 
         Step rootStep = TestStepStorage.pollTestStep();
-        testCase.setSteps(rootStep.getSteps());
-        testCase.setAttachments(rootStep.getAttachments());
+
+        testCase.getSteps().addAll(rootStep.getSteps());
+        testCase.getAttachments().addAll(rootStep.getAttachments());
 
         TestSuiteResult testSuiteResult = TestRunStorage.getTestRun(event.getRunUid());
         synchronized (LOCK) {
