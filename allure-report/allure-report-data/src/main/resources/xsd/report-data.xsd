@@ -120,7 +120,7 @@
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="time" type="alr:time"/>
             <xsd:element name="summary" type="alr:summary"/>
-            <xsd:element name="attachment" type="alr:attachments" minOccurs="0"/>
+            <xsd:element name="attachments" type="alr:attachments" minOccurs="0"/>
             <xsd:element name="steps" type="alr:allure-steps" minOccurs="0"/>
             <xsd:element name="status" type="alr:status"/>
         </xsd:all>
