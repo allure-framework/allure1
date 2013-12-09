@@ -1,0 +1,20 @@
+{
+  "uid" : "ac7a14835a250d9fa36cd54557731b27",
+  "title" : "Calculation test[64]",
+  "time" : {
+    "start" : 1386599308364,
+    "stop" : 1386599309601,
+    "duration" : 1237
+  },
+  "summary" : {
+    "attachments" : 300,
+    "steps" : 300
+  },
+  "failure" : null,
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "steps" : [ ],
+  "attachments" : [ ],
+  "labels" : [ ]
+}

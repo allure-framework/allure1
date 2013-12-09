@@ -65,7 +65,7 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
                 controller: 'FeaturesCtrl',
                 resolve: {
                     features: function($http) {
-                        return $http.get('data/features.json').then(processResponse);
+                        return $http.get('data/behavior.json').then(processResponse);
                     }
                 }
             })

@@ -33,7 +33,7 @@ angular.module('allure.features', [])
         $scope.story = story;
         //TODO: use shared testcase-list widget
         $scope.testsuite = {statistic: story.statistic};
-        $scope.testcases = story.testcases;
+        $scope.testcases = story.testCases;
         $scope.features.forEach(function(feature) {
             if(feature.stories.indexOf(story) !== -1) {
                 feature.expanded = true;
