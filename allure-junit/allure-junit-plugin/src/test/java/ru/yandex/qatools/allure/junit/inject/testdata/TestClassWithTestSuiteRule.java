@@ -1,7 +1,6 @@
 package ru.yandex.qatools.allure.junit.inject.testdata;
 
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.yandex.qatools.allure.junit.TestSuiteReportRule;
 
@@ -14,7 +13,6 @@ public class TestClassWithTestSuiteRule {
     public static TestSuiteReportRule reportRule;
 
     @Test
-    @Ignore
     public void testName() throws Exception {
 
     }

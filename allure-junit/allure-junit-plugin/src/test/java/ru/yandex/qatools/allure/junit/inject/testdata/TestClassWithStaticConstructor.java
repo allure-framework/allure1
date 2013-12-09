@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure.junit.inject.testdata;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -13,7 +12,6 @@ public class TestClassWithStaticConstructor {
     }
 
     @Test
-    @Ignore
     public void testName() throws Exception {
     }
 }
