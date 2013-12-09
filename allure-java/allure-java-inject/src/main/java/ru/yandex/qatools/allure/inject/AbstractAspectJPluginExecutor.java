@@ -21,7 +21,7 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
     @Parameter(defaultValue = "1.7")
     protected String javaVersion;
 
-    @Parameter(defaultValue = "1.7.3")
+    @Parameter(defaultValue = "1.7.4")
     protected String aspectJVersion;
 
     @Parameter(defaultValue = "${allure.version}")

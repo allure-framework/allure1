@@ -12,6 +12,10 @@
         <jaxb:class ref="ru.yandex.qatools.allure.model.Failure"/>
     </jaxb:bindings>
 
+    <jaxb:bindings node="//xsd:complexType[@name='label']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.Label"/>
+    </jaxb:bindings>
+
     <jaxb:bindings node="//xsd:complexType[@name='attachment']">
         <jaxb:class ref="ru.yandex.qatools.allure.model.Attachment"/>
     </jaxb:bindings>

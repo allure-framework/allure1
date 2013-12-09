@@ -1,6 +1,6 @@
 package ru.yandex.qatools.allure.storages;
 
-import ru.yandex.qatools.allure.model.TestStepResult;
+import ru.yandex.qatools.allure.model.Step;
 
 import java.util.Deque;
 import java.util.LinkedList;
@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class TestStepStorage {
 
-    private static final Map<Thread, Deque<TestStepResult>> testStepData = new ConcurrentHashMap<>();
+    private static final Map<Thread, Deque<Step>> testStepData = new ConcurrentHashMap<>();
 
     private TestStepStorage() {
     }
@@ -21,25 +21,25 @@ public final class TestStepStorage {
     private static void checkStep() {
         Thread currentThread = Thread.currentThread();
         if (!testStepData.containsKey(currentThread)) {
-            testStepData.put(currentThread, new LinkedList<TestStepResult>());
+            testStepData.put(currentThread, new LinkedList<Step>());
         }
 
         if (testStepData.get(currentThread).isEmpty()) {
-            testStepData.get(currentThread).add(new TestStepResult());
+            testStepData.get(currentThread).add(new Step());
         }
     }
 
-    public static TestStepResult getTestStep() {
+    public static Step getTestStep() {
         checkStep();
         return testStepData.get(Thread.currentThread()).getLast();
     }
 
-    public static void putTestStep(TestStepResult testStepResult) {
+    public static void putTestStep(Step testStepResult) {
         checkStep();
         testStepData.get(Thread.currentThread()).add(testStepResult);
     }
 
-    public static TestStepResult pollTestStep() {
+    public static Step pollTestStep() {
         checkStep();
         return testStepData.get(Thread.currentThread()).pollLast();
     }

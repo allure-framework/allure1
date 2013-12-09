@@ -1,0 +1,46 @@
+{
+  "time" : {
+    "start" : 1386599321528,
+    "stop" : 1386599321631,
+    "duration" : 103
+  },
+  "testSuites" : [ {
+    "uid" : "93411df1130a181741c15487a635862b",
+    "title" : "Test with steps",
+    "time" : {
+      "start" : 1386599321528,
+      "stop" : 1386599321631,
+      "duration" : 103
+    },
+    "statistic" : {
+      "total" : 2,
+      "passed" : 0,
+      "skipped" : 0,
+      "failed" : 1,
+      "broken" : 1
+    },
+    "description" : "Testsuite has testcases with many steps\n        and\n        many lines in description\n    ",
+    "classname" : "my.company.TestWithSteps",
+    "testCases" : [ {
+      "uid" : "9076213cb0b87f92bb7bb85fc5399da3",
+      "title" : "Attachments test",
+      "time" : {
+        "start" : 1386599321574,
+        "stop" : 1386599321620,
+        "duration" : 46
+      },
+      "severity" : "CRITICAL",
+      "status" : "FAILED"
+    }, {
+      "uid" : "12354f9ce9437fd52af582f7e99d1892",
+      "title" : "Lot of steps test",
+      "time" : {
+        "start" : 1386599321626,
+        "stop" : 1386599321630,
+        "duration" : 4
+      },
+      "severity" : "BLOCKER",
+      "status" : "BROKEN"
+    } ]
+  } ]
+}
