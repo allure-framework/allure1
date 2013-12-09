@@ -8,6 +8,10 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -17,7 +21,7 @@ import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.listFiles;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 08.12.13
  */
-public class AllureReportGeneratorTest {
+public class GenerateTest {
 
     private final static String JSON_FILE = ".+\\.json";
 
@@ -59,6 +63,7 @@ public class AllureReportGeneratorTest {
             File actual = getFile(output, checkedFileName);
 
             ObjectMapper objectMapper = new ObjectMapper();
+
             JsonNode originNode = objectMapper.readTree(file);
             JsonNode resultNode = objectMapper.readTree(actual);
 

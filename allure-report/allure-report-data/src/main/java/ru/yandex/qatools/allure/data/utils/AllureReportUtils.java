@@ -2,6 +2,8 @@ package ru.yandex.qatools.allure.data.utils;
 
 import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import org.apache.commons.io.FileUtils;
@@ -53,6 +55,7 @@ public final class AllureReportUtils {
             ObjectMapper mapper = new ObjectMapper();
             AnnotationIntrospector ai = new JaxbAnnotationIntrospector(TypeFactory.defaultInstance());
             mapper.getSerializationConfig().with(ai);
+
             mapper.writerWithDefaultPrettyPrinter().writeValue(new File(directory, name), obj);
         } catch (IOException e) {
             throw new ReportGenerationException(e);

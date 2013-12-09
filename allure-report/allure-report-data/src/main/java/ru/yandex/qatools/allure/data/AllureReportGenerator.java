@@ -1,7 +1,7 @@
 package ru.yandex.qatools.allure.data;
 
 import org.apache.commons.io.FileUtils;
-import ru.yandex.qatools.allure.data.transform.*;
+import ru.yandex.qatools.allure.data.providers.*;
 import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 
 import java.io.*;

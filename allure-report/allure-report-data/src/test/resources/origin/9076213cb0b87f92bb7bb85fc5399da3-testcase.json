@@ -1,0 +1,53 @@
+{
+  "uid" : "9076213cb0b87f92bb7bb85fc5399da3",
+  "title" : "Attachments test",
+  "time" : {
+    "start" : 1386599321574,
+    "stop" : 1386599321620,
+    "duration" : 46
+  },
+  "summary" : {
+    "attachments" : 4,
+    "steps" : 1
+  },
+  "failure" : {
+    "message" : "This test should be failed",
+    "stackTrace" : "java.lang.AssertionError: This test should be failed\n                    at org.junit.Assert.fail(Assert.java:88)\n                    at org.junit.Assert.assertTrue(Assert.java:41)\n                    at my.company.steps.CommonSteps.makeThisTestFailed(CommonSteps.java:35)\n                    at my.company.TestWithSteps.attachmentsTest(TestWithSteps.java:25)\n                    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n                    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n                    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n                    at java.lang.reflect.Method.invoke(Method.java:601)\n                    at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)\n                    at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n                    at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)\n                    at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n                    at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55)\n                    at org.junit.rules.RunRules.evaluate(RunRules.java:20)\n                    at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)\n                    at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)\n                    at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)\n                    at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)\n                    at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)\n                    at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)\n                    at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)\n                    at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)\n                    at org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55)\n                    at org.junit.rules.RunRules.evaluate(RunRules.java:20)\n                    at org.junit.runners.ParentRunner.run(ParentRunner.java:309)\n                    at org.apache.maven.surefire.junit4.JUnit4TestSet.execute(JUnit4TestSet.java:53)\n                    at org.apache.maven.surefire.junit4.JUnit4Provider.executeTestSet(JUnit4Provider.java:123)\n                    at org.apache.maven.surefire.junit4.JUnit4Provider.invoke(JUnit4Provider.java:104)\n                    at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n                    at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n                    at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n                    at java.lang.reflect.Method.invoke(Method.java:601)\n                    at org.apache.maven.surefire.util.ReflectionUtils.invokeMethodWithArray(ReflectionUtils.java:164)\n                    at org.apache.maven.surefire.booter.ProviderFactory$ProviderProxy.invoke(ProviderFactory.java:110)\n                    at org.apache.maven.surefire.booter.SurefireStarter.invokeProvider(SurefireStarter.java:175)\n                    at\n                    org.apache.maven.surefire.booter.SurefireStarter.runSuitesInProcessWhenForked(SurefireStarter.java:107)\n                    at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:68)\n                "
+  },
+  "description" : "Single-line description",
+  "severity" : "CRITICAL",
+  "status" : "FAILED",
+  "steps" : [ {
+    "title" : "Make this test failed",
+    "time" : {
+      "start" : 1386599321616,
+      "stop" : 1386599321618,
+      "duration" : 2
+    },
+    "summary" : {
+      "attachments" : 1,
+      "steps" : 0
+    },
+    "status" : "FAILED",
+    "attachments" : [ {
+      "title" : "TXT Attachment",
+      "source" : "5f73d429-dadb-4fba-9a24-a3ed88563ebf-attachment.txt",
+      "type" : "TXT"
+    } ],
+    "steps" : [ ]
+  } ],
+  "attachments" : [ {
+    "title" : "JSON Attachment",
+    "source" : "f2afdc4d-8b7a-48b9-9e7d-bc8f8d3e6445-attachment.json",
+    "type" : "JSON"
+  }, {
+    "title" : "XML Attachment",
+    "source" : "53064e37-3632-495b-87fd-4a69219b2e02-attachment.xml",
+    "type" : "XML"
+  }, {
+    "title" : "JPG Attachment",
+    "source" : "e0b1ddf1-8baa-4c21-8e30-69777198fcb3-attachment.jpg",
+    "type" : "JPG"
+  } ],
+  "labels" : [ ]
+}

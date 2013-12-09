@@ -52,10 +52,20 @@
     </xsl:template>
 
     <xsl:template name="add-time-node-for-test-run">
-        <xsl:call-template name="add-time-node-params">
-            <xsl:with-param name="start" select="min(//test-suite/@start)"/>
-            <xsl:with-param name="stop" select="max(//test-suite/@stop)"/>
-        </xsl:call-template>
+        <xsl:choose>
+            <xsl:when test="count(//test-suite)=0">
+                <xsl:call-template name="add-time-node-params">
+                    <xsl:with-param name="start" select="0"/>
+                    <xsl:with-param name="stop" select="0"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="count(//test-suite)>0">
+                <xsl:call-template name="add-time-node-params">
+                    <xsl:with-param name="start" select="min(//test-suite/@start)"/>
+                    <xsl:with-param name="stop" select="max(//test-suite/@stop)"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="add-time-node">

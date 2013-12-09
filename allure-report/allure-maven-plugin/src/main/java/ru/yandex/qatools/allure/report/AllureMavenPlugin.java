@@ -112,7 +112,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
     private boolean generateData(File reportDirectory) {
         try {
-            AllureReportGenerator reportGenerator = new AllureReportGenerator();
+            AllureReportGenerator reportGenerator = new AllureReportGenerator(reportDirectory);
             reportGenerator.generate(reportDirectory);
         } catch (Exception e) {
             getLog().error(getErrorMessage(e));

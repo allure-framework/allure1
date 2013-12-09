@@ -43,17 +43,10 @@
                         <plugin>
                             <groupId>com.github.jaxb-xew-plugin</groupId>
                             <artifactId>jaxb-xew-plugin</artifactId>
-                            <version>1.0</version>
+                            <version>1.1</version>
                         </plugin>
                     </plugins>
                 </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>ru.yandex.qatools.allure</groupId>
-                        <artifactId>allure-model</artifactId>
-                        <version>${project.version}</version>
-                    </dependency>
-                </dependencies>
             </plugin>
         </plugins>
     </build>
@@ -64,16 +57,7 @@
             <artifactId>allure-model</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.googlecode.lambdaj</groupId>
-            <artifactId>lambdaj</artifactId>
-            <version>2.3.3</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
-        </dependency>
+        <!--Jackson dependencies for serialize to JSON-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -84,10 +68,18 @@
             <artifactId>jackson-module-jaxb-annotations</artifactId>
             <version>2.3.0</version>
         </dependency>
+
+        <!--XSLT 2.0-->
         <dependency>
             <groupId>net.sourceforge.saxon</groupId>
             <artifactId>saxon</artifactId>
             <version>9.1.0.8</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

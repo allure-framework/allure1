@@ -1,4 +1,4 @@
-package ru.yandex.qatools.allure.data.transform;
+package ru.yandex.qatools.allure.data.providers;
 
 import java.io.File;
 
