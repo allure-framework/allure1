@@ -124,10 +124,10 @@
     <xsl:template name="add-summary-node">
         <xsl:element name="summary" inherit-namespaces="yes">
             <xsl:attribute name="attachments">
-                <xsl:value-of select="count(//attachment)"/>
+                <xsl:value-of select="count(.//attachment)"/>
             </xsl:attribute>
             <xsl:attribute name="steps">
-                <xsl:value-of select="count(//step)"/>
+                <xsl:value-of select="count(.//step)"/>
             </xsl:attribute>
         </xsl:element>
     </xsl:template>
