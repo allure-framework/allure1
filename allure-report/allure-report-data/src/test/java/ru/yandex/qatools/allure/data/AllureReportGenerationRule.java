@@ -1,19 +1,16 @@
 package ru.yandex.qatools.allure.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.RegexFileFilter;
-import org.junit.rules.ExternalResource;
-import org.junit.rules.TemporaryFolder;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.rules.ExternalResource;
+import org.apache.commons.io.FileUtils;
 
-import javax.xml.bind.JAXB;
-import java.io.File;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
+import javax.xml.bind.JAXB;
 import java.util.List;
+import java.io.File;
+import java.net.URL;
 
 /**
  * Created by eroshenkoam on 12/10/13.
@@ -52,11 +49,7 @@ public class AllureReportGenerationRule extends ExternalResource {
     }
 
     protected void after() {
-        try {
-            FileUtils.deleteDirectory(this.reportDataDir);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        FileUtils.deleteQuietly(this.reportDataDir);
     }
 
     public AllureXUnit getXUnitData() throws Exception {
