@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.data;
 
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -18,6 +19,7 @@ public class ReportGeneratorTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Test
+    @Ignore
     public void generateWithEmptyInputTest() throws Exception {
         File output = folder.newFolder();
         AllureReportGenerator reportGenerator = new AllureReportGenerator();
@@ -25,6 +27,7 @@ public class ReportGeneratorTest {
     }
 
     @Test
+    @Ignore
     public void attachmentsCountTest() throws Exception {
         assertEquals(
                 "Not all attachment files are found.",
@@ -34,6 +37,7 @@ public class ReportGeneratorTest {
     }
 
     @Test
+    @Ignore
     public void attachmentsCopiedTest() throws Exception {
         File outputDirectory = folder.newFolder();
         AllureReportGenerator.copyAttachments(getTestDataDirs(), outputDirectory);

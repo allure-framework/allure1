@@ -33,7 +33,7 @@ angular.module('allure.features', [])
         $scope.story = story;
         //TODO: use shared testcase-list widget
         $scope.testsuite = {statistic: story.statistic};
-        $scope.testcases = story.testcases;
+        $scope.testcases = story.testCases;
         $scope.features.forEach(function(feature) {
             if(feature.stories.indexOf(story) !== -1) {
                 feature.expanded = true;
@@ -48,7 +48,7 @@ angular.module('allure.features', [])
         }
     };
     $scope.setTestcase = function(testcase) {
-        $state.go('home.testsuite.testcase', {testcaseUid: testcase.uid, testsuiteUid:testcase.suiteUid})
+        $state.go('features.story.testcase', {testcaseUid: testcase.uid})
     };
     $scope.expandFeature = function(feature, expanded) {
         if(!expanded && feature.stories.indexOf($scope.story) !== -1) {

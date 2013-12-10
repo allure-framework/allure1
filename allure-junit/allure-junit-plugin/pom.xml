@@ -10,7 +10,7 @@
 
     <artifactId>allure-junit-plugin</artifactId>
 
-    <name>Allure JUnit Plugin</name>
+    <name>Allure jUnit Plugin</name>
 
     <packaging>maven-plugin</packaging>
 

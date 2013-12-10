@@ -1,5 +1,5 @@
-<div class="features b-island tab-content-fill">
-    <div class="features__pane features__list">
+<div class="features b-island tab-content-fill" pane-set>
+    <div class="pane_col features__list" pane>
         <div class="features__title b-island__title">Functional requirements</div>
         <div class="feature" ng-repeat="feature in features">
             <div class="item" ng-click="expandFeature(feature, !feature.expanded)">
@@ -25,7 +25,7 @@
             </ul>
         </div>
     </div>
-    <div class="features__pane features__info">
+    <div class="pane_col features__info">
         <div class="features__title b-island__title">Info</div>
         <h3 class="features__pane__header" ng-bind="summaryText"></h3>
         <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData"></div>
@@ -43,7 +43,7 @@
             </li>
         </ul>
     </div>
-    <div class="features__pane features__view" ng-class="story && 'features__view_visible'">
+    <div class="pane_col features__view" ng-if="story" pane>
         <div class="features__title b-island__title">Story</div>
         <h3 class="features__pane__header">{{story.title}}</h3>
         <div ng-controller="TestCasesCtrl" ng-if="testcases">
@@ -76,4 +76,5 @@
             </div>
         </div>
     </div>
+    <div ui-view="testcase"></div>
 </div>

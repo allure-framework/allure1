@@ -1,8 +1,0 @@
-<urn:test-suite start="0" stop="0" xmlns:urn="urn:model.allure.qatools.yandex.ru">
-    <uid>minimal-info</uid>
-    <title>Minimal Info Test Case</title>
-    <test-cases start="0" stop="0" status="passed" severity="normal">
-        <uid>minimal-info-first-test-case</uid>
-        <title>Minimal Info Test Case</title>
-    </test-cases>
-</urn:test-suite>

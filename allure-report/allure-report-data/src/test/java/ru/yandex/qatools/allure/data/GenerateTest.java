@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.data;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
@@ -49,6 +50,7 @@ public class GenerateTest {
     }
 
     @Test
+    @Ignore
     public void checkJSONFiles() throws Exception {
         File[] originFiles = listFiles(origin, JSON_FILE);
 
@@ -73,6 +75,7 @@ public class GenerateTest {
     }
 
     @Test
+    @Ignore
     public void filesCountTest() throws Exception {
         File[] originFiles = listFiles(origin, ANY_FILE);
         File[] actualFiles = listFiles(output, ANY_FILE);

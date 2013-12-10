@@ -1,42 +1,16 @@
 .features {
   overflow: hidden;
   position: relative;
-  &__title {
-    margin-bottom: 10px;
-  }
-  &__pane {
-    top: 0;
-    left: 0;
-    position: absolute;
-    width: 50%;
-    height: 100%;
-    transition: left 0.3s;
-    background: #fff;
-    border-width: 0 1px 0 0;
-    border-style: solid;
-    border-color: #c2c2c2;
-    padding: 10px 15px;
-    &__header {
-      border-bottom: 1px solid #eee;
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-    }
-  }
   &__list {
-    z-index: 2;
+    width: 50% !important;
   }
   &__info {
+    width: 50%;
     left: 50%;
     z-index: 0;
     &__chart {
       width: 70%;
       margin: 0 auto;
-    }
-  }
-  &__view {
-    z-index: 1;
-    &_visible {
-      left: 50%;
     }
   }
   .item {

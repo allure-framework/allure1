@@ -1,0 +1,34 @@
+{
+  "features" : [ {
+    "title" : "MySecondFeature",
+    "statistic" : {
+      "total" : 1,
+      "passed" : 0,
+      "skipped" : 0,
+      "failed" : 1,
+      "broken" : 0
+    },
+    "stories" : [ {
+      "uid" : "df2a5a56c512c5fa23f68723fc50a09f",
+      "title" : "MyAmazingStory",
+      "statistic" : {
+        "total" : 1,
+        "passed" : 0,
+        "skipped" : 0,
+        "failed" : 1,
+        "broken" : 0
+      },
+      "testCases" : [ {
+        "uid" : "785c16b21165f27ad6c3522f95085892",
+        "title" : "Attachments test",
+        "time" : {
+          "start" : 1386599304970,
+          "stop" : 1386599304976,
+          "duration" : 6
+        },
+        "severity" : "CRITICAL",
+        "status" : "FAILED"
+      } ]
+    } ]
+  } ]
+}

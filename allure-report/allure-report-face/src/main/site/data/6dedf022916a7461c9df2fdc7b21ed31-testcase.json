@@ -1,0 +1,52 @@
+{
+  "uid" : "6dedf022916a7461c9df2fdc7b21ed31",
+  "title" : "Usual search test",
+  "time" : {
+    "start" : 1386599298669,
+    "stop" : 1386599302904,
+    "duration" : 4235
+  },
+  "summary" : {
+    "attachments" : 4,
+    "steps" : 4
+  },
+  "failure" : null,
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "steps" : [ {
+    "title" : "openMainPage",
+    "time" : {
+      "start" : 1386599299721,
+      "stop" : 1386599300082,
+      "duration" : 361
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachment" : [ ],
+    "steps" : [ ]
+  }, {
+    "title" : "search",
+    "time" : {
+      "start" : 1386599300082,
+      "stop" : 1386599302200,
+      "duration" : 2118
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachment" : [ ],
+    "steps" : [ ]
+  } ],
+  "attachments" : [ {
+    "title" : "Page Screenshot",
+    "source" : "0c8c6444-c6ee-499b-9d88-e91b2a3a6677-attachment.png",
+    "type" : "PNG"
+  } ],
+  "labels" : [ ]
+}
