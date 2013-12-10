@@ -15,25 +15,25 @@ import java.util.UUID;
  */
 public class TestSuiteReportRule extends TestWatcher {
 
-	private String uid;
+    private String uid;
 
-	public TestSuiteReportRule() {
-	}
+    public TestSuiteReportRule() {
+    }
 
-	protected void starting(Description description) {
-		uid = UUID.randomUUID().toString();
+    protected void starting(Description description) {
+        uid = UUID.randomUUID().toString();
         Allure.LIFECYCLE.fire(new TestRunStartedEvent(
                 uid,
                 description.getTestClass().getName(),
                 description.getAnnotations()
         ));
-	}
+    }
 
-	protected void finished(Description description) {
+    protected void finished(Description description) {
         Allure.LIFECYCLE.fire(new TestRunFinishedEvent(uid));
-	}
+    }
 
-	public String getUid() {
-		return uid;
-	}
+    public String getUid() {
+        return uid;
+    }
 }

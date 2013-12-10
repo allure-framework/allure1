@@ -57,6 +57,10 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
+        Allure.LIFECYCLE.fire(new TestFailureEvent(
+                Thread.currentThread().getName(),
+                iTestResult.getThrowable()
+        ));
     }
 
     @Override
