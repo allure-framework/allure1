@@ -3,70 +3,6 @@
 
 }
 
-.xunit_col_nth(@index) when (@index > 0) {
-  .xunit_col:nth-child(@{index}) {
-    @left-offset: 5%*(@index - 1);
-    left: @left-offset;
-    width: 50% - @left-offset;
-    &:last-child {
-      left: 50%;
-      width: 50%;
-      @media (max-width: @screen-desktop) {
-        @left: @left-offset + 25%;
-        left: @left;
-        width: 100% - @left;
-      }
-      &.xunit_col-expanded {
-        left: @left-offset;
-        width: 100% - @left-offset;
-      }
-    }
-  }
-  .xunit_col_nth(@index - 1);
-}
-
-.xunit_col_nth(5);
-
-
-.xunit_col {
-  position: absolute;
-  width: 40%;
-  left: 0;
-  padding: 0 15px;
-  height: 100%;
-  overflow: auto;
-  background: #fff;
-  z-index: 1;
-  transition-property: width, left;
-  transition-duration: 0.3s;
-  &:first-child:last-child {
-    width: 100%;
-    left: 0;
-  }
-  & + .xunit_col {
-    border-left: 1px solid #ccc;
-  }
-  .xunit_overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-    display: none;
-    &:hover {
-      background: #f4f4f4;
-      opacity: 0.4;
-    }
-  }
-  &-overlay {
-    overflow: hidden;
-    .xunit_overlay {
-      display: block;
-    }
-  }
-}
-
 .test-list.table {
   table-layout: fixed;
   .xunit_table_column {
@@ -93,17 +29,13 @@
   }
 }
 
-.xunit .b-island__title {
-  padding: 10px 0;
-}
-
 .xunit_header {
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
   margin-bottom: 15px;
   &_controls {
     display: none;
-    .xunit_col:last-child & {
+    .pane_col:last-child & {
       display: block;
     }
     opacity: 0.5;

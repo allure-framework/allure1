@@ -48,7 +48,7 @@ angular.module('allure.features', [])
         }
     };
     $scope.setTestcase = function(testcase) {
-        $state.go('home.testsuite.testcase', {testcaseUid: testcase.uid, testsuiteUid:testcase.suiteUid})
+        $state.go('features.story.testcase', {testcaseUid: testcase.uid})
     };
     $scope.expandFeature = function(feature, expanded) {
         if(!expanded && feature.stories.indexOf($scope.story) !== -1) {

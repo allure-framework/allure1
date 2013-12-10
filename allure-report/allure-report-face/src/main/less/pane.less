@@ -1,0 +1,35 @@
+.pane_col {
+  position: absolute;
+  width: 0%;
+  left: 100%;
+  padding: 0 15px;
+  height: 100%;
+  overflow: auto;
+  background: #fff;
+  z-index: 1;
+  transition-property: width, left;
+  transition-duration: 0.3s;
+  border-left: 1px solid #ccc;
+  .pane_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    display: none;
+    &:hover {
+      background: #f4f4f4;
+      opacity: 0.4;
+    }
+  }
+  &-overlay {
+    overflow: hidden;
+    .pane_overlay {
+      display: block;
+    }
+  }
+  .b-island__title {
+    padding: 10px 0;
+  }
+}

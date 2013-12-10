@@ -1,11 +1,11 @@
 /*global angular */
 angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
         'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.charts',
-        'allure.testcase.controllers', 'allure.xUnit.controllers', 'allure.table', 'allure.features'])
+        'allure.testcase', 'allure.xUnit.controllers', 'allure.table', 'allure.pane', 'allure.features'])
     .config(function($tooltipProvider) {
         $tooltipProvider.options({appendToBody:true})
     })
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, testcaseProvider) {
         'use strict';
         function processResponse(response) {
             return response.data;
@@ -29,18 +29,6 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
                 url: "/:testsuiteUid"
             })
             .state('home.testsuite.expanded', {
-                url: '/expanded'
-            })
-            .state('home.testsuite.testcase', {
-                url: "/:testcaseUid"
-            })
-            .state('home.testsuite.testcase.expanded', {
-                url: '/expanded'
-            })
-            .state('home.testsuite.testcase.attachment', {
-                url: '/:attachmentUid'
-            })
-            .state('home.testsuite.testcase.attachment.expanded', {
                 url: '/expanded'
             })
             .state('graph', {
@@ -71,5 +59,7 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
             })
             .state('features.story', {
                 url: '/:storyUid'
-            })
+            });
+        testcaseProvider.attachStates('features.story');
+        testcaseProvider.attachStates('home.testsuite');
     });
