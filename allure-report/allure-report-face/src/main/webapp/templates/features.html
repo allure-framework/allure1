@@ -27,7 +27,7 @@
             </ul>
         </div>
     </div>
-    <div class="pane_col features__info">
+    <div class="pane_col features__info" ng-hide="story">
         <div class="features__title b-island__title">Info</div>
         <h3 class="features__pane__header" ng-bind="summaryText"></h3>
         <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData"></div>
@@ -56,7 +56,7 @@
                 <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
                     <tbody>
                     <tr ng-repeat="testcase in testcases | orderBy:sorting.predicate:sorting.reverse | filter:statusFilter | limitTo:testcasesLimit"
-                        class="clickable" ng-click="setTestcase(testcase)" ng-class="{active:testcase==$parent.testcase}">
+                        class="clickable" ng-click="setTestcase(testcase)" ng-class="{active:testcase.uid==testcaseUid}">
                         <td allure-table-col="{heading:'#', predicate: 'order', flex: 0.5}">{{testcase.order}}</td>
                         <td allure-table-col="{heading:'Title', predicate: 'title', flex: 3}" class="line-ellipsis" title="{{testcase.title}}">
                             <span tooltip="{{testcase.severity}}" tooltip-placement="left" class="icon-severity-{{testcase.severity|lowercase}}"></span>

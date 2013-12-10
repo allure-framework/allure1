@@ -8,8 +8,11 @@
   background: #fff;
   z-index: 1;
   transition-property: width, left;
-  transition-duration: 0.3s;
+  transition-duration: 0.4s;
   border-left: 1px solid #ccc;
+  &.ng-enter:not(.ng-enter-active), &.ng-leave-active {
+    left: 100% !important;
+  }
   .pane_overlay {
     position: absolute;
     top: 0;

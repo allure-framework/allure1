@@ -1,5 +1,5 @@
 /*global angular */
-angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
+angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui.router',
         'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.charts',
         'allure.testcase', 'allure.xUnit.controllers', 'allure.table', 'allure.pane', 'allure.features'])
     .config(function($tooltipProvider) {
