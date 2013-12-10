@@ -15,6 +15,7 @@ angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
             $state.go('home.testsuite', {testsuiteUid: testsuiteUid});
         };
         $scope.setTestcase = function(testcaseUid) {
+            $scope.testcaseUid = testcaseUid;
             $state.go('home.testsuite.testcase', {testcaseUid: testcaseUid});
         };
         $scope.isState = function(statename) {
@@ -38,8 +39,12 @@ angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
         });
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.testsuite;
+            delete $scope.testcaseUid;
             if(params.testsuiteUid) {
                 setTestsuite(params.testsuiteUid);
+            }
+            if(params.testcaseUid) {
+                $scope.testcaseUid = params.testcaseUid;
             }
         });
     })
