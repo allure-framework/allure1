@@ -1,6 +1,7 @@
-<div class="pane_col" ng-if="testcase" pane>
+<div class="pane_col" ng-if="testcase" pane pane-expanded="isState('testcase.expanded')">
+    <div class="pane_overlay clickable" ng-click="go('testcase.attachment')"></div>
     <ng-include src="'templates/testcase/testcase.html'"></ng-include>
 </div>
-<div class="pane_col" ng-if="attachment" pane>
+<div class="pane_col" ng-if="attachment" pane pane-expanded="isState('testcase.attachment.expanded')">
     <ng-include src="'templates/testcase/attachment.html'"></ng-include>
 </div>

@@ -1,6 +1,8 @@
 <div class="features b-island tab-content-fill" pane-set>
     <div class="pane_col features__list" pane>
+        <div class="pane_overlay clickable" ui-sref="features.story"></div>
         <div class="features__title b-island__title">Functional requirements</div>
+        <h3 class="features__pane__header">Features</h3>
         <div class="feature" ng-repeat="feature in features">
             <div class="item" ng-click="expandFeature(feature, !feature.expanded)">
                 <div class="item__icon" ng-class="feature.expanded ? 'arrow-down' : 'glyphicon glyphicon-play'"></div>
@@ -44,6 +46,7 @@
         </ul>
     </div>
     <div class="pane_col features__view" ng-if="story" pane>
+        <div class="pane_overlay clickable" ui-sref="features.story.testcase"></div>
         <div class="features__title b-island__title">Story</div>
         <h3 class="features__pane__header">{{story.title}}</h3>
         <div ng-controller="TestCasesCtrl" ng-if="testcases">
