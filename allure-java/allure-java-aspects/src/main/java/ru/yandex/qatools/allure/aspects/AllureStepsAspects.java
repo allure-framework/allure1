@@ -19,10 +19,12 @@ public class AllureStepsAspects {
 
 	@Pointcut("@annotation(ru.yandex.qatools.allure.annotations.Step)")
 	public void withStepAnnotation() {
+        //pointcut body, should be empty
 	}
 
 	@Pointcut("execution(* *(..))")
 	public void anyMethod() {
+        //pointcut body, should be empty
 	}
 
 	@Before("anyMethod() && withStepAnnotation()")

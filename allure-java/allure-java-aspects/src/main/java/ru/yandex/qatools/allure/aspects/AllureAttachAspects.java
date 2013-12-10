@@ -19,10 +19,12 @@ public class AllureAttachAspects {
 
 	@Pointcut("@annotation(ru.yandex.qatools.allure.annotations.Attach)")
 	public void withAttachAnnotation() {
+        //pointcut body, should be empty
 	}
 
 	@Pointcut("execution(* *(..))")
 	public void anyMethod() {
+        //pointcut body, should be empty
 	}
 
 	@AfterReturning(pointcut = "anyMethod() && withAttachAnnotation()", returning = "result")
