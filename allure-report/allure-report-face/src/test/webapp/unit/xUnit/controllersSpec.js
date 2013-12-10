@@ -98,7 +98,7 @@ describe('xUnit controllers', function () {
         });
     });
 
-    describe('HomeCtrl', function() {
+    xdescribe('HomeCtrl', function() {
         var treeUtilsSpy,
             stateMock,
             scope;
