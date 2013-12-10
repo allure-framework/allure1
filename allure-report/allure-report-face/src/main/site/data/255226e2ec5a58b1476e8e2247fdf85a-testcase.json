@@ -1,0 +1,52 @@
+{
+  "uid" : "255226e2ec5a58b1476e8e2247fdf85a",
+  "title" : "Wildcard search test",
+  "time" : {
+    "start" : 1386599298669,
+    "stop" : 1386599304878,
+    "duration" : 6209
+  },
+  "summary" : {
+    "attachments" : 4,
+    "steps" : 4
+  },
+  "failure" : null,
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "PASSED",
+  "steps" : [ {
+    "title" : "openMainPage",
+    "time" : {
+      "start" : 1386599299721,
+      "stop" : 1386599300106,
+      "duration" : 385
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachment" : [ ],
+    "steps" : [ ]
+  }, {
+    "title" : "search",
+    "time" : {
+      "start" : 1386599300106,
+      "stop" : 1386599304214,
+      "duration" : 4108
+    },
+    "summary" : {
+      "attachments" : 0,
+      "steps" : 0
+    },
+    "status" : "PASSED",
+    "attachment" : [ ],
+    "steps" : [ ]
+  } ],
+  "attachments" : [ {
+    "title" : "Page Screenshot",
+    "source" : "d7dc4bb7-e898-4526-9e82-7df16d338aa4-attachment.png",
+    "type" : "PNG"
+  } ],
+  "labels" : [ ]
+}

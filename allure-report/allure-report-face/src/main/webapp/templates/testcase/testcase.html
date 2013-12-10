@@ -2,9 +2,9 @@
 <div class="xunit_header">
     <h3>
         <div class="xunit_header_controls pull-right">
-            <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('home.testsuite.testcase.expanded')" ui-sref="home.testsuite.testcase.expanded"></span>
-            <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('home.testsuite.testcase.expanded')" ui-sref="home.testsuite.testcase"></span>
-            <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="home.testsuite"></span>
+            <!--<span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('home.testsuite.testcase.expanded')" ui-sref="home.testsuite.testcase.expanded"></span>-->
+            <!--<span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('home.testsuite.testcase.expanded')" ui-sref="home.testsuite.testcase"></span>-->
+            <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ng-click="closeTestcase()"></span>
         </div>
         <span class="icon-status-{{testcase.status | lowercase}}"></span>
         {{testcase.title}}

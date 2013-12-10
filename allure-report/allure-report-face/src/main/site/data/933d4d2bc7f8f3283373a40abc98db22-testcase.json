@@ -1,0 +1,23 @@
+{
+  "uid" : "933d4d2bc7f8f3283373a40abc98db22",
+  "title" : "Failed test without steps",
+  "time" : {
+    "start" : 1386599324849,
+    "stop" : 1386599324849,
+    "duration" : 0
+  },
+  "summary" : {
+    "attachments" : 4,
+    "steps" : 4
+  },
+  "failure" : {
+    "message" : "5 is not 2 + 2\nExpected: is <4>\n     got: <5>\n",
+    "stackTrace" : "java.lang.AssertionError: 5 is not 2 + 2\nExpected: is <4>\n     got: <5>\n\n\tat org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:21)\n\tat org.junit.Assert.assertThat(Assert.java:865)\n\tat my.company.MainPageTest.failedTestWithoutSteps(MainPageTest.java:27)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)\n\tat sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)\n\tat sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)\n\tat java.lang.reflect.Method.invoke(Method.java:606)\n\tat org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)\n\tat org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)\n\tat org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)\n\tat org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)\n\tat org.junit.rules.TestWatcher$1.evaluate(TestWatcher.java:55)\n\tat org.junit.rules.RunRules.evaluate(RunRules.java:20)\n\tat org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)\n\tat org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)\n\tat org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)\n\tat org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)\n\tat java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)\n\tat java.util.concurrent.FutureTask.run(FutureTask.java:262)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:744)\n"
+  },
+  "description" : null,
+  "severity" : "NORMAL",
+  "status" : "FAILED",
+  "steps" : [ ],
+  "attachments" : [ ],
+  "labels" : [ ]
+}
