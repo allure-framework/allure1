@@ -22,7 +22,7 @@
         <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
             <tbody>
             <tr ng-repeat="testcase in testcases | orderBy:sorting.predicate:sorting.reverse | filter:statusFilter | limitTo:testcasesLimit"
-                class="clickable" ng-click="setTestcase(testcase.uid)" ng-class="{active:testcase==$parent.testcase}">
+                class="clickable" ng-click="setTestcase(testcase.uid)" ng-class="{active:testcaseUid==testcase.uid}">
                 <td allure-table-col="{heading:'#', predicate: 'order', flex: 0.5}">{{testcase.order}}</td>
                 <td allure-table-col="{heading:'Title', predicate: 'title', flex: 3}" class="line-ellipsis" title="{{testcase.title}}">
                     <span tooltip="{{testcase.severity}}" tooltip-placement="left" class="icon-severity-{{testcase.severity|lowercase}}"></span>
