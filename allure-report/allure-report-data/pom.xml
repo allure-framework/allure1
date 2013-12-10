@@ -116,6 +116,19 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-model</artifactId>
+            <version>${project.version}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.googlecode.lambdaj</groupId>
+            <artifactId>lambdaj</artifactId>
+            <version>2.3.3</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

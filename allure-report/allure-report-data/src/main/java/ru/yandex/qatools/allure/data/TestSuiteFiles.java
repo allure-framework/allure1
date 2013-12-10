@@ -16,13 +16,13 @@ import static ru.yandex.qatools.allure.data.utils.XslTransformationUtil.applyTra
 
 public class TestSuiteFiles {
 
-    private static final String TEST_SUITES_MASK = ".+-testsuite\\.xml";
+    public static final String TEST_SUITES_MASK = ".+-testsuite\\.xml";
 
-    private static final String SUITES_TO_TEST_RUN_1_XSL = "xsl/suites-to-testrun-1.xsl";
+    public static final String SUITES_TO_TEST_RUN_1_XSL = "xsl/suites-to-testrun-1.xsl";
 
-    private static final String SUITES_TO_TEST_RUN_2_XSL = "xsl/suites-to-testrun-2.xsl";
+    public static final String SUITES_TO_TEST_RUN_2_XSL = "xsl/suites-to-testrun-2.xsl";
 
-    private static final String SUITES_TO_TEST_RUN_3_XSL = "xsl/suites-to-testrun-3.xsl";
+    public static final String SUITES_TO_TEST_RUN_3_XSL = "xsl/suites-to-testrun-3.xsl";
 
     private String suiteFiles;
 
