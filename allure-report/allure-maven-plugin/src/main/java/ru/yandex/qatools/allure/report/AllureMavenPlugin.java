@@ -87,6 +87,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             sink.link_();
 
         } else if (unpackReport()) {
+            generateData(reportDirectory);
             sink.rawText("<meta http-equiv=\"refresh\" content=\"0;url=allure-maven-plugin/index.html\" />");
             sink.link("allure-maven-plugin/index.html");
             sink.figure();
@@ -121,17 +122,15 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
                     executionEnvironment(getProject(), mavenSession, pluginManager)
             );
         } catch (MojoExecutionException e) {
-            getLog().error(getErrorMessage(e));
+            getLog().error(getErrorMessage(), e);
             return false;
         }
         return true;
     }
 
-    private String getErrorMessage(Throwable throwable) {
+    private String getErrorMessage() {
         return String.format(
-                "%s: %s. Please, see FAQ %s or contact with allure team %s.",
-                throwable.getClass().getName(),
-                throwable.getMessage(),
+                "Please, see FAQ %s or contact with allure team %s.",
                 FAQ,
                 ALLURE_TEAM
         );
