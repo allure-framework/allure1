@@ -1,6 +1,6 @@
 /**
- * @license AngularJS v1.2.0-rc.2
- * (c) 2010-2012 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.2.4
+ * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular, undefined) {'use strict';
@@ -12,20 +12,25 @@
  *
  * # ngTouch
  *
- * `ngTouch` is the name of the optional Angular module that provides touch events and other
- * helpers for touch-enabled devices.
- * The implementation is based on jQuery Mobile touch event handling
- * ([jquerymobile.com](http://jquerymobile.com/))
+ * The `ngTouch` module provides touch events and other helpers for touch-enabled devices.
+ * The implementation is based on jQuery Mobile touch event handling 
+ * ([jquerymobile.com](http://jquerymobile.com/)).
  *
  * {@installModule touch}
  *
  * See {@link ngTouch.$swipe `$swipe`} for usage.
+ *
+ * <div doc-module-components="ngTouch"></div>
+ *
  */
 
 // define ngTouch module
+/* global -ngTouch */
 var ngTouch = angular.module('ngTouch', []);
 
-/**
+/* global ngTouch: false */
+
+    /**
      * @ngdoc object
      * @name ngTouch.$swipe
      *
@@ -108,12 +113,12 @@ ngTouch.factory('$swipe', [function() {
         totalX = 0;
         totalY = 0;
         lastPos = startCoords;
-        eventHandlers['start'] && eventHandlers['start'](startCoords);
+        eventHandlers['start'] && eventHandlers['start'](startCoords, event);
       });
 
       element.on('touchcancel', function(event) {
         active = false;
-        eventHandlers['cancel'] && eventHandlers['cancel']();
+        eventHandlers['cancel'] && eventHandlers['cancel'](event);
       });
 
       element.on('touchmove mousemove', function(event) {
@@ -141,24 +146,25 @@ ngTouch.factory('$swipe', [function() {
         if (totalY > totalX) {
           // Allow native scrolling to take over.
           active = false;
-          eventHandlers['cancel'] && eventHandlers['cancel']();
+          eventHandlers['cancel'] && eventHandlers['cancel'](event);
           return;
         } else {
           // Prevent the browser from scrolling.
           event.preventDefault();
-
-          eventHandlers['move'] && eventHandlers['move'](coords);
+          eventHandlers['move'] && eventHandlers['move'](coords, event);
         }
       });
 
       element.on('touchend mouseup', function(event) {
         if (!active) return;
         active = false;
-        eventHandlers['end'] && eventHandlers['end'](getCoordinates(event));
+        eventHandlers['end'] && eventHandlers['end'](getCoordinates(event), event);
       });
     }
   };
 }]);
+
+/* global ngTouch: false */
 
 /**
  * @ngdoc directive
@@ -398,7 +404,7 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
         }
 
         if (!angular.isDefined(attr.disabled) || attr.disabled === false) {
-          element.triggerHandler('click', event);
+          element.triggerHandler('click', [event]);
         }
       }
 
@@ -415,9 +421,9 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
     // - On mobile browsers, the simulated "fast" click will call this.
     // - But the browser's follow-up slow click will be "busted" before it reaches this handler.
     // Therefore it's safe to use this directive on both mobile and desktop.
-    element.on('click', function(event) {
+    element.on('click', function(event, touchend) {
       scope.$apply(function() {
-        clickHandler(scope, {$event: event});
+        clickHandler(scope, {$event: (touchend || event)});
       });
     });
 
@@ -432,6 +438,8 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
   };
 }]);
 
+/* global ngTouch: false */
+
 /**
  * @ngdoc directive
  * @name ngTouch.directive:ngSwipeLeft
@@ -439,7 +447,8 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
  * @description
  * Specify custom behavior when an element is swiped to the left on a touchscreen device.
  * A leftward swipe is a quick, right-to-left slide of the finger.
- * Though ngSwipeLeft is designed for touch-based devices, it will work with a mouse click and drag too.
+ * Though ngSwipeLeft is designed for touch-based devices, it will work with a mouse click and drag
+ * too.
  *
  * Requires the {@link ngTouch `ngTouch`} module to be installed.
  *
@@ -468,7 +477,8 @@ ngTouch.directive('ngClick', ['$parse', '$timeout', '$rootElement',
  * @description
  * Specify custom behavior when an element is swiped to the right on a touchscreen device.
  * A rightward swipe is a quick, left-to-right slide of the finger.
- * Though ngSwipeRight is designed for touch-based devices, it will work with a mouse click and drag too.
+ * Though ngSwipeRight is designed for touch-based devices, it will work with a mouse click and drag
+ * too.
  *
  * Requires the {@link ngTouch `ngTouch`} module to be installed.
  *
@@ -524,18 +534,18 @@ function makeSwipeDirective(directiveName, direction, eventName) {
       }
 
       $swipe.bind(element, {
-        'start': function(coords) {
+        'start': function(coords, event) {
           startCoords = coords;
           valid = true;
         },
-        'cancel': function() {
+        'cancel': function(event) {
           valid = false;
         },
-        'end': function(coords) {
+        'end': function(coords, event) {
           if (validSwipe(coords)) {
             scope.$apply(function() {
               element.triggerHandler(eventName);
-              swipeHandler(scope);
+              swipeHandler(scope, {$event: event});
             });
           }
         }
