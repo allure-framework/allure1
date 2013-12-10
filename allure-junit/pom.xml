@@ -11,7 +11,7 @@
 
     <artifactId>allure-junit</artifactId>
 
-    <name>Allure JUnit</name>
+    <name>Allure jUnit</name>
 
     <modules>
         <module>allure-junit-adaptor</module>
