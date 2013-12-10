@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure;
 
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import ru.yandex.qatools.allure.annotations.*;
 import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.exceptions.UnknownEventException;
@@ -10,8 +11,6 @@ import ru.yandex.qatools.allure.storages.TestStepStorage;
 import ru.yandex.qatools.allure.storages.TestStorage;
 import ru.yandex.qatools.allure.utils.AllureWriteUtils;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 
@@ -195,15 +194,8 @@ public enum Allure {
 
     private static Failure getFailureByThrowable(Throwable throwable) {
         Failure failure = new Failure();
-        if (throwable.getMessage() == null || throwable.getMessage().length() == 0) {
-            failure.setMessage(throwable.getClass().getName());
-        } else {
-            failure.setMessage(throwable.getMessage());
-        }
-        StringWriter writer = new StringWriter();
-        PrintWriter printer = new PrintWriter(writer);
-        throwable.printStackTrace(printer);
-        failure.setStackTrace(writer.toString());
+        failure.setMessage(ExceptionUtils.getMessage(throwable));
+        failure.setStackTrace(ExceptionUtils.getStackTrace(throwable));
         return failure;
     }
 }

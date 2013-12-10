@@ -1,7 +1,7 @@
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:alr="urn:data.allure.qatools.yandex.ru"
-                xmlns:uid="java:ru.yandex.qatools.allure.data.utils.UidGenerationUtil"
+                xmlns:uid="java:ru.yandex.qatools.allure.data.utils.UidGenerationUtils"
                 exclude-result-prefixes="uid">
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>

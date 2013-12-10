@@ -8,7 +8,7 @@ import java.io.File;
 import java.io.StringReader;
 
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
-import static ru.yandex.qatools.allure.data.utils.XslTransformationUtil.applyTransformation;
+import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformation;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru

@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
  *         Date: 08.12.13
  */
 @SuppressWarnings("unused")
-public class UidGenerationUtil {
+public class UidGenerationUtils {
 
     private static final String ALGORITHM = "MD5";
 
