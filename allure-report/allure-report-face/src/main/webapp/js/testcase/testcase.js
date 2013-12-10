@@ -96,20 +96,22 @@ angular.module('allure.testcase', [])
                 ($scope.isExpanded() ? '' : '.expanded')
             );
         };
-        //noinspection FallthroughInSwitchStatementJS
-        switch ($scope.attachment.type) {
-            case 'JPG':
-            case 'PNG':
-                $scope.type = "image";
-            break;
-            case 'TXT':
-                $scope.type = "text";
-                fileGetContents($scope.getSourceUrl($scope.attachment));
-            break;
-            case 'XML':
-            case 'JSON':
-                $scope.type = "code";
-                fileGetContents($scope.getSourceUrl($scope.attachment));
-            break;
-        }
+        $scope.$watch('attachment', function(attachment) {
+            //noinspection FallthroughInSwitchStatementJS
+            switch (attachment.type) {
+                case 'JPG':
+                case 'PNG':
+                    $scope.type = "image";
+                    break;
+                case 'TXT':
+                    $scope.type = "text";
+                    fileGetContents($scope.getSourceUrl(attachment));
+                    break;
+                case 'XML':
+                case 'JSON':
+                    $scope.type = "code";
+                    fileGetContents($scope.getSourceUrl(attachment));
+                    break;
+            }
+        });
     });
