@@ -2,7 +2,6 @@
 describe('AllureTable directive', function () {
     'use strict';
     var scope,
-        elemScope,
         elem;
 
     function createElement(html, scopeValues) {
@@ -11,7 +10,6 @@ describe('AllureTable directive', function () {
             angular.extend(scope, scopeValues);
             elem = angular.element(html);
             $compile(elem)(scope);
-            elemScope = elem.scope();
             scope.$apply();
         });
     }
@@ -58,7 +56,7 @@ describe('AllureTable directive', function () {
             '<tr><td allure-table-col="{heading: \'Number\'}">1</td><td allure-table-col="\'Color\'">red</td></tr>'+
             '<tr><td>2</td><td>yellow</td></tr>'+
             '</tbody>');
-        expect(elemScope.columns).toEqual([{heading: 'Number', reverse: false, flex: 1}, {predicate: 'color', heading: 'Color', reverse: false, flex: 1}]);
+        expect(elem.isolateScope().columns).toEqual([{heading: 'Number', reverse: false, flex: 1}, {predicate: 'color', heading: 'Color', reverse: false, flex: 1}]);
     });
 
     describe('controller', function() {
