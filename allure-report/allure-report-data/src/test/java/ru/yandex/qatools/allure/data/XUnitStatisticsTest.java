@@ -1,18 +1,14 @@
 package ru.yandex.qatools.allure.data;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.filefilter.RegexFileFilter;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.junit.rules.RuleChain;
+import org.junit.rules.TestRule;
 import ru.yandex.qatools.allure.model.ModelProperties;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
-import javax.xml.bind.JAXB;
-import java.util.ArrayList;
 import java.util.List;
-import java.io.File;
 
 import static ch.lambdaj.Lambda.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -21,31 +17,22 @@ import static org.junit.Assert.assertThat;
 /**
  * Created by eroshenkoam on 12/10/13.
  */
-public class XUnitDataTest {
+public class XUnitStatisticsTest {
+
+    private static ModelProperties modelProperties = new ModelProperties();
 
     @ClassRule
-    public static TemporaryFolder tmpFolder = new TemporaryFolder();
+    public static AllureReportGenerationRule allureRule =
+            new AllureReportGenerationRule(modelProperties.getResultsPath());
 
-    private static AllureXUnit allureXUnitData;
+    private AllureXUnit allureXUnitData;
 
-    private static List<TestSuiteResult> testSuiteResults;
+    private List<TestSuiteResult> testSuiteResults;
 
-    @BeforeClass
-    public static void generateReport() throws Exception {
-        File allureDataDir = tmpFolder.newFolder();
-        ModelProperties modelProperties = new ModelProperties();
-        File allureResultsDir = new File(ClassLoader.getSystemResource(modelProperties.getResultsPath()).getFile());
-
-        AllureReportGenerator allureReportGenerator = new AllureReportGenerator(allureResultsDir);
-        allureReportGenerator.generate(allureDataDir);
-
-        ObjectMapper mapper = new ObjectMapper();
-        allureXUnitData = mapper.readValue(new File(allureDataDir, "xunit.json"), AllureXUnit.class);
-
-        testSuiteResults = new ArrayList<>();
-        for (String path : allureResultsDir.list(new RegexFileFilter(TestSuiteFiles.TEST_SUITES_MASK))) {
-            testSuiteResults.add(JAXB.unmarshal(new File(allureResultsDir, path), TestSuiteResult.class));
-        }
+    @Before
+    public void initVariables() throws Exception {
+        this.allureXUnitData = allureRule.getXUnitData();
+        this.testSuiteResults = allureRule.getTestSuiteResults();
     }
 
     @Test
