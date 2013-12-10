@@ -13,8 +13,8 @@
             <xsd:element name="classname" type="xsd:string" minOccurs="0"/>
             <xsd:element name="test-cases" type="ns2:test-cases-result" minOccurs="0"/>
         </xsd:all>
-        <xsd:attribute name="start" type="xsd:long" default="0"/>
-        <xsd:attribute name="stop" type="xsd:long" default="0"/>
+        <xsd:attribute name="start" type="xsd:long" use="required"/>
+        <xsd:attribute name="stop" type="xsd:long" use="required"/>
     </xsd:complexType>
 
     <xsd:complexType name="test-cases-result">
@@ -32,8 +32,8 @@
             <xsd:element name="attachments" type="ns2:attachments" minOccurs="0"/>
             <xsd:element name="labels" type="ns2:labels" minOccurs="0"/>
         </xsd:all>
-        <xsd:attribute name="start" type="xsd:long" default="0"/>
-        <xsd:attribute name="stop" type="xsd:long" default="0"/>
+        <xsd:attribute name="start" type="xsd:long" use="required"/>
+        <xsd:attribute name="stop" type="xsd:long" use="required"/>
         <xsd:attribute name="status" type="ns2:status" default="passed"/>
         <xsd:attribute name="severity" type="ns2:severity-level" default="normal"/>
     </xsd:complexType>
