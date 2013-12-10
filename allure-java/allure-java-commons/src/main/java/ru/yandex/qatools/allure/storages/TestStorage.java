@@ -11,25 +11,25 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class TestStorage {
 
-    private static final Map<String, TestCaseResult> testData = new ConcurrentHashMap<>();
+    private static final Map<String, TestCaseResult> TEST_DATA = new ConcurrentHashMap<>();
 
     private TestStorage() {
     }
 
     private static void checkTest(String uid) {
-        if (!testData.containsKey(uid)) {
-            testData.put(uid, new TestCaseResult());
+        if (!TEST_DATA.containsKey(uid)) {
+            TEST_DATA.put(uid, new TestCaseResult());
         }
     }
 
     public static TestCaseResult getTest(String uid) {
         checkTest(uid);
-        return testData.get(uid);
+        return TEST_DATA.get(uid);
     }
 
     public static TestCaseResult pollTest(String uid) {
         checkTest(uid);
-        return testData.remove(uid);
+        return TEST_DATA.remove(uid);
     }
 
 }

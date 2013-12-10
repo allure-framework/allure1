@@ -43,7 +43,9 @@ public class ShouldAddRulesTest {
         return Arrays.asList(
                 new Object[]{TestClass.class},
                 new Object[]{TestClassWithStaticConstructor.class},
-                new Object[]{TheoryTestClass.class}
+                new Object[]{TheoryTestClass.class},
+                new Object[]{TestClassWithRules.class},
+                new Object[]{TestClassWithNonAnnotatedRules.class}
         );
     }
 

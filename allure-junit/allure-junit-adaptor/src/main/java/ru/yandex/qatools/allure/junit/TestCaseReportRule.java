@@ -18,29 +18,29 @@ import java.util.UUID;
 
 public class TestCaseReportRule extends TestWatcher {
 
-	private String uid;
+    private String uid;
 
-	private String runUid;
+    private String runUid;
 
-	public TestCaseReportRule(TestSuiteReportRule testSuite) {
+    public TestCaseReportRule(TestSuiteReportRule testSuite) {
         this.uid = UUID.randomUUID().toString();
-		this.runUid = testSuite.getUid();
-	}
+        this.runUid = testSuite.getUid();
+    }
 
-	protected void starting(Description description) {
+    protected void starting(Description description) {
         Allure.LIFECYCLE.fire(new TestStartedEvent(uid, description.getMethodName(), description.getAnnotations()));
-	}
+    }
 
-	protected void finished(Description description) {
+    protected void finished(Description description) {
         Allure.LIFECYCLE.fire(new TestFinishedEvent(runUid, uid));
-	}
+    }
 
-	protected void skipped(AssumptionViolatedException e, Description description) {
+    protected void skipped(AssumptionViolatedException e, Description description) {
         Allure.LIFECYCLE.fire(new TestAssumptionFailureEvent(uid, e));
-	}
+    }
 
-	protected void failed(Throwable e, Description description) {
+    protected void failed(Throwable e, Description description) {
         Allure.LIFECYCLE.fire(new TestFailureEvent(uid, e));
-	}
+    }
 
 }

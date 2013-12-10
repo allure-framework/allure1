@@ -28,7 +28,7 @@ public abstract class Injector {
         return (Class<?>) AccessController.doPrivileged(new PrivilegedAction() {
             @Override
             public Class<?> run() {
-                return new MyClassLoader(loader).defineClass(name, bytes);
+                return new ClassLoaderWithPublicDefine(loader).defineClass(name, bytes);
             }
         });
     }

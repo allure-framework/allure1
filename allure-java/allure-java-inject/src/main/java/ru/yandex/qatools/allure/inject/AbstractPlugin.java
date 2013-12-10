@@ -57,16 +57,15 @@ public abstract class AbstractPlugin extends AbstractMojo {
         try {
             resolver.resolve(artifact, remoteRepositories, localRepository);
         } catch (ArtifactResolutionException | ArtifactNotFoundException e) {
-            getLog().error(getErrorMessage(e));
+            getLog().error(getErrorMessage(), e);
         }
 
         return artifact;
     }
 
-    protected String getErrorMessage(Throwable throwable) {
+    protected String getErrorMessage() {
         return String.format(
-                "%s. Please, see FAQ %s or contact with allure team %s.",
-                throwable.getMessage(),
+                "Please, see FAQ %s or contact with allure team %s:",
                 FAQ,
                 ALLURE_TEAM
         );
