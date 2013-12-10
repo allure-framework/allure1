@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:alr="urn:data.allure.qatools.yandex.ru"
+            targetNamespace="urn:data.allure.qatools.yandex.ru">
+
+    <xsd:element name="list-files" type="alr:list-files"/>
+
+    <!--Information about files.-->
+    <xsd:complexType name="list-files">
+        <xsd:sequence>
+            <xsd:element name="files" type="alr:files" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="files">
+        <xsd:sequence>
+            <xsd:element name="file" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="statistic">
+        <xsd:attribute name="total" type="xsd:long" default="0"/>
+        <xsd:attribute name="passed" type="xsd:long" default="0"/>
+        <xsd:attribute name="skipped" type="xsd:long" default="0"/>
+        <xsd:attribute name="failed" type="xsd:long" default="0"/>
+        <xsd:attribute name="broken" type="xsd:long" default="0"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="time">
+        <xsd:attribute name="start" type="xsd:long" default="0"/>
+        <xsd:attribute name="stop" type="xsd:long" default="0"/>
+        <xsd:attribute name="duration" type="xsd:long" default="0"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="summary">
+        <xsd:attribute name="attachments" type="xsd:long" default="0"/>
+        <xsd:attribute name="steps" type="xsd:long" default="0"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="attachments">
+        <xsd:sequence>
+            <xsd:element name="attachment" type="alr:attachment" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="labels">
+        <xsd:sequence>
+            <xsd:element name="label" type="alr:label" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="status"/>
+    <xsd:complexType name="attachment"/>
+    <xsd:complexType name="attachment-type"/>
+    <xsd:complexType name="severity-level"/>
+    <xsd:complexType name="failure"/>
+    <xsd:complexType name="label"/>
+
+</xsd:schema>

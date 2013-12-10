@@ -13,8 +13,11 @@ import ru.yandex.qatools.properties.annotations.Resource;
 @Resource.Classpath("model.properties")
 public class ModelProperties {
 
-    @Property("results.path")
+    @Property("allure.model.results.path")
     private String resultsPath;
+
+    @Property("allure.model.file.name")
+    private String modelFileName;
 
     public ModelProperties() {
         PropertyLoader.populate(this);
@@ -22,5 +25,9 @@ public class ModelProperties {
 
     public String getResultsPath() {
         return resultsPath;
+    }
+
+    public String getModelFileName() {
+        return modelFileName;
     }
 }

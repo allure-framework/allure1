@@ -1,5 +1,5 @@
 angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
-    .controller('HomeCtrl', function ($scope, $state, testcases, testsuites, treeUtils) {
+    .controller('HomeCtrl', function ($scope, $state, testsuites) {
         'use strict';
         function setTestsuite(testsuiteUid) {
             var testsuite = $scope.testsuites.filter(function(testsuite) {
@@ -7,26 +7,8 @@ angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
             })[0];
             if($scope.testsuite !== testsuite) {
                 $scope.testsuite = testsuite;
-                $scope.testcases = testcases.filter(function(testcase) {
-                    return testcase.suiteUid === $scope.testsuite.uid;
-                });
+                $scope.testcases = testsuite.testCases;
             }
-        }
-        function setTestcase(testcaseUid) {
-            $scope.testcase = $scope.testcases.filter(function(testcase) {
-                return testcase.uid === testcaseUid;
-            })[0];
-        }
-        function setAttachment(attachmentUid) {
-            var attachment;
-            treeUtils.walkAround($scope.testcase, 'steps', function(item) {
-                attachment = item.attachments.filter(function(attachment) {
-                    return attachment.source === attachmentUid;
-                })[0];
-                return !attachment;
-            });
-            //noinspection JSUnusedAssignment
-            $scope.attachment = attachment;
         }
 
         $scope.setTestsuite = function(testsuiteUid) {
@@ -34,9 +16,6 @@ angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
         };
         $scope.setTestcase = function(testcaseUid) {
             $state.go('home.testsuite.testcase', {testcaseUid: testcaseUid});
-        };
-        $scope.setAttachment = function(attachmentUid) {
-            $state.go('home.testsuite.testcase.attachment', {attachmentUid: attachmentUid});
         };
         $scope.isState = function(statename) {
             var parts = statename.split('.');
@@ -47,7 +26,6 @@ angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
             }
             return $state.is(statename);
         };
-        testcases = testcases.testCases;
         $scope.testsuites = testsuites.testSuites;
         $scope.time = testsuites.time;
         $scope.statistic = $scope.testsuites.reduce(function(statistic, testsuite) {
@@ -60,16 +38,8 @@ angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
         });
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.testsuite;
-            delete $scope.testcase;
-            delete $scope.attachment;
             if(params.testsuiteUid) {
                 setTestsuite(params.testsuiteUid);
-            }
-            if(params.testcaseUid) {
-                setTestcase(params.testcaseUid);
-            }
-            if(params.attachmentUid) {
-                setAttachment(params.attachmentUid);
             }
         });
     })

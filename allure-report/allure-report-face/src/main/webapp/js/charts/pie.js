@@ -2,7 +2,7 @@
 angular.module('allure.charts.pie', ['allure.charts.util']).directive('pieChart', function (d3, d3Util, d3Tooltip) {
     "use strict";
     function PieChart(elm, $scope, data) {
-        var radius = angular.element(elm).width()/10,
+        var radius = angular.element(elm).width()/4,
             width = radius * 2,
             height = radius * 2,
             svg = new d3Util.SvgViewport(elm, {

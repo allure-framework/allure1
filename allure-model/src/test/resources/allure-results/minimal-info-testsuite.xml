@@ -1,0 +1,10 @@
+<urn:test-suite start="0" stop="0" xmlns:urn="urn:model.allure.qatools.yandex.ru">
+    <title>Test suite with one test case</title>
+    <classname>my.company.TestSuiteWithOneTestCase</classname>
+    <description>This test case contains only one test case without any additional info</description>
+    <test-cases>
+        <test-case>
+            <title>Single test case without any info</title>
+        </test-case>
+    </test-cases>
+</urn:test-suite>

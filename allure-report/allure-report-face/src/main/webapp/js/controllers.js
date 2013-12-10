@@ -20,9 +20,8 @@ angular.module('allure.controllers', [])
         }, this);
     })
 
-    .controller('TimelineCtrl', function($scope, testcases, testsuites) {
+    .controller('TimelineCtrl', function($scope, testcases) {
         $scope.testcases = testcases.testCases;
-        $scope.testsuites = testsuites.testSuites;
     })
 
     .controller('TabsController', function($scope, $state) {

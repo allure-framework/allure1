@@ -4,7 +4,10 @@
 @import "islands/islands";
 @import "base";
 @import "statuses";
+@import "pane";
+@import "testcase";
 @import "charts";
+@import "features";
 @import "xunit";
 
 .dashboard {
@@ -34,6 +37,15 @@
   overflow: auto;
   position: relative;
   padding-left: 1px;
+  &>.tab-content-fill {
+    overflow: hidden;
+    position: absolute;
+    margin: 0;
+    top: 20px;
+    left: 0;
+    bottom: 20px;
+    right: 20px;
+  }
 }
 
 .feedback {
@@ -52,12 +64,4 @@
   margin: 20px 20px 20px 0;
   padding: 15px;
   overflow: hidden;
-  &_controls {
-    .form-control {
-      width: auto;
-    }
-    .form-group + .form-group {
-      margin-left: 20px;
-    }
-  }
 }

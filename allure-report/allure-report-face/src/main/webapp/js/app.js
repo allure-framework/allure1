@@ -1,17 +1,17 @@
 /*global angular */
 angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
         'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.charts',
-        'allure.testcase.controllers', 'allure.xUnit.controllers', 'allure.table'])
+        'allure.testcase', 'allure.xUnit.controllers', 'allure.table', 'allure.pane', 'allure.features'])
     .config(function($tooltipProvider) {
         $tooltipProvider.options({appendToBody:true})
     })
-    .config(function ($stateProvider, $urlRouterProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, testcaseProvider) {
         'use strict';
         function processResponse(response) {
             return response.data;
         }
         function testcasesResolve($http) {
-            return $http.get('data/testcases-pack.json').then(processResponse);
+            return $http.get('data/graph.json').then(processResponse);
         }
         $urlRouterProvider.otherwise("/home");
         $stateProvider
@@ -20,9 +20,8 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
                 templateUrl: "templates/home.html",
                 controller: 'HomeCtrl',
                 resolve: {
-                    testcases: testcasesResolve,
                     testsuites: function($http) {
-                        return $http.get('data/testsuites-pack.json').then(processResponse);
+                        return $http.get('data/xunit.json').then(processResponse);
                     }
                 }
             })
@@ -30,18 +29,6 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
                 url: "/:testsuiteUid"
             })
             .state('home.testsuite.expanded', {
-                url: '/expanded'
-            })
-            .state('home.testsuite.testcase', {
-                url: "/:testcaseUid"
-            })
-            .state('home.testsuite.testcase.expanded', {
-                url: '/expanded'
-            })
-            .state('home.testsuite.testcase.attachment', {
-                url: '/:attachmentUid'
-            })
-            .state('home.testsuite.testcase.attachment.expanded', {
                 url: '/expanded'
             })
             .state('graph', {
@@ -57,10 +44,22 @@ angular.module('allure', ['ui.bootstrap', 'localStorageModule', 'ui.router',
                 templateUrl: "templates/timeline.html",
                 controller: 'TimelineCtrl',
                 resolve: {
-                    testcases: testcasesResolve,
-                    testsuites: function($http) {
-                        return $http.get('data/testsuites-pack.json').then(processResponse);
+                    testcases: testcasesResolve
+                }
+            })
+            .state('features', {
+                url: '/features',
+                templateUrl: "templates/features.html",
+                controller: 'FeaturesCtrl',
+                resolve: {
+                    features: function($http) {
+                        return $http.get('data/behavior.json').then(processResponse);
                     }
                 }
             })
+            .state('features.story', {
+                url: '/:storyUid'
+            });
+        testcaseProvider.attachStates('features.story');
+        testcaseProvider.attachStates('home.testsuite');
     });
