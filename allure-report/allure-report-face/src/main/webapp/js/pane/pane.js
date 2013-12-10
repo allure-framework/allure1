@@ -44,6 +44,14 @@ angular.module('allure.pane', []).directive('paneSet', function() {
         panes.forEach(setPanePosition);
     };
 
+    function paneNeedOverlay(index) {
+        return index < panes.length-2 || (panes[panes.length-1].isExpanded() && panes.length > 1)
+    }
+
+    function paneShouldBeAtRight(index, expanded) {
+        return index !== 0 && index === panes.length-1 && !expanded;
+    }
+
     function setPanePosition(pane) {
         var index = panes.indexOf(pane),
             expanded = pane.isExpanded(),
@@ -51,7 +59,8 @@ angular.module('allure.pane', []).directive('paneSet', function() {
             width = (expanded ? 100 : 50) - offset;
         pane.elem[index === panes.length-1 ? 'addClass' : 'removeClass']('pane_col_last');
         pane.elem[index === 0 ? 'addClass' : 'removeClass']('pane_col_first');
-        if (index !== 0 && index === panes.length-1 && !expanded) {
+        pane.elem[paneNeedOverlay(index) ? 'addClass' : 'removeClass']('pane_col-overlay');
+        if (paneShouldBeAtRight(index, expanded)) {
             if(screenTest.isNarrow()) {
                 offset+=25;
                 width = 100-offset;

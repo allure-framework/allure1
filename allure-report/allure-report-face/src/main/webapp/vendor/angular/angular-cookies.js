@@ -1,6 +1,6 @@
 /**
- * @license AngularJS v1.2.0-rc.2
- * (c) 2010-2012 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.2.4
+ * (c) 2010-2014 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular, undefined) {'use strict';
@@ -12,10 +12,11 @@
  *
  * # ngCookies
  *
- * Provides the {@link ngCookies.$cookies `$cookies`} and
- * {@link ngCookies.$cookieStore `$cookieStore`} services.
+ * The `ngCookies` module provides a convenient wrapper for reading and writing browser cookies. 
  *
  * {@installModule cookies}
+ *
+ * <div doc-module-components="ngCookies"></div>
  *
  * See {@link ngCookies.$cookies `$cookies`} and
  * {@link ngCookies.$cookieStore `$cookieStore`} for usage.
@@ -80,7 +81,8 @@ angular.module('ngCookies', ['ng']).
 
 
       /**
-       * Pushes all the cookies from the service to the browser and verifies if all cookies were stored.
+       * Pushes all the cookies from the service to the browser and verifies if all cookies were
+       * stored.
        */
       function push() {
         var name,

@@ -32,8 +32,6 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
     private static final String ALLURE_TEAM = "mailto:charlie@yandex-team.ru";
 
-    private StringWriter errorWriter = new StringWriter();
-
     @Parameter
     private Dependency reportFace = new Dependency(
             "ru.yandex.qatools.allure",
@@ -88,7 +86,8 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             sink.text(FAQ);
             sink.link_();
 
-        } else if (generateData(reportDirectory) && unpackReport()) {
+        } else if (unpackReport()) {
+            generateData(reportDirectory);
             sink.rawText("<meta http-equiv=\"refresh\" content=\"0;url=allure-maven-plugin/index.html\" />");
             sink.link("allure-maven-plugin/index.html");
             sink.figure();
@@ -101,7 +100,6 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             sink.figureGraphics("allure-maven-plugin/img/report-failed.png");
             sink.figure_();
             sink.lineBreak();
-            sink.text(errorWriter.toString());
         }
 
         sink.body_();
@@ -110,16 +108,9 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
         sink.close();
     }
 
-    private boolean generateData(File reportDirectory) {
-        try {
-            AllureReportGenerator reportGenerator = new AllureReportGenerator(reportDirectory);
-            reportGenerator.generate(reportDirectory);
-        } catch (Exception e) {
-            getLog().error(getErrorMessage(e));
-            printStackTrace(e);
-            return false;
-        }
-        return true;
+    private void generateData(File reportDirectory) {
+        AllureReportGenerator reportGenerator = new AllureReportGenerator(reportDirectory);
+        reportGenerator.generate(reportDirectory);
     }
 
     private boolean unpackReport() {
@@ -131,22 +122,15 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
                     executionEnvironment(getProject(), mavenSession, pluginManager)
             );
         } catch (MojoExecutionException e) {
-            getLog().error(getErrorMessage(e));
-            printStackTrace(e);
+            getLog().error(getErrorMessage(), e);
             return false;
         }
         return true;
     }
 
-    private void printStackTrace(Throwable throwable) {
-        throwable.printStackTrace(new PrintWriter(errorWriter));
-    }
-
-    private String getErrorMessage(Throwable throwable) {
+    private String getErrorMessage() {
         return String.format(
-                "%s: %s. Please, see FAQ %s or contact with allure team %s.",
-                throwable.getClass().getName(),
-                throwable.getMessage(),
+                "Please, see FAQ %s or contact with allure team %s.",
                 FAQ,
                 ALLURE_TEAM
         );
