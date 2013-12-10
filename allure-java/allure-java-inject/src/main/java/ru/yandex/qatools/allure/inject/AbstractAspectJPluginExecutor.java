@@ -18,6 +18,10 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
  */
 public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
 
+    protected final static String ASPECT_GROUP_ID = "ru.yandex.qatools.allure";
+
+    protected final static String ASPECT_ARTIFACT_ID = "allure-java-aspects";
+
     @Parameter(defaultValue = "1.7")
     protected String javaVersion;
 
@@ -27,7 +31,7 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
     @Parameter(defaultValue = "${allure.version}")
     protected String adaptorVersion;
 
-    public void executeAspectJPlugin() throws MojoExecutionException, MojoFailureException {
+    protected void executeAspectJPlugin() throws MojoExecutionException, MojoFailureException {
         mavenProject.getDependencyArtifacts().addAll(getRequestedDependencyArtifacts());
         mavenProject.getArtifacts().add(getAspectsArtifact());
 
@@ -37,7 +41,7 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
 
 
     protected Artifact getAspectsArtifact() {
-        return getArtifact("ru.yandex.qatools.allure", "allure-java-aspects", adaptorVersion, "jar");
+        return getArtifact(ASPECT_GROUP_ID, ASPECT_ARTIFACT_ID, adaptorVersion, "jar");
     }
 
     protected List<Artifact> getRequestedDependencyArtifacts() {
@@ -67,8 +71,8 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
                 element("complianceLevel", javaVersion),
                 element("aspectLibraries",
                         element("aspectLibrary",
-                                element("groupId", "ru.yandex.qatools.allure"),
-                                element("artifactId", "allure-java-aspects")
+                                element("groupId", ASPECT_GROUP_ID),
+                                element("artifactId", ASPECT_ARTIFACT_ID)
                         )
                 )
         );

@@ -6,7 +6,7 @@ import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.StringWriter;
 
-import static ru.yandex.qatools.allure.data.utils.XslTransformationUtil.applyTransformations;
+import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
 
 
 /**

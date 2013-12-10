@@ -36,7 +36,9 @@ public class ShouldNotAddRulesTest {
                 new Object[]{AbstractClassWithTestMethod.class},
                 new Object[]{ClassWithPrivateTestMethod.class},
                 new Object[]{TestClassWithTestCaseRule.class},
-                new Object[]{TestClassWithTestSuiteRule.class}
+                new Object[]{TestClassWithTestSuiteRule.class},
+                new Object[]{ClassWithRules.class},
+                new Object[]{ClassWithNonAnnotatedRules.class}
         );
     }
 

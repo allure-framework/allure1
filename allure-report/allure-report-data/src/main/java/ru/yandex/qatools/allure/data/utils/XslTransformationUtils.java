@@ -17,7 +17,7 @@ import java.io.StringWriter;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.12.13
  */
-public class XslTransformationUtil {
+public class XslTransformationUtils {
 
     public static String applyTransformations(String xml, String... xslPaths) {
         String result = xml;
@@ -29,7 +29,7 @@ public class XslTransformationUtil {
 
     public static String applyTransformation(String xml, String xslPath) {
         return applyTransformation(
-                XslTransformationUtil.class.getClassLoader().getResourceAsStream(xslPath),
+                XslTransformationUtils.class.getClassLoader().getResourceAsStream(xslPath),
                 IOUtils.toInputStream(xml)
         );
     }
