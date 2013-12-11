@@ -98,62 +98,47 @@ describe('xUnit controllers', function () {
         });
     });
 
-    xdescribe('HomeCtrl', function() {
-        var treeUtilsSpy,
-            stateMock,
+    describe('HomeCtrl', function() {
+        var state,
             scope;
-        function StateMock() {
-            this.go = jasmine.createSpy('goSpy');
-            this.state = false;
-            this.is = function(name) {
-                return this.state === name || false;
-            };
-            this.includes = function(name) {
-                return this.state.substring(0, name.length) === name;
-            }
-        }
 
-        function createController(testsuites, testcases) {
+        function createController(testsuites) {
             var scope = $rootScope.$new();
-            stateMock = new StateMock();
             $controller('HomeCtrl', {
                 $scope: scope,
-                $state: stateMock,
-                treeUtils: treeUtilsSpy = {walkAround: jasmine.createSpy('treeWalkSpy').andCallFake(function(testcase, prop, callback) {
-                    callback(testcase);
-                })},
-                testsuites: {testSuites: testsuites},
-                testcases: {testCases: testcases}
+                $state: state = {
+                current: {data: {baseState: 'base'}},
+                    go: jasmine.createSpy('gotoStateSpy'),
+                    is: jasmine.createSpy('isStateSpy')
+                },
+                testsuites: {testSuites: testsuites}
             });
             return scope;
         }
 
+        function TestSuite(uid, start, statistic) {
+            this.uid = uid;
+            this.time = {start: start};
+            this.statistic = statistic;
+            this.testCases = Array.apply(null, new Array(statistic.total)).map(function (_, i) {
+                return {uid: 'case'+i};
+            });
+        }
+
         beforeEach(function() {
             scope = createController([
-                {time: {start:16545}, uid: 'suite1', statistic: {passed: 2, skipped: 0, broken: 0, failed: 1, total: 3}},
-                {time: {start:35335}, uid: 'suite2', statistic: {passed: 2, skipped: 0, broken: 1, failed: 1, total: 4}},
-                {time: {start:42566}, uid: 'suite3', statistic: {passed: 1, skipped: 0, broken: 0, failed: 0, total: 1}}
-            ], [
-                {uid: 'case1', suiteUid: 'suite1', title: 'Original testcase'},
-                {uid: 'case2', suiteUid: 'suite1'},
-                {uid: 'case3', suiteUid: 'suite1'},
-                {uid: 'case4', suiteUid: 'suite2'},
-                {uid: 'case5', suiteUid: 'suite2'},
-                {uid: 'case6', suiteUid: 'suite2'},
-                {uid: 'case7', suiteUid: 'suite2', attachments: [{source: 'file.txt'}, {source: 'image.jpg'}]},
-                {uid: 'case8', suiteUid: 'suite3'},
-                {uid: 'case1', suiteUid: 'suite3', title: 'Yet another testcase'}
+                new TestSuite('suite1', 16545, {passed: 2, skipped: 0, broken: 0, failed: 1, total: 3}),
+                new TestSuite('suite2', 35335, {passed: 2, skipped: 0, broken: 1, failed: 1, total: 4}),
+                new TestSuite('suite3', 42566, {passed: 1, skipped: 0, broken: 0, failed: 0, total: 1})
             ])
         });
 
         it('should change state when select is called', function() {
-            expect(stateMock.go).not.toHaveBeenCalled();
+            expect(state.go).not.toHaveBeenCalled();
             scope.setTestsuite('suite3');
-            expect(stateMock.go).toHaveBeenCalledWith('home.testsuite', {testsuiteUid: 'suite3'});
+            expect(state.go).toHaveBeenCalledWith('home.testsuite', {testsuiteUid: 'suite3'});
             scope.setTestcase('case1');
-            expect(stateMock.go).toHaveBeenCalledWith('home.testsuite.testcase', {testcaseUid: 'case1'});
-            scope.setAttachment('file.txt');
-            expect(stateMock.go).toHaveBeenCalledWith('home.testsuite.testcase.attachment', {attachmentUid: 'file.txt'});
+            expect(state.go).toHaveBeenCalledWith('home.testsuite.testcase', {testcaseUid: 'case1'});
         });
 
         it('should add up overall testsuites statistics', function() {
@@ -162,9 +147,18 @@ describe('xUnit controllers', function () {
             })
         });
 
-        it('should select correct testcase when testcase uid is not unique', function() {
-            scope.$broadcast('$stateChangeSuccess',  null, {testsuiteUid:'suite3', testcaseUid:'case1'});
-            expect(scope.testcase.title).toBe('Yet another testcase');
+        xdescribe('should make transition to', function() {
+            it('home', function() {
+                scope.$broadcast('$stateChangeSuccess',  null, {});
+                expect(scope.testsuite).toBeUndefined();
+                expect(scope.testsuiteUid).toBeUndefined();
+            });
+
+            it('testsuite', function() {
+                scope.$broadcast('$stateChangeSuccess',  null, {testsuiteUid:'suite2'});
+                expect(scope.testsuite).toBeDefined();
+                expect(scope.testsuiteUid).toBeUndefined();
+            });
         });
 
         describe('transitions', function() {
@@ -174,68 +168,38 @@ describe('xUnit controllers', function () {
                 });
             }
 
-            function assertState(testsuite, testcase, attachment) {
-                if(testsuite) {
-                    expect(scope.testsuite.uid).toBe(testsuite);
-                }
-                else {
-                    expect(scope.testsuite).toBeUndefined();
-                }
-                if(testcase) {
-                    expect(scope.testcase.uid).toBe(testcase);
-                }
-                else {
-                    expect(scope.testcase).toBeUndefined();
-                }
-                if(attachment) {
-                    expect(scope.attachment.source).toBe(attachment);
-                }
-                else {
-                    expect(scope.attachment).toBeUndefined();
-                }
+            function copyFields(object, fields) {
+                return fields.reduce(function(result, field) {
+                    result[field+'Uid'] = object[field+'Uid'];
+                    return result;
+                }, {})
+            }
+
+            function assertState(testsuite, testcase) {
+                expect(scope.testsuite)[testsuite ? 'toBeDefined' : 'toBeUndefined']();
+                expect(scope.testcaseUid)[testcase ? 'toBeDefined' : 'toBeUndefined']();
             }
 
             var levels = ['testrun', 'testsuite', 'testcase', 'attachment'],
-                testValues = {testsuiteUid: 'suite2', testcaseUid:'case7', attachmentUid:'file.txt'},
-                switchValues = {testsuiteUid: 'suite3', testcaseUid:'case5', attachmentUid:'image.jpg'};
+                testValues = {testsuiteUid: 'suite2', testcaseUid:'case7'},
+                switchValues = {testsuiteUid: 'suite3', testcaseUid:'case5'};
 
             function makeReturnTest(initialLevel, targetLevel) {
-                var initialLevelIndex = levels.indexOf(initialLevel),
-                    targetLevelIndex = levels.indexOf(targetLevel),
-                    source = {},
-                    dest = {};
-                for(var i=1;i<=initialLevelIndex;i++) {
-                    var key = levels[i]+'Uid';
-                    if(i <= targetLevelIndex) {
-                        dest[key] = testValues[key];
-                    }
-                    source[key] = testValues[key];
-                }
+                var source = copyFields(testValues, levels.slice(1, levels.indexOf(initialLevel))),
+                    dest = copyFields(testValues, levels.slice(1, levels.indexOf(targetLevel)));
                 makeTransitionTest(source, dest, 'should return to '+targetLevel+' from '+initialLevel)
             }
             function makeSwitchTest(level) {
-                var levelIndex = levels.indexOf(level),
-                    source = {},
-                    dest = {};
-                for(var i=1;i<=levelIndex;i++) {
-                    var key = levels[i]+'Uid';
-                    dest[key] = i < levelIndex ? testValues[key] : switchValues[key];
-                    source[key] = testValues[key];
-                }
+                var index = levels.indexOf(level),
+                    source = copyFields(testValues, levels.slice(1, index)),
+                    dest = copyFields(switchValues, levels.slice(1, index));
                 makeTransitionTest(source, dest, 'should switch between '+level+'s');
             }
             function makeSelectTest(level) {
-                var levelIndex = levels.indexOf(level),
-                    source = {},
-                    dest = {};
-                for(var i=1;i<=levelIndex;i++) {
-                    var key = levels[i]+'Uid';
-                    if(i < levelIndex) {
-                        source[key] = testValues[key];
-                    }
-                    dest[key] = testValues[key];
-                }
-                makeTransitionTest(source, dest, 'should select '+level+' from '+levels[levelIndex-1]);
+                var index = levels.indexOf(level),
+                    source = copyFields(testValues, levels.slice(1, index-1)),
+                    dest = copyFields(testValues, levels.slice(1, index));
+                makeTransitionTest(source, dest, 'should select '+level+' from '+levels[index-1]);
             }
             function makeTransitionTest(source, dest, description) {
                 it(description, function() {
@@ -256,25 +220,9 @@ describe('xUnit controllers', function () {
                 }
             });
 
-            it('should filter testcases when switching to testsuite', function() {
+            it('should extract testcases when switching to testsuite', function() {
                 scope.$broadcast('$stateChangeSuccess',  null, {testsuiteUid:'suite2'});
                 expect(scope.testcases.length).toBe(4);
-            });
-        });
-
-        describe('state checker', function() {
-            function testStateCheck(state, sample, result) {
-                stateMock.state = sample;
-                expect(scope.isState(state)).toBe(result);
-            }
-            it('should check current state', function() {
-                testStateCheck('home', 'home', true);
-                testStateCheck('home.testsuite', 'home.testsuite', true);
-                testStateCheck('home', 'home.testsuite', false);
-            });
-            it('should support wildcards in state check', function() {
-                testStateCheck('home.*', 'home.testsuite.expanded', true);
-                testStateCheck('home.testsuite.*', 'home.testsuite', false);
             });
         });
     });
