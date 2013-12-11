@@ -1,4 +1,4 @@
-angular.module('allure.xUnit.controllers', ['allure.xUnit.statusSwitcher'])
+angular.module('allure.xUnit.controllers', [])
     .controller('HomeCtrl', function ($scope, $state, testsuites) {
         'use strict';
         function setTestsuite(testsuiteUid) {

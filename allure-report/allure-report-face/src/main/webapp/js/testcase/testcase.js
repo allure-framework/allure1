@@ -1,43 +1,5 @@
 /*global angular:true */
-angular.module('allure.testcase', [])
-    .provider('testcase', function($stateProvider) {
-        function processResponse(response) {
-            return response.data;
-        }
-        return {
-            attachStates: function(baseState) {
-                var viewName = 'testcase@'+baseState.split('.')[0],
-                    state = {
-                    url: '/:testcaseUid',
-                    views: {},
-                    data: {
-                        baseState: baseState
-                    },
-                    resolve: {
-                        testcase: function($http, $stateParams) {
-                            return $http.get('data/'+$stateParams.testcaseUid+'-testcase.json').then(processResponse);
-                        }
-                    }
-
-                };
-                state.views[viewName] = {
-                    templateUrl: 'templates/testcase/testcaseView.html',
-                    controller: 'TestcaseCtrl'
-                };
-                $stateProvider.state(baseState+'.testcase', state)
-                .state(baseState+'.testcase.expanded', {
-                    url: '/expanded'
-                })
-                .state(baseState+'.testcase.attachment', {
-                    url: '/:attachmentUid'
-                })
-                .state(baseState+'.testcase.attachment.expanded', {
-                    url: '/expanded'
-                })
-            },
-            $get: [function() {}]
-        }
-    })
+angular.module('allure.testcase.controllers', [])
     .controller('TestcaseCtrl', function($scope, $state, testcase, treeUtils) {
         function setAttachment(source) {
             var attachment;
@@ -115,3 +77,4 @@ angular.module('allure.testcase', [])
             }
         });
     });
+angular.module('allure.testcase', ['allure.testcase.statusSwitcher', 'allure.testcase.controllers', 'allure.testcase.provider']);

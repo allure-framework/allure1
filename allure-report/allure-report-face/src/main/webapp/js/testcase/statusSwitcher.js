@@ -1,4 +1,4 @@
-angular.module('allure.xUnit.statusSwitcher', []).directive('statusSwitcher', function($storage, status) {
+angular.module('allure.testcase.statusSwitcher', []).directive('statusSwitcher', function($storage, status) {
     function StatusesStore() {
         function defaults(value, defaultVal) {
             return value !== null ? value : defaultVal;
