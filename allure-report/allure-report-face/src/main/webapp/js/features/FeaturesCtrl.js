@@ -48,6 +48,7 @@ angular.module('allure.features', [])
         }
     };
     $scope.setTestcase = function(testcase) {
+        $scope.testcaseUid = testcase.uid;
         $state.go('features.story.testcase', {testcaseUid: testcase.uid})
     };
     $scope.expandFeature = function(feature, expanded) {
@@ -75,8 +76,12 @@ angular.module('allure.features', [])
     $scope.$on('$stateChangeSuccess', function(event, state, params) {
         delete $scope.story;
         delete $scope.testcases;
+        delete $scope.testcaseUid;
         if(params.storyUid) {
             setStory(params.storyUid);
+        }
+        if(params.testcaseUid) {
+            $scope.testcaseUid = params.testcaseUid;
         }
     });
 });
