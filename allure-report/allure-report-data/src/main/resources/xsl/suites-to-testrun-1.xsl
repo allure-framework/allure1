@@ -1,6 +1,6 @@
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:ns2="urn:model.allure.qatools.yandex.ru"
+                xmlns:model="urn:model.allure.qatools.yandex.ru"
                 xmlns:alr="urn:data.allure.qatools.yandex.ru">
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
@@ -24,7 +24,7 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="ns2:test-suite">
+    <xsl:template match="model:test-suite">
         <xsl:apply-templates select="@*|node()"/>
     </xsl:template>
 
