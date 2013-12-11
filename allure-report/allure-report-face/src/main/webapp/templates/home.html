@@ -1,9 +1,9 @@
 <div class="xunit b-island tab-content-fill" pane-set>
-    <div class="pane_col" pane pane-expanded="isState('home')" ng-class="{'pane_col-overlay': isState('home.testsuite.*')}">
+    <div class="pane_col" pane pane-expanded="isState('home')">
         <div class="pane_overlay clickable" ui-sref="home.testsuite"></div>
         <ng-include src="'templates/xUnit/testrun.html'"></ng-include>
     </div>
-    <div class="pane_col" pane ng-if="testsuite" pane-expanded="isState('home.testsuite.expanded')" ng-class="{'pane_col-overlay': isState('home.testsuite.testcase.*')}">
+    <div class="pane_col" pane ng-if="testsuite" pane-expanded="isState('home.testsuite.expanded')">
         <div class="pane_overlay clickable" ui-sref="home.testsuite.testcase"></div>
         <ng-include src="'templates/xUnit/testsuite.html'"></ng-include>
     </div>
