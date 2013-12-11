@@ -37,6 +37,12 @@ describe('Pane set', function () {
         expect(pane[0].style.width).toBe(width+'%');
     }
 
+    function assertPaneOverlay(panes, overlappedCount) {
+        panes.each(function(index, pane) {
+            expect(angular.element(pane).hasClass('pane_col-overlay')).toBe(index < overlappedCount);
+        });
+    }
+
     it('should put single pane to left', function() {
         createPane(paneSimple);
         assertPanePosition(elem.find('[pane]'), 0, 50)
@@ -74,10 +80,9 @@ describe('Pane set', function () {
 
     it('should add overlay class except last and last but one panes', function() {
         createPane(repeat(paneSimple, 2)+paneAdditonal);
-        var pane = elem.find('[pane]').first();
-        expect(pane).not.toHaveClass('pane_col-overlay');
+        assertPaneOverlay(elem.find('[pane]'), 0);
         scope.$apply('active=true');
-        expect(pane).toHaveClass('pane_col-overlay');
+        assertPaneOverlay(elem.find('[pane]'), 1);
     });
 
     describe('expandable', function() {
@@ -99,10 +104,9 @@ describe('Pane set', function () {
         });
 
         it('should add overlay to last but one pane', function() {
-            var pane = elem.find('[pane]').eq(2);
-            expect(pane).toHaveClass('pane_col-overlay');
+            assertPaneOverlay(elem.find('[pane]'), 3);
             scope.$apply('paneExpanded=false');
-            expect(pane).not.toHaveClass('pane_col-overlay');
+            assertPaneOverlay(elem.find('[pane]'), 2);
         });
     });
 

@@ -45,7 +45,7 @@ angular.module('allure.pane', []).directive('paneSet', function() {
     };
 
     function paneNeedOverlay(index) {
-        return index < panes.length-2 || (panes[panes.length-1].isExpanded() && panes.length > 1)
+        return index < panes.length-2 || (index < panes.length-1 && panes[panes.length-1].isExpanded())
     }
 
     function paneShouldBeAtRight(index, expanded) {
