@@ -3,13 +3,13 @@ describe('Testcase controllers', function() {
     'use strict';
     var $controller, $rootScope;
 
-    beforeEach(module('allure.testcase'));
+    beforeEach(module('allure.testcase.controllers'));
     beforeEach(inject(function (_$controller_, _$rootScope_) {
         $controller = _$controller_;
         $rootScope = _$rootScope_;
     }));
 
-    xdescribe('StepCtrl', function() {
+    describe('StepCtrl', function() {
         function createController(scopeValues) {
             var scope = $rootScope.$new();
             scope = scope.$new();
@@ -41,7 +41,7 @@ describe('Testcase controllers', function() {
         });
     });
 
-    xdescribe('AttachmentPreviewCtrl', function() {
+    describe('AttachmentPreviewCtrl', function() {
         var backendDefinitions = {
                 'test.txt': 'test content',
                 'report.xml': '<root>test content xml</root>',
@@ -51,6 +51,9 @@ describe('Testcase controllers', function() {
         beforeEach(inject(function(_$httpBackend_) {
             $httpBackend = _$httpBackend_;
         }));
+        afterEach(function() {
+            $httpBackend.resetExpectations();
+        });
         function createController(attachment) {
             var scope = $rootScope.$new();
             scope = scope.$new();
@@ -62,6 +65,7 @@ describe('Testcase controllers', function() {
                     is: jasmine.createSpy('isStateSpy')
                 }
             });
+            scope.$apply();
             return scope;
         }
 
@@ -105,6 +109,15 @@ describe('Testcase controllers', function() {
             expect(scope.type).toBeUndefined();
         });
 
+        it('should re-detect type when attachment has changed', function() {
+            $httpBackend.expectGET('data/report.xml').respond(backendDefinitions['report.xml']);
+            var scope = createController({type: 'PNG', name: 'picture', source:'pic'});
+            expect(scope.type).toBe('image');
+            scope.attachment = {type: 'XML', name: 'report', source:'report.xml'};
+            scope.$apply();
+            expect(scope.type).toBe('code');
+        });
+
         describe('expanded state', function() {
             function createExpanedStateTests(expanded, stateName) {
                 it('should detect expanded state ['+expanded+']', function() {
@@ -123,6 +136,66 @@ describe('Testcase controllers', function() {
             }
             createExpanedStateTests(true, 'home.testsuite.testcase.attachment');
             createExpanedStateTests(false, 'home.testsuite.testcase.attachment.expanded')
+        });
+    });
+
+    describe('TestcaseCtrl', function() {
+        var state, treeUtils,
+            scope;
+        function createController(testcase) {
+            var scope = $rootScope.$new();
+            scope = scope.$new();
+            $controller('TestcaseCtrl', {
+                $scope: scope,
+                testcase: testcase,
+                $state: state = {
+                    current: {data: {baseState: 'base'}},
+                    go: jasmine.createSpy('gotoStateSpy'),
+                    is: jasmine.createSpy('isStateSpy')
+                },
+                treeUtils: treeUtils = {walkAround: jasmine.createSpy('treeWalkSpy').andCallFake(function(testcase, prop, callback) {
+                    callback(testcase);
+                })}
+            });
+            scope.$apply();
+            return scope;
+        }
+        describe('state checks', function() {
+            beforeEach(function() {
+                scope = createController({});
+            });
+            it('should add base when checking isState', function() {
+                scope.isState('testcase');
+                expect(state.is).toHaveBeenCalledWith('base.testcase');
+            });
+            it('should go to baseState on closing', function() {
+                scope.closeTestcase();
+                expect(state.go).toHaveBeenCalledWith('base');
+            });
+            it('should add base when going', function() {
+                scope.go('testcase');
+                expect(state.go).toHaveBeenCalledWith('base.testcase');
+            });
+            it('should go to attachment state', function() {
+                scope.setAttachment('log');
+                expect(state.go).toHaveBeenCalledWith('base.testcase.attachment', {attachmentUid: 'log'});
+            });
+        });
+
+        describe('state change handling', function() {
+            beforeEach(function() {
+                scope = createController({attachments: [{source: 'log', name: 'console log'}]});
+            });
+            it('should set attachment when uid is present', function() {
+                scope.$broadcast('$stateChangeSuccess',  null, {attachmentUid: 'log'});
+                expect(treeUtils.walkAround).toHaveBeenCalled();
+                expect(scope.attachment).toBeDefined();
+            });
+            it('should not has attachment on route without uid', function() {
+                scope.$broadcast('$stateChangeSuccess',  null, {});
+                expect(treeUtils.walkAround).not.toHaveBeenCalled();
+                expect(scope.attachment).toBeUndefined();
+            });
         });
     });
 });
