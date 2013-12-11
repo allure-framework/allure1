@@ -1,9 +1,9 @@
 /*global describe:true, it:true, beforeEach:true, afterEach:true, expect:true, spyOn:true, module:true, inject:true, angular:true, jasmine:true */
-describe('xUnit status switcher', function () {
+describe('Testcases status switcher', function () {
     'use strict';
     var store;
 
-    beforeEach(module('allure.xUnit.statusSwitcher'));
+    beforeEach(module('allure.testcase.statusSwitcher'));
     beforeEach(module(function($provide) {
         store = {};
         $provide.value('$storage', function() {
