@@ -31,9 +31,6 @@ angular.module('allure.features', [])
     function setStory(storyUid) {
         var story = findStory(storyUid);
         $scope.story = story;
-        //TODO: use shared testcase-list widget
-        $scope.testsuite = {statistic: story.statistic};
-        $scope.testcases = story.testCases;
         $scope.features.forEach(function(feature) {
             if(feature.stories.indexOf(story) !== -1) {
                 feature.expanded = true;
@@ -46,10 +43,6 @@ angular.module('allure.features', [])
         } else {
             $state.go('features.story', {storyUid: story.uid});
         }
-    };
-    $scope.setTestcase = function(testcase) {
-        $scope.testcaseUid = testcase.uid;
-        $state.go('features.story.testcase', {testcaseUid: testcase.uid})
     };
     $scope.expandFeature = function(feature, expanded) {
         if(!expanded && feature.stories.indexOf($scope.story) !== -1) {
@@ -73,15 +66,20 @@ angular.module('allure.features', [])
         'Some test are not passed',
         'All done. Good job!'
     ][Math.floor($scope.chartData[0].part*3)];
+    $scope.testcase = {};
+    $scope.$watch('testcase.uid', function(testcaseUid) {
+        if(testcaseUid) {
+            $state.go('features.story.testcase', {testcaseUid: testcaseUid})
+        }
+    });
     $scope.$on('$stateChangeSuccess', function(event, state, params) {
         delete $scope.story;
-        delete $scope.testcases;
-        delete $scope.testcaseUid;
+        delete $scope.testcase.uid;
         if(params.storyUid) {
             setStory(params.storyUid);
         }
         if(params.testcaseUid) {
-            $scope.testcaseUid = params.testcaseUid;
+            $scope.testcase.uid = params.testcaseUid;
         }
     });
 });
