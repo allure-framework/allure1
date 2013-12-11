@@ -9,7 +9,7 @@ import ru.yandex.qatools.allure.inject.Injector;
  *         Date: 11.11.13
  */
 @SuppressWarnings("unused")
-@Mojo(name = "allure", defaultPhase = LifecyclePhase.COMPILE, requiresDependencyResolution = ResolutionScope.COMPILE)
+@Mojo(name = "allure", defaultPhase = LifecyclePhase.COMPILE, requiresDependencyResolution = ResolutionScope.TEST)
 public class AllureJUnitPlugin extends AbstractInjectPlugin {
 
     @Override
