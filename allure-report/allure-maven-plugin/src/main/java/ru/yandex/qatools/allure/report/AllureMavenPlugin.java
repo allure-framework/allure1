@@ -30,7 +30,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
     private static final String FAQ = "https://github.com/allure-framework/allure-core/blob/master/docs/FAQ.md";
 
-    private static final String ALLURE_TEAM = "mailto:charlie@yandex-team.ru";
+    private static final String ALLURE_TEAM = "mailto:allure@yandex-team.ru";
 
     @Parameter
     private Dependency reportFace = new Dependency(
