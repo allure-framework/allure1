@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.model;
 
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -10,12 +11,13 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
-import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collection;
 
+
 /**
- * Created by eroshenkoam on 12/10/13.
+ * @author Artem Eroshenko eroshenkoam@yandex-team.ru
+ *         Date: 12/10/13
  */
 @RunWith(Parameterized.class)
 public class ResultsSchemaValidationTest {
@@ -36,13 +38,8 @@ public class ResultsSchemaValidationTest {
     @Parameterized.Parameters
     public static Collection<Object[]> getTestSuiteFileCollection() {
         File results = new File(ClassLoader.getSystemResource(modelProperties.getResultsPath()).getFile());
-        Collection testSuiteFileCollection = new ArrayList();
-        for (String testSuiteFilePath : results.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.matches(TEST_SUITE_FILES_REGEXP);
-            }
-        })) {
+        Collection<Object[]> testSuiteFileCollection = new ArrayList<>();
+        for (String testSuiteFilePath : results.list(new RegexFileFilter(TEST_SUITE_FILES_REGEXP))) {
             testSuiteFileCollection.add(new Object[]{new File(results, testSuiteFilePath)});
         }
         return testSuiteFileCollection;
