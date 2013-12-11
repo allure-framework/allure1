@@ -9,6 +9,7 @@ import org.objectweb.asm.tree.ClassNode;
 public class EmptyInjector extends Injector {
     @Override
     public void inject(ClassNode cn) {
+        //empty injector, do nothing
     }
 
     @Override

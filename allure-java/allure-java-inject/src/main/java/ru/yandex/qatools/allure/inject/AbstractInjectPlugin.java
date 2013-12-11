@@ -31,30 +31,23 @@ public abstract class AbstractInjectPlugin extends AbstractAspectJPluginExecutor
     protected File outputDirectory;
 
     protected void inject() throws MojoExecutionException, MojoFailureException {
-        getLog().info(String.format("Analyse test directory %s", testOutputDirectory));
-
         Iterator<File> testClasses = getClassFiles(testOutputDirectory);
         Iterator<File> classes = getClassFiles(outputDirectory);
-
-        if (!testClasses.hasNext()) {
-            getLog().info("There is no test classes for injecting.");
-        }
-
-        if (!classes.hasNext()) {
-            getLog().info("There is no classes for injecting.");
-        }
-
         Iterator<File> files = concat(classes, testClasses);
 
         while (files.hasNext()) {
             File testClassFile = files.next();
-            getLog().info("Processing file: " + testClassFile);
-            try {
-                byte[] bytes = getInjector().inject(new FileInputStream(testClassFile));
-                FileUtils.writeByteArrayToFile(testClassFile, bytes);
-            } catch (IOException e) {
-                throw new MojoExecutionException("IO trouble while reading file " + testClassFile, e);
-            }
+            processFile(testClassFile);
+        }
+    }
+
+    protected void processFile(File testClassFile) {
+        getLog().info("Processing file: " + testClassFile);
+        try {
+            byte[] bytes = getInjector().inject(new FileInputStream(testClassFile));
+            FileUtils.writeByteArrayToFile(testClassFile, bytes);
+        } catch (IOException e) {
+            getLog().error("IO trouble while reading file " + testClassFile, e);
         }
     }
 
