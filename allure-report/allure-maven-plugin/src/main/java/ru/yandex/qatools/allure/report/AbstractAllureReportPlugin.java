@@ -17,10 +17,6 @@ import java.util.Locale;
  */
 public abstract class AbstractAllureReportPlugin extends AbstractMavenReport {
 
-    protected static final String ALLURE_REPORT_DIR = "site/allure-maven-plugin";
-
-    protected static final String ALLURE_REPORT_DATA_DIR = ALLURE_REPORT_DIR + "/data";
-
     @Parameter(defaultValue = "${project}", required = true, readonly = true)
     protected MavenProject project;
 
@@ -55,4 +51,5 @@ public abstract class AbstractAllureReportPlugin extends AbstractMavenReport {
     public String getDescription(Locale locale) {
         return "Extended report on the test results of the project.";
     }
+
 }
