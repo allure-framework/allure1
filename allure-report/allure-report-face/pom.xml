@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -66,6 +67,61 @@
                 </configuration>
             </plugin>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <id>unpack</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>unpack</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>ru.yandex.qatools.allure</groupId>
+                                    <artifactId>allure-model</artifactId>
+                                    <version>${project.version}</version>
+                                    <type>test-jar</type>
+                                    <excludes>META-INF/**,ru/**</excludes>
+                                    <outputDirectory>
+                                        ${project.build.directory}
+                                    </outputDirectory>
+                                </artifactItem>
+                            </artifactItems>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <reportPlugins>
+                        <plugin>
+                            <groupId>ru.yandex.qatools.allure</groupId>
+                            <artifactId>allure-maven-plugin</artifactId>
+                            <version>${project.version}</version>
+                            <configuration>
+                                <allureResultsPath>allure-results</allureResultsPath>
+                                <allureReportPath>allure-report</allureReportPath>
+                                <allureFaceUnpack>false</allureFaceUnpack>
+                            </configuration>
+                        </plugin>
+                    </reportPlugins>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>site</goal>
+                        </goals>
+                        <phase>compile</phase>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>8.1.12.v20130726</version>
@@ -75,22 +131,22 @@
                         <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                             <contextPath>/main</contextPath>
                             <resourceBase>src/main/webapp</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
                         <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                             <contextPath>/main/data</contextPath>
-                            <resourceBase>src/main/site/data</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                            <resourceBase>target/allure-report/data/</resourceBase>
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
                         <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                             <contextPath>/test</contextPath>
                             <resourceBase>src/test/webapp/e2e/</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
                         <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                             <contextPath>/test/vendor</contextPath>
                             <resourceBase>src/test/webapp/vendor</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
                     </contextHandlers>
                 </configuration>
