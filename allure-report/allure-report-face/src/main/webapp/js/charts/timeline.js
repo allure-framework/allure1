@@ -98,7 +98,7 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
                 data.forEach(function(item) {
                     if(!results.some(function(result) {
                         var lastItem = result[result.length-1];
-                        if(lastItem.time.stop < item.time.start) {
+                        if(lastItem.time.stop <= item.time.start) {
                             result.push(item);
                             return true;
                         }
