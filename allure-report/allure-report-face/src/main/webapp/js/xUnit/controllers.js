@@ -19,12 +19,6 @@ angular.module('allure.xUnit.controllers', [])
             $state.go('home.testsuite.testcase', {testcaseUid: testcaseUid});
         };
         $scope.isState = function(statename) {
-            var parts = statename.split('.');
-            if(parts[parts.length-1] === "*") {
-                parts.pop();
-                statename = parts.join('.');
-                return $state.includes(statename) && !$state.is(statename);
-            }
             return $state.is(statename);
         };
         $scope.testsuites = testsuites.testSuites;
