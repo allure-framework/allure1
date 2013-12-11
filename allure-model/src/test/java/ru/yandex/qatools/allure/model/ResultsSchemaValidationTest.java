@@ -10,6 +10,7 @@ import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 import javax.xml.validation.Validator;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -20,6 +21,8 @@ import java.util.Collection;
 public class ResultsSchemaValidationTest {
 
     private final static ModelProperties modelProperties = new ModelProperties();
+
+    private static final String TEST_SUITE_FILES_REGEXP = ".*-testsuite\\.xml";
 
     private final File testSuiteFile;
 
@@ -34,7 +37,12 @@ public class ResultsSchemaValidationTest {
     public static Collection<Object[]> getTestSuiteFileCollection() {
         File results = new File(ClassLoader.getSystemResource(modelProperties.getResultsPath()).getFile());
         Collection testSuiteFileCollection = new ArrayList();
-        for (String testSuiteFilePath : results.list()) {
+        for (String testSuiteFilePath : results.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.matches(TEST_SUITE_FILES_REGEXP);
+            }
+        })) {
             testSuiteFileCollection.add(new Object[]{new File(results, testSuiteFilePath)});
         }
         return testSuiteFileCollection;

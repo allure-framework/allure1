@@ -77,4 +77,4 @@ angular.module('allure.testcase.controllers', [])
             }
         });
     });
-angular.module('allure.testcase', ['allure.testcase.statusSwitcher', 'allure.testcase.controllers', 'allure.testcase.provider']);
+angular.module('allure.testcase', ['allure.testcase.statusSwitcher', 'allure.testcase.testcasesList', 'allure.testcase.controllers', 'allure.testcase.provider']);

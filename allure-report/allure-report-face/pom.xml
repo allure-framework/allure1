@@ -214,7 +214,7 @@
                                             <filtering>true</filtering>
                                         </resource>
                                         <resource>
-                                            <directory>src/main/site</directory>
+                                            <directory>${project.build.directory}/allure-report</directory>
                                         </resource>
                                     </resources>
                                 </configuration>
