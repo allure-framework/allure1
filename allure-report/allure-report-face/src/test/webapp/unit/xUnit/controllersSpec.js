@@ -9,62 +9,6 @@ describe('xUnit controllers', function () {
         $rootScope = _$rootScope_;
     }));
 
-    describe('TestCasesCtrl', function () {
-        var watchingStoreSpy;
-        function createController() {
-            var scope = $rootScope.$new();
-            scope.testcases = [
-                {uid: 0, time:{start: 0}, status: 'PASSED'},
-                {uid: 1, time:{start: 42}, status: 'PASSED'},
-                {uid: 2, time:{start: 44}, status: 'BROKEN'},
-                {uid: 3, time:{start: 33}, status: 'FAILED'}
-            ];
-            scope.testsuite = {
-                statistic: { passed: 2, broken: 1, failed: 1, skipped: 0 }
-            };
-            $controller('TestCasesCtrl', {
-                $scope: scope,
-                WatchingStore: function() {
-                    return watchingStoreSpy = jasmine.createSpyObj('WatchingStore', ['bindProperty'])
-                },
-                status: {},
-                severity: {}
-            });
-            scope.showStatuses = {PASSED: false, BROKEN: true, FAILED: true, SKIPPED: true};
-            $rootScope.$apply();
-            return scope;
-        }
-
-        it('should bind sort settings to storage', function () {
-            createController();
-            expect(watchingStoreSpy.bindProperty.calls.length).toBe(2);
-        });
-
-        it('should filter testcases by status', function() {
-            var scope = createController();
-
-
-            expect(scope.statusFilter({status: 'PASSED'})).toBe(false);
-            expect(scope.statusFilter({status: 'FAILED'})).toBe(true);
-            scope.showStatuses = {PASSED: true, BROKEN: true, FAILED: true, SKIPPED: false};
-
-            expect(scope.statusFilter({status: 'PASSED'})).toBe(true);
-        });
-
-        it('should set order based on start time', function() {
-            var scope = createController();
-            expect(scope.testcases[0].order).toEqual(1);
-            expect(scope.testcases[0].uid).toEqual(0);
-            expect(scope.testcases[3].uid).toEqual(2);
-            expect(scope.testcases[3].order).toEqual(4);
-        });
-
-        it('should find visible testcases count', function() {
-            var scope = createController();
-            expect(scope.getVisibleCount()).toBe(2);
-        });
-    });
-
     describe('TestSuitesCtrl', function() {
         var watchingStoreSpy;
         function createController() {
@@ -137,7 +81,7 @@ describe('xUnit controllers', function () {
             expect(state.go).not.toHaveBeenCalled();
             scope.setTestsuite('suite3');
             expect(state.go).toHaveBeenCalledWith('home.testsuite', {testsuiteUid: 'suite3'});
-            scope.setTestcase('case1');
+            scope.$apply("testcase.uid = 'case1'");
             expect(state.go).toHaveBeenCalledWith('home.testsuite.testcase', {testcaseUid: 'case1'});
         });
 
@@ -218,11 +162,6 @@ describe('xUnit controllers', function () {
                         makeReturnTest(level, levels[index-i]);
                     }
                 }
-            });
-
-            it('should extract testcases when switching to testsuite', function() {
-                scope.$broadcast('$stateChangeSuccess',  null, {testsuiteUid:'suite2'});
-                expect(scope.testcases.length).toBe(4);
             });
         });
     });
