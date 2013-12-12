@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1386780601903" stop="1386780601906">
-    <title>Main page test</title>
-    <classname>my.company.MainPageTest</classname>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1386840828135" stop="1386840828137">
+    <title>Simple test</title>
+    <classname>my.company.SimpleTest</classname>
     <test-cases>
-        <test-case start="1386780601904" stop="1386780601904" status="passed" severity="normal">
-            <title>Test what do nothing and always passed right, but have a very long title, over 100 symbols, seriously</title>
-            <description>I hate descriptions! See the title!</description>
-            <steps/>
-            <attachments/>
-        </test-case>
-        <test-case start="1386780601904" stop="1386780601904" status="broken" severity="normal">
-            <title>Broken test without steps</title>
+        <test-case start="1386840828136" stop="1386840828137" status="skipped" severity="normal">
+            <title>Skipped simple test</title>
             <failure>
-                <message>ArrayIndexOutOfBoundsException: 1</message>
-                <stack-trace>java.lang.ArrayIndexOutOfBoundsException: 1
-	at my.company.MainPageTest.brokenTestWithoutSteps(MainPageTest.java:38)
+                <message>AssumptionViolatedException: Skipp it</message>
+                <stack-trace>org.junit.internal.AssumptionViolatedException: Skipp it
+	at org.junit.Assume.assumeTrue(Assume.java:59)
+	at my.company.SimpleTest.skippedSimpleTest(SimpleTest.java:34)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -39,8 +34,8 @@
             <steps/>
             <attachments/>
         </test-case>
-        <test-case start="1386780601904" stop="1386780601904" status="failed" severity="normal">
-            <title>Failed test without steps</title>
+        <test-case start="1386840828136" stop="1386840828137" status="failed" severity="normal">
+            <title>Failed simple test</title>
             <failure>
                 <message>AssertionError: 5 is not 2 + 2
 Expected: is &lt;4&gt;
@@ -50,7 +45,7 @@ Expected: is &lt;4&gt;
      but: was &lt;5&gt;
 	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 	at org.junit.Assert.assertThat(Assert.java:865)
-	at my.company.MainPageTest.failedTestWithoutSteps(MainPageTest.java:27)
+	at my.company.SimpleTest.failedSimpleTest(SimpleTest.java:29)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -75,13 +70,22 @@ Expected: is &lt;4&gt;
             <steps/>
             <attachments/>
         </test-case>
-        <test-case start="1386780601904" stop="1386780601906" status="skipped" severity="normal">
-            <title>Skipped test without steps</title>
+        <test-case start="1386840828136" stop="1386840828137" status="passed" severity="normal">
+            <title>Test what do nothing and always passed right, but have a very long title, over 100 symbols, seriously</title>
+            <description>I hate descriptions! See the title!</description>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="Story" value="SuccessStory"/>
+                <label name="Feature" value="SimpleStories"/>
+            </labels>
+        </test-case>
+        <test-case start="1386840828137" stop="1386840828137" status="broken" severity="normal">
+            <title>Broken simple test</title>
             <failure>
-                <message>AssumptionViolatedException: Skipp it</message>
-                <stack-trace>org.junit.internal.AssumptionViolatedException: Skipp it
-	at org.junit.Assume.assumeTrue(Assume.java:59)
-	at my.company.MainPageTest.skippedTestWithoutSteps(MainPageTest.java:32)
+                <message>ArrayIndexOutOfBoundsException: 1</message>
+                <stack-trace>java.lang.ArrayIndexOutOfBoundsException: 1
+	at my.company.SimpleTest.brokenSimpleTest(SimpleTest.java:40)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
