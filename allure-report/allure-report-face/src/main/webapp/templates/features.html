@@ -2,7 +2,7 @@
     <div class="pane_col features__list" pane>
         <div class="pane_overlay clickable" ui-sref="features.story"></div>
         <div class="features__title b-island__title">Functional requirements</div>
-        <h3 class="features__pane__header">Features</h3>
+        <h3 class="pane__header">Features</h3>
         <div class="feature" ng-repeat="feature in features">
             <div class="item" ng-click="expandFeature(feature, !feature.expanded)">
                 <div class="item__icon" ng-class="feature.expanded ? 'arrow-down' : 'glyphicon glyphicon-play'"></div>
@@ -29,7 +29,7 @@
     </div>
     <div class="pane_col features__info" ng-hide="story">
         <div class="features__title b-island__title">Info</div>
-        <h3 class="features__pane__header" ng-bind="summaryText"></h3>
+        <h3 class="pane__header" ng-bind="summaryText"></h3>
         <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData"></div>
         <hr>
         <h4>There are 5 stories, {{unstableStories.length}} unstable</h4>
@@ -45,10 +45,17 @@
             </li>
         </ul>
     </div>
-    <div class="pane_col features__view" ng-if="story" pane>
+    <div class="pane_col features__view" ng-if="story" pane pane-expanded="isState('features.story.expanded')">
         <div class="pane_overlay clickable" ui-sref="features.story.testcase"></div>
         <div class="features__title b-island__title">Story</div>
-        <h3 class="features__pane__header">{{story.title}}</h3>
+        <h3 class="pane__header">
+            <div class="pane__header_controls pull-right">
+                <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('features.story.expanded')" ui-sref="features.story.expanded"></span>
+                <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('features.story.expanded')" ui-sref="features.story"></span>
+                <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="features"></span>
+            </div>
+            {{story.title}}
+        </h3>
         <div status-switcher statuses="showStatuses" class="pull-right" statistic="story.statistic"></div>
         <div testcases-list="story.testCases" statuses="showStatuses" selected-uid="testcase.uid"></div>
     </div>

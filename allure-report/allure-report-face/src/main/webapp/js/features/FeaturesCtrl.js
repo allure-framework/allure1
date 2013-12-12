@@ -37,6 +37,9 @@ angular.module('allure.features', [])
             }
         });
     }
+    $scope.isState = function(statename) {
+        return $state.is(statename);
+    };
     $scope.setStory = function(story) {
         if(story === $scope.story) {
             $state.go('features');
