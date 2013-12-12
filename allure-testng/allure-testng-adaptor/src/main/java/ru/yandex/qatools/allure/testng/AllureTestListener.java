@@ -15,6 +15,7 @@ import java.util.UUID;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 22.11.13
  */
+@SuppressWarnings("unused")
 public class AllureTestListener implements ITestListener {
     private String runUid;
 
