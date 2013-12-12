@@ -59,6 +59,9 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
             })
             .state('features.story', {
                 url: '/:storyUid'
+            })
+            .state('features.story.expanded', {
+                url: '/expanded'
             });
         testcaseProvider.attachStates('features.story');
         testcaseProvider.attachStates('home.testsuite');

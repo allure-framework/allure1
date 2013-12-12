@@ -23,7 +23,7 @@ describe('Testcases status switcher', function () {
     }));
     //FIXME: duplicate of template
     beforeEach(inject(function($templateCache) {
-        $templateCache.put('templates/xUnit/status-switcher.html', '<div class="btn-group status_switcher">'+
+        $templateCache.put('templates/testcase/status-switcher.html', '<div class="btn-group status_switcher">'+
             '<span class="btn btn-default" ng-repeat="status in sortedStatuses" '+
             'ng-click="toggle(status)" ng-class="getClassName(status)">{{status | lowercase}} {{getStatistic(status)}}</span>'+
     '</div>')
