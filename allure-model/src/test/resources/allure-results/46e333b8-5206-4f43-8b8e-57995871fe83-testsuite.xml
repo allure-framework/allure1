@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1386840828142" stop="1386840828145">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1386842987838" stop="1386842987840">
     <title>Always passing test</title>
     <classname>my.company.AlwaysPassingTest</classname>
     <test-cases>
-        <test-case start="1386840828143" stop="1386840828143" status="passed" severity="normal">
+        <test-case start="1386842987839" stop="1386842987839" status="passed" severity="normal">
             <title>Test one</title>
             <steps/>
             <attachments/>
@@ -12,7 +12,7 @@
                 <label name="Feature" value="SimpleStories"/>
             </labels>
         </test-case>
-        <test-case start="1386840828144" stop="1386840828144" status="passed" severity="normal">
+        <test-case start="1386842987839" stop="1386842987839" status="passed" severity="normal">
             <title>Test two</title>
             <steps/>
             <attachments/>
@@ -21,8 +21,8 @@
                 <label name="Feature" value="SimpleStories"/>
             </labels>
         </test-case>
-        <test-case start="1386840828144" stop="1386840828144" status="passed" severity="normal">
-            <title>Test three</title>
+        <test-case start="1386842987839" stop="1386842987839" status="passed" severity="normal">
+            <title>Test four</title>
             <steps/>
             <attachments/>
             <labels>
@@ -30,8 +30,8 @@
                 <label name="Feature" value="SimpleStories"/>
             </labels>
         </test-case>
-        <test-case start="1386840828145" stop="1386840828145" status="passed" severity="normal">
-            <title>Test four</title>
+        <test-case start="1386842987839" stop="1386842987839" status="passed" severity="normal">
+            <title>Test three</title>
             <steps/>
             <attachments/>
             <labels>

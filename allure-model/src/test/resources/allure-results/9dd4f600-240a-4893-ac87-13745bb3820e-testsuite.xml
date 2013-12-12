@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1386840820916" stop="1386840828098">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1386842980649" stop="1386842987798">
     <title>Search tests</title>
     <description>This testsuite has tests what always are passing</description>
     <classname>my.company.ScreenshotTest</classname>
     <test-cases>
-        <test-case start="1386840820918" stop="1386840823037" status="failed" severity="normal">
+        <test-case start="1386842980650" stop="1386842982826" status="failed" severity="normal">
             <title>Page loading test</title>
             <failure>
                 <message>AssertionError: 
@@ -42,74 +42,74 @@ Expected: is &quot;Yandex&quot;
 </stack-trace>
             </failure>
             <steps>
-                <step start="1386840822054" stop="1386840822407" status="passed">
+                <step start="1386842981817" stop="1386842982169" status="passed">
                     <title>openMainPage</title>
                 </step>
-                <step start="1386840822500" stop="1386840822511" status="passed">
+                <step start="1386842982286" stop="1386842982297" status="passed">
                     <title>findElement</title>
                 </step>
-                <step start="1386840822512" stop="1386840822529" status="failed">
+                <step start="1386842982297" stop="1386842982313" status="failed">
                     <title>Check text in element</title>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Server Log" source="cb227d13-3f8e-45d1-8eec-7adaa7955f44-attachment.txt" type="txt"/>
-                <attachment title="Response" source="ecdef7fa-a198-4a94-9552-d8273355b9f2-attachment.json" type="json"/>
-                <attachment title="Page Screenshot" source="10da7494-5833-4574-aee7-e20150a7f36f-attachment.png" type="png"/>
+                <attachment title="Server Log" source="b08ae8fb-a2c1-41af-9e20-6c15d01551db-attachment.txt" type="txt"/>
+                <attachment title="Response" source="ff0fe7dd-8cd1-412d-9b6d-e06a5a6e3380-attachment.json" type="json"/>
+                <attachment title="Page Screenshot" source="976f484f-edb7-464b-bf3b-62e4b536b5ca-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="Story" value="WebdriverScreenshot"/>
                 <label name="Feature" value="Screenshot"/>
             </labels>
         </test-case>
-        <test-case start="1386840820919" stop="1386840826004" status="passed" severity="normal">
+        <test-case start="1386842980650" stop="1386842985003" status="passed" severity="normal">
             <title>Wildcard search test</title>
             <steps>
-                <step start="1386840822054" stop="1386840822407" status="passed">
+                <step start="1386842981817" stop="1386842982171" status="passed">
                     <title>openMainPage</title>
                 </step>
-                <step start="1386840822407" stop="1386840825270" status="passed">
+                <step start="1386842982172" stop="1386842984293" status="passed">
                     <title>search</title>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Page Screenshot" source="e35af6a6-80ae-4200-b28a-f47460bfd3e7-attachment.png" type="png"/>
+                <attachment title="Page Screenshot" source="dc651a49-b295-4c8a-90cc-639f236b6e8b-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="Story" value="WebdriverScreenshot"/>
                 <label name="Feature" value="Screenshot"/>
             </labels>
         </test-case>
-        <test-case start="1386840820918" stop="1386840827212" status="passed" severity="normal">
+        <test-case start="1386842980650" stop="1386842985006" status="passed" severity="normal">
             <title>Usual search test</title>
             <steps>
-                <step start="1386840822054" stop="1386840822415" status="passed">
+                <step start="1386842981817" stop="1386842982180" status="passed">
                     <title>openMainPage</title>
                 </step>
-                <step start="1386840822416" stop="1386840826527" status="passed">
+                <step start="1386842982180" stop="1386842984291" status="passed">
                     <title>search</title>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Page Screenshot" source="38d8d95d-bab7-4c90-8e72-59af4ac40ccf-attachment.png" type="png"/>
+                <attachment title="Page Screenshot" source="2db69679-a5da-47ca-95c5-bb05c6f48182-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="Story" value="WebdriverScreenshot"/>
                 <label name="Feature" value="Screenshot"/>
             </labels>
         </test-case>
-        <test-case start="1386840820918" stop="1386840828097" status="passed" severity="trivial">
+        <test-case start="1386842980650" stop="1386842987798" status="passed" severity="trivial">
             <title>Empty text search</title>
             <steps>
-                <step start="1386840822054" stop="1386840822423" status="passed">
+                <step start="1386842981817" stop="1386842982173" status="passed">
                     <title>openMainPage</title>
                 </step>
-                <step start="1386840822424" stop="1386840827495" status="passed">
+                <step start="1386842982174" stop="1386842987207" status="passed">
                     <title>search</title>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Page Screenshot" source="d09e1bfe-6682-4956-a687-6fc6033c8b9d-attachment.png" type="png"/>
+                <attachment title="Page Screenshot" source="8a5b4ddf-76fa-4cc4-8133-011860f935af-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="Story" value="WebdriverScreenshot"/>
