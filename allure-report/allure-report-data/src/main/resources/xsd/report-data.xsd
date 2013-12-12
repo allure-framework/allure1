@@ -59,11 +59,11 @@
     <xsd:complexType name="allure-test-suite">
         <xsd:all>
             <xsd:element name="uid" type="xsd:string"/>
-            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="name" type="xsd:string"/>
             <xsd:element name="time" type="alr:time"/>
+            <xsd:element name="title" type="xsd:string" minOccurs="0"/>
             <xsd:element name="statistic" type="alr:statistic"/>
             <xsd:element name="description" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="classname" type="xsd:string" minOccurs="0"/>
             <xsd:element name="test-cases" type="alr:allure-test-cases-info" minOccurs="0"/>
         </xsd:all>
     </xsd:complexType>

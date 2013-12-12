@@ -50,12 +50,18 @@
                         <arg>-Xxew</arg>
                         <arg>-Xxew:instantiate lazy</arg>
                         <arg>-Xxew:delete</arg>
+                        <arg>-Xfluent-api</arg>
                     </args>
                     <plugins>
                         <plugin>
                             <groupId>com.github.jaxb-xew-plugin</groupId>
                             <artifactId>jaxb-xew-plugin</artifactId>
                             <version>1.1</version>
+                        </plugin>
+                        <plugin>
+                            <groupId>net.java.dev.jaxb2-commons</groupId>
+                            <artifactId>jaxb-fluent-api</artifactId>
+                            <version>2.1.8</version>
                         </plugin>
                     </plugins>
                 </configuration>
