@@ -60,7 +60,7 @@ public enum Allure {
         testSuite.setStart(System.currentTimeMillis());
         String simpleName = event.getTestRunName().replaceAll(".*\\.(\\S+)", "$1");
         testSuite.setTitle(AllureWriteUtils.humanize(simpleName));
-        testSuite.setClassname(event.getTestRunName());
+        testSuite.setName(event.getTestRunName());
 
         for (Annotation annotation : event.getAnnotations()) {
             if (annotation instanceof Title) {
@@ -81,6 +81,7 @@ public enum Allure {
     private void fireTestStartedEvent(TestStartedEvent event) {
         TestCaseResult testCase = TestStorage.getTest(event.getUid());
         testCase.setStart(System.currentTimeMillis());
+        testCase.setName(event.getTestName());
         testCase.setTitle(humanize(event.getTestName()));
         testCase.setSeverity(SeverityLevel.NORMAL);
         testCase.setStatus(Status.PASSED);
@@ -144,11 +145,11 @@ public enum Allure {
     }
 
     private void fireStepStartEvent(StepStartEvent event) {
-        Step step = new Step();
-        step.setTitle(event.getStepTitle());
-        step.setStatus(Status.PASSED);
-        step.setStart(System.currentTimeMillis());
-        TestStepStorage.putTestStep(step);
+        TestStepStorage.putTestStep(new Step()
+                .withTitle(event.getStepTitle())
+                .withStatus(Status.PASSED)
+                .withStart(System.currentTimeMillis())
+        );
     }
 
     @SuppressWarnings("unused")
@@ -167,21 +168,19 @@ public enum Allure {
     }
 
     private void fireMakeAttachEvent(MakeAttachEvent event) {
-        Attachment attachment = new Attachment();
-        attachment.setTitle(event.getTitle());
-        attachment.setType(event.getAttachmentType());
-        attachment.setSource(AllureWriteUtils.writeAttachment(
+        Step step = TestStepStorage.getTestStep();
+
+        String source = writeAttachment(
                 event.getAttach(),
                 event.getAttachmentType(),
-                ".attach")
+                ".attach"
         );
 
-        Step step = TestStepStorage.getTestStep();
-        if (step.getAttachments() == null) {
-            step.setAttachments(new ArrayList<Attachment>());
-        }
-        step.getAttachments().add(attachment);
-
+        step.getAttachments().add(new Attachment()
+                .withTitle(event.getTitle())
+                .withType(event.getAttachmentType())
+                .withSource(source)
+        );
     }
 
     private static Status getStatusByThrowable(Throwable throwable) {
@@ -193,9 +192,8 @@ public enum Allure {
     }
 
     private static Failure getFailureByThrowable(Throwable throwable) {
-        Failure failure = new Failure();
-        failure.setMessage(ExceptionUtils.getMessage(throwable));
-        failure.setStackTrace(ExceptionUtils.getStackTrace(throwable));
-        return failure;
+        return new Failure()
+                .withMessage(ExceptionUtils.getMessage(throwable))
+                .withStackTrace(ExceptionUtils.getStackTrace(throwable));
     }
 }
