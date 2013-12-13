@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.events;
 
+import ru.yandex.qatools.allure.context.AllureContext;
 import ru.yandex.qatools.allure.model.AttachmentType;
 
 /**
@@ -11,10 +12,12 @@ public class MakeAttachEvent implements Event {
     private AttachmentType attachmentType;
     private Object attach;
 
-    public MakeAttachEvent(String title, AttachmentType attachmentType, Object attach) {
-        this.title = title;
-        this.attachmentType = attachmentType;
-        this.attach = attach;
+    public MakeAttachEvent() {
+    }
+
+    @Override
+    public void process(AllureContext context) {
+
     }
 
     public String getTitle() {
@@ -39,5 +42,20 @@ public class MakeAttachEvent implements Event {
 
     public void setAttach(Object attach) {
         this.attach = attach;
+    }
+
+    public MakeAttachEvent withTitle(String title) {
+        setTitle(title);
+        return this;
+    }
+
+    public MakeAttachEvent withType(AttachmentType type) {
+        setAttachmentType(type);
+        return this;
+    }
+
+    public MakeAttachEvent withAttach(Object attach) {
+        setAttach(attach);
+        return this;
     }
 }
