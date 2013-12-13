@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<qa:test-suite xmlns:qa="urn:model.allure.qatools.yandex.ru" start="1386840828142" stop="1386840828145">
+    <title>Always passing test</title>
+    <name>my.company.AlwaysPassingTest</name>
+    <test-cases>
+        <test-case start="1386840828143" stop="1386840828143" status="passed" severity="normal">
+            <name>test.one</name>
+            <title>Test one</title>
+            <steps>
+                <step start="1386840828143" stop="1386840828143" status="passed">
+                    <name>some-name</name>
+                </step>
+            </steps>
+            <labels>
+                <label name="Story" value="SuccessStory"/>
+                <label name="Feature" value="SimpleStories"/>
+            </labels>
+        </test-case>
+    </test-cases>
+</qa:test-suite>
