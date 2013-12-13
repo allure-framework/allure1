@@ -30,7 +30,7 @@
     <div class="pane_col features__info" ng-hide="story">
         <div class="features__title b-island__title">Info</div>
         <h3 class="pane__header" ng-bind="summaryText"></h3>
-        <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData"></div>
+        <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData" tooltip-tpl="chartTooltip"></div>
         <hr>
         <h4>There are {{allStories.length}} stories, {{unstableStories.length}} unstable</h4>
         <ul class="list-unstyled">
