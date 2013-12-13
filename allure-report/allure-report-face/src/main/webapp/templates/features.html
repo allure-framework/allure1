@@ -27,7 +27,7 @@
             </ul>
         </div>
     </div>
-    <div class="pane_col features__info" ng-hide="story">
+    <div class="pane_col features__info" ng-if="!story">
         <div class="features__title b-island__title">Info</div>
         <h3 class="pane__header" ng-bind="summaryText"></h3>
         <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData" tooltip-tpl="chartTooltip"></div>
