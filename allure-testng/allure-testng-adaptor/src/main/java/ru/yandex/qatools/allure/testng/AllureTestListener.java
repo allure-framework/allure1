@@ -25,58 +25,57 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestStartedEvent(
-                Thread.currentThread().getName(),
-                iTestResult.getName(),
-                Arrays.asList(iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations())
-        ));
+        Allure.LIFECYCLE.fire(new TestCaseStartedEvent()
+                .withUid(Thread.currentThread().getName())
+                .withName(iTestResult.getName())
+                .withAnnotations(Arrays.asList(iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations()))
+        );
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestFinishedEvent(
-                runUid,
-                Thread.currentThread().getName()
-        ));
+        Allure.LIFECYCLE.fire(new TestCaseFinishedEvent()
+                .withRunUid(runUid)
+                .withUid(Thread.currentThread().getName())
+        );
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestFailureEvent(
-                Thread.currentThread().getName(),
-                iTestResult.getThrowable()
-        ));
+        Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
+                .withUid(Thread.currentThread().getName())
+                .withThrowable(iTestResult.getThrowable())
+        );
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestAssumptionFailureEvent(
-                Thread.currentThread().getName(),
-                iTestResult.getThrowable()
-        ));
+        Allure.LIFECYCLE.fire(new TestCaseSkippedEvent()
+                .withUid(Thread.currentThread().getName())
+                .withThrowable(iTestResult.getThrowable())
+        );
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestFailureEvent(
-                Thread.currentThread().getName(),
-                iTestResult.getThrowable()
-        ));
+        Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
+                .withUid(Thread.currentThread().getName())
+                .withThrowable(iTestResult.getThrowable())
+        );
     }
 
     @Override
     public void onStart(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestRunStartedEvent(
-                runUid,
-                iTestContext.getCurrentXmlTest().getSuite().getName(),
-                Collections.<Annotation>emptyList()
-        ));
+        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent()
+                .withUid(runUid)
+                .withName(iTestContext.getCurrentXmlTest().getSuite().getName())
+                .withAnnotations(Collections.<Annotation>emptyList())
+        );
     }
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestRunFinishedEvent(
-                runUid
-        ));
+        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent().withUid(runUid)
+        );
     }
 }
