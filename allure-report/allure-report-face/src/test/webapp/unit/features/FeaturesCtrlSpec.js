@@ -76,7 +76,7 @@ describe('FeaturesCtrl', function () {
     });
 
     it('should create data for pieChart', function() {
-        expect(scope.chartData).toEqual([{value : 2, part : 2/3, name : 'passed'}, {value : 1, part : 1/3, name : 'failed'}]);
+        expect(scope.chartData).toEqual([{value : 1, part : 1/3, name : 'passed'}, {value : 2, part : 2/3, name : 'failed'}]);
     });
 
     it('should create list with all unstable stories', function() {
