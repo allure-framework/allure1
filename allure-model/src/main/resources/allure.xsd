@@ -12,6 +12,7 @@
             <xsd:element name="title" type="xsd:string" minOccurs="0"/>
             <xsd:element name="description" type="xsd:string" minOccurs="0"/>
             <xsd:element name="test-cases" type="qa:test-cases-result" minOccurs="0"/>
+            <xsd:element name="labels" type="qa:labels" minOccurs="0"/>
         </xsd:all>
         <xsd:attribute name="start" type="xsd:long" use="required"/>
         <xsd:attribute name="stop" type="xsd:long" use="required"/>
