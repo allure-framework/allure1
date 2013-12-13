@@ -7,7 +7,7 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  *         Date: 11.11.13
  */
 public class TestCaseFinishedEvent implements TestCaseEvent {
-    private String runUid;
+    private String suiteUid;
     private String uid;
 
     public TestCaseFinishedEvent() {
@@ -18,12 +18,12 @@ public class TestCaseFinishedEvent implements TestCaseEvent {
         testCase.setStop(System.currentTimeMillis());
     }
 
-    public String getRunUid() {
-        return runUid;
+    public String getSuiteUid() {
+        return suiteUid;
     }
 
-    public void setRunUid(String runUid) {
-        this.runUid = runUid;
+    public void setSuiteUid(String suiteUid) {
+        this.suiteUid = suiteUid;
     }
 
     public String getUid() {
@@ -35,7 +35,7 @@ public class TestCaseFinishedEvent implements TestCaseEvent {
     }
 
     public TestCaseFinishedEvent withRunUid(String runUid) {
-        setRunUid(runUid);
+        setSuiteUid(runUid);
         return this;
     }
 

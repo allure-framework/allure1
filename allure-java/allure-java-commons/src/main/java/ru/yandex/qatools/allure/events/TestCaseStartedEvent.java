@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.events;
 
+import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import java.lang.annotation.Annotation;
@@ -9,7 +10,7 @@ import java.util.Collection;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  */
-public class TestCaseStartedEvent implements TestSuiteEvent {
+public class TestCaseStartedEvent implements TestCaseEvent {
     private String uid;
     private String name;
     private Collection<Annotation> annotations;
@@ -18,7 +19,7 @@ public class TestCaseStartedEvent implements TestSuiteEvent {
     }
 
     @Override
-    public void process(TestSuiteResult testCase) {
+    public void process(TestCaseResult testCase) {
         testCase.setStart(System.currentTimeMillis());
     }
 

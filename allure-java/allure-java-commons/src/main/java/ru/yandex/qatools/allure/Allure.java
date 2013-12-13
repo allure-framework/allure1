@@ -1,18 +1,9 @@
 package ru.yandex.qatools.allure;
 
-import org.apache.commons.lang3.exception.ExceptionUtils;
-import ru.yandex.qatools.allure.annotations.*;
 import ru.yandex.qatools.allure.events.*;
-import ru.yandex.qatools.allure.exceptions.UnknownEventException;
 import ru.yandex.qatools.allure.model.*;
 import ru.yandex.qatools.allure.model.Step;
-import ru.yandex.qatools.allure.storages.TestRunStorage;
-import ru.yandex.qatools.allure.storages.TestStepStorage;
-import ru.yandex.qatools.allure.storages.TestStorage;
-import ru.yandex.qatools.allure.utils.AllureWriteUtils;
-
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
+import ru.yandex.qatools.allure.storages.*;
 
 import static ru.yandex.qatools.allure.utils.AllureWriteUtils.*;
 
@@ -24,176 +15,59 @@ public enum Allure {
 
     LIFECYCLE;
 
+    private static final StepStorage STEP_STORAGE = new StepStorage();
+
+    private static final TestCaseStorage TEST_CASE_STORAGE = new TestCaseStorage();
+
+    private static final TestSuiteStorage TEST_SUITE_STORAGE = new TestSuiteStorage();
+
     private static final Object LOCK = new Object();
 
     private Allure() {
     }
 
-    public void fire(Event event) {
-//        if (event instanceof TestSuiteStartedEvent) {
-//            fireTestRunStartedEvent((TestSuiteStartedEvent) event);
-//        } else if (event instanceof TestSuiteFinishedEvent) {
-//            fireTestRunFinishedEvent((TestSuiteFinishedEvent) event);
-//        } else if (event instanceof TestCaseStartedEvent) {
-//            fireTestStartedEvent((TestCaseStartedEvent) event);
-//        } else if (event instanceof TestCaseFinishedEvent) {
-//            fireTestFinishedEvent((TestCaseFinishedEvent) event);
-//        } else if (event instanceof TestCaseFailureEvent) {
-//            fireTestFailureEvent((TestCaseFailureEvent) event);
-//        } else if (event instanceof StepStartedEvent) {
-//            fireStepStartEvent((StepStartedEvent) event);
-//        } else if (event instanceof StepFinishedEvent) {
-//            fireStepStopEvent((StepFinishedEvent) event);
-//        } else if (event instanceof StepFailureEvent) {
-//            fireStepFailureEvent((StepFailureEvent) event);
-//        } else if (event instanceof MakeAttachEvent) {
-//            fireMakeAttachEvent((MakeAttachEvent) event);
-//        } else {
-//            throw new UnknownEventException("Unknown event " + event);
-//        }
+    public void fire(StepStartedEvent event) {
+        Step step = new Step();
+        event.process(step);
+        STEP_STORAGE.put(step);
     }
 
-//    private void fireTestRunStartedEvent(TestSuiteStartedEvent event) {
-//        TestSuiteResult testSuite = TestRunStorage.getTestRun(event.getUid());
-//        testSuite.setStart(System.currentTimeMillis());
-//        String simpleName = event.getName().replaceAll(".*\\.(\\S+)", "$1");
-//        testSuite.setTitle(AllureWriteUtils.humanize(simpleName));
-//        testSuite.setClassname(event.getName());
-//
-//        for (Annotation annotation : event.getAnnotations()) {
-//            if (annotation instanceof Title) {
-//                testSuite.setTitle(((Title) annotation).value());
-//            }
-//            if (annotation instanceof Description) {
-//                testSuite.setDescription(((Description) annotation).value());
-//            }
-//        }
-//    }
-//
-//    private void fireTestRunFinishedEvent(TestSuiteFinishedEvent event) {
-//        TestSuiteResult testSuite = TestRunStorage.pollTestRun(event.getUid());
-//        testSuite.setStop(System.currentTimeMillis());
-//        marshalTestSuite(testSuite);
-//    }
-//
-//    private void fireTestStartedEvent(TestCaseStartedEvent event) {
-//        TestCaseResult testCase = TestStorage.getTest(event.getUid());
-//        testCase.setStart(System.currentTimeMillis());
-//        testCase.setTitle(humanize(event.getName()));
-//        testCase.setSeverity(SeverityLevel.NORMAL);
-//        testCase.setStatus(Status.PASSED);
-//
-//        for (Annotation annotation : event.getAnnotations()) {
-//            if (annotation instanceof Title) {
-//                testCase.setTitle(((Title) annotation).value());
-//            }
-//            if (annotation instanceof Description) {
-//                testCase.setDescription(((Description) annotation).value());
-//            }
-//            if (annotation instanceof Severity) {
-//                testCase.setSeverity(((Severity) annotation).value());
-//            }
-//            if (annotation instanceof Story) {
-//                Story story = (Story) annotation;
-//                for (Class<?> clazz : story.value()) {
-//                    if (clazz.isAnnotationPresent(StoryClass.class)
-//                            && clazz.getDeclaringClass().isAnnotationPresent(FeatureClass.class)) {
-//                        Label labelStory = new Label();
-//                        labelStory.setName("Story");
-//                        labelStory.setValue(clazz.getSimpleName());
-//
-//                        Label labelFeature = new Label();
-//                        labelFeature.setName("Feature");
-//                        labelFeature.setValue(clazz.getDeclaringClass().getSimpleName());
-//                        testCase.getLabels().add(labelStory);
-//                        testCase.getLabels().add(labelFeature);
-//                    }
-//                }
-//            }
-//        }
-//    }
+    public void fire(StepEvent event) {
+        Step step = STEP_STORAGE.pollLast();
+        event.process(step);
+    }
 
-//    private void fireTestFinishedEvent(TestCaseFinishedEvent event) {
-//        TestCaseResult testCase = TestStorage.pollTest(event.getUid());
-//        testCase.setStop(System.currentTimeMillis());
-//
-//        Step rootStep = TestStepStorage.pollTestStep();
-//
-//        testCase.getSteps().addAll(rootStep.getSteps());
-//        testCase.getAttachments().addAll(rootStep.getAttachments());
-//
-//        TestSuiteResult testSuiteResult = TestRunStorage.getTestRun(event.getRunUid());
-//        synchronized (LOCK) {
-//            testSuiteResult.getTestCases().add(testCase);
-//
-//        }
-//    }
+    public void fire(StepFinishedEvent event) {
+        Step step = STEP_STORAGE.pollLast();
+        event.process(step);
+        STEP_STORAGE.getLast().getSteps().add(step);
+    }
 
-//    private void fireTestFailureEvent(TestCaseFailureEvent event) {
-//        TestCaseResult testCase = TestStorage.getTest(event.getUid());
-//        testCase.setStatus(getStatusByThrowable(event.getThrowable()));
-//        testCase.setFailure(getFailureByThrowable(event.getThrowable()));
-//    }
+    public void fire(TestCaseEvent event) {
+        TestCaseResult testCase = TEST_CASE_STORAGE.get();
+        event.process(testCase);
+    }
 
-//    private void fireTestAssumptionFailureEvent(TestAssumptionFailureEvent event) {
-//        TestCaseResult testCase = TestStorage.getTest(event.getUid());
-//        testCase.setStatus(Status.SKIPPED);
-//        testCase.setFailure(getFailureByThrowable(event.getThrowable()));
-//    }
+    public void fire(TestCaseFinishedEvent event) {
+        TestCaseResult testCase = TEST_CASE_STORAGE.get();
+        event.process(testCase);
+        synchronized (LOCK) {
+            TEST_SUITE_STORAGE.get(event.getSuiteUid()).getTestCases().add(testCase);
+        }
+        TEST_CASE_STORAGE.remove();
+    }
 
-//    private void fireStepStartEvent(StepStartedEvent event) {
-//        Step step = new Step();
-//        step.setTitle(event.getTitle());
-//        step.setStatus(Status.PASSED);
-//        step.setStart(System.currentTimeMillis());
-//        TestStepStorage.putTestStep(step);
-//    }
 
-//    @SuppressWarnings("unused")
-//    private void fireStepStopEvent(StepFinishedEvent event) {
-//        Step step = TestStepStorage.pollTestStep();
-//        step.setStop(System.currentTimeMillis());
-//
-//        Step parentStep = TestStepStorage.getTestStep();
-//        parentStep.getSteps().add(step);
-//
-//    }
+    public void fire(TestSuiteEvent event) {
+        TestSuiteResult testSuite = TEST_SUITE_STORAGE.get(event.getUid());
+        event.process(testSuite);
+    }
 
-//    private void fireStepFailureEvent(StepFailureEvent event) {
-//        Step step = TestStepStorage.getTestStep();
-//        step.setStatus(getStatusByThrowable(event.getThrowable()));
-//    }
-
-//    private void fireMakeAttachEvent(MakeAttachEvent event) {
-//        Attachment attachment = new Attachment();
-//        attachment.setTitle(event.getTitle());
-//        attachment.setType(event.getAttachmentType());
-//        attachment.setSource(AllureWriteUtils.writeAttachment(
-//                event.getAttach(),
-//                event.getAttachmentType(),
-//                ".attach")
-//        );
-//
-//        Step step = TestStepStorage.getTestStep();
-//        if (step.getAttachments() == null) {
-//            step.setAttachments(new ArrayList<Attachment>());
-//        }
-//        step.getAttachments().add(attachment);
-//
-//    }
-//
-//    private static Status getStatusByThrowable(Throwable throwable) {
-//        if (throwable instanceof AssertionError) {
-//            return Status.FAILED;
-//        } else {
-//            return Status.BROKEN;
-//        }
-//    }
-
-//    private static Failure getFailureByThrowable(Throwable throwable) {
-//        Failure failure = new Failure();
-//        failure.setMessage(ExceptionUtils.getMessage(throwable));
-//        failure.setStackTrace(ExceptionUtils.getStackTrace(throwable));
-//        return failure;
-//    }
+    public void fire(TestSuiteFinishedEvent event) {
+        String suiteUid = event.getUid();
+        TestSuiteResult testSuite = TEST_SUITE_STORAGE.get(suiteUid);
+        event.process(testSuite);
+        marshalTestSuite(testSuite);
+        TEST_SUITE_STORAGE.remove(suiteUid);
+    }
 }

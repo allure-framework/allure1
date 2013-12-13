@@ -20,9 +20,10 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
     @Override
     public void process(TestSuiteResult testSuite) {
         testSuite.setStart(System.currentTimeMillis());
-        testSuite.setClassname(name);
+        testSuite.setName(name);
     }
 
+    @Override
     public String getUid() {
         return uid;
     }

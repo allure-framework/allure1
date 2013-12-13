@@ -28,10 +28,9 @@ public class TestCaseFailureEvent implements TestCaseEvent {
     }
 
     private Failure getFailure() {
-        Failure failure = new Failure();
-        failure.setMessage(ExceptionUtils.getMessage(throwable));
-        failure.setStackTrace(ExceptionUtils.getStackTrace(throwable));
-        return failure;
+        return new Failure()
+                .withMessage(ExceptionUtils.getMessage(throwable))
+                .withStackTrace(ExceptionUtils.getStackTrace(throwable));
     }
 
     public String getUid() {

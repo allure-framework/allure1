@@ -17,6 +17,7 @@ public class TestSuiteFinishedEvent implements TestSuiteEvent {
         testSuite.setStop(System.currentTimeMillis());
     }
 
+    @Override
     public String getUid() {
         return uid;
     }
