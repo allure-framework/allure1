@@ -23,12 +23,12 @@
         mockD3Tooltip: function() {
             var tooltipsCount = 0;
             beforeEach(module(function($provide) {
-                $provide.value('d3Tooltip', function() {
+                $provide.value('d3Tooltip', jasmine.createSpy('tooltipConstructor').andCallFake(function() {
                     tooltipsCount++;
                     return angular.extend(jasmine.createSpyObj('tooltip', ['show', 'hide']), {destroy: function() {
                         tooltipsCount--;
                     }});
-                });
+                }));
             }));
             afterEach(function() {
                 expect(tooltipsCount).toBe(0);

@@ -51,9 +51,6 @@ angular.module('allure.charts.pie', ['allure.charts.util']).directive('pieChart'
         this.legend.items.on('mouseover', this.onLegendHover.bind(this))
             .on('mouseout', this.onLegendOut.bind(this))
             .on('click', this.onLegendClick.bind(this));
-
-
-        this.tooltip = new d3Tooltip(this.sectors, this.tooltipFormat);
     }
     PieChart.prototype.onLegendClick = function(legendData) {
         var sector = this.getSectorByName(legendData.name);
@@ -103,9 +100,14 @@ angular.module('allure.charts.pie', ['allure.charts.util']).directive('pieChart'
         });
         delete this.$scope.selected;
     };
-    PieChart.prototype.tooltipFormat =
-        '<div><b>{{value}} {{value == 1 ? "test" : "tests"}} ({{data.part * 100 | number:0}}%)</b></div>' +
-        '<div>{{value == 1 ? "is" : "are"}} {{data.name}}</div>';
+    PieChart.prototype.setTooltipFormat = function(format) {
+        if(!this.tooltip) {
+            this.tooltip = new d3Tooltip(this.sectors, format);
+        }
+        else {
+            this.tooltip.format = format;
+        }
+    };
     PieChart.prototype.destroy = function() {
         this.tooltip.destroy();
     };
@@ -113,12 +115,16 @@ angular.module('allure.charts.pie', ['allure.charts.util']).directive('pieChart'
     return {
         restrict: 'EA',
         scope: {
+            tooltipTpl: '=',
             data: '=',
             selected: '='
         },
         link: function ($scope, elm) {
             $scope.$watch('data', function (data) {
+                var format = $scope.tooltipTpl || '<div><b>{{value}} {{value == 1 ? "test" : "tests"}} ({{data.part * 100 | number:0}}%)</b></div>' +
+                    '<div>{{data.name}}</div>';
                 $scope.chart = new PieChart(elm[0], $scope, data);
+                $scope.chart.setTooltipFormat(format)
             });
             $scope.$on('$destroy', function() {
                 $scope.chart.destroy();

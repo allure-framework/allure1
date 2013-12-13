@@ -63,6 +63,8 @@ angular.module('allure.features', [])
         return story.statistic.passed !== story.statistic.total;
     });
     $scope.chartData = getChartData();
+    $scope.chartTooltip = '<div><b>{{value}} {{value == 1 ? "story" : "stories"}} ({{data.part * 100 | number:0}}%)</b></div>' +
+        '<div>{{data.name}}</div>';
     $scope.summaryText = [
         'Everything is very bad!',
         'There are many errors!',

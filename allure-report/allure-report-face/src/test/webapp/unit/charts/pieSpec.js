@@ -54,6 +54,26 @@ describe('PieChart', function() {
         expectStatusSelected('test');
     });
 
+    it('should pass default tooltip template', function() {
+        createElement('<div class="pie-chart" pie-chart selected="currentStatus" data="chartData"></div>', {chartData: [
+            {name: 'test', value: 3, part: 0.75},
+            {name: 'test2', value: 1, part: 0.25}
+        ]});
+        inject(function(d3Tooltip) {
+            expect(d3Tooltip.mostRecentCall.args[1]).toBeDefined();
+        });
+    });
+
+    it('should can customize tooltip', function() {
+        createElement('<div class="pie-chart" pie-chart selected="currentStatus" data="chartData" tooltip-tpl="tooltipTpl"></div>', {
+            chartData: [{name: 'test', value: 3, part: 0.75}, {name: 'test2', value: 1, part: 0.25}],
+            tooltipTpl: 'test tooltip'
+        });
+        inject(function(d3Tooltip) {
+            expect(d3Tooltip.mostRecentCall.args[1]).toBe('test tooltip');
+        });
+    });
+
     afterEach(function() {
         scope.$destroy();
     });
