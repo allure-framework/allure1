@@ -59,7 +59,7 @@
 
     <xsd:complexType name="failure">
         <xsd:all>
-            <xsd:element name="message" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="message" type="xsd:string"/>
             <xsd:element name="stack-trace" type="xsd:string" minOccurs="0"/>
         </xsd:all>
     </xsd:complexType>
