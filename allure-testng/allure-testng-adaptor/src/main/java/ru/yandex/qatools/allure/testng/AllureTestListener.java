@@ -17,33 +17,30 @@ import java.util.UUID;
  */
 @SuppressWarnings("unused")
 public class AllureTestListener implements ITestListener {
-    private String runUid;
+    private String suiteUid;
 
     public AllureTestListener() {
-        runUid = UUID.randomUUID().toString();
+        suiteUid = UUID.randomUUID().toString();
     }
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestCaseStartedEvent()
-                .withUid(Thread.currentThread().getName())
                 .withName(iTestResult.getName())
                 .withAnnotations(Arrays.asList(iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations()))
+                .withSuiteUid(suiteUid)
         );
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestCaseFinishedEvent()
-                .withRunUid(runUid)
-                .withUid(Thread.currentThread().getName())
         );
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
-                .withUid(Thread.currentThread().getName())
                 .withThrowable(iTestResult.getThrowable())
         );
     }
@@ -59,7 +56,6 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
-                .withUid(Thread.currentThread().getName())
                 .withThrowable(iTestResult.getThrowable())
         );
     }
@@ -67,7 +63,7 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onStart(ITestContext iTestContext) {
         Allure.LIFECYCLE.fire(new TestSuiteStartedEvent()
-                .withUid(runUid)
+                .withUid(suiteUid)
                 .withName(iTestContext.getCurrentXmlTest().getSuite().getName())
                 .withAnnotations(Collections.<Annotation>emptyList())
         );
@@ -75,7 +71,7 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent().withUid(runUid)
+        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent().withUid(suiteUid)
         );
     }
 }
