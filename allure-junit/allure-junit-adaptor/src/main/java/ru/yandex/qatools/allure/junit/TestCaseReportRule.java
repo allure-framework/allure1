@@ -4,10 +4,10 @@ import org.junit.internal.AssumptionViolatedException;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import ru.yandex.qatools.allure.Allure;
-import ru.yandex.qatools.allure.events.TestAssumptionFailureEvent;
-import ru.yandex.qatools.allure.events.TestFailureEvent;
-import ru.yandex.qatools.allure.events.TestFinishedEvent;
-import ru.yandex.qatools.allure.events.TestStartedEvent;
+import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
+import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
+import ru.yandex.qatools.allure.events.TestCaseSkippedEvent;
+import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 
 import java.util.UUID;
 
@@ -28,19 +28,23 @@ public class TestCaseReportRule extends TestWatcher {
     }
 
     protected void starting(Description description) {
-        Allure.LIFECYCLE.fire(new TestStartedEvent(uid, description.getMethodName(), description.getAnnotations()));
+        Allure.LIFECYCLE.fire(new TestCaseStartedEvent()
+                .withUid(uid)
+                .withName(description.getMethodName())
+                .withAnnotations(description.getAnnotations())
+        );
     }
 
     protected void finished(Description description) {
-        Allure.LIFECYCLE.fire(new TestFinishedEvent(runUid, uid));
+        Allure.LIFECYCLE.fire(new TestCaseFinishedEvent().withUid(uid).withRunUid(runUid));
     }
 
     protected void skipped(AssumptionViolatedException e, Description description) {
-        Allure.LIFECYCLE.fire(new TestAssumptionFailureEvent(uid, e));
+        Allure.LIFECYCLE.fire(new TestCaseSkippedEvent().withThrowable(e));
     }
 
     protected void failed(Throwable e, Description description) {
-        Allure.LIFECYCLE.fire(new TestFailureEvent(uid, e));
+        Allure.LIFECYCLE.fire(new TestCaseFailureEvent().withUid(uid).withThrowable(e));
     }
 
 }
