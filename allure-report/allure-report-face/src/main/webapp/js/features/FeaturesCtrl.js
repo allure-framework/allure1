@@ -11,9 +11,9 @@ angular.module('allure.features', [])
         });
     }
     function getChartData() {
-        var stable = $scope.unstableStories.length,
+        var unstable = $scope.unstableStories.length,
             total = $scope.allStories.length,
-            unstable = total - stable;
+            stable = total - unstable;
         return [
             {value: stable, part: stable/total, name: 'passed'},
             {value: unstable, part: unstable/total, name: 'failed'}];
