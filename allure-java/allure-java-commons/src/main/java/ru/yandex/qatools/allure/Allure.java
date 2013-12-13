@@ -33,7 +33,7 @@ public enum Allure {
     }
 
     public void fire(StepEvent event) {
-        Step step = STEP_STORAGE.pollLast();
+        Step step = STEP_STORAGE.getLast();
         event.process(step);
     }
 
@@ -41,6 +41,15 @@ public enum Allure {
         Step step = STEP_STORAGE.pollLast();
         event.process(step);
         STEP_STORAGE.getLast().getSteps().add(step);
+    }
+
+    public void fire(TestCaseStartedEvent event) {
+        TestCaseResult testCase = TEST_CASE_STORAGE.get();
+        event.process(testCase);
+
+        synchronized (LOCK) {
+            TEST_SUITE_STORAGE.get(event.getSuiteUid()).getTestCases().add(testCase);
+        }
     }
 
     public void fire(TestCaseEvent event) {
@@ -51,9 +60,12 @@ public enum Allure {
     public void fire(TestCaseFinishedEvent event) {
         TestCaseResult testCase = TEST_CASE_STORAGE.get();
         event.process(testCase);
-        synchronized (LOCK) {
-            TEST_SUITE_STORAGE.get(event.getSuiteUid()).getTestCases().add(testCase);
-        }
+
+        Step root = STEP_STORAGE.pollLast();
+        testCase.getSteps().addAll(root.getSteps());
+        testCase.getAttachments().addAll(root.getAttachments());
+
+        STEP_STORAGE.remove();
         TEST_CASE_STORAGE.remove();
     }
 

@@ -9,28 +9,28 @@ import ru.yandex.qatools.allure.model.Step;
  *         Date: 11.11.13
  */
 public class StepStartedEvent implements StepEvent {
-    private String title;
+    private String name;
 
     public StepStartedEvent() {
     }
 
     @Override
     public void process(Step step) {
-        step.setTitle(title);
+        step.setName(name);
         step.setStatus(Status.PASSED);
         step.setStart(System.currentTimeMillis());
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public StepStartedEvent withTitle(String title) {
-        setTitle(title);
+    public StepStartedEvent withName(String name) {
+        setName(name);
         return this;
     }
 

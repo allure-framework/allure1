@@ -10,7 +10,6 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  *         Date: 11.11.13
  */
 public class TestCaseFailureEvent implements TestCaseEvent {
-    private String uid;
     private Throwable throwable;
 
     public TestCaseFailureEvent() {
@@ -29,16 +28,8 @@ public class TestCaseFailureEvent implements TestCaseEvent {
 
     private Failure getFailure() {
         return new Failure()
-                .withMessage(ExceptionUtils.getMessage(throwable))
-                .withStackTrace(ExceptionUtils.getStackTrace(throwable));
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
+                .withMessage(ExceptionUtils.getMessage(getThrowable()))
+                .withStackTrace(ExceptionUtils.getStackTrace(getThrowable()));
     }
 
     public Throwable getThrowable() {
@@ -47,11 +38,6 @@ public class TestCaseFailureEvent implements TestCaseEvent {
 
     public void setThrowable(Throwable e) {
         this.throwable = e;
-    }
-
-    public TestCaseFailureEvent withUid(String uid) {
-        setUid(uid);
-        return this;
     }
 
     public TestCaseFailureEvent withThrowable(Throwable throwable) {

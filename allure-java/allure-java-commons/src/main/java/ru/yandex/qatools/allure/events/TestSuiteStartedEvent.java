@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.events;
 
 import ru.yandex.qatools.allure.model.TestSuiteResult;
+import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.lang.annotation.Annotation;
 import java.util.Collection;
@@ -21,6 +22,11 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
     public void process(TestSuiteResult testSuite) {
         testSuite.setStart(System.currentTimeMillis());
         testSuite.setName(name);
+
+        AnnotationManager annotationsManager = new AnnotationManager(annotations);
+        annotationsManager.isTitleAnnotationPresentUpdate(testSuite);
+        annotationsManager.isDescriptionAnnotationPresentUpdate(testSuite);
+        annotationsManager.isStoryAnnotationPresentUpdate(testSuite);
     }
 
     @Override
