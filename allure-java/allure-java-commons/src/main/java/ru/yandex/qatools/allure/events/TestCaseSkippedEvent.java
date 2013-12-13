@@ -10,7 +10,6 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  *         Date: 11.11.13
  */
 public class TestCaseSkippedEvent implements TestCaseEvent {
-    private String uid;
     private Throwable throwable;
 
     public TestCaseSkippedEvent() {
@@ -29,25 +28,12 @@ public class TestCaseSkippedEvent implements TestCaseEvent {
         return failure;
     }
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     public Throwable getThrowable() {
         return throwable;
     }
 
     public void setThrowable(Throwable e) {
         this.throwable = e;
-    }
-
-    public TestCaseSkippedEvent withUid(String uid) {
-        setUid(uid);
-        return this;
     }
 
     public TestCaseSkippedEvent withThrowable(Throwable throwable) {

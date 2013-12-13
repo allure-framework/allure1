@@ -48,7 +48,6 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestCaseSkippedEvent()
-                .withUid(Thread.currentThread().getName())
                 .withThrowable(iTestResult.getThrowable())
         );
     }

@@ -4,6 +4,7 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Collection;
 public class TestSuiteStartedEvent implements TestSuiteEvent {
     private String uid;
     private String name;
-    private Collection<Annotation> annotations;
+    private Collection<Annotation> annotations = new ArrayList<>();
 
     public TestSuiteStartedEvent() {
     }
