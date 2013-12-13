@@ -7,19 +7,15 @@ import ru.yandex.qatools.allure.model.Step;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  */
-public class StepFailureEvent implements StepEvent {
+public class StepSkippedEvent implements StepEvent {
     private Throwable throwable;
 
-    public StepFailureEvent() {
+    public StepSkippedEvent() {
     }
 
     @Override
     public void process(Step step) {
-        if (throwable instanceof AssertionError) {
-            step.setStatus(Status.FAILED);
-        } else {
-            step.setStatus(Status.BROKEN);
-        }
+        step.setStatus(Status.SKIPPED);
     }
 
     public Throwable getThrowable() {
@@ -30,7 +26,7 @@ public class StepFailureEvent implements StepEvent {
         this.throwable = throwable;
     }
 
-    public StepFailureEvent withThrowable(Throwable throwable) {
+    public StepSkippedEvent withThrowable(Throwable throwable) {
         setThrowable(throwable);
         return this;
     }
