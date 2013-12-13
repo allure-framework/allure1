@@ -22,7 +22,7 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class ResultsSchemaValidationTest {
 
-    private final static ModelProperties modelProperties = new ModelProperties();
+    private final static AllureModelProperties ALLURE_MODEL_PROPERTIES = new AllureModelProperties();
 
     private static final String TEST_SUITE_FILES_REGEXP = ".*-testsuite\\.xml";
 
@@ -31,13 +31,13 @@ public class ResultsSchemaValidationTest {
     private final File schemaFile;
 
     public ResultsSchemaValidationTest(File testSuiteFile) {
-        this.schemaFile = new File(ClassLoader.getSystemResource(modelProperties.getModelFileName()).getFile());
+        this.schemaFile = new File(ClassLoader.getSystemResource(ALLURE_MODEL_PROPERTIES.getModelFileName()).getFile());
         this.testSuiteFile = testSuiteFile;
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> getTestSuiteFileCollection() {
-        File results = new File(ClassLoader.getSystemResource(modelProperties.getResultsPath()).getFile());
+        File results = new File(ClassLoader.getSystemResource(ALLURE_MODEL_PROPERTIES.getResultsPath()).getFile());
         Collection<Object[]> testSuiteFileCollection = new ArrayList<>();
         for (String testSuiteFilePath : results.list(new RegexFileFilter(TEST_SUITE_FILES_REGEXP))) {
             testSuiteFileCollection.add(new Object[]{new File(results, testSuiteFilePath)});
