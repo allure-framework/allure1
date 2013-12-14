@@ -15,13 +15,13 @@ public enum Allure {
 
     LIFECYCLE;
 
-    final StepStorage STEP_STORAGE = new StepStorage();
+    final StepStorage stepStorage = new StepStorage();
 
-    final TestCaseStorage TEST_CASE_STORAGE = new TestCaseStorage();
+    final TestCaseStorage testCaseStorage = new TestCaseStorage();
 
-    final TestSuiteStorage TEST_SUITE_STORAGE = new TestSuiteStorage();
+    final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
 
-    private final Object LOCK = new Object();
+    private final Object lock = new Object();
 
     private Allure() {
     }
@@ -29,57 +29,57 @@ public enum Allure {
     public void fire(StepStartedEvent event) {
         Step step = new Step();
         event.process(step);
-        STEP_STORAGE.put(step);
+        stepStorage.put(step);
     }
 
     public void fire(StepEvent event) {
-        Step step = STEP_STORAGE.getLast();
+        Step step = stepStorage.getLast();
         event.process(step);
     }
 
     public void fire(StepFinishedEvent event) {
-        Step step = STEP_STORAGE.pollLast();
+        Step step = stepStorage.pollLast();
         event.process(step);
-        STEP_STORAGE.getLast().getSteps().add(step);
+        stepStorage.getLast().getSteps().add(step);
     }
 
     public void fire(TestCaseStartedEvent event) {
-        TestCaseResult testCase = TEST_CASE_STORAGE.get();
+        TestCaseResult testCase = testCaseStorage.get();
         event.process(testCase);
 
-        synchronized (LOCK) {
-            TEST_SUITE_STORAGE.get(event.getSuiteUid()).getTestCases().add(testCase);
+        synchronized (lock) {
+            testSuiteStorage.get(event.getSuiteUid()).getTestCases().add(testCase);
         }
     }
 
     public void fire(TestCaseEvent event) {
-        TestCaseResult testCase = TEST_CASE_STORAGE.get();
+        TestCaseResult testCase = testCaseStorage.get();
         event.process(testCase);
     }
 
     public void fire(TestCaseFinishedEvent event) {
-        TestCaseResult testCase = TEST_CASE_STORAGE.get();
+        TestCaseResult testCase = testCaseStorage.get();
         event.process(testCase);
 
-        Step root = STEP_STORAGE.pollLast();
+        Step root = stepStorage.pollLast();
         testCase.getSteps().addAll(root.getSteps());
         testCase.getAttachments().addAll(root.getAttachments());
 
-        STEP_STORAGE.remove();
-        TEST_CASE_STORAGE.remove();
+        stepStorage.remove();
+        testCaseStorage.remove();
     }
 
 
     public void fire(TestSuiteEvent event) {
-        TestSuiteResult testSuite = TEST_SUITE_STORAGE.get(event.getUid());
+        TestSuiteResult testSuite = testSuiteStorage.get(event.getUid());
         event.process(testSuite);
     }
 
     public void fire(TestSuiteFinishedEvent event) {
         String suiteUid = event.getUid();
-        TestSuiteResult testSuite = TEST_SUITE_STORAGE.get(suiteUid);
+        TestSuiteResult testSuite = testSuiteStorage.get(suiteUid);
         event.process(testSuite);
         marshal(testSuite);
-        TEST_SUITE_STORAGE.remove(suiteUid);
+        testSuiteStorage.remove(suiteUid);
     }
 }

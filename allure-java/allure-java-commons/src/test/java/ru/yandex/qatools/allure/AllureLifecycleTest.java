@@ -68,7 +68,7 @@ public class AllureLifecycleTest {
 
     public TestSuiteResult fireTestSuiteStart() {
         Allure.LIFECYCLE.fire(new TestSuiteStartedEvent("some.uid", "some.suite.name"));
-        TestSuiteResult testSuite = Allure.LIFECYCLE.TEST_SUITE_STORAGE.get("some.uid");
+        TestSuiteResult testSuite = Allure.LIFECYCLE.testSuiteStorage.get("some.uid");
         assertNotNull(testSuite);
         assertThat(testSuite.getName(), is("some.suite.name"));
         assertThat(testSuite.getTestCases(), hasSize(0));
@@ -81,7 +81,7 @@ public class AllureLifecycleTest {
 
     public TestCaseResult fireTestCaseStart() {
         Allure.LIFECYCLE.fire(new TestCaseStartedEvent("some.uid", "some.case.name"));
-        TestCaseResult testCase = Allure.LIFECYCLE.TEST_CASE_STORAGE.get();
+        TestCaseResult testCase = Allure.LIFECYCLE.testCaseStorage.get();
         assertNotNull(testCase);
         assertThat(testCase.getName(), is("some.case.name"));
         return testCase;
@@ -93,14 +93,14 @@ public class AllureLifecycleTest {
 
     public Step fireStepStart() {
         Allure.LIFECYCLE.fire(new StepStartedEvent("some.step.name"));
-        Step step = Allure.LIFECYCLE.STEP_STORAGE.getLast();
+        Step step = Allure.LIFECYCLE.stepStorage.getLast();
         assertNotNull(step);
         assertThat(step.getName(), is("some.step.name"));
         return step;
     }
 
     public Attachment fireMakeAttach() {
-        Step lastStep = Allure.LIFECYCLE.STEP_STORAGE.getLast();
+        Step lastStep = Allure.LIFECYCLE.stepStorage.getLast();
         int attachmentsCount = lastStep.getAttachments().size();
 
         Allure.LIFECYCLE.fire(new MakeAttachEvent("some.attach.title", AttachmentType.TXT, "attach.body"));
@@ -118,7 +118,7 @@ public class AllureLifecycleTest {
 
     public TestSuiteResult fireCustomTestSuiteEvent() {
         Allure.LIFECYCLE.fire(new ChangeTestSuiteTitleEvent("some.uid", "new.suite.title"));
-        TestSuiteResult testSuite = Allure.LIFECYCLE.TEST_SUITE_STORAGE.get("some.uid");
+        TestSuiteResult testSuite = Allure.LIFECYCLE.testSuiteStorage.get("some.uid");
         assertNotNull(testSuite);
         assertThat(testSuite.getTitle(), is("new.suite.title"));
         return testSuite;
@@ -126,7 +126,7 @@ public class AllureLifecycleTest {
 
     public TestCaseResult fireCustomTestCaseEvent() {
         Allure.LIFECYCLE.fire(new ChangeTestCaseTitleEvent("new.case.title"));
-        TestCaseResult testCase = Allure.LIFECYCLE.TEST_CASE_STORAGE.get();
+        TestCaseResult testCase = Allure.LIFECYCLE.testCaseStorage.get();
         assertNotNull(testCase);
         assertThat(testCase.getTitle(), is("new.case.title"));
         return testCase;
