@@ -1,11 +1,10 @@
 package ru.yandex.qatools.allure.events;
 
+import org.apache.commons.lang3.ArrayUtils;
+import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
-import ru.yandex.qatools.allure.utils.AnnotationManager;
 
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Arrays;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -14,7 +13,10 @@ import java.util.Collection;
 public class TestSuiteStartedEvent implements TestSuiteEvent {
     private String uid;
     private String name;
-    private Collection<Annotation> annotations = new ArrayList<>();
+
+    private String title;
+    private String description;
+    private Label[] labels;
 
     public TestSuiteStartedEvent(String uid, String name) {
         this.uid = uid;
@@ -26,10 +28,17 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
         testSuite.setStart(System.currentTimeMillis());
         testSuite.setName(name);
 
-        AnnotationManager annotationsManager = new AnnotationManager(annotations);
-        annotationsManager.isTitleAnnotationPresentUpdate(testSuite);
-        annotationsManager.isDescriptionAnnotationPresentUpdate(testSuite);
-        annotationsManager.isStoryAnnotationPresentUpdate(testSuite);
+        if (title != null) {
+            testSuite.setTitle(title);
+        }
+
+        if (description != null) {
+            testSuite.setDescription(description);
+        }
+
+        if (labels != null) {
+            testSuite.getLabels().addAll(Arrays.asList(labels));
+        }
     }
 
     @Override
@@ -49,17 +58,46 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
         this.name = name;
     }
 
-    public Collection<Annotation> getAnnotations() {
-        return annotations;
+    public String getTitle() {
+        return title;
     }
 
-    public void setAnnotations(Collection<Annotation> annotations) {
-        this.annotations = annotations;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public TestSuiteStartedEvent withAnnotations(Collection<Annotation> annotations) {
-        setAnnotations(annotations);
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Label[] getLabels() {
+        return labels;
+    }
+
+    public void setLabels(Label... labels) {
+        this.labels = labels;
+    }
+
+    public void addLabels(Label... labels) {
+        this.labels = ArrayUtils.addAll(this.labels, labels);
+    }
+
+    public TestSuiteStartedEvent withTitle(String title) {
+        setTitle(title);
         return this;
     }
 
+    public TestSuiteStartedEvent withDescription(String description) {
+        setDescription(description);
+        return this;
+    }
+
+    public TestSuiteStartedEvent withLabels(Label... labels) {
+        setLabels(labels);
+        return this;
+    }
 }

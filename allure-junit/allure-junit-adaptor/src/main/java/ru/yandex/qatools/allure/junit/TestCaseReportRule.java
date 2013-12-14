@@ -8,6 +8,7 @@ import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
 import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
 import ru.yandex.qatools.allure.events.TestCaseSkippedEvent;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
+import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 /**
  * @author Artem Eroshenko eroshenkoam
@@ -23,9 +24,12 @@ public class TestCaseReportRule extends TestWatcher {
     }
 
     protected void starting(Description description) {
-        Allure.LIFECYCLE.fire(new TestCaseStartedEvent(suiteUid, description.getMethodName())
-                .withAnnotations(description.getAnnotations())
-        );
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, description.getMethodName());
+        AnnotationManager am = new AnnotationManager(description.getAnnotations());
+
+        am.update(event);
+
+        Allure.LIFECYCLE.fire(event);
     }
 
     protected void finished(Description description) {

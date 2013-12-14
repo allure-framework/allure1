@@ -5,10 +5,8 @@ import org.testng.ITestListener;
 import org.testng.ITestResult;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.utils.AnnotationManager;
 
-import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.UUID;
 
 /**
@@ -25,9 +23,14 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestCaseStartedEvent(suiteUid, iTestResult.getName())
-                .withAnnotations(Arrays.asList(iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations()))
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, iTestResult.getName());
+        AnnotationManager am = new AnnotationManager(
+                iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations()
         );
+
+        am.update(event);
+
+        Allure.LIFECYCLE.fire(event);
     }
 
     @Override
@@ -60,7 +63,6 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onStart(ITestContext iTestContext) {
         Allure.LIFECYCLE.fire(new TestSuiteStartedEvent(suiteUid, iTestContext.getCurrentXmlTest().getSuite().getName())
-                .withAnnotations(Collections.<Annotation>emptyList())
         );
     }
 

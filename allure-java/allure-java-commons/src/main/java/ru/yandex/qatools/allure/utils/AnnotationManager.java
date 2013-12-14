@@ -1,12 +1,14 @@
 package ru.yandex.qatools.allure.utils;
 
 import ru.yandex.qatools.allure.annotations.*;
+import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
 import ru.yandex.qatools.allure.model.Label;
-import ru.yandex.qatools.allure.model.TestCaseResult;
-import ru.yandex.qatools.allure.model.TestSuiteResult;
+import ru.yandex.qatools.allure.model.SeverityLevel;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -22,50 +24,75 @@ public class AnnotationManager {
         this.annotations = annotations;
     }
 
-    public void isTitleAnnotationPresentUpdate(TestSuiteResult testSuite) {
-        if (isAnnotationPresent(Title.class)) {
-            testSuite.setTitle(getAnnotation(Title.class).value());
+    public AnnotationManager(Annotation... annotations) {
+        this.annotations = Arrays.asList(annotations);
+    }
+
+    public void update(TestSuiteStartedEvent event) {
+        if (isTitleAnnotationPresent()) {
+            event.setTitle(getTitle());
+        }
+
+        if (isDescriptionAnnotationPresent()) {
+            event.setDescription(getDescription());
+        }
+
+        if (isBehavior()) {
+            event.addLabels(getBehaviorLabels());
         }
     }
 
-    public void isTitleAnnotationPresentUpdate(TestCaseResult testCase) {
-        if (isAnnotationPresent(Title.class)) {
-            testCase.setTitle(getAnnotation(Title.class).value());
+    public void update(TestCaseStartedEvent event) {
+        if (isTitleAnnotationPresent()) {
+            event.setTitle(getTitle());
+        }
+
+        if (isDescriptionAnnotationPresent()) {
+            event.setDescription(getDescription());
+        }
+
+        if (isBehavior()) {
+            event.addLabels(getBehaviorLabels());
+        }
+
+        if (isSeverityAnnotationPresent()) {
+            event.setSeverity(getSeverity());
         }
     }
 
-    public void isDescriptionAnnotationPresentUpdate(TestSuiteResult testSuite) {
-        if (isAnnotationPresent(Description.class)) {
-            testSuite.setDescription(getAnnotation(Description.class).value());
-        }
+    public boolean isTitleAnnotationPresent() {
+        return isAnnotationPresent(Title.class);
     }
 
-    public void isDescriptionAnnotationPresentUpdate(TestCaseResult testCase) {
-        if (isAnnotationPresent(Description.class)) {
-            testCase.setDescription(getAnnotation(Description.class).value());
-        }
+    public boolean isDescriptionAnnotationPresent() {
+        return isAnnotationPresent(Description.class);
     }
 
-    public void isSeverityAnnotationPresentUpdate(TestCaseResult testCase) {
-        if (isAnnotationPresent(Severity.class)) {
-            testCase.setSeverity(getAnnotation(Severity.class).value());
-        }
+    public boolean isStoryAnnotationPresent() {
+        return isAnnotationPresent(Story.class);
     }
 
-    public void isStoryAnnotationPresentUpdate(TestCaseResult testCase) {
-        if (isAnnotationPresent(Story.class)) {
-            testCase.getLabels().addAll(getBehaviorLabels());
-        }
+    public boolean isSeverityAnnotationPresent() {
+        return isAnnotationPresent(Severity.class);
     }
 
-    public void isStoryAnnotationPresentUpdate(TestSuiteResult testSuite) {
-        if (isAnnotationPresent(Story.class)) {
-            testSuite.getLabels().addAll(getBehaviorLabels());
-        }
+    public boolean isBehavior() {
+        return isStoryAnnotationPresent() && isBehaviorClasses(getAnnotation(Story.class).value());
     }
 
+    public String getTitle() {
+        return getAnnotation(Title.class).value();
+    }
 
-    private List<Label> getBehaviorLabels() {
+    public String getDescription() {
+        return getAnnotation(Description.class).value();
+    }
+
+    public SeverityLevel getSeverity() {
+        return getAnnotation(Severity.class).value();
+    }
+
+    public Label[] getBehaviorLabels() {
         List<Label> labels = new ArrayList<>();
         for (Class<?> clazz : getAnnotation(Story.class).value()) {
             if (isBehaviorClass(clazz)) {
@@ -73,7 +100,7 @@ public class AnnotationManager {
                 labels.add(getFeatureLabel(clazz.getDeclaringClass()));
             }
         }
-        return labels;
+        return labels.toArray(new Label[labels.size()]);
     }
 
     public Label getFeatureLabel(Class<?> clazz) {
@@ -86,6 +113,15 @@ public class AnnotationManager {
         return new Label()
                 .withName(StoryClass.LABEL_NAME)
                 .withValue(clazz.getAnnotation(StoryClass.class).value());
+    }
+
+    public boolean isBehaviorClasses(Class<?>... classes) {
+        for (Class<?> clazz : classes) {
+            if(!isBehaviorClass(clazz)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public boolean isBehaviorClass(Class<?> clazz) {
