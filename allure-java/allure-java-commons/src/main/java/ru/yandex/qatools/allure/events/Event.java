@@ -5,5 +5,5 @@ package ru.yandex.qatools.allure.events;
  *         Date: 11.11.13
  */
 public interface Event<T> {
-    public void process(T context);
+    void process(T context);
 }

@@ -7,5 +7,5 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
  *         Date: 13.12.13
  */
 public interface TestSuiteEvent extends Event<TestSuiteResult> {
-    public String getUid();
+    String getUid();
 }
