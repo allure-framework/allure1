@@ -15,13 +15,13 @@ public enum Allure {
 
     LIFECYCLE;
 
-    private static final StepStorage STEP_STORAGE = new StepStorage();
+    final StepStorage STEP_STORAGE = new StepStorage();
 
-    private static final TestCaseStorage TEST_CASE_STORAGE = new TestCaseStorage();
+    final TestCaseStorage TEST_CASE_STORAGE = new TestCaseStorage();
 
-    private static final TestSuiteStorage TEST_SUITE_STORAGE = new TestSuiteStorage();
+    final TestSuiteStorage TEST_SUITE_STORAGE = new TestSuiteStorage();
 
-    private static final Object LOCK = new Object();
+    private final Object LOCK = new Object();
 
     private Allure() {
     }
@@ -79,7 +79,7 @@ public enum Allure {
         String suiteUid = event.getUid();
         TestSuiteResult testSuite = TEST_SUITE_STORAGE.get(suiteUid);
         event.process(testSuite);
-        marshalTestSuite(testSuite);
+        marshal(testSuite);
         TEST_SUITE_STORAGE.remove(suiteUid);
     }
 }

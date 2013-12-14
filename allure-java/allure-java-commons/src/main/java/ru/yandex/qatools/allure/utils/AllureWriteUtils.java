@@ -111,15 +111,15 @@ public final class AllureWriteUtils {
         return source;
     }
 
-    public static void marshalTestSuite(TestSuiteResult testSuite) {
-        marshalFile(
+    public static void marshal(TestSuiteResult testSuite) {
+        marshal(
                 OUTPUT,
                 UUID.randomUUID().toString() + TEST_SUITE + XML,
                 new ObjectFactory().createTestSuite(testSuite)
         );
     }
 
-    public static void marshalFile(final File directory, String name, Object obj) {
+    public static void marshal(final File directory, String name, Object obj) {
         if (directory.exists() || directory.mkdirs()) {
             File testSuiteFile = new File(directory, name);
             JAXB.marshal(obj, testSuiteFile);
