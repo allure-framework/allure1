@@ -17,7 +17,12 @@ public class AllureLifecycleTest {
     @Test
     public void allureLifecycleTest() throws Exception {
         TestSuiteResult testSuite = fireTestSuiteStart();
+        TestSuiteResult anotherTestSuite = fireCustomTestSuiteEvent();
+        assertEquals(testSuite, anotherTestSuite);
+
         TestCaseResult testCase = fireTestCaseStart();
+        TestCaseResult anotherTestCase = fireCustomTestCaseEvent();
+        assertEquals(testCase, anotherTestCase);
 
         assertThat(testSuite.getTestCases(), hasSize(1));
         assertEquals(testSuite.getTestCases().get(0), testCase);
@@ -57,8 +62,8 @@ public class AllureLifecycleTest {
 
         assertThat(testSuite.getTestCases(), hasSize(1));
 
-        TestSuiteResult anotherTestSuite = fireTestSuiteStart();
-        assertNotEquals(anotherTestSuite, testSuite);
+        TestSuiteResult nextTestSuite = fireTestSuiteStart();
+        assertNotEquals(anotherTestSuite, nextTestSuite);
     }
 
     public TestSuiteResult fireTestSuiteStart() {
@@ -109,5 +114,21 @@ public class AllureLifecycleTest {
 
     public void fireStepFinished() {
         Allure.LIFECYCLE.fire(new StepFinishedEvent());
+    }
+
+    public TestSuiteResult fireCustomTestSuiteEvent() {
+        Allure.LIFECYCLE.fire(new ChangeTestSuiteTitleEvent("some.uid", "new.suite.title"));
+        TestSuiteResult testSuite = Allure.LIFECYCLE.TEST_SUITE_STORAGE.get("some.uid");
+        assertNotNull(testSuite);
+        assertThat(testSuite.getTitle(), is("new.suite.title"));
+        return testSuite;
+    }
+
+    public TestCaseResult fireCustomTestCaseEvent() {
+        Allure.LIFECYCLE.fire(new ChangeTestCaseTitleEvent("new.case.title"));
+        TestCaseResult testCase = Allure.LIFECYCLE.TEST_CASE_STORAGE.get();
+        assertNotNull(testCase);
+        assertThat(testCase.getTitle(), is("new.case.title"));
+        return testCase;
     }
 }
