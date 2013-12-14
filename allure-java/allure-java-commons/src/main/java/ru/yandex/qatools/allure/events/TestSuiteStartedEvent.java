@@ -6,6 +6,8 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import java.util.Arrays;
 
+import static ru.yandex.qatools.allure.utils.AllureWriteUtils.humanize;
+
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
@@ -30,6 +32,8 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
 
         if (title != null) {
             testSuite.setTitle(title);
+        } else {
+            testSuite.setTitle(humanize(name));
         }
 
         if (description != null) {
