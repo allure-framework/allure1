@@ -9,7 +9,8 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 public class TestSuiteFinishedEvent implements TestSuiteEvent {
     private String uid;
 
-    public TestSuiteFinishedEvent() {
+    public TestSuiteFinishedEvent(String uid) {
+        this.uid = uid;
     }
 
     @Override
@@ -24,11 +25,6 @@ public class TestSuiteFinishedEvent implements TestSuiteEvent {
 
     public void setUid(String uid) {
         this.uid = uid;
-    }
-
-    public TestSuiteFinishedEvent withUid(String uid) {
-        setUid(uid);
-        return this;
     }
 
 }

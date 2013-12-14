@@ -16,7 +16,9 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
     private String name;
     private Collection<Annotation> annotations = new ArrayList<>();
 
-    public TestSuiteStartedEvent() {
+    public TestSuiteStartedEvent(String uid, String name) {
+        this.uid = uid;
+        this.name = name;
     }
 
     @Override
@@ -53,16 +55,6 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
 
     public void setAnnotations(Collection<Annotation> annotations) {
         this.annotations = annotations;
-    }
-
-    public TestSuiteStartedEvent withUid(String uid) {
-        setUid(uid);
-        return this;
-    }
-
-    public TestSuiteStartedEvent withName(String name) {
-        setName(name);
-        return this;
     }
 
     public TestSuiteStartedEvent withAnnotations(Collection<Annotation> annotations) {

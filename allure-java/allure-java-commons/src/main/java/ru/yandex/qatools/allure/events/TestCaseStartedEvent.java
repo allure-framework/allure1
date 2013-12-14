@@ -19,7 +19,9 @@ public class TestCaseStartedEvent implements TestCaseEvent {
     private String name;
     private Collection<Annotation> annotations = new ArrayList<>();
 
-    public TestCaseStartedEvent() {
+    public TestCaseStartedEvent(String suiteUid, String name) {
+        this.suiteUid = suiteUid;
+        this.name = name;
     }
 
     @Override
@@ -58,16 +60,6 @@ public class TestCaseStartedEvent implements TestCaseEvent {
 
     public void setAnnotations(Collection<Annotation> annotations) {
         this.annotations = annotations;
-    }
-
-    public TestCaseStartedEvent withSuiteUid(String suiteUid) {
-        setSuiteUid(suiteUid);
-        return this;
-    }
-
-    public TestCaseStartedEvent withName(String name) {
-        setName(name);
-        return this;
     }
 
     public TestCaseStartedEvent withAnnotations(Collection<Annotation> annotations) {

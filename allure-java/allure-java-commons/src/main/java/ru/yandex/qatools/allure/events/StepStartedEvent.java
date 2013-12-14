@@ -11,7 +11,8 @@ import ru.yandex.qatools.allure.model.Step;
 public class StepStartedEvent implements StepEvent {
     private String name;
 
-    public StepStartedEvent() {
+    public StepStartedEvent(String name) {
+        this.name = name;
     }
 
     @Override
@@ -27,11 +28,6 @@ public class StepStartedEvent implements StepEvent {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public StepStartedEvent withName(String name) {
-        setName(name);
-        return this;
     }
 
 }

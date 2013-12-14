@@ -22,15 +22,13 @@ public class TestSuiteReportRule extends TestWatcher {
 
     protected void starting(Description description) {
         uid = UUID.randomUUID().toString();
-        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent()
-                .withUid(uid)
-                .withName(description.getTestClass().getName())
+        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent(uid, description.getTestClass().getName())
                 .withAnnotations(description.getAnnotations())
         );
     }
 
     protected void finished(Description description) {
-        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent().withUid(uid));
+        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(uid));
     }
 
     public String getUid() {

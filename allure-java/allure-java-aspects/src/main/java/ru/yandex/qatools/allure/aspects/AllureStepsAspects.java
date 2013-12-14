@@ -32,7 +32,7 @@ public class AllureStepsAspects {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Step step = methodSignature.getMethod().getAnnotation(Step.class);
         String stepName = AllureAspectUtils.getTitle(step.value(), methodSignature.getName(), joinPoint.getArgs());
-        Allure.LIFECYCLE.fire(new StepStartedEvent().withName(stepName));
+        Allure.LIFECYCLE.fire(new StepStartedEvent(stepName));
     }
 
     @AfterThrowing(pointcut = "anyMethod() && withStepAnnotation()", throwing = "e")

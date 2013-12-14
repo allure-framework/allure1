@@ -36,7 +36,7 @@ public class StepEventTest {
 
     @Test
     public void testStepStartedEvent() throws Exception {
-        new StepStartedEvent().withName("name").process(step);
+        new StepStartedEvent("name").process(step);
         assertThat(step.getName(), is("name"));
         assertNotNull(step.getStart());
         assertThat(step.getStatus(), is(Status.PASSED));

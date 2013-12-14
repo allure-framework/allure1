@@ -25,10 +25,8 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestCaseStartedEvent()
-                .withName(iTestResult.getName())
+        Allure.LIFECYCLE.fire(new TestCaseStartedEvent(suiteUid, iTestResult.getName())
                 .withAnnotations(Arrays.asList(iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations()))
-                .withSuiteUid(suiteUid)
         );
     }
 
@@ -61,16 +59,14 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onStart(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent()
-                .withUid(suiteUid)
-                .withName(iTestContext.getCurrentXmlTest().getSuite().getName())
+        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent(suiteUid, iTestContext.getCurrentXmlTest().getSuite().getName())
                 .withAnnotations(Collections.<Annotation>emptyList())
         );
     }
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent().withUid(suiteUid)
+        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(suiteUid)
         );
     }
 }

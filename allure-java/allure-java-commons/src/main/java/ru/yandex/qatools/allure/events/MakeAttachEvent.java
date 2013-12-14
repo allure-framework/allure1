@@ -15,7 +15,10 @@ public class MakeAttachEvent implements StepEvent {
     private AttachmentType attachmentType;
     private Object attach;
 
-    public MakeAttachEvent() {
+    public MakeAttachEvent(String title, AttachmentType attachmentType, Object attach) {
+        this.title = title;
+        this.attachmentType = attachmentType;
+        this.attach = attach;
     }
 
     @Override
@@ -59,18 +62,4 @@ public class MakeAttachEvent implements StepEvent {
         this.attach = attach;
     }
 
-    public MakeAttachEvent withTitle(String title) {
-        setTitle(title);
-        return this;
-    }
-
-    public MakeAttachEvent withType(AttachmentType type) {
-        setAttachmentType(type);
-        return this;
-    }
-
-    public MakeAttachEvent withAttach(Object attach) {
-        setAttach(attach);
-        return this;
-    }
 }

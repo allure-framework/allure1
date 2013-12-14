@@ -22,7 +22,7 @@ public class TestSuiteEventTest {
 
     @Test
     public void testSuiteStartedEvent() throws Exception {
-        new TestSuiteStartedEvent().withName("name").withUid("someuid").process(testSuite);
+        new TestSuiteStartedEvent("some.uid", "name").process(testSuite);
         assertThat(testSuite.getName(), is("name"));
         assertNotNull(testSuite.getStart());
         //TODO check parameters from annotations??
@@ -30,7 +30,7 @@ public class TestSuiteEventTest {
 
     @Test
     public void testSuiteFinishedEvent() throws Exception {
-        new TestSuiteFinishedEvent().withUid("someuid").process(testSuite);
+        new TestSuiteFinishedEvent("some.uid").process(testSuite);
         assertNotNull(testSuite.getStop());
     }
 }

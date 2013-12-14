@@ -16,17 +16,15 @@ import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 
 public class TestCaseReportRule extends TestWatcher {
 
-    private String runUid;
+    private String suiteUid;
 
     public TestCaseReportRule(TestSuiteReportRule testSuite) {
-        this.runUid = testSuite.getUid();
+        this.suiteUid = testSuite.getUid();
     }
 
     protected void starting(Description description) {
-        Allure.LIFECYCLE.fire(new TestCaseStartedEvent()
-                .withName(description.getMethodName())
+        Allure.LIFECYCLE.fire(new TestCaseStartedEvent(suiteUid, description.getMethodName())
                 .withAnnotations(description.getAnnotations())
-                .withSuiteUid(runUid)
         );
     }
 

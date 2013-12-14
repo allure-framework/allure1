@@ -26,7 +26,7 @@ public class TestCaseEventTest {
 
     @Test
     public void testCaseStartedEvent() throws Exception {
-        new TestCaseStartedEvent().withName("name").withSuiteUid("suite.uid").process(testCase);
+        new TestCaseStartedEvent("suite.uid", "name").process(testCase);
         assertThat(testCase.getName(), is("name"));
         assertThat(testCase.getStatus(), is(Status.PASSED));
         assertThat(testCase.getSeverity(), is(SeverityLevel.NORMAL));

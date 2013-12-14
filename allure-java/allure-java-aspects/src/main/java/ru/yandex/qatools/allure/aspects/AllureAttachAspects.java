@@ -32,6 +32,6 @@ public class AllureAttachAspects {
 		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 		Attach attach = methodSignature.getMethod().getAnnotation(Attach.class);
 		String attachTitle = AllureAspectUtils.getTitle(attach.name(), methodSignature.getName(), joinPoint.getArgs());
-        Allure.LIFECYCLE.fire(new MakeAttachEvent().withTitle(attachTitle).withAttach(result).withType(attach.type()));
+        Allure.LIFECYCLE.fire(new MakeAttachEvent(attachTitle, attach.type(), result));
 	}
 }
