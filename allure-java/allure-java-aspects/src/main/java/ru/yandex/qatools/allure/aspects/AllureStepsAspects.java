@@ -9,6 +9,8 @@ import ru.yandex.qatools.allure.events.StepFailureEvent;
 import ru.yandex.qatools.allure.events.StepFinishedEvent;
 import ru.yandex.qatools.allure.events.StepStartedEvent;
 
+import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getTitle;
+
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 24.10.13
@@ -31,8 +33,8 @@ public class AllureStepsAspects {
     public void stepStart(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Step step = methodSignature.getMethod().getAnnotation(Step.class);
-        String stepName = AllureAspectUtils.getTitle(step.value(), methodSignature.getName(), joinPoint.getArgs());
-        Allure.LIFECYCLE.fire(new StepStartedEvent(stepName));
+        String stepTitle = getTitle(step.value(), methodSignature.getName(), joinPoint.getArgs());
+        Allure.LIFECYCLE.fire(new StepStartedEvent(methodSignature.getName()).withTitle(stepTitle));
     }
 
     @AfterThrowing(pointcut = "anyMethod() && withStepAnnotation()", throwing = "e")
