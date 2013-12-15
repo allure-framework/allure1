@@ -26,7 +26,7 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onTestStart(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestStartedEvent(
-                Thread.currentThread().getName(),
+                getTestUid(iTestResult),
                 iTestResult.getName(),
                 Arrays.asList(iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations())
         ));
@@ -34,24 +34,22 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestFinishedEvent(
-                runUid,
-                Thread.currentThread().getName()
-        ));
+        fireTestFinishedEvent(iTestResult);
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestFailureEvent(
-                Thread.currentThread().getName(),
+                getTestUid(iTestResult),
                 iTestResult.getThrowable()
         ));
+        fireTestFinishedEvent(iTestResult);
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestAssumptionFailureEvent(
-                Thread.currentThread().getName(),
+                getTestUid(iTestResult),
                 iTestResult.getThrowable()
         ));
     }
@@ -59,7 +57,7 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
         Allure.LIFECYCLE.fire(new TestFailureEvent(
-                Thread.currentThread().getName(),
+                getTestUid(iTestResult),
                 iTestResult.getThrowable()
         ));
     }
@@ -78,5 +76,16 @@ public class AllureTestListener implements ITestListener {
         Allure.LIFECYCLE.fire(new TestRunFinishedEvent(
                 runUid
         ));
+    }
+
+    private void fireTestFinishedEvent(ITestResult iTestResult) {
+        Allure.LIFECYCLE.fire(new TestFinishedEvent(
+                runUid,
+                getTestUid(iTestResult)
+        ));
+    }
+
+    private String getTestUid(ITestResult iTestResult) {
+        return Integer.toHexString(iTestResult.hashCode());
     }
 }
