@@ -1,15 +1,15 @@
 package ru.yandex.qatools.allure.testng;
 
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import org.testng.*;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -19,14 +19,19 @@ import java.util.UUID;
 public class AllureTestListener implements ITestListener {
     private String runUid;
 
+    private Set<String> startedTestUids =
+            Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+
     public AllureTestListener() {
         runUid = UUID.randomUUID().toString();
     }
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
+        String testUid = getTestUid(iTestResult);
+        startedTestUids.add(testUid);
         Allure.LIFECYCLE.fire(new TestStartedEvent(
-                getTestUid(iTestResult),
+                testUid,
                 iTestResult.getName(),
                 Arrays.asList(iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations())
         ));
@@ -48,10 +53,19 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
+        String testUid = getTestUid(iTestResult);
+        if (!startedTestUids.contains(testUid)) {
+            onTestStart(iTestResult);
+        }
+        Throwable skipReason = iTestResult.getThrowable();
+        if (skipReason == null) {
+            skipReason = new SkipException("The test was skipped for some reasons");
+        }
         Allure.LIFECYCLE.fire(new TestAssumptionFailureEvent(
-                getTestUid(iTestResult),
-                iTestResult.getThrowable()
+                testUid,
+                skipReason
         ));
+        fireTestFinishedEvent(iTestResult);
     }
 
     @Override
