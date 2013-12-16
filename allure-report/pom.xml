@@ -16,8 +16,8 @@
 
     <modules>
         <module>allure-report-data</module>
-        <module>allure-report-face</module>
         <module>allure-maven-plugin</module>
+        <module>allure-report-face</module>
     </modules>
 
 </project>
