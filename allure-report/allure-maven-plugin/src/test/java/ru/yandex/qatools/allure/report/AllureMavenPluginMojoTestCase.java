@@ -1,11 +1,9 @@
 package ru.yandex.qatools.allure.report;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
+import org.apache.maven.plugin.descriptor.PluginDescriptor;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
 
 import java.io.File;
-import java.io.InputStream;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -15,16 +13,34 @@ public class AllureMavenPluginMojoTestCase extends AbstractMojoTestCase {
 
     static {
         //TODO dirty hack??
-//        System.setProperty("basedir", new File("allure-report/allure-maven-plugin").getAbsolutePath());
+        System.setProperty("basedir", getReportPluginBasedir().getAbsolutePath());
     }
 
-    public void testSimple() throws Exception {
+    public static File getReportPluginBasedir() {
+        return new File("allure-report/allure-maven-plugin");
+    }
 
-//        File pluginConfig = new File(getBasedir(), "src/test/resources/unit/plugin-config.xml");
-//        System.out.println(pluginConfig.exists());
-//        File pluginConfig = FileUtils.toFile(getClassLoader().getResource("unit/plugin-config.xml"));
-//        AllureMavenPlugin mojo = (AllureMavenPlugin)super.lookupMojo("allure-maven-plugin", pluginConfig);
+    public void testGenerateReportWithoutData() throws Exception {
 
-//        assertNotNull(mojo);
+        File pluginConfig = getTestFile("src/test/resources/unit/plugin-config.xml");
+        System.out.println(pluginConfig.exists());
+
+        AllureMavenPlugin mojo = (AllureMavenPlugin) lookupMojo("allure-maven-plugin", pluginConfig);
+        assertNotNull(mojo);
+
+        PluginDescriptor pluginDescriptor = new PluginDescriptor();
+        pluginDescriptor.setArtifactId("allure-maven-plugin");
+        mojo.plugin = pluginDescriptor;
+
+        mojo.execute();
+
+        File xunit = new File(getReportPluginBasedir(), "target/test/unit/results/data/xunit.json");
+        assertTrue(xunit.exists());
+
+        File graph = new File(getReportPluginBasedir(), "target/test/unit/results/data/graph.json");
+        assertTrue(graph.exists());
+
+        File behavior = new File(getReportPluginBasedir(), "target/test/unit/results/data/behavior.json");
+        assertTrue(behavior.exists());
     }
 }

@@ -5,6 +5,9 @@
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-maven-plugin</artifactId>
                 <configuration>
+                    <outputDirectory>${basedir}/target/test/unit/</outputDirectory>
+                    <allureResultsPath>results/</allureResultsPath>
+                    <allureReportPath>results/</allureReportPath>
                 </configuration>
             </plugin>
         </plugins>
