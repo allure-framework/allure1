@@ -3,9 +3,7 @@ package ru.yandex.qatools.allure.data;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import org.junit.rules.RuleChain;
-import org.junit.rules.TestRule;
-import ru.yandex.qatools.allure.model.ModelProperties;
+import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import java.util.List;
@@ -15,15 +13,16 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
 /**
- * Created by eroshenkoam on 12/10/13.
+ * @author Artem Eroshenko eroshenkoam@yandex-team.ru
+ *         Date: 12/10/13
  */
 public class XUnitStatisticsTest {
 
-    private static ModelProperties modelProperties = new ModelProperties();
+    private static AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
 
     @ClassRule
     public static AllureReportGenerationRule allureRule =
-            new AllureReportGenerationRule(modelProperties.getResultsPath());
+            new AllureReportGenerationRule(resultsConfig.getDirectoryPath());
 
     private AllureXUnit allureXUnitData;
 

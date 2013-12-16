@@ -1,15 +1,13 @@
 package ru.yandex.qatools.allure.testng;
 
-import org.testng.*;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.utils.AnnotationManager;
 
-import java.lang.annotation.Annotation;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Set;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -17,89 +15,60 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @SuppressWarnings("unused")
 public class AllureTestListener implements ITestListener {
-    private String runUid;
-
-    private Set<String> startedTestUids =
-            Collections.newSetFromMap(new ConcurrentHashMap<String, Boolean>());
+    private String suiteUid;
 
     public AllureTestListener() {
-        runUid = UUID.randomUUID().toString();
+        suiteUid = UUID.randomUUID().toString();
     }
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        String testUid = getTestUid(iTestResult);
-        startedTestUids.add(testUid);
-        Allure.LIFECYCLE.fire(new TestStartedEvent(
-                testUid,
-                iTestResult.getName(),
-                Arrays.asList(iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations())
-        ));
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, iTestResult.getName());
+        AnnotationManager am = new AnnotationManager(
+                iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations()
+        );
+
+        am.update(event);
+
+        Allure.LIFECYCLE.fire(event);
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        fireTestFinishedEvent(iTestResult);
+        Allure.LIFECYCLE.fire(new TestCaseFinishedEvent()
+        );
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestFailureEvent(
-                getTestUid(iTestResult),
-                iTestResult.getThrowable()
-        ));
-        fireTestFinishedEvent(iTestResult);
+        Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
+                .withThrowable(iTestResult.getThrowable())
+        );
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        String testUid = getTestUid(iTestResult);
-        if (!startedTestUids.contains(testUid)) {
-            onTestStart(iTestResult);
-        }
-        Throwable skipReason = iTestResult.getThrowable();
-        if (skipReason == null) {
-            skipReason = new SkipException("The test was skipped for some reasons");
-        }
-        Allure.LIFECYCLE.fire(new TestAssumptionFailureEvent(
-                testUid,
-                skipReason
-        ));
-        fireTestFinishedEvent(iTestResult);
+        Allure.LIFECYCLE.fire(new TestCaseSkippedEvent()
+                .withThrowable(iTestResult.getThrowable())
+        );
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestFailureEvent(
-                getTestUid(iTestResult),
-                iTestResult.getThrowable()
-        ));
+        Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
+                .withThrowable(iTestResult.getThrowable())
+        );
     }
 
     @Override
     public void onStart(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestRunStartedEvent(
-                runUid,
-                iTestContext.getCurrentXmlTest().getSuite().getName(),
-                Collections.<Annotation>emptyList()
-        ));
+        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent(suiteUid, iTestContext.getCurrentXmlTest().getSuite().getName())
+        );
     }
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestRunFinishedEvent(
-                runUid
-        ));
-    }
-
-    private void fireTestFinishedEvent(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestFinishedEvent(
-                runUid,
-                getTestUid(iTestResult)
-        ));
-    }
-
-    private String getTestUid(ITestResult iTestResult) {
-        return Integer.toHexString(iTestResult.hashCode());
+        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(suiteUid)
+        );
     }
 }

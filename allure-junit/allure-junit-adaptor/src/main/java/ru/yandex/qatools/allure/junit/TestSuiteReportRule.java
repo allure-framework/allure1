@@ -3,8 +3,9 @@ package ru.yandex.qatools.allure.junit;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import ru.yandex.qatools.allure.Allure;
-import ru.yandex.qatools.allure.events.TestRunFinishedEvent;
-import ru.yandex.qatools.allure.events.TestRunStartedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
+import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.util.UUID;
 
@@ -22,15 +23,16 @@ public class TestSuiteReportRule extends TestWatcher {
 
     protected void starting(Description description) {
         uid = UUID.randomUUID().toString();
-        Allure.LIFECYCLE.fire(new TestRunStartedEvent(
-                uid,
-                description.getTestClass().getName(),
-                description.getAnnotations()
-        ));
+        TestSuiteStartedEvent event = new TestSuiteStartedEvent(uid, description.getTestClass().getName());
+        AnnotationManager am = new AnnotationManager(description.getAnnotations());
+
+        am.update(event);
+
+        Allure.LIFECYCLE.fire(event);
     }
 
     protected void finished(Description description) {
-        Allure.LIFECYCLE.fire(new TestRunFinishedEvent(uid));
+        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(uid));
     }
 
     public String getUid() {
