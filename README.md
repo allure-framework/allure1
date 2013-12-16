@@ -8,9 +8,9 @@
 
 ## Allure
 
-##### Release Version: 1.2.3
+##### Release Version: 1.2.4
 
-##### Development Version: 1.2.4-SNAPSHOT
+##### Development Version: 1.2.5-SNAPSHOT
 
 ### Allure
 
