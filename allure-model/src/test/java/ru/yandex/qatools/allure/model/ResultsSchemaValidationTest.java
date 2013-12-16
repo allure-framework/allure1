@@ -1,9 +1,12 @@
 package ru.yandex.qatools.allure.model;
 
-import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.runners.Parameterized;
+import ru.yandex.qatools.allure.config.AllureModelConfig;
+import ru.yandex.qatools.allure.config.AllureResultsConfig;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -22,24 +25,23 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class ResultsSchemaValidationTest {
 
-    private final static ModelProperties modelProperties = new ModelProperties();
-
-    private static final String TEST_SUITE_FILES_REGEXP = ".*-testsuite\\.xml";
 
     private final File testSuiteFile;
 
     private final File schemaFile;
 
     public ResultsSchemaValidationTest(File testSuiteFile) {
-        this.schemaFile = new File(ClassLoader.getSystemResource(modelProperties.getModelFileName()).getFile());
+        String schemaFileName = AllureModelConfig.newInstance().getSchemaFileName();
+        this.schemaFile = new File(ClassLoader.getSystemResource(schemaFileName).getFile());
         this.testSuiteFile = testSuiteFile;
     }
 
     @Parameterized.Parameters
     public static Collection<Object[]> getTestSuiteFileCollection() {
-        File results = new File(ClassLoader.getSystemResource(modelProperties.getResultsPath()).getFile());
+        AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
+        File results = new File(ClassLoader.getSystemResource(resultsConfig.getDirectoryPath()).getFile());
         Collection<Object[]> testSuiteFileCollection = new ArrayList<>();
-        for (String testSuiteFilePath : results.list(new RegexFileFilter(TEST_SUITE_FILES_REGEXP))) {
+        for (String testSuiteFilePath : results.list(new RegexFileFilter(resultsConfig.getTestSuiteFileRegex()))) {
             testSuiteFileCollection.add(new Object[]{new File(results, testSuiteFilePath)});
         }
         return testSuiteFileCollection;

@@ -4,12 +4,11 @@ import org.junit.internal.AssumptionViolatedException;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import ru.yandex.qatools.allure.Allure;
-import ru.yandex.qatools.allure.events.TestAssumptionFailureEvent;
-import ru.yandex.qatools.allure.events.TestFailureEvent;
-import ru.yandex.qatools.allure.events.TestFinishedEvent;
-import ru.yandex.qatools.allure.events.TestStartedEvent;
-
-import java.util.UUID;
+import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
+import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
+import ru.yandex.qatools.allure.events.TestCaseSkippedEvent;
+import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
+import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 /**
  * @author Artem Eroshenko eroshenkoam
@@ -18,29 +17,31 @@ import java.util.UUID;
 
 public class TestCaseReportRule extends TestWatcher {
 
-    private String uid;
-
-    private String runUid;
+    private String suiteUid;
 
     public TestCaseReportRule(TestSuiteReportRule testSuite) {
-        this.uid = UUID.randomUUID().toString();
-        this.runUid = testSuite.getUid();
+        this.suiteUid = testSuite.getUid();
     }
 
     protected void starting(Description description) {
-        Allure.LIFECYCLE.fire(new TestStartedEvent(uid, description.getMethodName(), description.getAnnotations()));
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, description.getMethodName());
+        AnnotationManager am = new AnnotationManager(description.getAnnotations());
+
+        am.update(event);
+
+        Allure.LIFECYCLE.fire(event);
     }
 
     protected void finished(Description description) {
-        Allure.LIFECYCLE.fire(new TestFinishedEvent(runUid, uid));
+        Allure.LIFECYCLE.fire(new TestCaseFinishedEvent());
     }
 
     protected void skipped(AssumptionViolatedException e, Description description) {
-        Allure.LIFECYCLE.fire(new TestAssumptionFailureEvent(uid, e));
+        Allure.LIFECYCLE.fire(new TestCaseSkippedEvent().withThrowable(e));
     }
 
     protected void failed(Throwable e, Description description) {
-        Allure.LIFECYCLE.fire(new TestFailureEvent(uid, e));
+        Allure.LIFECYCLE.fire(new TestCaseFailureEvent().withThrowable(e));
     }
 
 }

@@ -18,9 +18,9 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
  */
 public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
 
-    protected final static String ASPECT_GROUP_ID = "ru.yandex.qatools.allure";
+    protected static final String ASPECT_GROUP_ID = "ru.yandex.qatools.allure";
 
-    protected final static String ASPECT_ARTIFACT_ID = "allure-java-aspects";
+    protected static final String ASPECT_ARTIFACT_ID = "allure-java-aspects";
 
     @Parameter(defaultValue = "1.7")
     protected String javaVersion;

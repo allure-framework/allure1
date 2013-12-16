@@ -9,7 +9,7 @@
                 <span tooltip="{{testcase.severity}}" tooltip-placement="left" class="icon-severity-{{testcase.severity|lowercase}}"></span>
                 {{testcase.title}}
             </td>
-            <td allure-table-col="{heading:'Duration', predicate: 'time.duration', class:'text-right', flex: 1.5, reverse: true}"  class="line-ellipsis text-right" title="{{testsuite.time.duration | time}}">
+            <td allure-table-col="{heading:'Duration', predicate: 'time.duration', class:'text-right', flex: 1.5, reverse: true}"  class="line-ellipsis text-right" title="{{testcase.time.duration | time}}">
                 {{testcase.time.duration | time}}
             </td>
             <td allure-table-col="{heading:'Status', predicate: byStatusAndSeverity}">
