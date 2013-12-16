@@ -1,26 +1,24 @@
 package ru.yandex.qatools.allure.events;
 
+import ru.yandex.qatools.allure.model.TestSuiteResult;
+
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  */
-public class TestFinishedEvent implements Event {
-    private String runUid;
+public class TestSuiteFinishedEvent implements TestSuiteEvent {
     private String uid;
 
-    public TestFinishedEvent(String runUid, String uid) {
-        this.runUid = runUid;
+    public TestSuiteFinishedEvent(String uid) {
         this.uid = uid;
     }
 
-    public String getRunUid() {
-        return runUid;
+    @Override
+    public void process(TestSuiteResult testSuite) {
+        testSuite.setStop(System.currentTimeMillis());
     }
 
-    public void setRunUid(String runUid) {
-        this.runUid = runUid;
-    }
-
+    @Override
     public String getUid() {
         return uid;
     }
@@ -28,4 +26,5 @@ public class TestFinishedEvent implements Event {
     public void setUid(String uid) {
         this.uid = uid;
     }
+
 }

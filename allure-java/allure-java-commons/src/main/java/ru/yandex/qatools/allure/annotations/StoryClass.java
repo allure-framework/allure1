@@ -12,5 +12,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface StoryClass {
+    public static final String LABEL_NAME = "story";
+
     String value();
 }
