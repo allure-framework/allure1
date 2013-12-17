@@ -27,7 +27,8 @@ public class TextUtils {
 
     public static String humanize(String text) {
         String result = text.trim();
-        result = result.replaceAll(".*\\.([^.]+)", "$1");
+        result = result.replaceAll(".*\\.([^.^0-9]+)", "$1");
+        result = result.replaceAll("((.*\\D)|(^))\\.([0-9][^.]+)", "$4");
         result = splitCamelCase(result);
         result = result.replaceAll("(_)+", " ");
         result = underscoreCapFirstWords(result);

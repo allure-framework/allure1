@@ -34,6 +34,7 @@ public class TextUtilsHumanizeTest {
                 new Object[]{"XMLParser", "XML parser"},
                 new Object[]{"MyClass", "My class"},
                 new Object[]{"13Friends", "13 friends"},
+                new Object[]{"AreYouNowThat2Is2", "Are you now that 2 is 2"},
                 new Object[]{"GL11", "GL 11"},
                 new Object[]{"May5", "May 5"},
                 new Object[]{"small_case_worlds", "Small case worlds"},
@@ -44,6 +45,12 @@ public class TextUtilsHumanizeTest {
                 new Object[]{".my.", "My."},
                 new Object[]{"another...", "Another..."},
                 new Object[]{"my.company.another...", "Another..."},
+                new Object[]{"1.2", "1.2"},
+                new Object[]{"my.company.params[1.2, 1.3]", "Params [1.2, 1.3]"},
+                new Object[]{"e1.e2", "E 2"},
+                new Object[]{"e.2", "E.2"},
+                new Object[]{"my.company.e.2", "E.2"},
+                new Object[]{"e.2e", "2e"},
                 new Object[]{"withParams[1]", "With params [1]"}
         );
     }
