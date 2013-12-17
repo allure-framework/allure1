@@ -10,8 +10,6 @@ import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -32,43 +30,6 @@ public final class AllureWriteUtils {
 
     private AllureWriteUtils() {
         throw new IllegalStateException();
-    }
-
-    public static String humanize(String text) {
-        String result = text.trim();
-        result = splitCamelCase(result);
-        result = result.replaceAll("(_)+", " ");
-        result = underscoreCapFirstWords(result);
-        result = capitalize(result);
-
-        return result;
-    }
-
-    public static String capitalize(String text) {
-        return Character.toUpperCase(text.charAt(0)) + text.substring(1);
-    }
-
-    public static String underscoreCapFirstWords(String text) {
-        Matcher matcher = Pattern.compile("(^|\\w|\\s)([A-Z]+)([a-z]+)").matcher(text);
-
-        StringBuffer stringBuffer = new StringBuffer();
-        while (matcher.find()) {
-            matcher.appendReplacement(stringBuffer, matcher.group().toLowerCase());
-        }
-        matcher.appendTail(stringBuffer);
-
-        return stringBuffer.toString();
-    }
-
-    public static String splitCamelCase(String camelCaseString) {
-        return camelCaseString.replaceAll(
-                String.format("%s|%s|%s",
-                        "(?<=[A-Z])(?=[A-Z][a-z])",
-                        "(?<=[a-z0-9])(?=[A-Z])",
-                        "(?<=[A-Za-z])(?=[0-9])"
-                ),
-                "_"
-        );
     }
 
     public static void copyAttachment(String from, File to) {
