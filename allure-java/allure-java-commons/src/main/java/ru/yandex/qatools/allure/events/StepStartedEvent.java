@@ -4,8 +4,6 @@ package ru.yandex.qatools.allure.events;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
 
-import static ru.yandex.qatools.allure.utils.AllureWriteUtils.humanize;
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
@@ -26,8 +24,6 @@ public class StepStartedEvent implements StepEvent {
 
         if (title != null) {
             step.setTitle(title);
-        } else {
-            step.setTitle(humanize(name));
         }
     }
 
