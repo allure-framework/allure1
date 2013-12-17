@@ -8,6 +8,6 @@ import java.io.File;
  */
 public interface DataProvider {
 
-    public void provide(String testPack, File outputDirectory);
+    void provide(String testPack, File outputDirectory);
 
 }

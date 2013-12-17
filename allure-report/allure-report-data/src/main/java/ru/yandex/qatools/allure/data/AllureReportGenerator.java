@@ -60,6 +60,7 @@ public class AllureReportGenerator {
             try {
                 FileUtils.copyFile(attach, new File(outputDirectory, attach.getName()));
             } catch (IOException ignored) {
+                throw new ReportGenerationException(ignored);
             }
         }
     }

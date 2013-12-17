@@ -2,16 +2,17 @@ package ru.yandex.qatools.allure.storages;
 
 import ru.yandex.qatools.allure.model.Step;
 
+import java.util.Deque;
 import java.util.LinkedList;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 13.12.13
  */
-public class StepStorage extends ThreadLocal<LinkedList<Step>> {
+public class StepStorage extends ThreadLocal<Deque<Step>> {
     @Override
-    protected LinkedList<Step> initialValue() {
-        LinkedList<Step> queue = new LinkedList<>();
+    protected Deque<Step> initialValue() {
+        Deque<Step> queue = new LinkedList<>();
         queue.add(new Step());
         return queue;
     }

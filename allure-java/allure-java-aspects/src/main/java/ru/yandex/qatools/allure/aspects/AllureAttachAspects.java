@@ -17,21 +17,21 @@ import ru.yandex.qatools.allure.events.MakeAttachEvent;
 @Aspect
 public class AllureAttachAspects {
 
-	@Pointcut("@annotation(ru.yandex.qatools.allure.annotations.Attach)")
-	public void withAttachAnnotation() {
+    @Pointcut("@annotation(ru.yandex.qatools.allure.annotations.Attach)")
+    public void withAttachAnnotation() {
         //pointcut body, should be empty
-	}
+    }
 
-	@Pointcut("execution(* *(..))")
-	public void anyMethod() {
+    @Pointcut("execution(* *(..))")
+    public void anyMethod() {
         //pointcut body, should be empty
-	}
+    }
 
-	@AfterReturning(pointcut = "anyMethod() && withAttachAnnotation()", returning = "result")
-	public void attach(JoinPoint joinPoint, Object result) {
-		MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-		Attach attach = methodSignature.getMethod().getAnnotation(Attach.class);
-		String attachTitle = AllureAspectUtils.getTitle(attach.name(), methodSignature.getName(), joinPoint.getArgs());
+    @AfterReturning(pointcut = "anyMethod() && withAttachAnnotation()", returning = "result")
+    public void attach(JoinPoint joinPoint, Object result) {
+        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
+        Attach attach = methodSignature.getMethod().getAnnotation(Attach.class);
+        String attachTitle = AllureAspectUtils.getTitle(attach.name(), methodSignature.getName(), joinPoint.getArgs());
         Allure.LIFECYCLE.fire(new MakeAttachEvent(attachTitle, attach.type(), result));
-	}
+    }
 }
