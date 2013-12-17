@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.inject;
 import org.apache.maven.artifact.Artifact;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.MojoExecutionException;
+import org.apache.maven.plugin.MojoFailureException;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
 
@@ -30,7 +31,7 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
     @Parameter(defaultValue = "${allure.version}")
     protected String adaptorVersion;
 
-    protected void executeAspectJPlugin() throws MojoExecutionException {
+    protected void executeAspectJPlugin() throws MojoExecutionException, MojoFailureException {
         mavenProject.getDependencyArtifacts().addAll(getRequestedDependencyArtifacts());
         mavenProject.getArtifacts().add(getAspectsArtifact());
 
@@ -49,6 +50,7 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
         artifacts.add(getArtifact("org.modeshape", "modeshape-common", "3.2.0.Final", "jar"));
         return artifacts;
     }
+
 
 
     protected Plugin getAspectJPlugin() {
@@ -87,7 +89,7 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
     }
 
     @Override
-    public void execute() throws MojoExecutionException {
+    public void execute() throws MojoExecutionException, MojoFailureException {
         executeAspectJPlugin();
     }
 }
