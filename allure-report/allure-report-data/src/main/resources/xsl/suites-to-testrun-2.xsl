@@ -34,8 +34,8 @@
                 <xsl:with-param name="name" select="concat(name/text(), ../../name/text())"/>
             </xsl:call-template>
             <xsl:call-template name="add-title-node"/>
-            <xsl:call-template name="add-summary-node"/>
             <xsl:call-template name="add-time-node"/>
+            <xsl:call-template name="add-summary-node"/>
             <xsl:call-template name="add-severity-node"/>
             <xsl:call-template name="add-status-node"/>
 
@@ -45,6 +45,7 @@
 
     <xsl:template match="step">
         <xsl:element name="step">
+            <xsl:call-template name="add-title-node"/>
             <xsl:call-template name="add-time-node"/>
             <xsl:call-template name="add-summary-node"/>
             <xsl:call-template name="add-status-node"/>
