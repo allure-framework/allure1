@@ -11,7 +11,10 @@ import java.util.regex.Pattern;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 08.12.13
  */
-public class TextUtils {
+public final class TextUtils {
+
+    private TextUtils() {
+    }
 
     private static final String ALGORITHM = "MD5";
 

@@ -17,7 +17,10 @@ import java.io.StringWriter;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.12.13
  */
-public class XslTransformationUtils {
+public final class XslTransformationUtils {
+
+    private XslTransformationUtils() {
+    }
 
     public static String applyTransformations(String xml, String... xslPaths) {
         String result = xml;
