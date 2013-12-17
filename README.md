@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/allure-framework/allure-core.png?label=ready)](https://waffle.io/allure-framework/allure-core)  
 [how-it-works]: https://github.com/allure-framework/allure-core/blob/master/docs/how-it-works.md
 [glossary]: https://github.com/allure-framework/allure-core/blob/master/docs/dictionary.md
 [changelog]: #
