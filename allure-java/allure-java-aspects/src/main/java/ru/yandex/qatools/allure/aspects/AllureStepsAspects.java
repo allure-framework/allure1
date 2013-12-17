@@ -33,8 +33,15 @@ public class AllureStepsAspects {
     public void stepStart(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Step step = methodSignature.getMethod().getAnnotation(Step.class);
+
+        StepStartedEvent startedEvent = new StepStartedEvent(methodSignature.getName());
         String stepTitle = getTitle(step.value(), methodSignature.getName(), joinPoint.getArgs());
-        Allure.LIFECYCLE.fire(new StepStartedEvent(methodSignature.getName()).withTitle(stepTitle));
+
+        if (!stepTitle.isEmpty()) {
+            startedEvent.setTitle(stepTitle);
+        }
+
+        Allure.LIFECYCLE.fire(startedEvent);
     }
 
     @AfterThrowing(pointcut = "anyMethod() && withStepAnnotation()", throwing = "e")

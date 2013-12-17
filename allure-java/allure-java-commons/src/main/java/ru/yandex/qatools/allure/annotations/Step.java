@@ -14,6 +14,6 @@ import java.lang.annotation.Target;
 @Target(ElementType.METHOD)
 public @interface Step {
 
-    String value() default "{method}";
+    String value() default "";
 
 }
