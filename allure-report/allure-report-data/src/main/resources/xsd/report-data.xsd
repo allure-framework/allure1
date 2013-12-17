@@ -30,6 +30,7 @@
         <xsd:all>
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="statistic" type="alr:statistic"/>
+            <!--TODO think about this:-->
             <xsd:element name="stories" type="alr:allure-stories" minOccurs="0"/>
         </xsd:all>
     </xsd:complexType>
@@ -60,8 +61,8 @@
         <xsd:all>
             <xsd:element name="uid" type="xsd:string"/>
             <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="time" type="alr:time"/>
-            <xsd:element name="title" type="xsd:string" minOccurs="0"/>
             <xsd:element name="statistic" type="alr:statistic"/>
             <xsd:element name="description" type="xsd:string" minOccurs="0"/>
             <xsd:element name="test-cases" type="alr:allure-test-cases-info" minOccurs="0"/>
@@ -78,6 +79,7 @@
     <xsd:complexType name="allure-test-case">
         <xsd:all>
             <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="name" type="xsd:string"/>
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="time" type="alr:time"/>
             <xsd:element name="summary" type="alr:summary"/>
@@ -101,6 +103,7 @@
     <xsd:complexType name="allure-test-case-info">
         <xsd:all>
             <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="name" type="xsd:string"/>
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="time" type="alr:time"/>
             <xsd:element name="severity" type="alr:severity-level"/>
@@ -117,6 +120,7 @@
 
     <xsd:complexType name="allure-step">
         <xsd:all>
+            <xsd:element name="name" type="xsd:string"/>
             <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="time" type="alr:time"/>
             <xsd:element name="summary" type="alr:summary"/>

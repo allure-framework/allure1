@@ -3,7 +3,7 @@ package ru.yandex.qatools.allure.data;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import ru.yandex.qatools.allure.data.utils.UidGenerationUtils;
+import ru.yandex.qatools.allure.data.utils.TextUtils;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,11 +15,11 @@ import static org.junit.Assert.assertFalse;
  *         Date: 09.12.13
  */
 @RunWith(Parameterized.class)
-public class UtilsTest {
+public class TextUtilsGenerateUidTest {
 
     private String data;
 
-    public UtilsTest(String data) {
+    public TextUtilsGenerateUidTest(String data) {
         this.data = data;
     }
 
@@ -36,7 +36,7 @@ public class UtilsTest {
 
     @Test
     public void generateUid() throws Exception {
-        String result = UidGenerationUtils.generateUid(data);
+        String result = TextUtils.generateUid(data);
         assertFalse("Uid should be not empty", result.isEmpty());
     }
 }

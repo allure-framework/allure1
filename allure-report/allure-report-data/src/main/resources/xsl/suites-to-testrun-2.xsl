@@ -1,8 +1,8 @@
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:alr="urn:data.allure.qatools.yandex.ru"
-                xmlns:uid="java:ru.yandex.qatools.allure.data.utils.UidGenerationUtils"
-                exclude-result-prefixes="uid">
+                xmlns:utils="java:ru.yandex.qatools.allure.data.utils.TextUtils"
+                exclude-result-prefixes="utils">
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
     <xsl:strip-space elements="*"/>
@@ -18,8 +18,9 @@
     <xsl:template match="test-suite">
         <xsl:element name="test-suite">
             <xsl:call-template name="add-uid-node">
-                <xsl:with-param name="title" select="title/text()"/>
+                <xsl:with-param name="name" select="name/text()"/>
             </xsl:call-template>
+            <xsl:call-template name="add-title-node"/>
             <xsl:call-template name="add-time-node"/>
             <xsl:call-template name="add-statistic-node"/>
 
@@ -30,10 +31,11 @@
     <xsl:template match="test-case">
         <xsl:element name="test-case">
             <xsl:call-template name="add-uid-node">
-                <xsl:with-param name="title" select="concat(title/text(), ../../title/text())"/>
+                <xsl:with-param name="name" select="concat(name/text(), ../../name/text())"/>
             </xsl:call-template>
-            <xsl:call-template name="add-summary-node"/>
+            <xsl:call-template name="add-title-node"/>
             <xsl:call-template name="add-time-node"/>
+            <xsl:call-template name="add-summary-node"/>
             <xsl:call-template name="add-severity-node"/>
             <xsl:call-template name="add-status-node"/>
 
@@ -43,6 +45,7 @@
 
     <xsl:template match="step">
         <xsl:element name="step">
+            <xsl:call-template name="add-title-node"/>
             <xsl:call-template name="add-time-node"/>
             <xsl:call-template name="add-summary-node"/>
             <xsl:call-template name="add-status-node"/>
@@ -125,9 +128,9 @@
     </xsl:template>
 
     <xsl:template name="add-uid-node">
-        <xsl:param name="title"/>
+        <xsl:param name="name"/>
         <xsl:element name="uid">
-            <xsl:value-of select="uid:generateUid($title)"/>
+            <xsl:value-of select="utils:generateUid($name)"/>
         </xsl:element>
     </xsl:template>
 
@@ -140,6 +143,14 @@
                 <xsl:value-of select="count(.//step)"/>
             </xsl:attribute>
         </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="add-title-node">
+        <xsl:if test="count(title) = 0">
+            <xsl:element name="title">
+                <xsl:value-of select="utils:humanize(name/text())"/>
+            </xsl:element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="@start | @stop | @status | @severity">

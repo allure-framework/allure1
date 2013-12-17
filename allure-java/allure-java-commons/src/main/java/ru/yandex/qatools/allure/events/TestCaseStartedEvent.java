@@ -8,8 +8,6 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
 
 import java.util.Arrays;
 
-import static ru.yandex.qatools.allure.utils.AllureWriteUtils.humanize;
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
@@ -38,8 +36,6 @@ public class TestCaseStartedEvent implements TestCaseEvent {
 
         if (title != null) {
             testCase.setTitle(title);
-        } else {
-            testCase.setTitle(humanize(name));
         }
 
         if (description != null) {
