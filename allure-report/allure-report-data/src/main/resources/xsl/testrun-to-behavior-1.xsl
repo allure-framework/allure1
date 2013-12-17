@@ -1,8 +1,8 @@
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:alr="urn:data.allure.qatools.yandex.ru"
-                xmlns:uid="java:ru.yandex.qatools.allure.data.utils.TextUtils"
-                exclude-result-prefixes="uid">
+                xmlns:utils="java:ru.yandex.qatools.allure.data.utils.TextUtils"
+                exclude-result-prefixes="utils">
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
     <xsl:strip-space elements="*"/>
@@ -25,7 +25,7 @@
                                     <xsl:call-template name="add-test-cases-node"/>
 
                                     <xsl:call-template name="add-uid-node">
-                                        <xsl:with-param name="title" select="concat($feature-name, $story-name)"/>
+                                        <xsl:with-param name="name" select="concat($feature-name, $story-name)"/>
                                     </xsl:call-template>
                                 </xsl:element>
                             </xsl:for-each-group>
@@ -69,9 +69,9 @@
     </xsl:template>
 
     <xsl:template name="add-uid-node">
-        <xsl:param name="title"/>
+        <xsl:param name="name"/>
         <xsl:element name="uid">
-            <xsl:value-of select="uid:generateUid($title)"/>
+            <xsl:value-of select="utils:generateUid($name)"/>
         </xsl:element>
     </xsl:template>
 
