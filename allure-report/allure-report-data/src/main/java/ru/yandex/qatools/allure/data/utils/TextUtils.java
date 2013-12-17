@@ -30,14 +30,31 @@ public final class TextUtils {
 
     public static String humanize(String text) {
         String result = text.trim();
-        result = result.replaceAll(".*\\.([^.^0-9]+)", "$1");
-        result = result.replaceAll("((.*\\D)|(^))\\.([0-9][^.]+)", "$4");
-        result = splitCamelCase(result);
-        result = result.replaceAll("(_)+", " ");
+
+        Pattern pattern = Pattern.compile("(.*)(\\[.*\\])");
+        Matcher matcher = pattern.matcher(result);
+
+        String params = "";
+        if (matcher.matches()) {
+            result = matcher.group(1);
+            params = ' ' + matcher.group(2);
+        }
+
+        result = simplify(result);
+        result = splitCamelCaseWordsWithLowdashes(result);
+        result = lowdashesToSpaces(result);
         result = underscoreCapFirstWords(result);
         result = capitalize(result);
 
-        return result;
+        return result + params;
+    }
+
+    public static String lowdashesToSpaces(String text) {
+        return text.replaceAll("(_)+", " ");
+    }
+
+    public static String simplify(String text) {
+        return text.replaceAll(".*\\.([^.]+)", "$1");
     }
 
     public static String capitalize(String text) {
@@ -59,7 +76,7 @@ public final class TextUtils {
         return stringBuffer.toString();
     }
 
-    public static String splitCamelCase(String camelCaseString) {
+    public static String splitCamelCaseWordsWithLowdashes(String camelCaseString) {
         return camelCaseString.replaceAll(
                 String.format("%s|%s|%s|%s",
                         "(?<=[A-Z])(?=[A-Z][a-z])",
