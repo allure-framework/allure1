@@ -27,6 +27,7 @@ public class TextUtils {
 
     public static String humanize(String text) {
         String result = text.trim();
+        result = result.replaceAll(".*\\.([^.]+)", "$1");
         result = splitCamelCase(result);
         result = result.replaceAll("(_)+", " ");
         result = underscoreCapFirstWords(result);
@@ -36,6 +37,9 @@ public class TextUtils {
     }
 
     public static String capitalize(String text) {
+        if (text.isEmpty()) {
+            return text;
+        }
         return Character.toUpperCase(text.charAt(0)) + text.substring(1);
     }
 
@@ -53,10 +57,11 @@ public class TextUtils {
 
     public static String splitCamelCase(String camelCaseString) {
         return camelCaseString.replaceAll(
-                String.format("%s|%s|%s",
+                String.format("%s|%s|%s|%s",
                         "(?<=[A-Z])(?=[A-Z][a-z])",
                         "(?<=[a-z0-9])(?=[A-Z])",
-                        "(?<=[A-Za-z])(?=[0-9])"
+                        "(?<=[A-Za-z])(?=[0-9])",
+                        "(?<=[A-Za-z0-9])(?=[\\[])"
                 ),
                 "_"
         );
