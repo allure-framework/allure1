@@ -35,8 +35,7 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestCaseFinishedEvent()
-        );
+        fireFinishTest();
     }
 
     @Override
@@ -44,6 +43,7 @@ public class AllureTestListener implements ITestListener {
         Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
                 .withThrowable(iTestResult.getThrowable())
         );
+        fireFinishTest();
     }
 
     @Override
@@ -51,6 +51,7 @@ public class AllureTestListener implements ITestListener {
         Allure.LIFECYCLE.fire(new TestCaseSkippedEvent()
                 .withThrowable(iTestResult.getThrowable())
         );
+        fireFinishTest();
     }
 
     @Override
@@ -58,6 +59,7 @@ public class AllureTestListener implements ITestListener {
         Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
                 .withThrowable(iTestResult.getThrowable())
         );
+        fireFinishTest();
     }
 
     @Override
@@ -70,5 +72,9 @@ public class AllureTestListener implements ITestListener {
     public void onFinish(ITestContext iTestContext) {
         Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(suiteUid)
         );
+    }
+
+    private void fireFinishTest() {
+        Allure.LIFECYCLE.fire(new TestCaseFinishedEvent());
     }
 }
