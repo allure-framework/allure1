@@ -27,7 +27,7 @@
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.exclusions>vendor/**</sonar.exclusions>
         <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
-g    </properties>
+    </properties>
 
     <build>
         <sourceDirectory>src/main/webapp</sourceDirectory>
