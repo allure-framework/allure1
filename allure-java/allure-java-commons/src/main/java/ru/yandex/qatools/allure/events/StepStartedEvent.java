@@ -21,10 +21,7 @@ public class StepStartedEvent implements StepEvent {
         step.setName(name);
         step.setStatus(Status.PASSED);
         step.setStart(System.currentTimeMillis());
-
-        if (title != null) {
-            step.setTitle(title);
-        }
+        step.setTitle(title);
     }
 
     public String getName() {
