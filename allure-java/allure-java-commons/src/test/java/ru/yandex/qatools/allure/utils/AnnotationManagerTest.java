@@ -12,7 +12,6 @@ import ru.yandex.qatools.allure.model.SeverityLevel;
 import ru.yandex.qatools.allure.utils.testdata.SimpleClass;
 
 import java.lang.annotation.Annotation;
-import java.util.Arrays;
 import java.util.List;
 
 import static ch.lambdaj.Lambda.extract;
@@ -94,8 +93,7 @@ public class AnnotationManagerTest {
 
     }
 
-    private void checkLabels(Label... ls) {
-        List<Label> labels = Arrays.asList(ls);
+    private void checkLabels(List<Label> labels) {
         assertThat(labels, hasSize(2));
         assertThat(extract(labels, on(Label.class).getName()), contains(StoryClass.LABEL_NAME, FeatureClass.LABEL_NAME));
 

@@ -1,10 +1,11 @@
 package ru.yandex.qatools.allure.events;
 
-import org.apache.commons.lang3.ArrayUtils;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -16,7 +17,7 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
 
     private String title;
     private String description;
-    private Label[] labels;
+    private List<Label> labels = new ArrayList<>();
 
     public TestSuiteStartedEvent(String uid, String name) {
         this.uid = uid;
@@ -27,18 +28,9 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
     public void process(TestSuiteResult testSuite) {
         testSuite.setStart(System.currentTimeMillis());
         testSuite.setName(name);
-
-        if (title != null) {
-            testSuite.setTitle(title);
-        }
-
-        if (description != null) {
-            testSuite.setDescription(description);
-        }
-
-        if (labels != null) {
-            testSuite.getLabels().addAll(Arrays.asList(labels));
-        }
+        testSuite.setTitle(title);
+        testSuite.setDescription(description);
+        testSuite.getLabels().addAll(labels);
     }
 
     @Override
@@ -74,16 +66,12 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
         this.description = description;
     }
 
-    public Label[] getLabels() {
+    public List<Label> getLabels() {
         return labels;
     }
 
-    public void setLabels(Label... labels) {
+    public void setLabels(List<Label> labels) {
         this.labels = labels;
-    }
-
-    public void addLabels(Label... labels) {
-        this.labels = ArrayUtils.addAll(this.labels, labels);
     }
 
     public TestSuiteStartedEvent withTitle(String title) {
@@ -96,8 +84,13 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
         return this;
     }
 
-    public TestSuiteStartedEvent withLabels(Label... labels) {
+    public TestSuiteStartedEvent withLabels(List<Label> labels) {
         setLabels(labels);
+        return this;
+    }
+
+    public TestSuiteStartedEvent withLabels(Label... labels) {
+        setLabels(Arrays.asList(labels));
         return this;
     }
 }

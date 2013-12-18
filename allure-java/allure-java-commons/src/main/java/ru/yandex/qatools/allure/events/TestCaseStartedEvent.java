@@ -1,12 +1,13 @@
 package ru.yandex.qatools.allure.events;
 
-import org.apache.commons.lang3.ArrayUtils;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.SeverityLevel;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -19,8 +20,8 @@ public class TestCaseStartedEvent implements TestCaseEvent {
 
     private String title;
     private String description;
-    private SeverityLevel severity;
-    private Label[] labels;
+    private SeverityLevel severity = SeverityLevel.NORMAL;
+    private List<Label> labels = new ArrayList<>();
 
     public TestCaseStartedEvent(String suiteUid, String name) {
         this.suiteUid = suiteUid;
@@ -31,24 +32,11 @@ public class TestCaseStartedEvent implements TestCaseEvent {
     public void process(TestCaseResult testCase) {
         testCase.setStart(System.currentTimeMillis());
         testCase.setStatus(Status.PASSED);
-        testCase.setSeverity(SeverityLevel.NORMAL);
         testCase.setName(name);
-
-        if (title != null) {
-            testCase.setTitle(title);
-        }
-
-        if (description != null) {
-            testCase.setDescription(description);
-        }
-
-        if (severity != null) {
-            testCase.setSeverity(severity);
-        }
-
-        if (labels != null) {
-            testCase.getLabels().addAll(Arrays.asList(labels));
-        }
+        testCase.setSeverity(severity);
+        testCase.setTitle(title);
+        testCase.setDescription(description);
+        testCase.getLabels().addAll(labels);
     }
 
     public String getSuiteUid() {
@@ -91,20 +79,12 @@ public class TestCaseStartedEvent implements TestCaseEvent {
         this.severity = severity;
     }
 
-    public Label[] getLabels() {
+    public List<Label> getLabels() {
         return labels;
     }
 
-    public void setLabels(Label... labels) {
+    public void setLabels(List<Label> labels) {
         this.labels = labels;
-    }
-
-    public void addLabels(Label... labels) {
-        if (this.labels == null) {
-            setLabels(labels);
-        } else {
-            this.labels = ArrayUtils.addAll(this.labels, labels);
-        }
     }
 
     public TestCaseStartedEvent withTitle(String title) {
@@ -123,6 +103,11 @@ public class TestCaseStartedEvent implements TestCaseEvent {
     }
 
     public TestCaseStartedEvent withLabels(Label... labels) {
+        setLabels(Arrays.asList(labels));
+        return this;
+    }
+
+    public TestCaseStartedEvent withLabels(List<Label> labels) {
         setLabels(labels);
         return this;
     }

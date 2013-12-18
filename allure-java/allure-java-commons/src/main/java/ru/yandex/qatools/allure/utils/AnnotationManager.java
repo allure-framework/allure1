@@ -38,7 +38,7 @@ public class AnnotationManager {
         }
 
         if (isBehavior()) {
-            event.addLabels(getBehaviorLabels());
+            event.getLabels().addAll(getBehaviorLabels());
         }
     }
 
@@ -52,7 +52,7 @@ public class AnnotationManager {
         }
 
         if (isBehavior()) {
-            event.addLabels(getBehaviorLabels());
+            event.getLabels().addAll(getBehaviorLabels());
         }
 
         if (isSeverityAnnotationPresent()) {
@@ -92,7 +92,7 @@ public class AnnotationManager {
         return getAnnotation(Severity.class).value();
     }
 
-    public Label[] getBehaviorLabels() {
+    public List<Label> getBehaviorLabels() {
         List<Label> labels = new ArrayList<>();
         for (Class<?> clazz : getAnnotation(Story.class).value()) {
             if (isBehaviorClass(clazz)) {
@@ -100,7 +100,7 @@ public class AnnotationManager {
                 labels.add(getFeatureLabel(clazz.getDeclaringClass()));
             }
         }
-        return labels.toArray(new Label[labels.size()]);
+        return labels;
     }
 
     public Label getFeatureLabel(Class<?> clazz) {
