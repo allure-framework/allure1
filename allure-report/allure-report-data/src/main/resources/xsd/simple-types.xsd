@@ -56,5 +56,6 @@
     <xsd:complexType name="severity-level"/>
     <xsd:complexType name="failure"/>
     <xsd:complexType name="label"/>
+    <xsd:complexType name="description"/>
 
 </xsd:schema>

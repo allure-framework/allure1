@@ -1,9 +1,6 @@
 package ru.yandex.qatools.allure.events;
 
-import ru.yandex.qatools.allure.model.Label;
-import ru.yandex.qatools.allure.model.SeverityLevel;
-import ru.yandex.qatools.allure.model.Status;
-import ru.yandex.qatools.allure.model.TestCaseResult;
+import ru.yandex.qatools.allure.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,7 +16,7 @@ public class TestCaseStartedEvent implements TestCaseEvent {
     private String name;
 
     private String title;
-    private String description;
+    private Description description;
     private SeverityLevel severity = SeverityLevel.NORMAL;
     private List<Label> labels = new ArrayList<>();
 
@@ -63,11 +60,11 @@ public class TestCaseStartedEvent implements TestCaseEvent {
         this.title = title;
     }
 
-    public String getDescription() {
+    public Description getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Description description) {
         this.description = description;
     }
 
@@ -92,7 +89,7 @@ public class TestCaseStartedEvent implements TestCaseEvent {
         return this;
     }
 
-    public TestCaseStartedEvent withDescription(String description) {
+    public TestCaseStartedEvent withDescription(Description description) {
         setDescription(description);
         return this;
     }

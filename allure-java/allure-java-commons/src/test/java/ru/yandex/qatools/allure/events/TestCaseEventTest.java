@@ -68,10 +68,14 @@ public class TestCaseEventTest {
 
     @Test
     public void testCaseStartedEventDescription() throws Exception {
-        new TestCaseStartedEvent("suite.uid", "name").withDescription("some.description").process(testCase);
+        Description description = new Description()
+                .withValue("some.description")
+                .withType(DescriptionType.MARKDOWN);
+
+        new TestCaseStartedEvent("suite.uid", "name").withDescription(description).process(testCase);
         verify(testCase).setName("name");
         verify(testCase).setTitle(null);
-        verify(testCase).setDescription("some.description");
+        verify(testCase).setDescription(description);
         verify(testCase).setLabels(Collections.<Label>emptyList());
         verify(testCase).setStart(anyLong());
         verify(testCase).setSeverity(SeverityLevel.NORMAL);

@@ -10,7 +10,7 @@
         <xsd:all>
             <xsd:element name="name" type="qa:name"/>
             <xsd:element name="title" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="description" type="qa:description" minOccurs="0"/>
             <xsd:element name="test-cases" type="qa:test-cases-result" minOccurs="0"/>
             <xsd:element name="labels" type="qa:labels" minOccurs="0"/>
         </xsd:all>
@@ -28,7 +28,7 @@
         <xsd:all>
             <xsd:element name="name" type="qa:name"/>
             <xsd:element name="title" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="description" type="qa:description" minOccurs="0"/>
             <xsd:element name="failure" type="qa:failure" minOccurs="0"/>
             <xsd:element name="steps" type="qa:steps" minOccurs="0"/>
             <xsd:element name="attachments" type="qa:attachments" minOccurs="0"/>
@@ -87,7 +87,7 @@
         <xsd:attribute name="value" type="xsd:string" use="required"/>
         <xsd:attribute name="kind" type="qa:parameter-kind" use="required"/>
     </xsd:complexType>
-    
+
     <xsd:simpleType name="parameter-kind">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="configuration-parameter"/>
@@ -95,7 +95,7 @@
             <xsd:enumeration value="environment-variable"/>
         </xsd:restriction>
     </xsd:simpleType>
-    
+
     <xsd:complexType name="attachments">
         <xsd:sequence>
             <xsd:element name="attachment" type="qa:attachment" minOccurs="0" maxOccurs="unbounded"/>
@@ -136,6 +136,22 @@
             <xsd:enumeration value="normal"/>
             <xsd:enumeration value="minor"/>
             <xsd:enumeration value="trivial"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="description">
+        <xsd:simpleContent>
+            <xsd:extension base="xsd:string">
+                <xsd:attribute name="type" type="qa:description-type" default="text"/>
+            </xsd:extension>
+        </xsd:simpleContent>
+    </xsd:complexType>
+
+    <xsd:simpleType name="description-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="markdown"/>
+            <xsd:enumeration value="text"/>
+            <xsd:enumeration value="html"/>
         </xsd:restriction>
     </xsd:simpleType>
 

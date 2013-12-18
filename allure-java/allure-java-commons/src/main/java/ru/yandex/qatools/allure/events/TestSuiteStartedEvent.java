@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.events;
 
+import ru.yandex.qatools.allure.model.Description;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
@@ -16,7 +17,7 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
     private String name;
 
     private String title;
-    private String description;
+    private Description description;
     private List<Label> labels = new ArrayList<>();
 
     public TestSuiteStartedEvent(String uid, String name) {
@@ -58,11 +59,11 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
         this.title = title;
     }
 
-    public String getDescription() {
+    public Description getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(Description description) {
         this.description = description;
     }
 
@@ -79,7 +80,7 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
         return this;
     }
 
-    public TestSuiteStartedEvent withDescription(String description) {
+    public TestSuiteStartedEvent withDescription(Description description) {
         setDescription(description);
         return this;
     }

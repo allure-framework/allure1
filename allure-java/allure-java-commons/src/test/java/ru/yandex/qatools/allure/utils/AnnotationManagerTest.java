@@ -7,6 +7,8 @@ import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.allure.annotations.StoryClass;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
+import ru.yandex.qatools.allure.model.Description;
+import ru.yandex.qatools.allure.model.DescriptionType;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.SeverityLevel;
 import ru.yandex.qatools.allure.utils.testdata.SimpleClass;
@@ -56,7 +58,9 @@ public class AnnotationManagerTest {
 
     @Test
     public void testDescriptionValueGetter() throws Exception {
-        assertThat(annotationManager.getDescription(), is("some.description"));
+        Description description = annotationManager.getDescription();
+        assertThat(description.getValue(), is("some.description"));
+        assertThat(description.getType(), is(DescriptionType.TEXT));
     }
 
     @Test
@@ -75,7 +79,10 @@ public class AnnotationManagerTest {
         annotationManager.update(event);
 
         assertThat(event.getTitle(), equalTo("some.title"));
-        assertThat(event.getDescription(), equalTo("some.description"));
+
+        Description description = annotationManager.getDescription();
+        assertThat(description.getValue(), is("some.description"));
+        assertThat(description.getType(), is(DescriptionType.TEXT));
 
         checkLabels(event.getLabels());
     }
@@ -86,7 +93,11 @@ public class AnnotationManagerTest {
         annotationManager.update(event);
 
         assertThat(event.getTitle(), equalTo("some.title"));
-        assertThat(event.getDescription(), equalTo("some.description"));
+
+        Description description = annotationManager.getDescription();
+        assertThat(description.getValue(), is("some.description"));
+        assertThat(description.getType(), is(DescriptionType.TEXT));
+
         assertThat(event.getSeverity(), equalTo(SeverityLevel.BLOCKER));
 
         checkLabels(event.getLabels());

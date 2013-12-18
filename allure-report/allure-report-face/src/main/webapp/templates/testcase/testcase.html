@@ -13,7 +13,7 @@
 </div>
 <div class="alert alert-bordered" ng-show="testcase.description">
     <b>Description:</b>
-    <div class="preformated-text" text-cut="testcase.description"></div>
+    <div class="preformated-text" text-cut="testcase.description.value"></div>
 </div>
 <div class="page-header">
     <h4 ng-pluralize count="testcase.summary.steps" when="{0: 'No steps', one: '{} step', other: '{} steps'}"></h4>
