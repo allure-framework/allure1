@@ -1,12 +1,6 @@
 package ru.yandex.qatools.allure.events;
 
-import ru.yandex.qatools.allure.model.Description;
-import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru

@@ -2,10 +2,6 @@ package ru.yandex.qatools.allure.events;
 
 import ru.yandex.qatools.allure.model.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
