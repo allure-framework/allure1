@@ -2,12 +2,13 @@ package ru.yandex.qatools.allure.data;
 
 import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.data.providers.*;
-import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.listFiles;
 
 
 /**
@@ -52,16 +53,22 @@ public class AllureReportGenerator {
     }
 
     public static File[] getAttachmentsFiles(File... dirs) {
-        return AllureReportUtils.listFiles(dirs, ATTACHMENTS_MASK);
+        return listFiles(dirs, ATTACHMENTS_MASK);
     }
 
     public static void copyAttachments(File[] dirs, File outputDirectory) {
         for (File attach : getAttachmentsFiles(dirs)) {
             try {
-                FileUtils.copyFile(attach, new File(outputDirectory, attach.getName()));
-            } catch (IOException ignored) {
-                throw new ReportGenerationException(ignored);
+                copyAttachment(attach, new File(outputDirectory, attach.getName()));
+            } catch (IOException e) {
+                throw new ReportGenerationException(e);
             }
+        }
+    }
+
+    public static void copyAttachment(File srcFile, File destFile) throws IOException {
+        if (!srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) {
+            FileUtils.copyFile(srcFile, destFile);
         }
     }
 }
