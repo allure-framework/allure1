@@ -54,9 +54,6 @@ angular.module('allure.features', [])
         feature.expanded = expanded;
     };
     $scope.features = features.features;
-    if($scope.features.length === 0) {
-        return;
-    }
     $scope.allStories = $scope.features.reduce(function(all, feature) {
         return all.concat(feature.stories);
     }, []);
