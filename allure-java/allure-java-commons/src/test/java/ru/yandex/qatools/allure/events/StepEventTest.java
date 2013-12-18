@@ -5,9 +5,10 @@ import org.junit.Test;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -19,38 +20,44 @@ public class StepEventTest {
 
     @Before
     public void setUp() throws Exception {
-        step = new Step();
+        step = mock(Step.class);
     }
 
     @Test
     public void testStepFailureEventFailed() throws Exception {
         new StepFailureEvent().withThrowable(new AssertionError()).process(step);
-        assertThat(step.getStatus(), is(Status.FAILED));
+        verify(step).setStatus(Status.FAILED);
+        verifyNoMoreInteractions(step);
     }
 
     @Test
     public void testStepFailureEventBroken() throws Exception {
         new StepFailureEvent().withThrowable(new Exception()).process(step);
-        assertThat(step.getStatus(), is(Status.BROKEN));
+        verify(step).setStatus(Status.BROKEN);
+        verifyNoMoreInteractions(step);
     }
 
     @Test
     public void testStepStartedEvent() throws Exception {
         new StepStartedEvent("name").process(step);
-        assertThat(step.getName(), is("name"));
-        assertNotNull(step.getStart());
-        assertThat(step.getStatus(), is(Status.PASSED));
+        verify(step).setName("name");
+        verify(step).setStart(anyLong());
+        verify(step).setStatus(Status.PASSED);
+        verify(step).setTitle(null);
+        verifyNoMoreInteractions(step);
     }
 
     @Test
     public void testStepFinishedEvent() throws Exception {
         new StepFinishedEvent().process(step);
-        assertNotNull(step.getStop());
+        verify(step).setStop(anyLong());
+        verifyNoMoreInteractions(step);
     }
 
     @Test
     public void testStepSkippedEvent() throws Exception {
         new StepSkippedEvent().process(step);
-        assertThat(step.getStatus(), is(Status.SKIPPED));
+        verify(step).setStatus(Status.SKIPPED);
+        verifyNoMoreInteractions(step);
     }
 }

@@ -36,7 +36,7 @@ public class TestCaseStartedEvent implements TestCaseEvent {
         testCase.setSeverity(severity);
         testCase.setTitle(title);
         testCase.setDescription(description);
-        testCase.getLabels().addAll(labels);
+        testCase.setLabels(labels);
     }
 
     public String getSuiteUid() {

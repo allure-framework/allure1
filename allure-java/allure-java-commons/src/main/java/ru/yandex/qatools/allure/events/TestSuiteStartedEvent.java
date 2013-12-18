@@ -30,7 +30,7 @@ public class TestSuiteStartedEvent implements TestSuiteEvent {
         testSuite.setName(name);
         testSuite.setTitle(title);
         testSuite.setDescription(description);
-        testSuite.getLabels().addAll(labels);
+        testSuite.setLabels(labels);
     }
 
     @Override
