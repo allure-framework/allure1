@@ -2,18 +2,16 @@ package ru.yandex.qatools.allure.events;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.yandex.qatools.allure.annotations.FeatureClass;
-import ru.yandex.qatools.allure.annotations.StoryClass;
-import ru.yandex.qatools.allure.model.Label;
-import ru.yandex.qatools.allure.model.SeverityLevel;
-import ru.yandex.qatools.allure.model.Status;
-import ru.yandex.qatools.allure.model.TestCaseResult;
+import ru.yandex.qatools.allure.model.*;
 
-import static ch.lambdaj.Lambda.*;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 
 /**
@@ -26,72 +24,106 @@ public class TestCaseEventTest {
 
     @Before
     public void setUp() throws Exception {
-        testCase = new TestCaseResult();
+        testCase = mock(TestCaseResult.class);
     }
 
     @Test
     public void testCaseStartedEvent() throws Exception {
         new TestCaseStartedEvent("suite.uid", "name").process(testCase);
-        assertThat(testCase.getName(), is("name"));
-        assertThat(testCase.getStatus(), is(Status.PASSED));
-        assertThat(testCase.getSeverity(), is(SeverityLevel.NORMAL));
-        assertNotNull(testCase.getStart());
+        verify(testCase).setName("name");
+        verify(testCase).setTitle(null);
+        verify(testCase).setDescription(null);
+        verify(testCase).setLabels(Collections.<Label>emptyList());
+        verify(testCase).setStart(anyLong());
+        verify(testCase).setSeverity(SeverityLevel.NORMAL);
+        verify(testCase).setStatus(Status.PASSED);
+        verifyNoMoreInteractions(testCase);
     }
 
     @Test
     public void testCaseStartedEventSeverity() throws Exception {
         new TestCaseStartedEvent("suite.uid", "name").withSeverity(SeverityLevel.BLOCKER).process(testCase);
-        assertThat(testCase.getSeverity(), is(SeverityLevel.BLOCKER));
+        verify(testCase).setName("name");
+        verify(testCase).setTitle(null);
+        verify(testCase).setDescription(null);
+        verify(testCase).setLabels(Collections.<Label>emptyList());
+        verify(testCase).setStart(anyLong());
+        verify(testCase).setSeverity(SeverityLevel.BLOCKER);
+        verify(testCase).setStatus(Status.PASSED);
+        verifyNoMoreInteractions(testCase);
     }
 
     @Test
     public void testCaseStartedEventTitle() throws Exception {
         new TestCaseStartedEvent("suite.uid", "name").withTitle("some.title").process(testCase);
-        assertThat(testCase.getTitle(), is("some.title"));
+        verify(testCase).setName("name");
+        verify(testCase).setTitle("some.title");
+        verify(testCase).setDescription(null);
+        verify(testCase).setLabels(Collections.<Label>emptyList());
+        verify(testCase).setStart(anyLong());
+        verify(testCase).setSeverity(SeverityLevel.NORMAL);
+        verify(testCase).setStatus(Status.PASSED);
+        verifyNoMoreInteractions(testCase);
     }
 
     @Test
     public void testCaseStartedEventDescription() throws Exception {
         new TestCaseStartedEvent("suite.uid", "name").withDescription("some.description").process(testCase);
-        assertThat(testCase.getDescription(), is("some.description"));
+        verify(testCase).setName("name");
+        verify(testCase).setTitle(null);
+        verify(testCase).setDescription("some.description");
+        verify(testCase).setLabels(Collections.<Label>emptyList());
+        verify(testCase).setStart(anyLong());
+        verify(testCase).setSeverity(SeverityLevel.NORMAL);
+        verify(testCase).setStatus(Status.PASSED);
+        verifyNoMoreInteractions(testCase);
     }
 
     @Test
     public void testCaseStartedEventBehavior() throws Exception {
         Label label = new Label().withName("label.name").withValue("label.value");
         new TestCaseStartedEvent("suite.uid", "name").withLabels(label).process(testCase);
-        assertThat(testCase.getLabels(), hasSize(1));
-        assertThat(testCase.getLabels().get(0), having(on(Label.class).getName(), equalTo("label.name")));
-        assertThat(testCase.getLabels().get(0), having(on(Label.class).getValue(), equalTo("label.value")));
+        verify(testCase).setName("name");
+        verify(testCase).setTitle(null);
+        verify(testCase).setDescription(null);
+        verify(testCase).setLabels(Arrays.asList(label));
+        verify(testCase).setStart(anyLong());
+        verify(testCase).setSeverity(SeverityLevel.NORMAL);
+        verify(testCase).setStatus(Status.PASSED);
+        verifyNoMoreInteractions(testCase);
     }
 
     @Test
     public void testCaseFinishedEvent() throws Exception {
         new TestCaseFinishedEvent().process(testCase);
-        assertNotNull(testCase.getStop());
+        verify(testCase).setStop(anyLong());
+        verifyNoMoreInteractions(testCase);
     }
 
     @Test
     public void testCaseSkippedEvent() throws Exception {
-        new TestCaseSkippedEvent().withThrowable(new Exception("atata")).process(testCase);
-        assertNotNull(testCase.getFailure());
-        assertThat(testCase.getFailure().getMessage(), is("Exception: atata"));
-        assertThat(testCase.getStatus(), is(Status.SKIPPED));
+        Throwable throwable = new Exception("atata");
+        new TestCaseSkippedEvent().withThrowable(throwable).process(testCase);
+        verify(testCase).setFailure(any(Failure.class));
+        verify(testCase).setStatus(Status.SKIPPED);
+        verifyNoMoreInteractions(testCase);
     }
 
     @Test
     public void testCaseFailureEventFailed() throws Exception {
-        new TestCaseFailureEvent().withThrowable(new AssertionError("atata")).process(testCase);
-        assertNotNull(testCase.getFailure());
-        assertThat(testCase.getFailure().getMessage(), is("AssertionError: atata"));
-        assertThat(testCase.getStatus(), is(Status.FAILED));
+        Throwable throwable = new AssertionError("atata");
+        new TestCaseFailureEvent().withThrowable(throwable).process(testCase);
+        verify(testCase).setFailure(any(Failure.class));
+        verify(testCase).setStatus(Status.FAILED);
+        verifyNoMoreInteractions(testCase);
     }
 
     @Test
     public void testCaseFailureEventBroken() throws Exception {
-        new TestCaseFailureEvent().withThrowable(new Exception("atata")).process(testCase);
-        assertNotNull(testCase.getFailure());
-        assertThat(testCase.getFailure().getMessage(), is("Exception: atata"));
-        assertThat(testCase.getStatus(), is(Status.BROKEN));
+        Throwable throwable = new Exception("atata");
+        new TestCaseFailureEvent().withThrowable(throwable).process(testCase);
+        verify(testCase).setFailure(any(Failure.class));
+        verify(testCase).setStatus(Status.BROKEN);
+        verifyNoMoreInteractions(testCase);
     }
 }
