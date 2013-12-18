@@ -6,9 +6,7 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  */
-public class TestCaseFinishedEvent implements TestCaseEvent {
-    public TestCaseFinishedEvent() {
-    }
+public class TestCaseFinishedEvent extends AbstractTestCaseFinishedEvent {
 
     @Override
     public void process(TestCaseResult testCase) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+               xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+               schemaLocation="allure.events.xsd"
+               jaxb:version="2.1">
+
+    <jaxb:bindings node="//xsd:complexType[@name='attachment-type']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.AttachmentType"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='attach']">
+        <jaxb:class ref="java.lang.Object"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='severity']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.SeverityLevel"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='description']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.Description"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='label']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.Label"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='throwable']">
+        <jaxb:class ref="java.lang.Throwable"/>
+    </jaxb:bindings>
+
+</jaxb:bindings>

@@ -9,11 +9,7 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  */
-public class TestCaseSkippedEvent implements TestCaseEvent {
-    private Throwable throwable;
-
-    public TestCaseSkippedEvent() {
-    }
+public class TestCaseSkippedEvent extends AbstractTestCaseSkippedEvent {
 
     @Override
     public void process(TestCaseResult testCase) {
@@ -23,20 +19,7 @@ public class TestCaseSkippedEvent implements TestCaseEvent {
 
     private Failure getFailure() {
         return new Failure()
-                .withMessage(ExceptionUtils.getMessage(throwable))
-                .withStackTrace(ExceptionUtils.getStackTrace(throwable));
-    }
-
-    public Throwable getThrowable() {
-        return throwable;
-    }
-
-    public void setThrowable(Throwable e) {
-        this.throwable = e;
-    }
-
-    public TestCaseSkippedEvent withThrowable(Throwable throwable) {
-        setThrowable(throwable);
-        return this;
+                .withMessage(ExceptionUtils.getMessage(getThrowable()))
+                .withStackTrace(ExceptionUtils.getStackTrace(getThrowable()));
     }
 }
