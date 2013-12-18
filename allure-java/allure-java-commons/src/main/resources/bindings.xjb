@@ -4,6 +4,14 @@
                schemaLocation="allure.events.xsd"
                jaxb:version="2.1">
 
+    <jaxb:bindings node="//xsd:complexType[@name='attachment-type']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.AttachmentType"/>
+    </jaxb:bindings>
+
+    <jaxb:bindings node="//xsd:complexType[@name='attach']">
+        <jaxb:class ref="java.lang.Object"/>
+    </jaxb:bindings>
+
     <jaxb:bindings node="//xsd:complexType[@name='severity']">
         <jaxb:class ref="ru.yandex.qatools.allure.model.SeverityLevel"/>
     </jaxb:bindings>

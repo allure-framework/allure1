@@ -20,6 +20,8 @@
     <xsd:element name="step-skipped-event" type="ns:abstract-step-skipped-event"/>
     <xsd:element name="spep-finished-event" type="ns:abstract-step-finished-event"/>
 
+    <xsd:element name="make-attach-event" type="ns:abstract-make-attach-event"/>
+
     <xsd:complexType name="abstract-test-suite-started-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -136,12 +138,29 @@
         </xsd:annotation>
     </xsd:complexType>
 
+    <xsd:complexType name="abstract-make-attach-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.StepEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="title" type="xsd:string" nillable="true"/>
+            <xsd:element name="attachmentType" type="ns:attachment-type" nillable="true"/>
+            <xsd:element name="attach" type="ns:attach" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
+
     <xsd:complexType name="labels">
         <xsd:sequence>
             <xsd:element name="label" type="ns:label" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 
+
+    <xsd:complexType name="attachment-type"/>
+    <xsd:complexType name="attach"/>
 
     <xsd:complexType name="severity"/>
     <xsd:complexType name="description"/>
