@@ -12,7 +12,8 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
             y = d3.scale.sqrt().range([height, 0 ], 1),
             bins;
 
-        x.domain([0, d3.max(data, function(d) {return d.time.duration;})]).nice();
+        var maxDuration = Math.max(d3.max(data, function(d) {return d.time.duration;}), 1);
+        x.domain([0, maxDuration]).nice();
         bins = d3.layout.histogram().value(function(d) {
             return d.time.duration;
         }).bins(x.ticks())(data).map(function(bin) {
