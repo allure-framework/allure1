@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1387360104642" stop="1387360104643">
+    <name>my.company.AlwaysPassingTest</name>
+    <title>My.company.Always passing test</title>
+    <test-cases>
+        <test-case start="1387360104642" stop="1387360104643" status="passed" severity="normal">
+            <name>testThree</name>
+            <title>Test three</title>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value=""/>
+                <label name="feature" value=""/>
+            </labels>
+        </test-case>
+        <test-case start="1387360104643" stop="1387360104643" status="passed" severity="normal">
+            <name>testOne</name>
+            <title>Test one</title>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value=""/>
+                <label name="feature" value=""/>
+            </labels>
+        </test-case>
+        <test-case start="1387360104643" stop="1387360104643" status="passed" severity="normal">
+            <name>testTwo</name>
+            <title>Test two</title>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value=""/>
+                <label name="feature" value=""/>
+            </labels>
+        </test-case>
+        <test-case start="1387360104643" stop="1387360104643" status="passed" severity="normal">
+            <name>testFour</name>
+            <title>Test four</title>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value=""/>
+                <label name="feature" value=""/>
+            </labels>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

@@ -1,4 +1,4 @@
-<div class="features b-island tab-content-fill" pane-set>
+<div class="features b-island tab-content-fill" pane-set ng-show="features.length">
     <div class="pane_col features__list" pane>
         <div class="pane_overlay clickable" ui-sref="features.story"></div>
         <div class="features__title b-island__title">Functional requirements</div>
@@ -61,3 +61,7 @@
     </div>
     <div ui-view="testcase"></div>
 </div>
+<div class="tab-blank tab-content-fill" pane-set ng-hide="features.length">
+    <p class="tab-blank__text">Behaviors info not found. <br/> <a href="https://github.com/allure-framework/allure-core/blob/master/docs/behaviors.md">How can I provide info?</a></p>
+</div>
+
