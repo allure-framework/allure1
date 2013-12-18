@@ -15,6 +15,11 @@
     <xsd:element name="test-case-skipped-event" type="ns:abstract-test-case-skipped-event"/>
     <xsd:element name="test-case-finished-event" type="ns:abstract-test-case-finished-event"/>
 
+    <xsd:element name="step-started-event" type="ns:abstract-step-started-event"/>
+    <xsd:element name="step-failure-event" type="ns:abstract-step-failure-event"/>
+    <xsd:element name="step-skipped-event" type="ns:abstract-step-skipped-event"/>
+    <xsd:element name="spep-finished-event" type="ns:abstract-step-finished-event"/>
+
     <xsd:complexType name="abstract-test-suite-started-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -88,6 +93,48 @@
         </xsd:annotation>
     </xsd:complexType>
 
+    <xsd:complexType name="abstract-step-started-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.StepEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="name" type="xsd:string" nillable="false"/>
+            <xsd:element name="title" type="xsd:string" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="abstract-step-failure-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.StepEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="throwable" type="ns:throwable" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="abstract-step-skipped-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.StepEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="throwable" type="ns:throwable" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="abstract-step-finished-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.StepEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:complexType>
 
     <xsd:complexType name="labels">
         <xsd:sequence>
