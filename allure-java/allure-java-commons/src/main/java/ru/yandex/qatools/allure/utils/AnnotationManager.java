@@ -1,10 +1,10 @@
 package ru.yandex.qatools.allure.utils;
 
 import ru.yandex.qatools.allure.annotations.*;
+import ru.yandex.qatools.allure.annotations.Description;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
-import ru.yandex.qatools.allure.model.Label;
-import ru.yandex.qatools.allure.model.SeverityLevel;
+import ru.yandex.qatools.allure.model.*;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
@@ -84,8 +84,11 @@ public class AnnotationManager {
         return getAnnotation(Title.class).value();
     }
 
-    public String getDescription() {
-        return getAnnotation(Description.class).value();
+    public ru.yandex.qatools.allure.model.Description getDescription() {
+        Description description = getAnnotation(Description.class);
+        return new ru.yandex.qatools.allure.model.Description()
+                .withValue(description.value())
+                .withType(description.type());
     }
 
     public SeverityLevel getSeverity() {
@@ -117,7 +120,7 @@ public class AnnotationManager {
 
     public boolean isBehaviorClasses(Class<?>... classes) {
         for (Class<?> clazz : classes) {
-            if(!isBehaviorClass(clazz)) {
+            if (!isBehaviorClass(clazz)) {
                 return false;
             }
         }

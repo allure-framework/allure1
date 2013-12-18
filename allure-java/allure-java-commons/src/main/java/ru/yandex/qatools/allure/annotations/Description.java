@@ -1,5 +1,7 @@
 package ru.yandex.qatools.allure.annotations;
 
+import ru.yandex.qatools.allure.model.DescriptionType;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -15,5 +17,7 @@ import java.lang.annotation.Target;
 public @interface Description {
 
     String value();
+
+    DescriptionType type() default DescriptionType.TEXT;
 
 }
