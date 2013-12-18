@@ -10,102 +10,22 @@ import java.util.List;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  */
-public class TestCaseStartedEvent implements TestCaseEvent {
-
-    private String suiteUid;
-    private String name;
-
-    private String title;
-    private Description description;
-    private SeverityLevel severity = SeverityLevel.NORMAL;
-    private List<Label> labels = new ArrayList<>();
+public class TestCaseStartedEvent extends AbstractTestCaseStartedEvent {
 
     public TestCaseStartedEvent(String suiteUid, String name) {
-        this.suiteUid = suiteUid;
-        this.name = name;
+        setSuiteUid(suiteUid);
+        setName(name);
     }
 
     @Override
     public void process(TestCaseResult testCase) {
         testCase.setStart(System.currentTimeMillis());
         testCase.setStatus(Status.PASSED);
-        testCase.setName(name);
-        testCase.setSeverity(severity);
-        testCase.setTitle(title);
-        testCase.setDescription(description);
-        testCase.setLabels(labels);
+        testCase.setName(getName());
+        testCase.setSeverity(getSeverity());
+        testCase.setTitle(getTitle());
+        testCase.setDescription(getDescription());
+        testCase.setLabels(getLabels());
     }
 
-    public String getSuiteUid() {
-        return suiteUid;
-    }
-
-    public void setSuiteUid(String suiteUid) {
-        this.suiteUid = suiteUid;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Description getDescription() {
-        return description;
-    }
-
-    public void setDescription(Description description) {
-        this.description = description;
-    }
-
-    public SeverityLevel getSeverity() {
-        return severity;
-    }
-
-    public void setSeverity(SeverityLevel severity) {
-        this.severity = severity;
-    }
-
-    public List<Label> getLabels() {
-        return labels;
-    }
-
-    public void setLabels(List<Label> labels) {
-        this.labels = labels;
-    }
-
-    public TestCaseStartedEvent withTitle(String title) {
-        setTitle(title);
-        return this;
-    }
-
-    public TestCaseStartedEvent withDescription(Description description) {
-        setDescription(description);
-        return this;
-    }
-
-    public TestCaseStartedEvent withSeverity(SeverityLevel severity) {
-        setSeverity(severity);
-        return this;
-    }
-
-    public TestCaseStartedEvent withLabels(Label... labels) {
-        setLabels(Arrays.asList(labels));
-        return this;
-    }
-
-    public TestCaseStartedEvent withLabels(List<Label> labels) {
-        setLabels(labels);
-        return this;
-    }
 }

@@ -8,7 +8,12 @@
             targetNamespace="urn:events.allure.qatools.yandex.ru">
 
     <xsd:element name="test-suite-started-event" type="ns:abstract-test-suite-started-event"/>
-    <xsd:element name="test-suite-stopped-event" type="ns:abstract-test-suite-finished-event"/>
+    <xsd:element name="test-suite-finished-event" type="ns:abstract-test-suite-finished-event"/>
+
+    <xsd:element name="test-case-started-event" type="ns:abstract-test-case-started-event"/>
+    <xsd:element name="test-case-failure-event" type="ns:abstract-test-case-failure-event"/>
+    <xsd:element name="test-case-skipped-event" type="ns:abstract-test-case-skipped-event"/>
+    <xsd:element name="test-case-finished-event" type="ns:abstract-test-case-finished-event"/>
 
     <xsd:complexType name="abstract-test-suite-started-event" abstract="true">
         <xsd:annotation>
@@ -36,14 +41,65 @@
         </xsd:all>
     </xsd:complexType>
 
+    <xsd:complexType name="abstract-test-case-started-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.TestCaseEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="suiteUid" type="xsd:string" nillable="false"/>
+            <xsd:element name="name" type="xsd:string" nillable="false"/>
+            <xsd:element name="title" type="xsd:string" nillable="true"/>
+            <xsd:element name="description" type="ns:description" nillable="true"/>
+            <xsd:element name="severity" type="ns:severity" nillable="false"/>
+            <xsd:element name="labels" type="ns:labels" minOccurs="0" nillable="false"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="abstract-test-case-failure-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.TestCaseEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="throwable" type="ns:throwable" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="abstract-test-case-skipped-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.TestCaseEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="throwable" type="ns:throwable" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
+
+    <xsd:complexType name="abstract-test-case-finished-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.TestCaseEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+    </xsd:complexType>
+
+
     <xsd:complexType name="labels">
         <xsd:sequence>
             <xsd:element name="label" type="ns:label" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
 
+
+    <xsd:complexType name="severity"/>
     <xsd:complexType name="description"/>
     <xsd:complexType name="label"/>
 
+    <xsd:complexType name="throwable"/>
 
 </xsd:schema>
