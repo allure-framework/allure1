@@ -28,7 +28,7 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template match="summary | failure | steps | attachments | labels"/>
+    <xsl:template match="summary | failure | steps | attachments | labels | description"/>
 
     <xsl:template match="@*|node()">
         <xsl:copy>

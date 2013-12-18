@@ -28,4 +28,8 @@
         <jaxb:class ref="ru.yandex.qatools.allure.model.SeverityLevel"/>
     </jaxb:bindings>
 
+    <jaxb:bindings node="//xsd:complexType[@name='description']">
+        <jaxb:class ref="ru.yandex.qatools.allure.model.Description"/>
+    </jaxb:bindings>
+
 </jaxb:bindings>
