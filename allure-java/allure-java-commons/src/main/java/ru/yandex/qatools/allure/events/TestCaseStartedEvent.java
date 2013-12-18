@@ -13,6 +13,7 @@ import java.util.List;
 public class TestCaseStartedEvent extends AbstractTestCaseStartedEvent {
 
     public TestCaseStartedEvent(String suiteUid, String name) {
+        setSeverity(SeverityLevel.NORMAL);
         setSuiteUid(suiteUid);
         setName(name);
     }
