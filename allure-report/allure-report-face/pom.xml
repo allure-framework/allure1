@@ -22,7 +22,16 @@
         </dependency>
     </dependencies>
 
+    <properties>
+        <sonar.language>js</sonar.language>
+        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.exclusions>vendor/**</sonar.exclusions>
+        <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
+    </properties>
+
     <build>
+        <sourceDirectory>src/main/webapp</sourceDirectory>
+        <testSourceDirectory>src/main/webapp</testSourceDirectory>
         <plugins>
             <plugin>
                 <groupId>org.lesscss</groupId>
