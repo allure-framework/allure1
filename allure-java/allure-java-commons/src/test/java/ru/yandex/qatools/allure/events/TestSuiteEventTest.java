@@ -2,6 +2,8 @@ package ru.yandex.qatools.allure.events;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.yandex.qatools.allure.model.Description;
+import ru.yandex.qatools.allure.model.DescriptionType;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
@@ -49,11 +51,15 @@ public class TestSuiteEventTest {
 
     @Test
     public void testSuiteStartedEventDescription() throws Exception {
-        new TestSuiteStartedEvent("suite.uid", "name").withDescription("some.description").process(testSuite);
+        Description description = new Description()
+                .withValue("some.description")
+                .withType(DescriptionType.MARKDOWN);
+
+        new TestSuiteStartedEvent("suite.uid", "name").withDescription(description).process(testSuite);
         verify(testSuite).setStart(anyLong());
         verify(testSuite).setName("name");
         verify(testSuite).setTitle(null);
-        verify(testSuite).setDescription("some.description");
+        verify(testSuite).setDescription(description);
         verify(testSuite).setLabels(Collections.<Label>emptyList());
         verifyNoMoreInteractions(testSuite);
     }
