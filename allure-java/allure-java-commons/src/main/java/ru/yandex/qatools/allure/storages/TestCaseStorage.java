@@ -7,6 +7,7 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  *         Date: 13.12.13
  */
 public class TestCaseStorage extends ThreadLocal<TestCaseResult> {
+
     @Override
     protected TestCaseResult initialValue() {
         return new TestCaseResult();
