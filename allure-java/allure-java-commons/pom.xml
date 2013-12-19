@@ -14,7 +14,7 @@
     <dependencies>
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-model</artifactId>
+            <artifactId>allure-java-annotations</artifactId>
         </dependency>
         <dependency>
             <groupId>commons-io</groupId>
