@@ -37,13 +37,13 @@ angular.module('allure.directives', [])
         return {
             restrict: 'A',
             replace: 'true',
-            template: '<span>' +
-                '<span ng-bind="beginning"></span>' +
-                '<div ng-show="show" ng-bind="ending"></div>' +
-                '<div class="text-right">' +
-                    '<span ng-click="toggleShow(!show)" ng-show="ending" class="expand-btn clickable" ng-bind="showText"></span>' +
+            template: '<div>' +
+                '<span ng-bind="beginning" ng-class="{clickable: ending}" ng-click="toggleShow(!show)"></span> ' +
+                '<span ng-show="show" ng-bind="ending"></span> ' +
+                '<span class="text-right">' +
+                    '<span ng-click="toggleShow(!show)" ng-show="ending" class="pull-right expand-btn btn-link clickable" ng-bind="showText"></span>' +
                 '</div>' +
-            '</span>',
+            '</div>',
             scope: {
                 textCut: '='
             },

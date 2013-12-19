@@ -35,6 +35,26 @@ angular.module('allure.testcase.controllers', [])
     })
     .controller('StepCtrl', function($scope) {
         "use strict";
+        $scope.getStepClass = function(step) {
+            return {
+                PASSED: '',
+                BROKEN: 'text-warning',
+                FAILED: 'text-danger'
+            }[step.status];
+        };
+        $scope.formatSummary = function(step) {
+            var result = [];
+            if(step.summary.steps + step.summary.attachments === 0) {
+                return '';
+            }
+            if(step.summary.steps) {
+                result.push(step.summary.steps + ' sub-steps')
+            }
+            if(step.summary.attachments) {
+                result.push(step.summary.attachments + ' attachments')
+            }
+            return '('+result.join(', ')+')';
+        };
         $scope.expanded = false;
         $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0;
     })
