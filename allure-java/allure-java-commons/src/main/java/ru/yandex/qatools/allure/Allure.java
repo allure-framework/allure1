@@ -11,9 +11,9 @@ import static ru.yandex.qatools.allure.utils.AllureWriteUtils.*;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  */
-public enum Allure {
+public class Allure {
 
-    LIFECYCLE;
+    public static final Allure LIFECYCLE = new Allure();
 
     final StepStorage stepStorage = new StepStorage();
 
