@@ -11,31 +11,41 @@
     </h3>
     <div class="text-muted">Severity: {{testcase.severity}}</div>
 </div>
-<div class="testcase__description preformated-text" text-cut="testcase.description.value"></div>
-<div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status == 'FAILED' || testcase.status == 'BROKEN'">
-    <div class="preformated-text">{{testcase.failure.message}}</div>
+<div class="testcase__content">
+    <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
+    <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status == 'FAILED' || testcase.status == 'BROKEN'" ng-controller="angular.noop">
+        <span class="preformated-text">{{testcase.failure.message}}</span>
+        <div class="pull-right" ng-hide="expanded" ng-click="expanded = true">Show stacktrace</div>
+        <div class="pull-right" ng-show="expanded" ng-click="expanded = false">Hide stacktrace</div>
+        <div ng-show="expanded" class="preformated-text">{{testcase.failure.stackTrace}}</div>
+    </div>
+    <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
+        The test is passed right!
+    </div>
+    <div class="testcase__status alert-status-skipped" ng-show="testcase.status == 'SKIPPED'">
+        This test has been skipped
+    </div>
+    <div class="step__head">
+        <span class="step__title" ng-class="getStepClass(step)">Testcase started at {{testcase.time.start | date:'medium'}}</span>
+    </div>
+    <div class="step" ng-repeat="step in testcase.steps" ng-controller="StepCtrl">
+        <ng-include src="'testcaseStep.tpl'"></ng-include>
+    </div>
+    <div class="step__head" ng-show="testcase.failure.message">
+        <div class="preformated-text text-status-{{testcase.status | lowercase}}">{{testcase.failure.message}}</div>
+    </div>
+    <div class="step__head" ng-show="testcase.failure.stackTrace" ng-controller="angular.noop">
+        <div ng-hide="expanded" class="text-muted" ng-click="expanded = true">...stack trace...</div>
+        <span ng-show="expanded" class="preformated-text">{{testcase.failure.stackTrace}}</span>
+    </div>
+    <div class="step__head">
+        <span class="step__title text-status-{{testcase.status | lowercase}}">Testcase finished at {{testcase.time.stop | date:'medium'}}, duration {{testcase.time.duration | time}}</span>
+    </div>
+    <div class="step__head" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+        <ng-include src="'testcaseAttachment.tpl'"></ng-include>
+    </div>
 </div>
-<div class="text-success" ng-show="testcase.status == 'PASSED'">
-    <span class="step__expand glyphicon glyphicon-plus-sign"></span>
-    The test is passed right!
-</div>
-<div class="text-muted" ng-show="testcase.status == 'SKIPPED'">
-    This test has been skipped
-</div>
-<h4>Test log</h4>
-<div class="step__head">
-    <span class="step__title" ng-class="getStepClass(step)">Testcase started at {{testcase.time.start | date:'medium'}}</span>
-</div>
-<div class="step" ng-repeat="step in testcase.steps" ng-controller="StepCtrl">
-    <ng-include src="'testcaseStep.tpl'"></ng-include>
-</div>
-
-<div class="step__head">
-    <span class="step__title" ng-class="getStepClass(step)">Testcase finished at {{testcase.time.stop | date:'medium'}}, duration {{testcase.time.duration | time}}</span>
-</div>
-<div class="step__head" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
-    <ng-include src="'testcaseAttachment.tpl'"></ng-include>
-</div>
+<br/>
 <script type="text/ng-template" id="testcaseAttachment.tpl">
     <span class="glyphicon glyphicon-file"></span>
     <span>{{attachment.title}}</span>
@@ -45,20 +55,19 @@
     </div>
 </script>
 <script type="text/ng-template" id="testcaseStep.tpl">
-        <div class="step__head" ng-click="expanded = !expanded">
-            <b class="step__expand" ng-show="hasContent && !expanded">+</b>
-            <b class="step__expand" ng-show="hasContent && expanded">-</b>
-            <span class="step__time text-muted">[{{step.time.start | date:'HH:mm:ss.sss'}}]</span>
-            <span class="step__title" ng-class="getStepClass(step)">{{step.title}}</span>
-            <span class="text-muted">{{formatSummary(step)}}</span>
+    <div class="step__head" ng-click="expanded = !expanded">
+        <b class="step__expand" ng-show="hasContent && !expanded">+</b>
+        <b class="step__expand" ng-show="hasContent && expanded">-</b>
+        <span class="step__time text-muted">[{{step.time.start | date:'HH:mm:ss.sss'}}]</span>
+        <span class="step__title" ng-class="getStepClass(step)">{{step.title}}</span>
+        <span class="text-muted">{{formatSummary(step)}}</span>
+    </div>
+    <div class="step__content" ng-if="expanded">
+        <div ng-repeat="step in step.steps" ng-controller="StepCtrl">
+            <ng-include src="'testcaseStep.tpl'"></ng-include>
         </div>
-        <div class="step__content" ng-if="expanded">
-            <div ng-repeat="step in step.steps" ng-controller="StepCtrl">
-                <ng-include src="'testcaseStep.tpl'"></ng-include>
-            </div>
-            <div class="step__head" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
-                <ng-include src="'testcaseAttachment.tpl'"></ng-include>
-            </div>
+        <div class="step__head" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+            <ng-include src="'testcaseAttachment.tpl'"></ng-include>
         </div>
     </div>
 </script>
