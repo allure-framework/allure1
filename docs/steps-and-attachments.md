@@ -43,3 +43,18 @@ public void openPageByAddress(String pageAddress) {
 
 ### Attachments
 
+Аттачи - это артефакты, возникающие в ходе выполнения теста. В случае падения теста, аттачи помогают быстрее диагностировать причину падения. Аттачем может быть скриншот, часть лога с сервера, xml или json-ответ сервиса, куки или что-нибудь еще. 
+
+В терминах Allure, аттач - это проаннотированный метод, который возвращает строку или файл, который необходимо добавить к отчёту:
+
+``` java
+@Attach
+public String performedActions(ActionSequence actionSequence) {
+    return actionSequence.toString();
+}
+
+@Attach(name = "Скриншот страницы", type = AttachmentType.JPG)
+public static File saveScreenshot(File screenShot) {
+    return screenShot;
+}
+```
