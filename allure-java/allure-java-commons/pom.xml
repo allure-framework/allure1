@@ -26,6 +26,11 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.1</version>
         </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+            <version>0.6.5</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -79,13 +84,14 @@
                         <arg>-Xxew:instantiate lazy</arg>
                         <arg>-Xxew:delete</arg>
                         <arg>-Xinheritance</arg>
+                        <arg>-Xequals</arg>
                         <arg>-Xfluent-api</arg>
                     </args>
                     <plugins>
                         <plugin>
                             <groupId>org.jvnet.jaxb2_commons</groupId>
                             <artifactId>jaxb2-basics</artifactId>
-                            <version>0.6.4</version>
+                            <version>0.6.5</version>
                         </plugin>
                         <plugin>
                             <groupId>org.jvnet.jaxb2_commons</groupId>
