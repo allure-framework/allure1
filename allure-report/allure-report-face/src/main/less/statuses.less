@@ -10,6 +10,11 @@
 .alert-status-broken  { .alert-variant(@alert-warning-bg, @alert-warning-border, @alert-warning-text); }
 .alert-status-failed  { .alert-variant(@alert-danger-bg, @alert-danger-border, @alert-danger-text); }
 
+.text-status-skipped { color: @text-muted;}
+.text-status-passed  { color: @state-success-text;}
+.text-status-broken  { color: @state-warning-text;}
+.text-status-failed  { color: @state-danger-text;}
+
 .icon-status-skipped {
   color: @gray-light;
   .glyphicon;

@@ -33,8 +33,29 @@ angular.module('allure.testcase.controllers', [])
             }
         });
     })
-    .controller('StepCtrl', function($scope) {
+    .controller('StepCtrl', function($scope, $locale) {
         "use strict";
+        var stepPlural = {
+                one: ' sub-step',
+                other: ' sub-steps'
+            },
+            attachmentPlural = {
+                one: ' attachment',
+                other: ' attachments'
+            };
+        $scope.formatSummary = function(step) {
+            var result = [];
+            if(step.summary.steps + step.summary.attachments === 0) {
+                return '';
+            }
+            if(step.summary.steps) {
+                result.push(step.summary.steps + stepPlural[$locale.pluralCat(step.summary.steps)])
+            }
+            if(step.summary.attachments) {
+                result.push(step.summary.attachments + attachmentPlural[$locale.pluralCat(step.summary.attachments)])
+            }
+            return '('+result.join(', ')+')';
+        };
         $scope.expanded = false;
         $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0;
     })
