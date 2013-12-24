@@ -12,10 +12,6 @@ angular.module('allure.testcase.controllers', [])
             //noinspection JSUnusedAssignment
             $scope.attachment = attachment;
         }
-        function findLastStep(step) {
-            var length = step.steps.length;
-            return length > 0 ? findLastStep(step.steps[length-1]) : step;
-        }
         $scope.isState = function(state) {
             return $state.is(baseState+'.'+state);
         };
@@ -30,9 +26,6 @@ angular.module('allure.testcase.controllers', [])
         };
         var baseState = $state.current.data.baseState;
         $scope.testcase = testcase;
-        if(testcase.steps.length > 0) {
-            findLastStep(testcase).failure = testcase.failure;
-        }
 
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.attachment;
@@ -74,7 +67,7 @@ angular.module('allure.testcase.controllers', [])
             return '('+result.join(', ')+')';
         };
         $scope.expanded = isFailed($scope.step);
-        $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0 || $scope.step.failure;
+        $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0;
     })
 
     .controller('AttachmentPreviewCtrl', function ($scope, $http, $state) {
