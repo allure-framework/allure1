@@ -5,6 +5,16 @@
   right: 0;
   bottom: 0;
   transition: right 0.3s;
+  &__content {
+    margin-left: 10px;
+  }
+  &__description {
+    margin-bottom: 15px;
+  }
+  &__status {
+    padding: 7px;
+    margin: 7px -7px;
+  }
   &:empty {
     right: -100%;
   }
@@ -13,3 +23,31 @@
   }
 }
 
+.step {
+  &__content {
+    margin-left: 20px;
+  }
+  &__head {
+    position: relative;
+    cursor: pointer;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
+    &:hover {
+      background: #f4f4f4;
+    }
+    &.active {
+      color: #fff;
+      background: #428bca;
+      a {
+        color: #fff;
+      }
+
+    }
+  }
+  &__expand {
+    position: absolute;
+    margin-top: -11px;
+    left: -12px;
+    top: 50%;
+  }
+}

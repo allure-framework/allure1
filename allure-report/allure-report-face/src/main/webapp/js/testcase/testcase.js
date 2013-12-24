@@ -12,8 +12,10 @@ angular.module('allure.testcase.controllers', [])
             //noinspection JSUnusedAssignment
             $scope.attachment = attachment;
         }
-        var baseState = $state.current.data.baseState;
-        $scope.testcase = testcase;
+        function findLastStep(step) {
+            var length = step.steps.length;
+            return length > 0 ? findLastStep(step.steps[length-1]) : step;
+        }
         $scope.isState = function(state) {
             return $state.is(baseState+'.'+state);
         };
@@ -26,6 +28,12 @@ angular.module('allure.testcase.controllers', [])
         $scope.setAttachment = function(attachmentUid) {
             $state.go(baseState+'.testcase.attachment', {attachmentUid: attachmentUid});
         };
+        var baseState = $state.current.data.baseState;
+        $scope.testcase = testcase;
+        if(testcase.steps.length > 0) {
+            findLastStep(testcase).failure = testcase.failure;
+        }
+
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.attachment;
             if(params.attachmentUid) {
@@ -33,10 +41,40 @@ angular.module('allure.testcase.controllers', [])
             }
         });
     })
-    .controller('StepCtrl', function($scope) {
+    .controller('StepCtrl', function($scope, $locale) {
         "use strict";
-        $scope.expanded = false;
-        $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0;
+        function isFailed(step) {
+            return ['FAILED', 'BROKEN'].indexOf(step.status) !== -1;
+        }
+        var stepPlural = {
+                one: ' sub-step',
+                other: ' sub-steps'
+            },
+            attachmentPlural = {
+                one: ' attachment',
+                other: ' attachments'
+            };
+        $scope.getStepClass = function(step) {
+            if(isFailed(step)) {
+                return 'text-status-'+step.status.toLowerCase();
+            }
+            return '';
+        };
+        $scope.formatSummary = function(step) {
+            var result = [];
+            if(step.summary.steps + step.summary.attachments === 0) {
+                return '';
+            }
+            if(step.summary.steps) {
+                result.push(step.summary.steps + stepPlural[$locale.pluralCat(step.summary.steps)])
+            }
+            if(step.summary.attachments) {
+                result.push(step.summary.attachments + attachmentPlural[$locale.pluralCat(step.summary.attachments)])
+            }
+            return '('+result.join(', ')+')';
+        };
+        $scope.expanded = isFailed($scope.step);
+        $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0 || $scope.step.failure;
     })
 
     .controller('AttachmentPreviewCtrl', function ($scope, $http, $state) {
