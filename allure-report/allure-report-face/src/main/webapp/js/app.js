@@ -5,6 +5,9 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
     .config(function($tooltipProvider) {
         $tooltipProvider.options({appendToBody:true})
     })
+    .config(function($httpProvider) {
+        $httpProvider.defaults.cache = true;
+    })
     .config(function ($stateProvider, $urlRouterProvider, testcaseProvider) {
         'use strict';
         function processResponse(response) {
