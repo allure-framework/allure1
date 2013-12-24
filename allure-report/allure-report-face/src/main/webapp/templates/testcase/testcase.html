@@ -14,9 +14,9 @@
 <div class="testcase__content">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
     <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status == 'FAILED' || testcase.status == 'BROKEN'" ng-controller="angular.noop">
-        <span class="preformated-text">{{testcase.failure.message}}</span>
-        <div class="pull-right" ng-hide="expanded" ng-click="expanded = true">Show stacktrace</div>
-        <div class="pull-right" ng-show="expanded" ng-click="expanded = false">Hide stacktrace</div>
+        <span class="preformated-text" ng-click="expanded = !expanded">{{testcase.failure.message}}</span>
+        <div class="pull-right clickable" ng-hide="expanded" ng-click="expanded = true">Show stacktrace</div>
+        <div class="pull-right clickable" ng-show="expanded" ng-click="expanded = false">Hide stacktrace</div>
         <div ng-show="expanded" class="preformated-text">{{testcase.failure.stackTrace}}</div>
     </div>
     <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
@@ -26,20 +26,15 @@
         This test has been skipped
     </div>
     <div class="step__head">
-        <span class="step__title" ng-class="getStepClass(step)">Testcase started at {{testcase.time.start | date:'medium'}}</span>
+        <span class="step__time text-muted">[{{testcase.time.start | date:'HH:mm:ss.sss'}}]</span>
+        <span class="step__title">Testcase started</span>
     </div>
     <div class="step" ng-repeat="step in testcase.steps" ng-controller="StepCtrl">
         <ng-include src="'testcaseStep.tpl'"></ng-include>
     </div>
-    <div class="step__head" ng-show="testcase.failure.message">
-        <div class="preformated-text text-status-{{testcase.status | lowercase}}">{{testcase.failure.message}}</div>
-    </div>
-    <div class="step__head" ng-show="testcase.failure.stackTrace" ng-controller="angular.noop">
-        <div ng-hide="expanded" class="text-muted" ng-click="expanded = true">...stack trace...</div>
-        <span ng-show="expanded" class="preformated-text">{{testcase.failure.stackTrace}}</span>
-    </div>
     <div class="step__head">
-        <span class="step__title text-status-{{testcase.status | lowercase}}">Testcase finished at {{testcase.time.stop | date:'medium'}}, duration {{testcase.time.duration | time}}</span>
+        <span class="step__time text-muted">[{{testcase.time.stop | date:'HH:mm:ss.sss'}}]</span>
+        <span class="step__title">Testcase finished, duration {{testcase.time.duration | time}}</span>
     </div>
     <div class="step__head" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
         <ng-include src="'testcaseAttachment.tpl'"></ng-include>
@@ -51,7 +46,7 @@
     <span>{{attachment.title}}</span>
     <div class="pull-right">
         <span>{{attachment.type}}</span>
-        <a target="_blank" ng-href="{{'data/'+attachment.source}}">View raw</a>
+        <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{'data/'+attachment.source}}">View raw</a>
     </div>
 </script>
 <script type="text/ng-template" id="testcaseStep.tpl">
@@ -68,6 +63,14 @@
         </div>
         <div class="step__head" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
             <ng-include src="'testcaseAttachment.tpl'"></ng-include>
+        </div>
+        <div class="step" ng-controller="angular.noop" ng-show="step.failure.message" ng-init="expanded = false;">
+            <div class="step__head" ng-click="expanded = !expanded">
+                <b class="step__expand" ng-show="!expanded">+</b>
+                <b class="step__expand" ng-show="expanded">-</b>
+                <span class="preformated-text">{{step.failure.message}}</span>
+            </div>
+            <span ng-show="expanded" class="step__content preformated-text">{{step.failure.stackTrace}}</span>
         </div>
     </div>
 </script>

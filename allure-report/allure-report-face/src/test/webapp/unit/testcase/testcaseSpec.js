@@ -10,6 +10,14 @@ describe('Testcase controllers', function() {
     }));
 
     describe('StepCtrl', function() {
+        function Step(title, attachments, failure) {
+            this.title = title;
+            this.status = failure ? 'FAILED' : 'PASSED';
+            this.summary = {steps: 0};
+            this.attachments = attachments || [];
+            this.failure = failure;
+        }
+
         function createController(scopeValues) {
             var scope = $rootScope.$new();
             scope = scope.$new();
@@ -20,24 +28,29 @@ describe('Testcase controllers', function() {
             return scope;
         }
 
+        it('should expand failed steps' , function() {
+            var scope = createController({ step: new Step('Dummy step', [{title: 'file'}], {message: 'Error'}) });
+            expect(scope.expanded).toBeTruthy();
+        });
+
+        it('should not expand passed steps' , function() {
+            var scope = createController({ step: new Step('Dummy step') });
+            expect(scope.expanded).toBeFalsy();
+        });
+
         it('should detect empty content', function() {
-            var scope = createController({
-                testcase: {},
-                step: {
-                    title: 'Dummy step', attachments: [], summary: {steps: 0}
-                }
-            });
-            expect(scope.hasContent).toBe(false);
+            var scope = createController({ step: new Step('Dummy step') });
+            expect(scope.hasContent).toBeFalsy();
         });
 
         it('should detect existing content', function() {
-            var scope = createController({
-                testcase: {},
-                step: {
-                    title: 'Dummy step', attachments: [{title: 'file'}], summary: {steps: 0}
-                }
-            });
-            expect(scope.hasContent).toBe(true);
+            var scope = createController({ step: new Step('Dummy step', [{title: 'file'}]) });
+            expect(scope.hasContent).toBeTruthy();
+        });
+
+        it('should detect failure message', function() {
+            var scope = createController({ step: new Step('Failed step', [], {message: 'Error'}) });
+            expect(scope.hasContent).toBeTruthy();
         });
     });
 
@@ -162,7 +175,7 @@ describe('Testcase controllers', function() {
         }
         describe('state checks', function() {
             beforeEach(function() {
-                scope = createController({});
+                scope = createController({steps: []});
             });
             it('should add base when checking isState', function() {
                 scope.isState('testcase');
@@ -184,7 +197,7 @@ describe('Testcase controllers', function() {
 
         describe('state change handling', function() {
             beforeEach(function() {
-                scope = createController({attachments: [{source: 'log', name: 'console log'}]});
+                scope = createController({attachments: [{source: 'log', name: 'console log'}], steps: []});
             });
             it('should set attachment when uid is present', function() {
                 scope.$broadcast('$stateChangeSuccess',  null, {attachmentUid: 'log'});
@@ -197,5 +210,7 @@ describe('Testcase controllers', function() {
                 expect(scope.attachment).toBeUndefined();
             });
         });
+
+        it('should add failure message')
     });
 });

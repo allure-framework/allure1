@@ -30,17 +30,24 @@
   &__head {
     position: relative;
     cursor: pointer;
-    padding: 0 3px;
-    font-family: Monaco, "Lucida Console", monospace;
+    padding: 5px;
+    border-bottom: 1px solid #eee;
     &:hover {
       background: #f4f4f4;
     }
     &.active {
-      background: #c2c2c2;
+      color: #fff;
+      background: #428bca;
+      a {
+        color: #fff;
+      }
+
     }
   }
   &__expand {
-    left: -10px;
     position: absolute;
+    margin-top: -11px;
+    left: -12px;
+    top: 50%;
   }
 }
