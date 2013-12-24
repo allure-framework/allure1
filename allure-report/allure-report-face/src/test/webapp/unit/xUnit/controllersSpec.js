@@ -91,20 +91,6 @@ describe('xUnit controllers', function () {
             })
         });
 
-        xdescribe('should make transition to', function() {
-            it('home', function() {
-                scope.$broadcast('$stateChangeSuccess',  null, {});
-                expect(scope.testsuite).toBeUndefined();
-                expect(scope.testsuiteUid).toBeUndefined();
-            });
-
-            it('testsuite', function() {
-                scope.$broadcast('$stateChangeSuccess',  null, {testsuiteUid:'suite2'});
-                expect(scope.testsuite).toBeDefined();
-                expect(scope.testsuiteUid).toBeUndefined();
-            });
-        });
-
         describe('transitions', function() {
             function getObjectValues(object) {
                 return Object.keys(object).map(function(key) {
@@ -121,7 +107,7 @@ describe('xUnit controllers', function () {
 
             function assertState(testsuite, testcase) {
                 expect(scope.testsuite)[testsuite ? 'toBeDefined' : 'toBeUndefined']();
-                expect(scope.testcaseUid)[testcase ? 'toBeDefined' : 'toBeUndefined']();
+                expect(scope.testcase.uid)[testcase ? 'toBeDefined' : 'toBeUndefined']();
             }
 
             var levels = ['testrun', 'testsuite', 'testcase', 'attachment'],

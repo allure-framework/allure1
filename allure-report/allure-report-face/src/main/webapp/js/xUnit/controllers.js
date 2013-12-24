@@ -34,12 +34,12 @@ angular.module('allure.xUnit.controllers', [])
         });
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.testsuite;
-            delete $scope.testcaseUid;
+            delete $scope.testcase.uid;
             if(params.testsuiteUid) {
                 setTestsuite(params.testsuiteUid);
             }
             if(params.testcaseUid) {
-                $scope.testcaseUid = params.testcaseUid;
+                $scope.testcase.uid = params.testcaseUid;
             }
         });
     })
