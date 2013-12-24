@@ -3,8 +3,11 @@
 
 ## Allure JUnit integration module
 
-The first way (recommended), **RUNTIME**, *without using aspectj compiler and bytecode injections*,
-(don't work with AQUA framework for now) to use allure with **JUnit** and **Maven**:
+There are two ways to integrate JUnit tests with Allure
+
+### Recommended way
+The first way, **RUNTIME**, *without using aspectj compiler and bytecode injections*,
+(don't work with AQUA framework for now) to use allure with **JUnit** and **Maven**.
 
 First of all add allure version property and dependency of **allure-junit-adaptor**:
 
@@ -63,7 +66,8 @@ In the end u need to add **allure-report-plugin** to reporting section:
 </reporting>
 ```
 
-Another way (not recommended), **COMPILE**, with using aspectj compiler and bytecode injections:
+### Not recommended way
+Another way, **COMPILE**, with using aspectj compiler and bytecode injections:
 
 ``` xml
 <properties>
