@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1387445201748" stop="1387445201753">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1387886635130" stop="1387886635135">
     <name>my.company.ManyInfoTest</name>
     <description type="text">Testsuite has testcases with many steps
     and
 many lines in description</description>
     <test-cases>
-        <test-case start="1387445201750" stop="1387445201752" status="broken" severity="blocker">
+        <test-case start="1387886635132" stop="1387886635133" status="broken" severity="blocker">
             <name>lotOfStepsTest</name>
             <description type="text">I have many steps 
 
@@ -39,29 +39,29 @@ many lines in description</description>
 </stack-trace>
             </failure>
             <steps>
-                <step start="1387445201751" stop="1387445201751" status="passed">
+                <step start="1387886635132" stop="1387886635133" status="passed">
                     <name>parentStep</name>
                     <title>Parent step</title>
                     <steps>
-                        <step start="1387445201751" stop="1387445201751" status="passed">
+                        <step start="1387886635133" stop="1387886635133" status="passed">
                             <name>step</name>
                             <title>&quot;First nested&quot; step</title>
                         </step>
-                        <step start="1387445201751" stop="1387445201751" status="passed">
+                        <step start="1387886635133" stop="1387886635133" status="passed">
                             <name>step</name>
                             <title>&quot;Second nested&quot; step</title>
                         </step>
-                        <step start="1387445201751" stop="1387445201751" status="passed">
+                        <step start="1387886635133" stop="1387886635133" status="passed">
                             <name>step</name>
                             <title>&quot;Third nested&quot; step</title>
                         </step>
                     </steps>
                 </step>
-                <step start="1387445201751" stop="1387445201751" status="passed">
+                <step start="1387886635133" stop="1387886635133" status="passed">
                     <name>step</name>
                     <title>&quot;Last&quot; step</title>
                 </step>
-                <step start="1387445201752" stop="1387445201752" status="broken">
+                <step start="1387886635133" stop="1387886635133" status="broken">
                     <name>makeThisTestBroken</name>
                     <title>Make this test broken</title>
                 </step>
@@ -69,7 +69,7 @@ many lines in description</description>
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1387445201751" stop="1387445201753" status="failed" severity="critical">
+        <test-case start="1387886635132" stop="1387886635135" status="failed" severity="critical">
             <name>attachmentsTest</name>
             <description type="text">Single-line description</description>
             <failure>
@@ -101,22 +101,22 @@ many lines in description</description>
 </stack-trace>
             </failure>
             <steps>
-                <step start="1387445201753" stop="1387445201753" status="failed">
+                <step start="1387886635134" stop="1387886635135" status="failed">
                     <name>makeThisTestFailed</name>
                     <title>Make this test failed</title>
                     <attachments>
-                        <attachment title="TXT Attachment" source="dcf5106b-a6fd-4b56-a0b1-c1896ddaa786-attachment.txt" type="txt"/>
+                        <attachment title="TXT Attachment" source="5a23c766-aebb-408b-9dac-4a4c8eb6c88b-attachment.txt" type="txt"/>
                     </attachments>
                 </step>
             </steps>
             <attachments>
-                <attachment title="JSON Attachment" source="0f46e8e2-d149-4a3e-a343-6c80d3ad946f-attachment.json" type="json"/>
-                <attachment title="XML Attachment" source="537c52ef-601a-45f5-b56a-2de71f61cd60-attachment.xml" type="xml"/>
-                <attachment title="JPG Attachment" source="2a3c4421-a3be-43d1-aa52-4803b66460c9-attachment.jpg" type="jpg"/>
+                <attachment title="JSON Attachment" source="a6c79fff-176e-461c-a92b-180620bfcb76-attachment.json" type="json"/>
+                <attachment title="XML Attachment" source="cb9bb1d0-e546-413c-8e02-a0ab604a2a12-attachment.xml" type="xml"/>
+                <attachment title="JPG Attachment" source="0f0a35ea-ea33-4aa2-aa7e-d19517ccbb91-attachment.jpg" type="jpg"/>
             </attachments>
             <labels>
-                <label name="story" value=""/>
-                <label name="feature" value=""/>
+                <label name="story" value="OtherScreenshot"/>
+                <label name="feature" value="Screenshot"/>
             </labels>
         </test-case>
     </test-cases>
