@@ -47,11 +47,6 @@ describe('Testcase controllers', function() {
             var scope = createController({ step: new Step('Dummy step', [{title: 'file'}]) });
             expect(scope.hasContent).toBeTruthy();
         });
-
-        it('should detect failure message', function() {
-            var scope = createController({ step: new Step('Failed step', [], {message: 'Error'}) });
-            expect(scope.hasContent).toBeTruthy();
-        });
     });
 
     describe('AttachmentPreviewCtrl', function() {
