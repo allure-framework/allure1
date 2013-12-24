@@ -10,14 +10,14 @@
     <xsl:template match="alr:allure-test-run">
         <xsl:element name="alr:allure-behavior">
             <xsl:element name="features">
-                <xsl:for-each-group select="test-cases/test-case/labels/label[@name='Feature']" group-by="@value">
+                <xsl:for-each-group select="test-cases/test-case/labels/label[@name='feature']" group-by="@value">
                     <xsl:element name="feature">
 
                         <xsl:call-template name="add-title-node"/>
                         <xsl:variable name="feature-name" select="current-grouping-key()"/>
 
                         <xsl:element name="stories">
-                            <xsl:for-each-group select="current-group()/../label[@name='Story']" group-by="@value">
+                            <xsl:for-each-group select="current-group()/../label[@name='story']" group-by="@value">
                                 <xsl:element name="story">
                                     <xsl:call-template name="add-title-node"/>
                                     <xsl:variable name="story-name" select="current-grouping-key()"/>
