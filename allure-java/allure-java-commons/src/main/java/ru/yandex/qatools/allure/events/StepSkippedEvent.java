@@ -9,9 +9,6 @@ import ru.yandex.qatools.allure.model.Step;
  */
 public class StepSkippedEvent extends AbstractStepSkippedEvent {
 
-    public StepSkippedEvent() {
-    }
-
     @Override
     public void process(Step step) {
         step.setStatus(Status.SKIPPED);

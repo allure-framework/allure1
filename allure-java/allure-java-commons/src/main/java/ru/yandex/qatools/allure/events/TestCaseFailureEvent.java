@@ -11,9 +11,6 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  */
 public class TestCaseFailureEvent extends AbstractTestCaseFailureEvent {
 
-    public TestCaseFailureEvent() {
-    }
-
     @Override
     public void process(TestCaseResult testCase) {
         Status status = throwable instanceof AssertionError ? Status.FAILED : Status.BROKEN;

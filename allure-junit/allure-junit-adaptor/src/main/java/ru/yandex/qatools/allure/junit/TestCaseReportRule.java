@@ -17,6 +17,8 @@ import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 public class TestCaseReportRule extends TestWatcher {
 
+    private Allure lifecycle = Allure.LIFECYCLE;
+
     private String suiteUid;
 
     public TestCaseReportRule(TestSuiteReportRule testSuite) {
@@ -29,19 +31,26 @@ public class TestCaseReportRule extends TestWatcher {
 
         am.update(event);
 
-        Allure.LIFECYCLE.fire(event);
+        getLifecycle().fire(event);
     }
 
     protected void finished(Description description) {
-        Allure.LIFECYCLE.fire(new TestCaseFinishedEvent());
+        getLifecycle().fire(new TestCaseFinishedEvent());
     }
 
     protected void skipped(AssumptionViolatedException e, Description description) {
-        Allure.LIFECYCLE.fire(new TestCaseSkippedEvent().withThrowable(e));
+        getLifecycle().fire(new TestCaseSkippedEvent().withThrowable(e));
     }
 
     protected void failed(Throwable e, Description description) {
-        Allure.LIFECYCLE.fire(new TestCaseFailureEvent().withThrowable(e));
+        getLifecycle().fire(new TestCaseFailureEvent().withThrowable(e));
     }
 
+    public Allure getLifecycle() {
+        return lifecycle;
+    }
+
+    public void setLifecycle(Allure lifecycle) {
+        this.lifecycle = lifecycle;
+    }
 }

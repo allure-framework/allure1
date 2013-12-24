@@ -16,6 +16,8 @@ import java.util.UUID;
  */
 public class TestSuiteReportRule extends TestWatcher {
 
+    private Allure lifecycle = Allure.LIFECYCLE;
+
     private String uid;
 
     public TestSuiteReportRule() {
@@ -23,19 +25,27 @@ public class TestSuiteReportRule extends TestWatcher {
 
     protected void starting(Description description) {
         uid = UUID.randomUUID().toString();
-        TestSuiteStartedEvent event = new TestSuiteStartedEvent(uid, description.getTestClass().getName());
+        TestSuiteStartedEvent event = new TestSuiteStartedEvent(uid, description.getClassName());
         AnnotationManager am = new AnnotationManager(description.getAnnotations());
 
         am.update(event);
 
-        Allure.LIFECYCLE.fire(event);
+        getLifecycle().fire(event);
     }
 
     protected void finished(Description description) {
-        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(uid));
+        getLifecycle().fire(new TestSuiteFinishedEvent(uid));
     }
 
     public String getUid() {
         return uid;
+    }
+
+    public Allure getLifecycle() {
+        return lifecycle;
+    }
+
+    public void setLifecycle(Allure lifecycle) {
+        this.lifecycle = lifecycle;
     }
 }

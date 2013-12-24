@@ -33,6 +33,7 @@
             <xsd:element name="steps" type="qa:steps" minOccurs="0"/>
             <xsd:element name="attachments" type="qa:attachments" minOccurs="0"/>
             <xsd:element name="labels" type="qa:labels" minOccurs="0"/>
+            <xsd:element name="parameters" type="qa:parameters" minOccurs="0"/>
         </xsd:all>
         <xsd:attribute name="start" type="xsd:long" use="required"/>
         <xsd:attribute name="stop" type="xsd:long" use="required"/>
@@ -90,7 +91,7 @@
 
     <xsd:simpleType name="parameter-kind">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="configuration-parameter"/>
+            <xsd:enumeration value="argument"/>
             <xsd:enumeration value="system-property"/>
             <xsd:enumeration value="environment-variable"/>
         </xsd:restriction>
