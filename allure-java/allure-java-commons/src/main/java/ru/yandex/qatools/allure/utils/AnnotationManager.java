@@ -37,8 +37,12 @@ public class AnnotationManager {
             event.setDescription(getDescription());
         }
 
-        if (isBehavior()) {
-            event.getLabels().addAll(getBehaviorLabels());
+        if (isStoriesAnnotationPresent()) {
+            event.getLabels().addAll(getStoryLabels());
+        }
+
+        if (isFeaturesAnnotationPresent()) {
+            event.getLabels().addAll(getFeatureLabels());
         }
     }
 
@@ -51,8 +55,12 @@ public class AnnotationManager {
             event.setDescription(getDescription());
         }
 
-        if (isBehavior()) {
-            event.getLabels().addAll(getBehaviorLabels());
+        if (isStoriesAnnotationPresent()) {
+            event.getLabels().addAll(getStoryLabels());
+        }
+
+        if (isFeaturesAnnotationPresent()) {
+            event.getLabels().addAll(getFeatureLabels());
         }
 
         if (isSeverityAnnotationPresent()) {
@@ -68,16 +76,16 @@ public class AnnotationManager {
         return isAnnotationPresent(Description.class);
     }
 
-    public boolean isStoryAnnotationPresent() {
-        return isAnnotationPresent(Story.class);
-    }
-
     public boolean isSeverityAnnotationPresent() {
         return isAnnotationPresent(Severity.class);
     }
 
-    public boolean isBehavior() {
-        return isStoryAnnotationPresent() && isBehaviorClasses(getAnnotation(Story.class).value());
+    public boolean isStoriesAnnotationPresent() {
+        return isAnnotationPresent(Stories.class);
+    }
+
+    public boolean isFeaturesAnnotationPresent() {
+        return isAnnotationPresent(Features.class);
     }
 
     public String getTitle() {
@@ -95,43 +103,21 @@ public class AnnotationManager {
         return getAnnotation(Severity.class).value();
     }
 
-    public List<Label> getBehaviorLabels() {
-        List<Label> labels = new ArrayList<>();
-        for (Class<?> clazz : getAnnotation(Story.class).value()) {
-            if (isBehaviorClass(clazz)) {
-                labels.add(getStoryLabel(clazz));
-                labels.add(getFeatureLabel(clazz.getDeclaringClass()));
-            }
+    public List<Label> getStoryLabels() {
+        List<Label> result = new ArrayList<>();
+        for (String story : getAnnotation(Stories.class).value()) {
+            result.add(new Label().withName("story").withValue(story));
         }
-        return labels;
+        return result;
     }
 
-    public Label getFeatureLabel(Class<?> clazz) {
-        return new Label()
-                .withName(FeatureClass.LABEL_NAME)
-                .withValue(clazz.getAnnotation(FeatureClass.class).value());
-    }
-
-    public Label getStoryLabel(Class<?> clazz) {
-        return new Label()
-                .withName(StoryClass.LABEL_NAME)
-                .withValue(clazz.getAnnotation(StoryClass.class).value());
-    }
-
-    public boolean isBehaviorClasses(Class<?>... classes) {
-        for (Class<?> clazz : classes) {
-            if (!isBehaviorClass(clazz)) {
-                return false;
-            }
+    public List<Label> getFeatureLabels() {
+        List<Label> result = new ArrayList<>();
+        for (String feature : getAnnotation(Features.class).value()) {
+            result.add(new Label().withName("feature").withValue(feature));
         }
-        return true;
+        return result;
     }
-
-    public boolean isBehaviorClass(Class<?> clazz) {
-        return clazz.isAnnotationPresent(StoryClass.class)
-                && clazz.getDeclaringClass().isAnnotationPresent(FeatureClass.class);
-    }
-
 
     public <T extends Annotation> boolean isAnnotationPresent(Class<T> annotationType) {
         for (Annotation each : annotations) {
