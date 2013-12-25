@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
- *         Date: 03.12.13
+ *         Date: 25.12.13
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
-public @interface Story {
-    Class<?>[] value();
+public @interface Features {
+    String[] value();
 }
