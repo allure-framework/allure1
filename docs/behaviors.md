@@ -2,7 +2,10 @@
 
 ## Behaviors
 
-Allure provides ability to create testing based on functional requirements. You can define requirements to your application and create tests which checks concrete functionality or user story. We provide behavior-driven development ([BDD]) terms for help your behaviors definition. Your user scenarios are grouped in stories, then stories are grouped in features.
+Allure provides ability to create testing based on functional requirements. You can define requirements to your
+application and create tests which checks concrete functionality or user story. We provide behavior-driven development
+([BDD]) terms for help your behaviors definition. Your user scenarios are grouped in stories, then stories are grouped
+in features.
 
 If you want work as BDD, you need:
 
