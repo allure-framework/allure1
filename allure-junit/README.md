@@ -1,5 +1,6 @@
 [allure-junit-pom-example]: https://github.com/allure-framework/allure-core/blob/master/docs/allure-junit-pom-example.md
 [steps-and-attachments]: https://github.com/allure-framework/allure-core/blob/master/docs/steps-and-attachments.md
+[behaviors]: https://github.com/allure-framework/allure-core/blob/master/docs/behaviors.md
 
 ## Allure JUnit integration module
 
@@ -138,3 +139,21 @@ public String saveLog(Logger logger) {
 ```
 
 Click [here][steps-and-attachments] to see more information about steps and attachments.
+
+### BDD
+
+Also you have ability to group your test by **features** and **stories** (BDD-like). Just annotate test
+sutie or test case with **@ru.yandex.qatools.allure.annotations.Fratures** or
+**@ru.yandex.qatools.allure.annotations.Stories** annotations%
+
+```java
+@Features("My Feature")
+@Stories("My Story)
+@Test
+public void a2Test() throws Exception {
+    step1();
+    step2();
+}
+```
+
+Click [here][behaviors] to see more information about behaviors.
