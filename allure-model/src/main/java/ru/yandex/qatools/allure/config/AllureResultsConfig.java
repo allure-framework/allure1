@@ -43,7 +43,7 @@ public class AllureResultsConfig {
     }
 
     public String getTestSuiteFileExtension() {
-        return testSuiteFileSuffix;
+        return testSuiteFileExtension;
     }
 
     public String getAttachmentFileRegex() {
