@@ -2,9 +2,7 @@ package ru.yandex.qatools.allure.utils;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.yandex.qatools.allure.annotations.FeatureClass;
 import ru.yandex.qatools.allure.annotations.Step;
-import ru.yandex.qatools.allure.annotations.StoryClass;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
 import ru.yandex.qatools.allure.model.Description;
@@ -45,8 +43,8 @@ public class AnnotationManagerTest {
     public void testIsAnnotationPresentMethods() throws Exception {
         assertTrue(annotationManager.isTitleAnnotationPresent());
         assertTrue(annotationManager.isSeverityAnnotationPresent());
-        assertTrue(annotationManager.isBehavior());
-        assertTrue(annotationManager.isStoryAnnotationPresent());
+        assertTrue(annotationManager.isStoriesAnnotationPresent());
+        assertTrue(annotationManager.isFeaturesAnnotationPresent());
         assertTrue(annotationManager.isDescriptionAnnotationPresent());
         assertFalse(annotationManager.isAnnotationPresent(Step.class));
     }
@@ -69,8 +67,21 @@ public class AnnotationManagerTest {
     }
 
     @Test
-    public void testBehaviorLabelsGetter() throws Exception {
-        checkLabels(annotationManager.getBehaviorLabels());
+    public void testStoryLabelsGetter() throws Exception {
+        List<Label> labels = annotationManager.getStoryLabels();
+        assertThat(labels, hasSize(1));
+        Label label = labels.get(0);
+        assertThat(label.getName(), is("story"));
+        assertThat(label.getValue(), is("some.story"));
+    }
+
+    @Test
+    public void testFeaturesLabelsGetter() throws Exception {
+        List<Label> labels = annotationManager.getFeatureLabels();
+        assertThat(labels, hasSize(1));
+        Label label = labels.get(0);
+        assertThat(label.getName(), is("feature"));
+        assertThat(label.getValue(), is("some.feature"));
     }
 
     @Test
@@ -106,13 +117,13 @@ public class AnnotationManagerTest {
 
     private void checkLabels(List<Label> labels) {
         assertThat(labels, hasSize(2));
-        assertThat(extract(labels, on(Label.class).getName()), contains(StoryClass.LABEL_NAME, FeatureClass.LABEL_NAME));
+        assertThat(extract(labels, on(Label.class).getName()), contains("story", "feature"));
 
         for (Label label : labels) {
-            if (label.getName().equals(StoryClass.LABEL_NAME)) {
+            if (label.getName().equals("story")) {
                 assertThat(label.getValue(), equalTo("some.story"));
             }
-            if (label.getName().equals(FeatureClass.LABEL_NAME)) {
+            if (label.getName().equals("feature")) {
                 assertThat(label.getValue(), equalTo("some.feature"));
             }
         }

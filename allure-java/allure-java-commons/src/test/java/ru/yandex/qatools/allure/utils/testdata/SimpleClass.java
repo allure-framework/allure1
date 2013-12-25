@@ -1,9 +1,6 @@
 package ru.yandex.qatools.allure.utils.testdata;
 
-import ru.yandex.qatools.allure.annotations.Description;
-import ru.yandex.qatools.allure.annotations.Severity;
-import ru.yandex.qatools.allure.annotations.Story;
-import ru.yandex.qatools.allure.annotations.Title;
+import ru.yandex.qatools.allure.annotations.*;
 import ru.yandex.qatools.allure.model.SeverityLevel;
 
 /**
@@ -16,7 +13,8 @@ public class SimpleClass {
     @Title("some.title")
     @Description("some.description")
     @Severity(SeverityLevel.BLOCKER)
-    @Story(Behaviors.MyFeature.MyStory.class)
+    @Features("some.feature")
+    @Stories("some.story")
     public void simpleMethod() {
     }
 }
