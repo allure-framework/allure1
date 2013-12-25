@@ -9,7 +9,9 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.IOException;
-import java.util.UUID;
+
+import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateAttachmentFileName;
+import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -19,12 +21,6 @@ import java.util.UUID;
 public final class AllureWriteUtils {
 
     private static final String FAQ = "https://github.com/allure-framework/allure-core/allure-core/blob/master/docs/FAQ.md";
-
-    private static final String XML = ".xml";
-
-    private static final String TEST_SUITE = "-testsuite";
-
-    private static final String ATTACHMENT = "-attachment";
 
     private static final File OUTPUT = new File("target/site/allure-maven-plugin/data");
 
@@ -60,11 +56,8 @@ public final class AllureWriteUtils {
         }
     }
 
-    public static String writeAttachment(Object attachment, AttachmentType type, String defaultSuffix) {
-        String suffix = type != AttachmentType.OTHER ? "." + type.toString().toLowerCase() : defaultSuffix;
-
-        String attachmentUid = UUID.randomUUID().toString();
-        String source = attachmentUid + ATTACHMENT + suffix;
+    public static String writeAttachment(Object attachment, AttachmentType type) {
+        String source = generateAttachmentFileName(type);
 
         if (OUTPUT.exists() || OUTPUT.mkdirs()) {
             copyAttachment(attachment, new File(OUTPUT, source));
@@ -75,7 +68,7 @@ public final class AllureWriteUtils {
     public static void marshal(TestSuiteResult testSuite) {
         marshal(
                 OUTPUT,
-                UUID.randomUUID().toString() + TEST_SUITE + XML,
+                generateTestSuiteFileName(),
                 new ObjectFactory().createTestSuite(testSuite)
         );
     }

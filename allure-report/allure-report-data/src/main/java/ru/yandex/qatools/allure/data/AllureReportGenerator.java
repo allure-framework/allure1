@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.listFiles;
+import static ru.yandex.qatools.allure.config.AllureNamingUtils.listAttachmentFiles;
 
 
 /**
@@ -16,8 +16,6 @@ import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.listFiles;
  *         Date: 31.10.13
  */
 public class AllureReportGenerator {
-
-    private static final String ATTACHMENTS_MASK = ".+-attachment\\.\\w+";
 
     private List<DataProvider> dataProviders = new ArrayList<>();
 
@@ -52,12 +50,8 @@ public class AllureReportGenerator {
         };
     }
 
-    public static File[] getAttachmentsFiles(File... dirs) {
-        return listFiles(dirs, ATTACHMENTS_MASK);
-    }
-
     public static void copyAttachments(File[] dirs, File outputDirectory) {
-        for (File attach : getAttachmentsFiles(dirs)) {
+        for (File attach : listAttachmentFiles(dirs)) {
             try {
                 copyAttachment(attach, new File(outputDirectory, attach.getName()));
             } catch (IOException e) {

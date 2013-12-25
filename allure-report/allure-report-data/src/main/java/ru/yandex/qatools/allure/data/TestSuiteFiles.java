@@ -1,11 +1,11 @@
 package ru.yandex.qatools.allure.data;
 
-import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
-
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.StringWriter;
+import java.util.Collection;
 
+import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
 import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
 
 
@@ -16,8 +16,6 @@ import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTr
 
 public class TestSuiteFiles {
 
-    public static final String TEST_SUITES_MASK = ".+-testsuite\\.xml";
-
     public static final String SUITES_TO_TEST_RUN_1_XSL = "xsl/suites-to-testrun-1.xsl";
 
     public static final String SUITES_TO_TEST_RUN_2_XSL = "xsl/suites-to-testrun-2.xsl";
@@ -27,14 +25,14 @@ public class TestSuiteFiles {
     private String suiteFiles;
 
     public TestSuiteFiles(File... dirs) {
-        File[] testSuitesFiles = AllureReportUtils.listFiles(dirs, TEST_SUITES_MASK);
+        Collection<File> testSuitesFiles = listTestSuiteFiles(dirs);
 
         ListFiles listFiles = createListFiles(testSuitesFiles);
         suiteFiles = listFilesToString(listFiles);
 
     }
 
-    private ListFiles createListFiles(File... files) {
+    private ListFiles createListFiles(Collection<File> files) {
         ListFiles listFiles = new ListFiles();
         for (File file : files) {
             listFiles.getFiles().add(file.toURI().toString());

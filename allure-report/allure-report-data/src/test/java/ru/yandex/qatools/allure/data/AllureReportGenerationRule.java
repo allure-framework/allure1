@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure.data;
 
-import org.apache.commons.io.filefilter.RegexFileFilter;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.rules.ExternalResource;
@@ -12,8 +11,11 @@ import java.util.List;
 import java.io.File;
 import java.net.URL;
 
+import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
+
 /**
- * Created by eroshenkoam on 12/10/13.
+ * @author Artem Eroshenko eroshenkoam@yandex-team.ru
+ *         Date: 12/10/13
  */
 public class AllureReportGenerationRule extends ExternalResource {
 
@@ -63,8 +65,8 @@ public class AllureReportGenerationRule extends ExternalResource {
     public List<TestSuiteResult> getTestSuiteResults() {
         if (testSuiteResults == null) {
             testSuiteResults = new ArrayList<>();
-            for (String path : resultsDir.list(new RegexFileFilter(TestSuiteFiles.TEST_SUITES_MASK))) {
-                testSuiteResults.add(JAXB.unmarshal(new File(resultsDir, path), TestSuiteResult.class));
+            for (File file : listTestSuiteFiles(resultsDir)) {
+                testSuiteResults.add(JAXB.unmarshal(file, TestSuiteResult.class));
             }
         }
         return testSuiteResults;
