@@ -13,7 +13,7 @@ import ru.yandex.qatools.properties.annotations.Resource;
 public class AllureModelConfig {
 
     @Property("allure.model.schema.file.name")
-    private String schemaFileName;
+    private String schemaFileName = "allure.xsd";
 
     public AllureModelConfig() {
         PropertyLoader.populate(this);

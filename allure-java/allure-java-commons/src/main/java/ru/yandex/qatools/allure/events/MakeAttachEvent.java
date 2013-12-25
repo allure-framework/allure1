@@ -24,8 +24,7 @@ public class MakeAttachEvent extends AbstractMakeAttachEvent {
 
         String source = writeAttachment(
                 getAttach(),
-                getAttachmentType(),
-                ".attach"
+                getAttachmentType()
         );
 
         attachment.setTitle(getTitle());
