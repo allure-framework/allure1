@@ -150,9 +150,8 @@ sutie or test case with **@ru.yandex.qatools.allure.annotations.Fratures** or
 @Features("My Feature")
 @Stories("My Story")
 @Test
-public void a2Test() throws Exception {
-    step1();
-    step2();
+public void myTest() {
+    myStep();
 }
 ```
 
