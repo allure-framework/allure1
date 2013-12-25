@@ -3,15 +3,77 @@
 
 ## Allure JUnit integration module
 
-To use **Allure** with **JUnit**, just add following code to your **pom.xml**:
+There are two ways to integrate JUnit tests with Allure
 
-``` xml
-<!--Allure version, needed here for allure-maven-plugin. It can be moved to parent pom.-->
+### Recommended way
+The first way, **RUNTIME**, *without using aspectj compiler and bytecode injections*,
+(don't work with AQUA framework for now) to use allure with **JUnit** and **Maven**.
+
+First of all add allure version property and dependency of **allure-junit-adaptor**:
+
+```xml
 <properties>
     <allure.version>1.2.2</allure.version>
 </properties>
 
-<!--This dependency is necessary for Allure JUnit plugin. It can be moved to parent pom.-->
+<dependency>
+    <groupId>ru.yandex.qatools.allure</groupId>
+    <artifactId>allure-junit-adaptor</artifactId>
+    <version>${allure.version}</version>
+</dependency>
+```
+
+then, add **maven surefire plugin** with next configuration:
+
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.16</version>
+    <configuration>
+        <argLine>
+            -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+        </argLine>
+        <properties>
+            <property>
+                <name>listener</name>
+                <value>ru.yandex.qatools.allure.junit.AllureRunListener</value>
+            </property>
+        </properties>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+    </dependencies>
+</plugin>
+```
+
+In the end u need to add **allure-report-plugin** to reporting section:
+
+```xml
+<reporting>
+    <excludeDefaults>true</excludeDefaults>
+    <plugins>
+        <plugin>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-maven-plugin</artifactId>
+            <version>${allure.version}</version>
+        </plugin>
+    </plugins>
+</reporting>
+```
+
+### Not recommended way
+Another way, **COMPILE**, with using aspectj compiler and bytecode injections:
+
+``` xml
+<properties>
+    <allure.version>1.2.2</allure.version>
+</properties>
+
 <dependencies>
     <dependency>
         <groupId>ru.yandex.qatools.allure</groupId>
@@ -20,7 +82,6 @@ To use **Allure** with **JUnit**, just add following code to your **pom.xml**:
     </dependency>
 </dependencies>
 
-<!--Allure JUnit plugin. It can be moved to parent pom. -->
 <build>
     <plugins>
         <plugin>
@@ -39,7 +100,6 @@ To use **Allure** with **JUnit**, just add following code to your **pom.xml**:
     </plugins>
 </build>
 
-<!--Allure Maven Plugin. It can be moved to parent pom-->
 <reporting>
     <excludeDefaults>true</excludeDefaults>
     <plugins>
