@@ -1,3 +1,6 @@
+[maven]: http://maven.apache.org
+[phantomjs]: http://phantomjs.org/
+
 ## Contributing and Developing
 
 ### JDK
@@ -10,11 +13,11 @@ The target runtime version is still 1.5 or above.
 
 ### Maven 
 
-[Maven](http://maven.apache.org) version required to build: 3.0 or above.
+[Maven][maven] version required to build: 3.0 or above.
 
 ### PhantomJS
 
-To run unit test you need to install [phantomjs](http://phantomjs.org/) 1.9 or above.
+To run unit test you need to install [phantomjs][phantomjs] 1.9 or above.
 
 ### Encoding
 
