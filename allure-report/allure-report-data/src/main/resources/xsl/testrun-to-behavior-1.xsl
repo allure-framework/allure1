@@ -40,7 +40,7 @@
         <xsl:apply-templates/>
     </xsl:template>
 
-    <xsl:template match="summary | failure | steps | attachments | labels"/>
+    <xsl:template match="summary | failure | steps | attachments | labels | description"/>
 
     <xsl:template match="@*|node()">
         <xsl:call-template name="copy-all-without-namespace"/>

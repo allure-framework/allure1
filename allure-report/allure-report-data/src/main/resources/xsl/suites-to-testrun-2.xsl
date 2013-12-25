@@ -54,6 +54,16 @@
         </xsl:element>
     </xsl:template>
 
+    <xsl:template match="test-case/labels">
+        <xsl:element name="labels">
+            <xsl:copy-of select="child::*"/>
+            <xsl:call-template name="copy-suite-labels-to-test-case"/>
+
+            <xsl:call-template name="add-without-feature-label-if-needed"/>
+            <xsl:call-template name="add-without-story-label-if-needed"/>
+        </xsl:element>
+    </xsl:template>
+
     <xsl:template name="add-time-node-for-test-run">
         <xsl:choose>
             <xsl:when test="count(//test-suite)=0">
@@ -143,6 +153,28 @@
                 <xsl:value-of select="count(.//step)"/>
             </xsl:attribute>
         </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="copy-suite-labels-to-test-case">
+        <xsl:copy-of select="../../../labels/*"/>
+    </xsl:template>
+
+    <xsl:template name="add-without-feature-label-if-needed">
+        <xsl:if test="(count(label[@name='feature']) = 0) and (count(../../../labels/label[@name='feature']) = 0)">
+            <xsl:element name="label">
+                <xsl:attribute name="name" select="'feature'"/>
+                <xsl:attribute name="value" select="'Without feature'"/>
+            </xsl:element>
+        </xsl:if>
+    </xsl:template>
+
+    <xsl:template name="add-without-story-label-if-needed">
+        <xsl:if test="(count(label[@name='story']) = 0) and (count(../../../labels/label[@name='story']) = 0)">
+            <xsl:element name="label">
+                <xsl:attribute name="name" select="'story'"/>
+                <xsl:attribute name="value" select="'Without story'"/>
+            </xsl:element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="add-title-node">
