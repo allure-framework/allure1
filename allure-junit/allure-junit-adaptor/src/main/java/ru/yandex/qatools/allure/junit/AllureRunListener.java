@@ -23,7 +23,7 @@ public class AllureRunListener extends RunListener {
     private static final Map<String, String> SUITES = new HashMap<>();
 
     @Override
-    public void testStarted(Description description) throws Exception {
+    public void testStarted(Description description) {
         String suiteUid = getSuiteUid(description);
 
         TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, description.getMethodName());
@@ -35,12 +35,12 @@ public class AllureRunListener extends RunListener {
     }
 
     @Override
-    public void testFinished(Description description) throws Exception {
+    public void testFinished(Description description) {
         Allure.LIFECYCLE.fire(new TestCaseFinishedEvent());
     }
 
     @Override
-    public void testFailure(Failure failure) throws Exception {
+    public void testFailure(Failure failure) {
         Allure.LIFECYCLE.fire(new TestCaseFailureEvent().withThrowable(failure.getException()));
     }
 
@@ -50,7 +50,7 @@ public class AllureRunListener extends RunListener {
     }
 
     @Override
-    public void testIgnored(Description description) throws Exception {
+    public void testIgnored(Description description) {
         //if test class annotated with @Ignored
         if (description.getMethodName() == null) {
             return;
@@ -62,7 +62,7 @@ public class AllureRunListener extends RunListener {
     }
 
     @Override
-    public void testRunFinished(Result result) throws Exception {
+    public void testRunFinished(Result result) {
         for (String uid : SUITES.values()) {
             testSuiteFinished(uid);
         }
