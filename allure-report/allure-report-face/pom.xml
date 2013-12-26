@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -75,29 +76,22 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
+                <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>unpack</id>
-                        <phase>compile</phase>
+                        <id>copy-allure-model-test-resources</id>
+                        <phase>process-test-resources</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>ru.yandex.qatools.allure</groupId>
-                                    <artifactId>allure-model</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>test-jar</type>
-                                    <excludes>META-INF/**,ru/**</excludes>
-                                    <outputDirectory>
-                                        ${project.build.directory}
-                                    </outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/../../allure-model/src/test/resources/</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
@@ -125,7 +119,7 @@
                         <goals>
                             <goal>site</goal>
                         </goals>
-                        <phase>compile</phase>
+                        <phase>process-test-resources</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -139,22 +133,22 @@
                         <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                             <contextPath>/main</contextPath>
                             <resourceBase>src/main/webapp</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
                         <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                             <contextPath>/main/data</contextPath>
                             <resourceBase>target/allure-report/data/</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
                         <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                             <contextPath>/test</contextPath>
                             <resourceBase>src/test/webapp/e2e/</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
                         <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                             <contextPath>/test/vendor</contextPath>
                             <resourceBase>src/test/webapp/vendor</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
                     </contextHandlers>
                 </configuration>

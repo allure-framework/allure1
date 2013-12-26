@@ -50,29 +50,22 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
+                <artifactId>maven-resources-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>unpack</id>
-                        <phase>test-compile</phase>
+                        <id>copy-allure-model-test-resources</id>
+                        <phase>process-test-resources</phase>
                         <goals>
-                            <goal>unpack</goal>
+                            <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>ru.yandex.qatools.allure</groupId>
-                                    <artifactId>allure-model</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>test-jar</type>
-                                    <excludes>**\/*.class, META-INF</excludes>
-                                    <outputDirectory>
-                                        ${project.build.testOutputDirectory}
-                                    </outputDirectory>
-                                </artifactItem>
-                            </artifactItems>
+                            <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}/../../allure-model/src/test/resources/</directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
                         </configuration>
                     </execution>
                 </executions>
