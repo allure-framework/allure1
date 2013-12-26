@@ -20,7 +20,7 @@ public class AllureRunListener extends RunListener {
 
     private Allure lifecycle = Allure.LIFECYCLE;
 
-    private static final Map<String, String> suites = new HashMap<>();
+    private static final Map<String, String> SUITES = new HashMap<>();
 
     @Override
     public void testStarted(Description description) throws Exception {
@@ -63,7 +63,7 @@ public class AllureRunListener extends RunListener {
 
     @Override
     public void testRunFinished(Result result) throws Exception {
-        for (String uid : suites.values()) {
+        for (String uid : SUITES.values()) {
             testSuiteFinished(uid);
         }
     }
@@ -85,13 +85,13 @@ public class AllureRunListener extends RunListener {
     private String getSuiteUid(Description description) {
         String suiteName = description.getClassName();
         Collection<Annotation> annotations = Arrays.asList(description.getTestClass().getAnnotations());
-        if (!suites.containsKey(suiteName)) {
+        if (!SUITES.containsKey(suiteName)) {
             String uid = UUID.randomUUID().toString();
             testSuiteStarted(uid, suiteName, annotations);
-            suites.put(suiteName, uid);
+            SUITES.put(suiteName, uid);
             return uid;
         }
-        return suites.get(suiteName);
+        return SUITES.get(suiteName);
     }
 
     public Allure getLifecycle() {
