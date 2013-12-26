@@ -4,8 +4,7 @@ import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.data.providers.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.listAttachmentFiles;
@@ -17,13 +16,12 @@ import static ru.yandex.qatools.allure.config.AllureNamingUtils.listAttachmentFi
  */
 public class AllureReportGenerator {
 
-    private List<DataProvider> dataProviders = new ArrayList<>();
+    private List<DataProvider> dataProviders = Arrays.asList(defaultProviders());
 
     protected File[] inputDirectories;
 
     public AllureReportGenerator(File... inputDirectories) {
         this.inputDirectories = inputDirectories;
-        registerDataProviders(defaultProviders());
     }
 
     public void generate(File outputDirectory) {
@@ -35,10 +33,6 @@ public class AllureReportGenerator {
             provider.provide(testRun, outputDirectory);
         }
 
-    }
-
-    public void registerDataProviders(DataProvider... ts) {
-        Collections.addAll(dataProviders, ts);
     }
 
     public static DataProvider[] defaultProviders() {
