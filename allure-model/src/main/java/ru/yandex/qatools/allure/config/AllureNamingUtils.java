@@ -17,12 +17,14 @@ import java.util.UUID;
  */
 public class AllureNamingUtils {
 
+    public static final String FILE_NAME_PATTER = "%s-%s.%s";
+
     private AllureNamingUtils() {
     }
 
     public static String generateTestSuiteFileName(String name) {
         AllureResultsConfig config = AllureResultsConfig.newInstance();
-        return String.format("%s-%s.%s",
+        return String.format(FILE_NAME_PATTER,
                 name,
                 config.getTestSuiteFileSuffix(),
                 config.getTestSuiteFileExtension());
@@ -41,7 +43,7 @@ public class AllureNamingUtils {
 
     public static String generateAttachmentFileName(String name, AttachmentType type) {
         AllureResultsConfig config = AllureResultsConfig.newInstance();
-        return String.format("%s-%s.%s",
+        return String.format(FILE_NAME_PATTER,
                 name,
                 config.getAttachmentFileSuffix(),
                 type.toString().toLowerCase());
