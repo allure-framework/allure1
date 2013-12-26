@@ -121,10 +121,12 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
         sink.lineBreak();
 
+        String directoryIOErrorMessageTemplate = "Problem communicate with directory <%s>. [exists:%s,write:%s]";
+
         getLog().info(String.format("Analyse allure report directory <%s>", reportDirectory));
 
         if (!((reportDirectory.exists() || reportDirectory.mkdirs()) && reportDirectory.canWrite())) {
-            String error = String.format("Problem communicate with directory <%s>. [exists:%s,write:%s]",
+            String error = String.format(directoryIOErrorMessageTemplate,
                     reportDirectory.getAbsolutePath(),
                     reportDirectory.exists(),
                     reportDirectory.canWrite());
@@ -139,7 +141,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
         getLog().info(String.format("Analyse allure report data directory <%s>", reportDataDirectory));
         if (!((reportDataDirectory.exists() || reportDataDirectory.mkdirs()) && reportDataDirectory.canWrite())) {
-            String error = String.format("Problem communicate with directory <%s>. [exists:%s,write:%s]",
+            String error = String.format(directoryIOErrorMessageTemplate,
                     reportDataDirectory.getAbsolutePath(),
                     reportDataDirectory.exists(),
                     reportDataDirectory.canWrite());
