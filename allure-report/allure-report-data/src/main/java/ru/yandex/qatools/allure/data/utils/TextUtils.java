@@ -22,7 +22,7 @@ public final class TextUtils {
 
     private static final Integer RADIX = 16;
 
-    public static String generateUid(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public static String generateUid(String s) throws Exception {
         MessageDigest md = MessageDigest.getInstance(ALGORITHM);
         md.update(s.getBytes(CHARSET));
         return new BigInteger(1, md.digest()).toString(RADIX);

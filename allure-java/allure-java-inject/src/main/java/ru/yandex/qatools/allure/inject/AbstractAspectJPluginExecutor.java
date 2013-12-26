@@ -18,9 +18,11 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
  */
 public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
 
-    protected static final String ASPECT_GROUP_ID = "ru.yandex.qatools.allure";
+    protected static final String ALLURE_GROUP_ID = "ru.yandex.qatools.allure";
 
-    protected static final String ASPECT_ARTIFACT_ID = "allure-java-aspects";
+    protected static final String ALLURE_JAVA_ASPECTS_ARTIFACT_ID = "allure-java-aspects";
+
+    protected static final String ASPECTJ_GROUP_ID = "org.aspectj";
 
     @Parameter(defaultValue = "1.7")
     protected String javaVersion;
@@ -41,16 +43,15 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
 
 
     protected Artifact getAspectsArtifact() {
-        return getArtifact(ASPECT_GROUP_ID, ASPECT_ARTIFACT_ID, adaptorVersion, "jar");
+        return getArtifact(ALLURE_GROUP_ID, ALLURE_JAVA_ASPECTS_ARTIFACT_ID, adaptorVersion, "jar");
     }
 
     protected List<Artifact> getRequestedDependencyArtifacts() {
         ArrayList<Artifact> artifacts = new ArrayList<>();
-        artifacts.add(getArtifact("org.aspectj", "aspectjrt", aspectJVersion, "jar"));
+        artifacts.add(getArtifact(ASPECTJ_GROUP_ID, "aspectjrt", aspectJVersion, "jar"));
         artifacts.add(getArtifact("org.modeshape", "modeshape-common", "3.2.0.Final", "jar"));
         return artifacts;
     }
-
 
 
     protected Plugin getAspectJPlugin() {
@@ -59,7 +60,7 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
                 "aspectj-maven-plugin",
                 "1.4",
                 dependencies(
-                        dependency("org.aspectj", "aspectjtools", aspectJVersion)
+                        dependency(ASPECTJ_GROUP_ID, "aspectjtools", aspectJVersion)
                 )
         );
     }
@@ -71,8 +72,8 @@ public abstract class AbstractAspectJPluginExecutor extends AbstractPlugin {
                 element("complianceLevel", javaVersion),
                 element("aspectLibraries",
                         element("aspectLibrary",
-                                element("groupId", ASPECT_GROUP_ID),
-                                element("artifactId", ASPECT_ARTIFACT_ID)
+                                element("groupId", ALLURE_GROUP_ID),
+                                element("artifactId", ALLURE_JAVA_ASPECTS_ARTIFACT_ID)
                         )
                 )
         );
