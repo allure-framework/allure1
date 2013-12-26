@@ -25,6 +25,14 @@ import static org.objectweb.asm.Type.getInternalName;
 @SuppressWarnings("unchecked")
 public class JUnitRulesInjector extends Injector {
 
+    public static final String CLASS_INIT_SIGNATURE = "<clinit>";
+
+    public static final String METHOD_INIT_SIGNATURE = "<init>";
+
+    public static final String VOID_RETURN_TYPE = "()V";
+
+    public static final String ONE_ARGUMENT_SIGNATURE = "(%s)V";
+
     public static final String TEST_SUITE_RULE_FIELD_NAME =
             "ccda659af08708ef640aba172c7a527d1d5bd2137456933c96a80e8b1ff3b797";
     public static final String TEST_CASE_RULE_FIELD_NAME =
@@ -42,17 +50,17 @@ public class JUnitRulesInjector extends Injector {
         boolean staticConstructorPresent = false;
 
         for (MethodNode mn : (List<MethodNode>) cn.methods) {
-            if ("<clinit>".equals(mn.name) && mn.instructions.size() > 0) {
+            if (CLASS_INIT_SIGNATURE.equals(mn.name) && mn.instructions.size() > 0) {
                 initTestSuiteReportRule(cn.name, mn);
                 staticConstructorPresent = true;
             }
-            if ("<init>".equals(mn.name) && mn.instructions.size() > 0) {
+            if (METHOD_INIT_SIGNATURE.equals(mn.name) && mn.instructions.size() > 0) {
                 initTestCaseReportRule(cn.name, mn);
             }
         }
 
         if (!staticConstructorPresent) {
-            MethodNode mn = new MethodNode(ACC_STATIC, "<clinit>", "()V", null, null);
+            MethodNode mn = new MethodNode(ACC_STATIC, CLASS_INIT_SIGNATURE, VOID_RETURN_TYPE, null, null);
             mn.maxStack = 4;
             mn.maxLocals = 1;
             mn.instructions = new InsnList();
@@ -114,7 +122,8 @@ public class JUnitRulesInjector extends Injector {
         InsnList il = new InsnList();
         il.add(new TypeInsnNode(NEW, getInternalName(TestSuiteReportRule.class)));
         il.add(new InsnNode(DUP));
-        il.add(new MethodInsnNode(INVOKESPECIAL, getInternalName(TestSuiteReportRule.class), "<init>", "()V"));
+        il.add(new MethodInsnNode(INVOKESPECIAL, getInternalName(TestSuiteReportRule.class),
+                METHOD_INIT_SIGNATURE, VOID_RETURN_TYPE));
         il.add(new FieldInsnNode(PUTSTATIC, owner, TEST_SUITE_RULE_FIELD_NAME, TEST_SUITE_RULE_DESC));
         return il;
     }
@@ -125,8 +134,8 @@ public class JUnitRulesInjector extends Injector {
         il.add(new TypeInsnNode(NEW, getInternalName(TestCaseReportRule.class)));
         il.add(new InsnNode(DUP));
         il.add(new FieldInsnNode(GETSTATIC, owner, TEST_SUITE_RULE_FIELD_NAME, TEST_SUITE_RULE_DESC));
-        il.add(new MethodInsnNode(INVOKESPECIAL, getInternalName(TestCaseReportRule.class), "<init>",
-                String.format("(%s)V", TEST_SUITE_RULE_DESC)));
+        il.add(new MethodInsnNode(INVOKESPECIAL, getInternalName(TestCaseReportRule.class),
+                METHOD_INIT_SIGNATURE, String.format(ONE_ARGUMENT_SIGNATURE, TEST_SUITE_RULE_DESC)));
         il.add(new FieldInsnNode(PUTFIELD, owner, TEST_CASE_RULE_FIELD_NAME, TEST_CASE_RULE_DESC));
         return il;
     }
