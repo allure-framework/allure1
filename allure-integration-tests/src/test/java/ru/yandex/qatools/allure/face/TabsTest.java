@@ -25,7 +25,7 @@ public class TabsTest {
     @Before
     public void openBrowser() throws Exception {
         String port = System.getProperty("jetty.port");
-        String url = String.format("http://localhost:%s/main", port);
+        String url = String.format("http://localhost:%s/main/", port);
         driver.get(url);
         WebDriverWait wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".tab-content")));
