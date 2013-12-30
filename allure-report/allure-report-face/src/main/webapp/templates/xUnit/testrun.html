@@ -14,6 +14,24 @@
     <h4>Test Suites</h4>
     <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
         <tbody>
+        <tr class="total-row">
+            <td class="line-ellipsis">
+                <b>Total {{testsuites.length}} suites <span ng-hide="testsuites.length == (testsuites | filter:statusFilter).length">({{(testsuites | filter:statusFilter).length}} shown)</span></b>
+            </td>
+            <td class="line-nobreak">{{time.duration | time}}</td>
+            <td class="text-center">
+                <span class="label label-default" ng-show="statistic.skipped > 0">{{statistic.skipped}}</span>
+            </td>
+            <td class="text-center">
+                <span class="label label-warning" ng-show="statistic.broken > 0">{{statistic.broken}}</span>
+            </td>
+            <td class="text-center">
+                <span class="label label-danger" ng-show="statistic.failed > 0">{{statistic.failed}}</span>
+            </td>
+            <td class="text-center">
+                {{statistic.total}}
+            </td>
+        </tr>
         <tr ng-repeat="testsuite in testsuites | filter:statusFilter | orderBy:sorting.predicate:sorting.reverse"
             class="testsuite-row clickable"
             ng-class="{'active':testsuite == $parent.testsuite}" ng-click="setTestsuite(testsuite.uid)">
@@ -34,24 +52,6 @@
             </td>
             <td allure-table-col="{heading: 'Total', predicate: 'statistic.total', class:'text-center', reverse: true}" class="text-center">
                 {{testsuite.statistic.total}}
-            </td>
-        </tr>
-        <tr class="total-row">
-            <td class="line-ellipsis">
-                <b>Total {{testsuites.length}} suites <span ng-hide="testsuites.length == (testsuites | filter:statusFilter).length">({{(testsuites | filter:statusFilter).length}} shown)</span></b>
-            </td>
-            <td class="line-nobreak">{{time.duration | time}}</td>
-            <td class="text-center">
-                <span class="label label-default" ng-show="statistic.skipped > 0">{{statistic.skipped}}</span>
-            </td>
-            <td class="text-center">
-                <span class="label label-warning" ng-show="statistic.broken > 0">{{statistic.broken}}</span>
-            </td>
-            <td class="text-center">
-                <span class="label label-danger" ng-show="statistic.failed > 0">{{statistic.failed}}</span>
-            </td>
-            <td class="text-center">
-                {{statistic.total}}
             </td>
         </tr>
         </tbody>

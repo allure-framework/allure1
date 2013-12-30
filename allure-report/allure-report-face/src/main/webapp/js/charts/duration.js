@@ -37,7 +37,7 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
         svg.selectAll('.x-axis-group.axis, .chart-group').attr({transform: 'translate(0,' + (height) + ')'});
 
         var container = svg.select('.container-group'),
-            median = d3.median(bins, function(d) {return d.y;}),
+            median = y(d3.median(bins, function(d) {return d.y;})),
             bars = container.selectAll(".bar").data(bins).enter().append('rect').classed('bar fill-default', true);
 
         bars.attr({

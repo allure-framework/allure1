@@ -68,7 +68,7 @@ angular.module('allure.features', [])
     $scope.summaryText = [
         'Everything is very bad!',
         'There are many errors!',
-        'Some test are not passed',
+        'Some tests are not passed',
         'All done. Good job!'
     ][Math.floor($scope.chartData[0].part*3)];
     $scope.testcase = {};
