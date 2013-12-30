@@ -2,9 +2,8 @@
   position: absolute;
   width: 0%;
   left: 100%;
-  padding: 0 15px;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   background: #fff;
   z-index: 1;
   transition-property: width, left;
@@ -13,12 +12,18 @@
   &.ng-enter:not(.ng-enter-active), &.ng-leave-active {
     left: 100% !important;
   }
-  .pane_overlay {
+  .pane_content, .pane_overlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+  }
+  .pane_content {
+    padding: 0 15px;
+    overflow: auto;
+  }
+  .pane_overlay {
     z-index: 1;
     display: none;
     &:hover {
