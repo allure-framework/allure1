@@ -33,7 +33,7 @@
         <div class="pane_content">
             <div class="features__title b-island__title">Info</div>
             <h3 class="pane__header">There are {{allStories.length}} stories, {{unstableStories.length}} unstable</h3>
-            <ul class="list-unstyled">
+            <ul class="list-unstyled stories">
                 <li class="item" ng-repeat="story in unstableStories" ng-click="setStory(story)">
                     {{story.title}}
                     <div class="progress percents pull-right">
