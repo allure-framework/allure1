@@ -11,10 +11,10 @@
     }
   }
   .item {
+    cursor: pointer;
     position: relative;
     padding: 10px;
     border: 1px solid #c2c2c2;
-    margin-top: 10px;
     &:hover {
       background: #eee;
     }
@@ -30,6 +30,9 @@
     }
     &__subitems {
       margin-left: 40px;
+      .item {
+        border-width: 0 1px 1px 1px;
+      }
     }
     &__icon {
       display: inline-block;
@@ -47,6 +50,15 @@
   }
 }
 
+.stories {
+  .item {
+    border-width: 0 1px 1px 1px;
+    &:first-child {
+      border-top-width: 1px;
+    }
+  }
+}
+
 .feature {
-  margin: 20px 0 20px 20px;
+  margin: 10px 0 10px 20px;
 }
