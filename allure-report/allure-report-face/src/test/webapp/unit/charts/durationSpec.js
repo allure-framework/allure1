@@ -1,13 +1,9 @@
 /*global describe:true, it:true, beforeEach:true, afterEach:true, expect:true, spyOn:true, module:true, inject:true, angular:true, jasmine:true */
-describe('SeverityMap', function () {
+describe('DurationChart', function () {
     'use strict';
-    var scope, elem, filterSpy;
+    var scope, elem;
 
-    beforeEach(module('allure.charts.duration', function($filterProvider) {
-        $filterProvider.register('time', function() {
-            return filterSpy = jasmine.createSpy('filterSpy').andCallFake(angular.identity);
-        });
-    }));
+    beforeEach(module('allure.charts.duration'));
     jasmine.qatools.mockD3Tooltip();
 
     var defaultData = {data: [
@@ -44,17 +40,12 @@ describe('SeverityMap', function () {
         expect(elem.find('.bar').map(extractData).toArray()).toEqual([2, 0, 0, 0, 0, 0, 2, 0, 2]);
     });
 
-    it('should format ticks using time filter', function() {
-        createElement('<div duration data="data"></div>');
-        expect(filterSpy).toHaveBeenCalled();
-    });
-
     it('should create diagram only with zero durations', function() {
         createElement('<div duration data="data"></div>', { data: [
             {status: 'SKIPPED', time: {duration:0}},
             {status: 'SKIPPED', time: {duration:0}}
         ]});
-        expect(elem.find('.bar').map(extractData).toArray()).toEqual([2, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+        expect(elem.find('.bar').map(extractData).toArray()).toEqual([2]);
     });
 
     afterEach(function() {

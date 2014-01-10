@@ -1,5 +1,5 @@
 /* globals angular */
-angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip, timeFilter) {
+angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip) {
     function timeFormat() {
         var formats = [
             [d3.time.format("%d"), function(d) { return d.getUTCDay() && d.getUTCDate() != 1; }],
