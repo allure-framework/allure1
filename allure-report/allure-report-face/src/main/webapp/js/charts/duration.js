@@ -1,5 +1,22 @@
 /* globals angular */
 angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip, timeFilter) {
+    function timeFormat() {
+        var formats = [
+            [d3.time.format("%d"), function(d) { return d.getUTCDay() && d.getUTCDate() != 1; }],
+            [d3.time.format("%I:%M"), function(d) { return d.getUTCHours(); }],
+            [d3.time.format("%Mm"), function(d) { return d.getUTCMinutes(); }],
+            [d3.time.format("%-Ss"), function(d) { return d.getUTCSeconds(); }],
+            [d3.time.format("%Lms"), function(d) { return d.getUTCMilliseconds(); }]
+        ];
+        return function(date) {
+            if(date.valueOf() === 0) {
+                return "0";
+            }
+            var i = formats.length - 1, f = formats[i];
+            while (!f[1](date)) f = formats[--i];
+            return f[0](date);
+        }
+    }
     function DurationBars(element, data) {
         var width = angular.element(element).width()/2.2,
             height = width*0.6,
@@ -8,12 +25,11 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
                 height: height,
                 margin: {left: 60, bottom: 30}
             }),
-            x = d3.scale.linear().range([0, width]),
+            x = d3.time.scale.utc().range([0, width]),
             y = d3.scale.sqrt().range([height, 0 ], 1),
             bins;
 
-        var maxDuration = Math.max(d3.max(data, function(d) {return d.time.duration;}), 1);
-        x.domain([0, maxDuration]).nice();
+        x.domain([0, Math.max(d3.max(data, function(d) {return d.time.duration;}), 1)]);
         bins = d3.layout.histogram().value(function(d) {
             return d.time.duration;
         }).bins(x.ticks())(data).map(function(bin) {
@@ -27,9 +43,7 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
         y.domain([0, d3.max(bins, function(d) {return d.y;})]).nice();
 
         svg.select('.x-axis-group.axis').call(
-            d3.svg.axis().scale(x).orient('bottom').tickFormat(function(d) {
-                return timeFilter(d);
-            })
+            d3.svg.axis().scale(x).orient('bottom').tickFormat(timeFormat())
         );
         svg.select('.y-axis-group.axis').call(
             d3.svg.axis().scale(y).orient('left')
