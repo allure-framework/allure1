@@ -100,7 +100,7 @@ angular.module('allure.charts.util', [],function ($provide) {
             Legend: Legend
         };
     })
-    .factory('d3Tooltip', function(d3, $document, $compile, $rootScope) {
+    .factory('d3Tooltip', function(d3, $window, $document, $compile, $rootScope) {
         'use strict';
         function setContentAndCompile(element, template, values) {
             var scope = $rootScope.$new();
@@ -112,6 +112,7 @@ angular.module('allure.charts.util', [],function ($provide) {
         function Tooltip(elements, format, overrides) {
             angular.extend(this, overrides);
             this.tooltip = d3.select($document.find("body")[0]).append("div").attr("class", this.tooltipCls).style("opacity", 0);
+            this.$tooltip = angular.element(this.tooltip.node());
             this.format = format;
             elements.on('mouseover.tooltip', this.onMouseOver.bind(this))
                 .on("mouseout.tooltip", this.onMouseOut.bind(this));
@@ -129,6 +130,8 @@ angular.module('allure.charts.util', [],function ($provide) {
         Tooltip.prototype.show = function(data, x, y) {
             this.tooltip.style("opacity", 0.9);
             setContentAndCompile(this.tooltip, this.format, data);
+            x = Math.min(x, $window.innerWidth-this.$tooltip.outerWidth());
+            y = Math.min(y, $window.innerHeight-this.$tooltip.outerHeight());
             this.tooltip.style("left", x + "px")
                 .style("top", y + "px");
         };
