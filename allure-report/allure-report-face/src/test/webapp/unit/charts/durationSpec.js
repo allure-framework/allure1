@@ -1,9 +1,13 @@
 /*global describe:true, it:true, beforeEach:true, afterEach:true, expect:true, spyOn:true, module:true, inject:true, angular:true, jasmine:true */
 describe('DurationChart', function () {
     'use strict';
-    var scope, elem;
+    var scope, elem, filterSpy;
 
-    beforeEach(module('allure.charts.duration'));
+    beforeEach(module('allure.charts.duration', function($filterProvider) {
+        $filterProvider.register('d3time', function() {
+            return filterSpy = jasmine.createSpy('filterSpy').andCallFake(angular.identity);
+        });
+    }));
     jasmine.qatools.mockD3Tooltip();
 
     var defaultData = {data: [
@@ -38,6 +42,11 @@ describe('DurationChart', function () {
     it('should create graph and distribute testcases in intervals', function() {
         createElement('<div duration data="data"></div>');
         expect(elem.find('.bar').map(extractData).toArray()).toEqual([2, 0, 0, 0, 0, 0, 2, 0, 2]);
+    });
+
+    it('should format ticks using time filter', function() {
+        createElement('<div duration data="data"></div>');
+        expect(filterSpy).toHaveBeenCalled();
     });
 
     it('should create diagram only with zero durations', function() {

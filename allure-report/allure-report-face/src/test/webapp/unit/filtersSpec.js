@@ -14,6 +14,20 @@ describe('filter', function () {
         }));
     });
 
+    describe('d3time', function() {
+        it('should print only last time unit', inject(function(d3timeFilter) {
+            expect(d3timeFilter(new Date(0))).toBe('0');
+            expect(d3timeFilter(new Date(300))).toBe('300ms');
+            expect(d3timeFilter(new Date(1000+300))).toBe('300ms');
+            expect(d3timeFilter(new Date(1000))).toBe('1s');
+            expect(d3timeFilter(new Date(61*1000))).toBe('1s');
+            expect(d3timeFilter(new Date(60*1000))).toBe('1m');
+            expect(d3timeFilter(new Date(60*60*1000))).toBe('1h');
+            expect(d3timeFilter(new Date(25*60*60*1000))).toBe('25h');
+            expect(d3timeFilter(new Date(25*60*60*1000+1))).toBe('1ms');
+        }))
+    });
+
     describe('time', function() {
         it('should format time', inject(function(timeFilter) {
             expect(timeFilter(false)).toBe('0');

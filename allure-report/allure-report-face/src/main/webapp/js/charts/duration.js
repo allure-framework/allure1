@@ -1,22 +1,5 @@
 /* globals angular */
-angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip) {
-    function timeFormat() {
-        var formats = [
-            [d3.time.format("%d"), function(d) { return d.getUTCDay() && d.getUTCDate() != 1; }],
-            [d3.time.format("%I:%M"), function(d) { return d.getUTCHours(); }],
-            [d3.time.format("%Mm"), function(d) { return d.getUTCMinutes(); }],
-            [d3.time.format("%-Ss"), function(d) { return d.getUTCSeconds(); }],
-            [d3.time.format("%Lms"), function(d) { return d.getUTCMilliseconds(); }]
-        ];
-        return function(date) {
-            if(date.valueOf() === 0) {
-                return "0";
-            }
-            var i = formats.length - 1, f = formats[i];
-            while (!f[1](date)) f = formats[--i];
-            return f[0](date);
-        }
-    }
+angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip, d3timeFilter) {
     function DurationBars(element, data) {
         var width = angular.element(element).width()/2.2,
             height = width*0.6,
@@ -43,7 +26,7 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
         y.domain([0, d3.max(bins, function(d) {return d.y;})]).nice();
 
         svg.select('.x-axis-group.axis').call(
-            d3.svg.axis().scale(x).orient('bottom').tickFormat(timeFormat())
+            d3.svg.axis().scale(x).orient('bottom').tickFormat(d3timeFilter)
         );
         svg.select('.y-axis-group.axis').call(
             d3.svg.axis().scale(y).orient('left')
