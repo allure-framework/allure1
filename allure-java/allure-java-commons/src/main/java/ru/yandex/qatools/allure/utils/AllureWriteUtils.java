@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.utils;
 
 import org.apache.commons.io.FileUtils;
+import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.exceptions.AllureException;
 import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.ObjectFactory;
@@ -22,7 +23,8 @@ public final class AllureWriteUtils {
 
     private static final String FAQ = "https://github.com/allure-framework/allure-core/allure-core/blob/master/docs/FAQ.md";
 
-    private static final File OUTPUT = new File("target/site/allure-maven-plugin/data");
+    //TODO think about this
+    private static final File OUTPUT = new File("target/" + AllureResultsConfig.newInstance().getDirectoryPath() + "/data");
 
     private AllureWriteUtils() {
         throw new IllegalStateException();

@@ -24,6 +24,7 @@ public class AllureRunListener extends RunListener {
 
     @Override
     public void testStarted(Description description) {
+        System.out.println("testStarted");
         String suiteUid = getSuiteUid(description);
 
         TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, description.getMethodName());
@@ -36,21 +37,25 @@ public class AllureRunListener extends RunListener {
 
     @Override
     public void testFinished(Description description) {
+        System.out.println("testFinished");
         Allure.LIFECYCLE.fire(new TestCaseFinishedEvent());
     }
 
     @Override
     public void testFailure(Failure failure) {
+        System.out.println("testFailure");
         Allure.LIFECYCLE.fire(new TestCaseFailureEvent().withThrowable(failure.getException()));
     }
 
     @Override
     public void testAssumptionFailure(Failure failure) {
+        System.out.println("testAssumptionFailure");
         Allure.LIFECYCLE.fire(new TestCaseSkippedEvent().withThrowable(failure.getException()));
     }
 
     @Override
     public void testIgnored(Description description) {
+        System.out.println("testIgnored");
         //if test class annotated with @Ignored
         if (description.getMethodName() == null) {
             return;
@@ -63,12 +68,14 @@ public class AllureRunListener extends RunListener {
 
     @Override
     public void testRunFinished(Result result) {
+        System.out.println("testRunFinished");
         for (String uid : SUITES.values()) {
             testSuiteFinished(uid);
         }
     }
 
     public void testSuiteStarted(String uid, String suiteName, Collection<Annotation> annotations) {
+        System.out.println("testSuiteStarted");
         TestSuiteStartedEvent event = new TestSuiteStartedEvent(uid, suiteName);
         AnnotationManager am = new AnnotationManager(annotations);
 
@@ -78,6 +85,7 @@ public class AllureRunListener extends RunListener {
     }
 
     public void testSuiteFinished(String uid) {
+        System.out.println("testSuiteFinished");
         Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(uid));
     }
 

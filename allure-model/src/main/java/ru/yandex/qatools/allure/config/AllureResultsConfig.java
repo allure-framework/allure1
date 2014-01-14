@@ -28,7 +28,7 @@ public class AllureResultsConfig {
     private String attachmentFileSuffix = "attachment";
 
     @Property("allure.results.directory.path")
-    private String directoryPath = "allure-results";
+    private String directoryPath = "site/allure-maven-plugin";
 
     public AllureResultsConfig() {
         PropertyLoader.populate(this);
