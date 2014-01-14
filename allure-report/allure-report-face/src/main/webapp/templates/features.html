@@ -1,21 +1,40 @@
 <div class="features b-island tab-content-fill" pane-set ng-show="features.length">
     <div class="pane_col features__list" pane>
         <div class="pane_overlay clickable" ui-sref="features.story"></div>
-        <div class="features__title b-island__title">Functional requirements</div>
-        <h3 class="pane__header">Features</h3>
-        <div class="feature" ng-repeat="feature in features | orderBy:'title'">
-            <div class="item" ng-click="expandFeature(feature, !feature.expanded)">
-                <div class="item__icon" ng-class="feature.expanded ? 'arrow-down' : 'glyphicon glyphicon-play'"></div>
-                {{feature.title}}
-                <div class="progress percents pull-right">
-                    <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in feature.percents"
-                         tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
+        <div class="pane_content">
+            <div class="features__title b-island__title">Functional requirements</div>
+            <h3 class="pane__header">Features</h3>
+            <div class="feature" ng-repeat="feature in features | orderBy:'title'">
+                <div class="item" ng-click="expandFeature(feature, !feature.expanded)">
+                    <div class="item__icon" ng-class="feature.expanded ? 'arrow-down' : 'glyphicon glyphicon-play'"></div>
+                    {{feature.title}}
+                    <div class="progress percents pull-right">
+                        <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in feature.percents"
+                             tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
+                        </div>
                     </div>
+                    <div class="pull-right text-muted"><i ng-pluralize count="feature.stories.length" when="{one: '{} story', other: '{} stories'}"></i>&nbsp;</div>
                 </div>
-                <div class="pull-right text-muted"><i ng-pluralize count="feature.stories.length" when="{one: '{} story', other: '{} stories'}"></i>&nbsp;</div>
+                <ul ng-if="feature.expanded" class="list-unstyled item__subitems">
+                    <li class="item" ng-repeat="story in feature.stories | orderBy:'title'" ng-click="setStory(story)" ng-class="{item_active: story == $parent.story}">
+                        {{story.title}}
+                        <div class="progress percents pull-right">
+                            <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
+                                 tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
+                            </div>
+                        </div>
+                        <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
+                    </li>
+                </ul>
             </div>
-            <ul ng-if="feature.expanded" class="list-unstyled item__subitems">
-                <li class="item" ng-repeat="story in feature.stories | orderBy:'title'" ng-click="setStory(story)" ng-class="{item_active: story == $parent.story}">
+        </div>
+    </div>
+    <div class="pane_col features__info" ng-if="!story">
+        <div class="pane_content">
+            <div class="features__title b-island__title">Info</div>
+            <h3 class="pane__header">There are {{allStories.length}} stories, {{unstableStories.length}} unstable</h3>
+            <ul class="list-unstyled stories">
+                <li class="item" ng-repeat="story in unstableStories" ng-click="setStory(story)">
                     {{story.title}}
                     <div class="progress percents pull-right">
                         <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
@@ -25,39 +44,26 @@
                     <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
                 </li>
             </ul>
+            <hr>
+            <h4 ng-bind="summaryText"></h4>
+            <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData" tooltip-tpl="chartTooltip"></div>
         </div>
     </div>
-    <div class="pane_col features__info" ng-if="!story">
-        <div class="features__title b-island__title">Info</div>
-        <h3 class="pane__header" ng-bind="summaryText"></h3>
-        <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData" tooltip-tpl="chartTooltip"></div>
-        <hr>
-        <h4>There are {{allStories.length}} stories, {{unstableStories.length}} unstable</h4>
-        <ul class="list-unstyled">
-            <li class="item" ng-repeat="story in unstableStories" ng-click="setStory(story)">
-                {{story.title}}
-                <div class="progress percents pull-right">
-                    <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
-                         tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
-                    </div>
-                </div>
-                <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
-            </li>
-        </ul>
-    </div>
     <div class="pane_col features__view" ng-if="story" pane pane-expanded="isState('features.story.expanded')">
-        <div class="pane_overlay clickable" ui-sref="features.story.testcase"></div>
-        <div class="features__title b-island__title">Story</div>
-        <h3 class="pane__header">
-            <div class="pane__header_controls pull-right">
-                <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('features.story.expanded')" ui-sref="features.story.expanded"></span>
-                <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('features.story.expanded')" ui-sref="features.story"></span>
-                <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="features"></span>
-            </div>
-            {{story.title}}
-        </h3>
-        <div status-switcher statuses="showStatuses" class="pull-right" statistic="story.statistic"></div>
-        <div testcases-list="story.testCases" statuses="showStatuses" selected-uid="testcase.uid"></div>
+        <div class="pane_content">
+            <div class="pane_overlay clickable" ui-sref="features.story.testcase"></div>
+            <div class="features__title b-island__title">Story</div>
+            <h3 class="pane__header">
+                <div class="pane__header_controls pull-right">
+                    <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('features.story.expanded')" ui-sref="features.story.expanded"></span>
+                    <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('features.story.expanded')" ui-sref="features.story"></span>
+                    <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="features"></span>
+                </div>
+                {{story.title}}
+            </h3>
+            <div status-switcher statuses="showStatuses" class="pull-right" statistic="story.statistic"></div>
+            <div testcases-list="story.testCases" statuses="showStatuses" selected-uid="testcase.uid"></div>
+        </div>
     </div>
     <div ui-view="testcase"></div>
 </div>

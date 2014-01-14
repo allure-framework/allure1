@@ -1,5 +1,5 @@
 /* globals angular */
-angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip, timeFilter) {
+angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip, d3timeFilter) {
     function DurationBars(element, data) {
         var width = angular.element(element).width()/2.2,
             height = width*0.6,
@@ -8,12 +8,11 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
                 height: height,
                 margin: {left: 60, bottom: 30}
             }),
-            x = d3.scale.linear().range([0, width]),
+            x = d3.time.scale.utc().range([0, width]),
             y = d3.scale.sqrt().range([height, 0 ], 1),
             bins;
 
-        var maxDuration = Math.max(d3.max(data, function(d) {return d.time.duration;}), 1);
-        x.domain([0, maxDuration]).nice();
+        x.domain([0, Math.max(d3.max(data, function(d) {return d.time.duration;}), 1)]);
         bins = d3.layout.histogram().value(function(d) {
             return d.time.duration;
         }).bins(x.ticks())(data).map(function(bin) {
@@ -27,9 +26,7 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
         y.domain([0, d3.max(bins, function(d) {return d.y;})]).nice();
 
         svg.select('.x-axis-group.axis').call(
-            d3.svg.axis().scale(x).orient('bottom').tickFormat(function(d) {
-                return timeFilter(d);
-            })
+            d3.svg.axis().scale(x).orient('bottom').tickFormat(d3timeFilter)
         );
         svg.select('.y-axis-group.axis').call(
             d3.svg.axis().scale(y).orient('left')
@@ -37,7 +34,7 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
         svg.selectAll('.x-axis-group.axis, .chart-group').attr({transform: 'translate(0,' + (height) + ')'});
 
         var container = svg.select('.container-group'),
-            median = d3.median(bins, function(d) {return d.y;}),
+            median = y(d3.median(bins, function(d) {return d.y;})),
             bars = container.selectAll(".bar").data(bins).enter().append('rect').classed('bar fill-default', true);
 
         bars.attr({

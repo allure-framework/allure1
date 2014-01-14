@@ -1,10 +1,10 @@
 /*global describe:true, it:true, beforeEach:true, afterEach:true, expect:true, spyOn:true, module:true, inject:true, angular:true, jasmine:true */
-describe('SeverityMap', function () {
+describe('DurationChart', function () {
     'use strict';
     var scope, elem, filterSpy;
 
     beforeEach(module('allure.charts.duration', function($filterProvider) {
-        $filterProvider.register('time', function() {
+        $filterProvider.register('d3time', function() {
             return filterSpy = jasmine.createSpy('filterSpy').andCallFake(angular.identity);
         });
     }));
@@ -54,7 +54,7 @@ describe('SeverityMap', function () {
             {status: 'SKIPPED', time: {duration:0}},
             {status: 'SKIPPED', time: {duration:0}}
         ]});
-        expect(elem.find('.bar').map(extractData).toArray()).toEqual([2, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+        expect(elem.find('.bar').map(extractData).toArray()).toEqual([2]);
     });
 
     afterEach(function() {
