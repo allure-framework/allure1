@@ -5,7 +5,7 @@
             <div class="pane__header_controls pull-right">
                 <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('testcase.attachment.expanded')" ng-click="go('testcase.attachment.expanded')"></span>
                 <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('testcase.attachment.expanded')" ng-click="go('testcase.attachment')"></span>
-                <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="home.testsuite.testcase"></span>
+                <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ng-click="go('testcase')"></span>
             </div>
             {{attachment.title}}
         </h3>
