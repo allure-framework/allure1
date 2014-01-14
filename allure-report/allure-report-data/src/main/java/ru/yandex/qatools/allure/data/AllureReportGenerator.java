@@ -16,6 +16,8 @@ import static ru.yandex.qatools.allure.config.AllureNamingUtils.listAttachmentFi
  */
 public class AllureReportGenerator {
 
+    private static final String DATA_SUFFIX = "data/";
+
     private List<DataProvider> dataProviders = Arrays.asList(defaultProviders());
 
     protected File[] inputDirectories;

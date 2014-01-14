@@ -9,6 +9,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.reporting.MavenReportException;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
+import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.data.AllureReportGenerator;
 
 import java.util.*;
@@ -20,27 +21,23 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
  * @author Artem Eroshenko eroshenkoam
  *         6/7/13, 6:06 PM
  */
-@SuppressWarnings("unused")
+//@SuppressWarnings("unused")
 @Mojo(name = "allure-maven-plugin", defaultPhase = LifecyclePhase.SITE, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
-    protected static final String DEFAULT_ALLURE_REPORT_PATH = "site/allure-maven-plugin";
-
-    protected static final String DEFAULT_ALLURE_REPORT_DATA_PATH = "/data";
-
-    private static final String TEST_SUITE_FILES_REGEXP = ".*-testsuite\\.xml";
-
-    private static final String TEST_CASE_FILES_REGEXP = ".*-testcase\\.xml";
+    protected static final String DEFAULT_RESULTS_DIR = AllureResultsConfig.newInstance().getDirectoryPath();
 
     private static final String FAQ = "https://github.com/allure-framework/allure-core/blob/master/docs/FAQ.md";
 
     private static final String ALLURE_TEAM = "mailto:allure@yandex-team.ru";
 
-    @Parameter(alias = "allure.report.path", defaultValue = DEFAULT_ALLURE_REPORT_PATH, required = false)
-    protected String allureReportPath;
+    private static final String DATA_SUFFIX = "data/";
 
-    @Parameter(alias = "allure.results.path", defaultValue = DEFAULT_ALLURE_REPORT_PATH, required = false)
-    protected String allureResultsPath;
+    @Parameter(alias = "allure.report.path", required = false)
+    protected String allureReportPath = DEFAULT_RESULTS_DIR;
+
+    @Parameter(alias = "allure.results.path", required = false)
+    protected String allureResultsPath = DEFAULT_RESULTS_DIR;
 
 
     @Parameter(alias = "allure.face.unpack", defaultValue = "true", required = false)
@@ -54,20 +51,15 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             "war"
     );
 
-    @Parameter(defaultValue = "${project.build.directory}")
-    private String outputDirectory;
-
     @Parameter(defaultValue = "Allure Report")
     private String reportName;
+
+    @Parameter(defaultValue = "${project.build.directory}")
+    private String outputDirectory;
 
     @Override
     protected final String getOutputDirectory() {
         return outputDirectory;
-    }
-
-    @Override
-    public final File getReportOutputDirectory() {
-        return getAllureReportDirectory();
     }
 
     @Override
@@ -83,20 +75,12 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
         return allureReportPath;
     }
 
-    public String getAllureReportDataPath() {
-        return getAllureReportPath() + DEFAULT_ALLURE_REPORT_DATA_PATH;
-    }
-
     public File getAllureResultsDirectory() {
         return new File(getOutputDirectory(), getAllureResultsPath());
     }
 
     public File getAllureReportDirectory() {
         return new File(getOutputDirectory(), getAllureReportPath());
-    }
-
-    public File getAllureReportDataDirectory() {
-        return new File(getOutputDirectory(), getAllureReportDataPath());
     }
 
     public boolean isAllureFaceUnpack() {
@@ -107,7 +91,6 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
     protected final void executeReport(Locale locale) throws MavenReportException {
         File resultsDirectory = getAllureResultsDirectory();
         File reportDirectory = getAllureReportDirectory();
-        File reportDataDirectory = getAllureReportDataDirectory();
 
         Sink sink = getSink();
 
@@ -139,12 +122,14 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             return;
         }
 
-        getLog().info(String.format("Analyse allure report data directory <%s>", reportDataDirectory));
-        if (!((reportDataDirectory.exists() || reportDataDirectory.mkdirs()) && reportDataDirectory.canWrite())) {
+        File dataDir = new File(resultsDirectory, DATA_SUFFIX);
+
+        getLog().info(String.format("Analyse allure report data directory <%s>", dataDir));
+        if (!((dataDir.exists() || dataDir.mkdirs()) && dataDir.canWrite())) {
             String error = String.format(directoryIOErrorMessageTemplate,
-                    reportDataDirectory.getAbsolutePath(),
-                    reportDataDirectory.exists(),
-                    reportDataDirectory.canWrite());
+                    resultsDirectory.getAbsolutePath(),
+                    resultsDirectory.exists(),
+                    resultsDirectory.canWrite());
             getLog().error(error + FAQ);
             sink.text(error);
             sink.link(FAQ);
@@ -154,7 +139,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             return;
         }
 
-        generateData(resultsDirectory, reportDataDirectory);
+        generateData(dataDir, dataDir);
 
         //TODO: split this plugin on two with goals: generate-data, copy-face, default (include both)
         if (!allureFaceUnpack) {
@@ -182,14 +167,14 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
         sink.close();
     }
 
-    private void generateData(File resultsDirectory, File reportDataDirectory) {
+    private void generateData(File resultsDirectory, File reportDirectory) {
         getLog().info(String.format("Generate report data from results directory <%s> to report data directory <%s>",
                 resultsDirectory,
-                reportDataDirectory));
+                reportDirectory));
         AllureReportGenerator reportGenerator = new AllureReportGenerator(resultsDirectory);
-        reportGenerator.generate(reportDataDirectory);
+        reportGenerator.generate(reportDirectory);
         getLog().info(String.format("Generate report data complete to directory <%s>",
-                reportDataDirectory));
+                reportDirectory));
     }
 
     private boolean unpackReport() {
