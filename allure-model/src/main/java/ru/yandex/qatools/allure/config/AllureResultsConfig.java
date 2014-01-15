@@ -4,6 +4,8 @@ import ru.yandex.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.properties.annotations.Property;
 import ru.yandex.qatools.properties.annotations.Resource;
 
+import java.io.File;
+
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
  *         Date: 12/13/13
@@ -28,7 +30,7 @@ public class AllureResultsConfig {
     private String attachmentFileSuffix = "attachment";
 
     @Property("allure.results.directory.path")
-    private String directoryPath = "site/allure-maven-plugin";
+    private String directoryPath;
 
     public AllureResultsConfig() {
         PropertyLoader.populate(this);
@@ -55,6 +57,9 @@ public class AllureResultsConfig {
     }
 
     public String getDirectoryPath() {
+        if (directoryPath == null) {
+            directoryPath = new File("target/site/allure-maven-plugin").getAbsolutePath();
+        }
         return directoryPath;
     }
 

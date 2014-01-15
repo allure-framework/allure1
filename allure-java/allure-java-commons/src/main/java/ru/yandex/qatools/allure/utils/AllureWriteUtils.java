@@ -24,7 +24,7 @@ public final class AllureWriteUtils {
     private static final String FAQ = "https://github.com/allure-framework/allure-core/allure-core/blob/master/docs/FAQ.md";
 
     //TODO think about this
-    private static final File OUTPUT = new File("target/" + AllureResultsConfig.newInstance().getDirectoryPath() + "/data");
+    private static final File OUTPUT = new File(AllureResultsConfig.newInstance().getDirectoryPath(), "data");
 
     private AllureWriteUtils() {
         throw new IllegalStateException();
