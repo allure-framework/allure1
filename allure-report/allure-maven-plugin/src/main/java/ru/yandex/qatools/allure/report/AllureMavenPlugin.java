@@ -89,6 +89,9 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
     @Override
     protected final void executeReport(Locale locale) throws MavenReportException {
+        System.out.println("dir: " + AllureResultsConfig.newInstance().getDirectoryPath());
+        System.out.println("results path: " + getAllureResultsPath());
+        System.out.println("report path: " + getAllureReportPath());
         File resultsDirectory = getAllureResultsDirectory();
         File reportDirectory = getAllureReportDirectory();
 
