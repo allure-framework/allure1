@@ -17,7 +17,6 @@
         <module>allure-java-annotations</module>
         <module>allure-java-commons</module>
         <module>allure-java-aspects</module>
-        <module>allure-java-inject</module>
     </modules>
 
 </project>
