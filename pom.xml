@@ -145,11 +145,6 @@
             </dependency>
             <dependency>
                 <groupId>ru.yandex.qatools.allure</groupId>
-                <artifactId>allure-java-inject</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-junit-adaptor</artifactId>
                 <version>${project.version}</version>
             </dependency>
