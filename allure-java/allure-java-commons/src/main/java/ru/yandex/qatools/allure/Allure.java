@@ -15,11 +15,11 @@ public class Allure {
 
     public static final Allure LIFECYCLE = new Allure();
 
-    final StepStorage stepStorage = new StepStorage();
+    public final StepStorage stepStorage = new StepStorage();
 
-    final TestCaseStorage testCaseStorage = new TestCaseStorage();
+    public final TestCaseStorage testCaseStorage = new TestCaseStorage();
 
-    final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
+    public final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
 
     private final Object lock = new Object();
 
