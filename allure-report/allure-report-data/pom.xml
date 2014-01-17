@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
         <groupId>ru.yandex.qatools.allure</groupId>
@@ -12,6 +13,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>Allure Report Data</name>
+
+    <properties>
+        <allure.model.test.resources.path>${project.build.directory}/allure-results</allure.model.test.resources.path>
+    </properties>
 
     <build>
         <plugins>
@@ -58,16 +63,31 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+                            <outputDirectory>${allure.model.test.resources.path}</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.basedir}/../../allure-model/src/test/resources/</directory>
+                                    <directory>
+                                        ${project.basedir}/../../allure-model/src/test/resources/allure-results
+                                    </directory>
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.16</version>
+                <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory.path</name>
+                            <value>${allure.model.test.resources.path}</value>
+                        </property>
+                    </systemProperties>
+                </configuration>
             </plugin>
         </plugins>
     </build>
@@ -104,12 +124,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-model</artifactId>
-            <type>test-jar</type>
             <scope>test</scope>
         </dependency>
         <dependency>

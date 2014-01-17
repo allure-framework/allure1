@@ -5,7 +5,7 @@ import ru.yandex.qatools.allure.model.*;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.storages.*;
 
-import static ru.yandex.qatools.allure.utils.AllureWriteUtils.*;
+import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeTestSuiteResult;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -15,11 +15,11 @@ public class Allure {
 
     public static final Allure LIFECYCLE = new Allure();
 
-    final StepStorage stepStorage = new StepStorage();
+    public final StepStorage stepStorage = new StepStorage();
 
-    final TestCaseStorage testCaseStorage = new TestCaseStorage();
+    public final TestCaseStorage testCaseStorage = new TestCaseStorage();
 
-    final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
+    public final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
 
     private final Object lock = new Object();
 
@@ -79,7 +79,8 @@ public class Allure {
         String suiteUid = event.getUid();
         TestSuiteResult testSuite = testSuiteStorage.get(suiteUid);
         event.process(testSuite);
-        marshal(testSuite);
         testSuiteStorage.remove(suiteUid);
+
+        writeTestSuiteResult(testSuite);
     }
 }

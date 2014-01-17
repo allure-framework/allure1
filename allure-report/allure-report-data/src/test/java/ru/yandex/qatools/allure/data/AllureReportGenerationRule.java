@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.xml.bind.JAXB;
 import java.util.List;
 import java.io.File;
-import java.net.URL;
 
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
 
@@ -19,7 +18,7 @@ import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFil
  */
 public class AllureReportGenerationRule extends ExternalResource {
 
-    private final File reportDataDir;
+    private final File reportDir;
 
     private final File resultsDir;
 
@@ -27,37 +26,29 @@ public class AllureReportGenerationRule extends ExternalResource {
 
     private List<TestSuiteResult> testSuiteResults;
 
-    public AllureReportGenerationRule(String resultsPath) {
-        this(FileUtils.getTempDirectory(), resultsPath);
+    public AllureReportGenerationRule(File resultsDirectory) {
+        this(FileUtils.getTempDirectory(), resultsDirectory);
     }
 
-    public AllureReportGenerationRule(File reportDataDir, String resultsPath) {
-        this(reportDataDir, ClassLoader.getSystemResource(resultsPath));
-    }
-
-    public AllureReportGenerationRule(File reportDataDir, URL resultsURI) {
-        this(reportDataDir, new File(resultsURI.getFile()));
-    }
-
-    public AllureReportGenerationRule(File reportDataDir, File resultsDir) {
-        this.reportDataDir = reportDataDir;
+    public AllureReportGenerationRule(File reportDir, File resultsDir) {
+        this.reportDir = reportDir;
         this.resultsDir = resultsDir;
     }
 
 
     protected void before() throws Throwable {
         AllureReportGenerator reportGenerator = new AllureReportGenerator(resultsDir);
-        reportGenerator.generate(reportDataDir);
+        reportGenerator.generate(reportDir);
     }
 
     protected void after() {
-        FileUtils.deleteQuietly(this.reportDataDir);
+        FileUtils.deleteQuietly(this.reportDir);
     }
 
     public AllureXUnit getXUnitData() throws Exception {
         if (allureXUnit == null) {
             ObjectMapper mapper = new ObjectMapper();
-            allureXUnit = mapper.readValue(new File(reportDataDir, "xunit.json"), AllureXUnit.class);
+            allureXUnit = mapper.readValue(new File(reportDir, "data/xunit.json"), AllureXUnit.class);
         }
         return allureXUnit;
     }

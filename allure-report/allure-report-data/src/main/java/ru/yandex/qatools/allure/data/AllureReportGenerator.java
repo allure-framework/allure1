@@ -16,7 +16,7 @@ import static ru.yandex.qatools.allure.config.AllureNamingUtils.listAttachmentFi
  */
 public class AllureReportGenerator {
 
-    private static final String DATA_SUFFIX = "data/";
+    private static final String DATA_SUFFIX = "data";
 
     private List<DataProvider> dataProviders = Arrays.asList(defaultProviders());
 
@@ -26,13 +26,20 @@ public class AllureReportGenerator {
         this.inputDirectories = inputDirectories;
     }
 
-    public void generate(File outputDirectory) {
-        copyAttachments(inputDirectories, outputDirectory);
+    public void generate(File reportDirectory) {
+        File reportDataDirectory = new File(reportDirectory, DATA_SUFFIX);
+
+        if (!(reportDataDirectory.exists() || reportDataDirectory.mkdirs())) {
+            throw new RuntimeException(
+                    String.format("Can't create data directory <%s>", reportDataDirectory.getAbsolutePath())
+            );
+        }
+        copyAttachments(inputDirectories, reportDataDirectory);
 
         String testRun = new TestSuiteFiles(inputDirectories).generateTestRun();
 
         for (DataProvider provider : dataProviders) {
-            provider.provide(testRun, outputDirectory);
+            provider.provide(testRun, reportDataDirectory);
         }
 
     }

@@ -30,7 +30,7 @@ public class AllureResultsConfig {
     private String attachmentFileSuffix = "attachment";
 
     @Property("allure.results.directory.path")
-    private String directoryPath;
+    private String resultsDirectoryPath = "target/allure-results";
 
     public AllureResultsConfig() {
         PropertyLoader.populate(this);
@@ -56,11 +56,12 @@ public class AllureResultsConfig {
         return attachmentFileSuffix;
     }
 
-    public String getDirectoryPath() {
-        if (directoryPath == null) {
-            directoryPath = new File("target/site/allure-maven-plugin").getAbsolutePath();
-        }
-        return directoryPath;
+    public String getResultsDirectoryPath() {
+        return resultsDirectoryPath;
+    }
+
+    public File getResultsDirectory() {
+        return new File(resultsDirectoryPath);
     }
 
     public static AllureResultsConfig newInstance() {
