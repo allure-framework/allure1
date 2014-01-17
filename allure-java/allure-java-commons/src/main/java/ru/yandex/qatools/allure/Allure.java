@@ -5,7 +5,7 @@ import ru.yandex.qatools.allure.model.*;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.storages.*;
 
-import static ru.yandex.qatools.allure.utils.AllureWriteUtils.*;
+import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeTestSuiteResult;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -79,7 +79,8 @@ public class Allure {
         String suiteUid = event.getUid();
         TestSuiteResult testSuite = testSuiteStorage.get(suiteUid);
         event.process(testSuite);
-        marshal(testSuite);
         testSuiteStorage.remove(suiteUid);
+
+        writeTestSuiteResult(testSuite);
     }
 }
