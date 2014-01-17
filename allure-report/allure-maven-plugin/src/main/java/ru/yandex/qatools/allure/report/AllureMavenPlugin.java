@@ -21,7 +21,7 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
  * @author Artem Eroshenko eroshenkoam
  *         6/7/13, 6:06 PM
  */
-//@SuppressWarnings("unused")
+@SuppressWarnings("unused")
 @Mojo(name = "allure-maven-plugin", defaultPhase = LifecyclePhase.SITE, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
@@ -51,9 +51,11 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             "war"
     );
 
+    @SuppressWarnings("unused")
     @Parameter(defaultValue = "Allure Report")
     private String reportName;
 
+    @SuppressWarnings("unused")
     @Parameter(defaultValue = "${project.build.directory}")
     private String outputDirectory;
 
@@ -76,13 +78,14 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
     }
 
     public File getAllureResultsDirectory() {
-        return new File(getOutputDirectory(), getAllureResultsPath());
+        return new File(getAllureResultsPath());
     }
 
     public File getAllureReportDirectory() {
-        return new File(getOutputDirectory(), getAllureReportPath());
+        return new File(getAllureReportPath());
     }
 
+    @SuppressWarnings("unused")
     public boolean isAllureFaceUnpack() {
         return allureFaceUnpack;
     }
@@ -125,24 +128,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
             return;
         }
 
-        File dataDir = new File(resultsDirectory, DATA_SUFFIX);
-
-        getLog().info(String.format("Analyse allure report data directory <%s>", dataDir));
-        if (!((dataDir.exists() || dataDir.mkdirs()) && dataDir.canWrite())) {
-            String error = String.format(directoryIOErrorMessageTemplate,
-                    resultsDirectory.getAbsolutePath(),
-                    resultsDirectory.exists(),
-                    resultsDirectory.canWrite());
-            getLog().error(error + FAQ);
-            sink.text(error);
-            sink.link(FAQ);
-            sink.text(FAQ);
-            sink.link_();
-
-            return;
-        }
-
-        generateData(dataDir, dataDir);
+        generateData(resultsDirectory, reportDirectory);
 
         //TODO: split this plugin on two with goals: generate-data, copy-face, default (include both)
         if (!allureFaceUnpack) {

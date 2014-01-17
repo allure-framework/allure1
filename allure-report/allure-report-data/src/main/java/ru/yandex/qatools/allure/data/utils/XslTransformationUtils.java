@@ -45,7 +45,6 @@ public final class XslTransformationUtils {
 
     public static String applyTransformation(Source xml, Source xsl) {
         try {
-
             Transformer transformer = new TransformerFactoryImpl().newTransformer(xsl);
             StringWriter resultWriter = new StringWriter();
             Result result = new StreamResult(resultWriter);

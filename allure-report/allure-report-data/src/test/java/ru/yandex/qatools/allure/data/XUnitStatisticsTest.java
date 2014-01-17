@@ -2,7 +2,6 @@ package ru.yandex.qatools.allure.data;
 
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
@@ -17,14 +16,13 @@ import static org.junit.Assert.assertThat;
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
  *         Date: 12/10/13
  */
-@Ignore
 public class XUnitStatisticsTest {
 
     private static AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
 
     @ClassRule
     public static AllureReportGenerationRule allureRule =
-            new AllureReportGenerationRule(resultsConfig.getResultsDirectoryPath());
+            new AllureReportGenerationRule(resultsConfig.getResultsDirectory());
 
     private AllureXUnit allureXUnitData;
 
