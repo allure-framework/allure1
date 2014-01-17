@@ -15,7 +15,6 @@
 
     <modules>
         <module>allure-junit-adaptor</module>
-        <module>allure-junit-plugin</module>
     </modules>
 
 </project>

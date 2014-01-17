@@ -43,9 +43,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/allure-framework/allure</url>
-        <connection>scm:git@github.com:allure-framework/allure.git</connection>
-        <developerConnection>scm:git:git@github.com:allure-framework/allure.git</developerConnection>
+        <url>https://github.com/allure-framework/allure-core</url>
+        <connection>scm:git@github.com:allure-framework/allure-core.git</connection>
+        <developerConnection>scm:git:git@github.com:allure-framework/allure-core.git</developerConnection>
     </scm>
 
     <issueManagement>
@@ -141,11 +141,6 @@
             <dependency>
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-java-aspects</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.yandex.qatools.allure</groupId>
-                <artifactId>allure-java-inject</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
