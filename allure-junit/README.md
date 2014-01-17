@@ -4,17 +4,11 @@
 
 ## Allure JUnit integration module
 
-There are two ways to integrate JUnit tests with Allure
-
-### Recommended way
-The first way, **RUNTIME**, *without using aspectj compiler and bytecode injections*,
-(don't work with AQUA framework for now) to use allure with **JUnit** and **Maven**.
-
 First of all add allure version property and dependency of **allure-junit-adaptor**:
 
 ```xml
 <properties>
-    <allure.version>1.2.2</allure.version>
+    <allure.version>1.3.0.RC2</allure.version>
 </properties>
 
 <dependency>
@@ -52,55 +46,9 @@ then, add **maven surefire plugin** with next configuration:
 </plugin>
 ```
 
-In the end u need to add **allure-report-plugin** to reporting section:
+In the end you need to add **allure-report-plugin** to reporting section:
 
 ```xml
-<reporting>
-    <excludeDefaults>true</excludeDefaults>
-    <plugins>
-        <plugin>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-maven-plugin</artifactId>
-            <version>${allure.version}</version>
-        </plugin>
-    </plugins>
-</reporting>
-```
-
-### Not recommended way
-Another way, **COMPILE**, with using aspectj compiler and bytecode injections:
-
-``` xml
-<properties>
-    <allure.version>1.2.2</allure.version>
-</properties>
-
-<dependencies>
-    <dependency>
-        <groupId>ru.yandex.qatools.allure</groupId>
-        <artifactId>allure-junit-adaptor</artifactId>
-        <version>${allure.version}</version>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-junit-plugin</artifactId>
-            <version>${allure.version}</version>
-            <executions>
-                <execution>
-                    <phase>test-compile</phase>
-                    <goals>
-                        <goal>allure</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
-
 <reporting>
     <excludeDefaults>true</excludeDefaults>
     <plugins>
