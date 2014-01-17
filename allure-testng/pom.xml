@@ -15,7 +15,6 @@
 
     <modules>
         <module>allure-testng-adaptor</module>
-        <module>allure-testng-plugin</module>
     </modules>
 
 </project>
