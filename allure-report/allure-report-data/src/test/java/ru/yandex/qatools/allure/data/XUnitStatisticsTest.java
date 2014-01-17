@@ -24,7 +24,7 @@ public class XUnitStatisticsTest {
 
     @ClassRule
     public static AllureReportGenerationRule allureRule =
-            new AllureReportGenerationRule(resultsConfig.getDirectoryPath());
+            new AllureReportGenerationRule(resultsConfig.getResultsDirectoryPath());
 
     private AllureXUnit allureXUnitData;
 

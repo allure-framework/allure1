@@ -25,7 +25,7 @@ import static org.twdata.maven.mojoexecutor.MojoExecutor.*;
 @Mojo(name = "allure-maven-plugin", defaultPhase = LifecyclePhase.SITE, requiresDependencyResolution = ResolutionScope.COMPILE_PLUS_RUNTIME)
 public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
-    protected static final String DEFAULT_RESULTS_DIR = AllureResultsConfig.newInstance().getDirectoryPath();
+    protected static final String DEFAULT_RESULTS_DIR = AllureResultsConfig.newInstance().getResultsDirectoryPath();
 
     private static final String FAQ = "https://github.com/allure-framework/allure-core/blob/master/docs/FAQ.md";
 
@@ -89,7 +89,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
 
     @Override
     protected final void executeReport(Locale locale) throws MavenReportException {
-        System.out.println("dir: " + AllureResultsConfig.newInstance().getDirectoryPath());
+        System.out.println("dir: " + AllureResultsConfig.newInstance().getResultsDirectoryPath());
         System.out.println("results path: " + getAllureResultsPath());
         System.out.println("report path: " + getAllureReportPath());
         File resultsDirectory = getAllureResultsDirectory();

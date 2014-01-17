@@ -25,6 +25,7 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class ResultsSchemaValidationTest {
 
+    public static final String ALLURE_RESULTS_DIRECTORY_PATH = "allure-results";
 
     private final File testSuiteFile;
 
@@ -39,7 +40,7 @@ public class ResultsSchemaValidationTest {
     @Parameterized.Parameters
     public static Collection<Object[]> getTestSuiteFileCollection() {
         AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
-        File results = new File(ClassLoader.getSystemResource(resultsConfig.getDirectoryPath()).getFile());
+        File results = new File(ClassLoader.getSystemResource(ALLURE_RESULTS_DIRECTORY_PATH).getFile());
         Collection<Object[]> testSuiteFileCollection = new ArrayList<>();
         for (String testSuiteFilePath : results.list(new RegexFileFilter(resultsConfig.getTestSuiteFileRegex()))) {
             testSuiteFileCollection.add(new Object[]{new File(results, testSuiteFilePath)});
