@@ -14,10 +14,6 @@
     <dependencies>
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-model</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-java-annotations</artifactId>
         </dependency>
         <dependency>
