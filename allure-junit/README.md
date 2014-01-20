@@ -8,7 +8,7 @@ First of all add allure version property and dependency of **allure-junit-adapto
 
 ```xml
 <properties>
-    <allure.version>1.3.0.RC2</allure.version>
+    <allure.version>1.3.0.RC3</allure.version>
 </properties>
 
 <dependency>
