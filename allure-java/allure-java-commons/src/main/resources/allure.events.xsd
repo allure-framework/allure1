@@ -15,6 +15,8 @@
     <xsd:element name="test-case-skipped-event" type="ns:abstract-test-case-skipped-event"/>
     <xsd:element name="test-case-finished-event" type="ns:abstract-test-case-finished-event"/>
 
+    <xsd:element name="test-case-add-parameter-event" type="ns:abstract-test-case-add-parameter-event"/>
+
     <xsd:element name="step-started-event" type="ns:abstract-step-started-event"/>
     <xsd:element name="step-failure-event" type="ns:abstract-step-failure-event"/>
     <xsd:element name="step-skipped-event" type="ns:abstract-step-skipped-event"/>
@@ -95,6 +97,18 @@
         </xsd:annotation>
     </xsd:complexType>
 
+    <xsd:complexType name="abstract-test-case-add-parameter-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.TestCaseEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="name" type="xsd:string" nillable="false"/>
+            <xsd:element name="value" type="xsd:string" nillable="false"/>
+        </xsd:all>
+    </xsd:complexType>
+
     <xsd:complexType name="abstract-step-started-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -150,7 +164,6 @@
             <xsd:element name="attach" type="ns:attach" nillable="true"/>
         </xsd:all>
     </xsd:complexType>
-
 
     <xsd:complexType name="labels">
         <xsd:sequence>

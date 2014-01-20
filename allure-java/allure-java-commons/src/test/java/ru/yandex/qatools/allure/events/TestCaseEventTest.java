@@ -6,12 +6,11 @@ import ru.yandex.qatools.allure.model.*;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -24,7 +23,7 @@ public class TestCaseEventTest {
 
     @Before
     public void setUp() throws Exception {
-        testCase = mock(TestCaseResult.class);
+        testCase = spy(new TestCaseResult());
     }
 
     @Test
@@ -128,6 +127,18 @@ public class TestCaseEventTest {
         new TestCaseFailureEvent().withThrowable(throwable).process(testCase);
         verify(testCase).setFailure(any(Failure.class));
         verify(testCase).setStatus(Status.BROKEN);
+        verifyNoMoreInteractions(testCase);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void testCaseAddParameterTest() throws Exception {
+        List parameters = mock(List.class);
+        doReturn(parameters).when(testCase).getParameters();
+        new AddParameterEvent().withName("some-name").withValue("some-value").process(testCase);
+        verify(testCase).getParameters();
+        verify(parameters).add(any(Parameter.class));
+        verifyNoMoreInteractions(parameters);
         verifyNoMoreInteractions(testCase);
     }
 }
