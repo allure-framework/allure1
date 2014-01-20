@@ -202,7 +202,7 @@ public class AllureMavenPlugin extends AbstractAllureReportPlugin {
                                 element("artifactId", reportFace.getArtifactId()),
                                 element("version", reportFace.getVersion()),
                                 element("overWrite", "true"),
-                                element("outputDirectory", getOutputDirectory() + "/" + getAllureReportPath()),
+                                element("outputDirectory", getAllureReportPath()),
                                 element("type", reportFace.getPackaging())
                         )
                 )
