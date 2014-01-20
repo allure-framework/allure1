@@ -15,11 +15,11 @@ public class Allure {
 
     public static final Allure LIFECYCLE = new Allure();
 
-    public final StepStorage stepStorage = new StepStorage();
+    private final StepStorage stepStorage = new StepStorage();
 
-    public final TestCaseStorage testCaseStorage = new TestCaseStorage();
+    private final TestCaseStorage testCaseStorage = new TestCaseStorage();
 
-    public final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
+    private final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
 
     private final Object lock = new Object();
 
@@ -82,5 +82,17 @@ public class Allure {
         testSuiteStorage.remove(suiteUid);
 
         writeTestSuiteResult(testSuite);
+    }
+
+    public StepStorage getStepStorage() {
+        return stepStorage;
+    }
+
+    public TestCaseStorage getTestCaseStorage() {
+        return testCaseStorage;
+    }
+
+    public TestSuiteStorage getTestSuiteStorage() {
+        return testSuiteStorage;
     }
 }
