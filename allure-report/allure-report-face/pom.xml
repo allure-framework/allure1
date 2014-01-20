@@ -144,16 +144,6 @@
                             <resourceBase>target/allure-report/data/</resourceBase>
                             <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
                         </contextHandler>
-                        <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
-                            <contextPath>/test</contextPath>
-                            <resourceBase>src/test/webapp/e2e/</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
-                        </contextHandler>
-                        <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
-                            <contextPath>/test/vendor</contextPath>
-                            <resourceBase>src/test/webapp/vendor</resourceBase>
-                            <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
-                        </contextHandler>
                     </contextHandlers>
                 </configuration>
             </plugin>

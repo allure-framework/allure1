@@ -27,6 +27,7 @@
         <module>allure-junit</module>
         <module>allure-testng</module>
         <module>allure-report</module>
+        <module>allure-integration-tests</module>
     </modules>
 
     <organization>
