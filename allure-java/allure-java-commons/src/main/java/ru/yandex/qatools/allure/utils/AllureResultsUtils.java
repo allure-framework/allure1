@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.exceptions.AllureException;
 import ru.yandex.qatools.allure.model.AttachmentType;
+import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.bind.JAXB;
@@ -46,7 +47,7 @@ public class AllureResultsUtils {
 
     public static void writeTestSuiteResult(TestSuiteResult testSuiteResult) {
         File testSuiteResultFile = new File(getResultsDirectory(), generateTestSuiteFileName());
-        JAXB.marshal(testSuiteResult, testSuiteResultFile);
+        JAXB.marshal(new ObjectFactory().createTestSuite(testSuiteResult), testSuiteResultFile);
     }
 
     public static String writeAttachment(Object attachment, AttachmentType type) {
