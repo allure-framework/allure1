@@ -1,6 +1,7 @@
 [allure-junit-pom-example]: https://github.com/allure-framework/allure-core/blob/master/docs/allure-junit-pom-example.md
 [steps-and-attachments]: https://github.com/allure-framework/allure-core/blob/master/docs/steps-and-attachments.md
 [behaviors]: https://github.com/allure-framework/allure-core/blob/master/docs/behaviors.md
+[parameters]: #
 
 ## Allure JUnit integration module
 
@@ -104,3 +105,17 @@ public void myTest() {
 ```
 
 Click [here][behaviors] to see more information about behaviors.
+
+### Parameters
+
+Now you can add parameters to your allure report:
+
+```java
+public void myTest() {
+    ...
+    Allure.LIFECYCLE.fire(new AddParameterEvent("some_name", "some_value"));
+    ...
+}
+```
+
+read [more][parameters] about it.
