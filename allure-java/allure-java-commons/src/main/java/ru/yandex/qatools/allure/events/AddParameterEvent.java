@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.events;
 
 import ru.yandex.qatools.allure.model.Parameter;
+import ru.yandex.qatools.allure.model.ParameterKind;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 
 /**
@@ -16,6 +17,10 @@ public class AddParameterEvent extends AbstractTestCaseAddParameterEvent {
 
     @Override
     public void process(TestCaseResult context) {
-        context.getParameters().add(new Parameter().withName(getName()).withValue(getValue()));
+        context.getParameters().add(new Parameter()
+                .withName(getName())
+                .withValue(getValue())
+                .withKind(ParameterKind.ENVIRONMENT_VARIABLE)
+        );
     }
 }
