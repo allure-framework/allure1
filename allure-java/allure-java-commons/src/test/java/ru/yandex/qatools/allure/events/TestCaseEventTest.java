@@ -135,7 +135,7 @@ public class TestCaseEventTest {
     public void testCaseAddParameterTest() throws Exception {
         List parameters = mock(List.class);
         doReturn(parameters).when(testCase).getParameters();
-        new AddParameterEvent().withName("some-name").withValue("some-value").process(testCase);
+        new AddParameterEvent("some-name", "some-value").process(testCase);
         verify(testCase).getParameters();
         verify(parameters).add(any(Parameter.class));
         verifyNoMoreInteractions(parameters);

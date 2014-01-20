@@ -8,6 +8,12 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  *         Date: 20.01.14
  */
 public class AddParameterEvent extends AbstractTestCaseAddParameterEvent {
+
+    public AddParameterEvent(String name, String value) {
+        setName(name);
+        setValue(value);
+    }
+
     @Override
     public void process(TestCaseResult context) {
         context.getParameters().add(new Parameter().withName(getName()).withValue(getValue()));
