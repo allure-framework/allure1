@@ -2,6 +2,7 @@
 [steps-and-attachments]: https://github.com/allure-framework/allure-core/blob/master/docs/steps-and-attachments.md
 [behaviors]: https://github.com/allure-framework/allure-core/blob/master/docs/behaviors.md
 [parameters]: #
+[latest-allure-version]: https://github.com/allure-framework/allure-core/blob/master/README.md
 
 ## Allure JUnit integration module
 
@@ -9,7 +10,7 @@ First of all add allure version property and dependency of **allure-junit-adapto
 
 ```xml
 <properties>
-    <allure.version>1.3.0.RC3</allure.version>
+    <allure.version>[See latest allure version][latest-allure-version]</allure.version>
 </properties>
 
 <dependency>
@@ -25,7 +26,7 @@ then, add **maven surefire plugin** with next configuration:
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-surefire-plugin</artifactId>
-    <version>2.16</version>
+    <version>2.14</version>
     <configuration>
         <argLine>
             -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
