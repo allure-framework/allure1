@@ -8,7 +8,7 @@
 First of all add allure version property and dependency of **allure-testng-adaptor**:
 ```xml
 <properties>
-    <allure.version>[See latest allure version][latest-allure-version]</allure.version>
+    <allure.version>{latest allure version}</allure.version>
 </properties>
 
 <dependencies>
@@ -19,8 +19,8 @@ First of all add allure version property and dependency of **allure-testng-adapt
     </dependency>
 </dependencies>
 ```
-
-then, add **maven surefire plugin** with next configuration:
+latest Allure version you can see [here][latest-allure-version].
+Then, add **maven surefire plugin** with next configuration:
 
 ```xml
 <plugin>
