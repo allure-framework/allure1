@@ -10,8 +10,9 @@ First of all add allure version property and dependency of **allure-junit-adapto
 
 ```xml
 <properties>
-    <allure.version>[See latest allure version][latest-allure-version]</allure.version>
+    <allure.version>{latest allure version}</allure.version>
 </properties>
+Latest allure version you can see [here][latest-allure-version]
 
 <dependency>
     <groupId>ru.yandex.qatools.allure</groupId>
