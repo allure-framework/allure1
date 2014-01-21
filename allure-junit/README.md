@@ -12,17 +12,15 @@ First of all add allure version property and dependency of **allure-junit-adapto
 <properties>
     <allure.version>{latest allure version}</allure.version>
 </properties>
-```
-Latest allure version you can see [here][latest-allure-version]
-```xml
+
 <dependency>
     <groupId>ru.yandex.qatools.allure</groupId>
     <artifactId>allure-junit-adaptor</artifactId>
     <version>${allure.version}</version>
 </dependency>
 ```
-
-then, add **maven surefire plugin** with next configuration:
+latest Allure version you can see [here][latest-allure-version].
+Then, add **maven surefire plugin** with next configuration:
 
 ```xml
 <plugin>
