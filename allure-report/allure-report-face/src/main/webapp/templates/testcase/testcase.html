@@ -25,7 +25,7 @@
     <div class="testcase__status alert-status-skipped" ng-show="testcase.status == 'SKIPPED'">
         This test has been skipped
     </div>
-    <div class="environment" ng-repeat="property in testcase.properties | filter:{'kind':'environment-variable'}">
+    <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">
         <div class="pull-left environment_name text-muted">{{property.name}}:</div>
         <div class="pull-left">{{property.value}}</div>
     </div>
