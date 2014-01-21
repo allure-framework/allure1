@@ -109,7 +109,7 @@ Click [here][behaviors] to see more information about behaviors.
 
 ### Parameters
 
-Now you can add parameters to your allure report:
+Now you can add parameters to your tests, and they will shown in allure report:
 
 ```java
 public void myTest() {
