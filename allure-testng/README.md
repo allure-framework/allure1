@@ -5,15 +5,12 @@
 
 ## Allure TestNG integration module
 
-First of all you should add following code to your pom.xml:
-
-``` xml
-<!--Allure version, needed here for allure-maven-plugin. It can be moved to parent pom.-->
+First of all add allure version property and dependency of **allure-testng-adaptor**:
+```xml
 <properties>
-    <allure.version>1.2.2</allure.version>
+    <allure.version>[See latest allure version][latest-allure-version]</allure.version>
 </properties>
 
-<!--This dependency is necessary for Allure TestNG plugin. It can be moved to parent pom.-->
 <dependencies>
     <dependency>
         <groupId>ru.yandex.qatools.allure</groupId>
@@ -21,34 +18,39 @@ First of all you should add following code to your pom.xml:
         <version>${allure.version}</version>
     </dependency>
 </dependencies>
+```
 
-<!--Allure TestNG plugin. It can be moved to parent pom. -->
-<build>
-    <plugins>
-        <plugin>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-testng-plugin</artifactId>
-            <version>${allure.version}</version>
-            <executions>
-                <execution>
-                    <phase>test-compile</phase>
-                    <goals>
-                        <goal>allure</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+then, add **maven surefire plugin** with next configuration:
 
-        <!--Without surefire plugin TestNG test tests will run in one Suite with name "Common Suite" -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.16</version>
-        </plugin>
-    </plugins>
-</build>
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.14</version>
+    <configuration>
+        <argLine>
+            -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+        </argLine>
+        <properties>
+            <property>
+                <name>listener</name>
+                <value>ru.yandex.qatools.allure.testng.AllureTestListener</value>
+            </property>
+        </properties>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+    </dependencies>
+</plugin>
+```
 
-<!--Allure Maven Plugin. It can be moved to parent pom-->
+In the end you need to add **allure-report-plugin** to reporting section:
+
+```xml
 <reporting>
     <excludeDefaults>true</excludeDefaults>
     <plugins>
@@ -59,16 +61,6 @@ First of all you should add following code to your pom.xml:
         </plugin>
     </plugins>
 </reporting>
-```
-
-Then, you should add AllureTestListener to all your TestNG tests:
-
-``` java
-@Listeners(AllureTestListener.class)
-public class SimpleTest {
-    ...
-}
-
 ```
 
 ### Steps and attachments
