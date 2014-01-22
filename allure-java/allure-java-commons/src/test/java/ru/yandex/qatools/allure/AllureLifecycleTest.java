@@ -33,7 +33,7 @@ public class AllureLifecycleTest {
     @Before
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
-        System.setProperty("allure.results.directory.path", resultsDirectory.getAbsolutePath());
+        System.setProperty("allure.results.directory", resultsDirectory.getAbsolutePath());
     }
 
     @Test

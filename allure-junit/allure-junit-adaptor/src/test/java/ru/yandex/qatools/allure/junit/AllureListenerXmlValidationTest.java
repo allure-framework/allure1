@@ -30,7 +30,7 @@ public class AllureListenerXmlValidationTest {
     @Before
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
-        System.setProperty("allure.results.directory.path", resultsDirectory.getAbsolutePath());
+        System.setProperty("allure.results.directory", resultsDirectory.getAbsolutePath());
 
         JUnitCore core = new JUnitCore();
         core.addListener(new AllureRunListener());
