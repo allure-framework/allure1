@@ -20,13 +20,13 @@ import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFil
  */
 public class AllureListenerXmlValidationTest {
 
-    @ClassRule
-    public static TemporaryFolder folder = new TemporaryFolder();
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
-    public static File resultsDirectory;
+    public File resultsDirectory;
 
-    @BeforeClass
-    public static void setUp() throws Exception {
+    @Before
+    public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
         System.setProperty("allure.results.directory", resultsDirectory.getAbsolutePath());
 
@@ -49,8 +49,8 @@ public class AllureListenerXmlValidationTest {
         }
     }
 
-    @AfterClass
-    public static void tearDown() {
+    @After
+    public void tearDown() {
         System.setProperty("allure.results.directory", "");
     }
 
