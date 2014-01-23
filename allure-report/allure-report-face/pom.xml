@@ -16,6 +16,9 @@
 
     <properties>
         <sonar.language>js</sonar.language>
+        <sonar.sources>src/main/webapp</sonar.sources>
+        <sonar.tests>src/test/webapp</sonar.tests>
+
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.exclusions>vendor/**</sonar.exclusions>
         <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
