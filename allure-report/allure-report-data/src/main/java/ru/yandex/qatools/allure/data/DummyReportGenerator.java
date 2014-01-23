@@ -1,4 +1,4 @@
-package ru.yandex.qatools.allure.face;
+package ru.yandex.qatools.allure.data;
 
 import ru.yandex.qatools.allure.data.AllureReportGenerator;
 
