@@ -1,8 +1,6 @@
 package ru.yandex.qatools.allure;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.TemporaryFolder;
 import org.xml.sax.SAXException;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
@@ -33,7 +31,7 @@ public class AllureLifecycleTest {
     @Before
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
-        System.setProperty("allure.results.directory.path", resultsDirectory.getAbsolutePath());
+        System.setProperty("allure.results.directory", resultsDirectory.getAbsolutePath());
     }
 
     @Test
@@ -162,4 +160,10 @@ public class AllureLifecycleTest {
         assertThat(testCase.getTitle(), is("new.case.title"));
         return testCase;
     }
+
+    @After
+    public void tearDown() {
+        System.setProperty("allure.results.directory", "");
+    }
+
 }

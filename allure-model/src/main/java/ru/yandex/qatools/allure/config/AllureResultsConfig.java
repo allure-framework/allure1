@@ -29,8 +29,8 @@ public class AllureResultsConfig {
     @Property("allure.results.attachment.file.suffix")
     private String attachmentFileSuffix = "attachment";
 
-    @Property("allure.results.directory.path")
-    private String resultsDirectoryPath = "target/allure-results";
+    @Property("allure.results.directory")
+    private File resultsDirectory = new File("target/allure-results");
 
     public AllureResultsConfig() {
         PropertyLoader.populate(this);
@@ -57,11 +57,11 @@ public class AllureResultsConfig {
     }
 
     public String getResultsDirectoryPath() {
-        return resultsDirectoryPath;
+        return resultsDirectory.getAbsolutePath();
     }
 
     public File getResultsDirectory() {
-        return new File(resultsDirectoryPath);
+        return resultsDirectory;
     }
 
     public static AllureResultsConfig newInstance() {

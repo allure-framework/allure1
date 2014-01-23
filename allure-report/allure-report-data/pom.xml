@@ -82,7 +82,7 @@
                 <configuration>
                     <systemProperties>
                         <property>
-                            <name>allure.results.directory.path</name>
+                            <name>allure.results.directory</name>
                             <value>${allure.model.test.resources.path}</value>
                         </property>
                     </systemProperties>
