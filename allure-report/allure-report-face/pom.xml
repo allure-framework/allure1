@@ -19,6 +19,9 @@
         <sonar.sources>src/main/webapp/js</sonar.sources>
         <sonar.tests>src/test/webapp/unit</sonar.tests>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.javascript.jstestdriver.reportsPath>
+            ${project.build.directory}/surefire-reports/
+        </sonar.javascript.jstestdriver.reportsPath>
 
         <sonar.exclusions>vendor/**</sonar.exclusions>
         <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
@@ -111,13 +114,13 @@
                 </executions>
                 <configuration>
                     <outputStrategy>TOTAL</outputStrategy>
-
+                    <reportFormats>COBERTURA</reportFormats>
                     <baseDir>http://0.0.0.0:${jasmine.serverPort}</baseDir>
                     <outputDir>${project.build.directory}/site/cobertura</outputDir>
                     <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                     <noInstrumentPatterns>
-                        <pattern>.*spec.*</pattern>
-                        <pattern>.*vendor.*</pattern>
+                        <pattern>.*/spec/.*</pattern>
+                        <pattern>.*/vendor/.*</pattern>
                     </noInstrumentPatterns>
                 </configuration>
             </plugin>
