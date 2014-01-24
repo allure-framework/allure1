@@ -80,9 +80,6 @@
                             <goal>test</goal>
                         </goals>
                         <phase>test</phase>
-                        <configuration>
-                            <keepServerAlive>true</keepServerAlive>
-                        </configuration>
                     </execution>
                 </executions>
                 <configuration>
@@ -110,6 +107,7 @@
                         <goals>
                             <goal>coverage</goal>
                         </goals>
+                        <phase>none</phase>
                     </execution>
                 </executions>
                 <configuration>
