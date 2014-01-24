@@ -27,8 +27,8 @@ angular.module('allure.xUnit.controllers', [])
             passed: 0, skipped: 0, failed: 0, broken: 0, total: 0
         });
         $scope.testcase = {};
-        $scope.$watch('testcase.uid', function(testcaseUid) {
-            if(testcaseUid) {
+        $scope.$watch('testcase.uid', function(testcaseUid, oldUid) {
+            if(testcaseUid !== oldUid) {
                 $state.go('home.testsuite.testcase', {testcaseUid: testcaseUid})
             }
         });

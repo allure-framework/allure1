@@ -51,7 +51,7 @@ describe('xUnit controllers', function () {
             $controller('HomeCtrl', {
                 $scope: scope,
                 $state: state = {
-                current: {data: {baseState: 'base'}},
+                    current: {data: {baseState: 'base'}},
                     go: jasmine.createSpy('gotoStateSpy'),
                     is: jasmine.createSpy('isStateSpy')
                 },
@@ -74,7 +74,8 @@ describe('xUnit controllers', function () {
                 new TestSuite('suite1', 16545, {passed: 2, skipped: 0, broken: 0, failed: 1, total: 3}),
                 new TestSuite('suite2', 35335, {passed: 2, skipped: 0, broken: 1, failed: 1, total: 4}),
                 new TestSuite('suite3', 42566, {passed: 1, skipped: 0, broken: 0, failed: 0, total: 1})
-            ])
+            ]);
+            scope.$apply();
         });
 
         it('should change state when select is called', function() {
