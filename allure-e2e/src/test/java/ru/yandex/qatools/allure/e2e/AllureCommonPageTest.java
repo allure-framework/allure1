@@ -17,7 +17,7 @@ public class AllureCommonPageTest {
     @Test
     public void sampleTitleTest() {
         WebDriver driver = new PhantomJSDriver(DesiredCapabilities.firefox());
-        driver.get("http://0.0.0.0:8080/e2e");
+        driver.get("http://0.0.0.0:8080/e2e/index.html");
         assertThat(driver.getTitle(), equalTo("Allure Dashboard"));
     }
 }
