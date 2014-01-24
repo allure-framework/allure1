@@ -17,10 +17,42 @@
         <allure.report.directory>${project.build.directory}/allure-report</allure.report.directory>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-util</artifactId>
+                <version>9.1.0.v20131115</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-io</artifactId>
+                <version>9.1.0.v20131115</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-report-data</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.34.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.detro.ghostdriver</groupId>
+            <artifactId>phantomjsdriver</artifactId>
+            <version>1.0.3</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -29,12 +61,14 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
                 <configuration>
                     <skip>true</skip>
                 </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
                 <executions>
                     <execution>
                         <id>copy-allure-model-test-resources</id>
@@ -50,6 +84,24 @@
                                         ${project.basedir}/../allure-model/src/test/resources/allure-results
                                     </directory>
                                     <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-allure-report-face</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${allure.report.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${project.basedir}/../allure-report/allure-report-face/src/main/webapp
+                                    </directory>
+                                    <filtering>true</filtering>
                                 </resource>
                             </resources>
                         </configuration>
@@ -77,30 +129,112 @@
                     </arguments>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-allure-report-face</id>
-                        <phase>process-test-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${allure.report.directory}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>
-                                        ${project.basedir}/../allure-report/allure-report-face/src/main/webapp
-                                    </directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>integrations_tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-io</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-util</artifactId>
+                </dependency>
+            </dependencies>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.eclipse.jetty</groupId>
+                            <artifactId>jetty-maven-plugin</artifactId>
+                            <version>9.1.0.v20131115</version>
+                            <dependencies>
+                                <dependency>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-io</artifactId>
+                                    <version>9.1.0.v20131115</version>
+                                </dependency>
+                                <dependency>
+                                    <groupId>org.eclipse.jetty</groupId>
+                                    <artifactId>jetty-util</artifactId>
+                                    <version>9.1.0.v20131115</version>
+                                </dependency>
+                            </dependencies>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.16</version>
+                        <configuration>
+                            <excludes>
+                                <exclude>**/e2e/**</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>2.6</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <includes>
+                                <include>**/e2e/**</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <artifactId>jetty-maven-plugin</artifactId>
+                        <configuration>
+                            <scanIntervalSeconds>10</scanIntervalSeconds>
+                            <stopKey>foo</stopKey>
+                            <stopPort>9999</stopPort>
+                            <contextHandlers>
+                                <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
+                                    <contextPath>/e2e</contextPath>
+                                    <resourceBase>target/allure-report</resourceBase>
+                                    <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
+                                </contextHandler>
+                            </contextHandlers>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>start-jetty</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <configuration>
+                                    <scanIntervalSeconds>0</scanIntervalSeconds>
+                                    <daemon>true</daemon>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>stop-jetty</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>
