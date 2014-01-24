@@ -16,19 +16,21 @@
 
     <properties>
         <sonar.language>js</sonar.language>
+        <sonar.sources>src/main/webapp/js</sonar.sources>
+        <sonar.tests>src/test/webapp/unit</sonar.tests>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <sonar.javascript.jstestdriver.reportsPath>
+            ${project.build.directory}/surefire-reports/
+        </sonar.javascript.jstestdriver.reportsPath>
+
         <sonar.exclusions>vendor/**</sonar.exclusions>
         <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-report-data</artifactId>
-        </dependency>
-    </dependencies>
-
     <build>
+        <sourceDirectory>src/main/webapp</sourceDirectory>
+        <testSourceDirectory>src/test/webapp</testSourceDirectory>
+
         <plugins>
             <plugin>
                 <groupId>org.lesscss</groupId>
@@ -70,12 +72,14 @@
                 <groupId>com.github.searls</groupId>
                 <artifactId>jasmine-maven-plugin</artifactId>
                 <version>1.3.1.2</version>
+                <extensions>true</extensions>
                 <executions>
                     <execution>
                         <id>unit-test-running</id>
                         <goals>
                             <goal>test</goal>
                         </goals>
+                        <phase>test</phase>
                     </execution>
                 </executions>
                 <configuration>
@@ -94,6 +98,30 @@
                     </preloadSources>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>com.github.timurstrekalov</groupId>
+                <artifactId>saga-maven-plugin</artifactId>
+                <version>1.5.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>coverage</goal>
+                        </goals>
+                        <phase>none</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <outputStrategy>TOTAL</outputStrategy>
+                    <reportFormats>COBERTURA</reportFormats>
+                    <baseDir>http://0.0.0.0:${jasmine.serverPort}</baseDir>
+                    <outputDir>${project.build.directory}/site/cobertura</outputDir>
+                    <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+                    <noInstrumentPatterns>
+                        <pattern>.*/spec/.*</pattern>
+                        <pattern>.*/vendor/.*</pattern>
+                    </noInstrumentPatterns>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -110,6 +138,10 @@
                     <groupId>org.mortbay.jetty</groupId>
                     <artifactId>jetty-maven-plugin</artifactId>
                     <version>8.1.12.v20130726</version>
+                </dependency>
+                <dependency>
+                    <groupId>ru.yandex.qatools.allure</groupId>
+                    <artifactId>allure-report-data</artifactId>
                 </dependency>
             </dependencies>
 
@@ -151,7 +183,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <mainClass>ru.yandex.qatools.allure.face.DummyReportGenerator</mainClass>
+                            <mainClass>ru.yandex.qatools.allure.data.DummyReportGenerator</mainClass>
                             <arguments>
                                 <argument>${allure.results.directory}</argument>
                                 <argument>${allure.report.directory}</argument>
