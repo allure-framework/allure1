@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import ru.yandex.qatools.allure.AllureEnvironment;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -14,10 +15,12 @@ import static org.junit.Assert.assertThat;
  */
 public class AllureCommonPageTest {
 
+    public AllureEnvironment environment = AllureEnvironment.newInstance();
+
     @Test
     public void sampleTitleTest() {
         WebDriver driver = new PhantomJSDriver(DesiredCapabilities.firefox());
-        driver.get("http://0.0.0.0:8080/e2e/index.html");
+        driver.get(environment.getBaseUrl());
         assertThat(driver.getTitle(), equalTo("Allure Dashboard"));
     }
 }

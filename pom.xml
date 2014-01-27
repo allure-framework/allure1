@@ -10,8 +10,10 @@
     </parent>
 
     <properties>
-        <compiler.version>1.7</compiler.version>
+        <jetty.port>9990</jetty.port>
         <jetty.version>9.1.0.v20131115</jetty.version>
+
+        <compiler.version>1.7</compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -197,6 +199,11 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>ru.yandex.qatools.properties</groupId>
+                <artifactId>properties-loader</artifactId>
+                <version>1.4</version>
+            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>

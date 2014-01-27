@@ -9,12 +9,16 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>allure-e2e</artifactId>
+    <packaging>war</packaging>
 
     <name>Allure End To End Tests</name>
 
     <properties>
         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
         <allure.report.directory>${project.build.directory}/allure-report</allure.report.directory>
+
+        <jetty.host>0.0.0.0</jetty.host>
+        <jetty.port>9010</jetty.port>
     </properties>
 
     <dependencyManagement>
@@ -48,14 +52,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -149,6 +145,12 @@
                             </execution>
                         </executions>
                         <configuration>
+                            <systemProperties>
+                                <systemProperty>
+                                    <name>baseUrl</name>
+                                    <value>http://${jetty.host}:${jetty.port}/</value>
+                                </systemProperty>
+                            </systemProperties>
                             <includes>
                                 <include>**/e2e/**</include>
                             </includes>
@@ -158,16 +160,16 @@
                         <groupId>org.eclipse.jetty</groupId>
                         <artifactId>jetty-maven-plugin</artifactId>
                         <configuration>
+                            <webAppSourceDirectory>${allure.report.directory}</webAppSourceDirectory>
                             <scanIntervalSeconds>10</scanIntervalSeconds>
                             <stopKey>foo</stopKey>
                             <stopPort>9999</stopPort>
-                            <contextHandlers>
-                                <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
-                                    <contextPath>/e2e</contextPath>
-                                    <resourceBase>target/allure-report</resourceBase>
-                                    <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler"/>
-                                </contextHandler>
-                            </contextHandlers>
+                            <systemProperties>
+                                <systemProperty>
+                                    <name>jetty.port</name>
+                                    <value>${jetty.port}</value>
+                                </systemProperty>
+                            </systemProperties>
                         </configuration>
                         <executions>
                             <execution>
