@@ -1,16 +1,20 @@
 /*global angular:true */
 angular.module('allure.testcase.controllers', [])
-    .controller('TestcaseCtrl', function($scope, $state, testcase, treeUtils) {
-        function setAttachment(source) {
-            var attachment;
+    .controller('TestcaseCtrl', function($scope, $state, testcase, treeUtils, Collection) {
+        "use strict";
+        function getAllAttachments() {
+            var attachments = [];
             treeUtils.walkAround($scope.testcase, 'steps', function(item) {
-                attachment = item.attachments.filter(function(attachment) {
-                    return attachment.source === source;
-                })[0];
-                return !attachment;
+                if(item !== $scope.testcase) {
+                    attachments = attachments.concat(item.attachments);
+                }
             });
-            //noinspection JSUnusedAssignment
-            $scope.attachment = attachment;
+            return attachments.concat($scope.testcase.attachments);
+        }
+        function setAttachment(source) {
+            $scope.attachment = getAllAttachments().filter(function(attachment) {
+                return attachment.source === source;
+            })[0];
         }
         $scope.isState = function(state) {
             return $state.is(baseState+'.'+state);
@@ -24,8 +28,14 @@ angular.module('allure.testcase.controllers', [])
         $scope.setAttachment = function(attachmentUid) {
             $state.go(baseState+'.testcase.attachment', {attachmentUid: attachmentUid});
         };
-        var baseState = $state.current.data.baseState;
+        $scope.select = function(direction) {
+            var index = allAttachments.indexOf($scope.attachment);
+            setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).source);
+        };
+
         $scope.testcase = testcase;
+        var baseState = $state.current.data.baseState,
+            allAttachments = new Collection(getAllAttachments());
 
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.attachment;
@@ -59,10 +69,10 @@ angular.module('allure.testcase.controllers', [])
                 return '';
             }
             if(step.summary.steps) {
-                result.push(step.summary.steps + stepPlural[$locale.pluralCat(step.summary.steps)])
+                result.push(step.summary.steps + stepPlural[$locale.pluralCat(step.summary.steps)]);
             }
             if(step.summary.attachments) {
-                result.push(step.summary.attachments + attachmentPlural[$locale.pluralCat(step.summary.attachments)])
+                result.push(step.summary.attachments + attachmentPlural[$locale.pluralCat(step.summary.attachments)]);
             }
             return '('+result.join(', ')+')';
         };
@@ -74,8 +84,8 @@ angular.module('allure.testcase.controllers', [])
         "use strict";
         function fileGetContents(url) {
             //get raw file content without parsing
-            $http.get(url, {transformResponse: []}).then(function(resonse) {
-                $scope.attachText = resonse.data;
+            $http.get(url, {transformResponse: []}).then(function(response) {
+                $scope.attachText = response.data;
             });
         }
         $scope.getSourceUrl = function(attachment) {

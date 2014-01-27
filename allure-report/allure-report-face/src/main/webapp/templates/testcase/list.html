@@ -1,9 +1,8 @@
 <h4>Test Cases ({{testcases.length}} total<span ng-hide="getVisibleCount() == testcases.length">, {{getVisibleCount()}} shown</span>)</h4>
-<div ng-show="(testcases | filter:statusFilter).length > 0">
+<div ng-show="list.items.length > 0" on-keynav="select($direction)">
     <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
         <tbody>
-        <tr ng-repeat="testcase in testcases | orderBy:sorting.predicate:sorting.reverse | filter:statusFilter | limitTo:testcasesLimit"
-            class="clickable" ng-click="selectTestcase(testcase)" ng-class="{active:testcase.uid==selectedUid}">
+        <tr ng-repeat="testcase in list.items" class="clickable" ng-click="selectTestcase(testcase)" ng-class="{active:testcase.uid==selectedUid}">
             <td allure-table-col="{heading:'#', predicate: 'order', flex: 0.5}">{{testcase.order}}</td>
             <td allure-table-col="{heading:'Title', predicate: 'title', flex: 3}" class="line-ellipsis" title="{{testcase.title}}">
                 <span tooltip="{{testcase.severity}}" tooltip-placement="left" class="icon-severity-{{testcase.severity|lowercase}}"></span>

@@ -28,10 +28,10 @@ angular.module('allure.directives', [])
                     'FlashVars="text={{text}}" bgcolor="#FFF" />' +
                 '</object>';
                 scope.$watch('text', function(text) {
-                    elm.html(tmpl.replace('{{text}}', text))
+                    elm.html(tmpl.replace('{{text}}', text));
                 });
             }
-        }
+        };
     })
     .directive('textCut', function() {
         return {
@@ -66,6 +66,23 @@ angular.module('allure.directives', [])
                     }
                 });
             }
+        };
+    })
+    .directive('onKeynav', function($parse) {
+        return function(scope, element, attr) {
+            var fn = $parse(attr.onKeynav),
+                UP = 38,
+                DOWN = 40;
+            element.attr('tabIndex', '0');
+            element.on('keydown', function(event) {
+                var keyCode = event.keyCode;
+                if(keyCode === UP || keyCode === DOWN) {
+                    scope.$apply(function() {
+                        fn(scope, {$direction: keyCode === UP ? -1 : 1});
+                    });
+                    event.preventDefault();
+                }
+            });
         };
     });
 })();
