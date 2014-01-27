@@ -9,7 +9,7 @@
         ({{time.duration | time}})
     </div>
 </div>
-<div ng-controller="TestSuitesCtrl">
+<div ng-controller="TestSuitesCtrl" on-keynav="select($direction)">
     <div status-switcher statuses="showStatuses" class="pull-right"></div>
     <h4>Test Suites</h4>
     <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
@@ -32,9 +32,7 @@
                 {{statistic.total}}
             </td>
         </tr>
-        <tr ng-repeat="testsuite in testsuites | filter:statusFilter | orderBy:sorting.predicate:sorting.reverse"
-            class="testsuite-row clickable"
-            ng-class="{'active':testsuite == $parent.testsuite}" ng-click="setTestsuite(testsuite.uid)">
+        <tr ng-repeat="testsuite in list.items" class="testsuite-row clickable" ng-class="{'active':testsuite == $parent.testsuite}" ng-click="setTestsuite(testsuite.uid)">
             <td allure-table-col="{heading:'Title', predicate: 'title', flex: 6}" class="line-ellipsis" title="{{testsuite.title}}">
                 {{testsuite.title}}
             </td>

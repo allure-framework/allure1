@@ -2,8 +2,7 @@
 describe('Allure directive', function () {
     'use strict';
     var scope,
-        elem,
-        html;
+        elem;
 
     function createElement(html, scopeValues) {
         inject(function ($compile, $rootScope) {
@@ -49,6 +48,35 @@ describe('Allure directive', function () {
             expect(getEnding()).not.toHaveClass('ng-hide');
             getToggleButton().click();
             expect(getEnding()).toHaveClass('ng-hide');
+        });
+    });
+
+    describe('onKeynav', function() {
+        function triggerKeydown(element, keyCode) {
+            var e = jQuery.Event("keydown");
+            e.keyCode = keyCode;
+            element.trigger(e);
+        }
+        it('should call function when up arrow have been pressed', function() {
+            createElement('<div on-keynav="handler($direction)">', {
+                handler: jasmine.createSpy('handler')
+            });
+            triggerKeydown(elem, 40 /*Down*/);
+            expect(scope.handler).toHaveBeenCalledWith(1);
+        });
+        it('should call function when up arrow have been pressed', function() {
+            createElement('<div on-keynav="handler($direction)">', {
+                handler: jasmine.createSpy('handler')
+            });
+            triggerKeydown(elem, 38 /*Up*/);
+            expect(scope.handler).toHaveBeenCalledWith(-1);
+        });
+        it('should ignore other keycodes', function() {
+            createElement('<div on-keynav="handler($direction)">', {
+                handler: jasmine.createSpy('handler')
+            });
+            triggerKeydown(elem, 13 /*Enter*/);
+            expect(scope.handler).not.toHaveBeenCalled();
         });
     });
 });

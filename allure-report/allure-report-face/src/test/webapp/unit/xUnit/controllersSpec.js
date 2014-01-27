@@ -10,9 +10,10 @@ describe('xUnit controllers', function () {
     }));
 
     describe('TestSuitesCtrl', function() {
-        var watchingStoreSpy;
+        var watchingStoreSpy, collection;
         function createController() {
             var scope = $rootScope.$new();
+            scope.setTestsuite = jasmine.createSpy('set testsuite');
             scope.testsuites = [
                 {uid: 0, statistic: {passed: 0, failed: 1, broken: 0, skipped: 0}},
                 {uid: 1, statistic: {passed: 3, failed: 0, broken: 0, skipped: 0}},
@@ -21,7 +22,14 @@ describe('xUnit controllers', function () {
             $controller('TestSuitesCtrl', {
                 $scope: scope,
                 WatchingStore: function() {
-                    return watchingStoreSpy = jasmine.createSpyObj('WatchingStore', ['bindProperty'])
+                    watchingStoreSpy = jasmine.createSpyObj('WatchingStore', ['bindProperty']);
+                    return watchingStoreSpy;
+                },
+                Collection: function() {
+                    collection = jasmine.createSpyObj('Collection', ['filter', 'sort', 'limitTo', 'indexOf', 'getIndexBy', 'getNext', 'getPrevious']);
+                    collection.getNext.andReturn({uid:2});
+                    collection.getPrevious.andReturn({uid:0});
+                    return collection;
                 }
             });
             scope.showStatuses = {PASSED: false, BROKEN: true, FAILED: true, SKIPPED: true};
@@ -39,6 +47,26 @@ describe('xUnit controllers', function () {
             expect(scope.testsuites.filter(scope.statusFilter).length).toBe(2);
             scope.showStatuses.PASSED = true;
             expect(scope.testsuites.filter(scope.statusFilter).length).toBe(3);
+        });
+
+        it('should bind order and filter', function() {
+            createController();
+            expect(collection.filter).toHaveBeenCalled();
+            expect(collection.sort).toHaveBeenCalled();
+        });
+
+        it('should navigate down', function() {
+            var scope = createController();
+            scope.select(1);
+            expect(collection.getNext).toHaveBeenCalled();
+            expect(scope.setTestsuite).toHaveBeenCalledWith(2);
+        });
+
+        it('should navigate up', function() {
+            var scope = createController();
+            scope.select(-1);
+            expect(collection.getPrevious).toHaveBeenCalled();
+            expect(scope.setTestsuite).toHaveBeenCalledWith(0);
         });
     });
 
@@ -89,7 +117,7 @@ describe('xUnit controllers', function () {
         it('should add up overall testsuites statistics', function() {
             expect(scope.statistic).toEqual({
                 passed: 5, skipped: 0, broken: 1, failed: 2, total: 8
-            })
+            });
         });
 
         describe('transitions', function() {
@@ -103,7 +131,7 @@ describe('xUnit controllers', function () {
                 return fields.reduce(function(result, field) {
                     result[field+'Uid'] = object[field+'Uid'];
                     return result;
-                }, {})
+                }, {});
             }
 
             function assertState(testsuite, testcase) {
@@ -118,7 +146,7 @@ describe('xUnit controllers', function () {
             function makeReturnTest(initialLevel, targetLevel) {
                 var source = copyFields(testValues, levels.slice(1, levels.indexOf(initialLevel))),
                     dest = copyFields(testValues, levels.slice(1, levels.indexOf(targetLevel)));
-                makeTransitionTest(source, dest, 'should return to '+targetLevel+' from '+initialLevel)
+                makeTransitionTest(source, dest, 'should return to '+targetLevel+' from '+initialLevel);
             }
             function makeSwitchTest(level) {
                 var index = levels.indexOf(level),

@@ -1,11 +1,19 @@
 /*global describe:true, it:true, beforeEach:true, afterEach:true, expect:true, spyOn:true, module:true, inject:true, angular:true, jasmine:true */
 describe('Testcases list', function () {
     'use strict';
-    var WatchingStore;
+    var WatchingStore,
+        Collection;
 
     beforeEach(module('allure.testcase.testcasesList', function($provide) {
         $provide.value('WatchingStore', function() {
-            return  WatchingStore = jasmine.createSpyObj('WatchingStore', ['bindProperty']);
+            WatchingStore = jasmine.createSpyObj('WatchingStore', ['bindProperty']);
+            return WatchingStore;
+        });
+        $provide.value('Collection', function() {
+            Collection = jasmine.createSpyObj('Collection', ['filter', 'sort', 'limitTo', 'indexOf', 'getIndexBy', 'getNext', 'getPrevious']);
+            Collection.getNext.andReturn({uid:2});
+            Collection.getPrevious.andReturn({uid:0});
+            return Collection;
         });
         $provide.value('status', {});
         $provide.value('severity', {});
@@ -42,12 +50,9 @@ describe('Testcases list', function () {
 
         it('should filter testcases by status', function() {
             var scope = createController();
-
-
             expect(scope.statusFilter({status: 'PASSED'})).toBe(false);
             expect(scope.statusFilter({status: 'FAILED'})).toBe(true);
             scope.showStatuses = {PASSED: true, BROKEN: true, FAILED: true, SKIPPED: false};
-
             expect(scope.statusFilter({status: 'PASSED'})).toBe(true);
         });
 
@@ -62,6 +67,25 @@ describe('Testcases list', function () {
         it('should find visible testcases count', function() {
             var scope = createController();
             expect(scope.getVisibleCount()).toBe(2);
+        });
+
+        it('should bind order, filter and limit', function() {
+            createController();
+            expect(Collection.filter).toHaveBeenCalled();
+            expect(Collection.sort).toHaveBeenCalled();
+            expect(Collection.limitTo).toHaveBeenCalled();
+        });
+
+        it('should navigate down', function() {
+            var scope = createController();
+            scope.select(1);
+            expect(Collection.getNext).toHaveBeenCalled();
+        });
+
+        it('should navigate up', function() {
+            var scope = createController();
+            scope.select(-1);
+            expect(Collection.getPrevious).toHaveBeenCalled();
         });
     });
 
@@ -82,7 +106,7 @@ describe('Testcases list', function () {
                         '<td>{{testcase.title}}</td><td>{{testcase.time.duration}}</td><td>{{testcase.status}}</td>' +
                     '</tr>' +
                 '</table>'
-            )
+            );
         }));
         beforeEach(inject(function ($compile, $rootScope) {
             scope = $rootScope.$new();

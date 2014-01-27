@@ -136,4 +136,45 @@ describe('service', function () {
             }, 'children', 'children')).toBe(4);
         });
     });
+
+    describe('Collection', function() {
+        var collection, items;
+        beforeEach(inject(function(Collection) {
+            items = [0,1,2,3,4,5];
+            collection = new Collection(items);
+        }));
+
+        it('should apply filter', function() {
+            collection.filter(function(item) { return item > 3;});
+            expect(collection.items).toEqual([4,5]);
+        });
+
+        it('should apply sorting', function() {
+            collection.sort({
+                predicate: function(item) { return -item;}
+            });
+            expect(collection.items).toEqual([5,4,3,2,1,0]);
+        });
+
+        it('should apply limit', function() {
+            collection.limitTo(4);
+            expect(collection.items).toEqual([0,1,2,3]);
+        });
+
+        it('should find by key value', function() {
+            collection.items.push({key: 'value'});
+            expect(collection.getIndexBy('key', 'value')).toBe(6);
+        });
+
+        it('should index by item', function() {
+            expect(collection.indexOf(4)).toBe(4);
+        });
+
+        it('should navigate within items', function() {
+            expect(collection.getPrevious(4)).toBe(items[3]);
+            expect(collection.getPrevious(0)).toBe(items[0]);
+            expect(collection.getNext(3)).toBe(items[4]);
+            expect(collection.getNext(5)).toBe(items[5]);
+        });
+    });
 });

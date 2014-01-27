@@ -1,4 +1,5 @@
 angular.module('allure.testcase.testcasesList', []).directive('testcasesList', function() {
+    'use strict';
     return {
         templateUrl: 'templates/testcase/list.html',
         controller: 'TestCasesCtrl',
@@ -7,8 +8,8 @@ angular.module('allure.testcase.testcasesList', []).directive('testcasesList', f
             showStatuses: '=statuses',
             selectedUid: '='
         }
-    }
-}).controller('TestCasesCtrl', ['$scope' , 'WatchingStore', 'status', 'severity', function ($scope, WatchingStore, status, severity) {
+    };
+}).controller('TestCasesCtrl', ['$scope', 'WatchingStore', 'status', 'severity', 'Collection', function ($scope, WatchingStore, status, severity, Collection) {
     'use strict';
     var store = new WatchingStore('testCasesSettings');
     $scope.bySeverity = function(testcase) {
@@ -34,6 +35,17 @@ angular.module('allure.testcase.testcasesList', []).directive('testcasesList', f
     $scope.selectTestcase = function(testcase) {
         $scope.selectedUid = testcase.uid;
     };
+    $scope.select = function(direction) {
+        var currentIndex = $scope.list.getIndexBy('uid', $scope.selectedUid),
+            testcase;
+        if(direction < 0) {
+            testcase = $scope.list.getPrevious(currentIndex);
+        }
+        else {
+            testcase = $scope.list.getNext(currentIndex);
+        }
+        $scope.selectTestcase(testcase);
+    };
     $scope.testcasesLimit = 100;
     $scope.sorting = {
         predicate: store.bindProperty($scope, 'sorting.predicate', $scope.byStatusAndSeverity),
@@ -51,5 +63,15 @@ angular.module('allure.testcase.testcasesList', []).directive('testcasesList', f
         }, {
             passed: 0, skipped: 0, failed: 0, broken: 0, total: testcases.length
         });
+        $scope.list = new Collection(testcases);
     });
+    $scope.$watch('sorting', function(sorting) {
+        $scope.list.sort(sorting);
+    }, true);
+    $scope.$watch('testcasesLimit', function(limit) {
+        $scope.list.limitTo(limit);
+    });
+    $scope.$watch('showStatuses', function() {
+        $scope.list.filter($scope.statusFilter);
+    }, true);
 }]);

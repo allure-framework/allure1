@@ -1,9 +1,17 @@
 /*global describe:true, it:true, beforeEach:true, afterEach:true, expect:true, spyOn:true, module:true, inject:true, angular:true, jasmine:true */
 describe('Testcase controllers', function() {
     'use strict';
-    var $controller, $rootScope;
+    var $controller, $rootScope,
+        collection;
 
-    beforeEach(module('allure.testcase.controllers'));
+    beforeEach(module('allure.testcase.controllers', function($provide) {
+        $provide.value('Collection', function() {
+            collection = jasmine.createSpyObj('Collection', ['filter', 'sort', 'limitTo', 'indexOf', 'getNext', 'getPrevious']);
+            collection.getNext.andReturn({source:'log'});
+            collection.getPrevious.andReturn({source:'log'});
+            return collection;
+        });
+    }));
     beforeEach(inject(function (_$controller_, _$rootScope_) {
         $controller = _$controller_;
         $rootScope = _$rootScope_;
@@ -196,16 +204,24 @@ describe('Testcase controllers', function() {
             });
             it('should set attachment when uid is present', function() {
                 scope.$broadcast('$stateChangeSuccess',  null, {attachmentUid: 'log'});
-                expect(treeUtils.walkAround).toHaveBeenCalled();
                 expect(scope.attachment).toBeDefined();
             });
             it('should not has attachment on route without uid', function() {
                 scope.$broadcast('$stateChangeSuccess',  null, {});
-                expect(treeUtils.walkAround).not.toHaveBeenCalled();
                 expect(scope.attachment).toBeUndefined();
             });
         });
 
-        it('should add failure message')
+        it('should navigate down', function() {
+            var scope = createController({attachments: [{source: 'log'}]});
+            scope.select(1);
+            expect(collection.getNext).toHaveBeenCalled();
+        });
+
+        it('should navigate up', function() {
+            var scope = createController({attachments: [{source: 'log'}]});
+            scope.select(-1);
+            expect(collection.getPrevious).toHaveBeenCalled();
+        });
     });
 });
