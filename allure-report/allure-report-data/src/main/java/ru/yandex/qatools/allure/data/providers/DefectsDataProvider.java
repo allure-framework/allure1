@@ -1,6 +1,6 @@
 package ru.yandex.qatools.allure.data.providers;
 
-import ru.yandex.qatools.allure.data.AllureErrors;
+import ru.yandex.qatools.allure.data.AllureDefects;
 
 import javax.xml.bind.JAXB;
 import java.io.File;
@@ -13,21 +13,21 @@ import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTr
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.12.13
  */
-public class ErrorsDataProvider implements DataProvider {
+public class DefectsDataProvider implements DataProvider {
 
-    private static final String TEST_RUN_TO_ERRORS_XSL = "xsl/testrun-to-errors.xsl";
+    private static final String TEST_RUN_TO_ERRORS_XSL = "xsl/testrun-to-defects.xsl";
 
-    public static final String ERRORS_JSON = "errors.json";
+    public static final String ERRORS_JSON = "defects.json";
 
     @Override
     public void provide(String testPack, File outputDirectory) {
         String allureErrorsBody = applyTransformation(testPack, TEST_RUN_TO_ERRORS_XSL);
 
-        AllureErrors allureErrors = JAXB.unmarshal(
+        AllureDefects allureDefets = JAXB.unmarshal(
                 new StringReader(allureErrorsBody),
-                AllureErrors.class
+                AllureDefects.class
         );
 
-        serialize(outputDirectory, ERRORS_JSON, allureErrors);
+        serialize(outputDirectory, ERRORS_JSON, allureDefets);
     }
 }

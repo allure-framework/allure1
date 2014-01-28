@@ -43,7 +43,7 @@ public class AllureReportGenerator {
                 new GraphDataProvider(),
                 new TestCasesDataProvider(),
                 new BehaviorDataProvider(),
-                new ErrorsDataProvider()
+                new DefectsDataProvider()
         };
     }
 
