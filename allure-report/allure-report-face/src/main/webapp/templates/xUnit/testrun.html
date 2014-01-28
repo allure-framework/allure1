@@ -3,6 +3,7 @@
     <h3>Test run
         (<span ng-pluralize count="testsuites.length" when="{one: '{} testsuite', other: '{} testsuites'}"></span>,
         <span ng-pluralize count="statistic.total" when="{one: '{} testcase', other: '{} testcases'}"></span>)
+        <span class="label label-success" ng-show="statistic.total == statistic.passed">PASSED</span>
     </h3>
 
     <div class="text-muted">Started {{time.start | date:'mediumDate'}} at {{time.start | date:'HH:mm:ss'}}

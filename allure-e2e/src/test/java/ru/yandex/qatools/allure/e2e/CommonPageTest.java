@@ -13,7 +13,7 @@ import static org.junit.Assert.assertThat;
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
  *         Date: 1/24/14
  */
-public class AllureCommonPageTest {
+public class CommonPageTest {
 
     public AllureEnvironment environment = AllureEnvironment.newInstance();
 
