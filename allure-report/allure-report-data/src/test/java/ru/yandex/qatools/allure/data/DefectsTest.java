@@ -33,7 +33,7 @@ public class DefectsTest {
 
     @ClassRule
     public static AllureReportGenerationRule allureRule =
-            new AllureReportGenerationRule(resultsConfig.getDirectoryPath());
+            new AllureReportGenerationRule(resultsConfig.getResultsDirectory());
 
     private AllureDefects allureDefectsData;
 
