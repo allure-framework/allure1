@@ -11,6 +11,7 @@ First of all add allure version property and dependency of **allure-junit-adapto
 ```xml
 <properties>
     <allure.version>{latest allure version}</allure.version>
+    <aspectj.version>1.7.4</aspectj.version>
 </properties>
 
 <dependency>
