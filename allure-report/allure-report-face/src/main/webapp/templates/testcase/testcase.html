@@ -17,7 +17,7 @@
         <span class="preformated-text" ng-click="expanded = !expanded">{{testcase.failure.message}}</span>
         <a class="pull-right clickable" ng-hide="expanded" ng-click="expanded = true">Show stacktrace</a>
         <a class="pull-right clickable" ng-show="expanded" ng-click="expanded = false">Hide stacktrace</a>
-        <div ng-show="expanded" class="preformated-text">{{testcase.failure.stackTrace}}</div>
+        <div ng-show="expanded" class="testcase__stacktrace preformated-text">{{testcase.failure.stackTrace}}</div>
     </div>
     <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
         The test has passed right!
