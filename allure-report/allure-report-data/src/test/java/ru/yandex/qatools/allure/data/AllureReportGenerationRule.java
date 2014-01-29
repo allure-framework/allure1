@@ -1,15 +1,15 @@
 package ru.yandex.qatools.allure.data;
 
-import ru.yandex.qatools.allure.model.TestSuiteResult;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.rules.ExternalResource;
 import org.apache.commons.io.FileUtils;
+import org.junit.rules.ExternalResource;
+import ru.yandex.qatools.allure.model.TestSuiteResult;
 
-import java.util.ArrayList;
 import javax.xml.bind.JAXB;
-import java.util.List;
 import java.io.File;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
 
@@ -24,6 +24,8 @@ public class AllureReportGenerationRule extends ExternalResource {
     private final File resultsDir;
 
     private AllureXUnit allureXUnit;
+
+    private AllureDefects allureDefects;
 
     private List<TestSuiteResult> testSuiteResults;
 
@@ -60,6 +62,14 @@ public class AllureReportGenerationRule extends ExternalResource {
             allureXUnit = mapper.readValue(new File(reportDataDir, "xunit.json"), AllureXUnit.class);
         }
         return allureXUnit;
+    }
+
+    public AllureDefects getDefectsData() throws Exception {
+        if (allureDefects == null) {
+            ObjectMapper mapper = new ObjectMapper();
+            allureDefects = mapper.readValue(new File(reportDataDir, "defects.json"), AllureDefects.class);
+        }
+        return allureDefects;
     }
 
     public List<TestSuiteResult> getTestSuiteResults() {
