@@ -99,7 +99,7 @@
                 </plugin>
                 <plugin>
                     <groupId>org.codehaus.sonar</groupId>
-                    <artifactId>sonar-maven3-plugin</artifactId>
+                    <artifactId>sonar-maven-plugin</artifactId>
                     <version>4.0</version>
                 </plugin>
                 <plugin>
@@ -154,8 +154,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>sonar-maven3-plugin</artifactId>
+                <groupId>org.codehaus.sonar</groupId>
+                <artifactId>sonar-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
