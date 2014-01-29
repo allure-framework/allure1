@@ -140,7 +140,7 @@
     <xsl:template name="add-uid-node">
         <xsl:param name="name"/>
         <xsl:element name="uid">
-            <xsl:value-of select="utils:generateUid($name)"/>
+            <xsl:value-of select="utils:generateUid()"/>
         </xsl:element>
     </xsl:template>
 
