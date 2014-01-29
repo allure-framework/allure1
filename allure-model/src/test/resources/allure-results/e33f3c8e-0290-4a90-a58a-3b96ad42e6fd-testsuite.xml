@@ -1,77 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1390309062502" stop="1390309069976">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391003386359" stop="1391003394305">
     <name>my.company.ScreenshotTest</name>
     <title>Search tests</title>
     <description type="text">This testsuite has tests what always are passing</description>
     <test-cases>
-        <test-case start="1390309062502" stop="1390309069877" status="passed" severity="trivial">
+        <test-case start="1391003386359" stop="1391003394185" status="passed" severity="trivial">
             <name>emptyTextSearch</name>
             <title>Empty text search</title>
             <steps>
-                <step start="1390309064119" stop="1390309064528" status="passed">
+                <step start="1391003388134" stop="1391003388803" status="passed">
                     <name>openMainPage</name>
                 </step>
-                <step start="1390309064528" stop="1390309069284" status="passed">
+                <step start="1391003388803" stop="1391003393586" status="passed">
                     <name>search</name>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Page Screenshot" source="0dcd49d1-7cf6-45a6-bf3c-7413d70c142f-attachment.png" type="png"/>
+                <attachment title="Page Screenshot" source="6314e513-0894-4630-9bf4-9a1e4cb0a378-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="story" value="WebdriverScreenshot"/>
             </labels>
         </test-case>
-        <test-case start="1390309062502" stop="1390309069430" status="passed" severity="normal">
-            <name>wildcardSearch</name>
-            <title>Wildcard search test</title>
-            <steps>
-                <step start="1390309064119" stop="1390309064526" status="passed">
-                    <name>openMainPage</name>
-                </step>
-                <step start="1390309064527" stop="1390309068760" status="passed">
-                    <name>search</name>
-                </step>
-            </steps>
-            <attachments>
-                <attachment title="Page Screenshot" source="eb46540b-e659-458c-ade7-92acb93a4f09-attachment.png" type="png"/>
-            </attachments>
-            <labels>
-                <label name="story" value="WebdriverScreenshot"/>
-            </labels>
-        </test-case>
-        <test-case start="1390309062502" stop="1390309067585" status="passed" severity="normal">
+        <test-case start="1391003386359" stop="1391003393743" status="passed" severity="normal">
             <name>usualSearch</name>
             <title>Usual search test</title>
             <steps>
-                <step start="1390309064121" stop="1390309064556" status="passed">
+                <step start="1391003388134" stop="1391003388794" status="passed">
                     <name>openMainPage</name>
                 </step>
-                <step start="1390309064556" stop="1390309066826" status="passed">
+                <step start="1391003388795" stop="1391003393021" status="passed">
                     <name>search</name>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Page Screenshot" source="6e1ce608-f52c-4da8-abac-e460997832a3-attachment.png" type="png"/>
+                <attachment title="Page Screenshot" source="6d983952-fdc9-474c-99a4-d051d83e3338-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="story" value="WebdriverScreenshot"/>
             </labels>
         </test-case>
-        <test-case start="1390309062502" stop="1390309065638" status="failed" severity="normal">
+        <test-case start="1391003386360" stop="1391003389903" status="failed" severity="normal">
             <name>pageLoadingTest</name>
             <title>Page loading test</title>
             <failure>
-                <message>AssertionError: 
-Expected: is &quot;Yandex&quot;
-     but: was &quot;&quot;</message>
-                <stack-trace>java.lang.AssertionError: 
-Expected: is &quot;Yandex&quot;
-     but: was &quot;&quot;
+                <message>AssertionError: Text on current page should be correct
+Expected: element text is &quot;Yandex&quot;
+     but: &lt;[[PhantomJSDriver: phantomjs on LINUX (37bb2d80-88ec-11e3-ab07-03c4b84403b2)] -&gt; css selector: title]&gt; text is &quot;&quot;</message>
+                <stack-trace>java.lang.AssertionError: Text on current page should be correct
+Expected: element text is &quot;Yandex&quot;
+     but: &lt;[[PhantomJSDriver: phantomjs on LINUX (37bb2d80-88ec-11e3-ab07-03c4b84403b2)] -&gt; css selector: title]&gt; text is &quot;&quot;
 	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 	at org.junit.Assert.assertThat(Assert.java:865)
-	at org.junit.Assert.assertThat(Assert.java:832)
-	at my.company.steps.WebDriverSteps.checkText(WebDriverSteps.java:50)
+	at my.company.steps.WebDriverSteps.checkText(WebDriverSteps.java:51)
 	at my.company.ScreenshotTest.pageLoadingTest(ScreenshotTest.java:35)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
@@ -95,21 +76,39 @@ Expected: is &quot;Yandex&quot;
 </stack-trace>
             </failure>
             <steps>
-                <step start="1390309064119" stop="1390309064522" status="passed">
+                <step start="1391003388135" stop="1391003388809" status="passed">
                     <name>openMainPage</name>
                 </step>
-                <step start="1390309065041" stop="1390309065059" status="passed">
+                <step start="1391003389316" stop="1391003389327" status="passed">
                     <name>findElement</name>
                 </step>
-                <step start="1390309065059" stop="1390309065112" status="failed">
+                <step start="1391003389327" stop="1391003389380" status="failed">
                     <name>checkText</name>
                     <title>Check text in element</title>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Server Log" source="15e8d3d5-10bf-48a9-9a53-cca2de3f54c7-attachment.txt" type="txt"/>
-                <attachment title="Response" source="9e0ec0e8-046f-4e44-83a5-6c5968331233-attachment.json" type="json"/>
-                <attachment title="Page Screenshot" source="7bb17764-68c4-43de-a966-ab9dbf944ce3-attachment.png" type="png"/>
+                <attachment title="Server Log" source="8742e563-c153-481a-9841-ff591d2c59ed-attachment.txt" type="txt"/>
+                <attachment title="Response" source="8c558b28-eab6-4ce4-b988-4141cdd4441d-attachment.json" type="json"/>
+                <attachment title="Page Screenshot" source="33e86d60-23ed-4434-86ae-eeb1ae9c02df-attachment.png" type="png"/>
+            </attachments>
+            <labels>
+                <label name="story" value="WebdriverScreenshot"/>
+            </labels>
+        </test-case>
+        <test-case start="1391003386360" stop="1391003393754" status="passed" severity="normal">
+            <name>wildcardSearch</name>
+            <title>Wildcard search test</title>
+            <steps>
+                <step start="1391003388136" stop="1391003388794" status="passed">
+                    <name>openMainPage</name>
+                </step>
+                <step start="1391003388794" stop="1391003393023" status="passed">
+                    <name>search</name>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title="Page Screenshot" source="163f7e22-8281-47f0-864b-b643d354909d-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="story" value="WebdriverScreenshot"/>
