@@ -129,9 +129,9 @@ describe('Testcase controllers', function() {
             $httpBackend.expectGET('data/report.xml').respond(backendDefinitions['report.xml']);
             var scope = createController({type: 'PNG', name: 'picture', source:'pic'});
             expect(scope.type).toBe('image');
-            scope.attachment = {type: 'XML', name: 'report', source:'report.xml'};
+            scope.attachment = {type: 'HTML', name: 'report', source:'report.html'};
             scope.$apply();
-            expect(scope.type).toBe('code');
+            expect(scope.type).toBeUndefined();
         });
 
         describe('expanded state', function() {

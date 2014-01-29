@@ -115,6 +115,8 @@ angular.module('allure.testcase.controllers', [])
                     $scope.type = "code";
                     fileGetContents($scope.getSourceUrl(attachment));
                     break;
+                default:
+                    delete $scope.type;
             }
         });
     });
