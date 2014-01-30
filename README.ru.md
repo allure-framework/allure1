@@ -1,4 +1,4 @@
-[allure-dashboard-image]: https://github.com/allure-framework/allure-core/blob/master/docs/allure-dashboard.png
+[allure-dashboard-image]: https://raw.github.com/allure-framework/allure-core/master/docs/allure-dashboard.png
 [allure-teamcity-release-artifact]: http://teamcity.qatools.ru/repository/download/allure_core_master_release/473:id/index.html
 [junit-adaptor]: https://github.com/allure-framework/allure-core/blob/master/allure-junit/allure-junit-adaptor/README.ru.md
 [testng-adaptor]: https://github.com/allure-framework/allure-core/blob/master/allure-testng/allure-testng-adaptor/README.ru.md
