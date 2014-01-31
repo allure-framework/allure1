@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391003366619" stop="1391003394447">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391164808645" stop="1391164835339">
     <name>my.company.ParametrizedTest</name>
     <test-cases>
-        <test-case start="1391003366631" stop="1391003368573" status="passed" severity="normal">
-            <name>calculationTest[4]</name>
+        <test-case start="1391164808656" stop="1391164810634" status="passed" severity="normal">
+            <name>calculationTest[6]</name>
             <steps/>
             <attachments/>
             <labels>
@@ -11,10 +11,10 @@
                 <label name="feature" value="SimpleStories"/>
             </labels>
             <parameters>
-                <parameter name="Argument" value="4" kind="environment-variable"/>
+                <parameter name="Argument" value="6" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366635" stop="1391003367104" status="passed" severity="normal">
+        <test-case start="1391164808658" stop="1391164808929" status="passed" severity="normal">
             <name>calculationTest[15]</name>
             <steps/>
             <attachments/>
@@ -26,7 +26,7 @@
                 <parameter name="Argument" value="15" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366636" stop="1391003367135" status="passed" severity="normal">
+        <test-case start="1391164808659" stop="1391164809425" status="passed" severity="normal">
             <name>calculationTest[14]</name>
             <steps/>
             <attachments/>
@@ -38,7 +38,7 @@
                 <parameter name="Argument" value="14" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366636" stop="1391003367979" status="passed" severity="normal">
+        <test-case start="1391164808659" stop="1391164810206" status="passed" severity="normal">
             <name>calculationTest[13]</name>
             <steps/>
             <attachments/>
@@ -50,7 +50,7 @@
                 <parameter name="Argument" value="13" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366637" stop="1391003366691" status="passed" severity="normal">
+        <test-case start="1391164808659" stop="1391164809330" status="passed" severity="normal">
             <name>calculationTest[12]</name>
             <steps/>
             <attachments/>
@@ -62,50 +62,7 @@
                 <parameter name="Argument" value="12" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366637" stop="1391003367531" status="broken" severity="normal">
-            <name>calculationTest[11]</name>
-            <failure>
-                <message>Exception: Unexpected value</message>
-                <stack-trace>java.lang.Exception: Unexpected value
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:51)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:606)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
-	at org.junit.runners.Suite.runChild(Suite.java:127)
-	at org.junit.runners.Suite.runChild(Suite.java:26)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-	at java.lang.Thread.run(Thread.java:744)
-</stack-trace>
-            </failure>
-            <steps/>
-            <attachments/>
-            <labels>
-                <label name="story" value="ParametrizedStory"/>
-                <label name="feature" value="SimpleStories"/>
-            </labels>
-            <parameters>
-                <parameter name="Argument" value="11" kind="environment-variable"/>
-            </parameters>
-        </test-case>
-        <test-case start="1391003366637" stop="1391003366936" status="skipped" severity="normal">
+        <test-case start="1391164808660" stop="1391164808833" status="skipped" severity="normal">
             <name>calculationTest[10]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -149,11 +106,54 @@
                 <parameter name="Argument" value="10" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366637" stop="1391003368027" status="failed" severity="normal">
+        <test-case start="1391164808660" stop="1391164810082" status="broken" severity="normal">
+            <name>calculationTest[11]</name>
+            <failure>
+                <message>Exception: Unexpected value</message>
+                <stack-trace>java.lang.Exception: Unexpected value
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:51)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value="ParametrizedStory"/>
+                <label name="feature" value="SimpleStories"/>
+            </labels>
+            <parameters>
+                <parameter name="Argument" value="11" kind="environment-variable"/>
+            </parameters>
+        </test-case>
+        <test-case start="1391164808660" stop="1391164808831" status="failed" severity="normal">
             <name>calculationTest[9]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 10 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -194,14 +194,36 @@
                 <parameter name="Argument" value="9" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366638" stop="1391003367091" status="failed" severity="normal">
+        <test-case start="1391164808661" stop="1391164809371" status="passed" severity="normal">
+            <name>calculationTest[2]</name>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value="ParametrizedStory"/>
+                <label name="feature" value="SimpleStories"/>
+            </labels>
+            <parameters>
+                <parameter name="Argument" value="2" kind="environment-variable"/>
+            </parameters>
+        </test-case>
+        <test-case start="1391164808661" stop="1391164809160" status="passed" severity="normal">
             <name>calculationTest[7]</name>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value="ParametrizedStory"/>
+                <label name="feature" value="SimpleStories"/>
+            </labels>
+            <parameters>
+                <parameter name="Argument" value="7" kind="environment-variable"/>
+            </parameters>
+        </test-case>
+        <test-case start="1391164808661" stop="1391164810449" status="broken" severity="normal">
+            <name>calculationTest[1]</name>
             <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+                <message>Exception: Unexpected value</message>
+                <stack-trace>java.lang.Exception: Unexpected value
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:51)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -236,26 +258,14 @@
                 <label name="feature" value="SimpleStories"/>
             </labels>
             <parameters>
-                <parameter name="Argument" value="7" kind="environment-variable"/>
+                <parameter name="Argument" value="1" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366638" stop="1391003366701" status="passed" severity="normal">
-            <name>calculationTest[6]</name>
-            <steps/>
-            <attachments/>
-            <labels>
-                <label name="story" value="ParametrizedStory"/>
-                <label name="feature" value="SimpleStories"/>
-            </labels>
-            <parameters>
-                <parameter name="Argument" value="6" kind="environment-variable"/>
-            </parameters>
-        </test-case>
-        <test-case start="1391003366638" stop="1391003368633" status="failed" severity="normal">
+        <test-case start="1391164808661" stop="1391164809698" status="failed" severity="normal">
             <name>calculationTest[8]</name>
             <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -296,7 +306,7 @@
                 <parameter name="Argument" value="8" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366639" stop="1391003368582" status="passed" severity="normal">
+        <test-case start="1391164808662" stop="1391164809437" status="passed" severity="normal">
             <name>calculationTest[3]</name>
             <steps/>
             <attachments/>
@@ -308,7 +318,7 @@
                 <parameter name="Argument" value="3" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366639" stop="1391003366697" status="passed" severity="normal">
+        <test-case start="1391164808662" stop="1391164809352" status="passed" severity="normal">
             <name>calculationTest[5]</name>
             <steps/>
             <attachments/>
@@ -320,7 +330,19 @@
                 <parameter name="Argument" value="5" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366639" stop="1391003367187" status="skipped" severity="normal">
+        <test-case start="1391164808662" stop="1391164809769" status="passed" severity="normal">
+            <name>calculationTest[4]</name>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value="ParametrizedStory"/>
+                <label name="feature" value="SimpleStories"/>
+            </labels>
+            <parameters>
+                <parameter name="Argument" value="4" kind="environment-variable"/>
+            </parameters>
+        </test-case>
+        <test-case start="1391164808663" stop="1391164809945" status="skipped" severity="normal">
             <name>calculationTest[0]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -364,14 +386,15 @@
                 <parameter name="Argument" value="0" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366639" stop="1391003367550" status="broken" severity="normal">
-            <name>calculationTest[1]</name>
+        <test-case start="1391164808834" stop="1391164809106" status="failed" severity="normal">
+            <name>calculationTest[17]</name>
             <failure>
-                <message>Exception: Unexpected value</message>
-                <stack-trace>java.lang.Exception: Unexpected value
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:51)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
 	at java.lang.reflect.Method.invoke(Method.java:606)
 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
@@ -404,34 +427,10 @@
                 <label name="feature" value="SimpleStories"/>
             </labels>
             <parameters>
-                <parameter name="Argument" value="1" kind="environment-variable"/>
-            </parameters>
-        </test-case>
-        <test-case start="1391003366640" stop="1391003368212" status="passed" severity="normal">
-            <name>calculationTest[2]</name>
-            <steps/>
-            <attachments/>
-            <labels>
-                <label name="story" value="ParametrizedStory"/>
-                <label name="feature" value="SimpleStories"/>
-            </labels>
-            <parameters>
-                <parameter name="Argument" value="2" kind="environment-variable"/>
-            </parameters>
-        </test-case>
-        <test-case start="1391003366697" stop="1391003368204" status="passed" severity="normal">
-            <name>calculationTest[17]</name>
-            <steps/>
-            <attachments/>
-            <labels>
-                <label name="story" value="ParametrizedStory"/>
-                <label name="feature" value="SimpleStories"/>
-            </labels>
-            <parameters>
                 <parameter name="Argument" value="17" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366697" stop="1391003367244" status="passed" severity="normal">
+        <test-case start="1391164808834" stop="1391164808926" status="passed" severity="normal">
             <name>calculationTest[16]</name>
             <steps/>
             <attachments/>
@@ -443,7 +442,7 @@
                 <parameter name="Argument" value="16" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366701" stop="1391003367857" status="failed" severity="normal">
+        <test-case start="1391164808929" stop="1391164809593" status="failed" severity="normal">
             <name>calculationTest[18]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -487,7 +486,7 @@
                 <parameter name="Argument" value="18" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003366936" stop="1391003368003" status="failed" severity="normal">
+        <test-case start="1391164808929" stop="1391164810397" status="failed" severity="normal">
             <name>calculationTest[19]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -531,7 +530,7 @@
                 <parameter name="Argument" value="19" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367091" stop="1391003368382" status="skipped" severity="normal">
+        <test-case start="1391164809106" stop="1391164809557" status="skipped" severity="normal">
             <name>calculationTest[20]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -574,7 +573,7 @@
                 <parameter name="Argument" value="20" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367105" stop="1391003368149" status="broken" severity="normal">
+        <test-case start="1391164809161" stop="1391164809525" status="broken" severity="normal">
             <name>calculationTest[21]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -616,7 +615,7 @@
                 <parameter name="Argument" value="21" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367136" stop="1391003367752" status="passed" severity="normal">
+        <test-case start="1391164809330" stop="1391164811118" status="passed" severity="normal">
             <name>calculationTest[22]</name>
             <steps/>
             <attachments/>
@@ -628,7 +627,7 @@
                 <parameter name="Argument" value="22" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367188" stop="1391003368091" status="passed" severity="normal">
+        <test-case start="1391164809353" stop="1391164810026" status="passed" severity="normal">
             <name>calculationTest[23]</name>
             <steps/>
             <attachments/>
@@ -640,7 +639,7 @@
                 <parameter name="Argument" value="23" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367245" stop="1391003368035" status="passed" severity="normal">
+        <test-case start="1391164809371" stop="1391164810875" status="passed" severity="normal">
             <name>calculationTest[24]</name>
             <steps/>
             <attachments/>
@@ -652,7 +651,7 @@
                 <parameter name="Argument" value="24" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367532" stop="1391003368114" status="passed" severity="normal">
+        <test-case start="1391164809425" stop="1391164810266" status="passed" severity="normal">
             <name>calculationTest[25]</name>
             <steps/>
             <attachments/>
@@ -664,7 +663,7 @@
                 <parameter name="Argument" value="25" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367551" stop="1391003367704" status="passed" severity="normal">
+        <test-case start="1391164809438" stop="1391164809606" status="passed" severity="normal">
             <name>calculationTest[26]</name>
             <steps/>
             <attachments/>
@@ -676,7 +675,7 @@
                 <parameter name="Argument" value="26" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367705" stop="1391003369198" status="failed" severity="normal">
+        <test-case start="1391164809525" stop="1391164811359" status="failed" severity="normal">
             <name>calculationTest[27]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -720,7 +719,7 @@
                 <parameter name="Argument" value="27" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367753" stop="1391003368949" status="failed" severity="normal">
+        <test-case start="1391164809557" stop="1391164809666" status="failed" severity="normal">
             <name>calculationTest[28]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -764,11 +763,11 @@
                 <parameter name="Argument" value="28" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367858" stop="1391003368920" status="failed" severity="normal">
+        <test-case start="1391164809594" stop="1391164810727" status="failed" severity="normal">
             <name>calculationTest[29]</name>
             <failure>
-                <message>AssertionError: Expected 10 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -808,7 +807,7 @@
                 <parameter name="Argument" value="29" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003367980" stop="1391003369679" status="skipped" severity="normal">
+        <test-case start="1391164809606" stop="1391164810970" status="skipped" severity="normal">
             <name>calculationTest[30]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -851,7 +850,7 @@
                 <parameter name="Argument" value="30" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368003" stop="1391003368037" status="broken" severity="normal">
+        <test-case start="1391164809667" stop="1391164810696" status="broken" severity="normal">
             <name>calculationTest[31]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -893,7 +892,7 @@
                 <parameter name="Argument" value="31" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368027" stop="1391003368713" status="passed" severity="normal">
+        <test-case start="1391164809699" stop="1391164810158" status="passed" severity="normal">
             <name>calculationTest[32]</name>
             <steps/>
             <attachments/>
@@ -905,7 +904,7 @@
                 <parameter name="Argument" value="32" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368035" stop="1391003369983" status="passed" severity="normal">
+        <test-case start="1391164809769" stop="1391164811158" status="passed" severity="normal">
             <name>calculationTest[33]</name>
             <steps/>
             <attachments/>
@@ -917,7 +916,7 @@
                 <parameter name="Argument" value="33" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368037" stop="1391003369300" status="passed" severity="normal">
+        <test-case start="1391164809946" stop="1391164811303" status="passed" severity="normal">
             <name>calculationTest[34]</name>
             <steps/>
             <attachments/>
@@ -929,7 +928,7 @@
                 <parameter name="Argument" value="34" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368091" stop="1391003368903" status="passed" severity="normal">
+        <test-case start="1391164810027" stop="1391164811352" status="passed" severity="normal">
             <name>calculationTest[35]</name>
             <steps/>
             <attachments/>
@@ -941,7 +940,7 @@
                 <parameter name="Argument" value="35" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368114" stop="1391003369339" status="passed" severity="normal">
+        <test-case start="1391164810083" stop="1391164810278" status="passed" severity="normal">
             <name>calculationTest[36]</name>
             <steps/>
             <attachments/>
@@ -953,7 +952,7 @@
                 <parameter name="Argument" value="36" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368149" stop="1391003369743" status="failed" severity="normal">
+        <test-case start="1391164810158" stop="1391164811778" status="failed" severity="normal">
             <name>calculationTest[37]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -997,7 +996,7 @@
                 <parameter name="Argument" value="37" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368205" stop="1391003370199" status="failed" severity="normal">
+        <test-case start="1391164810206" stop="1391164811881" status="failed" severity="normal">
             <name>calculationTest[38]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -1041,11 +1040,11 @@
                 <parameter name="Argument" value="38" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368212" stop="1391003368727" status="failed" severity="normal">
+        <test-case start="1391164810266" stop="1391164810922" status="failed" severity="normal">
             <name>calculationTest[39]</name>
             <failure>
-                <message>AssertionError: Expected 10 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -1085,7 +1084,7 @@
                 <parameter name="Argument" value="39" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368383" stop="1391003369674" status="skipped" severity="normal">
+        <test-case start="1391164810278" stop="1391164811625" status="skipped" severity="normal">
             <name>calculationTest[40]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -1128,7 +1127,7 @@
                 <parameter name="Argument" value="40" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368583" stop="1391003369910" status="broken" severity="normal">
+        <test-case start="1391164810398" stop="1391164811808" status="broken" severity="normal">
             <name>calculationTest[41]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -1170,7 +1169,7 @@
                 <parameter name="Argument" value="41" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368583" stop="1391003369160" status="passed" severity="normal">
+        <test-case start="1391164810450" stop="1391164811016" status="passed" severity="normal">
             <name>calculationTest[42]</name>
             <steps/>
             <attachments/>
@@ -1182,7 +1181,7 @@
                 <parameter name="Argument" value="42" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368634" stop="1391003369831" status="passed" severity="normal">
+        <test-case start="1391164810635" stop="1391164811336" status="passed" severity="normal">
             <name>calculationTest[43]</name>
             <steps/>
             <attachments/>
@@ -1194,7 +1193,7 @@
                 <parameter name="Argument" value="43" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368714" stop="1391003369761" status="passed" severity="normal">
+        <test-case start="1391164810697" stop="1391164812264" status="passed" severity="normal">
             <name>calculationTest[44]</name>
             <steps/>
             <attachments/>
@@ -1206,7 +1205,7 @@
                 <parameter name="Argument" value="44" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368728" stop="1391003370640" status="passed" severity="normal">
+        <test-case start="1391164810727" stop="1391164810886" status="passed" severity="normal">
             <name>calculationTest[45]</name>
             <steps/>
             <attachments/>
@@ -1218,7 +1217,7 @@
                 <parameter name="Argument" value="45" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368903" stop="1391003370690" status="passed" severity="normal">
+        <test-case start="1391164810876" stop="1391164812856" status="passed" severity="normal">
             <name>calculationTest[46]</name>
             <steps/>
             <attachments/>
@@ -1230,40 +1229,8 @@
                 <parameter name="Argument" value="46" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368920" stop="1391003369716" status="failed" severity="normal">
+        <test-case start="1391164810887" stop="1391164811930" status="passed" severity="normal">
             <name>calculationTest[47]</name>
-            <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
-	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:606)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
-	at org.junit.runners.Suite.runChild(Suite.java:127)
-	at org.junit.runners.Suite.runChild(Suite.java:26)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-	at java.lang.Thread.run(Thread.java:744)
-</stack-trace>
-            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -1274,7 +1241,7 @@
                 <parameter name="Argument" value="47" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003368951" stop="1391003369585" status="failed" severity="normal">
+        <test-case start="1391164810923" stop="1391164812922" status="failed" severity="normal">
             <name>calculationTest[48]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -1318,7 +1285,7 @@
                 <parameter name="Argument" value="48" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369161" stop="1391003370136" status="failed" severity="normal">
+        <test-case start="1391164810971" stop="1391164811045" status="failed" severity="normal">
             <name>calculationTest[49]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -1362,7 +1329,7 @@
                 <parameter name="Argument" value="49" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369199" stop="1391003370751" status="skipped" severity="normal">
+        <test-case start="1391164811017" stop="1391164811406" status="skipped" severity="normal">
             <name>calculationTest[50]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -1405,7 +1372,7 @@
                 <parameter name="Argument" value="50" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369301" stop="1391003370140" status="broken" severity="normal">
+        <test-case start="1391164811046" stop="1391164811526" status="broken" severity="normal">
             <name>calculationTest[51]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -1447,7 +1414,7 @@
                 <parameter name="Argument" value="51" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369340" stop="1391003371090" status="passed" severity="normal">
+        <test-case start="1391164811119" stop="1391164811963" status="passed" severity="normal">
             <name>calculationTest[52]</name>
             <steps/>
             <attachments/>
@@ -1459,7 +1426,7 @@
                 <parameter name="Argument" value="52" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369586" stop="1391003371019" status="passed" severity="normal">
+        <test-case start="1391164811159" stop="1391164812547" status="passed" severity="normal">
             <name>calculationTest[53]</name>
             <steps/>
             <attachments/>
@@ -1471,7 +1438,7 @@
                 <parameter name="Argument" value="53" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369675" stop="1391003369977" status="passed" severity="normal">
+        <test-case start="1391164811304" stop="1391164812555" status="passed" severity="normal">
             <name>calculationTest[54]</name>
             <steps/>
             <attachments/>
@@ -1483,7 +1450,7 @@
                 <parameter name="Argument" value="54" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369680" stop="1391003371245" status="passed" severity="normal">
+        <test-case start="1391164811336" stop="1391164813064" status="passed" severity="normal">
             <name>calculationTest[55]</name>
             <steps/>
             <attachments/>
@@ -1495,7 +1462,7 @@
                 <parameter name="Argument" value="55" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369717" stop="1391003371341" status="passed" severity="normal">
+        <test-case start="1391164811353" stop="1391164811650" status="passed" severity="normal">
             <name>calculationTest[56]</name>
             <steps/>
             <attachments/>
@@ -1507,8 +1474,40 @@
                 <parameter name="Argument" value="56" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369744" stop="1391003371674" status="passed" severity="normal">
+        <test-case start="1391164811360" stop="1391164812635" status="failed" severity="normal">
             <name>calculationTest[57]</name>
+            <failure>
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -1519,7 +1518,7 @@
                 <parameter name="Argument" value="57" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369761" stop="1391003371570" status="failed" severity="normal">
+        <test-case start="1391164811407" stop="1391164811674" status="failed" severity="normal">
             <name>calculationTest[58]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -1563,11 +1562,11 @@
                 <parameter name="Argument" value="58" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369832" stop="1391003369884" status="failed" severity="normal">
+        <test-case start="1391164811527" stop="1391164812633" status="failed" severity="normal">
             <name>calculationTest[59]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 10 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -1607,7 +1606,7 @@
                 <parameter name="Argument" value="59" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369885" stop="1391003371238" status="skipped" severity="normal">
+        <test-case start="1391164811626" stop="1391164812004" status="skipped" severity="normal">
             <name>calculationTest[60]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -1650,7 +1649,7 @@
                 <parameter name="Argument" value="60" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369911" stop="1391003369935" status="broken" severity="normal">
+        <test-case start="1391164811651" stop="1391164813090" status="broken" severity="normal">
             <name>calculationTest[61]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -1692,7 +1691,7 @@
                 <parameter name="Argument" value="61" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369936" stop="1391003371812" status="passed" severity="normal">
+        <test-case start="1391164811675" stop="1391164813584" status="passed" severity="normal">
             <name>calculationTest[62]</name>
             <steps/>
             <attachments/>
@@ -1704,7 +1703,7 @@
                 <parameter name="Argument" value="62" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369977" stop="1391003370652" status="passed" severity="normal">
+        <test-case start="1391164811779" stop="1391164812876" status="passed" severity="normal">
             <name>calculationTest[63]</name>
             <steps/>
             <attachments/>
@@ -1716,7 +1715,7 @@
                 <parameter name="Argument" value="63" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003369984" stop="1391003371862" status="passed" severity="normal">
+        <test-case start="1391164811809" stop="1391164813072" status="passed" severity="normal">
             <name>calculationTest[64]</name>
             <steps/>
             <attachments/>
@@ -1728,7 +1727,7 @@
                 <parameter name="Argument" value="64" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370137" stop="1391003371278" status="passed" severity="normal">
+        <test-case start="1391164811883" stop="1391164813783" status="passed" severity="normal">
             <name>calculationTest[65]</name>
             <steps/>
             <attachments/>
@@ -1740,7 +1739,7 @@
                 <parameter name="Argument" value="65" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370141" stop="1391003371796" status="passed" severity="normal">
+        <test-case start="1391164811931" stop="1391164812466" status="passed" severity="normal">
             <name>calculationTest[66]</name>
             <steps/>
             <attachments/>
@@ -1752,7 +1751,7 @@
                 <parameter name="Argument" value="66" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370199" stop="1391003371817" status="passed" severity="normal">
+        <test-case start="1391164811963" stop="1391164813348" status="passed" severity="normal">
             <name>calculationTest[67]</name>
             <steps/>
             <attachments/>
@@ -1764,11 +1763,11 @@
                 <parameter name="Argument" value="67" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370641" stop="1391003371327" status="failed" severity="normal">
+        <test-case start="1391164812005" stop="1391164813520" status="failed" severity="normal">
             <name>calculationTest[68]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -1808,7 +1807,7 @@
                 <parameter name="Argument" value="68" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370653" stop="1391003370849" status="failed" severity="normal">
+        <test-case start="1391164812265" stop="1391164812640" status="failed" severity="normal">
             <name>calculationTest[69]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -1852,7 +1851,7 @@
                 <parameter name="Argument" value="69" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370691" stop="1391003370693" status="skipped" severity="normal">
+        <test-case start="1391164812467" stop="1391164813184" status="skipped" severity="normal">
             <name>calculationTest[70]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -1895,7 +1894,7 @@
                 <parameter name="Argument" value="70" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370694" stop="1391003371243" status="broken" severity="normal">
+        <test-case start="1391164812548" stop="1391164812933" status="broken" severity="normal">
             <name>calculationTest[71]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -1937,7 +1936,7 @@
                 <parameter name="Argument" value="71" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370752" stop="1391003372643" status="passed" severity="normal">
+        <test-case start="1391164812556" stop="1391164813074" status="passed" severity="normal">
             <name>calculationTest[72]</name>
             <steps/>
             <attachments/>
@@ -1949,7 +1948,7 @@
                 <parameter name="Argument" value="72" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003370849" stop="1391003371244" status="passed" severity="normal">
+        <test-case start="1391164812634" stop="1391164813573" status="passed" severity="normal">
             <name>calculationTest[73]</name>
             <steps/>
             <attachments/>
@@ -1961,7 +1960,7 @@
                 <parameter name="Argument" value="73" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371019" stop="1391003371986" status="passed" severity="normal">
+        <test-case start="1391164812635" stop="1391164813927" status="passed" severity="normal">
             <name>calculationTest[74]</name>
             <steps/>
             <attachments/>
@@ -1973,7 +1972,7 @@
                 <parameter name="Argument" value="74" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371091" stop="1391003371371" status="passed" severity="normal">
+        <test-case start="1391164812641" stop="1391164814397" status="passed" severity="normal">
             <name>calculationTest[75]</name>
             <steps/>
             <attachments/>
@@ -1985,7 +1984,7 @@
                 <parameter name="Argument" value="75" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371239" stop="1391003372092" status="passed" severity="normal">
+        <test-case start="1391164812857" stop="1391164814439" status="passed" severity="normal">
             <name>calculationTest[76]</name>
             <steps/>
             <attachments/>
@@ -1997,7 +1996,7 @@
                 <parameter name="Argument" value="76" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371244" stop="1391003371892" status="failed" severity="normal">
+        <test-case start="1391164812877" stop="1391164813394" status="failed" severity="normal">
             <name>calculationTest[77]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -2041,7 +2040,7 @@
                 <parameter name="Argument" value="77" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371244" stop="1391003372203" status="failed" severity="normal">
+        <test-case start="1391164812923" stop="1391164813066" status="failed" severity="normal">
             <name>calculationTest[78]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -2085,11 +2084,11 @@
                 <parameter name="Argument" value="78" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371245" stop="1391003372597" status="failed" severity="normal">
+        <test-case start="1391164812934" stop="1391164814728" status="failed" severity="normal">
             <name>calculationTest[79]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 10 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -2129,7 +2128,7 @@
                 <parameter name="Argument" value="79" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371279" stop="1391003372160" status="skipped" severity="normal">
+        <test-case start="1391164813065" stop="1391164813561" status="skipped" severity="normal">
             <name>calculationTest[80]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -2172,7 +2171,7 @@
                 <parameter name="Argument" value="80" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371328" stop="1391003372156" status="broken" severity="normal">
+        <test-case start="1391164813066" stop="1391164814002" status="broken" severity="normal">
             <name>calculationTest[81]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -2214,7 +2213,7 @@
                 <parameter name="Argument" value="81" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371342" stop="1391003372783" status="passed" severity="normal">
+        <test-case start="1391164813073" stop="1391164814389" status="passed" severity="normal">
             <name>calculationTest[82]</name>
             <steps/>
             <attachments/>
@@ -2226,7 +2225,7 @@
                 <parameter name="Argument" value="82" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371372" stop="1391003373140" status="passed" severity="normal">
+        <test-case start="1391164813075" stop="1391164813113" status="passed" severity="normal">
             <name>calculationTest[83]</name>
             <steps/>
             <attachments/>
@@ -2238,7 +2237,7 @@
                 <parameter name="Argument" value="83" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371571" stop="1391003372607" status="passed" severity="normal">
+        <test-case start="1391164813090" stop="1391164814062" status="passed" severity="normal">
             <name>calculationTest[84]</name>
             <steps/>
             <attachments/>
@@ -2250,7 +2249,7 @@
                 <parameter name="Argument" value="84" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371675" stop="1391003372027" status="passed" severity="normal">
+        <test-case start="1391164813114" stop="1391164814645" status="passed" severity="normal">
             <name>calculationTest[85]</name>
             <steps/>
             <attachments/>
@@ -2262,7 +2261,7 @@
                 <parameter name="Argument" value="85" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371797" stop="1391003372732" status="passed" severity="normal">
+        <test-case start="1391164813185" stop="1391164813263" status="passed" severity="normal">
             <name>calculationTest[86]</name>
             <steps/>
             <attachments/>
@@ -2274,8 +2273,40 @@
                 <parameter name="Argument" value="86" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371813" stop="1391003372858" status="passed" severity="normal">
+        <test-case start="1391164813264" stop="1391164814084" status="failed" severity="normal">
             <name>calculationTest[87]</name>
+            <failure>
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -2286,7 +2317,7 @@
                 <parameter name="Argument" value="87" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371818" stop="1391003372881" status="failed" severity="normal">
+        <test-case start="1391164813349" stop="1391164813449" status="failed" severity="normal">
             <name>calculationTest[88]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -2330,7 +2361,7 @@
                 <parameter name="Argument" value="88" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371863" stop="1391003372878" status="failed" severity="normal">
+        <test-case start="1391164813395" stop="1391164815030" status="failed" severity="normal">
             <name>calculationTest[89]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -2374,7 +2405,7 @@
                 <parameter name="Argument" value="89" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371893" stop="1391003372697" status="skipped" severity="normal">
+        <test-case start="1391164813449" stop="1391164813698" status="skipped" severity="normal">
             <name>calculationTest[90]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -2417,7 +2448,7 @@
                 <parameter name="Argument" value="90" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003371987" stop="1391003372319" status="broken" severity="normal">
+        <test-case start="1391164813521" stop="1391164814221" status="broken" severity="normal">
             <name>calculationTest[91]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -2459,7 +2490,7 @@
                 <parameter name="Argument" value="91" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372028" stop="1391003372895" status="passed" severity="normal">
+        <test-case start="1391164813562" stop="1391164813879" status="passed" severity="normal">
             <name>calculationTest[92]</name>
             <steps/>
             <attachments/>
@@ -2471,7 +2502,7 @@
                 <parameter name="Argument" value="92" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372093" stop="1391003372157" status="passed" severity="normal">
+        <test-case start="1391164813574" stop="1391164813910" status="passed" severity="normal">
             <name>calculationTest[93]</name>
             <steps/>
             <attachments/>
@@ -2483,7 +2514,7 @@
                 <parameter name="Argument" value="93" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372158" stop="1391003372478" status="passed" severity="normal">
+        <test-case start="1391164813585" stop="1391164814782" status="passed" severity="normal">
             <name>calculationTest[94]</name>
             <steps/>
             <attachments/>
@@ -2495,7 +2526,7 @@
                 <parameter name="Argument" value="94" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372159" stop="1391003372165" status="passed" severity="normal">
+        <test-case start="1391164813699" stop="1391164815538" status="passed" severity="normal">
             <name>calculationTest[95]</name>
             <steps/>
             <attachments/>
@@ -2507,7 +2538,7 @@
                 <parameter name="Argument" value="95" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372161" stop="1391003372253" status="passed" severity="normal">
+        <test-case start="1391164813784" stop="1391164815475" status="passed" severity="normal">
             <name>calculationTest[96]</name>
             <steps/>
             <attachments/>
@@ -2519,20 +2550,8 @@
                 <parameter name="Argument" value="96" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372166" stop="1391003372557" status="passed" severity="normal">
+        <test-case start="1391164813880" stop="1391164815546" status="failed" severity="normal">
             <name>calculationTest[97]</name>
-            <steps/>
-            <attachments/>
-            <labels>
-                <label name="story" value="ParametrizedStory"/>
-                <label name="feature" value="SimpleStories"/>
-            </labels>
-            <parameters>
-                <parameter name="Argument" value="97" kind="environment-variable"/>
-            </parameters>
-        </test-case>
-        <test-case start="1391003372204" stop="1391003372259" status="failed" severity="normal">
-            <name>calculationTest[98]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
                 <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
@@ -2572,11 +2591,11 @@
                 <label name="feature" value="SimpleStories"/>
             </labels>
             <parameters>
-                <parameter name="Argument" value="98" kind="environment-variable"/>
+                <parameter name="Argument" value="97" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372254" stop="1391003373729" status="failed" severity="normal">
-            <name>calculationTest[99]</name>
+        <test-case start="1391164813911" stop="1391164814193" status="failed" severity="normal">
+            <name>calculationTest[98]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
                 <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
@@ -2616,10 +2635,54 @@
                 <label name="feature" value="SimpleStories"/>
             </labels>
             <parameters>
+                <parameter name="Argument" value="98" kind="environment-variable"/>
+            </parameters>
+        </test-case>
+        <test-case start="1391164813928" stop="1391164814334" status="failed" severity="normal">
+            <name>calculationTest[99]</name>
+            <failure>
+                <message>AssertionError: Expected 10 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value="ParametrizedStory"/>
+                <label name="feature" value="SimpleStories"/>
+            </labels>
+            <parameters>
                 <parameter name="Argument" value="99" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372260" stop="1391003373068" status="skipped" severity="normal">
+        <test-case start="1391164814002" stop="1391164814633" status="skipped" severity="normal">
             <name>calculationTest[100]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -2662,7 +2725,7 @@
                 <parameter name="Argument" value="100" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372320" stop="1391003373232" status="broken" severity="normal">
+        <test-case start="1391164814063" stop="1391164814605" status="broken" severity="normal">
             <name>calculationTest[101]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -2704,7 +2767,7 @@
                 <parameter name="Argument" value="101" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372478" stop="1391003373994" status="passed" severity="normal">
+        <test-case start="1391164814084" stop="1391164815608" status="passed" severity="normal">
             <name>calculationTest[102]</name>
             <steps/>
             <attachments/>
@@ -2716,7 +2779,7 @@
                 <parameter name="Argument" value="102" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372557" stop="1391003372801" status="passed" severity="normal">
+        <test-case start="1391164814193" stop="1391164814345" status="passed" severity="normal">
             <name>calculationTest[103]</name>
             <steps/>
             <attachments/>
@@ -2728,7 +2791,7 @@
                 <parameter name="Argument" value="103" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372598" stop="1391003373317" status="passed" severity="normal">
+        <test-case start="1391164814222" stop="1391164815453" status="passed" severity="normal">
             <name>calculationTest[104]</name>
             <steps/>
             <attachments/>
@@ -2740,7 +2803,7 @@
                 <parameter name="Argument" value="104" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372607" stop="1391003374269" status="passed" severity="normal">
+        <test-case start="1391164814335" stop="1391164815444" status="passed" severity="normal">
             <name>calculationTest[105]</name>
             <steps/>
             <attachments/>
@@ -2752,7 +2815,7 @@
                 <parameter name="Argument" value="105" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372644" stop="1391003374213" status="passed" severity="normal">
+        <test-case start="1391164814346" stop="1391164816315" status="passed" severity="normal">
             <name>calculationTest[106]</name>
             <steps/>
             <attachments/>
@@ -2764,8 +2827,40 @@
                 <parameter name="Argument" value="106" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372698" stop="1391003373699" status="passed" severity="normal">
+        <test-case start="1391164814390" stop="1391164814430" status="failed" severity="normal">
             <name>calculationTest[107]</name>
+            <failure>
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -2776,11 +2871,11 @@
                 <parameter name="Argument" value="107" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372733" stop="1391003374585" status="failed" severity="normal">
+        <test-case start="1391164814398" stop="1391164816321" status="failed" severity="normal">
             <name>calculationTest[108]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -2820,7 +2915,7 @@
                 <parameter name="Argument" value="108" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372784" stop="1391003372875" status="failed" severity="normal">
+        <test-case start="1391164814431" stop="1391164814472" status="failed" severity="normal">
             <name>calculationTest[109]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -2864,7 +2959,7 @@
                 <parameter name="Argument" value="109" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372802" stop="1391003373137" status="skipped" severity="normal">
+        <test-case start="1391164814440" stop="1391164815813" status="skipped" severity="normal">
             <name>calculationTest[110]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -2907,7 +3002,7 @@
                 <parameter name="Argument" value="110" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372859" stop="1391003373910" status="broken" severity="normal">
+        <test-case start="1391164814473" stop="1391164814688" status="broken" severity="normal">
             <name>calculationTest[111]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -2949,7 +3044,7 @@
                 <parameter name="Argument" value="111" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372876" stop="1391003374172" status="passed" severity="normal">
+        <test-case start="1391164814606" stop="1391164815920" status="passed" severity="normal">
             <name>calculationTest[112]</name>
             <steps/>
             <attachments/>
@@ -2961,7 +3056,7 @@
                 <parameter name="Argument" value="112" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372879" stop="1391003374821" status="passed" severity="normal">
+        <test-case start="1391164814633" stop="1391164815207" status="passed" severity="normal">
             <name>calculationTest[113]</name>
             <steps/>
             <attachments/>
@@ -2973,7 +3068,7 @@
                 <parameter name="Argument" value="113" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372882" stop="1391003374122" status="passed" severity="normal">
+        <test-case start="1391164814646" stop="1391164815075" status="passed" severity="normal">
             <name>calculationTest[114]</name>
             <steps/>
             <attachments/>
@@ -2985,7 +3080,7 @@
                 <parameter name="Argument" value="114" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003372896" stop="1391003373780" status="passed" severity="normal">
+        <test-case start="1391164814689" stop="1391164815220" status="passed" severity="normal">
             <name>calculationTest[115]</name>
             <steps/>
             <attachments/>
@@ -2997,7 +3092,7 @@
                 <parameter name="Argument" value="115" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373069" stop="1391003374040" status="passed" severity="normal">
+        <test-case start="1391164814728" stop="1391164815594" status="passed" severity="normal">
             <name>calculationTest[116]</name>
             <steps/>
             <attachments/>
@@ -3009,40 +3104,8 @@
                 <parameter name="Argument" value="116" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373138" stop="1391003373951" status="failed" severity="normal">
+        <test-case start="1391164814783" stop="1391164815736" status="passed" severity="normal">
             <name>calculationTest[117]</name>
-            <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
-	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:606)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
-	at org.junit.runners.Suite.runChild(Suite.java:127)
-	at org.junit.runners.Suite.runChild(Suite.java:26)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-	at java.lang.Thread.run(Thread.java:744)
-</stack-trace>
-            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -3053,11 +3116,11 @@
                 <parameter name="Argument" value="117" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373140" stop="1391003374680" status="failed" severity="normal">
+        <test-case start="1391164815031" stop="1391164816059" status="failed" severity="normal">
             <name>calculationTest[118]</name>
             <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -3097,11 +3160,11 @@
                 <parameter name="Argument" value="118" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373233" stop="1391003373261" status="failed" severity="normal">
+        <test-case start="1391164815076" stop="1391164816264" status="failed" severity="normal">
             <name>calculationTest[119]</name>
             <failure>
-                <message>AssertionError: Expected 10 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -3141,7 +3204,7 @@
                 <parameter name="Argument" value="119" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373262" stop="1391003374203" status="skipped" severity="normal">
+        <test-case start="1391164815208" stop="1391164816549" status="skipped" severity="normal">
             <name>calculationTest[120]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -3184,7 +3247,7 @@
                 <parameter name="Argument" value="120" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373318" stop="1391003374600" status="broken" severity="normal">
+        <test-case start="1391164815221" stop="1391164815560" status="broken" severity="normal">
             <name>calculationTest[121]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -3226,7 +3289,7 @@
                 <parameter name="Argument" value="121" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373700" stop="1391003375628" status="passed" severity="normal">
+        <test-case start="1391164815445" stop="1391164816468" status="passed" severity="normal">
             <name>calculationTest[122]</name>
             <steps/>
             <attachments/>
@@ -3238,7 +3301,7 @@
                 <parameter name="Argument" value="122" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373730" stop="1391003374617" status="passed" severity="normal">
+        <test-case start="1391164815454" stop="1391164816238" status="passed" severity="normal">
             <name>calculationTest[123]</name>
             <steps/>
             <attachments/>
@@ -3250,7 +3313,7 @@
                 <parameter name="Argument" value="123" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373781" stop="1391003375268" status="passed" severity="normal">
+        <test-case start="1391164815476" stop="1391164815674" status="passed" severity="normal">
             <name>calculationTest[124]</name>
             <steps/>
             <attachments/>
@@ -3262,7 +3325,7 @@
                 <parameter name="Argument" value="124" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373911" stop="1391003374273" status="passed" severity="normal">
+        <test-case start="1391164815539" stop="1391164815721" status="passed" severity="normal">
             <name>calculationTest[125]</name>
             <steps/>
             <attachments/>
@@ -3274,7 +3337,7 @@
                 <parameter name="Argument" value="125" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373951" stop="1391003374128" status="passed" severity="normal">
+        <test-case start="1391164815546" stop="1391164815634" status="passed" severity="normal">
             <name>calculationTest[126]</name>
             <steps/>
             <attachments/>
@@ -3286,7 +3349,7 @@
                 <parameter name="Argument" value="126" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003373994" stop="1391003374532" status="failed" severity="normal">
+        <test-case start="1391164815561" stop="1391164816554" status="failed" severity="normal">
             <name>calculationTest[127]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -3330,11 +3393,11 @@
                 <parameter name="Argument" value="127" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374041" stop="1391003374998" status="failed" severity="normal">
+        <test-case start="1391164815595" stop="1391164815767" status="failed" severity="normal">
             <name>calculationTest[128]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -3374,7 +3437,7 @@
                 <parameter name="Argument" value="128" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374122" stop="1391003374125" status="failed" severity="normal">
+        <test-case start="1391164815609" stop="1391164817215" status="failed" severity="normal">
             <name>calculationTest[129]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -3418,7 +3481,7 @@
                 <parameter name="Argument" value="129" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374125" stop="1391003374495" status="skipped" severity="normal">
+        <test-case start="1391164815635" stop="1391164817159" status="skipped" severity="normal">
             <name>calculationTest[130]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -3461,7 +3524,7 @@
                 <parameter name="Argument" value="130" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374128" stop="1391003375699" status="broken" severity="normal">
+        <test-case start="1391164815675" stop="1391164816218" status="broken" severity="normal">
             <name>calculationTest[131]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -3503,7 +3566,7 @@
                 <parameter name="Argument" value="131" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374173" stop="1391003375998" status="passed" severity="normal">
+        <test-case start="1391164815722" stop="1391164815897" status="passed" severity="normal">
             <name>calculationTest[132]</name>
             <steps/>
             <attachments/>
@@ -3515,7 +3578,7 @@
                 <parameter name="Argument" value="132" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374204" stop="1391003375337" status="passed" severity="normal">
+        <test-case start="1391164815737" stop="1391164816523" status="passed" severity="normal">
             <name>calculationTest[133]</name>
             <steps/>
             <attachments/>
@@ -3527,7 +3590,7 @@
                 <parameter name="Argument" value="133" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374214" stop="1391003374711" status="passed" severity="normal">
+        <test-case start="1391164815768" stop="1391164816396" status="passed" severity="normal">
             <name>calculationTest[134]</name>
             <steps/>
             <attachments/>
@@ -3539,7 +3602,7 @@
                 <parameter name="Argument" value="134" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374270" stop="1391003375636" status="passed" severity="normal">
+        <test-case start="1391164815814" stop="1391164816729" status="passed" severity="normal">
             <name>calculationTest[135]</name>
             <steps/>
             <attachments/>
@@ -3551,7 +3614,7 @@
                 <parameter name="Argument" value="135" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374274" stop="1391003376203" status="passed" severity="normal">
+        <test-case start="1391164815898" stop="1391164817030" status="passed" severity="normal">
             <name>calculationTest[136]</name>
             <steps/>
             <attachments/>
@@ -3563,7 +3626,7 @@
                 <parameter name="Argument" value="136" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374496" stop="1391003375824" status="passed" severity="normal">
+        <test-case start="1391164815921" stop="1391164817356" status="passed" severity="normal">
             <name>calculationTest[137]</name>
             <steps/>
             <attachments/>
@@ -3575,11 +3638,11 @@
                 <parameter name="Argument" value="137" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374533" stop="1391003375945" status="failed" severity="normal">
+        <test-case start="1391164816060" stop="1391164817136" status="failed" severity="normal">
             <name>calculationTest[138]</name>
             <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -3619,11 +3682,11 @@
                 <parameter name="Argument" value="138" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374586" stop="1391003376244" status="failed" severity="normal">
+        <test-case start="1391164816219" stop="1391164817215" status="failed" severity="normal">
             <name>calculationTest[139]</name>
             <failure>
-                <message>AssertionError: Expected 10 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -3663,7 +3726,7 @@
                 <parameter name="Argument" value="139" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374601" stop="1391003374702" status="skipped" severity="normal">
+        <test-case start="1391164816238" stop="1391164816918" status="skipped" severity="normal">
             <name>calculationTest[140]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -3706,7 +3769,7 @@
                 <parameter name="Argument" value="140" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374618" stop="1391003375966" status="broken" severity="normal">
+        <test-case start="1391164816264" stop="1391164817968" status="broken" severity="normal">
             <name>calculationTest[141]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -3748,7 +3811,7 @@
                 <parameter name="Argument" value="141" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374681" stop="1391003376519" status="passed" severity="normal">
+        <test-case start="1391164816316" stop="1391164816941" status="passed" severity="normal">
             <name>calculationTest[142]</name>
             <steps/>
             <attachments/>
@@ -3760,7 +3823,7 @@
                 <parameter name="Argument" value="142" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374703" stop="1391003375360" status="passed" severity="normal">
+        <test-case start="1391164816322" stop="1391164818186" status="passed" severity="normal">
             <name>calculationTest[143]</name>
             <steps/>
             <attachments/>
@@ -3772,7 +3835,7 @@
                 <parameter name="Argument" value="143" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374711" stop="1391003375132" status="passed" severity="normal">
+        <test-case start="1391164816397" stop="1391164817321" status="passed" severity="normal">
             <name>calculationTest[144]</name>
             <steps/>
             <attachments/>
@@ -3784,7 +3847,7 @@
                 <parameter name="Argument" value="144" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374822" stop="1391003375333" status="passed" severity="normal">
+        <test-case start="1391164816469" stop="1391164817320" status="passed" severity="normal">
             <name>calculationTest[145]</name>
             <steps/>
             <attachments/>
@@ -3796,7 +3859,7 @@
                 <parameter name="Argument" value="145" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003374999" stop="1391003376841" status="passed" severity="normal">
+        <test-case start="1391164816524" stop="1391164818450" status="passed" severity="normal">
             <name>calculationTest[146]</name>
             <steps/>
             <attachments/>
@@ -3808,40 +3871,8 @@
                 <parameter name="Argument" value="146" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375133" stop="1391003376925" status="failed" severity="normal">
+        <test-case start="1391164816550" stop="1391164818239" status="passed" severity="normal">
             <name>calculationTest[147]</name>
-            <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
-	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:606)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
-	at org.junit.runners.Suite.runChild(Suite.java:127)
-	at org.junit.runners.Suite.runChild(Suite.java:26)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-	at java.lang.Thread.run(Thread.java:744)
-</stack-trace>
-            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -3852,7 +3883,7 @@
                 <parameter name="Argument" value="147" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375269" stop="1391003376233" status="failed" severity="normal">
+        <test-case start="1391164816554" stop="1391164817237" status="failed" severity="normal">
             <name>calculationTest[148]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -3896,11 +3927,11 @@
                 <parameter name="Argument" value="148" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375334" stop="1391003375941" status="failed" severity="normal">
+        <test-case start="1391164816729" stop="1391164818169" status="failed" severity="normal">
             <name>calculationTest[149]</name>
             <failure>
-                <message>AssertionError: Expected 10 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -3940,7 +3971,7 @@
                 <parameter name="Argument" value="149" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375338" stop="1391003376809" status="skipped" severity="normal">
+        <test-case start="1391164816918" stop="1391164818823" status="skipped" severity="normal">
             <name>calculationTest[150]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -3983,7 +4014,7 @@
                 <parameter name="Argument" value="150" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375361" stop="1391003375438" status="broken" severity="normal">
+        <test-case start="1391164816941" stop="1391164817459" status="broken" severity="normal">
             <name>calculationTest[151]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -4025,7 +4056,7 @@
                 <parameter name="Argument" value="151" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375439" stop="1391003375932" status="passed" severity="normal">
+        <test-case start="1391164817031" stop="1391164818070" status="passed" severity="normal">
             <name>calculationTest[152]</name>
             <steps/>
             <attachments/>
@@ -4037,7 +4068,7 @@
                 <parameter name="Argument" value="152" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375629" stop="1391003376728" status="passed" severity="normal">
+        <test-case start="1391164817137" stop="1391164817939" status="passed" severity="normal">
             <name>calculationTest[153]</name>
             <steps/>
             <attachments/>
@@ -4049,7 +4080,7 @@
                 <parameter name="Argument" value="153" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375637" stop="1391003376009" status="passed" severity="normal">
+        <test-case start="1391164817160" stop="1391164817528" status="passed" severity="normal">
             <name>calculationTest[154]</name>
             <steps/>
             <attachments/>
@@ -4061,7 +4092,7 @@
                 <parameter name="Argument" value="154" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375700" stop="1391003376997" status="passed" severity="normal">
+        <test-case start="1391164817216" stop="1391164818769" status="passed" severity="normal">
             <name>calculationTest[155]</name>
             <steps/>
             <attachments/>
@@ -4073,7 +4104,7 @@
                 <parameter name="Argument" value="155" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375826" stop="1391003377551" status="passed" severity="normal">
+        <test-case start="1391164817216" stop="1391164818781" status="passed" severity="normal">
             <name>calculationTest[156]</name>
             <steps/>
             <attachments/>
@@ -4085,40 +4116,8 @@
                 <parameter name="Argument" value="156" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375932" stop="1391003377160" status="failed" severity="normal">
+        <test-case start="1391164817238" stop="1391164818375" status="passed" severity="normal">
             <name>calculationTest[157]</name>
-            <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
-	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:606)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
-	at org.junit.runners.Suite.runChild(Suite.java:127)
-	at org.junit.runners.Suite.runChild(Suite.java:26)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-	at java.lang.Thread.run(Thread.java:744)
-</stack-trace>
-            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -4129,11 +4128,11 @@
                 <parameter name="Argument" value="157" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375942" stop="1391003376719" status="failed" severity="normal">
+        <test-case start="1391164817321" stop="1391164819215" status="failed" severity="normal">
             <name>calculationTest[158]</name>
             <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -4173,7 +4172,7 @@
                 <parameter name="Argument" value="158" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375946" stop="1391003377010" status="failed" severity="normal">
+        <test-case start="1391164817321" stop="1391164819164" status="failed" severity="normal">
             <name>calculationTest[159]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -4217,7 +4216,7 @@
                 <parameter name="Argument" value="159" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375967" stop="1391003377962" status="skipped" severity="normal">
+        <test-case start="1391164817357" stop="1391164817741" status="skipped" severity="normal">
             <name>calculationTest[160]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -4260,7 +4259,7 @@
                 <parameter name="Argument" value="160" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003375998" stop="1391003377805" status="broken" severity="normal">
+        <test-case start="1391164817460" stop="1391164818517" status="broken" severity="normal">
             <name>calculationTest[161]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -4302,7 +4301,7 @@
                 <parameter name="Argument" value="161" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376010" stop="1391003376172" status="passed" severity="normal">
+        <test-case start="1391164817529" stop="1391164818272" status="passed" severity="normal">
             <name>calculationTest[162]</name>
             <steps/>
             <attachments/>
@@ -4314,7 +4313,7 @@
                 <parameter name="Argument" value="162" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376173" stop="1391003377700" status="passed" severity="normal">
+        <test-case start="1391164817742" stop="1391164819715" status="passed" severity="normal">
             <name>calculationTest[163]</name>
             <steps/>
             <attachments/>
@@ -4326,7 +4325,7 @@
                 <parameter name="Argument" value="163" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376204" stop="1391003377492" status="passed" severity="normal">
+        <test-case start="1391164817940" stop="1391164819567" status="passed" severity="normal">
             <name>calculationTest[164]</name>
             <steps/>
             <attachments/>
@@ -4338,7 +4337,7 @@
                 <parameter name="Argument" value="164" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376234" stop="1391003377160" status="passed" severity="normal">
+        <test-case start="1391164817968" stop="1391164819416" status="passed" severity="normal">
             <name>calculationTest[165]</name>
             <steps/>
             <attachments/>
@@ -4350,7 +4349,7 @@
                 <parameter name="Argument" value="165" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376245" stop="1391003377653" status="passed" severity="normal">
+        <test-case start="1391164818071" stop="1391164819730" status="passed" severity="normal">
             <name>calculationTest[166]</name>
             <steps/>
             <attachments/>
@@ -4362,7 +4361,7 @@
                 <parameter name="Argument" value="166" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376520" stop="1391003378459" status="passed" severity="normal">
+        <test-case start="1391164818170" stop="1391164819776" status="passed" severity="normal">
             <name>calculationTest[167]</name>
             <steps/>
             <attachments/>
@@ -4374,11 +4373,11 @@
                 <parameter name="Argument" value="167" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376719" stop="1391003377419" status="failed" severity="normal">
+        <test-case start="1391164818187" stop="1391164819249" status="failed" severity="normal">
             <name>calculationTest[168]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -4418,7 +4417,7 @@
                 <parameter name="Argument" value="168" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376728" stop="1391003377055" status="failed" severity="normal">
+        <test-case start="1391164818239" stop="1391164819821" status="failed" severity="normal">
             <name>calculationTest[169]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -4462,7 +4461,7 @@
                 <parameter name="Argument" value="169" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376810" stop="1391003376933" status="skipped" severity="normal">
+        <test-case start="1391164818273" stop="1391164819468" status="skipped" severity="normal">
             <name>calculationTest[170]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -4505,7 +4504,7 @@
                 <parameter name="Argument" value="170" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376842" stop="1391003378822" status="broken" severity="normal">
+        <test-case start="1391164818376" stop="1391164819808" status="broken" severity="normal">
             <name>calculationTest[171]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -4547,7 +4546,7 @@
                 <parameter name="Argument" value="171" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376926" stop="1391003377407" status="passed" severity="normal">
+        <test-case start="1391164818451" stop="1391164818697" status="passed" severity="normal">
             <name>calculationTest[172]</name>
             <steps/>
             <attachments/>
@@ -4559,7 +4558,7 @@
                 <parameter name="Argument" value="172" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376934" stop="1391003378630" status="passed" severity="normal">
+        <test-case start="1391164818518" stop="1391164818843" status="passed" severity="normal">
             <name>calculationTest[173]</name>
             <steps/>
             <attachments/>
@@ -4571,7 +4570,7 @@
                 <parameter name="Argument" value="173" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003376998" stop="1391003377165" status="passed" severity="normal">
+        <test-case start="1391164818698" stop="1391164819767" status="passed" severity="normal">
             <name>calculationTest[174]</name>
             <steps/>
             <attachments/>
@@ -4583,7 +4582,7 @@
                 <parameter name="Argument" value="174" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377011" stop="1391003377365" status="passed" severity="normal">
+        <test-case start="1391164818770" stop="1391164820607" status="passed" severity="normal">
             <name>calculationTest[175]</name>
             <steps/>
             <attachments/>
@@ -4595,7 +4594,7 @@
                 <parameter name="Argument" value="175" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377056" stop="1391003378043" status="passed" severity="normal">
+        <test-case start="1391164818782" stop="1391164818924" status="passed" severity="normal">
             <name>calculationTest[176]</name>
             <steps/>
             <attachments/>
@@ -4607,7 +4606,7 @@
                 <parameter name="Argument" value="176" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377161" stop="1391003377566" status="failed" severity="normal">
+        <test-case start="1391164818823" stop="1391164819347" status="failed" severity="normal">
             <name>calculationTest[177]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -4651,7 +4650,7 @@
                 <parameter name="Argument" value="177" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377161" stop="1391003378080" status="failed" severity="normal">
+        <test-case start="1391164818844" stop="1391164820469" status="failed" severity="normal">
             <name>calculationTest[178]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -4695,11 +4694,11 @@
                 <parameter name="Argument" value="178" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377166" stop="1391003378307" status="failed" severity="normal">
+        <test-case start="1391164818925" stop="1391164820868" status="failed" severity="normal">
             <name>calculationTest[179]</name>
             <failure>
-                <message>AssertionError: Expected 10 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -4739,7 +4738,7 @@
                 <parameter name="Argument" value="179" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377366" stop="1391003378950" status="skipped" severity="normal">
+        <test-case start="1391164819164" stop="1391164819856" status="skipped" severity="normal">
             <name>calculationTest[180]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -4782,7 +4781,7 @@
                 <parameter name="Argument" value="180" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377407" stop="1391003378666" status="broken" severity="normal">
+        <test-case start="1391164819216" stop="1391164819566" status="broken" severity="normal">
             <name>calculationTest[181]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -4824,7 +4823,7 @@
                 <parameter name="Argument" value="181" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377420" stop="1391003378879" status="passed" severity="normal">
+        <test-case start="1391164819250" stop="1391164819503" status="passed" severity="normal">
             <name>calculationTest[182]</name>
             <steps/>
             <attachments/>
@@ -4836,7 +4835,7 @@
                 <parameter name="Argument" value="182" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377493" stop="1391003377552" status="passed" severity="normal">
+        <test-case start="1391164819348" stop="1391164819459" status="passed" severity="normal">
             <name>calculationTest[183]</name>
             <steps/>
             <attachments/>
@@ -4848,7 +4847,7 @@
                 <parameter name="Argument" value="183" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377552" stop="1391003379509" status="passed" severity="normal">
+        <test-case start="1391164819417" stop="1391164819889" status="passed" severity="normal">
             <name>calculationTest[184]</name>
             <steps/>
             <attachments/>
@@ -4860,7 +4859,7 @@
                 <parameter name="Argument" value="184" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377553" stop="1391003379324" status="passed" severity="normal">
+        <test-case start="1391164819460" stop="1391164821319" status="passed" severity="normal">
             <name>calculationTest[185]</name>
             <steps/>
             <attachments/>
@@ -4872,7 +4871,7 @@
                 <parameter name="Argument" value="185" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377567" stop="1391003379357" status="passed" severity="normal">
+        <test-case start="1391164819468" stop="1391164820379" status="passed" severity="normal">
             <name>calculationTest[186]</name>
             <steps/>
             <attachments/>
@@ -4884,7 +4883,7 @@
                 <parameter name="Argument" value="186" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377653" stop="1391003378035" status="failed" severity="normal">
+        <test-case start="1391164819504" stop="1391164820310" status="failed" severity="normal">
             <name>calculationTest[187]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -4928,11 +4927,11 @@
                 <parameter name="Argument" value="187" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377700" stop="1391003378275" status="failed" severity="normal">
+        <test-case start="1391164819567" stop="1391164819905" status="failed" severity="normal">
             <name>calculationTest[188]</name>
             <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -4972,7 +4971,7 @@
                 <parameter name="Argument" value="188" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377805" stop="1391003378783" status="failed" severity="normal">
+        <test-case start="1391164819568" stop="1391164821443" status="failed" severity="normal">
             <name>calculationTest[189]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -5016,7 +5015,7 @@
                 <parameter name="Argument" value="189" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003377963" stop="1391003378000" status="skipped" severity="normal">
+        <test-case start="1391164819716" stop="1391164821238" status="skipped" severity="normal">
             <name>calculationTest[190]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -5059,7 +5058,7 @@
                 <parameter name="Argument" value="190" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378001" stop="1391003379660" status="broken" severity="normal">
+        <test-case start="1391164819730" stop="1391164819833" status="broken" severity="normal">
             <name>calculationTest[191]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -5101,7 +5100,7 @@
                 <parameter name="Argument" value="191" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378036" stop="1391003379088" status="passed" severity="normal">
+        <test-case start="1391164819768" stop="1391164821714" status="passed" severity="normal">
             <name>calculationTest[192]</name>
             <steps/>
             <attachments/>
@@ -5113,7 +5112,7 @@
                 <parameter name="Argument" value="192" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378044" stop="1391003379012" status="passed" severity="normal">
+        <test-case start="1391164819777" stop="1391164821026" status="passed" severity="normal">
             <name>calculationTest[193]</name>
             <steps/>
             <attachments/>
@@ -5125,7 +5124,7 @@
                 <parameter name="Argument" value="193" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378080" stop="1391003380064" status="passed" severity="normal">
+        <test-case start="1391164819809" stop="1391164820371" status="passed" severity="normal">
             <name>calculationTest[194]</name>
             <steps/>
             <attachments/>
@@ -5137,7 +5136,7 @@
                 <parameter name="Argument" value="194" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378275" stop="1391003378434" status="passed" severity="normal">
+        <test-case start="1391164819822" stop="1391164821292" status="passed" severity="normal">
             <name>calculationTest[195]</name>
             <steps/>
             <attachments/>
@@ -5149,7 +5148,7 @@
                 <parameter name="Argument" value="195" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378308" stop="1391003378743" status="passed" severity="normal">
+        <test-case start="1391164819833" stop="1391164819868" status="passed" severity="normal">
             <name>calculationTest[196]</name>
             <steps/>
             <attachments/>
@@ -5161,40 +5160,8 @@
                 <parameter name="Argument" value="196" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378435" stop="1391003379330" status="failed" severity="normal">
+        <test-case start="1391164819856" stop="1391164820368" status="passed" severity="normal">
             <name>calculationTest[197]</name>
-            <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
-	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:606)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
-	at org.junit.runners.Suite.runChild(Suite.java:127)
-	at org.junit.runners.Suite.runChild(Suite.java:26)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-	at java.lang.Thread.run(Thread.java:744)
-</stack-trace>
-            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -5205,7 +5172,7 @@
                 <parameter name="Argument" value="197" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378459" stop="1391003379227" status="failed" severity="normal">
+        <test-case start="1391164819869" stop="1391164820192" status="failed" severity="normal">
             <name>calculationTest[198]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -5249,11 +5216,11 @@
                 <parameter name="Argument" value="198" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378631" stop="1391003380553" status="failed" severity="normal">
+        <test-case start="1391164819890" stop="1391164820870" status="failed" severity="normal">
             <name>calculationTest[199]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 10 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -5293,7 +5260,7 @@
                 <parameter name="Argument" value="199" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378666" stop="1391003379774" status="skipped" severity="normal">
+        <test-case start="1391164819906" stop="1391164821834" status="skipped" severity="normal">
             <name>calculationTest[200]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -5336,7 +5303,7 @@
                 <parameter name="Argument" value="200" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378744" stop="1391003380601" status="broken" severity="normal">
+        <test-case start="1391164820193" stop="1391164820449" status="broken" severity="normal">
             <name>calculationTest[201]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -5378,7 +5345,7 @@
                 <parameter name="Argument" value="201" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378784" stop="1391003379751" status="passed" severity="normal">
+        <test-case start="1391164820310" stop="1391164820923" status="passed" severity="normal">
             <name>calculationTest[202]</name>
             <steps/>
             <attachments/>
@@ -5390,7 +5357,7 @@
                 <parameter name="Argument" value="202" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378823" stop="1391003380443" status="passed" severity="normal">
+        <test-case start="1391164820369" stop="1391164821243" status="passed" severity="normal">
             <name>calculationTest[203]</name>
             <steps/>
             <attachments/>
@@ -5402,7 +5369,7 @@
                 <parameter name="Argument" value="203" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378880" stop="1391003379693" status="passed" severity="normal">
+        <test-case start="1391164820371" stop="1391164821122" status="passed" severity="normal">
             <name>calculationTest[204]</name>
             <steps/>
             <attachments/>
@@ -5414,7 +5381,7 @@
                 <parameter name="Argument" value="204" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003378951" stop="1391003379198" status="passed" severity="normal">
+        <test-case start="1391164820380" stop="1391164821206" status="passed" severity="normal">
             <name>calculationTest[205]</name>
             <steps/>
             <attachments/>
@@ -5426,7 +5393,7 @@
                 <parameter name="Argument" value="205" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379013" stop="1391003379480" status="passed" severity="normal">
+        <test-case start="1391164820450" stop="1391164821197" status="passed" severity="normal">
             <name>calculationTest[206]</name>
             <steps/>
             <attachments/>
@@ -5438,8 +5405,20 @@
                 <parameter name="Argument" value="206" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379089" stop="1391003380274" status="failed" severity="normal">
+        <test-case start="1391164820470" stop="1391164821631" status="passed" severity="normal">
             <name>calculationTest[207]</name>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value="ParametrizedStory"/>
+                <label name="feature" value="SimpleStories"/>
+            </labels>
+            <parameters>
+                <parameter name="Argument" value="207" kind="environment-variable"/>
+            </parameters>
+        </test-case>
+        <test-case start="1391164820607" stop="1391164822582" status="failed" severity="normal">
+            <name>calculationTest[208]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
                 <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
@@ -5479,58 +5458,14 @@
                 <label name="feature" value="SimpleStories"/>
             </labels>
             <parameters>
-                <parameter name="Argument" value="207" kind="environment-variable"/>
-            </parameters>
-        </test-case>
-        <test-case start="1391003379199" stop="1391003380686" status="failed" severity="normal">
-            <name>calculationTest[208]</name>
-            <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
-	at org.junit.Assert.fail(Assert.java:88)
-	at org.junit.Assert.assertTrue(Assert.java:41)
-	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
-	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:606)
-	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
-	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
-	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
-	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
-	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
-	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
-	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
-	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
-	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
-	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
-	at org.junit.runners.Suite.runChild(Suite.java:127)
-	at org.junit.runners.Suite.runChild(Suite.java:26)
-	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
-	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
-	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
-	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
-	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
-	at java.lang.Thread.run(Thread.java:744)
-</stack-trace>
-            </failure>
-            <steps/>
-            <attachments/>
-            <labels>
-                <label name="story" value="ParametrizedStory"/>
-                <label name="feature" value="SimpleStories"/>
-            </labels>
-            <parameters>
                 <parameter name="Argument" value="208" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379227" stop="1391003379941" status="failed" severity="normal">
+        <test-case start="1391164820870" stop="1391164820881" status="failed" severity="normal">
             <name>calculationTest[209]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 10 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -5570,7 +5505,7 @@
                 <parameter name="Argument" value="209" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379325" stop="1391003380430" status="skipped" severity="normal">
+        <test-case start="1391164820870" stop="1391164821022" status="skipped" severity="normal">
             <name>calculationTest[210]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -5613,7 +5548,7 @@
                 <parameter name="Argument" value="210" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379331" stop="1391003380188" status="broken" severity="normal">
+        <test-case start="1391164820882" stop="1391164822803" status="broken" severity="normal">
             <name>calculationTest[211]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -5655,7 +5590,7 @@
                 <parameter name="Argument" value="211" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379358" stop="1391003379892" status="passed" severity="normal">
+        <test-case start="1391164820924" stop="1391164820926" status="passed" severity="normal">
             <name>calculationTest[212]</name>
             <steps/>
             <attachments/>
@@ -5667,7 +5602,7 @@
                 <parameter name="Argument" value="212" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379480" stop="1391003379805" status="passed" severity="normal">
+        <test-case start="1391164820927" stop="1391164821926" status="passed" severity="normal">
             <name>calculationTest[213]</name>
             <steps/>
             <attachments/>
@@ -5679,7 +5614,7 @@
                 <parameter name="Argument" value="213" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379510" stop="1391003379818" status="passed" severity="normal">
+        <test-case start="1391164821022" stop="1391164822441" status="passed" severity="normal">
             <name>calculationTest[214]</name>
             <steps/>
             <attachments/>
@@ -5691,7 +5626,7 @@
                 <parameter name="Argument" value="214" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379661" stop="1391003381139" status="passed" severity="normal">
+        <test-case start="1391164821027" stop="1391164822638" status="passed" severity="normal">
             <name>calculationTest[215]</name>
             <steps/>
             <attachments/>
@@ -5703,7 +5638,7 @@
                 <parameter name="Argument" value="215" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379694" stop="1391003380884" status="passed" severity="normal">
+        <test-case start="1391164821123" stop="1391164822074" status="passed" severity="normal">
             <name>calculationTest[216]</name>
             <steps/>
             <attachments/>
@@ -5715,8 +5650,40 @@
                 <parameter name="Argument" value="216" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379751" stop="1391003380159" status="passed" severity="normal">
+        <test-case start="1391164821198" stop="1391164822777" status="failed" severity="normal">
             <name>calculationTest[217]</name>
+            <failure>
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -5727,11 +5694,11 @@
                 <parameter name="Argument" value="217" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379775" stop="1391003381689" status="failed" severity="normal">
+        <test-case start="1391164821207" stop="1391164821213" status="failed" severity="normal">
             <name>calculationTest[218]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -5771,7 +5738,7 @@
                 <parameter name="Argument" value="218" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379805" stop="1391003381674" status="failed" severity="normal">
+        <test-case start="1391164821214" stop="1391164822483" status="failed" severity="normal">
             <name>calculationTest[219]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -5815,7 +5782,7 @@
                 <parameter name="Argument" value="219" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379819" stop="1391003381245" status="skipped" severity="normal">
+        <test-case start="1391164821239" stop="1391164821922" status="skipped" severity="normal">
             <name>calculationTest[220]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -5858,7 +5825,7 @@
                 <parameter name="Argument" value="220" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379893" stop="1391003381632" status="broken" severity="normal">
+        <test-case start="1391164821244" stop="1391164821563" status="broken" severity="normal">
             <name>calculationTest[221]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -5900,7 +5867,7 @@
                 <parameter name="Argument" value="221" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003379941" stop="1391003381440" status="passed" severity="normal">
+        <test-case start="1391164821293" stop="1391164821570" status="passed" severity="normal">
             <name>calculationTest[222]</name>
             <steps/>
             <attachments/>
@@ -5912,7 +5879,7 @@
                 <parameter name="Argument" value="222" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380064" stop="1391003381704" status="passed" severity="normal">
+        <test-case start="1391164821320" stop="1391164822917" status="passed" severity="normal">
             <name>calculationTest[223]</name>
             <steps/>
             <attachments/>
@@ -5924,7 +5891,7 @@
                 <parameter name="Argument" value="223" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380159" stop="1391003381157" status="passed" severity="normal">
+        <test-case start="1391164821444" stop="1391164822558" status="passed" severity="normal">
             <name>calculationTest[224]</name>
             <steps/>
             <attachments/>
@@ -5936,7 +5903,7 @@
                 <parameter name="Argument" value="224" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380189" stop="1391003381719" status="passed" severity="normal">
+        <test-case start="1391164821564" stop="1391164822509" status="passed" severity="normal">
             <name>calculationTest[225]</name>
             <steps/>
             <attachments/>
@@ -5948,7 +5915,7 @@
                 <parameter name="Argument" value="225" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380274" stop="1391003380869" status="passed" severity="normal">
+        <test-case start="1391164821571" stop="1391164822915" status="passed" severity="normal">
             <name>calculationTest[226]</name>
             <steps/>
             <attachments/>
@@ -5960,8 +5927,40 @@
                 <parameter name="Argument" value="226" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380431" stop="1391003382379" status="passed" severity="normal">
+        <test-case start="1391164821631" stop="1391164822068" status="failed" severity="normal">
             <name>calculationTest[227]</name>
+            <failure>
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -5972,7 +5971,7 @@
                 <parameter name="Argument" value="227" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380444" stop="1391003381574" status="failed" severity="normal">
+        <test-case start="1391164821715" stop="1391164823163" status="failed" severity="normal">
             <name>calculationTest[228]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -6016,11 +6015,11 @@
                 <parameter name="Argument" value="228" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380554" stop="1391003380943" status="failed" severity="normal">
+        <test-case start="1391164821835" stop="1391164823461" status="failed" severity="normal">
             <name>calculationTest[229]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 10 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -6060,7 +6059,7 @@
                 <parameter name="Argument" value="229" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380602" stop="1391003380768" status="skipped" severity="normal">
+        <test-case start="1391164821923" stop="1391164822660" status="skipped" severity="normal">
             <name>calculationTest[230]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -6103,7 +6102,7 @@
                 <parameter name="Argument" value="230" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380687" stop="1391003381895" status="broken" severity="normal">
+        <test-case start="1391164821927" stop="1391164822515" status="broken" severity="normal">
             <name>calculationTest[231]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -6145,7 +6144,7 @@
                 <parameter name="Argument" value="231" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380769" stop="1391003380988" status="passed" severity="normal">
+        <test-case start="1391164822069" stop="1391164822178" status="passed" severity="normal">
             <name>calculationTest[232]</name>
             <steps/>
             <attachments/>
@@ -6157,7 +6156,7 @@
                 <parameter name="Argument" value="232" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380870" stop="1391003382190" status="passed" severity="normal">
+        <test-case start="1391164822075" stop="1391164822620" status="passed" severity="normal">
             <name>calculationTest[233]</name>
             <steps/>
             <attachments/>
@@ -6169,7 +6168,7 @@
                 <parameter name="Argument" value="233" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380885" stop="1391003380959" status="passed" severity="normal">
+        <test-case start="1391164822179" stop="1391164823641" status="passed" severity="normal">
             <name>calculationTest[234]</name>
             <steps/>
             <attachments/>
@@ -6181,7 +6180,7 @@
                 <parameter name="Argument" value="234" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380944" stop="1391003381922" status="passed" severity="normal">
+        <test-case start="1391164822442" stop="1391164824139" status="passed" severity="normal">
             <name>calculationTest[235]</name>
             <steps/>
             <attachments/>
@@ -6193,7 +6192,7 @@
                 <parameter name="Argument" value="235" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380960" stop="1391003381280" status="passed" severity="normal">
+        <test-case start="1391164822483" stop="1391164823272" status="passed" severity="normal">
             <name>calculationTest[236]</name>
             <steps/>
             <attachments/>
@@ -6205,7 +6204,7 @@
                 <parameter name="Argument" value="236" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003380988" stop="1391003382286" status="passed" severity="normal">
+        <test-case start="1391164822510" stop="1391164823782" status="passed" severity="normal">
             <name>calculationTest[237]</name>
             <steps/>
             <attachments/>
@@ -6217,11 +6216,11 @@
                 <parameter name="Argument" value="237" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381140" stop="1391003381312" status="failed" severity="normal">
+        <test-case start="1391164822516" stop="1391164823325" status="failed" severity="normal">
             <name>calculationTest[238]</name>
             <failure>
-                <message>AssertionError: Expected 8 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -6261,11 +6260,11 @@
                 <parameter name="Argument" value="238" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381158" stop="1391003381278" status="failed" severity="normal">
+        <test-case start="1391164822559" stop="1391164824096" status="failed" severity="normal">
             <name>calculationTest[239]</name>
             <failure>
-                <message>AssertionError: Expected 10 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -6305,7 +6304,7 @@
                 <parameter name="Argument" value="239" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381246" stop="1391003382823" status="skipped" severity="normal">
+        <test-case start="1391164822583" stop="1391164824429" status="skipped" severity="normal">
             <name>calculationTest[240]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -6348,7 +6347,7 @@
                 <parameter name="Argument" value="240" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381278" stop="1391003382100" status="broken" severity="normal">
+        <test-case start="1391164822621" stop="1391164824290" status="broken" severity="normal">
             <name>calculationTest[241]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -6390,7 +6389,7 @@
                 <parameter name="Argument" value="241" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381281" stop="1391003382293" status="passed" severity="normal">
+        <test-case start="1391164822638" stop="1391164822891" status="passed" severity="normal">
             <name>calculationTest[242]</name>
             <steps/>
             <attachments/>
@@ -6402,7 +6401,7 @@
                 <parameter name="Argument" value="242" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381312" stop="1391003381509" status="passed" severity="normal">
+        <test-case start="1391164822661" stop="1391164824428" status="passed" severity="normal">
             <name>calculationTest[243]</name>
             <steps/>
             <attachments/>
@@ -6414,7 +6413,7 @@
                 <parameter name="Argument" value="243" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381440" stop="1391003381877" status="passed" severity="normal">
+        <test-case start="1391164822778" stop="1391164823065" status="passed" severity="normal">
             <name>calculationTest[244]</name>
             <steps/>
             <attachments/>
@@ -6426,7 +6425,7 @@
                 <parameter name="Argument" value="244" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381510" stop="1391003383298" status="passed" severity="normal">
+        <test-case start="1391164822804" stop="1391164823804" status="passed" severity="normal">
             <name>calculationTest[245]</name>
             <steps/>
             <attachments/>
@@ -6438,7 +6437,7 @@
                 <parameter name="Argument" value="245" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381575" stop="1391003383509" status="passed" severity="normal">
+        <test-case start="1391164822892" stop="1391164824774" status="passed" severity="normal">
             <name>calculationTest[246]</name>
             <steps/>
             <attachments/>
@@ -6450,8 +6449,40 @@
                 <parameter name="Argument" value="246" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381632" stop="1391003383116" status="passed" severity="normal">
+        <test-case start="1391164822915" stop="1391164823603" status="failed" severity="normal">
             <name>calculationTest[247]</name>
+            <failure>
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -6462,11 +6493,11 @@
                 <parameter name="Argument" value="247" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381675" stop="1391003382961" status="failed" severity="normal">
+        <test-case start="1391164822917" stop="1391164824673" status="failed" severity="normal">
             <name>calculationTest[248]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -6506,7 +6537,7 @@
                 <parameter name="Argument" value="248" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381689" stop="1391003383324" status="failed" severity="normal">
+        <test-case start="1391164823066" stop="1391164823764" status="failed" severity="normal">
             <name>calculationTest[249]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -6550,7 +6581,7 @@
                 <parameter name="Argument" value="249" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381705" stop="1391003383011" status="skipped" severity="normal">
+        <test-case start="1391164823164" stop="1391164823440" status="skipped" severity="normal">
             <name>calculationTest[250]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -6593,7 +6624,7 @@
                 <parameter name="Argument" value="250" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381720" stop="1391003382285" status="broken" severity="normal">
+        <test-case start="1391164823273" stop="1391164823371" status="broken" severity="normal">
             <name>calculationTest[251]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -6635,7 +6666,7 @@
                 <parameter name="Argument" value="251" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381878" stop="1391003383349" status="passed" severity="normal">
+        <test-case start="1391164823326" stop="1391164823892" status="passed" severity="normal">
             <name>calculationTest[252]</name>
             <steps/>
             <attachments/>
@@ -6647,7 +6678,7 @@
                 <parameter name="Argument" value="252" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381896" stop="1391003383476" status="passed" severity="normal">
+        <test-case start="1391164823372" stop="1391164824978" status="passed" severity="normal">
             <name>calculationTest[253]</name>
             <steps/>
             <attachments/>
@@ -6659,7 +6690,7 @@
                 <parameter name="Argument" value="253" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003381922" stop="1391003382908" status="passed" severity="normal">
+        <test-case start="1391164823441" stop="1391164824777" status="passed" severity="normal">
             <name>calculationTest[254]</name>
             <steps/>
             <attachments/>
@@ -6671,7 +6702,7 @@
                 <parameter name="Argument" value="254" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382100" stop="1391003382124" status="passed" severity="normal">
+        <test-case start="1391164823462" stop="1391164824749" status="passed" severity="normal">
             <name>calculationTest[255]</name>
             <steps/>
             <attachments/>
@@ -6683,7 +6714,7 @@
                 <parameter name="Argument" value="255" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382124" stop="1391003383215" status="passed" severity="normal">
+        <test-case start="1391164823604" stop="1391164823711" status="passed" severity="normal">
             <name>calculationTest[256]</name>
             <steps/>
             <attachments/>
@@ -6695,8 +6726,40 @@
                 <parameter name="Argument" value="256" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382191" stop="1391003382931" status="passed" severity="normal">
+        <test-case start="1391164823642" stop="1391164824195" status="failed" severity="normal">
             <name>calculationTest[257]</name>
+            <failure>
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -6707,7 +6770,7 @@
                 <parameter name="Argument" value="257" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382286" stop="1391003383206" status="failed" severity="normal">
+        <test-case start="1391164823712" stop="1391164825607" status="failed" severity="normal">
             <name>calculationTest[258]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -6751,7 +6814,7 @@
                 <parameter name="Argument" value="258" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382287" stop="1391003383013" status="failed" severity="normal">
+        <test-case start="1391164823764" stop="1391164824633" status="failed" severity="normal">
             <name>calculationTest[259]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -6795,7 +6858,7 @@
                 <parameter name="Argument" value="259" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382294" stop="1391003383293" status="skipped" severity="normal">
+        <test-case start="1391164823783" stop="1391164823988" status="skipped" severity="normal">
             <name>calculationTest[260]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -6838,7 +6901,7 @@
                 <parameter name="Argument" value="260" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382380" stop="1391003382853" status="broken" severity="normal">
+        <test-case start="1391164823805" stop="1391164824436" status="broken" severity="normal">
             <name>calculationTest[261]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -6880,7 +6943,7 @@
                 <parameter name="Argument" value="261" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382824" stop="1391003384539" status="passed" severity="normal">
+        <test-case start="1391164823892" stop="1391164825303" status="passed" severity="normal">
             <name>calculationTest[262]</name>
             <steps/>
             <attachments/>
@@ -6892,7 +6955,7 @@
                 <parameter name="Argument" value="262" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382854" stop="1391003383311" status="passed" severity="normal">
+        <test-case start="1391164823989" stop="1391164825682" status="passed" severity="normal">
             <name>calculationTest[263]</name>
             <steps/>
             <attachments/>
@@ -6904,7 +6967,7 @@
                 <parameter name="Argument" value="263" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382909" stop="1391003383700" status="passed" severity="normal">
+        <test-case start="1391164824097" stop="1391164825361" status="passed" severity="normal">
             <name>calculationTest[264]</name>
             <steps/>
             <attachments/>
@@ -6916,7 +6979,7 @@
                 <parameter name="Argument" value="264" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382932" stop="1391003384259" status="passed" severity="normal">
+        <test-case start="1391164824140" stop="1391164824993" status="passed" severity="normal">
             <name>calculationTest[265]</name>
             <steps/>
             <attachments/>
@@ -6928,7 +6991,7 @@
                 <parameter name="Argument" value="265" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003382961" stop="1391003384080" status="passed" severity="normal">
+        <test-case start="1391164824195" stop="1391164824994" status="passed" severity="normal">
             <name>calculationTest[266]</name>
             <steps/>
             <attachments/>
@@ -6940,7 +7003,7 @@
                 <parameter name="Argument" value="266" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383012" stop="1391003384620" status="passed" severity="normal">
+        <test-case start="1391164824291" stop="1391164825289" status="passed" severity="normal">
             <name>calculationTest[267]</name>
             <steps/>
             <attachments/>
@@ -6952,7 +7015,7 @@
                 <parameter name="Argument" value="267" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383014" stop="1391003384028" status="failed" severity="normal">
+        <test-case start="1391164824429" stop="1391164824986" status="failed" severity="normal">
             <name>calculationTest[268]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -6996,11 +7059,11 @@
                 <parameter name="Argument" value="268" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383117" stop="1391003383718" status="failed" severity="normal">
+        <test-case start="1391164824430" stop="1391164824681" status="failed" severity="normal">
             <name>calculationTest[269]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 10 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -7040,7 +7103,7 @@
                 <parameter name="Argument" value="269" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383206" stop="1391003383690" status="skipped" severity="normal">
+        <test-case start="1391164824437" stop="1391164825554" status="skipped" severity="normal">
             <name>calculationTest[270]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -7083,7 +7146,7 @@
                 <parameter name="Argument" value="270" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383215" stop="1391003384638" status="broken" severity="normal">
+        <test-case start="1391164824634" stop="1391164826347" status="broken" severity="normal">
             <name>calculationTest[271]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -7125,7 +7188,7 @@
                 <parameter name="Argument" value="271" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383294" stop="1391003384625" status="passed" severity="normal">
+        <test-case start="1391164824674" stop="1391164825392" status="passed" severity="normal">
             <name>calculationTest[272]</name>
             <steps/>
             <attachments/>
@@ -7137,7 +7200,7 @@
                 <parameter name="Argument" value="272" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383299" stop="1391003384035" status="passed" severity="normal">
+        <test-case start="1391164824682" stop="1391164826602" status="passed" severity="normal">
             <name>calculationTest[273]</name>
             <steps/>
             <attachments/>
@@ -7149,7 +7212,7 @@
                 <parameter name="Argument" value="273" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383311" stop="1391003383886" status="passed" severity="normal">
+        <test-case start="1391164824750" stop="1391164825409" status="passed" severity="normal">
             <name>calculationTest[274]</name>
             <steps/>
             <attachments/>
@@ -7161,7 +7224,7 @@
                 <parameter name="Argument" value="274" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383325" stop="1391003383609" status="passed" severity="normal">
+        <test-case start="1391164824775" stop="1391164825923" status="passed" severity="normal">
             <name>calculationTest[275]</name>
             <steps/>
             <attachments/>
@@ -7173,7 +7236,7 @@
                 <parameter name="Argument" value="275" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383350" stop="1391003384072" status="passed" severity="normal">
+        <test-case start="1391164824778" stop="1391164825874" status="passed" severity="normal">
             <name>calculationTest[276]</name>
             <steps/>
             <attachments/>
@@ -7185,8 +7248,40 @@
                 <parameter name="Argument" value="276" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383477" stop="1391003384362" status="passed" severity="normal">
+        <test-case start="1391164824979" stop="1391164825010" status="failed" severity="normal">
             <name>calculationTest[277]</name>
+            <failure>
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
+	at org.junit.Assert.fail(Assert.java:88)
+	at org.junit.Assert.assertTrue(Assert.java:41)
+	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
+	at sun.reflect.GeneratedMethodAccessor1.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.junit.runners.Suite.runChild(Suite.java:127)
+	at org.junit.runners.Suite.runChild(Suite.java:26)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
             <steps/>
             <attachments/>
             <labels>
@@ -7197,11 +7292,11 @@
                 <parameter name="Argument" value="277" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383510" stop="1391003384137" status="failed" severity="normal">
+        <test-case start="1391164824987" stop="1391164825482" status="failed" severity="normal">
             <name>calculationTest[278]</name>
             <failure>
-                <message>AssertionError: Expected 9 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
+                <message>AssertionError: Expected 8 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 8 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -7241,11 +7336,11 @@
                 <parameter name="Argument" value="278" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383610" stop="1391003383797" status="failed" severity="normal">
+        <test-case start="1391164824994" stop="1391164826843" status="failed" severity="normal">
             <name>calculationTest[279]</name>
             <failure>
-                <message>AssertionError: Expected 10 less than 8 </message>
-                <stack-trace>java.lang.AssertionError: Expected 10 less than 8 
+                <message>AssertionError: Expected 9 less than 8 </message>
+                <stack-trace>java.lang.AssertionError: Expected 9 less than 8 
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
 	at my.company.ParametrizedTest.calculationTest(ParametrizedTest.java:56)
@@ -7285,7 +7380,7 @@
                 <parameter name="Argument" value="279" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383690" stop="1391003383708" status="skipped" severity="normal">
+        <test-case start="1391164824995" stop="1391164825260" status="skipped" severity="normal">
             <name>calculationTest[280]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -7328,7 +7423,7 @@
                 <parameter name="Argument" value="280" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383701" stop="1391003385304" status="broken" severity="normal">
+        <test-case start="1391164825010" stop="1391164826128" status="broken" severity="normal">
             <name>calculationTest[281]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -7370,7 +7465,7 @@
                 <parameter name="Argument" value="281" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383709" stop="1391003384579" status="passed" severity="normal">
+        <test-case start="1391164825261" stop="1391164826393" status="passed" severity="normal">
             <name>calculationTest[282]</name>
             <steps/>
             <attachments/>
@@ -7382,7 +7477,7 @@
                 <parameter name="Argument" value="282" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383719" stop="1391003384104" status="passed" severity="normal">
+        <test-case start="1391164825289" stop="1391164825726" status="passed" severity="normal">
             <name>calculationTest[283]</name>
             <steps/>
             <attachments/>
@@ -7394,7 +7489,7 @@
                 <parameter name="Argument" value="283" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383798" stop="1391003383898" status="passed" severity="normal">
+        <test-case start="1391164825304" stop="1391164825820" status="passed" severity="normal">
             <name>calculationTest[284]</name>
             <steps/>
             <attachments/>
@@ -7406,7 +7501,7 @@
                 <parameter name="Argument" value="284" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383887" stop="1391003384641" status="passed" severity="normal">
+        <test-case start="1391164825362" stop="1391164825804" status="passed" severity="normal">
             <name>calculationTest[285]</name>
             <steps/>
             <attachments/>
@@ -7418,7 +7513,7 @@
                 <parameter name="Argument" value="285" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003383898" stop="1391003385223" status="passed" severity="normal">
+        <test-case start="1391164825393" stop="1391164827335" status="passed" severity="normal">
             <name>calculationTest[286]</name>
             <steps/>
             <attachments/>
@@ -7430,7 +7525,7 @@
                 <parameter name="Argument" value="286" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384029" stop="1391003385253" status="failed" severity="normal">
+        <test-case start="1391164825410" stop="1391164826022" status="failed" severity="normal">
             <name>calculationTest[287]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -7474,7 +7569,7 @@
                 <parameter name="Argument" value="287" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384036" stop="1391003384622" status="failed" severity="normal">
+        <test-case start="1391164825483" stop="1391164826749" status="failed" severity="normal">
             <name>calculationTest[288]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -7518,7 +7613,7 @@
                 <parameter name="Argument" value="288" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384073" stop="1391003384654" status="failed" severity="normal">
+        <test-case start="1391164825555" stop="1391164826061" status="failed" severity="normal">
             <name>calculationTest[289]</name>
             <failure>
                 <message>AssertionError: Expected 10 less than 8 </message>
@@ -7562,7 +7657,7 @@
                 <parameter name="Argument" value="289" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384081" stop="1391003385438" status="skipped" severity="normal">
+        <test-case start="1391164825608" stop="1391164826716" status="skipped" severity="normal">
             <name>calculationTest[290]</name>
             <failure>
                 <message>AssumptionViolatedException: Nothing to do</message>
@@ -7605,7 +7700,7 @@
                 <parameter name="Argument" value="290" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384105" stop="1391003384150" status="broken" severity="normal">
+        <test-case start="1391164825683" stop="1391164826054" status="broken" severity="normal">
             <name>calculationTest[291]</name>
             <failure>
                 <message>Exception: Unexpected value</message>
@@ -7647,7 +7742,7 @@
                 <parameter name="Argument" value="291" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384138" stop="1391003384895" status="passed" severity="normal">
+        <test-case start="1391164825727" stop="1391164826485" status="passed" severity="normal">
             <name>calculationTest[292]</name>
             <steps/>
             <attachments/>
@@ -7659,7 +7754,7 @@
                 <parameter name="Argument" value="292" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384151" stop="1391003385183" status="passed" severity="normal">
+        <test-case start="1391164825805" stop="1391164826134" status="passed" severity="normal">
             <name>calculationTest[293]</name>
             <steps/>
             <attachments/>
@@ -7671,7 +7766,7 @@
                 <parameter name="Argument" value="293" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384260" stop="1391003385720" status="passed" severity="normal">
+        <test-case start="1391164825822" stop="1391164826420" status="passed" severity="normal">
             <name>calculationTest[294]</name>
             <steps/>
             <attachments/>
@@ -7683,7 +7778,7 @@
                 <parameter name="Argument" value="294" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384363" stop="1391003384631" status="passed" severity="normal">
+        <test-case start="1391164825874" stop="1391164826760" status="passed" severity="normal">
             <name>calculationTest[295]</name>
             <steps/>
             <attachments/>
@@ -7695,7 +7790,7 @@
                 <parameter name="Argument" value="295" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384540" stop="1391003384967" status="passed" severity="normal">
+        <test-case start="1391164825924" stop="1391164826225" status="passed" severity="normal">
             <name>calculationTest[296]</name>
             <steps/>
             <attachments/>
@@ -7707,7 +7802,7 @@
                 <parameter name="Argument" value="296" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384580" stop="1391003385499" status="failed" severity="normal">
+        <test-case start="1391164826023" stop="1391164826692" status="failed" severity="normal">
             <name>calculationTest[297]</name>
             <failure>
                 <message>AssertionError: Expected 8 less than 8 </message>
@@ -7751,7 +7846,7 @@
                 <parameter name="Argument" value="297" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384621" stop="1391003386351" status="failed" severity="normal">
+        <test-case start="1391164826055" stop="1391164826322" status="failed" severity="normal">
             <name>calculationTest[298]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>
@@ -7795,7 +7890,7 @@
                 <parameter name="Argument" value="298" kind="environment-variable"/>
             </parameters>
         </test-case>
-        <test-case start="1391003384622" stop="1391003384813" status="failed" severity="normal">
+        <test-case start="1391164826062" stop="1391164826603" status="failed" severity="normal">
             <name>calculationTest[299]</name>
             <failure>
                 <message>AssertionError: Expected 9 less than 8 </message>

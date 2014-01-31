@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391003394194" stop="1391003394492">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391164835049" stop="1391164835381">
     <name>my.company.AlwaysPassingTest</name>
     <test-cases>
-        <test-case start="1391003394194" stop="1391003394195" status="passed" severity="normal">
-            <name>testThree</name>
+        <test-case start="1391164835049" stop="1391164835050" status="passed" severity="normal">
+            <name>testOne</name>
             <steps/>
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1391003394194" stop="1391003394195" status="passed" severity="normal">
+        <test-case start="1391164835049" stop="1391164835050" status="passed" severity="normal">
             <name>testFour</name>
             <steps/>
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1391003394195" stop="1391003394195" status="passed" severity="normal">
+        <test-case start="1391164835050" stop="1391164835050" status="passed" severity="normal">
             <name>testTwo</name>
             <steps/>
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1391003394195" stop="1391003394195" status="passed" severity="normal">
-            <name>testOne</name>
+        <test-case start="1391164835050" stop="1391164835050" status="passed" severity="normal">
+            <name>testThree</name>
             <steps/>
             <attachments/>
             <labels/>

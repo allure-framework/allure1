@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391164827342" stop="1391164835203">
+    <name>my.company.ScreenshotTest</name>
+    <title>Search tests</title>
+    <description type="text">This testsuite has tests what always are passing</description>
+    <test-cases>
+        <test-case start="1391164827342" stop="1391164830732" status="failed" severity="normal">
+            <name>pageLoadingTest</name>
+            <title>Page loading test</title>
+            <failure>
+                <message>AssertionError: Text on current page should be correct
+Expected: element text is &quot;Yandex&quot;
+     but: &lt;[[PhantomJSDriver: phantomjs on LINUX (1a337730-8a64-11e3-ab75-332e70b46b0d)] -&gt; css selector: title]&gt; text is &quot;&quot;</message>
+                <stack-trace>java.lang.AssertionError: Text on current page should be correct
+Expected: element text is &quot;Yandex&quot;
+     but: &lt;[[PhantomJSDriver: phantomjs on LINUX (1a337730-8a64-11e3-ab75-332e70b46b0d)] -&gt; css selector: title]&gt; text is &quot;&quot;
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at org.junit.Assert.assertThat(Assert.java:865)
+	at my.company.steps.WebDriverSteps.checkText(WebDriverSteps.java:51)
+	at my.company.ScreenshotTest.pageLoadingTest(ScreenshotTest.java:40)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:47)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
+	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:26)
+	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
+	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:271)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:70)
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:471)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:262)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
+	at java.lang.Thread.run(Thread.java:744)
+</stack-trace>
+            </failure>
+            <steps>
+                <step start="1391164829360" stop="1391164829801" status="passed">
+                    <name>openMainPage</name>
+                </step>
+                <step start="1391164830164" stop="1391164830174" status="passed">
+                    <name>findElement</name>
+                </step>
+                <step start="1391164830174" stop="1391164830213" status="failed">
+                    <name>checkText</name>
+                    <title>Check text in element</title>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title="Server Log" source="e18b7bd8-e2d7-4041-badd-a8c13163e613-attachment.txt" type="txt"/>
+                <attachment title="Response" source="d8b81632-dc63-4fd8-922b-f2894f63c650-attachment.json" type="json"/>
+                <attachment title="Page Screenshot" source="f3d45a11-b1d1-4dce-ad31-7984d02a22ea-attachment.png" type="png"/>
+            </attachments>
+            <labels>
+                <label name="story" value="WebdriverScreenshot"/>
+            </labels>
+            <parameters>
+                <parameter name="BROWSER" value="Phantom JS" kind="environment-variable"/>
+                <parameter name="PROD_HOST" value="http://ya.ru" kind="environment-variable"/>
+                <parameter name="TEST_HOST" value="http://test.ya.ru" kind="environment-variable"/>
+            </parameters>
+        </test-case>
+        <test-case start="1391164827342" stop="1391164834702" status="passed" severity="normal">
+            <name>wildcardSearch</name>
+            <title>Wildcard search test</title>
+            <steps>
+                <step start="1391164829360" stop="1391164829885" status="passed">
+                    <name>openMainPage</name>
+                </step>
+                <step start="1391164829885" stop="1391164834009" status="passed">
+                    <name>search</name>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title="Page Screenshot" source="8bf2f11d-2853-4cd2-bb9e-2f787f059b76-attachment.png" type="png"/>
+            </attachments>
+            <labels>
+                <label name="story" value="WebdriverScreenshot"/>
+            </labels>
+        </test-case>
+        <test-case start="1391164827342" stop="1391164835042" status="passed" severity="trivial">
+            <name>emptyTextSearch</name>
+            <title>Empty text search</title>
+            <steps>
+                <step start="1391164829360" stop="1391164829776" status="passed">
+                    <name>openMainPage</name>
+                </step>
+                <step start="1391164829776" stop="1391164834458" status="passed">
+                    <name>search</name>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title="Page Screenshot" source="42a417a4-df9f-44cc-bad5-c3213c1be7fa-attachment.png" type="png"/>
+            </attachments>
+            <labels>
+                <label name="story" value="WebdriverScreenshot"/>
+            </labels>
+        </test-case>
+        <test-case start="1391164827342" stop="1391164834707" status="passed" severity="normal">
+            <name>usualSearch</name>
+            <title>Usual search test</title>
+            <steps>
+                <step start="1391164829360" stop="1391164829867" status="passed">
+                    <name>openMainPage</name>
+                </step>
+                <step start="1391164829871" stop="1391164833987" status="passed">
+                    <name>search</name>
+                </step>
+            </steps>
+            <attachments>
+                <attachment title="Page Screenshot" source="cc4c07fc-b601-4a0a-a412-8861e44b7617-attachment.png" type="png"/>
+            </attachments>
+            <labels>
+                <label name="story" value="WebdriverScreenshot"/>
+            </labels>
+        </test-case>
+    </test-cases>
+    <labels>
+        <label name="feature" value="Screenshot"/>
+    </labels>
+</ns2:test-suite>
