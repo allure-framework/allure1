@@ -8,8 +8,11 @@
         </div>
         <span class="icon-status-{{testcase.status | lowercase}}"></span>
         {{testcase.title}}
+        <small>Severity: {{testcase.severity}}</small>
     </h3>
-    <div class="text-muted">Severity: {{testcase.severity}}</div>
+    <div class="text-muted" ng-show="testcase.name">
+        {{testcase.name}} <copy-button text="testcase.name"></copy-button>
+    </div>
 </div>
 <div class="testcase__content" on-keynav="select($direction)">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
