@@ -28,7 +28,7 @@ angular.module('allure.filters', [])
                 format = formats[i];
             }
             return format[0](time);
-        }
+        };
     })
     .filter('time', function() {
         'use strict';
@@ -61,4 +61,18 @@ angular.module('allure.filters', [])
             }
             return result.join(' ');
         };
-    });
+    })
+    .filter('linky', ['$sce', function($sce) {
+        "use strict";
+        function addLink(text) {
+            return ['<a href="', text, '">', text, '</a>'].join('');
+        }
+        var LINKY_URL_REGEXP = /^(\w)+:\/\/.*/;
+
+        return function(text) {
+            if (!text) {
+                return text;
+            }
+            return $sce.trustAsHtml(LINKY_URL_REGEXP.test(text) ? addLink(text) : text);
+        };
+    }]);
