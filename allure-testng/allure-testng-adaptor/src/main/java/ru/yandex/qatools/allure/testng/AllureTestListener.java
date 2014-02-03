@@ -1,80 +1,75 @@
 package ru.yandex.qatools.allure.testng;
 
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestResult;
+import org.testng.*;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
-import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.util.UUID;
 
 /**
+ * Process only suite events, all test case events are simply passed to
+ * @{link InternalAllureTestListener} with wrapped @{link ITestResult} argument
+ *
+ * @see InternalAllureTestListener
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 22.11.13
  */
-@SuppressWarnings("unused")
 public class AllureTestListener implements ITestListener {
-    private String suiteUid;
+
+    private Allure lifecycle = Allure.LIFECYCLE;
+
+    private String suiteUid = UUID.randomUUID().toString();
+
+    private InternalAllureTestListener internalAllureTestListener;
 
     public AllureTestListener() {
-        suiteUid = UUID.randomUUID().toString();
-    }
-
-    @Override
-    public void onTestStart(ITestResult iTestResult) {
-        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, iTestResult.getName());
-        AnnotationManager am = new AnnotationManager(
-                iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations()
-        );
-
-        am.update(event);
-
-        Allure.LIFECYCLE.fire(event);
-    }
-
-    @Override
-    public void onTestSuccess(ITestResult iTestResult) {
-        fireFinishTest();
-    }
-
-    @Override
-    public void onTestFailure(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
-                .withThrowable(iTestResult.getThrowable())
-        );
-        fireFinishTest();
-    }
-
-    @Override
-    public void onTestSkipped(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestCaseSkippedEvent()
-                .withThrowable(iTestResult.getThrowable())
-        );
-        fireFinishTest();
-    }
-
-    @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        Allure.LIFECYCLE.fire(new TestCaseFailureEvent()
-                .withThrowable(iTestResult.getThrowable())
-        );
-        fireFinishTest();
+        internalAllureTestListener = new InternalAllureTestListener(suiteUid);
     }
 
     @Override
     public void onStart(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent(suiteUid, iTestContext.getCurrentXmlTest().getSuite().getName())
+        getLifecycle().fire(new TestSuiteStartedEvent(
+                suiteUid, iTestContext.getCurrentXmlTest().getSuite().getName())
         );
     }
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(suiteUid)
-        );
+        getLifecycle().fire(new TestSuiteFinishedEvent(suiteUid));
     }
 
-    private void fireFinishTest() {
-        Allure.LIFECYCLE.fire(new TestCaseFinishedEvent());
+    @Override
+    public void onTestStart(ITestResult iTestResult) {
+        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
+        internalAllureTestListener.onTestStart(extendedTestResult);
+    }
+
+    @Override
+    public void onTestSuccess(ITestResult iTestResult) {
+        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
+        internalAllureTestListener.onTestSuccess(extendedTestResult);
+    }
+
+    @Override
+    public void onTestFailure(ITestResult iTestResult) {
+        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
+        internalAllureTestListener.onTestFailure(extendedTestResult);
+    }
+
+    @Override
+    public void onTestSkipped(ITestResult iTestResult) {
+        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
+        internalAllureTestListener.onTestSkipped(extendedTestResult);
+    }
+
+    @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
+        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
+        internalAllureTestListener.onTestFailedButWithinSuccessPercentage(extendedTestResult);
+    }
+
+    Allure getLifecycle() {
+        return lifecycle;
     }
 }
