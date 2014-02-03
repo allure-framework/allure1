@@ -9,9 +9,9 @@
 
 ## Allure
 
-##### Release Version: 1.3.0.RC3
+##### Release Version: 1.3.0
 
-##### Development Version: 1.3.0-SNAPSHOT
+##### Development Version: 1.3.1-SNAPSHOT
 
 ### Allure
 
