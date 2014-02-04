@@ -13,7 +13,11 @@
   }
   &__status {
     padding: 7px;
-    margin: 7px -7px;
+    margin: 7px 0;
+    overflow: hidden;
+  }
+  &__stacktrace {
+    clear: both;
   }
   &:empty {
     right: -100%;
@@ -48,5 +52,19 @@
     margin-top: -11px;
     left: -12px;
     top: 50%;
+  }
+}
+
+.environment {
+  padding: 0 7px;
+  overflow: hidden;
+  &:last-child {
+    border-bottom: 1px solid #eee;
+  }
+  &:hover {
+    background: #f2f2f2;
+  }
+  &_name {
+    padding-right: 5px;
   }
 }

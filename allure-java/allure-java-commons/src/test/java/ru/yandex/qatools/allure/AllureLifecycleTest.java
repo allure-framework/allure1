@@ -1,18 +1,38 @@
 package ru.yandex.qatools.allure;
 
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.TemporaryFolder;
+import org.xml.sax.SAXException;
+import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.model.*;
+
+import javax.xml.transform.stream.StreamSource;
+import javax.xml.validation.Validator;
+import java.io.File;
+import java.io.IOException;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
+import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 14.12.13
  */
 public class AllureLifecycleTest {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    public File resultsDirectory;
+
+    @Before
+    public void setUp() throws Exception {
+        resultsDirectory = folder.newFolder();
+        System.setProperty("allure.results.directory", resultsDirectory.getAbsolutePath());
+    }
 
     @Test
     public void allureLifecycleTest() throws Exception {
@@ -59,6 +79,7 @@ public class AllureLifecycleTest {
         assertEquals(testCase.getAttachments().get(0), testCaseAttachment);
 
         fireTestSuiteFinished();
+        validateTestSuite();
 
         assertThat(testSuite.getTestCases(), hasSize(1));
 
@@ -68,7 +89,7 @@ public class AllureLifecycleTest {
 
     public TestSuiteResult fireTestSuiteStart() {
         Allure.LIFECYCLE.fire(new TestSuiteStartedEvent("some.uid", "some.suite.name"));
-        TestSuiteResult testSuite = Allure.LIFECYCLE.testSuiteStorage.get("some.uid");
+        TestSuiteResult testSuite = Allure.LIFECYCLE.getTestSuiteStorage().get("some.uid");
         assertNotNull(testSuite);
         assertThat(testSuite.getName(), is("some.suite.name"));
         assertThat(testSuite.getTestCases(), hasSize(0));
@@ -79,9 +100,17 @@ public class AllureLifecycleTest {
         Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent("some.uid"));
     }
 
+    public void validateTestSuite() throws SAXException, IOException {
+        Validator validator = AllureModelUtils.getAllureSchemaValidator();
+
+        for (File each : listTestSuiteFiles(resultsDirectory)) {
+            validator.validate(new StreamSource(each));
+        }
+    }
+
     public TestCaseResult fireTestCaseStart() {
         Allure.LIFECYCLE.fire(new TestCaseStartedEvent("some.uid", "some.case.name"));
-        TestCaseResult testCase = Allure.LIFECYCLE.testCaseStorage.get();
+        TestCaseResult testCase = Allure.LIFECYCLE.getTestCaseStorage().get();
         assertNotNull(testCase);
         assertThat(testCase.getName(), is("some.case.name"));
         return testCase;
@@ -93,14 +122,14 @@ public class AllureLifecycleTest {
 
     public Step fireStepStart() {
         Allure.LIFECYCLE.fire(new StepStartedEvent("some.step.name"));
-        Step step = Allure.LIFECYCLE.stepStorage.getLast();
+        Step step = Allure.LIFECYCLE.getStepStorage().getLast();
         assertNotNull(step);
         assertThat(step.getName(), is("some.step.name"));
         return step;
     }
 
     public Attachment fireMakeAttach() {
-        Step lastStep = Allure.LIFECYCLE.stepStorage.getLast();
+        Step lastStep = Allure.LIFECYCLE.getStepStorage().getLast();
         int attachmentsCount = lastStep.getAttachments().size();
 
         Allure.LIFECYCLE.fire(new MakeAttachEvent("some.attach.title", AttachmentType.TXT, "attach.body"));
@@ -118,7 +147,7 @@ public class AllureLifecycleTest {
 
     public TestSuiteResult fireCustomTestSuiteEvent() {
         Allure.LIFECYCLE.fire(new ChangeTestSuiteTitleEvent("some.uid", "new.suite.title"));
-        TestSuiteResult testSuite = Allure.LIFECYCLE.testSuiteStorage.get("some.uid");
+        TestSuiteResult testSuite = Allure.LIFECYCLE.getTestSuiteStorage().get("some.uid");
         assertNotNull(testSuite);
         assertThat(testSuite.getTitle(), is("new.suite.title"));
         return testSuite;
@@ -126,9 +155,15 @@ public class AllureLifecycleTest {
 
     public TestCaseResult fireCustomTestCaseEvent() {
         Allure.LIFECYCLE.fire(new ChangeTestCaseTitleEvent("new.case.title"));
-        TestCaseResult testCase = Allure.LIFECYCLE.testCaseStorage.get();
+        TestCaseResult testCase = Allure.LIFECYCLE.getTestCaseStorage().get();
         assertNotNull(testCase);
         assertThat(testCase.getTitle(), is("new.case.title"));
         return testCase;
     }
+
+    @After
+    public void tearDown() {
+        System.setProperty("allure.results.directory", "");
+    }
+
 }

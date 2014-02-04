@@ -1,20 +1,17 @@
 [allure-junit-pom-example]: https://github.com/allure-framework/allure-core/blob/master/docs/allure-junit-pom-example.md
 [steps-and-attachments]: https://github.com/allure-framework/allure-core/blob/master/docs/steps-and-attachments.md
 [behaviors]: https://github.com/allure-framework/allure-core/blob/master/docs/behaviors.md
+[parameters]: #
+[latest-allure-version]: https://github.com/allure-framework/allure-core/blob/master/README.md
 
 ## Allure JUnit integration module
-
-There are two ways to integrate JUnit tests with Allure
-
-### Recommended way
-The first way, **RUNTIME**, *without using aspectj compiler and bytecode injections*,
-(don't work with AQUA framework for now) to use allure with **JUnit** and **Maven**.
 
 First of all add allure version property and dependency of **allure-junit-adaptor**:
 
 ```xml
 <properties>
-    <allure.version>1.2.2</allure.version>
+    <allure.version>{latest allure version}</allure.version>
+    <aspectj.version>1.7.4</aspectj.version>
 </properties>
 
 <dependency>
@@ -23,14 +20,14 @@ First of all add allure version property and dependency of **allure-junit-adapto
     <version>${allure.version}</version>
 </dependency>
 ```
-
-then, add **maven surefire plugin** with next configuration:
+latest Allure version you can see [here][latest-allure-version].
+Then, add **maven surefire plugin** with next configuration:
 
 ```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-surefire-plugin</artifactId>
-    <version>2.16</version>
+    <version>2.14</version>
     <configuration>
         <argLine>
             -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
@@ -52,55 +49,9 @@ then, add **maven surefire plugin** with next configuration:
 </plugin>
 ```
 
-In the end u need to add **allure-report-plugin** to reporting section:
+In the end you need to add **allure-report-plugin** to reporting section:
 
 ```xml
-<reporting>
-    <excludeDefaults>true</excludeDefaults>
-    <plugins>
-        <plugin>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-maven-plugin</artifactId>
-            <version>${allure.version}</version>
-        </plugin>
-    </plugins>
-</reporting>
-```
-
-### Not recommended way
-Another way, **COMPILE**, with using aspectj compiler and bytecode injections:
-
-``` xml
-<properties>
-    <allure.version>1.2.2</allure.version>
-</properties>
-
-<dependencies>
-    <dependency>
-        <groupId>ru.yandex.qatools.allure</groupId>
-        <artifactId>allure-junit-adaptor</artifactId>
-        <version>${allure.version}</version>
-    </dependency>
-</dependencies>
-
-<build>
-    <plugins>
-        <plugin>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-junit-plugin</artifactId>
-            <version>${allure.version}</version>
-            <executions>
-                <execution>
-                    <phase>test-compile</phase>
-                    <goals>
-                        <goal>allure</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-    </plugins>
-</build>
-
 <reporting>
     <excludeDefaults>true</excludeDefaults>
     <plugins>
@@ -156,3 +107,17 @@ public void myTest() {
 ```
 
 Click [here][behaviors] to see more information about behaviors.
+
+### Parameters
+
+Now you can add parameters to your tests, and they will shown in allure report:
+
+```java
+public void myTest() {
+    ...
+    Allure.LIFECYCLE.fire(new AddParameterEvent("some_name", "some_value"));
+    ...
+}
+```
+
+read [more][parameters] about it.

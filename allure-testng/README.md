@@ -1,17 +1,16 @@
-[allure-junit-pom-example]: https://github.com/allure-framework/allure-core/blob/master/docs/allure-junit-pom-example.md
 [steps-and-attachments]: https://github.com/allure-framework/allure-core/blob/master/docs/steps-and-attachments.md
+[behaviors]: https://github.com/allure-framework/allure-core/blob/master/docs/behaviors.md
+[parameters]: #
+[latest-allure-version]: https://github.com/allure-framework/allure-core/blob/master/README.md
 
 ## Allure TestNG integration module
 
-First of all you should add following code to your pom.xml:
-
-``` xml
-<!--Allure version, needed here for allure-maven-plugin. It can be moved to parent pom.-->
+First of all add allure version property and dependency of **allure-testng-adaptor**:
+```xml
 <properties>
-    <allure.version>1.2.2</allure.version>
+    <allure.version>{latest allure version}</allure.version>
 </properties>
 
-<!--This dependency is necessary for Allure TestNG plugin. It can be moved to parent pom.-->
 <dependencies>
     <dependency>
         <groupId>ru.yandex.qatools.allure</groupId>
@@ -19,34 +18,39 @@ First of all you should add following code to your pom.xml:
         <version>${allure.version}</version>
     </dependency>
 </dependencies>
+```
+latest Allure version you can see [here][latest-allure-version].
+Then, add **maven surefire plugin** with next configuration:
 
-<!--Allure TestNG plugin. It can be moved to parent pom. -->
-<build>
-    <plugins>
-        <plugin>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-testng-plugin</artifactId>
-            <version>${allure.version}</version>
-            <executions>
-                <execution>
-                    <phase>test-compile</phase>
-                    <goals>
-                        <goal>allure</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>2.14</version>
+    <configuration>
+        <argLine>
+            -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
+        </argLine>
+        <properties>
+            <property>
+                <name>listener</name>
+                <value>ru.yandex.qatools.allure.testng.AllureTestListener</value>
+            </property>
+        </properties>
+    </configuration>
+    <dependencies>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+        </dependency>
+    </dependencies>
+</plugin>
+```
 
-        <!--Without surefire plugin TestNG test tests will run in one Suite with name "Common Suite" -->
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>2.16</version>
-        </plugin>
-    </plugins>
-</build>
+In the end you need to add **allure-report-plugin** to reporting section:
 
-<!--Allure Maven Plugin. It can be moved to parent pom-->
+```xml
 <reporting>
     <excludeDefaults>true</excludeDefaults>
     <plugins>
@@ -57,16 +61,6 @@ First of all you should add following code to your pom.xml:
         </plugin>
     </plugins>
 </reporting>
-```
-
-Then, you should add AllureTestListener to all your TestNG tests:
-
-``` java
-@Listeners(AllureTestListener.class)
-public class SimpleTest {
-    ...
-}
-
 ```
 
 ### Steps and attachments
@@ -95,3 +89,34 @@ public String saveLog(Logger logger) {
 ```
 
 Click [here][steps-and-attachments] to see more information about steps and attachments.
+
+### BDD
+
+Also you have ability to group your test by **features** and **stories** (BDD-like). Just annotate test
+sutie or test case with **@ru.yandex.qatools.allure.annotations.Fratures** or
+**@ru.yandex.qatools.allure.annotations.Stories** annotations%
+
+```java
+@Features("My Feature")
+@Stories("My Story")
+@Test
+public void myTest() {
+    myStep();
+}
+```
+
+Click [here][behaviors] to see more information about behaviors.
+
+### Parameters
+
+Now you can add parameters to your tests, and they will shown in allure report:
+
+```java
+public void myTest() {
+    ...
+    Allure.LIFECYCLE.fire(new AddParameterEvent("some_name", "some_value"));
+    ...
+}
+```
+
+read [more][parameters] about it.

@@ -8,22 +8,31 @@
         </div>
         <span class="icon-status-{{testcase.status | lowercase}}"></span>
         {{testcase.title}}
+        <small>Severity: {{testcase.severity}}</small>
     </h3>
-    <div class="text-muted">Severity: {{testcase.severity}}</div>
+    <div class="text-muted" ng-show="testcase.name">
+        {{testcase.name}} <copy-button text="testcase.name"></copy-button>
+    </div>
 </div>
-<div class="testcase__content">
+<div class="testcase__content" on-keynav="select($direction)">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
     <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status == 'FAILED' || testcase.status == 'BROKEN'" ng-controller="angular.noop">
         <span class="preformated-text" ng-click="expanded = !expanded">{{testcase.failure.message}}</span>
         <a class="pull-right clickable" ng-hide="expanded" ng-click="expanded = true">Show stacktrace</a>
         <a class="pull-right clickable" ng-show="expanded" ng-click="expanded = false">Hide stacktrace</a>
-        <div ng-show="expanded" class="preformated-text">{{testcase.failure.stackTrace}}</div>
+        <div ng-show="expanded" class="testcase__stacktrace preformated-text">{{testcase.failure.stackTrace}}</div>
     </div>
     <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
         The test has passed right!
     </div>
     <div class="testcase__status alert-status-skipped" ng-show="testcase.status == 'SKIPPED'">
         This test has been skipped
+    </div>
+    <div class="environments">
+        <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">
+            <div class="pull-left environment_name text-muted">{{property.name}}:</div>
+            <div class="pull-left" ng-bind-html="property.value | linky"></div>
+        </div>
     </div>
     <div class="step" ng-repeat="step in testcase.steps" ng-controller="StepCtrl">
         <ng-include src="'testcaseStep.tpl'"></ng-include>

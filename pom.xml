@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -9,13 +10,16 @@
     </parent>
 
     <properties>
+        <jetty.port>9990</jetty.port>
+        <jetty.version>9.1.0.v20131115</jetty.version>
+
         <compiler.version>1.7</compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <groupId>ru.yandex.qatools.allure</groupId>
     <artifactId>allure-core</artifactId>
-    <version>1.3.0-SNAPSHOT</version>
+    <version>1.3.1-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -27,6 +31,7 @@
         <module>allure-junit</module>
         <module>allure-testng</module>
         <module>allure-report</module>
+        <module>allure-e2e</module>
     </modules>
 
     <organization>
@@ -43,9 +48,9 @@
     </licenses>
 
     <scm>
-        <url>https://github.com/allure-framework/allure</url>
-        <connection>scm:git@github.com:allure-framework/allure.git</connection>
-        <developerConnection>scm:git:git@github.com:allure-framework/allure.git</developerConnection>
+        <url>https://github.com/allure-framework/allure-core</url>
+        <connection>scm:git@github.com:allure-framework/allure-core.git</connection>
+        <developerConnection>scm:git:git@github.com:allure-framework/allure-core.git</developerConnection>
     </scm>
 
     <issueManagement>
@@ -82,13 +87,55 @@
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.6</version>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <version>2.2.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.sonar</groupId>
+                    <artifactId>sonar-maven-plugin</artifactId>
+                    <version>4.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.jvnet.jaxb2.maven2</groupId>
+                    <artifactId>maven-jaxb2-plugin</artifactId>
+                    <version>0.8.3</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>${jetty.version}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.eclipse.jetty</groupId>
+                            <artifactId>jetty-io</artifactId>
+                            <version>${jetty.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.eclipse.jetty</groupId>
+                            <artifactId>jetty-util</artifactId>
+                            <version>${jetty.version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
             </plugins>
         </pluginManagement>
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
                 <configuration>
                     <source>${compiler.version}</source>
                     <target>${compiler.version}</target>
@@ -97,7 +144,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
-                <version>2.2.1</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
@@ -108,9 +154,8 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
+                <groupId>org.codehaus.sonar</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
-                <version>2.2</version>
             </plugin>
         </plugins>
     </build>
@@ -121,12 +166,6 @@
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-model</artifactId>
                 <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.yandex.qatools.allure</groupId>
-                <artifactId>allure-model</artifactId>
-                <version>${project.version}</version>
-                <type>test-jar</type>
             </dependency>
             <dependency>
                 <groupId>ru.yandex.qatools.allure</groupId>
@@ -141,11 +180,6 @@
             <dependency>
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-java-aspects</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>ru.yandex.qatools.allure</groupId>
-                <artifactId>allure-java-inject</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -165,6 +199,11 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>ru.yandex.qatools.properties</groupId>
+                <artifactId>properties-loader</artifactId>
+                <version>1.4</version>
+            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -190,6 +229,18 @@
                 <artifactId>hamcrest-all</artifactId>
                 <version>1.3</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-util</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-io</artifactId>
+                <version>${jetty.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

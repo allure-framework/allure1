@@ -1,3 +1,4 @@
+/*globals angular*/
 angular.module('allure.xUnit.controllers', [])
     .controller('HomeCtrl', function ($scope, $state, testsuites) {
         'use strict';
@@ -27,8 +28,8 @@ angular.module('allure.xUnit.controllers', [])
             passed: 0, skipped: 0, failed: 0, broken: 0, total: 0
         });
         $scope.testcase = {};
-        $scope.$watch('testcase.uid', function(testcaseUid) {
-            if(testcaseUid) {
+        $scope.$watch('testcase.uid', function(testcaseUid, oldUid) {
+            if(testcaseUid && testcaseUid !== oldUid) {
                 $state.go('home.testsuite.testcase', {testcaseUid: testcaseUid})
             }
         });
@@ -44,7 +45,7 @@ angular.module('allure.xUnit.controllers', [])
         });
     })
 
-    .controller('TestSuitesCtrl', function($scope, WatchingStore) {
+    .controller('TestSuitesCtrl', function($scope, WatchingStore, Collection) {
         'use strict';
         var store = new WatchingStore('testSuitesSettings');
         $scope.statusFilter = function(testsuite) {
@@ -54,9 +55,23 @@ angular.module('allure.xUnit.controllers', [])
             });
             return visible;
         };
+        $scope.select = function(direction) {
+            var index = $scope.list.indexOf($scope.testsuite),
+                testsuite = direction < 0 ? $scope.list.getPrevious(index) : $scope.list.getNext(index);
+            $scope.setTestsuite(testsuite.uid);
+        };
         $scope.showStatuses = {};
         $scope.sorting = {
             predicate: store.bindProperty($scope, 'sorting.predicate', 'statistic.failed'),
             reverse: store.bindProperty($scope, 'sorting.reverse', false)
         };
+        $scope.$watch('testsuites', function(testsuites) {
+            $scope.list = new Collection(testsuites);
+        });
+        $scope.$watch('showStatuses', function() {
+            $scope.list.filter($scope.statusFilter);
+        }, true);
+        $scope.$watch('sorting', function() {
+            $scope.list.sort($scope.sorting);
+        }, true);
     });

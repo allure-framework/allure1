@@ -4,7 +4,7 @@ import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.Step;
 
-import static ru.yandex.qatools.allure.utils.AllureWriteUtils.writeAttachment;
+import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachment;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru

@@ -15,7 +15,7 @@ import java.util.UUID;
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
  *         Date: 12/24/13
  */
-public class AllureNamingUtils {
+public final class AllureNamingUtils {
 
     public static final String FILE_NAME_PATTER = "%s-%s.%s";
 

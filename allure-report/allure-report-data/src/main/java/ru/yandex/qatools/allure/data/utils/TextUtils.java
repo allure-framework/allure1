@@ -1,9 +1,8 @@
 package ru.yandex.qatools.allure.data.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,6 +25,10 @@ public final class TextUtils {
         MessageDigest md = MessageDigest.getInstance(ALGORITHM);
         md.update(s.getBytes(CHARSET));
         return new BigInteger(1, md.digest()).toString(RADIX);
+    }
+
+    public static String generateUid() {
+        return UUID.randomUUID().toString();
     }
 
     public static String humanize(String text) {
