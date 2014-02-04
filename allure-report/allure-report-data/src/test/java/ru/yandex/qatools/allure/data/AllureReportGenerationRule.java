@@ -7,7 +7,6 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.bind.JAXB;
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,7 +58,7 @@ public class AllureReportGenerationRule extends ExternalResource {
     public AllureDefects getDefectsData() throws Exception {
         if (allureDefects == null) {
             ObjectMapper mapper = new ObjectMapper();
-            allureDefects = mapper.readValue(new File(reportDataDir, "defects.json"), AllureDefects.class);
+            allureDefects = mapper.readValue(new File(reportDir, "data/defects.json"), AllureDefects.class);
         }
         return allureDefects;
     }

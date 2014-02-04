@@ -2,7 +2,6 @@ package ru.yandex.qatools.allure.data;
 
 import org.junit.Before;
 import org.junit.ClassRule;
-import org.junit.Ignore;
 import org.junit.Test;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.model.Status;
@@ -24,7 +23,6 @@ import static org.junit.Assert.assertThat;
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
  *         Date: 12/10/13
  */
-@Ignore
 public class DefectsTest {
 
     public static final String TEST_DEFECTS = "Test defects";
@@ -33,7 +31,7 @@ public class DefectsTest {
 
     @ClassRule
     public static AllureReportGenerationRule allureRule =
-            new AllureReportGenerationRule(resultsConfig.getDirectoryPath());
+            new AllureReportGenerationRule(resultsConfig.getResultsDirectory());
 
     private AllureDefects allureDefectsData;
 
