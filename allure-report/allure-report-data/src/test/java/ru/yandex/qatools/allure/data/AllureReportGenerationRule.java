@@ -58,7 +58,7 @@ public class AllureReportGenerationRule extends ExternalResource {
     public AllureDefects getDefectsData() throws Exception {
         if (allureDefects == null) {
             ObjectMapper mapper = new ObjectMapper();
-            allureDefects = mapper.readValue(new File(reportDir, "defects.json"), AllureDefects.class);
+            allureDefects = mapper.readValue(new File(reportDir, "data/defects.json"), AllureDefects.class);
         }
         return allureDefects;
     }
