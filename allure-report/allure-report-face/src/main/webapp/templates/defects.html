@@ -1,9 +1,9 @@
-<div class="defects b-island tab-content-fill" pane-set>
+<div class="defects b-island tab-content-fill" pane-set ng-if="defects.length > 0">
     <div class="pane_col defects_list" pane pane-expanded="isState('defects')" on-keynav="select($direction)">
         <!--<div class="pane_overlay clickable"></div>-->
         <div class="pane_content" ui-scrollfix-target>
             <div class="b-island__title">Defects</div>
-            <div style="overflow: hidden" ng-repeat="type in defects">
+            <div ng-repeat="type in defects">
                 <h3 class="pane__header defect_title defect_type_{{type.status|lowercase}}" ui-scrollfix inherit-width>
                     {{type.title}}
                     <small ng-pluralize count="type.defects.length" when="{one: '{} defect', other: '{} defects'}"></small>
@@ -20,4 +20,9 @@
         </div>
     </div>
     <div ui-view="testcase"></div>
+</div>
+<div class="tab-blank__text" ng-if="defects.length == 0">
+    <img src="img/tests_passed.jpg"
+         alt="happiness"/>
+    <p>No defects in test run. Good job!</p>
 </div>
