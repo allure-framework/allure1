@@ -161,9 +161,14 @@ describe('service', function () {
             expect(collection.items).toEqual([0,1,2,3]);
         });
 
-        it('should find by key value', function() {
+        it('should get index by key value', function() {
             collection.items.push({key: 'value'});
             expect(collection.getIndexBy('key', 'value')).toBe(6);
+        });
+
+        it('should find item by key value', function() {
+            collection.items.push({key: 'value'});
+            expect(collection.findBy('key', 'value')).toEqual(collection.items[6]);
         });
 
         it('should index by item', function() {

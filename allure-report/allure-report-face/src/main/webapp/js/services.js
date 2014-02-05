@@ -73,6 +73,9 @@ angular.module('allure.services', [])
             this.limit = limit;
             this._update();
         };
+        Collection.prototype.findBy = function(key, value) {
+            return this.items[this.getIndexBy(key, value)];
+        };
         Collection.prototype.getIndexBy = function(key, value) {
             var index = -1;
             this.items.some(function(item, i) {

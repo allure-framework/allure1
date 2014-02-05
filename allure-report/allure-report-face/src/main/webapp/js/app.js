@@ -1,9 +1,10 @@
 /*global angular */
 angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui.router',
-        'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.charts',
-        'allure.testcase', 'allure.xUnit.controllers', 'allure.table', 'allure.pane', 'allure.features'])
+        'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.table', 'allure.pane',
+        'allure.scrollfix', 'allure.charts', 'allure.testcase', 'allure.xUnit.controllers', 'allure.features',
+        'allure.defects'])
     .config(function($tooltipProvider) {
-        $tooltipProvider.options({appendToBody:true})
+        $tooltipProvider.options({appendToBody:true});
     })
     .config(function($httpProvider) {
         $httpProvider.defaults.cache = true;
@@ -18,6 +19,16 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
         }
         $urlRouterProvider.otherwise("/home");
         $stateProvider
+            .state('defects', {
+                url: '/defects',
+                templateUrl: "templates/defects.html",
+                controller: 'DefectsCtrl',
+                resolve: {
+                    defects: function($http) {
+                        return $http.get('data/defects.json').then(processResponse);
+                    }
+                }
+            })
             .state('home', {
                 url: "/home",
                 templateUrl: "templates/home.html",
@@ -66,6 +77,7 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
             .state('features.story.expanded', {
                 url: '/expanded'
             });
+        testcaseProvider.attachStates('defects');
         testcaseProvider.attachStates('features.story');
         testcaseProvider.attachStates('home.testsuite');
     });

@@ -9,6 +9,7 @@
     <xsd:element name="allure-x-unit" type="alr:allure-x-unit"/>
     <xsd:element name="allure-graph" type="alr:allure-graph"/>
     <xsd:element name="allure-behavior" type="alr:allure-behavior"/>
+    <xsd:element name="allure-defects" type="alr:allure-defects"/>
     <xsd:element name="allure-test-case-pack" type="alr:allure-test-case-pack"/>
 
     <!--Data for xUnit tab-->
@@ -16,6 +17,13 @@
         <xsd:sequence>
             <xsd:element name="time" type="alr:time"/>
             <xsd:element name="test-suites" type="alr:allure-test-suites" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <!--Data for defects tab-->
+    <xsd:complexType name="allure-defects">
+        <xsd:sequence>
+            <xsd:element name="defects-list" type="alr:allure-defects-list" minOccurs="0"/>
         </xsd:sequence>
     </xsd:complexType>
 

@@ -1,8 +1,7 @@
 /*global angular, $, Rainbow */
-(function() {
-'use strict';
 angular.module('allure.directives', [])
     .directive('rainbowHighlight', function() {
+        'use strict';
         return function($scope, elm, attrs) {
             $scope.$watch(attrs.rainbowHighlight, function(code) {
                 if(!code) {
@@ -15,6 +14,7 @@ angular.module('allure.directives', [])
         };
     })
     .directive('copyButton', function() {
+        'use strict';
         return {
             restrict: 'E',
             replace: true,
@@ -34,6 +34,7 @@ angular.module('allure.directives', [])
         };
     })
     .directive('textCut', function() {
+        'use strict';
         return {
             restrict: 'A',
             replace: 'true',
@@ -69,6 +70,7 @@ angular.module('allure.directives', [])
         };
     })
     .directive('onKeynav', function($parse) {
+        'use strict';
         return function(scope, element, attr) {
             var fn = $parse(attr.onKeynav),
                 UP = 38,
@@ -84,5 +86,17 @@ angular.module('allure.directives', [])
                 }
             });
         };
+    })
+    .directive('inheritWidth', function($window, $document) {
+        "use strict";
+        return function(scope, elm) {
+            function updateWidth() {
+                elm.css('width', elm.parent().width());
+            }
+            $document.on('webkitTransitionEnd transitionend', updateWidth);
+            angular.element($window).on('resize', updateWidth);
+            scope.$watch(function() {
+                return elm.parent().width();
+            }, updateWidth);
+        };
     });
-})();

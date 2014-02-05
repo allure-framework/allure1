@@ -39,6 +39,12 @@ public class TabsTest {
     }
 
     @Test
+    public void defectsTab() throws Exception {
+        driver.findElement(By.cssSelector(".b-vert__icon.glyphicon-flag")).click();
+        checkHash("#/defects");
+    }
+
+    @Test
     public void homeTab() throws Exception {
         checkHash("#/home");
     }

@@ -37,7 +37,7 @@
     <div class="step" ng-repeat="step in testcase.steps" ng-controller="StepCtrl">
         <ng-include src="'testcaseStep.tpl'"></ng-include>
     </div>
-    <div class="step__head clickable" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+    <div class="list-item clickable" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
         <ng-include src="'testcaseAttachment.tpl'"></ng-include>
     </div>
 </div>
@@ -50,7 +50,7 @@
     </div>
 </script>
 <script type="text/ng-template" id="testcaseStep.tpl">
-    <div class="step__head" ng-click="expanded = !expanded" ng-class="{clickable: hasContent}">
+    <div class="list-item" ng-click="expanded = !expanded" ng-class="{clickable: hasContent}">
         <b class="step__expand" ng-show="hasContent && !expanded">+</b>
         <b class="step__expand" ng-show="hasContent && expanded">-</b>
         <span class="step__time text-muted">[{{step.time.start | date:'HH:mm:ss.sss'}}]</span>
@@ -61,7 +61,7 @@
         <div ng-repeat="step in step.steps" ng-controller="StepCtrl">
             <ng-include src="'testcaseStep.tpl'"></ng-include>
         </div>
-        <div class="step__head clickable" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+        <div class="list-item clickable" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
             <ng-include src="'testcaseAttachment.tpl'"></ng-include>
         </div>
     </div>
