@@ -140,6 +140,7 @@
     <xsd:complexType name="allure-defect">
         <xsd:all>
             <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="status" type="alr:status"/>
             <xsd:element name="defects" type="alr:defects"/>
         </xsd:all>
     </xsd:complexType>

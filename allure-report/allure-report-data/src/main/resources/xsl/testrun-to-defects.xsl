@@ -13,6 +13,7 @@
                     <xsl:element name="defect">
 
                         <xsl:call-template name="add-title-node"/>
+                        <xsl:call-template name="add-status-node"/>
 
                         <xsl:element name="defects">
                             <xsl:for-each select="current-group()">
@@ -41,6 +42,12 @@
                 </xsl:element>
             </xsl:when>
         </xsl:choose>
+    </xsl:template>
+
+    <xsl:template name="add-status-node">
+        <xsl:element name="status">
+            <xsl:value-of select="current-grouping-key()"/>
+        </xsl:element>
     </xsl:template>
 
     <xsl:template name="add-failure">
