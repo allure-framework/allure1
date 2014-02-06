@@ -5,7 +5,6 @@ angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, 
         return $state.is(statename);
     };
     $scope.setTestcase = function(testcase) {
-        $scope.testcase = testcase;
         $state.go('defects.testcase', {testcaseUid: testcase.uid});
     };
     $scope.select = function(direction) {
@@ -24,7 +23,7 @@ angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, 
     $scope.$on('$stateChangeSuccess', function(event, state, params) {
         delete $scope.testcase;
         if(params.testcaseUid) {
-            $scope.setTestcase(testcases.findBy('uid', params.testcaseUid));
+            $scope.testcase = testcases.findBy('uid', params.testcaseUid);
         }
     });
 });
