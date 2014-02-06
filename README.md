@@ -9,9 +9,7 @@
 
 ## Allure
 
-##### Release Version: 1.3.0
-
-##### Development Version: 1.3.1-SNAPSHOT
+##### [Release Version](https://github.com/allure-framework/allure-core/releases/latest)
 
 ### Allure
 
