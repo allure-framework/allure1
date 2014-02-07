@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module('allure.testcase.testcasesList', []).directive('testcasesList', function() {
     'use strict';
     return {
@@ -55,8 +56,8 @@ angular.module('allure.testcase.testcasesList', []).directive('testcasesList', f
         testcases.sort(function (caseA, caseB) {
             return caseA.time.start - caseB.time.start;
         }).forEach(function (testcase, index) {
-                testcase.order = index + 1;
-            });
+            testcase.order = index + 1;
+        });
         $scope.statistic = testcases.reduce(function(statistic, testcase) {
             statistic[testcase.status.toLowerCase()]++;
             return statistic;
@@ -64,6 +65,9 @@ angular.module('allure.testcase.testcasesList', []).directive('testcasesList', f
             passed: 0, skipped: 0, failed: 0, broken: 0, total: testcases.length
         });
         $scope.list = new Collection(testcases);
+        $scope.list.sort($scope.sorting);
+        $scope.list.limitTo($scope.testcasesLimit);
+        $scope.list.filter($scope.statusFilter);
     });
     $scope.$watch('sorting', function(sorting) {
         $scope.list.sort(sorting);

@@ -16,7 +16,7 @@
             </td>
         </tr>
         <tr ng-show="(testcases | filter:statusFilter).length > testcasesLimit">
-            <td colspan="4" class="text-center clickable" ng-click="testcasesLimit = testcasesLimit+100">
+            <td colspan="4" class="text-center clickable" ng-click="$parent.testcasesLimit = testcasesLimit+100">
                 <a>Show more tescases</a>
             </td>
         </tr>
