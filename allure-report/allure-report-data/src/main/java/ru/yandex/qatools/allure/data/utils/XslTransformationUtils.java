@@ -12,6 +12,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -33,7 +34,7 @@ public final class XslTransformationUtils {
     public static String applyTransformation(String xml, String xslPath) {
         return applyTransformation(
                 XslTransformationUtils.class.getClassLoader().getResourceAsStream(xslPath),
-                IOUtils.toInputStream(xml)
+                IOUtils.toInputStream(xml, StandardCharsets.UTF_8)
         );
     }
 
