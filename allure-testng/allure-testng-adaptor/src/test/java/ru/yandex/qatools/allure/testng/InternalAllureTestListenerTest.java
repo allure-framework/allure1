@@ -1,7 +1,7 @@
 package ru.yandex.qatools.allure.testng;
 
+import org.junit.*;
 import org.mockito.InOrder;
-import org.testng.annotations.*;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
 
@@ -21,7 +21,7 @@ public class InternalAllureTestListenerTest {
     private InternalAllureTestListener internalListener;
     private Allure allure;
 
-    @BeforeMethod
+    @Before
     public void setUp() {
         internalListener = new InternalAllureTestListener(DEFAULT_SUITE_NAME);
         allure = mock(Allure.class);

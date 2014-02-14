@@ -1,8 +1,8 @@
 package ru.yandex.qatools.allure.testng;
 
+import org.junit.Test;
 import org.testng.ITestResult;
 import org.testng.SkipException;
-import org.testng.annotations.Test;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.MatcherAssert.assertThat;
