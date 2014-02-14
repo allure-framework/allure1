@@ -8,8 +8,11 @@
         </div>
         <span class="icon-status-{{testcase.status | lowercase}}"></span>
         {{testcase.title}}
+        <small>Severity: {{testcase.severity}}</small>
     </h3>
-    <div class="text-muted">Severity: {{testcase.severity}}</div>
+    <div class="text-muted" ng-show="testcase.name">
+        {{testcase.name}} <copy-button text="testcase.name"></copy-button>
+    </div>
 </div>
 <div class="testcase__content" on-keynav="select($direction)">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
@@ -20,19 +23,21 @@
         <div ng-show="expanded" class="testcase__stacktrace preformated-text">{{testcase.failure.stackTrace}}</div>
     </div>
     <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
-        The test has passed right!
+        The test has passed!
     </div>
     <div class="testcase__status alert-status-skipped" ng-show="testcase.status == 'SKIPPED'">
         This test has been skipped
     </div>
-    <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">
-        <div class="pull-left environment_name text-muted">{{property.name}}:</div>
-        <div class="pull-left">{{property.value}}</div>
+    <div class="environments">
+        <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">
+            <div class="pull-left environment_name text-muted">{{property.name}}:</div>
+            <div class="pull-left" ng-bind-html="property.value | linky"></div>
+        </div>
     </div>
     <div class="step" ng-repeat="step in testcase.steps" ng-controller="StepCtrl">
         <ng-include src="'testcaseStep.tpl'"></ng-include>
     </div>
-    <div class="step__head clickable" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+    <div class="list-item clickable" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
         <ng-include src="'testcaseAttachment.tpl'"></ng-include>
     </div>
 </div>
@@ -45,7 +50,7 @@
     </div>
 </script>
 <script type="text/ng-template" id="testcaseStep.tpl">
-    <div class="step__head" ng-click="expanded = !expanded" ng-class="{clickable: hasContent}">
+    <div class="list-item" ng-click="expanded = !expanded" ng-class="{clickable: hasContent}">
         <b class="step__expand" ng-show="hasContent && !expanded">+</b>
         <b class="step__expand" ng-show="hasContent && expanded">-</b>
         <span class="step__time text-muted">[{{step.time.start | date:'HH:mm:ss.sss'}}]</span>
@@ -56,7 +61,7 @@
         <div ng-repeat="step in step.steps" ng-controller="StepCtrl">
             <ng-include src="'testcaseStep.tpl'"></ng-include>
         </div>
-        <div class="step__head clickable" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+        <div class="list-item clickable" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
             <ng-include src="'testcaseAttachment.tpl'"></ng-include>
         </div>
     </div>

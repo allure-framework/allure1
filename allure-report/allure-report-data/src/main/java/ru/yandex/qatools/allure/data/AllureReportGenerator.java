@@ -49,7 +49,8 @@ public class AllureReportGenerator {
                 new XUnitDataProvider(),
                 new GraphDataProvider(),
                 new TestCasesDataProvider(),
-                new BehaviorDataProvider()
+                new BehaviorDataProvider(),
+                new DefectsDataProvider()
         };
     }
 

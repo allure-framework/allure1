@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391003386359" stop="1391003394305">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391779530376" stop="1391779538163">
     <name>my.company.ScreenshotTest</name>
     <title>Search tests</title>
     <description type="text">This testsuite has tests what always are passing</description>
     <test-cases>
-        <test-case start="1391003386359" stop="1391003394185" status="passed" severity="trivial">
+        <test-case start="1391779530377" stop="1391779538054" status="passed" severity="trivial">
             <name>emptyTextSearch</name>
             <title>Empty text search</title>
             <steps>
-                <step start="1391003388134" stop="1391003388803" status="passed">
+                <step start="1391779532287" stop="1391779532839" status="passed">
                     <name>openMainPage</name>
                 </step>
-                <step start="1391003388803" stop="1391003393586" status="passed">
+                <step start="1391779532839" stop="1391779537458" status="passed">
                     <name>search</name>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Page Screenshot" source="6314e513-0894-4630-9bf4-9a1e4cb0a378-attachment.png" type="png"/>
+                <attachment title="Page Screenshot" source="907bb6cb-ac51-45d7-9adc-d459eb3d23c3-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="story" value="WebdriverScreenshot"/>
             </labels>
         </test-case>
-        <test-case start="1391003386359" stop="1391003393743" status="passed" severity="normal">
-            <name>usualSearch</name>
-            <title>Usual search test</title>
+        <test-case start="1391779530377" stop="1391779535714" status="passed" severity="normal">
+            <name>wildcardSearch</name>
+            <title>Wildcard search test</title>
             <steps>
-                <step start="1391003388134" stop="1391003388794" status="passed">
+                <step start="1391779532287" stop="1391779532807" status="passed">
                     <name>openMainPage</name>
                 </step>
-                <step start="1391003388795" stop="1391003393021" status="passed">
+                <step start="1391779532807" stop="1391779535021" status="passed">
                     <name>search</name>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Page Screenshot" source="6d983952-fdc9-474c-99a4-d051d83e3338-attachment.png" type="png"/>
+                <attachment title="Page Screenshot" source="3515797b-f33c-4fb3-adc9-54b16e2510a3-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="story" value="WebdriverScreenshot"/>
             </labels>
         </test-case>
-        <test-case start="1391003386360" stop="1391003389903" status="failed" severity="normal">
+        <test-case start="1391779530378" stop="1391779533663" status="failed" severity="normal">
             <name>pageLoadingTest</name>
             <title>Page loading test</title>
             <failure>
                 <message>AssertionError: Text on current page should be correct
 Expected: element text is &quot;Yandex&quot;
-     but: &lt;[[PhantomJSDriver: phantomjs on LINUX (37bb2d80-88ec-11e3-ab07-03c4b84403b2)] -&gt; css selector: title]&gt; text is &quot;&quot;</message>
+     but: &lt;[[PhantomJSDriver: phantomjs on LINUX (51b88fa0-8ffb-11e3-b08a-0f43623324f4)] -&gt; css selector: title]&gt; text is &quot;&quot;</message>
                 <stack-trace>java.lang.AssertionError: Text on current page should be correct
 Expected: element text is &quot;Yandex&quot;
-     but: &lt;[[PhantomJSDriver: phantomjs on LINUX (37bb2d80-88ec-11e3-ab07-03c4b84403b2)] -&gt; css selector: title]&gt; text is &quot;&quot;
+     but: &lt;[[PhantomJSDriver: phantomjs on LINUX (51b88fa0-8ffb-11e3-b08a-0f43623324f4)] -&gt; css selector: title]&gt; text is &quot;&quot;
 	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 	at org.junit.Assert.assertThat(Assert.java:865)
 	at my.company.steps.WebDriverSteps.checkText(WebDriverSteps.java:51)
-	at my.company.ScreenshotTest.pageLoadingTest(ScreenshotTest.java:35)
+	at my.company.ScreenshotTest.pageLoadingTest(ScreenshotTest.java:40)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -76,39 +76,44 @@ Expected: element text is &quot;Yandex&quot;
 </stack-trace>
             </failure>
             <steps>
-                <step start="1391003388135" stop="1391003388809" status="passed">
+                <step start="1391779532288" stop="1391779532726" status="passed">
                     <name>openMainPage</name>
                 </step>
-                <step start="1391003389316" stop="1391003389327" status="passed">
+                <step start="1391779533084" stop="1391779533096" status="passed">
                     <name>findElement</name>
                 </step>
-                <step start="1391003389327" stop="1391003389380" status="failed">
+                <step start="1391779533096" stop="1391779533144" status="failed">
                     <name>checkText</name>
                     <title>Check text in element</title>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Server Log" source="8742e563-c153-481a-9841-ff591d2c59ed-attachment.txt" type="txt"/>
-                <attachment title="Response" source="8c558b28-eab6-4ce4-b988-4141cdd4441d-attachment.json" type="json"/>
-                <attachment title="Page Screenshot" source="33e86d60-23ed-4434-86ae-eeb1ae9c02df-attachment.png" type="png"/>
+                <attachment title="Server Log" source="4a4519b5-a4e4-4a35-a092-db86292ac770-attachment.txt" type="txt"/>
+                <attachment title="Response" source="20813455-cea9-4045-b4ea-968e94c5496e-attachment.json" type="json"/>
+                <attachment title="Page Screenshot" source="0f008d2b-409e-4126-a435-cbdc4d7e9a96-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="story" value="WebdriverScreenshot"/>
             </labels>
+            <parameters>
+                <parameter name="BROWSER" value="Phantom JS" kind="environment-variable"/>
+                <parameter name="PROD_HOST" value="http://ya.ru" kind="environment-variable"/>
+                <parameter name="TEST_HOST" value="http://test.ya.ru" kind="environment-variable"/>
+            </parameters>
         </test-case>
-        <test-case start="1391003386360" stop="1391003393754" status="passed" severity="normal">
-            <name>wildcardSearch</name>
-            <title>Wildcard search test</title>
+        <test-case start="1391779530378" stop="1391779537736" status="passed" severity="normal">
+            <name>usualSearch</name>
+            <title>Usual search test</title>
             <steps>
-                <step start="1391003388136" stop="1391003388794" status="passed">
+                <step start="1391779532287" stop="1391779532828" status="passed">
                     <name>openMainPage</name>
                 </step>
-                <step start="1391003388794" stop="1391003393023" status="passed">
+                <step start="1391779532828" stop="1391779537054" status="passed">
                     <name>search</name>
                 </step>
             </steps>
             <attachments>
-                <attachment title="Page Screenshot" source="163f7e22-8281-47f0-864b-b643d354909d-attachment.png" type="png"/>
+                <attachment title="Page Screenshot" source="561b4d99-0ef0-4413-83d0-2e5d2bae3736-attachment.png" type="png"/>
             </attachments>
             <labels>
                 <label name="story" value="WebdriverScreenshot"/>

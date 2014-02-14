@@ -31,22 +31,6 @@
   &__content {
     margin-left: 20px;
   }
-  &__head {
-    position: relative;
-    padding: 5px;
-    border-bottom: 1px solid #eee;
-    &:hover {
-      background: #f4f4f4;
-    }
-    &.active {
-      color: #fff;
-      background: #428bca;
-      a {
-        color: #fff;
-      }
-
-    }
-  }
   &__expand {
     position: absolute;
     margin-top: -11px;
@@ -58,6 +42,9 @@
 .environment {
   padding: 0 7px;
   overflow: hidden;
+  &:last-child {
+    border-bottom: 1px solid #eee;
+  }
   &:hover {
     background: #f2f2f2;
   }

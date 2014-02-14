@@ -76,6 +76,23 @@ describe('Testcases list', function () {
             expect(Collection.limitTo).toHaveBeenCalled();
         });
 
+        it('should bind filters again after change testcases list', function() {
+            var scope = createController();
+            scope.testcases = [
+                {uid: 4, time:{start: 50}, status: 'FAILED'},
+                {uid: 5, time:{start: 48}, status: 'PASSED'},
+                {uid: 6, time:{start: 55}, status: 'BROKEN'},
+                {uid: 7, time:{start: 64}, status: 'PASSED'}
+            ];
+            Collection.filter.reset();
+            Collection.sort.reset();
+            Collection.limitTo.reset();
+            scope.$apply();
+            expect(Collection.filter).toHaveBeenCalled();
+            expect(Collection.sort).toHaveBeenCalled();
+            expect(Collection.limitTo).toHaveBeenCalled();
+        });
+
         it('should navigate down', function() {
             var scope = createController();
             scope.select(1);
