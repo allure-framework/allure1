@@ -5,7 +5,6 @@
         <tr ng-repeat="testcase in list.items" class="clickable" ng-click="selectTestcase(testcase)" ng-class="{active:testcase.uid==selectedUid}">
             <td allure-table-col="{heading:'#', predicate: 'order', flex: 0.5}">{{testcase.order}}</td>
             <td allure-table-col="{heading:'Title', predicate: 'title', flex: 3}" class="line-ellipsis" title="{{testcase.title}}">
-                <span tooltip="{{testcase.severity}}" tooltip-placement="left" class="icon-severity-{{testcase.severity|lowercase}}"></span>
                 {{testcase.title}}
             </td>
             <td allure-table-col="{heading:'Duration', predicate: 'time.duration', class:'text-right', flex: 1.5, reverse: true}"  class="line-ellipsis text-right" title="{{testcase.time.duration | time}}">

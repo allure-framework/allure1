@@ -58,21 +58,21 @@ describe('Allure directive', function () {
             element.trigger(e);
         }
         it('should call function when up arrow have been pressed', function() {
-            createElement('<div on-keynav="handler($direction)">', {
+            createElement('<div on-keynav="handler($direction)"></div>', {
                 handler: jasmine.createSpy('handler')
             });
             triggerKeydown(elem, 40 /*Down*/);
             expect(scope.handler).toHaveBeenCalledWith(1);
         });
         it('should call function when up arrow have been pressed', function() {
-            createElement('<div on-keynav="handler($direction)">', {
+            createElement('<div on-keynav="handler($direction)"></div>', {
                 handler: jasmine.createSpy('handler')
             });
             triggerKeydown(elem, 38 /*Up*/);
             expect(scope.handler).toHaveBeenCalledWith(-1);
         });
         it('should ignore other keycodes', function() {
-            createElement('<div on-keynav="handler($direction)">', {
+            createElement('<div on-keynav="handler($direction)"></div>', {
                 handler: jasmine.createSpy('handler')
             });
             triggerKeydown(elem, 13 /*Enter*/);
