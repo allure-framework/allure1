@@ -22,6 +22,8 @@ public class AllureResultsUtils {
 
     private static File resultsDirectory;
 
+    private static final Object LOCK = new Object();
+
     private AllureResultsUtils() {
     }
 
@@ -35,13 +37,16 @@ public class AllureResultsUtils {
     public static File createResultsDirectory() {
         AllureResultsConfig resultsConfig = new AllureResultsConfig();
         File resultsDirectory = resultsConfig.getResultsDirectory();
-        if (resultsDirectory.exists() || resultsDirectory.mkdirs()) {
-            return resultsDirectory;
-        } else {
-            throw new AllureException(
-                    String.format("Results directory <%s> doesn't exists or can't be created",
-                            resultsDirectory.getAbsolutePath())
-            );
+
+        synchronized (LOCK) {
+            if (resultsDirectory.exists() || resultsDirectory.mkdirs()) {
+                return resultsDirectory;
+            } else {
+                throw new AllureException(
+                        String.format("Results directory <%s> doesn't exists or can't be created",
+                                resultsDirectory.getAbsolutePath())
+                );
+            }
         }
     }
 
