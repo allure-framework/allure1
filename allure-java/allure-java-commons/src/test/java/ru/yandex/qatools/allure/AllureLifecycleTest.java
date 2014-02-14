@@ -6,6 +6,7 @@ import org.xml.sax.SAXException;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.model.*;
+import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
@@ -31,7 +32,7 @@ public class AllureLifecycleTest {
     @Before
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
-        System.setProperty("allure.results.directory", resultsDirectory.getAbsolutePath());
+        AllureResultsUtils.setResultsDirectory(resultsDirectory);
     }
 
     @Test
@@ -163,7 +164,7 @@ public class AllureLifecycleTest {
 
     @After
     public void tearDown() {
-        System.setProperty("allure.results.directory", "");
+        AllureResultsUtils.setResultsDirectory(null);
     }
 
 }
