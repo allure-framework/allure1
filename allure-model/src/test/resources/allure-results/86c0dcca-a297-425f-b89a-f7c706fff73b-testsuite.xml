@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391164835062" stop="1391164835384">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391779538074" stop="1391779538362">
     <name>my.company.ManyInfoTest</name>
     <description type="text">Testsuite has testcases with many steps
     and
 many lines in description</description>
     <test-cases>
-        <test-case start="1391164835062" stop="1391164835075" status="failed" severity="critical">
+        <test-case start="1391779538074" stop="1391779538089" status="failed" severity="critical">
             <name>attachmentsTest</name>
             <description type="text">Single-line description</description>
             <failure>
@@ -13,7 +13,7 @@ many lines in description</description>
                 <stack-trace>java.lang.AssertionError: This test should be failed
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
-	at my.company.steps.CommonSteps.makeThisTestFailed(CommonSteps.java:35)
+	at my.company.steps.CommonSteps.makeThisTestFailed(CommonSteps.java:36)
 	at my.company.ManyInfoTest.attachmentsTest(ManyInfoTest.java:34)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
@@ -35,25 +35,25 @@ many lines in description</description>
 </stack-trace>
             </failure>
             <steps>
-                <step start="1391164835073" stop="1391164835075" status="failed">
+                <step start="1391779538087" stop="1391779538089" status="failed">
                     <name>makeThisTestFailed</name>
                     <title>Make this test failed</title>
                     <attachments>
-                        <attachment title="TXT Attachment" source="eefd7176-26bf-4d34-83f8-0dc90740f310-attachment.txt" type="txt"/>
+                        <attachment title="TXT Attachment" source="8f7c3ce8-c488-4afa-9593-90d40170d9b5-attachment.txt" type="txt"/>
                     </attachments>
                 </step>
             </steps>
             <attachments>
-                <attachment title="JSON Attachment" source="1b942a82-8043-40fd-8a79-eff1a1fb8712-attachment.json" type="json"/>
-                <attachment title="XML Attachment" source="a761b99a-4589-4439-942f-29da851ea259-attachment.xml" type="xml"/>
-                <attachment title="JPG Attachment" source="9f0aacec-b46c-4132-bd54-6df3c8116788-attachment.jpg" type="jpg"/>
+                <attachment title="JSON Attachment" source="19eae11f-12e2-43e9-b3bc-4c810ec0f8d6-attachment.json" type="json"/>
+                <attachment title="XML Attachment" source="5e81d22c-2620-4f31-b8c0-d6210f963602-attachment.xml" type="xml"/>
+                <attachment title="JPG Attachment" source="92322727-1a62-428c-9dab-fe6d49812a32-attachment.jpg" type="jpg"/>
             </attachments>
             <labels>
                 <label name="story" value="OtherScreenshot"/>
                 <label name="feature" value="Screenshot"/>
             </labels>
         </test-case>
-        <test-case start="1391164835062" stop="1391164835066" status="broken" severity="blocker">
+        <test-case start="1391779538074" stop="1391779538078" status="broken" severity="blocker">
             <name>lotOfStepsTest</name>
             <description type="text">I have many steps 
 
@@ -63,7 +63,7 @@ many lines in description</description>
             <failure>
                 <message>FileNotFoundException: No file found.</message>
                 <stack-trace>java.io.FileNotFoundException: No file found.
-	at my.company.steps.CommonSteps.makeThisTestBroken(CommonSteps.java:29)
+	at my.company.steps.CommonSteps.makeThisTestBroken(CommonSteps.java:30)
 	at my.company.ManyInfoTest.lotOfStepsTest(ManyInfoTest.java:43)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
@@ -85,29 +85,29 @@ many lines in description</description>
 </stack-trace>
             </failure>
             <steps>
-                <step start="1391164835063" stop="1391164835064" status="passed">
+                <step start="1391779538075" stop="1391779538076" status="passed">
                     <name>parentStep</name>
                     <title>Parent step</title>
                     <steps>
-                        <step start="1391164835064" stop="1391164835064" status="passed">
+                        <step start="1391779538076" stop="1391779538076" status="passed">
                             <name>step</name>
                             <title>&quot;First nested&quot; step</title>
                         </step>
-                        <step start="1391164835064" stop="1391164835064" status="passed">
+                        <step start="1391779538076" stop="1391779538076" status="passed">
                             <name>step</name>
                             <title>&quot;Second nested&quot; step</title>
                         </step>
-                        <step start="1391164835064" stop="1391164835064" status="passed">
+                        <step start="1391779538076" stop="1391779538076" status="passed">
                             <name>step</name>
                             <title>&quot;Third nested&quot; step</title>
                         </step>
                     </steps>
                 </step>
-                <step start="1391164835064" stop="1391164835064" status="passed">
+                <step start="1391779538077" stop="1391779538077" status="passed">
                     <name>step</name>
                     <title>&quot;Last&quot; step</title>
                 </step>
-                <step start="1391164835065" stop="1391164835065" status="broken">
+                <step start="1391779538077" stop="1391779538077" status="broken">
                     <name>makeThisTestBroken</name>
                     <title>Make this test broken</title>
                 </step>
@@ -115,7 +115,7 @@ many lines in description</description>
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1391164835063" stop="1391164835065" status="failed" severity="normal">
+        <test-case start="1391779538075" stop="1391779538084" status="failed" severity="normal">
             <name>longAssertionTest</name>
             <title>Test with long assertion text</title>
             <failure>
@@ -128,7 +128,7 @@ Expected: &quot;{\n\&quot;name\&quot;: \&quot;test\&quot;,\n\&quot;value\&quot;:
 	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
 	at org.junit.Assert.assertThat(Assert.java:865)
 	at org.junit.Assert.assertThat(Assert.java:832)
-	at my.company.ManyInfoTest.longAssertionTest(ManyInfoTest.java:55)
+	at my.company.ManyInfoTest.longAssertionTest(ManyInfoTest.java:56)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -149,7 +149,9 @@ Expected: &quot;{\n\&quot;name\&quot;: \&quot;test\&quot;,\n\&quot;value\&quot;:
 </stack-trace>
             </failure>
             <steps/>
-            <attachments/>
+            <attachments>
+                <attachment title="System Environment" source="b0a3b232-d496-4bbd-ba67-9ab4141e0eb0-attachment.txt" type="txt"/>
+            </attachments>
             <labels/>
             <parameters>
                 <parameter name="PATH" value="/home/just-boris/.rvm/gems/ruby-2.0.0-p353/bin:/home/just-boris/.rvm/gems/ruby-2.0.0-p353@global/bin:/home/just-boris/.rvm/rubies/ruby-2.0.0-p353/bin:/home/just-boris/.rvm/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games" kind="environment-variable"/>

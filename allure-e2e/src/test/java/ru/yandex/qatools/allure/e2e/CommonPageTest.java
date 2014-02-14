@@ -1,10 +1,8 @@
 package ru.yandex.qatools.allure.e2e;
 
+import org.junit.Rule;
 import org.junit.Test;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import ru.yandex.qatools.allure.AllureEnvironment;
+import ru.yandex.qatools.allure.JSErrorsRule;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -15,12 +13,11 @@ import static org.junit.Assert.assertThat;
  */
 public class CommonPageTest {
 
-    public AllureEnvironment environment = AllureEnvironment.newInstance();
+    @Rule
+    public JSErrorsRule rule = new JSErrorsRule();
 
     @Test
     public void sampleTitleTest() {
-        WebDriver driver = new PhantomJSDriver(DesiredCapabilities.firefox());
-        driver.get(environment.getBaseUrl());
-        assertThat(driver.getTitle(), equalTo("Allure Dashboard"));
+        assertThat(rule.getDriver().getTitle(), equalTo("Allure Dashboard"));
     }
 }

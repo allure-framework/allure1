@@ -3,7 +3,7 @@
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.3.1-SNAPSHOT</version>
+        <version>1.3.2-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>allure-e2e</artifactId>
@@ -38,13 +38,11 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>2.34.0</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.github.detro.ghostdriver</groupId>
             <artifactId>phantomjsdriver</artifactId>
             <version>1.0.3</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

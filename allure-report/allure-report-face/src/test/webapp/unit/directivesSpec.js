@@ -58,25 +58,54 @@ describe('Allure directive', function () {
             element.trigger(e);
         }
         it('should call function when up arrow have been pressed', function() {
-            createElement('<div on-keynav="handler($direction)">', {
+            createElement('<div on-keynav="handler($direction)"></div>', {
                 handler: jasmine.createSpy('handler')
             });
             triggerKeydown(elem, 40 /*Down*/);
             expect(scope.handler).toHaveBeenCalledWith(1);
         });
         it('should call function when up arrow have been pressed', function() {
-            createElement('<div on-keynav="handler($direction)">', {
+            createElement('<div on-keynav="handler($direction)"></div>', {
                 handler: jasmine.createSpy('handler')
             });
             triggerKeydown(elem, 38 /*Up*/);
             expect(scope.handler).toHaveBeenCalledWith(-1);
         });
         it('should ignore other keycodes', function() {
-            createElement('<div on-keynav="handler($direction)">', {
+            createElement('<div on-keynav="handler($direction)"></div>', {
                 handler: jasmine.createSpy('handler')
             });
             triggerKeydown(elem, 13 /*Enter*/);
             expect(scope.handler).not.toHaveBeenCalled();
+        });
+    });
+
+    describe('inherit width', function() {
+        beforeEach(function() {
+            this.fakeWindow = angular.element('<div>');
+            module({ $window: this.fakeWindow });
+        });
+        beforeEach(function() {
+            createElement('<div><div inherit-width style="position: absolute"></div></div>');
+            this.wrapper = elem;
+            this.elem = this.wrapper.children();
+            this.wrapper.appendTo('body');
+        });
+        afterEach(function() {
+            this.wrapper.remove();
+        });
+
+        it('should sync width with parent', function() {
+            this.wrapper.width(300);
+            scope.$apply();
+            expect(this.elem.width()).toBe(300);
+        });
+
+        it('should change on window resize', function() {
+            elem.css('transition', 'width 0.1s');
+            elem.css('width', 300);
+            this.fakeWindow.trigger('resize');
+            expect(this.elem.width()).toBe(300);
         });
     });
 });

@@ -34,11 +34,13 @@
     <script src="js/testcase/testcase.js"></script>
     <script src="js/testcase/list.js"></script>
     <script src="js/features/FeaturesCtrl.js"></script>
+    <script src="js/defects/defects.js"></script>
     <script src="js/charts/charts.js"></script>
     <script src="js/charts/pie.js"></script>
     <script src="js/charts/timeline.js"></script>
     <script src="js/charts/duration.js"></script>
     <script src="js/charts/severityMap.js"></script>
+    <script src="js/scrollfix/scrollfix.js"></script>
 </head>
 <body class="b-page">
 <header class="b-page__nav navbar navbar-static-top" role="navigation">
@@ -63,6 +65,10 @@
 </header>
 <div class="dashboard" ng-controller="TabsController">
     <ul class="b-vert list-unstyled">
+        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('defects')}"><div class="b-vert__title" ui-sref="defects">
+            <div class="b-vert__icon glyphicon glyphicon-flag"></div>
+            Defects
+        </div></li>
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('home')}"><div class="b-vert__title" ui-sref="home">
             <div class="b-vert__icon glyphicon glyphicon-briefcase"></div>
             xUnit

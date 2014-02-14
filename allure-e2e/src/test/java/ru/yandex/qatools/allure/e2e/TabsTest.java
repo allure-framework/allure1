@@ -1,33 +1,26 @@
 package ru.yandex.qatools.allure.e2e;
 
-import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.phantomjs.PhantomJSDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ru.yandex.qatools.allure.AllureEnvironment;
+import ru.yandex.qatools.allure.JSErrorsRule;
 
 import static org.junit.Assert.assertEquals;
 
 public class TabsTest {
 
-    public AllureEnvironment environment = AllureEnvironment.newInstance();
+    @Rule
+    public JSErrorsRule rule = new JSErrorsRule();
 
     WebDriver driver;
 
     @Before
-    public void setupWebdriver() {
-        driver = new PhantomJSDriver(new DesiredCapabilities());
-    }
-
-
-    @Before
     public void openBrowser() throws Exception {
-        driver.get(environment.getBaseUrl());
+        driver = rule.getDriver();
         WebDriverWait wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".tab-content")));
     }
@@ -36,6 +29,12 @@ public class TabsTest {
         String url = driver.getCurrentUrl();
         String hash = url.substring(url.indexOf('#'));
         assertEquals(expectedHash, hash);
+    }
+
+    @Test
+    public void defectsTab() throws Exception {
+        driver.findElement(By.cssSelector(".b-vert__icon.glyphicon-flag")).click();
+        checkHash("#/defects");
     }
 
     @Test
@@ -59,11 +58,6 @@ public class TabsTest {
     public void timelineTab() throws Exception {
         driver.findElement(By.cssSelector(".b-vert__icon.glyphicon-time")).click();
         checkHash("#/timeline");
-    }
-
-    @After
-    public void quit() {
-        driver.quit();
     }
 
 }

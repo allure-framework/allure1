@@ -1,165 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
-            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xs="http://www.w3.org/2001/XMLSchema"
             xmlns:qa="urn:model.allure.qatools.yandex.ru"
             targetNamespace="urn:model.allure.qatools.yandex.ru">
 
-    <xsd:element name="test-suite" type="qa:test-suite-result"/>
+    <xs:element name="test-suite" type="qa:test-suite-result"/>
 
-    <xsd:complexType name="test-suite-result">
-        <xsd:all>
-            <xsd:element name="name" type="qa:name"/>
-            <xsd:element name="title" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="description" type="qa:description" minOccurs="0"/>
-            <xsd:element name="test-cases" type="qa:test-cases-result" minOccurs="0"/>
-            <xsd:element name="labels" type="qa:labels" minOccurs="0"/>
-        </xsd:all>
-        <xsd:attribute name="start" type="xsd:long" use="required"/>
-        <xsd:attribute name="stop" type="xsd:long" use="required"/>
-    </xsd:complexType>
+    <xs:complexType name="test-suite-result">
+        <xs:all>
+            <xs:element name="name" type="qa:name"/>
+            <xs:element name="title" type="xs:string" minOccurs="0"/>
+            <xs:element name="description" type="qa:description" minOccurs="0"/>
+            <xs:element name="test-cases" type="qa:test-cases-result" minOccurs="0"/>
+            <xs:element name="labels" type="qa:labels" minOccurs="0"/>
+        </xs:all>
+        <xs:attribute name="start" type="xs:long" use="required"/>
+        <xs:attribute name="stop" type="xs:long" use="required"/>
+    </xs:complexType>
 
-    <xsd:complexType name="test-cases-result">
-        <xsd:sequence>
-            <xsd:element name="test-case" type="qa:test-case-result" maxOccurs="unbounded" minOccurs="0"/>
-        </xsd:sequence>
-    </xsd:complexType>
+    <xs:complexType name="test-cases-result">
+        <xs:sequence>
+            <xs:element name="test-case" type="qa:test-case-result" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xsd:complexType name="test-case-result">
-        <xsd:all>
-            <xsd:element name="name" type="qa:name"/>
-            <xsd:element name="title" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="description" type="qa:description" minOccurs="0"/>
-            <xsd:element name="failure" type="qa:failure" minOccurs="0"/>
-            <xsd:element name="steps" type="qa:steps" minOccurs="0"/>
-            <xsd:element name="attachments" type="qa:attachments" minOccurs="0"/>
-            <xsd:element name="labels" type="qa:labels" minOccurs="0"/>
-            <xsd:element name="parameters" type="qa:parameters" minOccurs="0"/>
-        </xsd:all>
-        <xsd:attribute name="start" type="xsd:long" use="required"/>
-        <xsd:attribute name="stop" type="xsd:long" use="required"/>
-        <xsd:attribute name="status" type="qa:status" use="required"/>
-        <xsd:attribute name="severity" type="qa:severity-level" use="required"/>
-    </xsd:complexType>
+    <xs:complexType name="test-case-result">
+        <xs:all>
+            <xs:element name="name" type="qa:name"/>
+            <xs:element name="title" type="xs:string" minOccurs="0"/>
+            <xs:element name="description" type="qa:description" minOccurs="0"/>
+            <xs:element name="failure" type="qa:failure" minOccurs="0"/>
+            <xs:element name="steps" type="qa:steps" minOccurs="0"/>
+            <xs:element name="attachments" type="qa:attachments" minOccurs="0"/>
+            <xs:element name="labels" type="qa:labels" minOccurs="0"/>
+            <xs:element name="parameters" type="qa:parameters" minOccurs="0"/>
+        </xs:all>
+        <xs:attribute name="start" type="xs:long" use="required"/>
+        <xs:attribute name="stop" type="xs:long" use="required"/>
+        <xs:attribute name="status" type="qa:status" use="required"/>
+        <xs:attribute name="severity" type="qa:severity-level" use="required"/>
+    </xs:complexType>
 
-    <xsd:complexType name="steps">
-        <xsd:sequence>
-            <xsd:element name="step" type="qa:step" minOccurs="0" maxOccurs="unbounded"/>
-        </xsd:sequence>
-    </xsd:complexType>
+    <xs:complexType name="steps">
+        <xs:sequence>
+            <xs:element name="step" type="qa:step" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xsd:complexType name="step">
-        <xsd:all>
-            <xsd:element name="name" type="qa:name"/>
-            <xsd:element name="title" type="xsd:string" minOccurs="0"/>
-            <xsd:element name="attachments" type="qa:attachments" minOccurs="0"/>
-            <xsd:element name="steps" type="qa:steps" minOccurs="0"/>
-        </xsd:all>
-        <xsd:attribute name="start" type="xsd:long" use="required"/>
-        <xsd:attribute name="stop" type="xsd:long" use="required"/>
-        <xsd:attribute name="status" type="qa:status" use="required"/>
-    </xsd:complexType>
+    <xs:complexType name="step">
+        <xs:all>
+            <xs:element name="name" type="qa:name"/>
+            <xs:element name="title" type="xs:string" minOccurs="0"/>
+            <xs:element name="attachments" type="qa:attachments" minOccurs="0"/>
+            <xs:element name="steps" type="qa:steps" minOccurs="0"/>
+        </xs:all>
+        <xs:attribute name="start" type="xs:long" use="required"/>
+        <xs:attribute name="stop" type="xs:long" use="required"/>
+        <xs:attribute name="status" type="qa:status" use="required"/>
+    </xs:complexType>
 
-    <xsd:complexType name="failure">
-        <xsd:all>
-            <xsd:element name="message" type="xsd:string"/>
-            <xsd:element name="stack-trace" type="xsd:string" minOccurs="0"/>
-        </xsd:all>
-    </xsd:complexType>
+    <xs:complexType name="failure">
+        <xs:all>
+            <xs:element name="message" type="xs:string"/>
+            <xs:element name="stack-trace" type="xs:string" minOccurs="0"/>
+        </xs:all>
+    </xs:complexType>
 
-    <xsd:complexType name="labels">
-        <xsd:sequence>
-            <xsd:element name="label" type="qa:label" minOccurs="0" maxOccurs="unbounded"/>
-        </xsd:sequence>
-    </xsd:complexType>
+    <xs:complexType name="labels">
+        <xs:sequence>
+            <xs:element name="label" type="qa:label" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xsd:complexType name="label">
-        <xsd:attribute name="name" type="qa:name" use="required"/>
-        <xsd:attribute name="value" type="xsd:string" use="required"/>
-    </xsd:complexType>
+    <xs:complexType name="label">
+        <xs:attribute name="name" type="qa:name" use="required"/>
+        <xs:attribute name="value" type="xs:string" use="required"/>
+    </xs:complexType>
 
-    <xsd:complexType name="parameters">
-        <xsd:sequence>
-            <xsd:element name="parameter" type="qa:parameter" minOccurs="0" maxOccurs="unbounded"/>
-        </xsd:sequence>
-    </xsd:complexType>
+    <xs:complexType name="parameters">
+        <xs:sequence>
+            <xs:element name="parameter" type="qa:parameter" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xsd:complexType name="parameter">
-        <xsd:attribute name="name" type="qa:name" use="required"/>
-        <xsd:attribute name="value" type="xsd:string" use="required"/>
-        <xsd:attribute name="kind" type="qa:parameter-kind" use="required"/>
-    </xsd:complexType>
+    <xs:complexType name="parameter">
+        <xs:attribute name="name" type="qa:name" use="required"/>
+        <xs:attribute name="value" type="xs:string" use="required"/>
+        <xs:attribute name="kind" type="qa:parameter-kind" use="required"/>
+    </xs:complexType>
 
-    <xsd:simpleType name="parameter-kind">
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="argument"/>
-            <xsd:enumeration value="system-property"/>
-            <xsd:enumeration value="environment-variable"/>
-        </xsd:restriction>
-    </xsd:simpleType>
+    <xs:simpleType name="parameter-kind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="argument"/>
+            <xs:enumeration value="system-property"/>
+            <xs:enumeration value="environment-variable"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xsd:complexType name="attachments">
-        <xsd:sequence>
-            <xsd:element name="attachment" type="qa:attachment" minOccurs="0" maxOccurs="unbounded"/>
-        </xsd:sequence>
-    </xsd:complexType>
+    <xs:complexType name="attachments">
+        <xs:sequence>
+            <xs:element name="attachment" type="qa:attachment" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
 
-    <xsd:complexType name="attachment">
-        <xsd:attribute name="title" type="xsd:string" use="required"/>
-        <xsd:attribute name="source" type="xsd:string" use="required"/>
-        <xsd:attribute name="type" type="qa:attachment-type" use="required"/>
-    </xsd:complexType>
+    <xs:complexType name="attachment">
+        <xs:attribute name="title" type="xs:string" use="required"/>
+        <xs:attribute name="source" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="qa:attachment-type" use="required"/>
+    </xs:complexType>
 
-    <xsd:simpleType name="attachment-type">
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="txt"/>
-            <xsd:enumeration value="html"/>
-            <xsd:enumeration value="xml"/>
-            <xsd:enumeration value="png"/>
-            <xsd:enumeration value="jpg"/>
-            <xsd:enumeration value="json"/>
-            <xsd:enumeration value="other"/>
-        </xsd:restriction>
-    </xsd:simpleType>
+    <xs:simpleType name="attachment-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="txt"/>
+            <xs:enumeration value="html"/>
+            <xs:enumeration value="xml"/>
+            <xs:enumeration value="png"/>
+            <xs:enumeration value="jpg"/>
+            <xs:enumeration value="json"/>
+            <xs:enumeration value="other"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xsd:simpleType name="status">
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="failed"/>
-            <xsd:enumeration value="broken"/>
-            <xsd:enumeration value="passed"/>
-            <xsd:enumeration value="skipped"/>
-        </xsd:restriction>
-    </xsd:simpleType>
+    <xs:simpleType name="status">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="failed"/>
+            <xs:enumeration value="broken"/>
+            <xs:enumeration value="passed"/>
+            <xs:enumeration value="skipped"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xsd:simpleType name="severity-level">
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="blocker"/>
-            <xsd:enumeration value="critical"/>
-            <xsd:enumeration value="normal"/>
-            <xsd:enumeration value="minor"/>
-            <xsd:enumeration value="trivial"/>
-        </xsd:restriction>
-    </xsd:simpleType>
+    <xs:simpleType name="severity-level">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="blocker"/>
+            <xs:enumeration value="critical"/>
+            <xs:enumeration value="normal"/>
+            <xs:enumeration value="minor"/>
+            <xs:enumeration value="trivial"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xsd:complexType name="description">
-        <xsd:simpleContent>
-            <xsd:extension base="xsd:string">
-                <xsd:attribute name="type" type="qa:description-type" default="text"/>
-            </xsd:extension>
-        </xsd:simpleContent>
-    </xsd:complexType>
+    <xs:complexType name="description">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="type" type="qa:description-type" default="text"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
 
-    <xsd:simpleType name="description-type">
-        <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="markdown"/>
-            <xsd:enumeration value="text"/>
-            <xsd:enumeration value="html"/>
-        </xsd:restriction>
-    </xsd:simpleType>
+    <xs:simpleType name="description-type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="markdown"/>
+            <xs:enumeration value="text"/>
+            <xs:enumeration value="html"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-    <xsd:simpleType name="name">
-        <xsd:restriction base="xsd:string">
-            <xsd:pattern value="([A-Za-z0-9_-]|\.){1,60}(\[.*\])?"/>
-        </xsd:restriction>
-    </xsd:simpleType>
+    <xs:simpleType name="name">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([A-Za-z0-9_-]|\.){1,60}(\[.*\])?"/>
+        </xs:restriction>
+    </xs:simpleType>
 
-</xsd:schema>
+</xs:schema>

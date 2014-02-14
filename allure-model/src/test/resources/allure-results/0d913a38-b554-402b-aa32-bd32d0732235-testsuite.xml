@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391164835044" stop="1391164835383">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1391779538056" stop="1391779538361">
     <name>my.company.SimpleTest</name>
     <test-cases>
-        <test-case start="1391164835044" stop="1391164835046" status="skipped" severity="normal">
+        <test-case start="1391779538057" stop="1391779538059" status="passed" severity="normal">
+            <name>longTitleTest</name>
+            <title>Test what do nothing and always passed right, but have a very long title, over 100 symbols, seriously</title>
+            <description type="text">I hate descriptions! See the title!</description>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="story" value="SuccessStory"/>
+                <label name="feature" value="SimpleStories"/>
+            </labels>
+        </test-case>
+        <test-case start="1391779538057" stop="1391779538059" status="skipped" severity="normal">
             <name>skippedSimpleTest</name>
             <failure>
                 <message>AssumptionViolatedException: Skipp it</message>
@@ -32,18 +43,7 @@
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1391164835044" stop="1391164835047" status="passed" severity="normal">
-            <name>longTitleTest</name>
-            <title>Test what do nothing and always passed right, but have a very long title, over 100 symbols, seriously</title>
-            <description type="text">I hate descriptions! See the title!</description>
-            <steps/>
-            <attachments/>
-            <labels>
-                <label name="story" value="SuccessStory"/>
-                <label name="feature" value="SimpleStories"/>
-            </labels>
-        </test-case>
-        <test-case start="1391164835045" stop="1391164835046" status="failed" severity="normal">
+        <test-case start="1391779538057" stop="1391779538058" status="failed" severity="normal">
             <name>failedSimpleTest</name>
             <failure>
                 <message>AssertionError: 5 is not 2 + 2
@@ -78,7 +78,7 @@ Expected: is &lt;4&gt;
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1391164835046" stop="1391164835047" status="broken" severity="normal">
+        <test-case start="1391779538057" stop="1391779538059" status="broken" severity="normal">
             <name>brokenSimpleTest</name>
             <failure>
                 <message>ArrayIndexOutOfBoundsException: 1</message>

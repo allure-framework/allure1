@@ -1,4 +1,7 @@
-angular.module('allure.table', []).directive('allureTable', function () {
+/*global angular*/
+angular.module('allure.table', [])
+    .directive('allureTable', function () {
+        "use strict";
         return {
             replace: true,
             transclude: true,
@@ -10,30 +13,32 @@ angular.module('allure.table', []).directive('allureTable', function () {
             link: function (scope, elem, attrs, ctrl) {
                 ctrl.transclude(function (clone) {
                     elem.append(clone);
-                })
+                });
             }
-        }
+        };
     })
     .directive('allureTableCol', function () {
+        "use strict";
         return {
             require: '^allureTable',
             link: function (scope, elem, attrs, tableCtrl) {
-                tableCtrl.addColumn(scope.$eval(attrs.allureTableCol))
+                tableCtrl.addColumn(scope.$eval(attrs.allureTableCol));
             }
-        }
+        };
     })
     .controller('AllureTableController', function ($scope, $transclude) {
+        "use strict";
         var defaultConfig = {reverse: false, flex: 1};
         this.addColumn = function (column) {
             if (typeof column === 'string') {
                 column = {
                     heading: column,
                     predicate: column.toLowerCase()
-                }
+                };
             }
             column = angular.extend({}, defaultConfig, column);
             if (!this.findColumn(column.heading)) {
-                $scope.columns.push(column)
+                $scope.columns.push(column);
             }
         };
         this.findColumn = function (heading) {
@@ -43,7 +48,7 @@ angular.module('allure.table', []).directive('allureTable', function () {
         };
         this.transclude = $transclude;
         $scope.getWidth = function(column) {
-            var totalFlex = $scope.columns.reduce(function(total, col) {return total + col.flex}, 0);
+            var totalFlex = $scope.columns.reduce(function(total, col) {return total + col.flex;}, 0);
             return 100/totalFlex*column.flex + '%';
         };
         $scope.columns = [];
