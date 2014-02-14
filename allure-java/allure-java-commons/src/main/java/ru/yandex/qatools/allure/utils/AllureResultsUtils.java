@@ -45,6 +45,10 @@ public class AllureResultsUtils {
         }
     }
 
+    public static void setResultsDirectory(File resultsDirectory) {
+        AllureResultsUtils.resultsDirectory = resultsDirectory;
+    }
+
     public static void writeTestSuiteResult(TestSuiteResult testSuiteResult) {
         File testSuiteResultFile = new File(getResultsDirectory(), generateTestSuiteFileName());
         JAXB.marshal(new ObjectFactory().createTestSuite(testSuiteResult), testSuiteResultFile);
