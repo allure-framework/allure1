@@ -22,6 +22,8 @@ import static java.nio.file.FileVisitResult.*;
  */
 public class AllureTestListenerXmlValidationTest {
 
+    private static final String DEFAULT_SUITE_NAME = "suite";
+
     private static final String ALLURE_RESULTS_DIRECTORY_PROP = "allure.results.directory";
     private static final String ALLURE_RESULTS = "allure-results";
 
@@ -30,12 +32,11 @@ public class AllureTestListenerXmlValidationTest {
     @BeforeClass
     public static void setUpClass() throws IOException {
         resultsDir = Files.createTempDirectory(ALLURE_RESULTS);
-        System.out.println(String.format("Result folder is %s", resultsDir));
         System.setProperty(ALLURE_RESULTS_DIRECTORY_PROP, resultsDir.toAbsolutePath().toString());
 
         AllureTestListener allureListener = new AllureTestListener();
         TestNG testNG = new TestNG();
-        testNG.setDefaultSuiteName("suite");
+        testNG.setDefaultSuiteName(DEFAULT_SUITE_NAME);
         testNG.setTestClasses(new Class[] { TestDataClass.class });
         testNG.addListener(allureListener);
 
@@ -50,13 +51,11 @@ public class AllureTestListenerXmlValidationTest {
 
     @Test
     public void suiteFilesCountTest() throws Exception {
-        System.out.println("Start suite files count test");
         assertThat(listTestSuiteFiles(resultsDir.toFile()).size(), is(1));
     }
 
     @Test
     public void validateSuiteFilesTest() throws Exception {
-        System.out.println("Start validation suite files test");
         Validator validator = AllureModelUtils.getAllureSchemaValidator();
 
         for (File each : listTestSuiteFiles(resultsDir.toFile())) {

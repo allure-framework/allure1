@@ -2,6 +2,9 @@ package ru.yandex.qatools.allure.testng;
 
 import org.junit.*;
 import org.mockito.InOrder;
+import org.testng.ITestResult;
+import org.testng.xml.XmlSuite;
+import org.testng.xml.XmlTest;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
 
@@ -13,54 +16,57 @@ import static org.mockito.Mockito.*;
  * @author Kirill Kozlov kozlov.k.e@gmail.com
  *         Date: 02.02.14
  */
-public class InternalAllureTestListenerTest {
+public class AllureTestListenerTest {
 
-    private static final String DEFAULT_SUITE_NAME = "suite";
     private static final String DEFAULT_TEST_NAME = "test";
 
-    private InternalAllureTestListener internalListener;
+    private AllureTestListener testngListener;
     private Allure allure;
 
     @Before
     public void setUp() {
-        internalListener = new InternalAllureTestListener(DEFAULT_SUITE_NAME);
+        testngListener = spy(new AllureTestListener());
         allure = mock(Allure.class);
 
-        internalListener.setLifecycle(allure);
+        testngListener.setLifecycle(allure);
     }
 
     @Test
     public void skipTestFireTestCaseStartedEvent() {
-        AllureTestResultAdaptor testResult = mock(AllureTestResultAdaptor.class);
+        ITestResult testResult = mock(ITestResult.class);
         when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
-        when(testResult.getAnnotations()).thenReturn(new Annotation[0]);
 
-        internalListener.onTestSkipped(testResult);
+        doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
 
-        verify(allure).fire(eq(new TestCaseStartedEvent(DEFAULT_SUITE_NAME, DEFAULT_TEST_NAME)));
+        testngListener.onTestSkipped(testResult);
+
+        String suiteUid = testngListener.getSuiteUid();
+        verify(allure).fire(eq(new TestCaseStartedEvent(suiteUid, DEFAULT_TEST_NAME)));
     }
 
     @Test
     public void skipTestFiredSkippedEventWithThrowable() {
-        AllureTestResultAdaptor testResult = mock(AllureTestResultAdaptor.class);
+        ITestResult testResult = mock(ITestResult.class);
         Throwable throwable = new NullPointerException();
         when(testResult.getThrowable()).thenReturn(throwable);
-        when(testResult.getName()).thenReturn("test");
-        when(testResult.getAnnotations()).thenReturn(new Annotation[0]);
+        when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
 
-        internalListener.onTestSkipped(testResult);
+        doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
+
+        testngListener.onTestSkipped(testResult);
 
         verify(allure).fire(eq(new TestCaseSkippedEvent().withThrowable(throwable)));
     }
 
     @Test
     public void skipTestFiredEventsOrder() {
-        AllureTestResultAdaptor testResult = mock(AllureTestResultAdaptor.class);
+        ITestResult testResult = mock(ITestResult.class);
         when(testResult.getThrowable()).thenReturn(new NullPointerException());
         when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
-        when(testResult.getAnnotations()).thenReturn(new Annotation[0]);
 
-        internalListener.onTestSkipped(testResult);
+        doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
+
+        testngListener.onTestSkipped(testResult);
 
         InOrder inOrder = inOrder(allure);
         inOrder.verify(allure).fire(isA(TestCaseStartedEvent.class));

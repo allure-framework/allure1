@@ -3,14 +3,14 @@ package ru.yandex.qatools.allure.testng;
 import org.testng.*;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.utils.AnnotationManager;
 
-import java.util.UUID;
+import java.lang.annotation.Annotation;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Process only suite events, all test case events are simply passed to
- * @{link InternalAllureTestListener} with wrapped @{link ITestResult} argument
- *
- * @see InternalAllureTestListener
+ * Allure framework listener for <a href="http://testng.org">TestNG</a> framework.
  *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 22.11.13
@@ -21,11 +21,8 @@ public class AllureTestListener implements ITestListener {
 
     private String suiteUid = UUID.randomUUID().toString();
 
-    private InternalAllureTestListener internalAllureTestListener;
-
-    public AllureTestListener() {
-        internalAllureTestListener = new InternalAllureTestListener(suiteUid);
-    }
+    private Set<String> startedTestNames = Collections.newSetFromMap(
+            new ConcurrentHashMap<String, Boolean>());
 
     @Override
     public void onStart(ITestContext iTestContext) {
@@ -41,35 +38,70 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
-        internalAllureTestListener.onTestStart(extendedTestResult);
+        AllureTestResultAdaptor testResultAdaptor = new AllureTestResultAdaptor(iTestResult);
+        startedTestNames.add(testResultAdaptor.getName());
+
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, testResultAdaptor.getName());
+        AnnotationManager am = new AnnotationManager(getMethodAnnotations(iTestResult));
+
+        am.update(event);
+
+        getLifecycle().fire(event);
     }
 
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
-        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
-        internalAllureTestListener.onTestSuccess(extendedTestResult);
+        fireFinishTest();
     }
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
-        internalAllureTestListener.onTestFailure(extendedTestResult);
+        AllureTestResultAdaptor testResultAdaptor = new AllureTestResultAdaptor(iTestResult);
+        getLifecycle().fire(new TestCaseFailureEvent()
+                .withThrowable(testResultAdaptor.getThrowable())
+        );
+        fireFinishTest();
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
-        internalAllureTestListener.onTestSkipped(extendedTestResult);
+        AllureTestResultAdaptor testResultAdaptor = new AllureTestResultAdaptor(iTestResult);
+        if (!startedTestNames.contains(testResultAdaptor.getName())) {
+            onTestStart(iTestResult);
+        }
+
+        getLifecycle().fire(new TestCaseSkippedEvent()
+                .withThrowable(testResultAdaptor.getThrowable())
+        );
+        fireFinishTest();
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        AllureTestResultAdaptor extendedTestResult = new AllureTestResultAdaptor(iTestResult);
-        internalAllureTestListener.onTestFailedButWithinSuccessPercentage(extendedTestResult);
+        AllureTestResultAdaptor testResultAdaptor = new AllureTestResultAdaptor(iTestResult);
+        getLifecycle().fire(new TestCaseFailureEvent()
+                .withThrowable(testResultAdaptor.getThrowable())
+        );
+        fireFinishTest();
+    }
+
+    public Annotation[] getMethodAnnotations(ITestResult iTestResult) {
+        return iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations();
+    }
+
+    private void fireFinishTest() {
+        getLifecycle().fire(new TestCaseFinishedEvent());
     }
 
     Allure getLifecycle() {
         return lifecycle;
+    }
+
+    void setLifecycle(Allure lifecycle) {
+        this.lifecycle = lifecycle;
+    }
+
+    String getSuiteUid() {
+        return suiteUid;
     }
 }
