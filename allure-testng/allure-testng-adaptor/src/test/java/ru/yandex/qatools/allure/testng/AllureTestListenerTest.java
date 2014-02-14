@@ -3,8 +3,6 @@ package ru.yandex.qatools.allure.testng;
 import org.junit.*;
 import org.mockito.InOrder;
 import org.testng.ITestResult;
-import org.testng.xml.XmlSuite;
-import org.testng.xml.XmlTest;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
 
