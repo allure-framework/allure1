@@ -38,6 +38,7 @@ public class AllureTestListenerXmlValidationTest {
         TestNG testNG = new TestNG();
         testNG.setDefaultSuiteName(DEFAULT_SUITE_NAME);
         testNG.setTestClasses(new Class[] { TestDataClass.class });
+        testNG.setUseDefaultListeners(false);
         testNG.addListener(allureListener);
 
         testNG.run();
