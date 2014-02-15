@@ -5,6 +5,7 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.runner.JUnitCore;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.junit.testdata.SimpleTestClass;
+import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
@@ -28,7 +29,7 @@ public class AllureListenerXmlValidationTest {
     @Before
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
-        System.setProperty("allure.results.directory", resultsDirectory.getAbsolutePath());
+        AllureResultsUtils.setResultsDirectory(resultsDirectory);
 
         JUnitCore core = new JUnitCore();
         core.addListener(new AllureRunListener());
@@ -51,7 +52,7 @@ public class AllureListenerXmlValidationTest {
 
     @After
     public void tearDown() {
-        System.setProperty("allure.results.directory", "");
+        AllureResultsUtils.setResultsDirectory(null);
     }
 
 }
