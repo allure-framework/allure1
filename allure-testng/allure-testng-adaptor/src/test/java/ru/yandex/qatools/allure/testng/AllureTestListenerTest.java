@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.testng;
 import org.junit.*;
 import org.mockito.InOrder;
 import org.testng.ITestResult;
+import org.testng.SkipException;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
 
@@ -43,7 +44,7 @@ public class AllureTestListenerTest {
     }
 
     @Test
-    public void skipTestFiredSkippedEventWithThrowable() {
+    public void skipTestWithThrowable() {
         ITestResult testResult = mock(ITestResult.class);
         Throwable throwable = new NullPointerException();
         when(testResult.getThrowable()).thenReturn(throwable);
@@ -54,6 +55,18 @@ public class AllureTestListenerTest {
         testngListener.onTestSkipped(testResult);
 
         verify(allure).fire(eq(new TestCaseSkippedEvent().withThrowable(throwable)));
+    }
+
+    @Test
+    public void skipTestWithoutThrowable() {
+        ITestResult testResult = mock(ITestResult.class);
+        when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
+
+        doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
+
+        testngListener.onTestSkipped(testResult);
+
+        verify(allure).fire(isA(TestCaseSkippedEvent.class));
     }
 
     @Test

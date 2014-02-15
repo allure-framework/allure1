@@ -38,10 +38,9 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        AllureTestResultAdaptor testResultAdaptor = new AllureTestResultAdaptor(iTestResult);
-        startedTestNames.add(testResultAdaptor.getName());
+        startedTestNames.add(iTestResult.getName());
 
-        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, testResultAdaptor.getName());
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, iTestResult.getName());
         AnnotationManager am = new AnnotationManager(getMethodAnnotations(iTestResult));
 
         am.update(event);
@@ -56,31 +55,33 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult iTestResult) {
-        AllureTestResultAdaptor testResultAdaptor = new AllureTestResultAdaptor(iTestResult);
         getLifecycle().fire(new TestCaseFailureEvent()
-                .withThrowable(testResultAdaptor.getThrowable())
+                .withThrowable(iTestResult.getThrowable())
         );
         fireFinishTest();
     }
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        AllureTestResultAdaptor testResultAdaptor = new AllureTestResultAdaptor(iTestResult);
-        if (!startedTestNames.contains(testResultAdaptor.getName())) {
+        if (!startedTestNames.contains(iTestResult.getName())) {
             onTestStart(iTestResult);
         }
 
+        Throwable throwable = iTestResult.getThrowable();
+        if (throwable == null) {
+            throwable = new SkipException("The test was skipped for some reason");
+        }
+
         getLifecycle().fire(new TestCaseSkippedEvent()
-                .withThrowable(testResultAdaptor.getThrowable())
+                .withThrowable(throwable)
         );
         fireFinishTest();
     }
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        AllureTestResultAdaptor testResultAdaptor = new AllureTestResultAdaptor(iTestResult);
         getLifecycle().fire(new TestCaseFailureEvent()
-                .withThrowable(testResultAdaptor.getThrowable())
+                .withThrowable(iTestResult.getThrowable())
         );
         fireFinishTest();
     }
