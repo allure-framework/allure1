@@ -4,6 +4,7 @@ import org.junit.*;
 import org.testng.TestNG;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.testng.testdata.TestDataClass;
+import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
@@ -23,30 +24,28 @@ import static java.nio.file.FileVisitResult.*;
 public class AllureTestListenerXmlValidationTest {
 
     private static final String DEFAULT_SUITE_NAME = "suite";
-
-    private static final String ALLURE_RESULTS_DIRECTORY_PROP = "allure.results.directory";
     private static final String ALLURE_RESULTS = "allure-results";
 
     private static Path resultsDir;
 
-    @BeforeClass
-    public static void setUpClass() throws IOException {
+    @Before
+    public void setUp() throws IOException {
         resultsDir = Files.createTempDirectory(ALLURE_RESULTS);
-        System.setProperty(ALLURE_RESULTS_DIRECTORY_PROP, resultsDir.toAbsolutePath().toString());
+        AllureResultsUtils.setResultsDirectory(resultsDir.toFile());
 
         AllureTestListener allureListener = new AllureTestListener();
         TestNG testNG = new TestNG();
         testNG.setDefaultSuiteName(DEFAULT_SUITE_NAME);
-        testNG.setTestClasses(new Class[] { TestDataClass.class });
+        testNG.setTestClasses(new Class[]{TestDataClass.class});
         testNG.setUseDefaultListeners(false);
         testNG.addListener(allureListener);
 
         testNG.run();
     }
 
-    @AfterClass
-    public static void tearDownClass() throws IOException {
-        System.clearProperty(ALLURE_RESULTS_DIRECTORY_PROP);
+    @After
+    public void tearDown() throws IOException {
+        AllureResultsUtils.setResultsDirectory(null);
         deleteNotEmptyDirectory(resultsDir);
     }
 
