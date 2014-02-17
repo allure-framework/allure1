@@ -16,7 +16,7 @@
 </div>
 <div class="testcase__content" on-keynav="select($direction)">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
-    <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status == 'FAILED' || testcase.status == 'BROKEN'" ng-controller="angular.noop">
+    <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status !== 'PASSED'" ng-controller="angular.noop">
         <span class="preformated-text" ng-click="expanded = !expanded">{{testcase.failure.message}}</span>
         <a class="pull-right clickable" ng-hide="expanded" ng-click="expanded = true">Show stacktrace</a>
         <a class="pull-right clickable" ng-show="expanded" ng-click="expanded = false">Hide stacktrace</a>
@@ -24,9 +24,6 @@
     </div>
     <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
         The test has passed!
-    </div>
-    <div class="testcase__status alert-status-skipped" ng-show="testcase.status == 'SKIPPED'">
-        This test has been skipped
     </div>
     <div class="environments">
         <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">
