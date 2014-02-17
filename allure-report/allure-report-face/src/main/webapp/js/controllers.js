@@ -1,6 +1,7 @@
 /*global angular:true */
 angular.module('allure.controllers', [])
     .controller('GraphCtrl', function($scope, testcases, status) {
+        "use strict";
         $scope.testcases = testcases.testCases;
         $scope.statistic = {
             passed: 0, skipped: 0, failed: 0, broken: 0,
@@ -21,7 +22,12 @@ angular.module('allure.controllers', [])
     })
 
     .controller('TimelineCtrl', function($scope, testcases) {
+        "use strict";
         $scope.testcases = testcases.testCases;
+        $scope.startTime = $scope.testcases.reduce(function(min, testcase) {
+            return Math.min(min, testcase.time.start);
+
+        }, Number.POSITIVE_INFINITY);
     })
 
     .controller('TabsController', function($scope, $state) {

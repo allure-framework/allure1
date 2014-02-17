@@ -7,23 +7,23 @@
             <div class="feature" ng-repeat="feature in features | orderBy:'title'">
                 <div class="item" ng-click="expandFeature(feature, !feature.expanded)">
                     <div class="item__icon" ng-class="feature.expanded ? 'arrow-down' : 'glyphicon glyphicon-play'"></div>
-                    {{feature.title}}
                     <div class="progress percents pull-right">
                         <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in feature.percents"
                              tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
                         </div>
                     </div>
                     <div class="pull-right text-muted"><i ng-pluralize count="feature.stories.length" when="{one: '{} story', other: '{} stories'}"></i>&nbsp;</div>
+                    {{feature.title}}
                 </div>
                 <ul ng-if="feature.expanded" class="list-unstyled item__subitems">
                     <li class="item" ng-repeat="story in feature.stories | orderBy:'title'" ng-click="setStory(story)" ng-class="{item_active: story == $parent.story}">
-                        {{story.title}}
                         <div class="progress percents pull-right">
                             <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
                                  tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
                             </div>
                         </div>
                         <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
+                        {{story.title}}
                     </li>
                 </ul>
             </div>
@@ -35,13 +35,13 @@
             <h3 class="pane__header">There are {{allStories.length}} stories, {{unstableStories.length}} unstable</h3>
             <ul class="list-unstyled stories">
                 <li class="item" ng-repeat="story in unstableStories" ng-click="setStory(story)">
-                    {{story.title}}
                     <div class="progress percents pull-right">
                         <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
                              tooltip="{{percent.count}} {{percent.status}} ({{percent.value|number:0}}%)" ng-style="{width: percent.value+'%'}">{{percent.count}}
                         </div>
                     </div>
                     <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
+                    {{story.title}}
                 </li>
             </ul>
             <hr>
