@@ -1,6 +1,7 @@
 <div class="timeline b-island">
     <div class="page-header b-island__title">
         <h3>Timeline</h3>
+        <div class="text-muted">Started {{startTime | date:'mediumDate'}} at {{startTime | date:'HH:mm:ss'}}</div>
     </div>
     <div timeline>
         <timestamp data="testcase" ng-repeat="testcase in testcases"></timestamp>
