@@ -20,7 +20,7 @@ public class TabsTest {
 
     @Before
     public void openBrowser() throws Exception {
-        driver = rule.getDriver();
+        driver = rule.driver();
         WebDriverWait wait = new WebDriverWait(driver, 3);
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".tab-content")));
     }
