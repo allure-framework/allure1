@@ -1,4 +1,4 @@
-package ru.yandex.qatools.allure;
+package ru.yandex.qatools.allure.elements;
 
 import org.openqa.selenium.support.FindBy;
 import ru.yandex.qatools.htmlelements.annotations.Block;
@@ -17,11 +17,35 @@ public class Tabs extends HtmlElement {
     @FindBy(css = "[ui-sref=\"home\"]")
     private Button xUnit;
 
+    @Name("Features")
+    @FindBy(css = "[ui-sref=\"features\"]")
+    private Button behaviours;
+
+    @Name("Graph")
+    @FindBy(css = "[ui-sref=\"graph\"]")
+    private Button graph;
+
+    @Name("Timeline")
+    @FindBy(css = "[ui-sref=\"timeline\"]")
+    private Button timeline;
+
+    public Button defects() {
+        return defects;
+    }
+
     public Button xUnit() {
         return xUnit;
     }
 
-    public Button defects() {
-        return defects;
+    public Button behaviours() {
+        return behaviours;
+    }
+
+    public Button graph() {
+        return graph;
+    }
+
+    public Button timeline() {
+        return timeline;
     }
 }

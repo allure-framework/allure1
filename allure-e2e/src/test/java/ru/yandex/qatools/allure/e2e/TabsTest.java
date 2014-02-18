@@ -3,37 +3,38 @@ package ru.yandex.qatools.allure.e2e;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.allure.JSErrorsRule;
+import ru.yandex.qatools.allure.Page;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.Assert.assertEquals;
+import static ru.yandex.qatools.allure.Helpers.existsAndVisible;
+import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.should;
+import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.timeoutHasExpired;
 
 public class TabsTest {
 
     @Rule
     public JSErrorsRule rule = new JSErrorsRule();
 
-    WebDriver driver;
+    private Page page;
 
     @Before
     public void openBrowser() throws Exception {
-        driver = rule.driver();
-        WebDriverWait wait = new WebDriverWait(driver, 3);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".tab-content")));
+        page = new Page(rule.driver());
+        assertThat(page.tabContent(), should(existsAndVisible()).whileWaitingUntil(timeoutHasExpired(SECONDS.toMillis(3))));
     }
 
     public void checkHash(String expectedHash) {
-        String url = driver.getCurrentUrl();
+        String url = rule.driver().getCurrentUrl();
         String hash = url.substring(url.indexOf('#'));
         assertEquals(expectedHash, hash);
     }
 
     @Test
     public void defectsTab() throws Exception {
-        driver.findElement(By.cssSelector(".b-vert__icon.glyphicon-flag")).click();
+        page.tabs().defects().click();
         checkHash("#/defects");
     }
 
@@ -44,19 +45,19 @@ public class TabsTest {
 
     @Test
     public void behaviorsTab() throws Exception {
-        driver.findElement(By.cssSelector(".b-vert__icon.glyphicon-list")).click();
+        page.tabs().behaviours().click();
         checkHash("#/features");
     }
 
     @Test
     public void graphTab() throws Exception {
-        driver.findElement(By.cssSelector(".b-vert__icon.glyphicon-stats")).click();
+        page.tabs().graph().click();
         checkHash("#/graph");
     }
 
     @Test
     public void timelineTab() throws Exception {
-        driver.findElement(By.cssSelector(".b-vert__icon.glyphicon-time")).click();
+        page.tabs().timeline().click();
         checkHash("#/timeline");
     }
 

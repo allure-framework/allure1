@@ -42,7 +42,7 @@ public class DefectsTabTest {
     public void shouldOpenTestcaseOnClick() throws Exception {
         page.defectsTabContent().defectAt(0).click();
 
-        assertThat(page.defectsTabContent().testcaseTitle(), should(exists()));
-        assertThat(page.defectsTabContent().testcaseTitle(), text(not(containsString("{{testcase.title}}"))));
+        assertThat(page.defectsTabContent().testcase().title(), should(exists()));
+        assertThat(page.defectsTabContent().testcase().title(), text(not(containsString("{{testcase.title}}"))));
     }
 }

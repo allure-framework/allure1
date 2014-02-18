@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.blocks;
 
 import org.openqa.selenium.support.FindBy;
+import ru.yandex.qatools.allure.elements.TestcasePanel;
 import ru.yandex.qatools.htmlelements.annotations.Block;
 import ru.yandex.qatools.htmlelements.annotations.Name;
 import ru.yandex.qatools.htmlelements.element.Button;
@@ -16,23 +17,13 @@ public class DefectsTab extends HtmlElement {
     private List<Button> defects;
 
     @Name("Testcase view")
-    @FindBy(css="[ui-view='testcase'] .pane_col")
-    private HtmlElement testcase;
-
-
-    @Name("Testcase title")
-    @FindBy(css="[ui-view='testcase'] .pane_col .pane__header h3")
-    private HtmlElement testcaseTitle;
+    private TestcasePanel testcase;
 
     public Button defectAt(int index) {
         return defects.get(index);
     }
 
-    public HtmlElement testcase() {
+    public TestcasePanel testcase() {
         return testcase;
-    }
-
-    public HtmlElement testcaseTitle() {
-        return testcaseTitle;
     }
 }
