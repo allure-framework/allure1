@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.utils;
 
+import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.exceptions.AllureException;
@@ -7,7 +8,9 @@ import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
-import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.IOException;
 
@@ -56,7 +59,17 @@ public class AllureResultsUtils {
 
     public static void writeTestSuiteResult(TestSuiteResult testSuiteResult) {
         File testSuiteResultFile = new File(getResultsDirectory(), generateTestSuiteFileName());
-        JAXB.marshal(new ObjectFactory().createTestSuite(testSuiteResult), testSuiteResultFile);
+
+        try {
+            Marshaller m = JAXBContext.newInstance(TestSuiteResult.class).createMarshaller();
+            m.setProperty(
+                    CharacterEscapeHandler.class.getName(),
+                    XmlEscapeHandler.getInstance()
+            );
+            m.marshal(new ObjectFactory().createTestSuite(testSuiteResult), testSuiteResultFile);
+        } catch (JAXBException e) {
+            throw new AllureException("Can't marshall test suite result", e);
+        }
     }
 
     public static String writeAttachment(Object attachment, AttachmentType type) {
