@@ -1,6 +1,6 @@
 package ru.yandex.qatools.allure.utils;
 
-import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
+import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.exceptions.AllureException;
@@ -64,7 +64,7 @@ public class AllureResultsUtils {
             Marshaller m = JAXBContext.newInstance(TestSuiteResult.class).createMarshaller();
             m.setProperty(
                     CharacterEscapeHandler.class.getName(),
-                    new XmlEscapeHandler("UTF-8")
+                    XmlEscapeHandler.getInstance()
             );
             m.marshal(new ObjectFactory().createTestSuite(testSuiteResult), testSuiteResultFile);
         } catch (JAXBException e) {

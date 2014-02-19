@@ -1,38 +1,51 @@
 package ru.yandex.qatools.allure.utils;
 
-import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;
+import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 
 import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetEncoder;
 
-/**
- * @author Dmitry Baev charlie@yandex-team.ru
- *         Date: 19.02.14
- */
 public class XmlEscapeHandler implements CharacterEscapeHandler {
 
-    private CharsetEncoder encoder;
-
-    public XmlEscapeHandler(String charset) {
-        encoder = Charset.forName(charset).newEncoder();
+    private XmlEscapeHandler() {
     }
+
+    private static final CharacterEscapeHandler instance = new XmlEscapeHandler();
 
     @Override
     public void escape(char[] ch, int start, int length, boolean isAttVal, Writer out) throws IOException {
         int limit = start + length;
         boolean cData = false;
         StringWriter buffer = new StringWriter();
+
         for (int i = start; i < limit; i++) {
-            if (isCDATA(ch[i])) {
-                writeEntity(ch[i], buffer);
-                cData = true;
-            } else if (encoder.canEncode(ch[i])) {
-                buffer.write(ch[i]);
-            } else {
-                writeEntity(ch[i], buffer);
+            switch (ch[i]) {
+                case '&':
+                    buffer.append("&amp;");
+                    break;
+                case '<':
+                    buffer.append("&lt;");
+                    break;
+                case '>':
+                    buffer.append("&gt;");
+                    break;
+                case '\"':
+                    if (isAttVal) {
+                        buffer.append("&quot;");
+                    } else {
+                        buffer.append('\"');
+                    }
+                    break;
+                default:
+                    if (isCDATA(ch[i])) {
+                        writeEntity(ch[i], buffer);
+                        cData = true;
+                    } else if (ch[i] > '\u007f') {
+                        writeEntity(ch[i], buffer);
+                    } else {
+                        out.write(ch[i]);
+                    }
             }
         }
         if (cData) {
@@ -55,5 +68,9 @@ public class XmlEscapeHandler implements CharacterEscapeHandler {
         cDataCharacter |= (c >= '\uD800' && c < '\uE000');
         cDataCharacter |= (c == '\uFFFE' || c == '\uFFFF');
         return cDataCharacter;
+    }
+
+    public static CharacterEscapeHandler getInstance() {
+        return instance;
     }
 }
