@@ -48,7 +48,6 @@ public class WriteTestSuiteResultTest {
         }
     }
 
-
     @After
     public void tearDown() {
         AllureResultsUtils.setResultsDirectory(null);
