@@ -38,9 +38,10 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        startedTestNames.add(iTestResult.getName());
+        String testName = getName(iTestResult);
+        startedTestNames.add(testName);
 
-        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, iTestResult.getName());
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, testName);
         AnnotationManager am = new AnnotationManager(getMethodAnnotations(iTestResult));
 
         am.update(event);
@@ -63,7 +64,7 @@ public class AllureTestListener implements ITestListener {
 
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
-        if (!startedTestNames.contains(iTestResult.getName())) {
+        if (!startedTestNames.contains(getName(iTestResult))) {
             onTestStart(iTestResult);
         }
 
@@ -88,6 +89,19 @@ public class AllureTestListener implements ITestListener {
 
     public Annotation[] getMethodAnnotations(ITestResult iTestResult) {
         return iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations();
+    }
+
+    private String getName(ITestResult iTestResult) {
+        StringBuilder sb = new StringBuilder(iTestResult.getName());
+        Object[] parameters = iTestResult.getParameters();
+        if (parameters != null && parameters.length > 0) {
+            sb.append("[");
+            for (Object parameter: parameters) {
+                sb.append(parameter).append(",");
+            }
+            sb.replace(sb.length() - 1, sb.length(), "]");
+        }
+        return sb.toString();
     }
 
     private void fireFinishTest() {
