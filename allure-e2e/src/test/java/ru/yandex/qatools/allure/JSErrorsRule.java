@@ -28,7 +28,7 @@ public class JSErrorsRule extends TestWatcher {
         }
     }
 
-    public WebDriver getDriver() {
+    public WebDriver driver() {
         return driver;
     }
 

@@ -3,7 +3,7 @@
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.3.2-SNAPSHOT</version>
+        <version>1.3.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>allure-e2e</artifactId>
@@ -43,6 +43,26 @@
             <groupId>com.github.detro.ghostdriver</groupId>
             <artifactId>phantomjsdriver</artifactId>
             <version>1.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.matchers</groupId>
+            <artifactId>webdriver-matchers</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.matchers</groupId>
+            <artifactId>matcher-decorators</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.htmlelements</groupId>
+            <artifactId>htmlelements-java</artifactId>
+            <version>1.11</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.htmlelements</groupId>
+            <artifactId>htmlelements-matchers</artifactId>
+            <version>1.11</version>
         </dependency>
     </dependencies>
 

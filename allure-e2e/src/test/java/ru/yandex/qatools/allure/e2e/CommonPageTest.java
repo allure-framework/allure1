@@ -18,6 +18,6 @@ public class CommonPageTest {
 
     @Test
     public void sampleTitleTest() {
-        assertThat(rule.getDriver().getTitle(), equalTo("Allure Dashboard"));
+        assertThat(rule.driver().getTitle(), equalTo("Allure Dashboard"));
     }
 }

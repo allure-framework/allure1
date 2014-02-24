@@ -1,51 +1,46 @@
-package ru.yandex.qatools.allure.junit;
+package ru.yandex.qatools.allure.utils;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.junit.runner.JUnitCore;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
-import ru.yandex.qatools.allure.junit.testdata.SimpleTestClass;
-import ru.yandex.qatools.allure.utils.AllureResultsUtils;
+import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
- *         Date: 20.01.14
+ *         Date: 19.02.14
  */
-public class AllureListenerXmlValidationTest {
+public class WriteTestSuiteResultTest {
+
+    public File resultsDirectory;
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
-
-    public File resultsDirectory;
 
     @Before
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
         AllureResultsUtils.setResultsDirectory(resultsDirectory);
-
-        JUnitCore core = new JUnitCore();
-        core.addListener(new AllureRunListener());
-        core.run(SimpleTestClass.class);
     }
 
     @Test
-    public void suiteFilesCountTest() throws Exception {
-        assertThat(listTestSuiteFiles(resultsDirectory).size(), is(1));
-    }
+    public void invalidCharacterTest() throws Exception {
+        TestSuiteResult testSuiteResult = new TestSuiteResult()
+                .withName("somename");
 
-    @Test
-    public void validateSuiteFilesTest() throws Exception {
+        String titleWithInvalidXmlCharacter = String.valueOf(Character.toChars(0x0));
+        testSuiteResult.setTitle(titleWithInvalidXmlCharacter);
+
+        AllureResultsUtils.writeTestSuiteResult(testSuiteResult);
+
         Validator validator = AllureModelUtils.getAllureSchemaValidator();
 
         for (File each : listTestSuiteFiles(resultsDirectory)) {
@@ -57,5 +52,4 @@ public class AllureListenerXmlValidationTest {
     public void tearDown() {
         AllureResultsUtils.setResultsDirectory(null);
     }
-
 }
