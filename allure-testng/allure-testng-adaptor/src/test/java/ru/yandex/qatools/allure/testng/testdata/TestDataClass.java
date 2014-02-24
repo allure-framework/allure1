@@ -1,6 +1,10 @@
 package ru.yandex.qatools.allure.testng.testdata;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.testng.Assert.fail;
 
 /**
@@ -22,4 +26,15 @@ public class TestDataClass {
     @Test(dependsOnMethods = "failedTest")
     public void skippedByDependencyTest() { }
 
+    @DataProvider
+    public Object[][] dataProvider() {
+        return new Object[][] {
+                {1}, {2}, {3}
+        };
+    }
+
+    @Test(dataProvider = "dataProvider")
+    public void parametrizedTest(int parameter) {
+        assertThat(parameter, equalTo(2));
+    }
 }
