@@ -3,7 +3,6 @@ package ru.yandex.qatools.allure.testng;
 import org.junit.*;
 import org.mockito.InOrder;
 import org.testng.ITestResult;
-import org.testng.SkipException;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
 
@@ -83,5 +82,23 @@ public class AllureTestListenerTest {
         inOrder.verify(allure).fire(isA(TestCaseStartedEvent.class));
         inOrder.verify(allure).fire(isA(TestCaseSkippedEvent.class));
         inOrder.verify(allure).fire(isA(TestCaseFinishedEvent.class));
+    }
+
+    @Test
+    public void parametrizedTest() {
+        double doubleParameter = 10.0;
+        String stringParameter = "string";
+        ITestResult testResult = mock(ITestResult.class);
+        when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
+        when(testResult.getParameters()).thenReturn(new Object[] { doubleParameter, stringParameter});
+
+        doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
+
+        testngListener.onTestStart(testResult);
+
+        String suiteUid = testngListener.getSuiteUid();
+        String testName = String.format("%s[%s,%s]",
+                DEFAULT_TEST_NAME, Double.toString(doubleParameter), stringParameter);
+        verify(allure).fire(eq(new TestCaseStartedEvent(suiteUid, testName)));
     }
 }
