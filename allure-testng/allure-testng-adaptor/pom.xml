@@ -3,7 +3,7 @@
     <parent>
         <artifactId>allure-testng</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.3.2-SNAPSHOT</version>
+        <version>1.3.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
