@@ -46,7 +46,11 @@ public final class AllureAspectUtils {
                                     if (obj instanceof boolean[]) {
                                         return Arrays.toString((boolean[])obj);
                                     } else {
-                                        return obj;
+                                        if (obj instanceof char[]) {
+                                            return Arrays.toString((char[])obj);
+                                        } else {
+                                            return obj;
+                                        }
                                     }
                                 }
                             }
