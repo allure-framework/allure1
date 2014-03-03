@@ -1,8 +1,8 @@
 package ru.yandex.qatools.allure.aspects;
 
+import java.lang.reflect.Array;
 import java.text.MessageFormat;
 import java.util.Arrays;
-import java.util.Objects;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -16,48 +16,21 @@ public final class AllureAspectUtils {
         String finalPattern = namePattern.replaceAll("\\{method\\}", methodName);
         Object[] results = new Object[parameters.length];
         for (int i = 0; i < parameters.length; i++){
-            results[i] = checkForArray(parameters[i]);
+            results[i] = arrayToString(parameters[i]);
         }
         return MessageFormat.format(finalPattern, results);
     }
 
-    private static Object checkForArray(Object obj) {
-        if (obj instanceof Object[]) {
-            return Arrays.toString((Object[])obj);
-        } else {
-            if (obj instanceof byte[]) {
-                return Arrays.toString((byte[])obj);
-            } else {
-                if (obj instanceof short[]) {
-                    return Arrays.toString((short[])obj);
-                } else {
-                    if (obj instanceof int[]) {
-                        return Arrays.toString((int[])obj);
-                    } else {
-                        if (obj instanceof long[]) {
-                            return Arrays.toString((long[])obj);
-                        } else {
-                            if (obj instanceof float[]) {
-                                return Arrays.toString((float[])obj);
-                            } else {
-                                if (obj instanceof double[]) {
-                                    return Arrays.toString((double[])obj);
-                                } else {
-                                    if (obj instanceof boolean[]) {
-                                        return Arrays.toString((boolean[])obj);
-                                    } else {
-                                        if (obj instanceof char[]) {
-                                            return Arrays.toString((char[])obj);
-                                        } else {
-                                            return obj;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+    public static Object arrayToString(Object obj) {
+        if (obj.getClass().isArray()) {
+            int len = Array.getLength(obj);
+            String[] strings = new String[len];
+            for (int i = 0; i < len; i++){
+                strings[i] = String.valueOf(Array.get(obj, i));
             }
+            return Arrays.toString(strings);
+        } else {
+            return obj;
         }
     }
 }
