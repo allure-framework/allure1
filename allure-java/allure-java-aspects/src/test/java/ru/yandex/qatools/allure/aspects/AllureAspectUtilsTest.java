@@ -98,4 +98,22 @@ public class AllureAspectUtilsTest {
         assertThat("Название метода с массивом чисел с плавающей запятой двойной точности сформировано неверно", title,
                 equalTo("getSomethingNew (first arg:[4.0000006, 0.4, 6.0], second arg:-5 462)"));
     }
+
+    @Test
+    public void getTitleWithoutArray() {
+        double firstArg = 0.00000001;
+        String secondArg = "second arg";
+        String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
+        assertThat("Название метода без массивов сформировано неверно", title,
+                equalTo("getSomethingNew (first arg:0, second arg:second arg)"));
+    }
+
+    @Test
+    public void getTitleWithEmptyArray() {
+        String[] firstArg = new String[0];
+        long secondArg = 1000000000000L;
+        String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
+        assertThat("Название метода с пустым массивом сформировано неверно", title,
+                equalTo("getSomethingNew (first arg:[], second arg:1 000 000 000 000)"));
+    }
 }
