@@ -24,9 +24,7 @@ public class AllureAspectUtilsTest {
         int secondArg = 2454575;
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом строк сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg), "2" + (char)160 + "454" + (char)160 + "575")
-                ));
+                equalTo("getSomethingNew (first arg:[one string, two string, three string], second arg:2 454 575)"));
     }
 
     @Test
@@ -35,31 +33,25 @@ public class AllureAspectUtilsTest {
         Integer secondArg = 1546825;
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом длинных целых чисел сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg), "1" + (char)160 + "546" + (char)160 + "825")
-                ));
+                equalTo("getSomethingNew (first arg:[20000, 464564, 8798765465465465132], second arg:1 546 825)"));
     }
 
     @Test
     public void getTitleWithIntArray(){
-        int[] firstArg = {465,464,6,456,465,461,231,3,24,5641,321,32,135,46,46,51,321};
+        int[] firstArg = {1, 2, 3};
         Boolean secondArg = true;
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом целых чисел сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg), secondArg)
-                ));
+                equalTo("getSomethingNew (first arg:[1, 2, 3], second arg:true)"));
     }
 
     @Test
     public void getTitleWithShortArray(){
-        short[] firstArg = {54, 856, -856};
+        short[] firstArg = {32767, 0, -32768};
         String secondArg = "aaabbbbccdddd";
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом коротких целых чисел сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg), secondArg)
-                ));
+                equalTo("getSomethingNew (first arg:[32767, 0, -32768], second arg:aaabbbbccdddd)"));
     }
 
     @Test
@@ -68,52 +60,42 @@ public class AllureAspectUtilsTest {
         double secondArg = 25.546548946;
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом символов сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg), "25,547")
-                ));
+                equalTo("getSomethingNew (first arg:[a, b, z], second arg:25,547)"));
     }
 
     @Test
     public void getTitleWithByteArray(){
-        byte[] firstArg = {25, 60, -128};
+        byte[] firstArg = {1, 127, -128};
         char secondArg = 'x';
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом байтов сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg), secondArg)
-                ));
+                equalTo("getSomethingNew (first arg:[1, 127, -128], second arg:x)"));
     }
 
     @Test
     public void getTitleWithBooleanArray(){
-        boolean[] firstArg = {true, false, false, false, true, false, true, true};
+        boolean[] firstArg = {true, false, false};
         float secondArg = 0.00005F;
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом логических переменных сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg), "0")
-                ));
+                equalTo("getSomethingNew (first arg:[true, false, false], second arg:0)"));
     }
 
     @Test
     public void getTitleWithFloatArray(){
-        float[] firstArg = {0.1215F, 8754.002F, 896.45F};
+        float[] firstArg = {0.1F, 1.002F, 6.45F};
         byte secondArg = 127;
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом чисел с плавающей запятой сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg), secondArg)
-                ));
+                equalTo("getSomethingNew (first arg:[0.1, 1.002, 6.45], second arg:127)"));
     }
 
     @Test
     public void getTitleWithDoubleArray(){
-        double[] firstArg = {456454.545646,4.564,6.4,6.54,56.4,6.54,65.4};
+        double[] firstArg = {4.0000006, 0.4, 6.0};
         short secondArg = -5462;
         String title = getTitle(namePattern, methodName, new Object[]{firstArg, secondArg});
         assertThat("Название метода с массивом чисел с плавающей запятой двойной точности сформировано неверно", title,
-                equalTo(String.format("%s (first arg:%s, second arg:%s)",
-                        methodName, Arrays.toString(firstArg),"-5" + (char)160 + "462")
-                ));
+                equalTo("getSomethingNew (first arg:[4.0000006, 0.4, 6.0], second arg:-5 462)"));
     }
 }
