@@ -38,7 +38,7 @@ public class AllureCli {
         @Option(type = OptionType.COMMAND, name = {"-o", "--outputPath"}, description = "Directory to output report files to (default is \"" + DEFAULT_OUTPUT_PATH + "\")")
         public String outputPath = DEFAULT_OUTPUT_PATH;
 
-        @Arguments(title = "inputPaths", description = "A list of input directories to be processed")
+        @Arguments(title = "inputPaths", required = true, description = "A list of input directories to be processed")
         public List<String> inputPaths;
 
         public void run() {
