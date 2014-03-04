@@ -31,6 +31,7 @@
         <module>allure-testng</module>
         <module>allure-report</module>
         <module>allure-e2e</module>
+        <module>allure-cli</module>
     </modules>
 
     <organization>
