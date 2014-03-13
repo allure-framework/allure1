@@ -1,14 +1,25 @@
 angular.module('allure.features', [])
 .controller('FeaturesCtrl', function($scope, $state, status, features) {
+    "use strict";
     function calculatePercents(item) {
         item.percents = status.all.map(function(status) {
             status = status.toLowerCase();
+            var value = item.statistic[status]/item.statistic.total*100 || 0;
             return {
                 count: item.statistic[status],
-                value: item.statistic[status]/item.statistic.total*100 || 0,
+                ratio: value,
+                value: value > 0 ? Math.max(value, 3) : 0,
                 status: status
-            }
+            };
         });
+        if(item.percents.reduce(function(total, current) {return total+current.value;}, 0) > 100) {
+            var highValue = item.percents.reduce(function(max, current) {
+                return max.value > current.value ? max : current;
+            }, {value:0});
+            highValue.value = item.percents.reduce(function(value, current) {
+                return current === highValue ? value : value - current.value;
+            }, 100);
+        }
     }
     function getChartData() {
         var unstable = $scope.unstableStories.length,
@@ -49,7 +60,7 @@ angular.module('allure.features', [])
     };
     $scope.expandFeature = function(feature, expanded) {
         if(!expanded && feature.stories.indexOf($scope.story) !== -1) {
-            $state.go('features')
+            $state.go('features');
         }
         feature.expanded = expanded;
     };
@@ -74,7 +85,7 @@ angular.module('allure.features', [])
     $scope.testcase = {};
     $scope.$watch('testcase.uid', function(testcaseUid) {
         if(testcaseUid) {
-            $state.go('features.story.testcase', {testcaseUid: testcaseUid})
+            $state.go('features.story.testcase', {testcaseUid: testcaseUid});
         }
     });
     $scope.$on('$stateChangeSuccess', function(event, state, params) {

@@ -57,16 +57,22 @@ describe('FeaturesCtrl', function () {
         scope = createController([
             new Feature('simple feature', [new Story(1, 'simple story', [0,1,0,3])]),
             new Feature('complex feature', [
-                new Story(2, 'success story', [0,0,0,5]),
-                new Story(3, 'bad story',     [3,1,1,0])
+                new Story(2, 'success story', [0,0,0,6]),
+                new Story(3, 'bad story',     [192,1,1,0])
             ])
         ]);
     });
 
     it('should convert statistics to percents in features', function() {
         expect(scope.features[1].percents.map(function(percent) {
+            return percent.ratio;
+        })).toEqual([96, 0.5, 0.5, 3]);
+    });
+
+    it('should limit min percent value in  statistics', function() {
+        expect(scope.features[1].percents.map(function(percent) {
             return percent.value;
-        })).toEqual([30, 10, 10, 50]);
+        })).toEqual([91, 3, 3, 3]);
     });
 
     it('should convert statistics to percents in stories', function() {
