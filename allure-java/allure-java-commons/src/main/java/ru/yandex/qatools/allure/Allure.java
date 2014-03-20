@@ -1,6 +1,8 @@
 package ru.yandex.qatools.allure;
 
 import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.events.clearstorage.ClearStepStorageEvent;
+import ru.yandex.qatools.allure.events.clearstorage.ClearTestStorageEvent;
 import ru.yandex.qatools.allure.model.*;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.storages.*;
@@ -82,6 +84,14 @@ public class Allure {
         testSuiteStorage.remove(suiteUid);
 
         writeTestSuiteResult(testSuite);
+    }
+
+    public void fire(ClearStepStorageEvent event) {
+        stepStorage.remove();
+    }
+
+    public void fire(ClearTestStorageEvent event) {
+        testCaseStorage.remove();
     }
 
     public StepStorage getStepStorage() {
