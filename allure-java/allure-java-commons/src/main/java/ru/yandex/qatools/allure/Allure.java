@@ -84,6 +84,14 @@ public class Allure {
         writeTestSuiteResult(testSuite);
     }
 
+    public void fire(ClearStepStorageEvent event) {
+        stepStorage.remove();
+    }
+
+    public void fire(ClearTestStorageEvent event) {
+        testCaseStorage.remove();
+    }
+
     public StepStorage getStepStorage() {
         return stepStorage;
     }

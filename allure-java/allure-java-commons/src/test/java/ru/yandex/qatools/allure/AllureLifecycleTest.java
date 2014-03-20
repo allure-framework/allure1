@@ -88,6 +88,54 @@ public class AllureLifecycleTest {
         assertNotEquals(anotherTestSuite, nextTestSuite);
     }
 
+    @Test
+    public void allureClearStorageTest(){
+        TestSuiteResult testSuite = fireTestSuiteStart();
+        TestCaseResult testCase = fireTestCaseStart();
+        assertThat(testSuite.getTestCases(), hasSize(1));
+        assertEquals(testSuite.getTestCases().get(0), testCase);
+
+        Step parentStep = fireStepStart();
+        Step nestedStep = fireStepStart();
+        fireStepFinished();
+
+        assertThat(parentStep.getSteps(), hasSize(1));
+        assertEquals(parentStep.getSteps().get(0), nestedStep);
+
+        fireStepFinished();
+        fireClearStepStorage();
+
+        assertThat(testCase.getSteps(), hasSize(0));
+        fireClearTestStorage();
+        TestCaseResult afterClearing = Allure.LIFECYCLE.getTestCaseStorage().get();
+        assertNotEquals(testCase, afterClearing);
+        checkTestCaseIsNew(afterClearing);
+
+
+    }
+
+    private void checkTestCaseIsNew(TestCaseResult testCaseResult) {
+        assertNull(testCaseResult.getName());
+        assertNull(testCaseResult.getTitle());
+        assertNull(testCaseResult.getDescription());
+        assertNull(testCaseResult.getFailure());
+        assertNull(testCaseResult.getStatus());
+        assertNull(testCaseResult.getSeverity());
+        assertTrue(testCaseResult.getSteps().isEmpty());
+        assertTrue(testCaseResult.getAttachments().isEmpty());
+        assertTrue(testCaseResult.getLabels().isEmpty());
+        assertTrue(testCaseResult.getParameters().isEmpty());
+        assertTrue(testCaseResult.getStart() == 0 && testCaseResult.getStop()==0);
+    }
+
+    private void fireClearTestStorage() {
+        Allure.LIFECYCLE.fire(new ClearTestStorageEvent());
+    }
+
+    private void fireClearStepStorage() {
+        Allure.LIFECYCLE.fire(new ClearStepStorageEvent());
+    }
+
     public TestSuiteResult fireTestSuiteStart() {
         Allure.LIFECYCLE.fire(new TestSuiteStartedEvent("some.uid", "some.suite.name"));
         TestSuiteResult testSuite = Allure.LIFECYCLE.getTestSuiteStorage().get("some.uid");
