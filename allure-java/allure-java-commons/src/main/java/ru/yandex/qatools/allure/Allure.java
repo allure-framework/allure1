@@ -1,8 +1,6 @@
 package ru.yandex.qatools.allure;
 
 import ru.yandex.qatools.allure.events.*;
-import ru.yandex.qatools.allure.events.clearstorage.ClearStepStorageEvent;
-import ru.yandex.qatools.allure.events.clearstorage.ClearTestStorageEvent;
 import ru.yandex.qatools.allure.model.*;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.storages.*;

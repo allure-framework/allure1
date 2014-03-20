@@ -5,8 +5,6 @@ import org.junit.rules.TemporaryFolder;
 import org.xml.sax.SAXException;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.*;
-import ru.yandex.qatools.allure.events.clearstorage.ClearStepStorageEvent;
-import ru.yandex.qatools.allure.events.clearstorage.ClearTestStorageEvent;
 import ru.yandex.qatools.allure.model.*;
 import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 

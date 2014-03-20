@@ -24,6 +24,9 @@
 
     <xsd:element name="make-attach-event" type="ns:abstract-make-attach-event"/>
 
+    <xsd:element name="clear-step-storage-event" type="ns:clear-step-storage-event"/>
+    <xsd:element name="clear-test-storage-event" type="ns:clear-test-storage-event"/>
+
     <xsd:complexType name="abstract-test-suite-started-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -164,6 +167,10 @@
             <xsd:element name="attach" type="ns:attach" nillable="true"/>
         </xsd:all>
     </xsd:complexType>
+
+    <xsd:complexType name="clear-step-storage-event" />
+
+    <xsd:complexType name="clear-test-storage-event" />
 
     <xsd:complexType name="labels">
         <xsd:sequence>
