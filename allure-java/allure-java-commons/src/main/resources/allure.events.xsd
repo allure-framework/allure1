@@ -20,7 +20,7 @@
     <xsd:element name="step-started-event" type="ns:abstract-step-started-event"/>
     <xsd:element name="step-failure-event" type="ns:abstract-step-failure-event"/>
     <xsd:element name="step-skipped-event" type="ns:abstract-step-skipped-event"/>
-    <xsd:element name="spep-finished-event" type="ns:abstract-step-finished-event"/>
+    <xsd:element name="step-finished-event" type="ns:abstract-step-finished-event"/>
 
     <xsd:element name="make-attach-event" type="ns:abstract-make-attach-event"/>
 
