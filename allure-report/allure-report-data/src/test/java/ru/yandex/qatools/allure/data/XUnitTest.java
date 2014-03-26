@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
+import ru.yandex.qatools.allure.model.Description;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import java.util.List;
@@ -16,7 +17,7 @@ import static org.junit.Assert.assertThat;
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
  *         Date: 12/10/13
  */
-public class XUnitStatisticsTest {
+public class XUnitTest {
 
     private static AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
 
@@ -32,6 +33,22 @@ public class XUnitStatisticsTest {
     public void initVariables() throws Exception {
         this.allureXUnitData = allureRule.getXUnitData();
         this.testSuiteResults = allureRule.getTestSuiteResults();
+    }
+
+    @Test
+    public void xUnitSuiteDescriptionTest() throws Exception {
+        int size = testSuiteResults.size();
+        for (int i = 0; i < size; i++) {
+            Description xUnitDescription = allureXUnitData.getTestSuites().get(i).getDescription();
+            Description resultsDescription = testSuiteResults.get(i).getDescription();
+            assertThat(xUnitDescription == null, equalTo(resultsDescription == null));
+            if (xUnitDescription != null && resultsDescription != null) {
+                assertThat(
+                        xUnitDescription.getValue(),
+                        equalTo(resultsDescription.getValue())
+                );
+            }
+        }
     }
 
     @Test
