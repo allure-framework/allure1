@@ -1,5 +1,5 @@
 <div class="b-island__title">Testcase</div>
-<div class="pane__header">
+<div class="pane__header title-status-{{testcase.status | lowercase}}">
     <h3>
         <div class="pane__header_controls pull-right">
             <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('testcase.expanded')" ng-click="go('testcase.expanded')"></span>
@@ -16,15 +16,6 @@
 </div>
 <div class="testcase__content" on-keynav="select($direction)">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
-    <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status !== 'PASSED'" ng-controller="angular.noop">
-        <span class="preformated-text" ng-click="expanded = !expanded">{{testcase.failure.message}}</span>
-        <a class="pull-right clickable" ng-hide="expanded" ng-click="expanded = true">Show stacktrace</a>
-        <a class="pull-right clickable" ng-show="expanded" ng-click="expanded = false">Hide stacktrace</a>
-        <div ng-show="expanded" class="testcase__stacktrace preformated-text">{{testcase.failure.stackTrace}}</div>
-    </div>
-    <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
-        The test has passed!
-    </div>
     <div class="environments">
         <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">
             <div class="pull-left environment_name text-muted">{{property.name}}:</div>
@@ -34,11 +25,23 @@
     <div class="step" ng-repeat="step in testcase.steps" ng-controller="StepCtrl">
         <ng-include src="'testcaseStep.tpl'"></ng-include>
     </div>
+    <div ng-include="'testcaseFailure.tpl'" ng-if="testcase.failure"></div>
+    <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
+        The test has passed!
+    </div>
     <div class="list-item clickable" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
         <ng-include src="'testcaseAttachment.tpl'"></ng-include>
     </div>
 </div>
 <br/>
+<script type="text/ng-template" id="testcaseFailure.tpl">
+    <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status !== 'PASSED'" ng-controller="angular.noop">
+        <span class="preformated-text" ng-click="testcaseExpanded = !testcaseExpanded">{{failure.message}}</span>
+        <a class="pull-right clickable" ng-hide="testcaseExpanded" ng-click="testcaseExpanded = true">Show stacktrace</a>
+        <a class="pull-right clickable" ng-show="testcaseExpanded" ng-click="testcaseExpanded = false">Hide stacktrace</a>
+        <div ng-show="testcaseExpanded" class="testcase__stacktrace preformated-text">{{failure.stackTrace}}</div>
+    </div>
+</script>
 <script type="text/ng-template" id="testcaseAttachment.tpl">
     <span class="glyphicon glyphicon-file" tooltip="{{attachment.type}}"></span>
     <span>{{attachment.title}}</span>
@@ -61,5 +64,6 @@
         <div class="list-item clickable" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
             <ng-include src="'testcaseAttachment.tpl'"></ng-include>
         </div>
+        <div ng-include="'testcaseFailure.tpl'" ng-if="step.failure"></div>
     </div>
 </script>

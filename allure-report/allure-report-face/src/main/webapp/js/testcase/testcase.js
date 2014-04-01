@@ -2,6 +2,9 @@
 angular.module('allure.testcase.controllers', [])
     .controller('TestcaseCtrl', function($scope, $state, testcase, treeUtils, Collection) {
         "use strict";
+        function isFailed(step) {
+            return ['FAILED', 'BROKEN', 'SKIPPED'].indexOf(step.status) !== -1;
+        }
         function getAllAttachments() {
             var attachments = [];
             treeUtils.walkAround($scope.testcase, 'steps', function(item) {
@@ -36,6 +39,18 @@ angular.module('allure.testcase.controllers', [])
         $scope.testcase = testcase;
         var baseState = $state.current.data.baseState,
             allAttachments = new Collection(getAllAttachments());
+        $scope.failure = testcase.failure;
+        delete testcase.failure;
+
+        function findFailedStep(step) {
+            var hasFailed = step.steps.some(findFailedStep);
+            if(isFailed(step) && !hasFailed) {
+                step.failure = $scope.failure;
+                return true;
+            }
+            return hasFailed;
+        }
+        findFailedStep($scope.testcase);
 
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.attachment;
@@ -47,7 +62,7 @@ angular.module('allure.testcase.controllers', [])
     .controller('StepCtrl', function($scope, $locale) {
         "use strict";
         function isFailed(step) {
-            return ['FAILED', 'BROKEN'].indexOf(step.status) !== -1;
+            return ['FAILED', 'BROKEN', 'SKIPPED'].indexOf(step.status) !== -1;
         }
         var stepPlural = {
                 one: ' sub-step',
@@ -77,7 +92,7 @@ angular.module('allure.testcase.controllers', [])
             return '('+result.join(', ')+')';
         };
         $scope.expanded = isFailed($scope.step);
-        $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0;
+        $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0 || $scope.step.failure;
     })
 
     .controller('AttachmentPreviewCtrl', function ($scope, $http, $state) {

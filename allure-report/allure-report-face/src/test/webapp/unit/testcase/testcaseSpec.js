@@ -158,6 +158,12 @@ describe('Testcase controllers', function() {
     describe('TestcaseCtrl', function() {
         var state, treeUtils,
             scope;
+
+        function Step(status, steps) {
+            this.status = status;
+            this.steps = steps || [];
+        }
+
         function createController(testcase) {
             var scope = $rootScope.$new();
             scope = scope.$new();
@@ -176,6 +182,23 @@ describe('Testcase controllers', function() {
             scope.$apply();
             return scope;
         }
+
+        it('should move failure to last failed step', function() {
+            var scope = createController({
+                failure: {error: 'test'},
+                status: 'FAILED',
+                steps: [
+                    new Step('PASSED'),
+                    new Step('FAILED', [
+                        new Step('PASSED'),
+                        new Step('FAILED')
+                    ])
+                ]
+            });
+            expect(scope.testcase.failure).toBeUndefined();
+            expect(scope.testcase.steps[1].steps[1].failure.error).toBe(scope.failure.error);
+        });
+
         describe('state checks', function() {
             beforeEach(function() {
                 scope = createController({steps: []});
@@ -213,13 +236,13 @@ describe('Testcase controllers', function() {
         });
 
         it('should navigate down', function() {
-            var scope = createController({attachments: [{source: 'log'}]});
+            var scope = createController({attachments: [{source: 'log'}], steps: []});
             scope.select(1);
             expect(collection.getNext).toHaveBeenCalled();
         });
 
         it('should navigate up', function() {
-            var scope = createController({attachments: [{source: 'log'}]});
+            var scope = createController({attachments: [{source: 'log'}], steps: []});
             scope.select(-1);
             expect(collection.getPrevious).toHaveBeenCalled();
         });
