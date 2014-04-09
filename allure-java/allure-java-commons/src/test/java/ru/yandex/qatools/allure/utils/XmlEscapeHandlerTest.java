@@ -11,6 +11,7 @@ import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
+import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamSource;
@@ -18,6 +19,10 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
+
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -58,14 +63,19 @@ public class XmlEscapeHandlerTest {
                 XmlEscapeHandler.getInstance()
         );
 
-        result = new TestSuiteResult().withName("name");
+        result = new TestSuiteResult().withName("name-and-кириллицей-also");
     }
 
     @Test
     public void dataWithInvalidCharacterTest() throws Exception {
-        result.setTitle(character);
+        result.setTitle("prefix " + character + " suffix");
         m.marshal(new ObjectFactory().createTestSuite(result), testSuiteResultFile);
         Validator validator = AllureModelUtils.getAllureSchemaValidator();
         validator.validate(new StreamSource(testSuiteResultFile));
+
+        TestSuiteResult testSuite = JAXB.unmarshal(testSuiteResultFile, TestSuiteResult.class);
+        assertThat(testSuite.getName(), is("name-and-кириллицей-also"));
+        assertTrue(testSuite.getTitle().startsWith("prefix "));
+        assertTrue(testSuite.getTitle().endsWith(" suffix"));
     }
 }
