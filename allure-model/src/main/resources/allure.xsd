@@ -8,7 +8,7 @@
 
     <xs:complexType name="test-suite-result">
         <xs:all>
-            <xs:element name="name" type="qa:name"/>
+            <xs:element name="name" type="xs:string"/>
             <xs:element name="title" type="xs:string" minOccurs="0"/>
             <xs:element name="description" type="qa:description" minOccurs="0"/>
             <xs:element name="test-cases" type="qa:test-cases-result" minOccurs="0"/>
@@ -26,7 +26,7 @@
 
     <xs:complexType name="test-case-result">
         <xs:all>
-            <xs:element name="name" type="qa:name"/>
+            <xs:element name="name" type="xs:string"/>
             <xs:element name="title" type="xs:string" minOccurs="0"/>
             <xs:element name="description" type="qa:description" minOccurs="0"/>
             <xs:element name="failure" type="qa:failure" minOccurs="0"/>
@@ -49,7 +49,7 @@
 
     <xs:complexType name="step">
         <xs:all>
-            <xs:element name="name" type="qa:name"/>
+            <xs:element name="name" type="xs:string"/>
             <xs:element name="title" type="xs:string" minOccurs="0"/>
             <xs:element name="attachments" type="qa:attachments" minOccurs="0"/>
             <xs:element name="steps" type="qa:steps" minOccurs="0"/>
@@ -73,7 +73,7 @@
     </xs:complexType>
 
     <xs:complexType name="label">
-        <xs:attribute name="name" type="qa:name" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="value" type="xs:string" use="required"/>
     </xs:complexType>
 
@@ -84,7 +84,7 @@
     </xs:complexType>
 
     <xs:complexType name="parameter">
-        <xs:attribute name="name" type="qa:name" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="value" type="xs:string" use="required"/>
         <xs:attribute name="kind" type="qa:parameter-kind" use="required"/>
     </xs:complexType>
@@ -153,12 +153,6 @@
             <xs:enumeration value="markdown"/>
             <xs:enumeration value="text"/>
             <xs:enumeration value="html"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="name">
-        <xs:restriction base="xs:string">
-            <xs:pattern value="([A-Za-z0-9_-]|\.){1,60}(\[.*\])?"/>
         </xs:restriction>
     </xs:simpleType>
 
