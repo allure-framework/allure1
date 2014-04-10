@@ -40,7 +40,6 @@ angular.module('allure.testcase.controllers', [])
         var baseState = $state.current.data.baseState,
             allAttachments = new Collection(getAllAttachments());
         $scope.failure = testcase.failure;
-        delete testcase.failure;
 
         function findFailedStep(step) {
             var hasFailed = step.steps.some(findFailedStep);

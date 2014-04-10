@@ -151,7 +151,7 @@ describe('Testcase controllers', function() {
                 });
             }
             createExpanedStateTests(true, 'home.testsuite.testcase.attachment');
-            createExpanedStateTests(false, 'home.testsuite.testcase.attachment.expanded')
+            createExpanedStateTests(false, 'home.testsuite.testcase.attachment.expanded');
         });
     });
 
@@ -195,7 +195,6 @@ describe('Testcase controllers', function() {
                     ])
                 ]
             });
-            expect(scope.testcase.failure).toBeUndefined();
             expect(scope.testcase.steps[1].steps[1].failure.error).toBe(scope.failure.error);
         });
 
