@@ -14,18 +14,19 @@ public final class AllureAspectUtils {
 
     public static String getTitle(String namePattern, String methodName, Object[] parameters) {
         String finalPattern = namePattern.replaceAll("\\{method\\}", methodName);
-        Object[] results = new Object[parameters.length];
-        for (int i = 0; i < parameters.length; i++){
+        int paramsCount = parameters == null ? 0 : parameters.length;
+        Object[] results = new Object[paramsCount];
+        for (int i = 0; i < paramsCount; i++) {
             results[i] = arrayToString(parameters[i]);
         }
         return MessageFormat.format(finalPattern, results);
     }
 
     public static Object arrayToString(Object obj) {
-        if (obj.getClass().isArray()) {
+        if (obj != null && obj.getClass().isArray()) {
             int len = Array.getLength(obj);
             String[] strings = new String[len];
-            for (int i = 0; i < len; i++){
+            for (int i = 0; i < len; i++) {
                 strings[i] = String.valueOf(Array.get(obj, i));
             }
             return Arrays.toString(strings);
