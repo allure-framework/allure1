@@ -16,6 +16,7 @@
 </div>
 <div class="testcase__content" on-keynav="select($direction)">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
+    <div ng-include="'testcaseFailure.tpl'"></div>
     <div class="environments">
         <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">
             <div class="pull-left environment_name text-muted">{{property.name}}:</div>
@@ -25,7 +26,6 @@
     <div class="step" ng-repeat="step in testcase.steps" ng-controller="StepCtrl">
         <ng-include src="'testcaseStep.tpl'"></ng-include>
     </div>
-    <div ng-include="'testcaseFailure.tpl'" ng-if="testcase.failure"></div>
     <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
         The test has passed!
     </div>
@@ -61,9 +61,9 @@
         <div ng-repeat="step in step.steps" ng-controller="StepCtrl">
             <ng-include src="'testcaseStep.tpl'"></ng-include>
         </div>
+        <div ng-include="'testcaseFailure.tpl'" ng-if="step.failure"></div>
         <div class="list-item clickable" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
             <ng-include src="'testcaseAttachment.tpl'"></ng-include>
         </div>
-        <div ng-include="'testcaseFailure.tpl'" ng-if="step.failure"></div>
     </div>
 </script>
