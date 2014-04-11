@@ -39,6 +39,6 @@ public class StepStorageTest {
     public void pollLastTest() throws Exception {
         Step step = stepStorage.getLast();
         assertEquals(step, stepStorage.pollLast());
-        assertThat(stepStorage.get(), hasSize(0));
+        assertThat(stepStorage.get(), hasSize(1));
     }
 }
