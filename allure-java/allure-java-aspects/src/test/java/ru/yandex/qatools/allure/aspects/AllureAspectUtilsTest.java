@@ -137,16 +137,17 @@ public class AllureAspectUtilsTest {
 
     @Test
     public void getTitleWithoutParams() {
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null);
-        assertThat("Название метода с null", title,
-                equalTo(NAME_PATTERN_WITH_TWO_ARGS));
+        String title = getTitle("{method}", METHOD_NAME, null);
+        Object[] args = {METHOD_NAME};
+        assertThat("Title without params test", title,
+                equalTo(MessageFormat.format("{0}", args)));
     }
 
     @Test
     public void getTitleWithNullParam() {
         String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, new Object[]{null});
         Object[] args = {METHOD_NAME, null};
-        assertThat("Название метода с null", title,
+        assertThat("Название метода с null-параметром", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
     }
 
@@ -155,7 +156,7 @@ public class AllureAspectUtilsTest {
         String[] firstArg = new String[]{null, "something"};
         String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, new Object[]{firstArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg)};
-        assertThat("Название метода с null", title,
+        assertThat("Название метода с массивом, в котором есть null", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
     }
 
@@ -164,7 +165,7 @@ public class AllureAspectUtilsTest {
         Object[] firstArg = new Object[]{new String[]{"a", "b"}, "something", null};
         String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, new Object[]{firstArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg)};
-        assertThat("Название метода с null", title,
+        assertThat("Название метода с массивом массивов, в котором есть null", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
     }
 }
