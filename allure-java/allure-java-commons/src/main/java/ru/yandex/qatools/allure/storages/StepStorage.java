@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.storages;
 
+import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
 
 import java.util.Deque;
@@ -13,7 +14,7 @@ public class StepStorage extends ThreadLocal<Deque<Step>> {
     @Override
     protected Deque<Step> initialValue() {
         Deque<Step> queue = new LinkedList<>();
-        queue.add(new Step());
+        queue.add(createRootStep());
         return queue;
     }
 
@@ -26,6 +27,19 @@ public class StepStorage extends ThreadLocal<Deque<Step>> {
     }
 
     public Step pollLast() {
-        return get().pollLast();
+        Deque<Step> queue = get();
+        Step last = queue.pollLast();
+        if (queue.isEmpty()) {
+            queue.add(createRootStep());
+        }
+        return last;
+    }
+
+    public Step createRootStep() {
+        return new Step()
+                .withName("Root step")
+                .withTitle("Allure step processing error: if you see this step something went wrong.")
+                .withStart(System.currentTimeMillis())
+                .withStatus(Status.BROKEN);
     }
 }
