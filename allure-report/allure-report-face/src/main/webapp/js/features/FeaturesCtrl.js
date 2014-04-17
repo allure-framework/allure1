@@ -1,3 +1,4 @@
+/*global angular*/
 angular.module('allure.features', [])
 .controller('FeaturesCtrl', function($scope, $state, status, features) {
     "use strict";

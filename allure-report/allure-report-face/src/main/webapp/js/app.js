@@ -7,6 +7,14 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
         $tooltipProvider.options({appendToBody:true});
     })
     .config(function($httpProvider) {
+        "use strict";
+        $httpProvider.interceptors.push(function($rootScope) {
+            return {
+                responseError: function(rejection) {
+                    $rootScope.error = rejection;
+                }
+            };
+        });
         $httpProvider.defaults.cache = true;
     })
     .config(function ($stateProvider, $urlRouterProvider, testcaseProvider) {
