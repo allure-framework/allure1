@@ -1,5 +1,9 @@
 # Allure
+
+### [Release Version](https://github.com/allure-framework/allure-core/releases/latest)
+
 ![image](https://raw.github.com/allure-framework/allure-core/master/allure-dashboard.png)
+
 A flexible, lightweight multi-language framework for writing **self-documenting tests**, with the ability to store attachments, such as screenshots, logs and so on.
 
 ## Who uses Allure
