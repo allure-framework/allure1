@@ -106,9 +106,9 @@ Name | Target | Parameters | Description
 --- | --- | --- | ---
 **@Step** | method | String value | Defines a step
 **@Attach** | method | String name, AttachmentType type, String suffix| Defines an attachment
-**@Title** | TestCase, TestSuite | String value() | Меняет имя теста.
-**@Description** | TestCase, TestSuite | String value() | Добавляет описание.
-**@Severity** | TestCase | SeverityType value() | С помощью этой аннотации изменить установить важность теста. Возможные значения - *TRIVIAL*, *MINOR*, *NORMAL*, *CRITICAL* и *BLOCKER*. По умолчанию -  *NORMAL*.
+**@Title** | test case, test suite | String value | Modifies test title
+**@Description** | test case, test suite | String value | Adds description to test case or test suite
+**@Severity** | test case | SeverityType type | Allows to set test importance. Possible values are *TRIVIAL*, *MINOR*, *NORMAL*, *CRITICAL* and *BLOCKER*. Default is *NORMAL*.
 #### Using Allure with JUnit
 In order to use Allure with JUnit you need to add some dependencies to your Maven project. First add Allure JUnit adapter itself:
 ```xml
