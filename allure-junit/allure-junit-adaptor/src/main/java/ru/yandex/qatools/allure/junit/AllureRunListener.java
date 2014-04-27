@@ -23,10 +23,20 @@ public class AllureRunListener extends RunListener {
     private final Map<String, String> suites = new HashMap<>();
 
     @Override
-    public void testStarted(Description description) {
-        String suiteUid = getSuiteUid(description);
+    public void testRunStarted(Description description) throws Exception {
+        if (description == null) {
+            return;  // If you don't pass junit provider - surefire (<= 2.17) pass null instead of description
+        }
 
-        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, description.getMethodName());
+        for (Description suite : description.getChildren()) {
+            getSuiteUid(suite);
+        }
+    }
+
+
+    @Override
+    public void testStarted(Description description) {
+        TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(description), description.getMethodName());
         AnnotationManager am = new AnnotationManager(description.getAnnotations());
 
         am.update(event);
@@ -41,7 +51,12 @@ public class AllureRunListener extends RunListener {
 
     @Override
     public void testFailure(Failure failure) {
-        getLifecycle().fire(new TestCaseFailureEvent().withThrowable(failure.getException()));
+        if (failure.getDescription().getChildren().isEmpty()) {
+            getLifecycle().fire(new TestCaseFailureEvent().withThrowable(failure.getException()));
+        } else { // Fail before any case starts
+            getLifecycle().fire(new TestSuiteFailureEvent(getSuiteUid(failure.getDescription()))
+                    .withThrowable(failure.getException()));
+        }
     }
 
     @Override

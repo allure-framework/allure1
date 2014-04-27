@@ -13,9 +13,11 @@
             <xs:element name="description" type="qa:description" minOccurs="0"/>
             <xs:element name="test-cases" type="qa:test-cases-result" minOccurs="0"/>
             <xs:element name="labels" type="qa:labels" minOccurs="0"/>
+            <xs:element name="failure" type="qa:failure" minOccurs="0"/>
         </xs:all>
         <xs:attribute name="start" type="xs:long" use="required"/>
         <xs:attribute name="stop" type="xs:long" use="required"/>
+        <xs:attribute name="status" type="qa:status" use="optional"/>
     </xs:complexType>
 
     <xs:complexType name="test-cases-result">
