@@ -15,5 +15,16 @@
 <div class="alert alert-bordered" ng-show="testsuite.description">
     <b>Description:</b><span class="preformated-text" text-cut="testsuite.description.value"></span>
 </div>
-<div status-switcher statuses="showStatuses" class="pull-right" statistic="testsuite.statistic"></div>
-<div testcases-list="testsuite.testCases" statuses="showStatuses" selected-uid="testcase.uid"></div>
+<div ng-hide="testsuite.status" status-switcher statuses="showStatuses" class="pull-right" statistic="testsuite.statistic"></div>
+<div ng-hide="testsuite.status" testcases-list="testsuite.testCases" statuses="showStatuses" selected-uid="testcase.uid"></div>
+
+<div ng-include="'testsuiteFailure.tpl'"></div>
+
+<script type="text/ng-template" id="testsuiteFailure.tpl">
+    <div class="testcase__status alert-status-{{testsuite.status | lowercase}}" ng-show="testsuite.status" ng-controller="angular.noop">
+        <span class="preformated-text" ng-click="testcaseExpanded = !testcaseExpanded">{{testsuite.failure.message}}</span>
+        <span class="pull-right btn btn-default btn-sm btn-status-{{testsuite.status|lowercase}}" ng-hide="testsuiteExpanded" ng-click="testsuiteExpanded = true">Show stacktrace</span>
+        <span class="pull-right btn btn-default btn-sm active btn-status-{{testsuite.status|lowercase}}" ng-show="testsuiteExpanded" ng-click="testsuiteExpanded = false">Hide stacktrace</span>
+        <div ng-show="testsuiteExpanded" class="testcase__stacktrace preformated-text">{{testsuite.failure.stackTrace}}</div>
+    </div>
+</script>
