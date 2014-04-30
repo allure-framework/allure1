@@ -4,6 +4,7 @@ import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.exceptions.AllureException;
+import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
@@ -70,6 +71,11 @@ public class AllureResultsUtils {
         } catch (JAXBException e) {
             throw new AllureException("Can't marshall test suite result", e);
         }
+    }
+
+    public static boolean deleteAttachment(Attachment attachment) {
+        File attachmentFile = new File(getResultsDirectory(), attachment.getSource());
+        return attachmentFile.exists() && attachmentFile.canWrite() && attachmentFile.delete();
     }
 
     public static String writeAttachment(Object attachment, AttachmentType type) {
