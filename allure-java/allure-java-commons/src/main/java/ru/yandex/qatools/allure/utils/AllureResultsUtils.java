@@ -14,6 +14,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateAttachmentFileName;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName;
@@ -79,35 +80,39 @@ public class AllureResultsUtils {
     }
 
     public static String writeAttachment(Object attachment, AttachmentType type) {
-        String attachmentFileName = generateAttachmentFileName(type);
-        File attachmentFile = new File(getResultsDirectory(), attachmentFileName);
-        writeAttachment(attachment, attachmentFile);
-        return attachmentFileName;
+        if (attachment instanceof String) {
+            return writeAttachment((String) attachment, type);
+        } else if (attachment instanceof File) {
+            return writeAttachment((File) attachment, type);
+        }
+        throw new AllureException("Attach-method should be return 'java.lang.String' or 'java.io.File'.");
     }
 
-    public static void writeAttachment(Object content, File attachmentFile) {
-        if (content instanceof String) {
-            writeAttachment((String) content, attachmentFile);
-        } else if (content instanceof File) {
-            copyAttachment((File) content, attachmentFile);
-        } else {
-            throw new AllureException("Attach-method should be return 'java.lang.String' or 'java.io.File'.");
+    public static String writeAttachment(String attachment, AttachmentType type) {
+        try {
+            String name = HashGenerator.sha256Hex(attachment);
+            String fileName = generateAttachmentFileName(name, type);
+            File file = new File(getResultsDirectory(), fileName);
+            if (!file.exists()) {
+                FileUtils.writeStringToFile(file, attachment, "UTF-8");
+            }
+            return fileName;
+        } catch (NoSuchAlgorithmException | IOException e) {
+            throw new AllureException("Error while saving attach", e);
         }
     }
 
-    public static void writeAttachment(String content, File attachmentFile) {
+    public static String writeAttachment(File attachment, AttachmentType type) {
         try {
-            FileUtils.writeStringToFile(attachmentFile, content, "UTF-8");
-        } catch (IOException e) {
-            throw new AllureException("Can't write to file " + attachmentFile.getAbsolutePath(), e);
-        }
-    }
-
-    public static void copyAttachment(File from, File to) {
-        try {
-            FileUtils.copyFile(from, to);
-        } catch (IOException e) {
-            throw new AllureException("Can't copy attach file", e);
+            String name = HashGenerator.sha256Hex(attachment);
+            String fileName = generateAttachmentFileName(name, type);
+            File file = new File(getResultsDirectory(), fileName);
+            if (!file.exists()) {
+                FileUtils.copyFile(attachment, file);
+            }
+            return fileName;
+        } catch (NoSuchAlgorithmException | IOException e) {
+            throw new AllureException("Error while saving attach", e);
         }
     }
 
