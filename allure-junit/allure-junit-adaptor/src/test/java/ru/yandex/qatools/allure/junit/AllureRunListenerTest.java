@@ -2,12 +2,14 @@ package ru.yandex.qatools.allure.junit;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.junit.testdata.ClassWithIgnoreAnnotatedMethod;
 import ru.yandex.qatools.allure.junit.testdata.TestData;
 
 import java.lang.annotation.Annotation;
@@ -15,8 +17,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
+import static org.junit.runner.Description.createTestDescription;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
+import static ru.yandex.qatools.allure.junit.testdata.ClassWithIgnoreAnnotatedMethod.METHOD_NAME_WITH_IGNORE;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -76,8 +80,9 @@ public class AllureRunListenerTest {
 
     @Test
     public void testIgnoredTest() throws Exception {
-        Description description = mock(Description.class);
-        when(description.getMethodName()).thenReturn("some.method.name");
+        Description description = spy(createTestDescription(this.getClass(), METHOD_NAME_WITH_IGNORE));
+        doReturn(ClassWithIgnoreAnnotatedMethod.class.getMethod(METHOD_NAME_WITH_IGNORE).getAnnotation(Ignore.class))
+                .when(description).getAnnotation(Ignore.class);
 
         doNothing().when(runListener).testStarted(description);
         doNothing().when(runListener).testFinished(description);
