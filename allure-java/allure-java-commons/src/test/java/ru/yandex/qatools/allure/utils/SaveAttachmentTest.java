@@ -1,8 +1,5 @@
 package ru.yandex.qatools.allure.utils;
 
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.NameFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -12,10 +9,12 @@ import ru.yandex.qatools.allure.model.AttachmentType;
 
 import java.io.File;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.*;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.deleteAttachment;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachment;
+import static ru.yandex.qatools.allure.utils.DirectoryMatcher.contains;
+import static ru.yandex.qatools.allure.utils.DirectoryMatcher.notContains;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -46,7 +45,7 @@ public class SaveAttachmentTest {
         String firstSource = first.getSource();
         assertNotNull(firstSource);
 
-        checkDirectoryContains(firstSource, true);
+        assertThat(resultsDirectory, contains(firstSource));
 
         Attachment second = save(STRING);
         assertNotNull(second);
@@ -55,26 +54,18 @@ public class SaveAttachmentTest {
 
         assertEquals(firstSource, secondSource);
 
-        checkDirectoryContains(secondSource, true);
+        assertThat(resultsDirectory, contains(secondSource));
 
         deleteAttachment(first);
 
-        checkDirectoryContains(firstSource, false);
-        checkDirectoryContains(secondSource, false);
+        assertThat(resultsDirectory, notContains(firstSource));
+        assertThat(resultsDirectory, notContains(secondSource));
 
         deleteAttachment(second);
 
-        checkDirectoryContains(firstSource, false);
-        checkDirectoryContains(secondSource, false);
-    }
-
-    public void checkDirectoryContains(String fileName, boolean contains) {
-        int size = FileUtils.listFiles(
-                resultsDirectory,
-                new NameFileFilter(fileName),
-                TrueFileFilter.INSTANCE
-        ).size();
-        assertEquals(size, contains ? 1 : 0);
+        assertThat(resultsDirectory, notContains(firstSource));
+        assertThat(resultsDirectory, notContains(secondSource));
+        assertThat(2, is(2));
     }
 
     public Attachment save(File file) {
@@ -92,4 +83,6 @@ public class SaveAttachmentTest {
     public File getResourceAsFile(String resourcePath) throws Exception {
         return new File(getClass().getClassLoader().getResource(resourcePath).toURI());
     }
+
+
 }
