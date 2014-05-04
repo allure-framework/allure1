@@ -1,6 +1,6 @@
 # Allure
 
-### [Release Version](https://github.com/allure-framework/allure-core/releases/latest)
+[<img src="http://img.shields.io/github/release/allure-framework/allure-core.png?style=flat">](https://github.com/allure-framework/allure-core/releases/latest)
 
 ![image](https://raw.github.com/allure-framework/allure-core/master/allure-dashboard.png)
 
