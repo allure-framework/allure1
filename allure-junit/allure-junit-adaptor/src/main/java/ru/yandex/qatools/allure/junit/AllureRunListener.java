@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.junit;
 
+import org.junit.Ignore;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -10,6 +11,8 @@ import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -57,7 +60,12 @@ public class AllureRunListener extends RunListener {
         }
 
         testStarted(description);
-        getLifecycle().fire(new TestCaseSkippedEvent().withThrowable(new Exception("Test ignored.")));
+        getLifecycle().fire(new TestCaseSkippedEvent()
+                .withThrowable(new Exception(
+                        defaultIfEmpty(
+                                description.getAnnotation(Ignore.class).value(),
+                                "Test ignored (without reason)!"
+                        ))));
         testFinished(description);
     }
 
