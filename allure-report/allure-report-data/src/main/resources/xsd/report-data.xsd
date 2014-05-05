@@ -66,6 +66,8 @@
             <xsd:element name="statistic" type="alr:statistic"/>
             <xsd:element name="description" type="alr:description" minOccurs="0"/>
             <xsd:element name="test-cases" type="alr:allure-test-cases-info" minOccurs="0"/>
+            <xsd:element name="failure" type="alr:failure" minOccurs="0"/>
+            <xsd:element name="status" type="alr:status"/>
         </xsd:all>
     </xsd:complexType>
 

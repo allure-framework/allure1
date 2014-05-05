@@ -33,7 +33,7 @@
                 {{statistic.total}}
             </td>
         </tr>
-        <tr ng-repeat="testsuite in list.items" class="testsuite-row clickable" ng-class="{'active':testsuite == $parent.testsuite}" ng-click="setTestsuite(testsuite.uid)">
+        <tr ng-repeat="testsuite in list.items" class="testsuite-row clickable alert-status-{{testsuite.status|lowercase}}"  ng-class="{'active':testsuite == $parent.testsuite}" ng-click="setTestsuite(testsuite.uid)">
             <td allure-table-col="{heading:'Title', predicate: 'title', flex: 6}" class="line-ellipsis" title="{{testsuite.title}}">
                 {{testsuite.title}}
             </td>

@@ -9,6 +9,7 @@
 
     <xsd:element name="test-suite-started-event" type="ns:abstract-test-suite-started-event"/>
     <xsd:element name="test-suite-finished-event" type="ns:abstract-test-suite-finished-event"/>
+    <xsd:element name="test-suite-failure-event" type="ns:abstract-test-suite-failure-event"/>
 
     <xsd:element name="test-case-started-event" type="ns:abstract-test-case-started-event"/>
     <xsd:element name="test-case-failure-event" type="ns:abstract-test-case-failure-event"/>
@@ -52,6 +53,20 @@
             <xsd:element name="uid" type="xsd:string" nillable="false"/>
         </xsd:all>
     </xsd:complexType>
+
+
+    <xsd:complexType name="abstract-test-suite-failure-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.TestSuiteEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="uid" type="xsd:string" nillable="false"/>
+            <xsd:element name="throwable" type="ns:throwable" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
 
     <xsd:complexType name="abstract-test-case-started-event" abstract="true">
         <xsd:annotation>

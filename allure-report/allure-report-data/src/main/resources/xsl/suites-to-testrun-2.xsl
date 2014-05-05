@@ -23,6 +23,7 @@
             <xsl:call-template name="add-title-node"/>
             <xsl:call-template name="add-time-node"/>
             <xsl:call-template name="add-statistic-node"/>
+            <xsl:call-template name="add-status-node"/>
 
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>

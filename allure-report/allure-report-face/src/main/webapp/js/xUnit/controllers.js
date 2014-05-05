@@ -49,7 +49,7 @@ angular.module('allure.xUnit.controllers', [])
         'use strict';
         var store = new WatchingStore('testSuitesSettings');
         $scope.statusFilter = function(testsuite) {
-            var visible = false;
+            var visible = $scope.showStatuses[testsuite.status];
             angular.forEach(testsuite.statistic, function(value, status) {
                 visible = visible || ($scope.showStatuses[status.toUpperCase()] && value > 0);
             });

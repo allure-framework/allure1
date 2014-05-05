@@ -7,6 +7,8 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.JUnitCore;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
+import ru.yandex.qatools.allure.junit.testdata.AssertionErrorInBeforeClass;
+import ru.yandex.qatools.allure.junit.testdata.ExceptionInBeforeClass;
 import ru.yandex.qatools.allure.junit.testdata.SimpleTestClass;
 import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
@@ -14,7 +16,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
 
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
 
@@ -36,12 +38,12 @@ public class AllureListenerXmlValidationTest {
 
         JUnitCore core = new JUnitCore();
         core.addListener(new AllureRunListener());
-        core.run(SimpleTestClass.class);
+        core.run(SimpleTestClass.class, ExceptionInBeforeClass.class, AssertionErrorInBeforeClass.class);
     }
 
     @Test
     public void suiteFilesCountTest() throws Exception {
-        assertThat(listTestSuiteFiles(resultsDirectory).size(), is(1));
+        assertThat("One of *suites.xml files can't be found", listTestSuiteFiles(resultsDirectory), hasSize(3));
     }
 
     @Test

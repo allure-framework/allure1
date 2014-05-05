@@ -17,7 +17,9 @@ describe('xUnit controllers', function () {
             scope.testsuites = [
                 {uid: 0, statistic: {passed: 0, failed: 1, broken: 0, skipped: 0}},
                 {uid: 1, statistic: {passed: 3, failed: 0, broken: 0, skipped: 0}},
-                {uid: 2, statistic: {passed: 2, failed: 0, broken: 2, skipped: 1}}
+                {uid: 2, statistic: {passed: 2, failed: 0, broken: 2, skipped: 1}},
+                {uid: 3, status: 'BROKEN', statistic: {passed: 0, failed: 0, broken: 0, skipped: 0}},
+                {uid: 4, status: 'FAILED', statistic: {passed: 0, failed: 0, broken: 0, skipped: 0}}
             ];
             $controller('TestSuitesCtrl', {
                 $scope: scope,
@@ -44,9 +46,23 @@ describe('xUnit controllers', function () {
 
         it('should filter testsuites by status', function() {
             var scope = createController();
-            expect(scope.testsuites.filter(scope.statusFilter).length).toBe(2);
+            expect(scope.testsuites.filter(scope.statusFilter).length).toBe(4);
             scope.showStatuses.PASSED = true;
+            expect(scope.testsuites.filter(scope.statusFilter).length).toBe(5);
+        });
+
+
+        it('should hide broken suites when broken is false', function() {
+            var scope = createController();
+            scope.showStatuses.BROKEN = false;
             expect(scope.testsuites.filter(scope.statusFilter).length).toBe(3);
+        });
+
+        it('should hide broken and failed suites when broken and failed is false', function() {
+            var scope = createController();
+            scope.showStatuses.FAILED = false;
+            scope.showStatuses.BROKEN = false;
+            expect(scope.testsuites.filter(scope.statusFilter).length).toBe(1);
         });
 
         it('should bind order and filter', function() {
