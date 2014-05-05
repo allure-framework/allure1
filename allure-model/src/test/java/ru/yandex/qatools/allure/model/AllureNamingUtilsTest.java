@@ -39,15 +39,4 @@ public class AllureNamingUtilsTest {
         when(directory.listFiles(any(FileFilter.class))).thenReturn(testSuiteFiles);
         assertThat(listTestSuiteFiles(directory).size(), equalTo(testSuiteFiles.length));
     }
-
-    @Test
-    public void generatedAttachmentsNamesMustBeFoundByListAttachmentsMethod() {
-        File[] attachmentsFiles = new File[]{
-                new File(generateAttachmentFileName(AttachmentType.HTML)),
-                new File(generateAttachmentFileName(AttachmentType.OTHER))
-        };
-
-        when(directory.listFiles(any(FileFilter.class))).thenReturn(attachmentsFiles);
-        assertThat(listAttachmentFiles(directory).size(), equalTo(attachmentsFiles.length));
-    }
 }

@@ -49,10 +49,6 @@ public final class AllureNamingUtils {
                 type.toString().toLowerCase());
     }
 
-    public static String generateAttachmentFileName(AttachmentType type) {
-        return generateAttachmentFileName(UUID.randomUUID().toString(), type);
-    }
-
     public static Collection<File> listAttachmentFiles(File... directories) {
         AllureResultsConfig config = AllureResultsConfig.newInstance();
         return listFiles(directories,

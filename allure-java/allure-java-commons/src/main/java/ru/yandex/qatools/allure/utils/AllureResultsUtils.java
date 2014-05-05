@@ -4,6 +4,7 @@ import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import ru.yandex.qatools.allure.exceptions.AllureException;
+import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
@@ -14,6 +15,9 @@ import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.IOException;
 
+import static com.google.common.hash.Hashing.sha256;
+import static com.google.common.io.Files.hash;
+import static org.apache.commons.io.Charsets.UTF_8;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateAttachmentFileName;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName;
 
@@ -72,36 +76,45 @@ public class AllureResultsUtils {
         }
     }
 
+    public static boolean deleteAttachment(Attachment attachment) {
+        File attachmentFile = new File(getResultsDirectory(), attachment.getSource());
+        return attachmentFile.exists() && attachmentFile.canWrite() && attachmentFile.delete();
+    }
+
     public static String writeAttachment(Object attachment, AttachmentType type) {
-        String attachmentFileName = generateAttachmentFileName(type);
-        File attachmentFile = new File(getResultsDirectory(), attachmentFileName);
-        writeAttachment(attachment, attachmentFile);
-        return attachmentFileName;
+        if (attachment instanceof String) {
+            return writeAttachment((String) attachment, type);
+        } else if (attachment instanceof File) {
+            return writeAttachment((File) attachment, type);
+        }
+        throw new AllureException("Attach-method should be return 'java.lang.String' or 'java.io.File'.");
     }
 
-    public static void writeAttachment(Object content, File attachmentFile) {
-        if (content instanceof String) {
-            writeAttachment((String) content, attachmentFile);
-        } else if (content instanceof File) {
-            copyAttachment((File) content, attachmentFile);
-        } else {
-            throw new AllureException("Attach-method should be return 'java.lang.String' or 'java.io.File'.");
+    public static String writeAttachment(String attachment, AttachmentType type) {
+        try {
+            String name = sha256().hashString(attachment, UTF_8).toString();
+            String fileName = generateAttachmentFileName(name, type);
+            File file = new File(getResultsDirectory(), fileName);
+            if (!file.exists()) {
+                FileUtils.writeStringToFile(file, attachment, "UTF-8");
+            }
+            return fileName;
+        } catch (IOException e) {
+            throw new AllureException("Error while saving attach", e);
         }
     }
 
-    public static void writeAttachment(String content, File attachmentFile) {
+    public static String writeAttachment(File attachment, AttachmentType type) {
         try {
-            FileUtils.writeStringToFile(attachmentFile, content, "UTF-8");
+            String name = hash(attachment, sha256()).toString();
+            String fileName = generateAttachmentFileName(name, type);
+            File file = new File(getResultsDirectory(), fileName);
+            if (!file.exists()) {
+                FileUtils.copyFile(attachment, file);
+            }
+            return fileName;
         } catch (IOException e) {
-            throw new AllureException("Can't write to file " + attachmentFile.getAbsolutePath(), e);
-        }
-    }
-
-    public static void copyAttachment(File from, File to) {
-        try {
-            FileUtils.copyFile(from, to);
-        } catch (IOException e) {
-            throw new AllureException("Can't copy attach file", e);
+            throw new AllureException("Error while saving attach", e);
         }
     }
 
