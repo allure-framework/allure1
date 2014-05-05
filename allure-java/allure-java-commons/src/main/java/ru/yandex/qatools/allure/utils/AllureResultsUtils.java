@@ -14,8 +14,10 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import java.io.File;
 import java.io.IOException;
-import java.security.NoSuchAlgorithmException;
 
+import static com.google.common.hash.Hashing.sha256;
+import static com.google.common.io.Files.hash;
+import static org.apache.commons.io.Charsets.UTF_8;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateAttachmentFileName;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName;
 
@@ -90,28 +92,28 @@ public class AllureResultsUtils {
 
     public static String writeAttachment(String attachment, AttachmentType type) {
         try {
-            String name = HashGenerator.sha256Hex(attachment);
+            String name = sha256().hashString(attachment, UTF_8).toString();
             String fileName = generateAttachmentFileName(name, type);
             File file = new File(getResultsDirectory(), fileName);
             if (!file.exists()) {
                 FileUtils.writeStringToFile(file, attachment, "UTF-8");
             }
             return fileName;
-        } catch (NoSuchAlgorithmException | IOException e) {
+        } catch (IOException e) {
             throw new AllureException("Error while saving attach", e);
         }
     }
 
     public static String writeAttachment(File attachment, AttachmentType type) {
         try {
-            String name = HashGenerator.sha256Hex(attachment);
+            String name = hash(attachment, sha256()).toString();
             String fileName = generateAttachmentFileName(name, type);
             File file = new File(getResultsDirectory(), fileName);
             if (!file.exists()) {
                 FileUtils.copyFile(attachment, file);
             }
             return fileName;
-        } catch (NoSuchAlgorithmException | IOException e) {
+        } catch (IOException e) {
             throw new AllureException("Error while saving attach", e);
         }
     }

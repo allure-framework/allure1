@@ -9,7 +9,6 @@ import ru.yandex.qatools.allure.model.AttachmentType;
 
 import java.io.File;
 
-import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.deleteAttachment;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachment;
@@ -65,7 +64,6 @@ public class SaveAttachmentTest {
 
         assertThat(resultsDirectory, notContains(firstSource));
         assertThat(resultsDirectory, notContains(secondSource));
-        assertThat(2, is(2));
     }
 
     public Attachment save(File file) {

@@ -47,7 +47,7 @@ public class RemoveAttachmentsEventTest {
     }
 
     @Test
-    public void removeAttachmentsByDefaultTest() throws Exception {
+    public void shouldNotDeleteAnyByDefault() throws Exception {
         String[] files = resultsDirectory.list();
 
         new RemoveAttachmentsEvent("a^").process(root);

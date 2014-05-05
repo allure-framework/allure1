@@ -3,9 +3,9 @@ package ru.yandex.qatools.allure.utils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 
 import java.io.File;
 
@@ -16,7 +16,7 @@ import static org.hamcrest.CoreMatchers.not;
  *         Date: 04.05.14
  */
 public class DirectoryMatcher {
-    public static class Contains<T> extends BaseMatcher<T> {
+    public static class Contains extends TypeSafeMatcher<File> {
 
         private String fileName;
 
@@ -25,18 +25,12 @@ public class DirectoryMatcher {
         }
 
         @Override
-        public boolean matches(Object item) {
-            if (!(item instanceof File)) {
-                return false;
-            }
-
-            File dir = (File) item;
-            return dir.isDirectory() && !FileUtils.listFiles(
-                    dir,
+        protected boolean matchesSafely(File directory) {
+            return directory.isDirectory() && !FileUtils.listFiles(
+                    directory,
                     new NameFileFilter(fileName),
                     TrueFileFilter.INSTANCE
             ).isEmpty();
-
         }
 
         @Override
@@ -46,7 +40,7 @@ public class DirectoryMatcher {
     }
 
     public static Matcher contains(String fileName) {
-        return new Contains<>(fileName);
+        return new Contains(fileName);
     }
 
     public static Matcher notContains(String fileName) {
