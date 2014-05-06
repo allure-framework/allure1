@@ -30,7 +30,6 @@
         <module>allure-junit</module>
         <module>allure-testng</module>
         <module>allure-report</module>
-        <module>allure-e2e</module>
         <module>allure-cli</module>
     </modules>
 
@@ -202,7 +201,7 @@
             <dependency>
                 <groupId>ru.yandex.qatools.properties</groupId>
                 <artifactId>properties-loader</artifactId>
-                <version>1.4</version>
+                <version>1.5</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -243,5 +242,17 @@
 
         </dependencies>
     </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>integration-tests</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>allure-e2e</module>
+            </modules>
+        </profile>
+    </profiles>
 
 </project>
