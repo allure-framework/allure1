@@ -1,6 +1,9 @@
 package ru.yandex.qatools.allure;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
+import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.xml.sax.SAXException;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
@@ -57,10 +60,10 @@ public class AllureLifecycleTest {
         Step nestedStep = fireStepStart();
         Attachment secondAttach = fireMakeAttach();
 
-        assertNotEquals(firstAttach, secondAttach);
+        assertFalse(firstAttach == secondAttach);
 
         assertThat(nestedStep.getAttachments(), hasSize(1));
-        assertEquals(nestedStep.getAttachments().get(0), secondAttach);
+        assertTrue(nestedStep.getAttachments().get(0) == secondAttach);
 
         fireStepFinished();
 
@@ -89,7 +92,7 @@ public class AllureLifecycleTest {
     }
 
     @Test
-    public void allureClearStorageTest(){
+    public void allureClearStorageTest() {
         TestSuiteResult testSuite = fireTestSuiteStart();
         TestCaseResult testCase = fireTestCaseStart();
         assertThat(testSuite.getTestCases(), hasSize(1));
@@ -100,7 +103,7 @@ public class AllureLifecycleTest {
         fireStepFinished();
 
         assertThat(parentStep.getSteps(), hasSize(1));
-        assertEquals(parentStep.getSteps().get(0), nestedStep);
+        assertTrue(parentStep.getSteps().get(0) == nestedStep);
 
         fireStepFinished();
         fireClearStepStorage();
@@ -108,9 +111,8 @@ public class AllureLifecycleTest {
         assertThat(testCase.getSteps(), hasSize(0));
         fireClearTestStorage();
         TestCaseResult afterClearing = Allure.LIFECYCLE.getTestCaseStorage().get();
-        assertNotEquals(testCase, afterClearing);
+        assertFalse(testCase == afterClearing);
         checkTestCaseIsNew(afterClearing);
-
 
     }
 
@@ -120,12 +122,11 @@ public class AllureLifecycleTest {
         assertNull(testCaseResult.getDescription());
         assertNull(testCaseResult.getFailure());
         assertNull(testCaseResult.getStatus());
-        assertNull(testCaseResult.getSeverity());
         assertTrue(testCaseResult.getSteps().isEmpty());
         assertTrue(testCaseResult.getAttachments().isEmpty());
         assertTrue(testCaseResult.getLabels().isEmpty());
         assertTrue(testCaseResult.getParameters().isEmpty());
-        assertTrue(testCaseResult.getStart() == 0 && testCaseResult.getStop()==0);
+        assertTrue(testCaseResult.getStart() == 0 && testCaseResult.getStop() == 0);
     }
 
     private void fireClearTestStorage() {

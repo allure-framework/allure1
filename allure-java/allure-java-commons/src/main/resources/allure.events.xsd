@@ -64,7 +64,6 @@
             <xsd:element name="name" type="xsd:string" nillable="false"/>
             <xsd:element name="title" type="xsd:string" nillable="true"/>
             <xsd:element name="description" type="ns:description" nillable="true"/>
-            <xsd:element name="severity" type="ns:severity" nillable="false"/>
             <xsd:element name="labels" type="ns:labels" minOccurs="0" nillable="false"/>
         </xsd:all>
     </xsd:complexType>

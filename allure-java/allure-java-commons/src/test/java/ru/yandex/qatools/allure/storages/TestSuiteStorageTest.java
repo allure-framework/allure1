@@ -4,8 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -23,15 +22,15 @@ public class TestSuiteStorageTest {
     @Test
     public void getTest() throws Exception {
         TestSuiteResult testSuite = testSuiteStorage.get("a");
-        assertEquals(testSuite, testSuiteStorage.get("a"));
-        assertNotEquals(testSuite, testSuiteStorage.get("b"));
+        assertTrue(testSuite == testSuiteStorage.get("a"));
+        assertFalse(testSuite == testSuiteStorage.get("b"));
     }
 
     @Test
     public void removeTest() throws Exception {
         TestSuiteResult testSuite = testSuiteStorage.get("a");
-        assertEquals(testSuite, testSuiteStorage.get("a"));
+        assertTrue(testSuite == testSuiteStorage.get("a"));
         testSuiteStorage.remove("a");
-        assertNotEquals(testSuite, testSuiteStorage.get("a"));
+        assertFalse(testSuite == testSuiteStorage.get("a"));
     }
 }

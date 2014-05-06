@@ -12,6 +12,10 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createSeverityLabel;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createStoryLabel;
+
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 13.12.13
@@ -64,7 +68,7 @@ public class AnnotationManager {
         }
 
         if (isSeverityAnnotationPresent()) {
-            event.setSeverity(getSeverity());
+            event.getLabels().add(createSeverityLabel(getSeverity()));
         }
     }
 
@@ -106,7 +110,7 @@ public class AnnotationManager {
     public List<Label> getStoryLabels() {
         List<Label> result = new ArrayList<>();
         for (String story : getAnnotation(Stories.class).value()) {
-            result.add(new Label().withName("story").withValue(story));
+            result.add(createStoryLabel(story));
         }
         return result;
     }
@@ -114,7 +118,7 @@ public class AnnotationManager {
     public List<Label> getFeatureLabels() {
         List<Label> result = new ArrayList<>();
         for (String feature : getAnnotation(Features.class).value()) {
-            result.add(new Label().withName("feature").withValue(feature));
+            result.add(createFeatureLabel(feature));
         }
         return result;
     }
