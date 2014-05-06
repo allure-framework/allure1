@@ -36,6 +36,7 @@
                         <arg>-Xxew</arg>
                         <arg>-Xxew:instantiate lazy</arg>
                         <arg>-Xxew:delete</arg>
+                        <arg>-Xequals</arg>
                         <arg>-Xfluent-api</arg>
                     </args>
                     <plugins>
@@ -49,6 +50,11 @@
                             <artifactId>jaxb-fluent-api</artifactId>
                             <version>2.1.8</version>
                         </plugin>
+                        <plugin>
+                            <groupId>org.jvnet.jaxb2_commons</groupId>
+                            <artifactId>jaxb2-basics</artifactId>
+                            <version>0.6.5</version>
+                        </plugin>
                     </plugins>
                 </configuration>
             </plugin>
@@ -56,6 +62,12 @@
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+            <version>0.6.5</version>
+        </dependency>
+
         <dependency>
             <groupId>ru.yandex.qatools.properties</groupId>
             <artifactId>properties-loader</artifactId>

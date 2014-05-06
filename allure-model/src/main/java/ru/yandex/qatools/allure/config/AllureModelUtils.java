@@ -1,6 +1,9 @@
 package ru.yandex.qatools.allure.config;
 
 import org.xml.sax.SAXException;
+import ru.yandex.qatools.allure.model.Label;
+import ru.yandex.qatools.allure.model.LabelName;
+import ru.yandex.qatools.allure.model.SeverityLevel;
 
 import javax.xml.XMLConstants;
 import javax.xml.transform.stream.StreamSource;
@@ -24,5 +27,21 @@ public final class AllureModelUtils {
                 .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
         Schema schema = schemaFactory.newSchema(new StreamSource(schemaFile));
         return schema.newValidator();
+    }
+
+    public static Label createFeatureLabel(String feature) {
+        return createLabel(LabelName.FEATURE, feature);
+    }
+
+    public static Label createStoryLabel(String story) {
+        return createLabel(LabelName.STORY, story);
+    }
+
+    public static Label createSeverityLabel(SeverityLevel level) {
+        return createLabel(LabelName.SEVERITY, level.value());
+    }
+
+    public static Label createLabel(LabelName name, String value) {
+        return new Label().withName(name.value()).withValue(value);
     }
 }

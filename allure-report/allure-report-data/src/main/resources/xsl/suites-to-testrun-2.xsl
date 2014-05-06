@@ -126,9 +126,16 @@
     </xsl:template>
 
     <xsl:template name="add-severity-node">
-        <xsl:element name="severity">
-            <xsl:value-of select="@severity"/>
-        </xsl:element>
+        <xsl:choose>
+            <xsl:when test="count(labels/label[@name='severity']) = 0">
+                <xsl:element name="severity">normal</xsl:element>
+            </xsl:when>
+            <xsl:when test="count(labels/label[@name='severity']) > 0">
+                <xsl:element name="severity">
+                    <xsl:value-of select="labels/label[@name='severity']/@value"/>
+                </xsl:element>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
 
     <xsl:template name="add-status-node">
@@ -185,7 +192,7 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="@start | @stop | @status | @severity">
+    <xsl:template match="@start | @stop | @status">
     </xsl:template>
 
     <xsl:template match="@*|node()">

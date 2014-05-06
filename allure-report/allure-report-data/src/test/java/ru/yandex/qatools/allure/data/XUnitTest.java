@@ -4,14 +4,14 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
-import ru.yandex.qatools.allure.model.Description;
-import ru.yandex.qatools.allure.model.TestSuiteResult;
+import ru.yandex.qatools.allure.model.*;
 
 import java.util.List;
+import java.util.Map;
 
 import static ch.lambdaj.Lambda.*;
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
@@ -49,6 +49,45 @@ public class XUnitTest {
                 );
             }
         }
+    }
+
+    @Test
+    public void xUnitSeverityNotNullTest() {
+        for (AllureTestSuite testSuite : allureXUnitData.getTestSuites()) {
+            for (AllureTestCaseInfo testCase : testSuite.getTestCases()) {
+                assertNotNull(testCase.getSeverity());
+            }
+        }
+    }
+
+    @Test
+    public void xUnitSeverityTest() {
+        List<TestCaseResult> testCases = flatten(extract(testSuiteResults, on(TestSuiteResult.class).getTestCases()));
+        List<Label> labels = flatten(extract(testCases, on(TestCaseResult.class).getLabels()));
+        List<Label> severityLabels = filter(
+                having(on(Label.class).getName(), equalTo(LabelName.SEVERITY.value())),
+                labels
+        );
+        Map<String, Integer> counts = count(severityLabels, on(Label.class).getValue());
+
+        checkSeverity(counts, SeverityLevel.BLOCKER);
+        checkSeverity(counts, SeverityLevel.MINOR);
+        checkSeverity(counts, SeverityLevel.CRITICAL);
+        checkSeverity(counts, SeverityLevel.TRIVIAL);
+    }
+
+    public void checkSeverity( Map<String, Integer> counts, SeverityLevel level) {
+        int modify = 0;
+        for (AllureTestSuite testSuite : allureXUnitData.getTestSuites()) {
+            for (AllureTestCaseInfo testCase : testSuite.getTestCases()) {
+                if (testCase.getSeverity().equals(level)) {
+                    modify++;
+                }
+            }
+        }
+
+        int origin = counts.get(level.value()) == null ? 0 : counts.get(level.value());
+        assertEquals(origin, modify);
     }
 
     @Test

@@ -5,9 +5,7 @@ import org.junit.Test;
 import ru.yandex.qatools.allure.model.Step;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -25,20 +23,20 @@ public class StepStorageTest {
     public void getLastTest() throws Exception {
         Step step = stepStorage.getLast();
         assertNotNull(step);
-        assertEquals(step, stepStorage.getLast());
+        assertTrue(step == stepStorage.getLast());
     }
 
     @Test
     public void putTest() throws Exception {
         Step step = new Step();
         stepStorage.put(step);
-        assertEquals(step, stepStorage.getLast());
+        assertTrue(step == stepStorage.getLast());
     }
 
     @Test
     public void pollLastTest() throws Exception {
         Step step = stepStorage.getLast();
-        assertEquals(step, stepStorage.pollLast());
+        assertTrue(step == stepStorage.pollLast());
         assertThat(stepStorage.get(), hasSize(1));
     }
 }

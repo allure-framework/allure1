@@ -5,10 +5,7 @@ import org.junit.Test;
 import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
-import ru.yandex.qatools.allure.model.Description;
-import ru.yandex.qatools.allure.model.DescriptionType;
-import ru.yandex.qatools.allure.model.Label;
-import ru.yandex.qatools.allure.model.SeverityLevel;
+import ru.yandex.qatools.allure.model.*;
 import ru.yandex.qatools.allure.utils.testdata.SimpleClass;
 
 import java.lang.annotation.Annotation;
@@ -20,9 +17,8 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.*;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -70,18 +66,14 @@ public class AnnotationManagerTest {
     public void testStoryLabelsGetter() throws Exception {
         List<Label> labels = annotationManager.getStoryLabels();
         assertThat(labels, hasSize(1));
-        Label label = labels.get(0);
-        assertThat(label.getName(), is("story"));
-        assertThat(label.getValue(), is("some.story"));
+        assertEquals(labels.get(0), createLabel(LabelName.STORY, "some.story"));
     }
 
     @Test
     public void testFeaturesLabelsGetter() throws Exception {
         List<Label> labels = annotationManager.getFeatureLabels();
         assertThat(labels, hasSize(1));
-        Label label = labels.get(0);
-        assertThat(label.getName(), is("feature"));
-        assertThat(label.getValue(), is("some.feature"));
+        assertEquals(labels.get(0), createLabel(LabelName.FEATURE, "some.feature"));
     }
 
     @Test
@@ -95,7 +87,9 @@ public class AnnotationManagerTest {
         assertThat(description.getValue(), is("some.description"));
         assertThat(description.getType(), is(DescriptionType.TEXT));
 
-        checkLabels(event.getLabels());
+        assertTrue(event.getLabels().contains(createStoryLabel("some.story")));
+        assertTrue(event.getLabels().contains(createFeatureLabel("some.feature")));
+        assertFalse(event.getLabels().contains(createSeverityLabel(SeverityLevel.BLOCKER)));
     }
 
     @Test
@@ -109,23 +103,8 @@ public class AnnotationManagerTest {
         assertThat(description.getValue(), is("some.description"));
         assertThat(description.getType(), is(DescriptionType.TEXT));
 
-        assertThat(event.getSeverity(), equalTo(SeverityLevel.BLOCKER));
-
-        checkLabels(event.getLabels());
-
-    }
-
-    private void checkLabels(List<Label> labels) {
-        assertThat(labels, hasSize(2));
-        assertThat(extract(labels, on(Label.class).getName()), contains("story", "feature"));
-
-        for (Label label : labels) {
-            if (label.getName().equals("story")) {
-                assertThat(label.getValue(), equalTo("some.story"));
-            }
-            if (label.getName().equals("feature")) {
-                assertThat(label.getValue(), equalTo("some.feature"));
-            }
-        }
+        assertTrue(event.getLabels().contains(createStoryLabel("some.story")));
+        assertTrue(event.getLabels().contains(createFeatureLabel("some.feature")));
+        assertTrue(event.getLabels().contains(createSeverityLabel(SeverityLevel.BLOCKER)));
     }
 }

@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.events;
 
-import ru.yandex.qatools.allure.model.*;
+import ru.yandex.qatools.allure.model.Status;
+import ru.yandex.qatools.allure.model.TestCaseResult;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -9,7 +10,6 @@ import ru.yandex.qatools.allure.model.*;
 public class TestCaseStartedEvent extends AbstractTestCaseStartedEvent {
 
     public TestCaseStartedEvent(String suiteUid, String name) {
-        setSeverity(SeverityLevel.NORMAL);
         setSuiteUid(suiteUid);
         setName(name);
     }
@@ -19,7 +19,6 @@ public class TestCaseStartedEvent extends AbstractTestCaseStartedEvent {
         testCase.setStart(System.currentTimeMillis());
         testCase.setStatus(Status.PASSED);
         testCase.setName(getName());
-        testCase.setSeverity(getSeverity());
         testCase.setTitle(getTitle());
         testCase.setDescription(getDescription());
         testCase.setLabels(getLabels());

@@ -34,20 +34,6 @@ public class TestCaseEventTest {
         verify(testCase).setDescription(null);
         verify(testCase).setLabels(Collections.<Label>emptyList());
         verify(testCase).setStart(anyLong());
-        verify(testCase).setSeverity(SeverityLevel.NORMAL);
-        verify(testCase).setStatus(Status.PASSED);
-        verifyNoMoreInteractions(testCase);
-    }
-
-    @Test
-    public void testCaseStartedEventSeverity() throws Exception {
-        new TestCaseStartedEvent("suite.uid", "name").withSeverity(SeverityLevel.BLOCKER).process(testCase);
-        verify(testCase).setName("name");
-        verify(testCase).setTitle(null);
-        verify(testCase).setDescription(null);
-        verify(testCase).setLabels(Collections.<Label>emptyList());
-        verify(testCase).setStart(anyLong());
-        verify(testCase).setSeverity(SeverityLevel.BLOCKER);
         verify(testCase).setStatus(Status.PASSED);
         verifyNoMoreInteractions(testCase);
     }
@@ -60,7 +46,6 @@ public class TestCaseEventTest {
         verify(testCase).setDescription(null);
         verify(testCase).setLabels(Collections.<Label>emptyList());
         verify(testCase).setStart(anyLong());
-        verify(testCase).setSeverity(SeverityLevel.NORMAL);
         verify(testCase).setStatus(Status.PASSED);
         verifyNoMoreInteractions(testCase);
     }
@@ -77,13 +62,12 @@ public class TestCaseEventTest {
         verify(testCase).setDescription(description);
         verify(testCase).setLabels(Collections.<Label>emptyList());
         verify(testCase).setStart(anyLong());
-        verify(testCase).setSeverity(SeverityLevel.NORMAL);
         verify(testCase).setStatus(Status.PASSED);
         verifyNoMoreInteractions(testCase);
     }
 
     @Test
-    public void testCaseStartedEventBehavior() throws Exception {
+    public void testCaseStartedEventLabels() throws Exception {
         Label label = new Label().withName("label.name").withValue("label.value");
         new TestCaseStartedEvent("suite.uid", "name").withLabels(label).process(testCase);
         verify(testCase).setName("name");
@@ -91,7 +75,6 @@ public class TestCaseEventTest {
         verify(testCase).setDescription(null);
         verify(testCase).setLabels(Arrays.asList(label));
         verify(testCase).setStart(anyLong());
-        verify(testCase).setSeverity(SeverityLevel.NORMAL);
         verify(testCase).setStatus(Status.PASSED);
         verifyNoMoreInteractions(testCase);
     }

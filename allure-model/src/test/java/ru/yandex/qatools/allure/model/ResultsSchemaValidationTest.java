@@ -1,9 +1,8 @@
 package ru.yandex.qatools.allure.model;
 
+import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.runners.Parameterized;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.config.AllureResultsConfig;
@@ -11,6 +10,7 @@ import ru.yandex.qatools.allure.config.AllureResultsConfig;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -33,10 +33,14 @@ public class ResultsSchemaValidationTest {
     @Parameterized.Parameters
     public static Collection<Object[]> getTestSuiteFileCollection() {
         AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
-        File results = new File(ClassLoader.getSystemResource(ALLURE_RESULTS_DIRECTORY_PATH).getFile());
         Collection<Object[]> testSuiteFileCollection = new ArrayList<>();
-        for (String testSuiteFilePath : results.list(new RegexFileFilter(resultsConfig.getTestSuiteFileRegex()))) {
-            testSuiteFileCollection.add(new Object[]{new File(results, testSuiteFilePath)});
+        URL url = ClassLoader.getSystemResource(ALLURE_RESULTS_DIRECTORY_PATH);
+        if (url != null) {
+            File results = new File(url.getFile());
+
+            for (String testSuiteFilePath : results.list(new RegexFileFilter(resultsConfig.getTestSuiteFileRegex()))) {
+                testSuiteFileCollection.add(new Object[]{new File(results, testSuiteFilePath)});
+            }
         }
         return testSuiteFileCollection;
     }
