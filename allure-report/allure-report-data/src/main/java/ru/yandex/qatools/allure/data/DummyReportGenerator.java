@@ -1,8 +1,9 @@
 package ru.yandex.qatools.allure.data;
 
-import ru.yandex.qatools.allure.data.AllureReportGenerator;
-
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
@@ -10,8 +11,29 @@ import java.io.File;
  */
 public class DummyReportGenerator {
 
+    /**
+     * Generate Allure report data from directories with allure report results.
+     *
+     * @param args a list of directory paths. First (args.length - 1) arguments -
+     *             results directories, last argument - the folder to generated data
+     */
     public static void main(String[] args) {
-        AllureReportGenerator reportGenerator = new AllureReportGenerator(new File(args[0]));
-        reportGenerator.generate(new File(args[1]));
+        if (args.length < 2) {
+            System.out.println("There must be at least two arguments");
+            return;
+        }
+        int lastIndex = args.length - 1;
+        AllureReportGenerator reportGenerator = new AllureReportGenerator(
+                getFiles(Arrays.copyOf(args, lastIndex))
+        );
+        reportGenerator.generate(new File(args[lastIndex]));
+    }
+
+    public static File[] getFiles(String[] paths) {
+        List<File> files = new ArrayList<>();
+        for (String path : paths) {
+            files.add(new File(path));
+        }
+        return files.toArray(new File[files.size()]);
     }
 }
