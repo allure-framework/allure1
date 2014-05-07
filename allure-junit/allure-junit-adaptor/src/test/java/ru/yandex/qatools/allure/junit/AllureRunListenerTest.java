@@ -2,25 +2,21 @@ package ru.yandex.qatools.allure.junit;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.internal.AssumptionViolatedException;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
-import ru.yandex.qatools.allure.junit.testdata.ClassWithIgnoreAnnotatedMethod;
-import ru.yandex.qatools.allure.junit.testdata.TestData;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
-import static org.junit.runner.Description.createTestDescription;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
-import static ru.yandex.qatools.allure.junit.testdata.ClassWithIgnoreAnnotatedMethod.METHOD_NAME_WITH_IGNORE;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -41,12 +37,6 @@ public class AllureRunListenerTest {
     }
 
     @Test
-    public void testSuiteStartedTest() throws Exception {
-        runListener.testSuiteStarted("some-uid", "some-name", Collections.<Annotation>emptyList());
-        verify(allure).fire(eq(new TestSuiteStartedEvent("some-uid", "some-name")));
-    }
-
-    @Test
     public void testSuiteFinishedTest() throws Exception {
         runListener.testSuiteFinished("some-uid");
         verify(allure).fire(eq(new TestSuiteFinishedEvent("some-uid")));
@@ -61,7 +51,8 @@ public class AllureRunListenerTest {
         doReturn("some.uid").when(runListener).getSuiteUid(description);
         runListener.testStarted(description);
 
-        verify(allure).fire(eq(new TestCaseStartedEvent("some.uid", "some.method.name")));
+        inOrder(allure).verify(allure).fire(eq(new ClearStepStorageEvent()));
+        inOrder(allure).verify(allure).fire(eq(new TestCaseStartedEvent("some.uid", "some.method.name")));
     }
 
     @Test
@@ -71,46 +62,62 @@ public class AllureRunListenerTest {
         verify(allure).fire(eq(new TestCaseFinishedEvent()));
     }
 
-    //if test class annotated with @Ignored, do nothing
-    @Test
-    public void testSuiteIgnoredTest() throws Exception {
-        Description description = mock(Description.class);
-        runListener.testIgnored(description);
-    }
-
     @Test
     public void testIgnoredTest() throws Exception {
-        Description description = spy(createTestDescription(this.getClass(), METHOD_NAME_WITH_IGNORE));
-        doReturn(ClassWithIgnoreAnnotatedMethod.class.getMethod(METHOD_NAME_WITH_IGNORE).getAnnotation(Ignore.class))
-                .when(description).getAnnotation(Ignore.class);
-
-        doNothing().when(runListener).testStarted(description);
-        doNothing().when(runListener).testFinished(description);
-        runListener.testIgnored(description);
-
-        verify(allure).fire(any(TestCaseSkippedEvent.class));
+        AssumptionViolatedException exception = mock(AssumptionViolatedException.class);
+        doReturn(exception).when(runListener).getIgnoredException(any(Description.class));
+        doNothing().when(runListener).createFakeTestCaseWithFailure(any(Description.class), eq(exception));
     }
 
     @Test
     public void testAssumptionFailureTest() throws Exception {
-        Failure failure = mock(Failure.class);
-        Throwable exception = mock(Throwable.class);
-        when(failure.getException()).thenReturn(exception);
-
+        Failure failure = mockFailure();
+        doNothing().when(runListener).testFailure(eq(failure));
         runListener.testAssumptionFailure(failure);
-
-        verify(allure).fire(eq(new TestCaseSkippedEvent().withThrowable(exception)));
     }
 
     @Test
     public void testFailureTest() throws Exception {
-        Failure failure = mock(Failure.class);
+        Description description = mock(Description.class);
+        when(description.isTest()).thenReturn(true);
         Throwable exception = mock(Throwable.class);
-        when(failure.getException()).thenReturn(exception);
+
+        Failure failure = mockFailureWith(exception, description);
 
         runListener.testFailure(failure);
 
-        verify(allure).fire(eq(new TestCaseFailureEvent().withThrowable(exception)));
+        TestCaseFailureEvent event = new TestCaseFailureEvent();
+        event.setThrowable(exception);
+
+        verify(allure).fire(eq(event));
+    }
+
+    @Test
+    public void testFailureWithAssumptionTest() throws Exception {
+        Description description = mock(Description.class);
+        when(description.isTest()).thenReturn(true);
+        Throwable exception = mock(AssumptionViolatedException.class);
+
+        Failure failure = mockFailureWith(exception, description);
+
+        runListener.testFailure(failure);
+
+        TestCaseSkippedEvent event = new TestCaseSkippedEvent();
+        event.setThrowable(exception);
+
+        verify(allure).fire(eq(event));
+    }
+
+    @Test
+    public void suiteFailureTest() throws Exception {
+        Description description = mock(Description.class);
+        when(description.isTest()).thenReturn(false);
+        Throwable exception = mock(AssumptionViolatedException.class);
+
+        Failure failure = mockFailureWith(exception, description);
+        doNothing().when(runListener).createFakeTestCaseWithFailure(eq(description), eq(exception));
+
+        runListener.testFailure(failure);
     }
 
     @SuppressWarnings("unchecked")
@@ -127,25 +134,6 @@ public class AllureRunListenerTest {
 
         verify(allure).fire(eq(new TestSuiteFinishedEvent("first.uid")));
         verify(allure).fire(eq(new TestSuiteFinishedEvent("second.uid")));
-    }
-
-    @SuppressWarnings("unchecked")
-    @Test
-    public void getSuiteUidIfNeedToGenerateUidTest() throws Exception {
-        Description description = mock(Description.class);
-        when(description.getAnnotations()).thenReturn(Collections.<Annotation>emptyList());
-        when(description.getClassName()).thenReturn("some.suite.name");
-        when(description.getTestClass()).thenReturn((Class) TestData.class);
-
-        Map<String, String> fakeSuites = (Map<String, String>) mock(Map.class);
-        doReturn(false).when(fakeSuites).containsKey("some.suite.name");
-
-        doReturn(fakeSuites).when(runListener).getSuites();
-        runListener.getSuiteUid(description);
-
-        verify(allure).fire(any(TestSuiteStartedEvent.class));
-        verify(fakeSuites).put(eq("some.suite.name"), anyString());
-        verify(fakeSuites).get("some.suite.name");
     }
 
     @SuppressWarnings("unchecked")
@@ -167,4 +155,16 @@ public class AllureRunListenerTest {
     public void tearDown() throws Exception {
         verifyNoMoreInteractions(allure);
     }
+
+    public static Failure mockFailureWith(Throwable throwable, Description description) {
+        Failure failure = mock(Failure.class);
+        when(failure.getException()).thenReturn(throwable);
+        when(failure.getDescription()).thenReturn(description);
+        return failure;
+    }
+
+    public static Failure mockFailure() {
+        return mockFailureWith(mock(Throwable.class), mock(Description.class));
+    }
+
 }

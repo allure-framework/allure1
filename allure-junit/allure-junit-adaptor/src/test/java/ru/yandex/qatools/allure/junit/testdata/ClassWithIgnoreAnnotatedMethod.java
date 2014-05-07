@@ -12,8 +12,10 @@ public class ClassWithIgnoreAnnotatedMethod {
 
     public static final String METHOD_NAME_WITH_IGNORE = "methodWithIgnoreAnnotation";
 
+    public static final String IGNORE_VALUE = "ignore-value";
+
     @Test
-    @Ignore
+    @Ignore(IGNORE_VALUE)
     public void methodWithIgnoreAnnotation() throws Exception {
     }
 }
