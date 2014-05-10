@@ -14,12 +14,18 @@ public class TestCaseSkippedEvent extends AbstractTestCaseSkippedEvent {
     @Override
     public void process(TestCaseResult testCase) {
         testCase.setStatus(Status.SKIPPED);
-        testCase.setFailure(getFailure());
+        testCase.setFailure(throwable == null ? getDefaultFailure() : getFailure());
     }
 
     private Failure getFailure() {
         return new Failure()
                 .withMessage(ExceptionUtils.getMessage(getThrowable()))
                 .withStackTrace(ExceptionUtils.getStackTrace(getThrowable()));
+    }
+
+    private Failure getDefaultFailure() {
+        return new Failure()
+                .withMessage("Test skipped with unknown reason")
+                .withStackTrace("There are no stack trace");
     }
 }

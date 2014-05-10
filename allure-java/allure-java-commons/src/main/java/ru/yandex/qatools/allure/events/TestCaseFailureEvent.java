@@ -15,12 +15,18 @@ public class TestCaseFailureEvent extends AbstractTestCaseFailureEvent {
     public void process(TestCaseResult testCase) {
         Status status = throwable instanceof AssertionError ? Status.FAILED : Status.BROKEN;
         testCase.setStatus(status);
-        testCase.setFailure(getFailure());
+        testCase.setFailure(throwable == null ? getDefaultFailure() : getFailure());
     }
 
     private Failure getFailure() {
         return new Failure()
                 .withMessage(ExceptionUtils.getMessage(getThrowable()))
                 .withStackTrace(ExceptionUtils.getStackTrace(getThrowable()));
+    }
+
+    private Failure getDefaultFailure() {
+        return new Failure()
+                .withMessage("Test broken with unknown reason")
+                .withStackTrace("There are no stack trace");
     }
 }

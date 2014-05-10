@@ -96,6 +96,14 @@ public class TestCaseEventTest {
     }
 
     @Test
+    public void testCaseSkippedEventWithNullFailure() throws Exception {
+        new TestCaseSkippedEvent().withThrowable(null).process(testCase);
+        verify(testCase).setFailure(any(Failure.class));
+        verify(testCase).setStatus(Status.SKIPPED);
+        verifyNoMoreInteractions(testCase);
+    }
+
+    @Test
     public void testCaseFailureEventFailed() throws Exception {
         Throwable throwable = new AssertionError("atata");
         new TestCaseFailureEvent().withThrowable(throwable).process(testCase);
@@ -108,6 +116,14 @@ public class TestCaseEventTest {
     public void testCaseFailureEventBroken() throws Exception {
         Throwable throwable = new Exception("atata");
         new TestCaseFailureEvent().withThrowable(throwable).process(testCase);
+        verify(testCase).setFailure(any(Failure.class));
+        verify(testCase).setStatus(Status.BROKEN);
+        verifyNoMoreInteractions(testCase);
+    }
+
+    @Test
+    public void testCaseFailureEventBrokenWithNullFailure() throws Exception {
+        new TestCaseFailureEvent().withThrowable(null).process(testCase);
         verify(testCase).setFailure(any(Failure.class));
         verify(testCase).setStatus(Status.BROKEN);
         verifyNoMoreInteractions(testCase);

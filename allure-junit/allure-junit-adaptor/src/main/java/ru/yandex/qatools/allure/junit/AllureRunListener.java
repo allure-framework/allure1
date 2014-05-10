@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.junit;
 
 import org.junit.Ignore;
+import org.junit.internal.AssumptionViolatedException;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
@@ -9,8 +10,9 @@ import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.utils.AnnotationManager;
 
-import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
@@ -18,7 +20,6 @@ import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 20.12.13
  */
-@SuppressWarnings("unused")
 public class AllureRunListener extends RunListener {
 
     private Allure lifecycle = Allure.LIFECYCLE;
@@ -26,10 +27,21 @@ public class AllureRunListener extends RunListener {
     private final Map<String, String> suites = new HashMap<>();
 
     @Override
-    public void testStarted(Description description) {
-        String suiteUid = getSuiteUid(description);
+    public void testRunStarted(Description description) throws Exception {
+        if (description == null) {
+            // If you don't pass junit provider - surefire (<= 2.17) pass null instead of description
+            return;
+        }
 
-        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, description.getMethodName());
+        for (Description suite : description.getChildren()) {
+            testSuiteStarted(suite);
+        }
+    }
+
+    public void testSuiteStarted(Description description) {
+        String uid = generateSuiteUid(description.getClassName());
+
+        TestSuiteStartedEvent event = new TestSuiteStartedEvent(uid, description.getClassName());
         AnnotationManager am = new AnnotationManager(description.getAnnotations());
 
         am.update(event);
@@ -38,35 +50,43 @@ public class AllureRunListener extends RunListener {
     }
 
     @Override
-    public void testFinished(Description description) {
-        getLifecycle().fire(new TestCaseFinishedEvent());
+    public void testStarted(Description description) {
+        TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(description), description.getMethodName());
+        AnnotationManager am = new AnnotationManager(description.getAnnotations());
+
+        am.update(event);
+
+        fireClearStepStorage();
+        getLifecycle().fire(event);
     }
 
     @Override
     public void testFailure(Failure failure) {
-        getLifecycle().fire(new TestCaseFailureEvent().withThrowable(failure.getException()));
+        if (failure.getDescription().isTest()) {
+            fireTestCaseFailure(failure.getException());
+        } else {
+            createFakeTestCaseWithFailure(failure.getDescription(), failure.getException());
+        }
     }
 
     @Override
     public void testAssumptionFailure(Failure failure) {
-        getLifecycle().fire(new TestCaseSkippedEvent().withThrowable(failure.getException()));
+        testFailure(failure);
     }
 
     @Override
     public void testIgnored(Description description) {
-        //if test class annotated with @Ignored do nothing
-        if (description.getMethodName() == null) {
-            return;
-        }
+        createFakeTestCaseWithFailure(description, getIgnoredException(description));
+    }
 
-        testStarted(description);
-        getLifecycle().fire(new TestCaseSkippedEvent()
-                .withThrowable(new Exception(
-                        defaultIfEmpty(
-                                description.getAnnotation(Ignore.class).value(),
-                                "Test ignored (without reason)!"
-                        ))));
-        testFinished(description);
+    @Override
+    public void testFinished(Description description) {
+        getLifecycle().fire(new TestCaseFinishedEvent());
+    }
+
+
+    public void testSuiteFinished(String uid) {
+        getLifecycle().fire(new TestSuiteFinishedEvent(uid));
     }
 
     @Override
@@ -76,31 +96,59 @@ public class AllureRunListener extends RunListener {
         }
     }
 
-    public void testSuiteStarted(String uid, String suiteName, Collection<Annotation> annotations) {
-        TestSuiteStartedEvent event = new TestSuiteStartedEvent(uid, suiteName);
-        AnnotationManager am = new AnnotationManager(annotations);
-
-        am.update(event);
-
-        getLifecycle().fire(event);
+    public String generateSuiteUid(String suiteName) {
+        String uid = UUID.randomUUID().toString();
+        synchronized (getSuites()) {
+            getSuites().put(suiteName, uid);
+        }
+        return uid;
     }
-
-    public void testSuiteFinished(String uid) {
-        getLifecycle().fire(new TestSuiteFinishedEvent(uid));
-    }
-
 
     public String getSuiteUid(Description description) {
         String suiteName = description.getClassName();
         if (!getSuites().containsKey(suiteName)) {
-            String uid = UUID.randomUUID().toString();
-
-            Collection<Annotation> annotations = Arrays.asList(description.getTestClass().getAnnotations());
-            testSuiteStarted(uid, suiteName, annotations);
-
-            getSuites().put(suiteName, uid);
+            Description suiteDescription = Description.createSuiteDescription(description.getTestClass());
+            testSuiteStarted(suiteDescription);
         }
         return getSuites().get(suiteName);
+    }
+
+    public AssumptionViolatedException getIgnoredException(Description description) {
+        Ignore ignore = description.getAnnotation(Ignore.class);
+        return ignore == null ? null : new AssumptionViolatedException(
+                defaultIfEmpty(ignore.value(), "Test ignored (without reason)!")
+        );
+    }
+
+    public void createFakeTestCaseWithFailure(Description description, Throwable throwable) {
+        String uid = getSuiteUid(description);
+
+        TestCaseStartedEvent event = new TestCaseStartedEvent(uid, description.getClassName());
+        String methodName = description.getMethodName();
+        event.setTitle(methodName == null ? description.getTestClass().getSimpleName() : methodName);
+
+        fireClearStepStorage();
+        getLifecycle().fire(event);
+
+        fireTestCaseFailure(throwable);
+
+        getLifecycle().fire(new TestCaseFinishedEvent());
+    }
+
+    public void fireTestCaseFailure(Throwable throwable) {
+        if (throwable instanceof AssumptionViolatedException) {
+            TestCaseSkippedEvent event = new TestCaseSkippedEvent();
+            event.setThrowable(throwable);
+            getLifecycle().fire(event);
+        } else {
+            TestCaseFailureEvent event = new TestCaseFailureEvent();
+            event.setThrowable(throwable);
+            getLifecycle().fire(event);
+        }
+    }
+
+    public void fireClearStepStorage() {
+        getLifecycle().fire(new ClearStepStorageEvent());
     }
 
     public Allure getLifecycle() {
