@@ -39,4 +39,32 @@ public class StepStorageTest {
         assertTrue(step == stepStorage.pollLast());
         assertThat(stepStorage.get(), hasSize(1));
     }
+
+    @Test
+    public void childThreadStepsTest() throws Exception {
+        final Step last = stepStorage.getLast();
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                assertTrue(last == stepStorage.getLast());
+            }
+        });
+        thread.start();
+        thread.join();
+    }
+
+    @Test
+    public void childThreadStepsIfParentDontInitStepsTest() throws Exception {
+        final Step[] childLast = new Step[1];
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                childLast[0] = stepStorage.getLast();
+            }
+        });
+        Step last = stepStorage.getLast();
+        assertFalse(last == childLast[0]);
+        thread.start();
+        thread.join();
+    }
 }
