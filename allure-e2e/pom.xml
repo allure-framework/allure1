@@ -96,7 +96,7 @@
                             <resources>
                                 <resource>
                                     <directory>
-                                        ${project.basedir}/../allure-report/allure-report-face/src/main/webapp
+                                        ${project.basedir}/../allure-report-face/src/main/webapp
                                     </directory>
                                     <excludes>
                                         <exclude>index.html</exclude>
@@ -105,7 +105,7 @@
                                 </resource>
                                 <resource>
                                     <directory>
-                                        ${project.basedir}/../allure-report/allure-report-face/src/main/webapp
+                                        ${project.basedir}/../allure-report-face/src/main/webapp
                                     </directory>
                                     <includes>
                                         <include>index.html</include>

@@ -26,10 +26,14 @@
 
     <modules>
         <module>allure-model</module>
-        <module>allure-java</module>
-        <module>allure-junit</module>
-        <module>allure-testng</module>
-        <module>allure-report</module>
+        <module>allure-java-annotations</module>
+        <module>allure-java-commons</module>
+        <module>allure-java-aspects</module>
+        <module>allure-junit-adaptor</module>
+        <module>allure-testng-adaptor</module>
+        <module>allure-report-data</module>
+        <module>allure-report-face</module>
+        <module>allure-maven-plugin</module>
         <module>allure-cli</module>
     </modules>
 
