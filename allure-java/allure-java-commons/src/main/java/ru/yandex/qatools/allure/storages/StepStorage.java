@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 13.12.13
  */
-public class StepStorage extends ThreadLocal<Deque<Step>> {
+public class StepStorage extends InheritableThreadLocal<Deque<Step>> {
     @Override
     protected Deque<Step> initialValue() {
         Deque<Step> queue = new LinkedList<>();

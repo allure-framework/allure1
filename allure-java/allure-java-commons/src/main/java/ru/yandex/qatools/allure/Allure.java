@@ -61,6 +61,9 @@ public class Allure {
     }
 
     public void fire(TestCaseStartedEvent event) {
+        //init root step in parent thread if needed
+        stepStorage.get();
+
         TestCaseResult testCase = testCaseStorage.get();
         event.process(testCase);
 
