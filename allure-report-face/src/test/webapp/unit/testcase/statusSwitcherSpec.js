@@ -19,7 +19,7 @@ describe('Testcases status switcher', function () {
                 }
             };
         });
-        $provide.value('status', {all:  ['FAILED', 'BROKEN', 'SKIPPED', 'PASSED']})
+        $provide.value('status', {all:  ['FAILED', 'BROKEN', 'CANCELED', 'PASSED', 'PENDING']})
     }));
     //FIXME: duplicate of template
     beforeEach(inject(function($templateCache) {
@@ -55,25 +55,25 @@ describe('Testcases status switcher', function () {
 
     it('should create switcher and set default values', function() {
         var switcher = createElement({});
-        assertCheckedStatuses(switcher.el, ['skipped', 'broken', 'failed'])
+        assertCheckedStatuses(switcher.el, ['canceled', 'broken', 'failed'])
     });
 
     it('should expose statuses into parent scope', function() {
         var switcher = createElement({});
-        expect(switcher.scope.status).toEqual({PASSED: false, SKIPPED: true, FAILED: true, BROKEN: true})
+        expect(switcher.scope.status).toEqual({PASSED: false, CANCELED: true, FAILED: true, BROKEN: true, PENDING: false})
     });
 
     it('should create switcher load values from store', function() {
         store = {PASSED: true, FAILED: false};
         var switcher = createElement({});
-        assertCheckedStatuses(switcher.el, ['skipped', 'broken', 'passed'])
+        assertCheckedStatuses(switcher.el, ['canceled', 'broken', 'passed'])
     });
 
     it('should toggle status and save it into store', function() {
         store = {PASSED: true, FAILED: false};
         var switcher = createElement({});
         switcher.el.find('.btn.btn-status-passed').click();
-        assertCheckedStatuses(switcher.el, ['skipped', 'broken']);
+        assertCheckedStatuses(switcher.el, ['canceled', 'broken']);
         expect(store.PASSED).toBe(false);
     });
 
@@ -81,15 +81,15 @@ describe('Testcases status switcher', function () {
         var switcher = createElement({}),
             switcher2 = createElement({});
         switcher.el.find('.btn.btn-status-failed').click();
-        assertCheckedStatuses(switcher.el, ['skipped', 'broken']);
-        assertCheckedStatuses(switcher2.el, ['skipped', 'broken']);
+        assertCheckedStatuses(switcher.el, ['canceled', 'broken']);
+        assertCheckedStatuses(switcher2.el, ['canceled', 'broken']);
     });
 
     it('should create buttons in correct order', function() {
         var switcher = createElement({});
         expect(switcher.el.find('.btn').map(function(index, btn) {
             return angular.element(btn).text().trim();
-        }).toArray()).toEqual(['passed', 'skipped', 'broken', 'failed'])
+        }).toArray()).toEqual(['pending', 'passed', 'canceled', 'broken', 'failed'])
     });
 
     describe('statistics', function() {

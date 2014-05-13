@@ -65,7 +65,9 @@ public class AllureRunListener extends RunListener {
         if (failure.getDescription().isTest()) {
             fireTestCaseFailure(failure.getException());
         } else {
-            createFakeTestCaseWithFailure(failure.getDescription(), failure.getException());
+            startFakeTestCase(failure.getDescription());
+            fireTestCaseFailure(failure.getException());
+            finishFakeTestCase();
         }
     }
 
@@ -76,7 +78,9 @@ public class AllureRunListener extends RunListener {
 
     @Override
     public void testIgnored(Description description) {
-        createFakeTestCaseWithFailure(description, getIgnoredException(description));
+        startFakeTestCase(description);
+        getLifecycle().fire(new TestCasePendingEvent().withMessage(getIgnoredMessage(description)));
+        finishFakeTestCase();
     }
 
     @Override
@@ -113,14 +117,12 @@ public class AllureRunListener extends RunListener {
         return getSuites().get(suiteName);
     }
 
-    public AssumptionViolatedException getIgnoredException(Description description) {
+    public String getIgnoredMessage(Description description) {
         Ignore ignore = description.getAnnotation(Ignore.class);
-        return ignore == null ? null : new AssumptionViolatedException(
-                defaultIfEmpty(ignore.value(), "Test ignored (without reason)!")
-        );
+        return defaultIfEmpty(ignore == null ? "" : ignore.value(), "Test ignored (without reason)!");
     }
 
-    public void createFakeTestCaseWithFailure(Description description, Throwable throwable) {
+    public void startFakeTestCase(Description description) {
         String uid = getSuiteUid(description);
 
         TestCaseStartedEvent event = new TestCaseStartedEvent(uid, description.getClassName());
@@ -129,21 +131,17 @@ public class AllureRunListener extends RunListener {
 
         fireClearStepStorage();
         getLifecycle().fire(event);
+    }
 
-        fireTestCaseFailure(throwable);
-
+    public void finishFakeTestCase() {
         getLifecycle().fire(new TestCaseFinishedEvent());
     }
 
     public void fireTestCaseFailure(Throwable throwable) {
         if (throwable instanceof AssumptionViolatedException) {
-            TestCaseSkippedEvent event = new TestCaseSkippedEvent();
-            event.setThrowable(throwable);
-            getLifecycle().fire(event);
+            getLifecycle().fire(new TestCaseCanceledEvent().withThrowable(throwable));
         } else {
-            TestCaseFailureEvent event = new TestCaseFailureEvent();
-            event.setThrowable(throwable);
-            getLifecycle().fire(event);
+            getLifecycle().fire(new TestCaseFailureEvent().withThrowable(throwable));
         }
     }
 

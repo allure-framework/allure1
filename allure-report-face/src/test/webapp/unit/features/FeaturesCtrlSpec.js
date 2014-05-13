@@ -15,8 +15,9 @@ describe('FeaturesCtrl', function () {
         this.statistic = {
             failed: statistic[0],
             broken: statistic[1],
-            skipped: statistic[2],
+            canceled: statistic[2],
             passed: statistic[3],
+            pending: statistic[4],
             total: statistic.reduce(function(r, i) { return r+i; }, 0)
         };
         this.testCases = range(this.statistic.total).map(function(_, index) {
@@ -28,11 +29,11 @@ describe('FeaturesCtrl', function () {
         this.title = title;
         this.stories = stories;
         this.statistic = this.stories.reduce(function(stat, story) {
-            ['passed', 'skipped', 'broken', 'failed', 'total'].forEach(function(status) {
+            ['passed', 'canceled', 'broken', 'failed', 'pending', 'total'].forEach(function(status) {
                 stat[status] += story.statistic[status];
             });
             return stat;
-        }, {passed: 0, skipped:0, broken:0, failed:0, total:0})
+        }, {passed: 0, canceled:0, broken:0, failed:0, pending: 0, total:0})
     }
 
     function range(count) {
@@ -46,7 +47,7 @@ describe('FeaturesCtrl', function () {
             $scope: scope,
             $state: state = jasmine.createSpyObj('state', ['go']),
             status: {
-                all: ['FAILED', 'BROKEN', 'SKIPPED', 'PASSED']
+                all: ['FAILED', 'BROKEN', 'CANCELED', 'PASSED', 'PENDING']
             },
             features: {features: features}
         });
@@ -55,10 +56,10 @@ describe('FeaturesCtrl', function () {
 
     beforeEach(function() {
         scope = createController([
-            new Feature('simple feature', [new Story(1, 'simple story', [0,1,0,3])]),
+            new Feature('simple feature', [new Story(1, 'simple story', [0,1,0,3,0])]),
             new Feature('complex feature', [
-                new Story(2, 'success story', [0,0,0,6]),
-                new Story(3, 'bad story',     [192,1,1,0])
+                new Story(2, 'success story', [0,0,0,6,0]),
+                new Story(3, 'bad story',     [192,1,1,0,0])
             ])
         ]);
     });
@@ -66,19 +67,19 @@ describe('FeaturesCtrl', function () {
     it('should convert statistics to percents in features', function() {
         expect(scope.features[1].percents.map(function(percent) {
             return percent.ratio;
-        })).toEqual([96, 0.5, 0.5, 3]);
+        })).toEqual([96, 0.5, 0.5, 3, 0]);
     });
 
     it('should limit min percent value in  statistics', function() {
         expect(scope.features[1].percents.map(function(percent) {
             return percent.value;
-        })).toEqual([91, 3, 3, 3]);
+        })).toEqual([91, 3, 3, 3, 0]);
     });
 
     it('should convert statistics to percents in stories', function() {
         expect(scope.features[0].stories[0].percents.map(function(percent) {
             return percent.value;
-        })).toEqual([0, 25, 0, 75]);
+        })).toEqual([0, 25, 0, 75, 0]);
     });
 
     it('should create data for pieChart', function() {

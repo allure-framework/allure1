@@ -38,7 +38,7 @@ describe('Testcases list', function () {
             $controller('TestCasesCtrl', {
                 $scope: scope
             });
-            scope.showStatuses = {PASSED: false, BROKEN: true, FAILED: true, SKIPPED: true};
+            scope.showStatuses = {PASSED: false, BROKEN: true, FAILED: true, CANCELED: true, PENDING: false};
             $rootScope.$apply();
             return scope;
         }
@@ -52,7 +52,7 @@ describe('Testcases list', function () {
             var scope = createController();
             expect(scope.statusFilter({status: 'PASSED'})).toBe(false);
             expect(scope.statusFilter({status: 'FAILED'})).toBe(true);
-            scope.showStatuses = {PASSED: true, BROKEN: true, FAILED: true, SKIPPED: false};
+            scope.showStatuses = {PASSED: true, BROKEN: true, FAILED: true, CANCELED: false, PENDING: false};
             expect(scope.statusFilter({status: 'PASSED'})).toBe(true);
         });
 

@@ -15,9 +15,9 @@ describe('xUnit controllers', function () {
             var scope = $rootScope.$new();
             scope.setTestsuite = jasmine.createSpy('set testsuite');
             scope.testsuites = [
-                {uid: 0, statistic: {passed: 0, failed: 1, broken: 0, skipped: 0}},
-                {uid: 1, statistic: {passed: 3, failed: 0, broken: 0, skipped: 0}},
-                {uid: 2, statistic: {passed: 2, failed: 0, broken: 2, skipped: 1}}
+                {uid: 0, statistic: {passed: 0, failed: 1, broken: 0, canceled: 0, pending: 0}},
+                {uid: 1, statistic: {passed: 3, failed: 0, broken: 0, canceled: 0, pending: 0}},
+                {uid: 2, statistic: {passed: 2, failed: 0, broken: 2, canceled: 1, pending: 0}}
             ];
             $controller('TestSuitesCtrl', {
                 $scope: scope,
@@ -32,7 +32,7 @@ describe('xUnit controllers', function () {
                     return collection;
                 }
             });
-            scope.showStatuses = {PASSED: false, BROKEN: true, FAILED: true, SKIPPED: true};
+            scope.showStatuses = {PASSED: false, BROKEN: true, FAILED: true, CANCELED: true, PENDING: false};
             $rootScope.$apply();
             return scope;
         }
@@ -99,9 +99,9 @@ describe('xUnit controllers', function () {
 
         beforeEach(function() {
             scope = createController([
-                new TestSuite('suite1', 16545, {passed: 2, skipped: 0, broken: 0, failed: 1, total: 3}),
-                new TestSuite('suite2', 35335, {passed: 2, skipped: 0, broken: 1, failed: 1, total: 4}),
-                new TestSuite('suite3', 42566, {passed: 1, skipped: 0, broken: 0, failed: 0, total: 1})
+                new TestSuite('suite1', 16545, {passed: 2, canceled: 0, broken: 0, failed: 1, pending: 0, total: 3}),
+                new TestSuite('suite2', 35335, {passed: 2, canceled: 0, broken: 1, failed: 1, pending: 0, total: 4}),
+                new TestSuite('suite3', 42566, {passed: 1, canceled: 0, broken: 0, failed: 0, pending: 0, total: 1})
             ]);
             scope.$apply();
         });
@@ -116,7 +116,7 @@ describe('xUnit controllers', function () {
 
         it('should add up overall testsuites statistics', function() {
             expect(scope.statistic).toEqual({
-                passed: 5, skipped: 0, broken: 1, failed: 2, total: 8
+                passed: 5, canceled: 0, pending: 0, broken: 1, failed: 2, total: 8
             });
         });
 

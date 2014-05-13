@@ -3,7 +3,7 @@ angular.module('allure.testcase.controllers', [])
     .controller('TestcaseCtrl', function($scope, $state, testcase, treeUtils, Collection) {
         "use strict";
         function isFailed(step) {
-            return ['FAILED', 'BROKEN', 'SKIPPED'].indexOf(step.status) !== -1;
+            return ['FAILED', 'BROKEN', 'CANCELED'].indexOf(step.status) !== -1;
         }
         function getAllAttachments() {
             var attachments = [];

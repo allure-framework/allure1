@@ -73,7 +73,7 @@ public class AllureTestListener implements ITestListener {
             throwable = new SkipException("The test was skipped for some reason");
         }
 
-        getLifecycle().fire(new TestCaseSkippedEvent()
+        getLifecycle().fire(new TestCaseCanceledEvent()
                 .withThrowable(throwable)
         );
         fireFinishTest();

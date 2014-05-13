@@ -11,15 +11,14 @@
     <xsd:element name="test-suite-finished-event" type="ns:abstract-test-suite-finished-event"/>
 
     <xsd:element name="test-case-started-event" type="ns:abstract-test-case-started-event"/>
-    <xsd:element name="test-case-failure-event" type="ns:abstract-test-case-failure-event"/>
-    <xsd:element name="test-case-skipped-event" type="ns:abstract-test-case-skipped-event"/>
+    <xsd:element name="test-case-status-change-event" type="ns:abstract-test-case-status-change-event"/>
     <xsd:element name="test-case-finished-event" type="ns:abstract-test-case-finished-event"/>
 
     <xsd:element name="test-case-add-parameter-event" type="ns:abstract-test-case-add-parameter-event"/>
 
     <xsd:element name="step-started-event" type="ns:abstract-step-started-event"/>
     <xsd:element name="step-failure-event" type="ns:abstract-step-failure-event"/>
-    <xsd:element name="step-skipped-event" type="ns:abstract-step-skipped-event"/>
+    <xsd:element name="step-canceled-event" type="ns:abstract-step-canceled-event"/>
     <xsd:element name="step-finished-event" type="ns:abstract-step-finished-event"/>
 
     <xsd:element name="make-attach-event" type="ns:abstract-make-attach-event"/>
@@ -68,7 +67,7 @@
         </xsd:all>
     </xsd:complexType>
 
-    <xsd:complexType name="abstract-test-case-failure-event" abstract="true">
+    <xsd:complexType name="abstract-test-case-status-change-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
                 <itn:implements>ru.yandex.qatools.allure.events.TestCaseEvent</itn:implements>
@@ -78,18 +77,6 @@
             <xsd:element name="throwable" type="ns:throwable" nillable="true"/>
         </xsd:all>
     </xsd:complexType>
-
-    <xsd:complexType name="abstract-test-case-skipped-event" abstract="true">
-        <xsd:annotation>
-            <xsd:appinfo>
-                <itn:implements>ru.yandex.qatools.allure.events.TestCaseEvent</itn:implements>
-            </xsd:appinfo>
-        </xsd:annotation>
-        <xsd:all>
-            <xsd:element name="throwable" type="ns:throwable" nillable="true"/>
-        </xsd:all>
-    </xsd:complexType>
-
 
     <xsd:complexType name="abstract-test-case-finished-event" abstract="true">
         <xsd:annotation>
@@ -134,7 +121,7 @@
         </xsd:all>
     </xsd:complexType>
 
-    <xsd:complexType name="abstract-step-skipped-event" abstract="true">
+    <xsd:complexType name="abstract-step-canceled-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
                 <itn:implements>ru.yandex.qatools.allure.events.StepEvent</itn:implements>
@@ -167,9 +154,9 @@
         </xsd:all>
     </xsd:complexType>
 
-    <xsd:complexType name="clear-step-storage-event" />
+    <xsd:complexType name="clear-step-storage-event"/>
 
-    <xsd:complexType name="clear-test-storage-event" />
+    <xsd:complexType name="clear-test-storage-event"/>
 
     <xsd:complexType name="labels">
         <xsd:sequence>

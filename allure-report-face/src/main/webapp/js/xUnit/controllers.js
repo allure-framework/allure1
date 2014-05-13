@@ -20,12 +20,12 @@ angular.module('allure.xUnit.controllers', [])
         $scope.testsuites = testsuites.testSuites;
         $scope.time = testsuites.time;
         $scope.statistic = $scope.testsuites.reduce(function(statistic, testsuite) {
-            ['passed', 'skipped', 'broken', 'failed', 'total'].forEach(function(status) {
+            ['passed', 'pending', 'canceled', 'broken', 'failed', 'total'].forEach(function(status) {
                 statistic[status] += testsuite.statistic[status]
             });
             return statistic;
         }, {
-            passed: 0, skipped: 0, failed: 0, broken: 0, total: 0
+            passed: 0, pending: 0, canceled: 0, failed: 0, broken: 0, total: 0
         });
         $scope.testcase = {};
         $scope.$watch('testcase.uid', function(testcaseUid, oldUid) {

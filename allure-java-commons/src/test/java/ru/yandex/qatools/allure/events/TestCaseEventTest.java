@@ -87,19 +87,19 @@ public class TestCaseEventTest {
     }
 
     @Test
-    public void testCaseSkippedEvent() throws Exception {
+    public void testCaseCanceledEvent() throws Exception {
         Throwable throwable = new Exception("atata");
-        new TestCaseSkippedEvent().withThrowable(throwable).process(testCase);
+        new TestCaseCanceledEvent().withThrowable(throwable).process(testCase);
         verify(testCase).setFailure(any(Failure.class));
-        verify(testCase).setStatus(Status.SKIPPED);
+        verify(testCase).setStatus(Status.CANCELED);
         verifyNoMoreInteractions(testCase);
     }
 
     @Test
-    public void testCaseSkippedEventWithNullFailure() throws Exception {
-        new TestCaseSkippedEvent().withThrowable(null).process(testCase);
+    public void testCaseCanceledEventWithNullFailure() throws Exception {
+        new TestCaseCanceledEvent().withThrowable(null).process(testCase);
         verify(testCase).setFailure(any(Failure.class));
-        verify(testCase).setStatus(Status.SKIPPED);
+        verify(testCase).setStatus(Status.CANCELED);
         verifyNoMoreInteractions(testCase);
     }
 

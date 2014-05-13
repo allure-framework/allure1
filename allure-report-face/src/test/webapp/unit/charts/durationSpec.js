@@ -51,8 +51,8 @@ describe('DurationChart', function () {
 
     it('should create diagram only with zero durations', function() {
         createElement('<div duration data="data"></div>', { data: [
-            {status: 'SKIPPED', time: {duration:0}},
-            {status: 'SKIPPED', time: {duration:0}}
+            {status: 'CANCELED', time: {duration:0}},
+            {status: 'CANCELED', time: {duration:0}}
         ]});
         expect(elem.find('.bar').map(extractData).toArray()).toEqual([2]);
     });

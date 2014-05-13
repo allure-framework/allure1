@@ -64,9 +64,7 @@ public class AllureRunListenerTest {
 
     @Test
     public void testIgnoredTest() throws Exception {
-        AssumptionViolatedException exception = mock(AssumptionViolatedException.class);
-        doReturn(exception).when(runListener).getIgnoredException(any(Description.class));
-        doNothing().when(runListener).createFakeTestCaseWithFailure(any(Description.class), eq(exception));
+        doReturn("some").when(runListener).getIgnoredMessage(any(Description.class));
     }
 
     @Test
@@ -86,10 +84,7 @@ public class AllureRunListenerTest {
 
         runListener.testFailure(failure);
 
-        TestCaseFailureEvent event = new TestCaseFailureEvent();
-        event.setThrowable(exception);
-
-        verify(allure).fire(eq(event));
+        verify(allure).fire(eq(new TestCaseFailureEvent().withThrowable(exception)));
     }
 
     @Test
@@ -102,10 +97,7 @@ public class AllureRunListenerTest {
 
         runListener.testFailure(failure);
 
-        TestCaseSkippedEvent event = new TestCaseSkippedEvent();
-        event.setThrowable(exception);
-
-        verify(allure).fire(eq(event));
+        verify(allure).fire(eq(new TestCaseCanceledEvent().withThrowable(exception)));
     }
 
     @Test
@@ -115,8 +107,12 @@ public class AllureRunListenerTest {
         Throwable exception = mock(AssumptionViolatedException.class);
 
         Failure failure = mockFailureWith(exception, description);
-        doNothing().when(runListener).createFakeTestCaseWithFailure(eq(description), eq(exception));
 
+        doNothing().when(runListener).startFakeTestCase(eq(description));
+        doNothing().when(runListener).fireTestCaseFailure(eq(exception));
+        doNothing().when(runListener).finishFakeTestCase();
+
+        doNothing().when(runListener).startFakeTestCase(any(Description.class));
         runListener.testFailure(failure);
     }
 

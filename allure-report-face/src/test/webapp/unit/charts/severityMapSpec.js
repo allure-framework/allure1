@@ -4,7 +4,7 @@ describe('SeverityMap', function () {
     var scope, elem;
 
     beforeEach(module('allure.charts.severityMap', function($provide) {
-        $provide.value('status', {all: ['PASSED', 'FAILED', 'SKIPPED']});
+        $provide.value('status', {all: ['PASSED', 'FAILED', 'CANCELED']});
         $provide.value('severity', {all: ['CRITICAL', 'NORMAL', 'TRIVIAL']});
     }));
     jasmine.qatools.mockD3Tooltip();
@@ -36,7 +36,7 @@ describe('SeverityMap', function () {
     it('should group data and create graph', function() {
         expect(elem.find('.fill-passed:not([height="0"])').length).toBe(2);
         expect(elem.find('.fill-failed:not([height="0"])').length).toBe(1);
-        expect(elem.find('.fill-skipped:not([height="0"])').length).toBe(0);
+        expect(elem.find('.fill-canceled:not([height="0"])').length).toBe(0);
     });
 
     afterEach(function() {
