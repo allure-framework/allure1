@@ -90,4 +90,8 @@ public final class TextUtils {
                 "_"
         );
     }
+
+    public static String getMessageMask(String message) {
+        return message.replaceAll("\\s+", " ");
+    }
 }

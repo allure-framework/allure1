@@ -1,6 +1,8 @@
 <xsl:stylesheet version="2.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:alr="urn:data.allure.qatools.yandex.ru">
+                xmlns:alr="urn:data.allure.qatools.yandex.ru"
+                xmlns:utils="java:ru.yandex.qatools.allure.data.utils.TextUtils"
+                exclude-result-prefixes="utils">
 
     <xsl:output method="xml" encoding="UTF-8" indent="yes" omit-xml-declaration="yes"/>
     <xsl:strip-space elements="*"/>
@@ -16,12 +18,7 @@
                         <xsl:call-template name="add-status-node"/>
 
                         <xsl:element name="defects">
-                            <xsl:for-each select="current-group()">
-                                <xsl:element name="defect-item">
-                                    <xsl:call-template name="add-failure"/>
-                                    <xsl:call-template name="add-test-cases-node"/>
-                                </xsl:element>
-                            </xsl:for-each>
+                            <xsl:call-template name="add-test-cases-grouped-by-message"/>
                         </xsl:element>
                     </xsl:element>
                 </xsl:for-each-group>
@@ -50,19 +47,31 @@
         </xsl:element>
     </xsl:template>
 
-    <xsl:template name="add-failure">
-        <xsl:element name="failure">
-            <xsl:copy-of select="current()/failure/*"/>
-        </xsl:element>
-    </xsl:template>
-
-    <xsl:template name="add-test-cases-node">
-        <xsl:element name="test-cases">
-            <xsl:for-each select="current()">
-                <xsl:element name="test-case">
-                    <xsl:copy-of select="current()/*"/>
+    <xsl:template name="add-test-cases-grouped-by-message">
+        <xsl:for-each-group select="current-group()"
+                            group-by="utils:getMessageMask(failure/message)">
+            <xsl:element name="defect-item">
+                <xsl:element name="failure">
+                    <xsl:element name="message">
+                        <xsl:choose>
+                            <xsl:when test="count(current-group())=1">
+                                <xsl:value-of select="current()/failure/message/text()"/>
+                            </xsl:when>
+                            <xsl:when test="count(current-group())!=1">
+                                <xsl:value-of select="current-grouping-key()"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:element>
                 </xsl:element>
-            </xsl:for-each>
-        </xsl:element>
+                <xsl:element name="test-cases">
+
+                    <xsl:for-each select="current-group()">
+                        <xsl:element name="test-case">
+                            <xsl:copy-of select="current()/*"/>
+                        </xsl:element>
+                    </xsl:for-each>
+                </xsl:element>
+            </xsl:element>
+        </xsl:for-each-group>
     </xsl:template>
 </xsl:stylesheet>
