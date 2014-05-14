@@ -53,7 +53,7 @@ public class AllureTestListenerTest {
 
         testngListener.onTestSkipped(testResult);
 
-        verify(allure).fire(eq(new TestCaseSkippedEvent().withThrowable(throwable)));
+        verify(allure).fire(eq(new TestCaseCanceledEvent().withThrowable(throwable)));
     }
 
     @Test
@@ -65,7 +65,7 @@ public class AllureTestListenerTest {
 
         testngListener.onTestSkipped(testResult);
 
-        verify(allure).fire(isA(TestCaseSkippedEvent.class));
+        verify(allure).fire(isA(TestCaseCanceledEvent.class));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class AllureTestListenerTest {
 
         InOrder inOrder = inOrder(allure);
         inOrder.verify(allure).fire(isA(TestCaseStartedEvent.class));
-        inOrder.verify(allure).fire(isA(TestCaseSkippedEvent.class));
+        inOrder.verify(allure).fire(isA(TestCaseCanceledEvent.class));
         inOrder.verify(allure).fire(isA(TestCaseFinishedEvent.class));
     }
 

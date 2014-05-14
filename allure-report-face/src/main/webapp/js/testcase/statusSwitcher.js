@@ -6,7 +6,8 @@ angular.module('allure.testcase.statusSwitcher', []).directive('statusSwitcher',
         var store = this.store = $storage('visibleStatuses');
         this.statuses = {
             PASSED:  defaults(store.getItem('PASSED'), false),
-            SKIPPED: defaults(store.getItem('SKIPPED'), true),
+            PENDING: defaults(store.getItem('PENDING'), false),
+            CANCELED: defaults(store.getItem('CANCELED'), true),
             BROKEN:  defaults(store.getItem('BROKEN'), true),
             FAILED:  defaults(store.getItem('FAILED'), true)
         }

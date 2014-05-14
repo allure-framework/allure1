@@ -21,7 +21,10 @@
             </td>
             <td class="line-nobreak">{{time.duration | time}}</td>
             <td class="text-center">
-                <span class="label label-default" ng-show="statistic.skipped > 0">{{statistic.skipped}}</span>
+                <span class="label label-default" ng-show="statistic.canceled > 0">{{statistic.canceled}}</span>
+            </td>
+            <td class="text-center">
+                <span class="label label-info" ng-show="statistic.pending > 0">{{statistic.pending}}</span>
             </td>
             <td class="text-center">
                 <span class="label label-warning" ng-show="statistic.broken > 0">{{statistic.broken}}</span>
@@ -40,8 +43,11 @@
             <td allure-table-col="{heading: 'Duration', predicate: 'time.duration', flex: 2, reverse: true}" class="line-ellipsis" title="{{testsuite.time.duration | time}}">
                 {{testsuite.time.duration | time}}
             </td>
-            <td allure-table-col="{heading: 'Skipped', predicate: 'statistic.skipped', class:'text-center', reverse: true}" class="text-center">
-                <span class="label label-default" ng-show="testsuite.statistic.skipped > 0">{{testsuite.statistic.skipped}}</span>
+            <td allure-table-col="{heading: 'Canceled', predicate: 'statistic.canceled', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-default" ng-show="testsuite.statistic.canceled > 0">{{testsuite.statistic.canceled}}</span>
+            </td>
+            <td allure-table-col="{heading: 'Pending', predicate: 'statistic.pending', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-info" ng-show="testsuite.statistic.pending > 0">{{testsuite.statistic.pending}}</span>
             </td>
             <td allure-table-col="{heading: 'Broken', predicate: 'statistic.broken', class:'text-center', reverse: true}" class="text-center">
                 <span class="label label-warning" ng-show="testsuite.statistic.broken > 0">{{testsuite.statistic.broken}}</span>

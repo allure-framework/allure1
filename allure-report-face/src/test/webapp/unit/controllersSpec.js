@@ -17,7 +17,7 @@ describe('controllers', function () {
                 $scope: scope,
                 testcases: {testCases: testcases},
                 status: {
-                    all: ['FAILED', 'BROKEN', 'PASSED', 'SKIPPED']
+                    all: ['FAILED', 'BROKEN', 'CANCELED', 'PASSED', 'PENDING']
                 }
             });
             return scope;
@@ -36,14 +36,15 @@ describe('controllers', function () {
         it('should format pie-chart data', function() {
             var scope = createController([{status: 'FAILED'}, {status: 'PASSED'}, {status: 'PASSED'}]);
             expect(scope.statistic).toEqual({
-                passed: 2, skipped: 0, failed: 1, broken: 0,
+                passed: 2, canceled: 0, failed: 1, broken: 0, pending: 0,
                 total: 3
             });
             expect(scope.chartData).toEqual([
                 {name: 'failed', value: 1, part: 1/3},
                 {name: 'broken', value: 0, part: 0},
+                {name: 'canceled', value: 0, part: 0},
                 {name: 'passed', value: 2, part: 2/3},
-                {name: 'skipped', value: 0, part: 0}
+                {name: 'pending', value: 0, part: 0}
             ]);
         });
     });

@@ -62,7 +62,7 @@ angular.module('allure.testcase.testcasesList', []).directive('testcasesList', f
             statistic[testcase.status.toLowerCase()]++;
             return statistic;
         }, {
-            passed: 0, skipped: 0, failed: 0, broken: 0, total: testcases.length
+            passed: 0, canceled: 0, failed: 0, broken: 0, pending: 0, total: testcases.length
         });
         $scope.list = new Collection(testcases);
         $scope.list.sort($scope.sorting);

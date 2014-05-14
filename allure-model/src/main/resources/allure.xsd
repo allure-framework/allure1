@@ -125,7 +125,8 @@
             <xs:enumeration value="failed"/>
             <xs:enumeration value="broken"/>
             <xs:enumeration value="passed"/>
-            <xs:enumeration value="skipped"/>
+            <xs:enumeration value="canceled"/>
+            <xs:enumeration value="pending"/>
         </xs:restriction>
     </xs:simpleType>
 

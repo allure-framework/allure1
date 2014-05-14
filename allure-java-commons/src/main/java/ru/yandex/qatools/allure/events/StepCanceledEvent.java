@@ -7,11 +7,11 @@ import ru.yandex.qatools.allure.model.Step;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  */
-public class StepSkippedEvent extends AbstractStepSkippedEvent {
+public class StepCanceledEvent extends AbstractStepCanceledEvent {
 
     @Override
     public void process(Step step) {
-        step.setStatus(Status.SKIPPED);
+        step.setStatus(Status.CANCELED);
     }
 
 }

@@ -4,7 +4,7 @@ angular.module('allure.controllers', [])
         "use strict";
         $scope.testcases = testcases.testCases;
         $scope.statistic = {
-            passed: 0, skipped: 0, failed: 0, broken: 0,
+            passed: 0, canceled: 0, failed: 0, broken: 0, pending: 0,
             total: $scope.testcases.length
         };
         $scope.testcases.forEach(function(testcase) {

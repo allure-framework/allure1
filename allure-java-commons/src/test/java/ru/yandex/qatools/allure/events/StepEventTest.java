@@ -55,9 +55,9 @@ public class StepEventTest {
     }
 
     @Test
-    public void testStepSkippedEvent() throws Exception {
-        new StepSkippedEvent().process(step);
-        verify(step).setStatus(Status.SKIPPED);
+    public void testStepCanceledEvent() throws Exception {
+        new StepCanceledEvent().process(step);
+        verify(step).setStatus(Status.CANCELED);
         verifyNoMoreInteractions(step);
     }
 }

@@ -7,8 +7,9 @@ describe('service', function () {
         it('should return correct order of statuses', inject(function (status) {
             expect(status.getSortOrder('FAILED')).toEqual(0);
             expect(status.getSortOrder('BROKEN')).toEqual(1);
-            expect(status.getSortOrder('SKIPPED')).toEqual(2);
+            expect(status.getSortOrder('CANCELED')).toEqual(2);
             expect(status.getSortOrder('PASSED')).toEqual(3);
+            expect(status.getSortOrder('PENDING')).toEqual(4);
         }));
     });
 

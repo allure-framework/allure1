@@ -22,7 +22,8 @@
     <xsd:complexType name="statistic">
         <xsd:attribute name="total" type="xsd:long" default="0"/>
         <xsd:attribute name="passed" type="xsd:long" default="0"/>
-        <xsd:attribute name="skipped" type="xsd:long" default="0"/>
+        <xsd:attribute name="pending" type="xsd:long" default="0"/>
+        <xsd:attribute name="canceled" type="xsd:long" default="0"/>
         <xsd:attribute name="failed" type="xsd:long" default="0"/>
         <xsd:attribute name="broken" type="xsd:long" default="0"/>
     </xsd:complexType>

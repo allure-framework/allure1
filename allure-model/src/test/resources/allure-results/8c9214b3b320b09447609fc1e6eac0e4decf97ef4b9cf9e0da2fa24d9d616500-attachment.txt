@@ -18,7 +18,7 @@ java.awt.graphicsenv = sun.awt.CGraphicsEnvironment
 basedir = /Users/charlie/IdeaProjects/allure-junit-variant
 java.endorsed.dirs = /Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/jre/lib/endorsed
 os.arch = x86_64
-surefire.real.class.path = /Users/charlie/IdeaProjects/allure-junit-variant/target/surefire/surefirebooter3119673507548622335.jar:/Users/charlie/.m2/repository/org/aspectj/aspectjweaver/1.7.4/aspectjweaver-1.7.4.jar
+surefire.real.class.path = /Users/charlie/IdeaProjects/allure-junit-variant/target/surefire/surefirebooter4843280174925668324.jar:/Users/charlie/.m2/repository/org/aspectj/aspectjweaver/1.7.4/aspectjweaver-1.7.4.jar
 java.io.tmpdir = /var/folders/_g/_dn1831d6bl0c0yk64f2ct8x9x9pm5/T/
 line.separator = 
 
@@ -42,7 +42,7 @@ java.class.path = /Users/charlie/IdeaProjects/allure-junit-variant/target/test-c
 java.vm.specification.version = 1.7
 sun.arch.data.model = 64
 java.home = /Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/jre
-sun.java.command = /Users/charlie/IdeaProjects/allure-junit-variant/target/surefire/surefirebooter3119673507548622335.jar /Users/charlie/IdeaProjects/allure-junit-variant/target/surefire/surefire766412342168974137tmp /Users/charlie/IdeaProjects/allure-junit-variant/target/surefire/surefire_01442297052416972613tmp
+sun.java.command = /Users/charlie/IdeaProjects/allure-junit-variant/target/surefire/surefirebooter4843280174925668324.jar /Users/charlie/IdeaProjects/allure-junit-variant/target/surefire/surefire2625461826464236661tmp /Users/charlie/IdeaProjects/allure-junit-variant/target/surefire/surefire_02178154724121187304tmp
 java.specification.vendor = Oracle Corporation
 user.language = ru
 awt.toolkit = sun.lwawt.macosx.LWCToolkit
