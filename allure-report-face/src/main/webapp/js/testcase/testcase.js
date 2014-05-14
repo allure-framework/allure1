@@ -100,8 +100,12 @@ angular.module('allure.testcase.controllers', [])
             //get raw file content without parsing
             $http.get(url, {transformResponse: []}).then(function(response) {
                 $scope.attachText = response.data;
-            });
+            }, $scope.onError);
         }
+
+        $scope.onError = function() {
+            $scope.notFound = true;
+        };
         $scope.getSourceUrl = function(attachment) {
             return 'data/'+attachment.source;
         };
@@ -114,6 +118,7 @@ angular.module('allure.testcase.controllers', [])
             );
         };
         $scope.$watch('attachment', function(attachment) {
+            $scope.notFound = false;
             //noinspection FallthroughInSwitchStatementJS
             switch (attachment.type) {
                 case 'JPG':
