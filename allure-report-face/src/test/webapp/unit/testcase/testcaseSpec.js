@@ -117,6 +117,7 @@ describe('Testcase controllers', function() {
             expect(scope.type).toBe('text');
 
             $httpBackend.flush();
+            expect(scope.notFound).toBeFalsy();
             expect(scope.attachText).toBe('test content');
         });
 
@@ -125,8 +126,14 @@ describe('Testcase controllers', function() {
             expect(scope.type).toBeUndefined();
         });
 
+        it('should show message when load error has occurred', function() {
+            $httpBackend.expectGET('data/report.xml').respond(404);
+            var scope = createController({type: 'XML', name: 'report', source:'report.xml'});
+            $httpBackend.flush();
+            expect(scope.notFound).toBeTruthy();
+        });
+
         it('should re-detect type when attachment has changed', function() {
-            $httpBackend.expectGET('data/report.xml').respond(backendDefinitions['report.xml']);
             var scope = createController({type: 'PNG', name: 'picture', source:'pic'});
             expect(scope.type).toBe('image');
             scope.attachment = {type: 'HTML', name: 'report', source:'report.html'};

@@ -99,4 +99,14 @@ angular.module('allure.directives', [])
                 return elm.parent().width();
             }, updateWidth);
         };
+    })
+    .directive('onError', function() {
+        "use strict";
+        return function(scope, elm, attrs) {
+            elm.on('error', function(event) {
+                scope.$apply(function() {
+                    scope.$eval(attrs.onError, {$event: event});
+                });
+            });
+        };
     });

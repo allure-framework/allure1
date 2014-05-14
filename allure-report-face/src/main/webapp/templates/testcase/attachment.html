@@ -11,9 +11,9 @@
         </h3>
         <a class="text-muted" ng-href="{{getSourceUrl(attachment)}}">{{attachment.source}}</a>
     </div>
-    <div class="attachment_body" ng-switch="type">
+    <div class="attachment_body" ng-switch="type" ng-hide="notFound">
         <div ng-switch-when="image" class="text-center">
-            <img ng-src="{{getSourceUrl(attachment)}}" alt="Attachment image" ng-class="{'zoom-in': !isExpanded(), 'zoom-out': isExpanded()}" ng-click="toggleExpanded()" />
+            <img ng-src="{{getSourceUrl(attachment)}}" alt="Attachment image" ng-class="{'zoom-in': !isExpanded(), 'zoom-out': isExpanded()}" ng-click="toggleExpanded()" on-error="onError()" />
         </div>
         <div ng-switch-when="text">
             <pre>{{attachText}}</pre>
@@ -22,7 +22,8 @@
             <pre><code data-language="{{attachment.type | lowercase}}" rainbow-highlight="attachText"></code></pre>
         </div>
         <div ng-switch-default>
-            <iframe style="width: 100%; min-height: 600px;" frameborder="0" ng-src="{{getSourceUrl(attachment)}}"></iframe>
+            <iframe style="width: 100%; min-height: 600px;" frameborder="0" ng-src="{{getSourceUrl(attachment)}}" on-error="onError()"></iframe>
         </div>
     </div>
+    <p ng-show="notFound"><i class="text-muted">Attachment not found</i></p>
 </div>

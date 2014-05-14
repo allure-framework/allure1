@@ -4,18 +4,18 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
         'allure.scrollfix', 'allure.charts', 'allure.testcase', 'allure.xUnit.controllers', 'allure.features',
         'allure.defects'])
     .config(function($tooltipProvider) {
+        "use strict";
         $tooltipProvider.options({appendToBody:true});
     })
     .config(function($httpProvider) {
         "use strict";
-        $httpProvider.interceptors.push(function($rootScope) {
-            return {
-                responseError: function(rejection) {
-                    $rootScope.error = rejection;
-                }
-            };
-        });
         $httpProvider.defaults.cache = true;
+    })
+    .run(function($rootScope) {
+        "use strict";
+        $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, rejection) {
+            $rootScope.error = rejection;
+        });
     })
     .config(function ($stateProvider, $urlRouterProvider, testcaseProvider) {
         'use strict';
