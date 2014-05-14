@@ -156,7 +156,7 @@
                                     <resources>
                                         <resource>
                                             <directory>
-                                                ${project.basedir}/../../allure-model/src/test/resources/allure-results
+                                                ${project.basedir}/../allure-model/src/test/resources/allure-results
                                             </directory>
                                             <filtering>false</filtering>
                                         </resource>
@@ -181,7 +181,6 @@
                             <arguments>
                                 <argument>${allure.results.directory}</argument>
                                 <argument>${allure.report.directory}</argument>
-                                <argument>-classpath</argument>
                             </arguments>
                         </configuration>
                     </plugin>
