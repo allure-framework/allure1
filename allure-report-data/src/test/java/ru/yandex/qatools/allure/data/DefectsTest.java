@@ -10,12 +10,8 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import java.util.List;
 
-import static ch.lambdaj.Lambda.having;
-import static ch.lambdaj.Lambda.on;
-import static ch.lambdaj.Lambda.select;
-import static ch.lambdaj.Lambda.selectFirst;
+import static ch.lambdaj.Lambda.*;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
@@ -71,7 +67,9 @@ public class DefectsTest {
                     having(on(TestCaseResult.class).getStatus(), equalTo(Status.FAILED))).size();
         }
 
-        assertThat(defect.defects, hasSize(equalTo(resultsTestCasesCount)));
+        int testCasesInDefectsCount = flatten(extract(defect.defects, on(DefectItem.class).getTestCases())).size();
+
+        assertThat(testCasesInDefectsCount, equalTo(resultsTestCasesCount));
     }
 
     @Test
@@ -86,7 +84,9 @@ public class DefectsTest {
                     having(on(TestCaseResult.class).getStatus(), equalTo(Status.BROKEN))).size();
         }
 
-        assertThat(defect.defects, hasSize(equalTo(resultsTestCasesCount)));
+        int testCasesInDefectsCount = flatten(extract(defect.defects, on(DefectItem.class).getTestCases())).size();
+
+        assertThat(testCasesInDefectsCount, equalTo(resultsTestCasesCount));
     }
 
 }
