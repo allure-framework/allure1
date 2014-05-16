@@ -22,12 +22,12 @@ public class AllureReportGenerator {
 
     protected File[] inputDirectories;
 
-    public AllureReportGenerator(File... inputDirectories) {
+    public AllureReportGenerator(final File... inputDirectories) {
         this.inputDirectories = inputDirectories;
     }
 
-    public void generate(File reportDirectory) {
-        File reportDataDirectory = new File(reportDirectory, DATA_SUFFIX);
+    public void generate(final File reportDirectory) {
+        final File reportDataDirectory = new File(reportDirectory, DATA_SUFFIX);
 
         if (!(reportDataDirectory.exists() || reportDataDirectory.mkdirs())) {
             throw new RuntimeException(
@@ -36,9 +36,14 @@ public class AllureReportGenerator {
         }
         copyAttachments(inputDirectories, reportDataDirectory);
 
-        String testRun = new TestSuiteFiles(inputDirectories).generateTestRun();
+        final TestSuiteFiles testSuiteFiles = new TestSuiteFiles(inputDirectories);
+        final String testRun = testSuiteFiles.generateTestRun();
+        
+        for (final File skippedSuiteFile: testSuiteFiles.getSkippedSuiteFiles()){
+            //TODO: here we can log invalid suite files (https://github.com/allure-framework/allure-core/issues/183)
+        }
 
-        for (DataProvider provider : dataProviders) {
+        for (final DataProvider provider : dataProviders) {
             provider.provide(testRun, reportDataDirectory);
         }
 
@@ -54,8 +59,8 @@ public class AllureReportGenerator {
         };
     }
 
-    public static void copyAttachments(File[] dirs, File outputDirectory) {
-        for (File attach : listAttachmentFiles(dirs)) {
+    public static void copyAttachments(final File[] dirs, final File outputDirectory) {
+        for (final File attach : listAttachmentFiles(dirs)) {
             try {
                 copyAttachment(attach, new File(outputDirectory, attach.getName()));
             } catch (IOException e) {
@@ -64,7 +69,7 @@ public class AllureReportGenerator {
         }
     }
 
-    public static void copyAttachment(File srcFile, File destFile) throws IOException {
+    public static void copyAttachment(final File srcFile, final File destFile) throws IOException {
         if (!srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) {
             FileUtils.copyFile(srcFile, destFile);
         }

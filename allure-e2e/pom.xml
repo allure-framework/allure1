@@ -124,13 +124,16 @@
                     <execution>
                         <phase>process-test-resources</phase>
                         <goals>
-                            <goal>java</goal>
+                            <goal>exec</goal>
                         </goals>
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>ru.yandex.qatools.allure.data.DummyReportGenerator</mainClass>
+                    <executable>java</executable>
                     <arguments>
+                        <argument>-classpath</argument>
+                        <classpath/>
+                        <mainClass>ru.yandex.qatools.allure.data.DummyReportGenerator</mainClass>
                         <argument>${allure.results.directory}</argument>
                         <argument>${allure.report.directory}</argument>
                     </arguments>
