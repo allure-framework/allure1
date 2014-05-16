@@ -90,6 +90,8 @@
                             <classpathPrefix>lib/</classpathPrefix>
                             <mainClass>ru.yandex.qatools.allure.AllureCli</mainClass>
                             <useUniqueVersions>false</useUniqueVersions>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
                         </manifest>
                     </archive>
                 </configuration>
