@@ -8,11 +8,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarFile;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
+import java.util.jar.Manifest;
 
 public class AllureCli {
 
@@ -24,7 +27,7 @@ public class AllureCli {
         final CliBuilder<Runnable> builder = Cli.<Runnable>builder("allure")
                 .withDescription("Allure command line client")
                 .withDefaultCommand(Help.class)
-                .withCommands(Help.class, GenerateCommand.class);
+                .withCommands(Help.class, GenerateCommand.class, ShowVersionCommand.class);
 
         final Cli<Runnable> parser = builder.build();
 
@@ -93,5 +96,27 @@ public class AllureCli {
             return new File(AllureCli.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         }
     }
+
+    @Command(name = "version", description = "Show client version")
+    public static class ShowVersionCommand implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                final URL url = ((URLClassLoader) getClass().getClassLoader()).findResource("META-INF/MANIFEST.MF");
+                final Manifest manifest = new Manifest(url.openStream());
+                final String specificationVersion = manifest.getMainAttributes().getValue("Specification-Version");
+                if (specificationVersion != null) {
+                    System.out.println(specificationVersion);
+                } else {
+                    System.out.println("Failed to load version from MANIFEST.MF. This is probably a bug.");
+                }
+            } catch (IOException e) {
+                System.out.println("Failed to load version because of exception.");
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
 }
