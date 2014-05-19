@@ -21,7 +21,7 @@ public final class AllureModelUtils {
     }
 
     public static Validator getAllureSchemaValidator() throws SAXException {
-        String schemaFileName = AllureModelConfig.newInstance().getSchemaFileName();
+        String schemaFileName = AllureConfig.newInstance().getSchemaFileName();
         InputStream schemaFile = ClassLoader.getSystemResourceAsStream(schemaFileName);
         SchemaFactory schemaFactory = SchemaFactory
                 .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

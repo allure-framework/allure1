@@ -14,9 +14,9 @@ angular.module('allure.testcase.controllers', [])
             });
             return attachments.concat($scope.testcase.attachments);
         }
-        function setAttachment(source) {
+        function setAttachment(uid) {
             $scope.attachment = getAllAttachments().filter(function(attachment) {
-                return attachment.source === source;
+                return attachment.uid === uid;
             })[0];
         }
         $scope.isState = function(state) {
@@ -33,7 +33,7 @@ angular.module('allure.testcase.controllers', [])
         };
         $scope.select = function(direction) {
             var index = allAttachments.indexOf($scope.attachment);
-            setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).source);
+            setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).uid);
         };
 
         $scope.testcase = testcase;
@@ -121,16 +121,19 @@ angular.module('allure.testcase.controllers', [])
             $scope.notFound = false;
             //noinspection FallthroughInSwitchStatementJS
             switch (attachment.type) {
-                case 'JPG':
-                case 'PNG':
+                case 'image/jpeg':
+                case 'image/jpg':
+                case 'image/png':
+                case 'image/*':
                     $scope.type = "image";
                     break;
-                case 'TXT':
+                case 'text/plain':
+                case 'text/*':
                     $scope.type = "text";
                     fileGetContents($scope.getSourceUrl(attachment));
                     break;
-                case 'XML':
-                case 'JSON':
+                case 'text/xml':
+                case 'application/json':
                     $scope.type = "code";
                     fileGetContents($scope.getSourceUrl(attachment));
                     break;

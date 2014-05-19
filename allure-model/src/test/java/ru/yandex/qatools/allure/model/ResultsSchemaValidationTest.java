@@ -4,8 +4,8 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
-import ru.yandex.qatools.allure.config.AllureResultsConfig;
 
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
@@ -32,7 +32,7 @@ public class ResultsSchemaValidationTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> getTestSuiteFileCollection() {
-        AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
+        AllureConfig resultsConfig = AllureConfig.newInstance();
         Collection<Object[]> testSuiteFileCollection = new ArrayList<>();
         URL url = ClassLoader.getSystemResource(ALLURE_RESULTS_DIRECTORY_PATH);
         if (url != null) {

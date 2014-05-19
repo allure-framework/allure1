@@ -8,7 +8,7 @@
         <jaxb:class ref="ru.yandex.qatools.allure.model.AttachmentType"/>
     </jaxb:bindings>
 
-    <jaxb:bindings node="//xsd:complexType[@name='attach']">
+    <jaxb:bindings node="//xsd:complexType[@name='attachment']">
         <jaxb:class ref="java.lang.Object"/>
     </jaxb:bindings>
 

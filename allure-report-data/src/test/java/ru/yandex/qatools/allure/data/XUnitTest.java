@@ -3,7 +3,7 @@ package ru.yandex.qatools.allure.data;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import ru.yandex.qatools.allure.config.AllureResultsConfig;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.model.*;
 
 import java.util.List;
@@ -19,11 +19,11 @@ import static org.junit.Assert.*;
  */
 public class XUnitTest {
 
-    private static AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
+    private static final AllureConfig CONFIG = AllureConfig.newInstance();
 
     @ClassRule
     public static AllureReportGenerationRule allureRule =
-            new AllureReportGenerationRule(resultsConfig.getResultsDirectory());
+            new AllureReportGenerationRule(CONFIG.getResultsDirectory());
 
     private AllureXUnit allureXUnitData;
 
@@ -76,7 +76,7 @@ public class XUnitTest {
         checkSeverity(counts, SeverityLevel.TRIVIAL);
     }
 
-    public void checkSeverity( Map<String, Integer> counts, SeverityLevel level) {
+    public void checkSeverity(Map<String, Integer> counts, SeverityLevel level) {
         int modify = 0;
         for (AllureTestSuite testSuite : allureXUnitData.getTestSuites()) {
             for (AllureTestCaseInfo testCase : testSuite.getTestCases()) {

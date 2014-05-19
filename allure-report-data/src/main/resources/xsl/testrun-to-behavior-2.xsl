@@ -26,8 +26,11 @@
             <xsl:attribute name="passed">
                 <xsl:value-of select="count(.//test-case/status[text()='passed'])"/>
             </xsl:attribute>
-            <xsl:attribute name="skipped">
-                <xsl:value-of select="count(.//test-case/status[text()='skipped'])"/>
+            <xsl:attribute name="canceled">
+                <xsl:value-of select="count(.//test-case/status[text()='canceled'])"/>
+            </xsl:attribute>
+            <xsl:attribute name="pending">
+                <xsl:value-of select="count(.//test-case/status[text()='pending'])"/>
             </xsl:attribute>
             <xsl:attribute name="failed">
                 <xsl:value-of select="count(.//test-case/status[text()='failed'])"/>

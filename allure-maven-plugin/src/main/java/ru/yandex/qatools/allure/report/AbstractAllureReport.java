@@ -8,7 +8,7 @@ import org.apache.maven.plugins.annotations.Component;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
-import ru.yandex.qatools.allure.config.AllureResultsConfig;
+import ru.yandex.qatools.allure.config.AllureConfig;
 
 import java.io.File;
 import java.util.Locale;
@@ -27,7 +27,7 @@ public abstract class AbstractAllureReport extends AbstractMavenReport {
     private String outputDirectory;
 
     @Parameter(alias = "allure.results.directory", required = false)
-    private File allureResultsDirectory = AllureResultsConfig.newInstance().getResultsDirectory();
+    private File allureResultsDirectory = AllureConfig.newInstance().getResultsDirectory();
 
     @Parameter
     private Dependency reportFace = new Dependency(

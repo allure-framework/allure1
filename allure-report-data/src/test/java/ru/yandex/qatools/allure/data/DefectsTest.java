@@ -3,7 +3,7 @@ package ru.yandex.qatools.allure.data;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Test;
-import ru.yandex.qatools.allure.config.AllureResultsConfig;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
@@ -21,13 +21,15 @@ import static org.junit.Assert.assertThat;
  */
 public class DefectsTest {
 
-    public static final String TEST_DEFECTS = "Test defects";
-    public static final String PRODUCT_DEFECTS = "Product defects";
-    private static AllureResultsConfig resultsConfig = AllureResultsConfig.newInstance();
+    private static final String TEST_DEFECTS = "Test defects";
+
+    private static final String PRODUCT_DEFECTS = "Product defects";
+
+    private static final AllureConfig CONFIG = AllureConfig.newInstance();
 
     @ClassRule
     public static AllureReportGenerationRule allureRule =
-            new AllureReportGenerationRule(resultsConfig.getResultsDirectory());
+            new AllureReportGenerationRule(CONFIG.getResultsDirectory());
 
     private AllureDefects allureDefectsData;
 
@@ -35,8 +37,8 @@ public class DefectsTest {
 
     @Before
     public void initVariables() throws Exception {
-        this.allureDefectsData = allureRule.getDefectsData();
-        this.testSuiteResults = allureRule.getTestSuiteResults();
+        allureDefectsData = allureRule.getDefectsData();
+        testSuiteResults = allureRule.getTestSuiteResults();
     }
 
     @Test

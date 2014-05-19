@@ -1,15 +1,16 @@
 package ru.yandex.qatools.allure.events;
 
+import org.apache.commons.io.Charsets;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import ru.yandex.qatools.allure.model.Attachment;
-import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -79,10 +80,11 @@ public class RemoveAttachmentsEventTest {
         }
     }
 
-    public Attachment save(String string) {
-        String source = writeAttachment(string, AttachmentType.TXT);
+    public Attachment save(String string) throws IOException {
+        String type = "text/plain";
+        String source = writeAttachment(string.getBytes(Charsets.UTF_8), type);
 
-        return new Attachment().withSource(source).withType(AttachmentType.TXT).withTitle("other-title");
+        return new Attachment().withSource(source).withType(type).withTitle("other-title");
     }
 
 }
