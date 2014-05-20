@@ -120,15 +120,21 @@
   }
 }
 
+.defects .pane-header {
+  padding: 10px;
+}
+
 .defect {
   &_title {
-    padding: 10px;
     &.ui-scrollfix {
       background: rgba(255, 255, 255, 0.9);
       position: fixed;
       top: 50px;
       z-index: 1;
       width: inherit;
+      & + * {
+        margin-top: 83px;
+      }
     }
   }
   &_message {
