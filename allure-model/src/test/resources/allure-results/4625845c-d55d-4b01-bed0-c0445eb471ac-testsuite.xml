@@ -1,4 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1399987040967" stop="1399987061113"><name>my.company.AfterClassTest</name><test-cases><test-case start="1399987041026" stop="1399987041037" status="passed"><name>firstTest</name><steps/><attachments/><labels/></test-case><test-case start="1399987041027" stop="1399987041250" status="failed"><name>secondTest</name><failure><message>AssertionError: </message><stack-trace>java.lang.AssertionError
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1400681607868" stop="1400681627106">
+    <name>my.company.AfterClassTest</name>
+    <test-cases>
+        <test-case start="1400681607928" stop="1400681608186" status="failed">
+            <name>secondTest</name>
+            <failure>
+                <message>AssertionError: </message>
+                <stack-trace>java.lang.AssertionError
 	at org.junit.Assert.fail(Assert.java:86)
 	at org.junit.Assert.fail(Assert.java:95)
 	at my.company.AfterClassTest.secondTest(AfterClassTest.java:25)
@@ -20,7 +28,24 @@
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
 	at java.lang.Thread.run(Thread.java:722)
-</stack-trace></failure><steps/><attachments/><labels/></test-case><test-case start="1399987041252" stop="1399987041252" status="failed"><name>my.company.AfterClassTest</name><title>AfterClassTest</title><failure><message>AssertionError: </message><stack-trace>java.lang.AssertionError
+</stack-trace>
+            </failure>
+            <steps/>
+            <attachments/>
+            <labels/>
+        </test-case>
+        <test-case start="1400681607928" stop="1400681607939" status="passed">
+            <name>firstTest</name>
+            <steps/>
+            <attachments/>
+            <labels/>
+        </test-case>
+        <test-case start="1400681608188" stop="1400681608188" status="failed">
+            <name>my.company.AfterClassTest</name>
+            <title>AfterClassTest</title>
+            <failure>
+                <message>AssertionError: </message>
+                <stack-trace>java.lang.AssertionError
 	at org.junit.Assert.fail(Assert.java:86)
 	at org.junit.Assert.fail(Assert.java:95)
 	at my.company.AfterClassTest.afterClass(AfterClassTest.java:30)
@@ -56,4 +81,12 @@
 	at org.apache.maven.surefire.booter.ProviderFactory.invokeProvider(ProviderFactory.java:86)
 	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:153)
 	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:95)
-</stack-trace></failure><steps/><attachments/><labels/></test-case></test-cases><labels/></ns2:test-suite>
+</stack-trace>
+            </failure>
+            <steps/>
+            <attachments/>
+            <labels/>
+        </test-case>
+    </test-cases>
+    <labels/>
+</ns2:test-suite>

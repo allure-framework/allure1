@@ -1,4 +1,13 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?><ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1399987040975" stop="1399987061148"><name>my.company.NonAsciiTest</name><test-cases><test-case start="1399987041545" stop="1399987041545" status="passed"><name>test_pass</name><description type="text">Этот тест проходит</description><steps/><attachments/><labels/></test-case><test-case start="1399987041545" stop="1399987041590" status="broken"><name>test_raise_cyrilling</name><description type="text">Этот тест выкидывает исключение с русскими буквами</description><failure><message>Exception: Невероятная проблема!</message><stack-trace>java.lang.Exception: Невероятная проблема!
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1400681607876" stop="1400681627123">
+    <name>my.company.NonAsciiTest</name>
+    <test-cases>
+        <test-case start="1400681608883" stop="1400681608930" status="broken">
+            <name>test_raise_cyrilling</name>
+            <description type="text">Этот тест выкидывает исключение с русскими буквами</description>
+            <failure>
+                <message>Exception: Невероятная проблема!</message>
+                <stack-trace>java.lang.Exception: Невероятная проблема!
 	at my.company.NonAsciiTest.test_raise_cyrilling(NonAsciiTest.java:21)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
@@ -18,4 +27,19 @@
 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)
 	at java.lang.Thread.run(Thread.java:722)
-</stack-trace></failure><steps/><attachments/><labels/></test-case></test-cases><labels/></ns2:test-suite>
+</stack-trace>
+            </failure>
+            <steps/>
+            <attachments/>
+            <labels/>
+        </test-case>
+        <test-case start="1400681608883" stop="1400681608891" status="passed">
+            <name>test_pass</name>
+            <description type="text">Этот тест проходит</description>
+            <steps/>
+            <attachments/>
+            <labels/>
+        </test-case>
+    </test-cases>
+    <labels/>
+</ns2:test-suite>

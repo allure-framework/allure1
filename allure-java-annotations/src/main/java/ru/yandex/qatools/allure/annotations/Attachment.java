@@ -11,7 +11,7 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 public @interface Attachment {
 
-    String name() default "{method}";
+    String value() default "{method}";
 
-    String type() default "text/plain";
+    String type() default "";
 }

@@ -163,8 +163,8 @@
         </xsd:annotation>
         <xsd:all>
             <xsd:element name="title" type="xsd:string" nillable="true"/>
-            <xsd:element name="attachmentType" type="xsd:string" nillable="true"/>
             <xsd:element name="attachment" type="xsd:base64Binary" nillable="true"/>
+            <xsd:element name="type" type="xsd:string" nillable="true"/>
         </xsd:all>
     </xsd:complexType>
 

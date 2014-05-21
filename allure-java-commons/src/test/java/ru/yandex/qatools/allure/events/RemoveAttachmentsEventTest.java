@@ -81,10 +81,7 @@ public class RemoveAttachmentsEventTest {
     }
 
     public Attachment save(String string) throws IOException {
-        String type = "text/plain";
-        String source = writeAttachment(string.getBytes(Charsets.UTF_8), type);
-
-        return new Attachment().withSource(source).withType(type).withTitle("other-title");
+        return writeAttachment(string.getBytes(Charsets.UTF_8), "other-title");
     }
 
 }
