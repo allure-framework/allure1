@@ -92,8 +92,8 @@ describe('Testcase controllers', function() {
                 expect(scope.type).toBe('image');
             });
         }
-        createDetectImageTest('JPG');
-        createDetectImageTest('PNG');
+        createDetectImageTest('image/jpeg');
+        createDetectImageTest('image/png');
 
         function createDetectCodeTest(language) {
             it('should detect '+language+' code', function() {
@@ -107,13 +107,13 @@ describe('Testcase controllers', function() {
             });
         }
 
-        createDetectCodeTest('XML');
-        createDetectCodeTest('JSON');
+        createDetectCodeTest('text/xml');
+        createDetectCodeTest('application/json');
 
         it('should detect and work with TXT type', function() {
             var filename = 'test.txt';
             $httpBackend.expectGET('data/'+filename).respond(backendDefinitions[filename]);
-            var scope = createController({type: 'TXT', name: 'message', source:'test.txt'});
+            var scope = createController({type: 'text/plain', name: 'message', source:'test.txt'});
             expect(scope.type).toBe('text');
 
             $httpBackend.flush();
@@ -122,21 +122,21 @@ describe('Testcase controllers', function() {
         });
 
         it('should pass other types', function() {
-            var scope = createController({type: 'OTHER', name: 'config', source:'config.properties'});
+            var scope = createController({type: '*/*', name: 'config', source:'config.properties'});
             expect(scope.type).toBeUndefined();
         });
 
         it('should show message when load error has occurred', function() {
             $httpBackend.expectGET('data/report.xml').respond(404);
-            var scope = createController({type: 'XML', name: 'report', source:'report.xml'});
+            var scope = createController({type: 'text/xml', name: 'report', source:'report.xml'});
             $httpBackend.flush();
             expect(scope.notFound).toBeTruthy();
         });
 
         it('should re-detect type when attachment has changed', function() {
-            var scope = createController({type: 'PNG', name: 'picture', source:'pic'});
+            var scope = createController({type: 'image/png', name: 'picture', source:'pic'});
             expect(scope.type).toBe('image');
-            scope.attachment = {type: 'HTML', name: 'report', source:'report.html'};
+            scope.attachment = {type: 'text/html', name: 'report', source:'report.html'};
             scope.$apply();
             expect(scope.type).toBeUndefined();
         });
@@ -144,12 +144,12 @@ describe('Testcase controllers', function() {
         describe('expanded state', function() {
             function createExpanedStateTests(expanded, stateName) {
                 it('should detect expanded state ['+expanded+']', function() {
-                    var scope = createController({type: 'PNG', name: 'picture', source:'pic'});
+                    var scope = createController({type: 'image/png', name: 'picture', source:'pic'});
                     stateMock.is.andReturn(expanded);
                     expect(scope.isExpanded()).toBe(expanded);
                 });
                 it('should toggle expanded state ['+expanded+']', function() {
-                    var scope = createController({type: 'PNG', name: 'picture', source:'pic'});
+                    var scope = createController({type: 'image/png', name: 'picture', source:'pic'});
                     stateMock.is.andReturn(expanded);
                     scope.toggleExpanded();
                     expect(stateMock.go.calls.length).toBe(1);
@@ -229,10 +229,10 @@ describe('Testcase controllers', function() {
 
         describe('state change handling', function() {
             beforeEach(function() {
-                scope = createController({attachments: [{source: 'log', name: 'console log'}], steps: []});
+                scope = createController({attachments: [{uid: 'uid', source: 'log', name: 'console log'}], steps: []});
             });
             it('should set attachment when uid is present', function() {
-                scope.$broadcast('$stateChangeSuccess',  null, {attachmentUid: 'log'});
+                scope.$broadcast('$stateChangeSuccess',  null, {attachmentUid: 'uid'});
                 expect(scope.attachment).toBeDefined();
             });
             it('should not has attachment on route without uid', function() {

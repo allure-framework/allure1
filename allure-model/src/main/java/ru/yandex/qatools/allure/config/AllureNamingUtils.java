@@ -23,7 +23,7 @@ public final class AllureNamingUtils {
     }
 
     public static String generateTestSuiteFileName(String name) {
-        AllureResultsConfig config = AllureResultsConfig.newInstance();
+        AllureConfig config = AllureConfig.newInstance();
         return String.format(FILE_NAME_PATTER,
                 name,
                 config.getTestSuiteFileSuffix(),
@@ -35,14 +35,14 @@ public final class AllureNamingUtils {
     }
 
     public static Collection<File> listTestSuiteFiles(File... directory) {
-        AllureResultsConfig config = AllureResultsConfig.newInstance();
+        AllureConfig config = AllureConfig.newInstance();
         return listFiles(directory,
                 new RegexFileFilter(config.getTestSuiteFileRegex()),
                 CanReadFileFilter.CAN_READ);
     }
 
     public static String generateAttachmentFileName(String name, AttachmentType type) {
-        AllureResultsConfig config = AllureResultsConfig.newInstance();
+        AllureConfig config = AllureConfig.newInstance();
         return String.format(FILE_NAME_PATTER,
                 name,
                 config.getAttachmentFileSuffix(),
@@ -50,7 +50,7 @@ public final class AllureNamingUtils {
     }
 
     public static Collection<File> listAttachmentFiles(File... directories) {
-        AllureResultsConfig config = AllureResultsConfig.newInstance();
+        AllureConfig config = AllureConfig.newInstance();
         return listFiles(directories,
                 new RegexFileFilter(config.getAttachmentFileRegex()),
                 CanReadFileFilter.CAN_READ);

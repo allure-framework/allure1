@@ -2,7 +2,7 @@ package ru.yandex.qatools.allure.data.utils;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
-import java.util.UUID;
+import java.security.SecureRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,7 +28,10 @@ public final class TextUtils {
     }
 
     public static String generateUid() {
-        return UUID.randomUUID().toString();
+        SecureRandom rand = new SecureRandom();
+        byte[] randomBytes = new byte[8];
+        rand.nextBytes(randomBytes);
+        return new BigInteger(1, randomBytes).toString(RADIX);
     }
 
     public static String humanize(String text) {

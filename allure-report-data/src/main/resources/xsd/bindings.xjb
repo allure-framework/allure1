@@ -16,14 +16,6 @@
         <jaxb:class ref="ru.yandex.qatools.allure.model.Label"/>
     </jaxb:bindings>
 
-    <jaxb:bindings node="//xsd:complexType[@name='attachment']">
-        <jaxb:class ref="ru.yandex.qatools.allure.model.Attachment"/>
-    </jaxb:bindings>
-
-    <jaxb:bindings node="//xsd:complexType[@name='attachment-type']">
-        <jaxb:class ref="ru.yandex.qatools.allure.model.AttachmentType"/>
-    </jaxb:bindings>
-
     <jaxb:bindings node="//xsd:complexType[@name='severity-level']">
         <jaxb:class ref="ru.yandex.qatools.allure.model.SeverityLevel"/>
     </jaxb:bindings>

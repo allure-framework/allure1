@@ -105,7 +105,7 @@
     <xs:complexType name="attachment">
         <xs:attribute name="title" type="xs:string" use="required"/>
         <xs:attribute name="source" type="xs:string" use="required"/>
-        <xs:attribute name="type" type="qa:attachment-type" use="required"/>
+        <xs:attribute name="type" type="xs:string" use="required"/>
     </xs:complexType>
 
     <xs:simpleType name="attachment-type">

@@ -1,7 +1,7 @@
 package ru.yandex.qatools.allure;
 
 import org.apache.commons.io.IOUtils;
-import ru.yandex.qatools.allure.config.AllureReportConfig;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
@@ -84,7 +84,7 @@ public class Allure {
         Step root = stepStorage.pollLast();
 
         if (Status.PASSED.equals(testCase.getStatus())) {
-            new RemoveAttachmentsEvent(AllureReportConfig.newInstance().getRemoveAttachments()).process(root);
+            new RemoveAttachmentsEvent(AllureConfig.newInstance().getRemoveAttachments()).process(root);
         }
 
         testCase.getSteps().addAll(root.getSteps());

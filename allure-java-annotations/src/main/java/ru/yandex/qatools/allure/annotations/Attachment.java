@@ -1,23 +1,17 @@
 package ru.yandex.qatools.allure.annotations;
 
-import ru.yandex.qatools.allure.model.AttachmentType;
-
 import java.lang.annotation.*;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
- *         Date: 10.24.13
+ *         Date: 15.05.14
  */
-@Deprecated
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface Attach {
-
-    AttachmentType type() default AttachmentType.TXT;
+public @interface Attachment {
 
     String name() default "{method}";
 
-    String suffix() default ".txt";
-
+    String type() default "text/plain";
 }

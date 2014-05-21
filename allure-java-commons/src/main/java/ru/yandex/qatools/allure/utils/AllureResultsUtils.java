@@ -2,10 +2,11 @@ package ru.yandex.qatools.allure.utils;
 
 import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.apache.commons.io.FileUtils;
-import ru.yandex.qatools.allure.config.AllureResultsConfig;
+import org.apache.tika.mime.MimeTypeException;
+import org.apache.tika.mime.MimeTypes;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.exceptions.AllureException;
 import ru.yandex.qatools.allure.model.Attachment;
-import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
@@ -16,9 +17,8 @@ import java.io.File;
 import java.io.IOException;
 
 import static com.google.common.hash.Hashing.sha256;
-import static com.google.common.io.Files.hash;
 import static org.apache.commons.io.Charsets.UTF_8;
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateAttachmentFileName;
+import static org.apache.tika.mime.MimeTypes.getDefaultMimeTypes;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName;
 
 /**
@@ -29,7 +29,11 @@ public class AllureResultsUtils {
 
     private static File resultsDirectory;
 
-    private static final Object LOCK = new Object();
+    private static final Object RESULT_DIRECTORY_LOCK = new Object();
+
+    private static final Object ATTACHMENTS_LOCK = new Object();
+
+    private static final AllureConfig CONFIG = AllureConfig.newInstance();
 
     private AllureResultsUtils() {
     }
@@ -41,11 +45,11 @@ public class AllureResultsUtils {
         return resultsDirectory;
     }
 
+    //TODO: allure exception
     public static File createResultsDirectory() {
-        AllureResultsConfig resultsConfig = new AllureResultsConfig();
-        File resultsDirectory = resultsConfig.getResultsDirectory();
+        File resultsDirectory = CONFIG.getResultsDirectory();
 
-        synchronized (LOCK) {
+        synchronized (RESULT_DIRECTORY_LOCK) {
             if (resultsDirectory.exists() || resultsDirectory.mkdirs()) {
                 return resultsDirectory;
             } else {
@@ -66,13 +70,14 @@ public class AllureResultsUtils {
 
         try {
             Marshaller m = JAXBContext.newInstance(TestSuiteResult.class).createMarshaller();
+            m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             m.setProperty(
                     CharacterEscapeHandler.class.getName(),
                     XmlEscapeHandler.getInstance()
             );
             m.marshal(new ObjectFactory().createTestSuite(testSuiteResult), testSuiteResultFile);
-        } catch (JAXBException e) {
-            throw new AllureException("Can't marshall test suite result", e);
+        } catch (JAXBException ignored) {
+            //TODO
         }
     }
 
@@ -81,41 +86,47 @@ public class AllureResultsUtils {
         return attachmentFile.exists() && attachmentFile.canWrite() && attachmentFile.delete();
     }
 
-    public static String writeAttachment(Object attachment, AttachmentType type) {
-        if (attachment instanceof String) {
-            return writeAttachment((String) attachment, type);
-        } else if (attachment instanceof File) {
-            return writeAttachment((File) attachment, type);
-        }
-        throw new AllureException("Attach-method should be return 'java.lang.String' or 'java.io.File'.");
-    }
-
-    public static String writeAttachment(String attachment, AttachmentType type) {
+    public static String writeAttachmentSafety(byte[] attachment, String type) {
         try {
-            String name = sha256().hashString(attachment, UTF_8).toString();
-            String fileName = generateAttachmentFileName(name, type);
-            File file = new File(getResultsDirectory(), fileName);
-            if (!file.exists()) {
-                FileUtils.writeStringToFile(file, attachment, "UTF-8");
-            }
-            return fileName;
-        } catch (IOException e) {
-            throw new AllureException("Error while saving attach", e);
+            return writeAttachment(attachment, type);
+        } catch (Exception e) {
+            return writeAttachmentWithErrorMessage(e);
         }
     }
 
-    public static String writeAttachment(File attachment, AttachmentType type) {
+    public static String writeAttachmentWithErrorMessage(Throwable throwable) {
+        String message = throwable.getMessage();
         try {
-            String name = hash(attachment, sha256()).toString();
-            String fileName = generateAttachmentFileName(name, type);
-            File file = new File(getResultsDirectory(), fileName);
-            if (!file.exists()) {
-                FileUtils.copyFile(attachment, file);
-            }
-            return fileName;
-        } catch (IOException e) {
-            throw new AllureException("Error while saving attach", e);
+            writeAttachment(message.getBytes(UTF_8), "test/plain");
+        } catch (Exception ignore) {
         }
+        return null;
     }
 
+    public static String writeAttachment(byte[] attachment, String type) throws IOException {
+        String name = generateAttachmentName(attachment);
+        String extension = getExtensionByMimeType(type);
+        String source = name + extension;
+        File file = new File(getResultsDirectory(), source);
+        synchronized (ATTACHMENTS_LOCK) {
+            if (!file.exists()) {
+                FileUtils.writeByteArrayToFile(file, attachment);
+            }
+        }
+        return source;
+    }
+
+    public static String generateAttachmentName(byte[] attachment) {
+        String prefix = sha256().hashBytes(attachment).toString();
+        return prefix + CONFIG.getAttachmentFileSuffix();
+    }
+
+    public static String getExtensionByMimeType(String type) {
+        MimeTypes types = getDefaultMimeTypes();
+        try {
+            return types.forName(type).getExtension();
+        } catch (MimeTypeException ignored) {
+            return "";
+        }
+    }
 }

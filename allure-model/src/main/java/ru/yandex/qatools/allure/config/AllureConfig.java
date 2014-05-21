@@ -11,8 +11,14 @@ import java.io.File;
  *         Date: 12/13/13
  */
 @SuppressWarnings("unused")
-@Resource.Classpath("allure.results.properties")
-public class AllureResultsConfig {
+@Resource.Classpath("allure.properties")
+public class AllureConfig {
+
+    @Property("allure.model.schema.file.name")
+    private String schemaFileName = "allure.xsd";
+
+    @Property("allure.report.remove.attachments")
+    private String removeAttachments = "a^";
 
     @Property("allure.results.testsuite.file.regex")
     private String testSuiteFileRegex = ".*-testsuite\\.xml";
@@ -24,16 +30,24 @@ public class AllureResultsConfig {
     private String testSuiteFileExtension = "xml";
 
     @Property("allure.results.attachment.file.regex")
-    private String attachmentFileRegex = ".+-attachment\\.\\w+";
+    private String attachmentFileRegex = ".+-attachment(\\..+)?";
 
     @Property("allure.results.attachment.file.suffix")
-    private String attachmentFileSuffix = "attachment";
+    private String attachmentFileSuffix = "-attachment";
 
     @Property("allure.results.directory")
     private File resultsDirectory = new File("target/allure-results");
 
-    public AllureResultsConfig() {
+    public AllureConfig() {
         PropertyLoader.populate(this);
+    }
+
+    public String getSchemaFileName() {
+        return schemaFileName;
+    }
+
+    public String getRemoveAttachments() {
+        return removeAttachments;
     }
 
     public String getTestSuiteFileRegex() {
@@ -56,16 +70,12 @@ public class AllureResultsConfig {
         return attachmentFileSuffix;
     }
 
-    public String getResultsDirectoryPath() {
-        return resultsDirectory.getAbsolutePath();
-    }
-
     public File getResultsDirectory() {
         return resultsDirectory;
     }
 
-    public static AllureResultsConfig newInstance() {
-        return new AllureResultsConfig();
+    public static AllureConfig newInstance() {
+        return new AllureConfig();
     }
 
 }

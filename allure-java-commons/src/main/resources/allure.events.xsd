@@ -22,6 +22,7 @@
     <xsd:element name="step-finished-event" type="ns:abstract-step-finished-event"/>
 
     <xsd:element name="make-attach-event" type="ns:abstract-make-attach-event"/>
+    <xsd:element name="make-attachment-event" type="ns:abstract-make-attachment-event"/>
 
     <xsd:element name="clear-step-storage-event" type="ns:clear-step-storage-event"/>
     <xsd:element name="clear-test-storage-event" type="ns:clear-test-storage-event"/>
@@ -150,7 +151,20 @@
         <xsd:all>
             <xsd:element name="title" type="xsd:string" nillable="true"/>
             <xsd:element name="attachmentType" type="ns:attachment-type" nillable="true"/>
-            <xsd:element name="attach" type="ns:attach" nillable="true"/>
+            <xsd:element name="attach" type="ns:attachment" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="abstract-make-attachment-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.StepEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="title" type="xsd:string" nillable="true"/>
+            <xsd:element name="attachmentType" type="xsd:string" nillable="true"/>
+            <xsd:element name="attachment" type="xsd:base64Binary" nillable="true"/>
         </xsd:all>
     </xsd:complexType>
 
@@ -166,7 +180,7 @@
 
 
     <xsd:complexType name="attachment-type"/>
-    <xsd:complexType name="attach"/>
+    <xsd:complexType name="attachment"/>
 
     <xsd:complexType name="severity"/>
     <xsd:complexType name="description"/>

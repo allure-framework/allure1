@@ -1,13 +1,14 @@
 package ru.yandex.qatools.allure.utils;
 
+import org.apache.commons.io.Charsets;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import ru.yandex.qatools.allure.model.Attachment;
-import ru.yandex.qatools.allure.model.AttachmentType;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.Assert.*;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.deleteAttachment;
@@ -26,9 +27,9 @@ public class SaveAttachmentTest {
 
     public File resultsDirectory;
 
-    private static final String FILE = "simple-file-attachment.txt";
+    private static final String ATTACHMENT = "simple attachment context";
 
-    private static final String STRING = "simple attachment context";
+    private static final String TITLE = "title";
 
     @Before
     public void setUp() throws Exception {
@@ -38,15 +39,15 @@ public class SaveAttachmentTest {
 
     @Test
     public void saveAndDeleteTest() throws Exception {
-        File file = getResourceAsFile(FILE);
-        Attachment first = save(file);
+        Attachment first = save(ATTACHMENT);
+        ;
         assertNotNull(first);
         String firstSource = first.getSource();
         assertNotNull(firstSource);
 
         assertThat(resultsDirectory, contains(firstSource));
 
-        Attachment second = save(STRING);
+        Attachment second = save(ATTACHMENT);
         assertNotNull(second);
         String secondSource = second.getSource();
         assertNotNull(secondSource);
@@ -66,21 +67,11 @@ public class SaveAttachmentTest {
         assertThat(resultsDirectory, notContains(secondSource));
     }
 
-    public Attachment save(File file) {
-        String source = writeAttachment(file, AttachmentType.TXT);
+    public Attachment save(String string) throws IOException {
+        String type = "text/plain";
+        String source = writeAttachment(string.getBytes(Charsets.UTF_8), type);
 
-        return new Attachment().withSource(source).withType(AttachmentType.TXT).withTitle("some-title");
+        return new Attachment().withSource(source).withType(type).withTitle(TITLE);
     }
-
-    public Attachment save(String string) {
-        String source = writeAttachment(string, AttachmentType.TXT);
-
-        return new Attachment().withSource(source).withType(AttachmentType.TXT).withTitle("other-title");
-    }
-
-    public File getResourceAsFile(String resourcePath) throws Exception {
-        return new File(getClass().getClassLoader().getResource(resourcePath).toURI());
-    }
-
 
 }
