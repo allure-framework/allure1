@@ -20,7 +20,7 @@ import static ru.yandex.qatools.allure.utils.DirectoryMatcher.notContains;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 30.04.14
  */
-public class SaveAttachmentTest {
+public class DeleteAttachmentTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
@@ -40,7 +40,7 @@ public class SaveAttachmentTest {
     @Test
     public void saveAndDeleteTest() throws Exception {
         Attachment first = save(ATTACHMENT);
-        ;
+
         assertNotNull(first);
         String firstSource = first.getSource();
         assertNotNull(firstSource);
@@ -68,10 +68,7 @@ public class SaveAttachmentTest {
     }
 
     public Attachment save(String string) throws IOException {
-        String type = "text/plain";
-        String source = writeAttachment(string.getBytes(Charsets.UTF_8), type);
-
-        return new Attachment().withSource(source).withType(type).withTitle(TITLE);
+        return writeAttachment(string.getBytes(Charsets.UTF_8), TITLE);
     }
 
 }

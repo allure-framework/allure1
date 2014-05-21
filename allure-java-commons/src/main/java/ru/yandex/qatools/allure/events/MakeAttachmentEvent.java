@@ -11,22 +11,15 @@ import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachmentS
  */
 public class MakeAttachmentEvent extends AbstractMakeAttachmentEvent {
 
-    public MakeAttachmentEvent(String title, String attachmentType, byte[] attachment) {
+    public MakeAttachmentEvent(byte[] attachment, String title, String type) {
         setTitle(title);
-        setAttachmentType(attachmentType);
+        setType(type);
         setAttachment(attachment);
     }
 
     @Override
     public void process(Step step) {
-        Attachment attachment = new Attachment();
-
-        String source = writeAttachmentSafety(getAttachment(), getAttachmentType());
-
-        attachment.setTitle(getTitle());
-        attachment.setType(getAttachmentType());
-        attachment.setSource(source);
-
+        Attachment attachment = writeAttachmentSafety(getAttachment(), getTitle(), getType());
         step.getAttachments().add(attachment);
     }
 

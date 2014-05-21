@@ -62,7 +62,7 @@
             <ng-include src="'testcaseStep.tpl'"></ng-include>
         </div>
         <div ng-include="'testcaseFailure.tpl'" ng-if="step.failure"></div>
-        <div class="list-item clickable" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.source)" ng-class="{active:attachment==$parent.attachment}">
+        <div class="list-item clickable" ng-repeat="attachment in step.attachments" ng-click="setAttachment(attachment.uid)" ng-class="{active:attachment==$parent.attachment}">
             <ng-include src="'testcaseAttachment.tpl'"></ng-include>
         </div>
     </div>

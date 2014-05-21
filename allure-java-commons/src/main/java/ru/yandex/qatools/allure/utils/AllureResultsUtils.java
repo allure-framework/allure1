@@ -2,6 +2,7 @@ package ru.yandex.qatools.allure.utils;
 
 import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.apache.commons.io.FileUtils;
+import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MimeTypeException;
 import org.apache.tika.mime.MimeTypes;
 import ru.yandex.qatools.allure.config.AllureConfig;
@@ -13,6 +14,7 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -86,34 +88,43 @@ public class AllureResultsUtils {
         return attachmentFile.exists() && attachmentFile.canWrite() && attachmentFile.delete();
     }
 
-    public static String writeAttachmentSafety(byte[] attachment, String type) {
+    public static Attachment writeAttachmentSafety(byte[] attachment, String title, String type) {
         try {
-            return writeAttachment(attachment, type);
+            return type == null || type.isEmpty()
+                    ? writeAttachment(attachment, title)
+                    : writeAttachment(attachment, title, type);
+
         } catch (Exception e) {
-            return writeAttachmentWithErrorMessage(e);
+            return writeAttachmentWithErrorMessage(e, title);
         }
     }
 
-    public static String writeAttachmentWithErrorMessage(Throwable throwable) {
+    public static Attachment writeAttachmentWithErrorMessage(Throwable throwable, String title) {
         String message = throwable.getMessage();
         try {
-            writeAttachment(message.getBytes(UTF_8), "test/plain");
+            return writeAttachment(message.getBytes(UTF_8), title);
         } catch (Exception ignore) {
         }
         return null;
     }
 
-    public static String writeAttachment(byte[] attachment, String type) throws IOException {
+    public static Attachment writeAttachment(byte[] attachment, String title, String type) throws IOException {
         String name = generateAttachmentName(attachment);
         String extension = getExtensionByMimeType(type);
         String source = name + extension;
+
         File file = new File(getResultsDirectory(), source);
         synchronized (ATTACHMENTS_LOCK) {
             if (!file.exists()) {
                 FileUtils.writeByteArrayToFile(file, attachment);
             }
         }
-        return source;
+        return new Attachment().withTitle(title).withSource(source).withType(type);
+    }
+
+    public static Attachment writeAttachment(byte[] attachment, String title) throws IOException {
+        String type = getDefaultMimeTypes().detect(new ByteArrayInputStream(attachment), new Metadata()).toString();
+        return writeAttachment(attachment, title, type);
     }
 
     public static String generateAttachmentName(byte[] attachment) {

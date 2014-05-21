@@ -28,53 +28,26 @@ public class MakeAttachEvent extends AbstractMakeAttachEvent {
 
     @Override
     public void process(Step step) {
-        Attachment attachment = new Attachment();
-
-        String type = convertType(getAttachmentType());
-        String source = writeSafety(getAttach(), type);
-
-        attachment.setSource(source);
-        attachment.setTitle(getTitle());
-        attachment.setType(type);
+        Attachment attachment = writeSafety(getAttach(), getTitle());
 
         step.getAttachments().add(attachment);
     }
 
-    private static String write(Object attachment, String type) throws IOException {
+    private static Attachment write(Object attachment, String title) throws IOException {
         if (attachment instanceof String) {
-            return writeAttachment(((String) attachment).getBytes(Charsets.UTF_8), type);
+            return writeAttachment(((String) attachment).getBytes(Charsets.UTF_8), title);
         } else if (attachment instanceof File) {
             byte[] bytes = FileUtils.readFileToByteArray((File) attachment);
-            return writeAttachment(bytes, type);
+            return writeAttachment(bytes, title);
         }
         throw new AllureException("Attach-method should be return 'java.lang.String' or 'java.io.File'.");
     }
 
-    private static String writeSafety(Object attachment, String type) {
+    private static Attachment writeSafety(Object attachment, String title) {
         try {
-            return write(attachment, type);
+            return write(attachment, title);
         } catch (Exception e) {
-            return writeAttachmentWithErrorMessage(e);
+            return writeAttachmentWithErrorMessage(e, title);
         }
     }
-
-    private static String convertType(AttachmentType type) {
-        switch (type) {
-            case XML:
-                return "text/xml";
-            case HTML:
-                return "text/html";
-            case PNG:
-                return "image/png";
-            case JPG:
-                return "image/jpeg";
-            case JSON:
-                return "application/json";
-            case TXT:
-                return "text/plain";
-            default:
-                return "*/*";
-        }
-    }
-
 }

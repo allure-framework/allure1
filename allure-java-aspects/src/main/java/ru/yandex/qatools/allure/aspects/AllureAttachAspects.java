@@ -36,6 +36,7 @@ public class AllureAttachAspects {
         //pointcut body, should be empty
     }
 
+    @SuppressWarnings("deprecation")
     @Deprecated
     @AfterReturning(pointcut = "anyMethod() && withAttachAnnotation()", returning = "result")
     public void attach(JoinPoint joinPoint, Object result) {
@@ -50,7 +51,7 @@ public class AllureAttachAspects {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Attachment attachment = methodSignature.getMethod().getAnnotation(Attachment.class);
         String attachTitle = AllureAspectUtils.getTitle(
-                attachment.name(),
+                attachment.value(),
                 methodSignature.getName(),
                 joinPoint.getArgs()
         );
@@ -61,7 +62,7 @@ public class AllureAttachAspects {
         } else if (result instanceof byte[]) {
             bytes = (byte[]) result;
         }
-        Allure.LIFECYCLE.fire(new MakeAttachmentEvent(attachTitle, attachment.type(), bytes));
+        Allure.LIFECYCLE.fire(new MakeAttachmentEvent(bytes, attachTitle, attachment.type()));
     }
 
 }

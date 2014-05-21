@@ -1,0 +1,11 @@
+{
+    "filed": "simple",
+    "complexField": {
+        "subField": "sub-simple",
+        "sub2Field": "sub2-simple"
+    },
+    "arrayField": [
+        "first",
+        "second"
+    ]
+}
