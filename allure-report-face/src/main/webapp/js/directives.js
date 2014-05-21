@@ -1,15 +1,20 @@
-/*global angular, $, Rainbow */
+/*global angular, $, hljs */
 angular.module('allure.directives', [])
-    .directive('rainbowHighlight', function() {
+    .directive('highlight', function() {
         'use strict';
         return function($scope, elm, attrs) {
-            $scope.$watch(attrs.rainbowHighlight, function(code) {
+            $scope.$watch(attrs.highlight, function(code) {
                 if(!code) {
                     return;
                 }
-                Rainbow.color(code, attrs.language, function(highlighted) {
-                    elm.html(highlighted);
-                });
+                var result;
+                if(attrs.language) {
+                    result = hljs.highlight(code, attrs.language).value;
+                }
+                else {
+                    result = hljs.highlightAuto(code).value;
+                }
+                elm.html(result);
             });
         };
     })

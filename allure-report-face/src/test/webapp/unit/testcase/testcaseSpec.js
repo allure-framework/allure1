@@ -59,7 +59,7 @@ describe('Testcase controllers', function() {
 
     describe('AttachmentPreviewCtrl', function() {
         var backendDefinitions = {
-                'test.txt': 'test content',
+                'report.txt': 'test content',
                 'report.xml': '<root>test content xml</root>',
                 'report.json': '{"root": {"content":"test content"}}'
             },
@@ -95,30 +95,26 @@ describe('Testcase controllers', function() {
         createDetectImageTest('image/jpeg');
         createDetectImageTest('image/png');
 
-        function createDetectCodeTest(language) {
-            it('should detect '+language+' code', function() {
+        function createDetectTextTest(language) {
+            it('should detect '+language, function() {
                 var filename = 'report.'+language.toLowerCase();
                 $httpBackend.expectGET('data/'+filename).respond(backendDefinitions[filename]);
                 var scope = createController({type: language, name: 'report', source:'report.'+language.toLowerCase()});
-                expect(scope.type).toBe('code');
+                expect(scope.type).toBe('text');
 
                 $httpBackend.flush();
                 expect(scope.attachText).toBe(backendDefinitions['report.'+language.toLowerCase()]);
             });
         }
 
-        createDetectCodeTest('text/xml');
-        createDetectCodeTest('application/json');
+        createDetectTextTest('text/xml');
+        createDetectTextTest('application/json');
+        createDetectTextTest('text/plain');
 
-        it('should detect and work with TXT type', function() {
-            var filename = 'test.txt';
-            $httpBackend.expectGET('data/'+filename).respond(backendDefinitions[filename]);
-            var scope = createController({type: 'text/plain', name: 'message', source:'test.txt'});
-            expect(scope.type).toBe('text');
-
-            $httpBackend.flush();
-            expect(scope.notFound).toBeFalsy();
-            expect(scope.attachText).toBe('test content');
+        it("should extract 'json' from 'application/json'", function() {
+            $httpBackend.expectGET('data/report.json').respond(backendDefinitions['report.json']);
+            var scope = createController({type: 'application/json', name: 'report', source:'report.json'});
+            expect(scope.language).toBe('json');
         });
 
         it('should pass other types', function() {

@@ -119,6 +119,7 @@ angular.module('allure.testcase.controllers', [])
         };
         $scope.$watch('attachment', function(attachment) {
             $scope.notFound = false;
+            delete $scope.language;
             //noinspection FallthroughInSwitchStatementJS
             switch (attachment.type) {
                 case 'image/jpeg':
@@ -127,14 +128,14 @@ angular.module('allure.testcase.controllers', [])
                 case 'image/*':
                     $scope.type = "image";
                     break;
+                case 'text/xml':
+                case 'application/xml':
+                case 'application/json':
+                    $scope.language = attachment.type.split('/').pop();
+                //fallthrough
                 case 'text/plain':
                 case 'text/*':
                     $scope.type = "text";
-                    fileGetContents($scope.getSourceUrl(attachment));
-                    break;
-                case 'text/xml':
-                case 'application/json':
-                    $scope.type = "code";
                     fileGetContents($scope.getSourceUrl(attachment));
                     break;
                 default:
