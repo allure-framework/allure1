@@ -37,6 +37,12 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
                     }
                 }
             })
+            .state('defects.defect', {
+                url: "/:defectUid"
+            })
+            .state('defects.defect.expanded', {
+                url: '/expanded'
+            })
             .state('home', {
                 url: "/home",
                 templateUrl: "templates/home.html",
@@ -85,7 +91,7 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
             .state('features.story.expanded', {
                 url: '/expanded'
             });
-        testcaseProvider.attachStates('defects');
+        testcaseProvider.attachStates('defects.defect');
         testcaseProvider.attachStates('features.story');
         testcaseProvider.attachStates('home.testsuite');
     });
