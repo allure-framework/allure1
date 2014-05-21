@@ -16,10 +16,7 @@
             <img ng-src="{{getSourceUrl(attachment)}}" alt="Attachment image" ng-class="{'zoom-in': !isExpanded(), 'zoom-out': isExpanded()}" ng-click="toggleExpanded()" on-error="onError()" />
         </div>
         <div ng-switch-when="text">
-            <pre>{{attachText}}</pre>
-        </div>
-        <div ng-switch-when="code">
-            <pre><code data-language="{{attachment.type | lowercase}}" rainbow-highlight="attachText"></code></pre>
+            <pre><code highlight="attachText"></code></pre>
         </div>
         <div ng-switch-default>
             <iframe style="width: 100%; min-height: 600px;" frameborder="0" ng-src="{{getSourceUrl(attachment)}}" on-error="onError()"></iframe>
