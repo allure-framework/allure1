@@ -11,7 +11,7 @@ import ru.yandex.qatools.properties.annotations.Property;
 public class AllureEnvironment {
 
     @Property("baseUrl")
-    private String baseUrl = "http://0.0.0.0:9010/";
+    private String baseUrl = "http://127.0.0.1:9010/";
 
     public AllureEnvironment() {
         PropertyLoader.populate(this);

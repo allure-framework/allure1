@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure;
 import org.apache.commons.io.IOUtils;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
@@ -35,6 +36,7 @@ public class JSErrorsRule extends TestWatcher {
     @Override
     protected void starting(Description description) {
         driver = new PhantomJSDriver(new DesiredCapabilities());
+        driver.manage().window().setSize(new Dimension(1024, 768));
         driver.get(environment.getBaseUrl());
         ((JavascriptExecutor) driver).executeScript(loggingJS);
     }
