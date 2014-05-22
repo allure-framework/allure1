@@ -20,11 +20,11 @@ public class DefectsDataProvider implements DataProvider {
     public static final String ERRORS_JSON = "defects.json";
 
     @Override
-    public void provide(final String testPack, final File outputDirectory) {
+    public void provide(String testPack, File outputDirectory) {
         
-        final String allureErrorsBody = applyTransformation(testPack, TEST_RUN_TO_ERRORS_XSL);
+        String allureErrorsBody = applyTransformation(testPack, TEST_RUN_TO_ERRORS_XSL);
 
-        final AllureDefects allureDefects = JAXB.unmarshal(
+        AllureDefects allureDefects = JAXB.unmarshal(
                 new StringReader(allureErrorsBody),
                 AllureDefects.class
         );
