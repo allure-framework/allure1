@@ -27,11 +27,14 @@ public class TestSuiteFiles {
 
     private final String suiteFiles;
     
-    public TestSuiteFiles(File... dirs) {
+    private final boolean validateXML; 
+    
+    public TestSuiteFiles(boolean validateXML, File... dirs) {
         Collection<File> testSuitesFiles = listTestSuiteFiles(dirs);
 
         ListFiles listFiles = createListFiles(testSuitesFiles);
         suiteFiles = listFilesToString(listFiles);
+        this.validateXML = validateXML;
 
     }
 
@@ -39,8 +42,10 @@ public class TestSuiteFiles {
         ListFiles listFiles = new ListFiles();
         for (File file : files) {
             try {
-                Validator validator = getAllureSchemaValidator();
-                validator.validate(new StreamSource(file));
+                if (validateXML){
+                    Validator validator = getAllureSchemaValidator();
+                    validator.validate(new StreamSource(file));
+                }
                 listFiles.getFiles().add(file.toURI().toString());
             } catch (Exception e) {
                 //TODO: log validation error (#183)

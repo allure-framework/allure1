@@ -21,6 +21,8 @@ public class AllureReportGenerator {
     private List<DataProvider> dataProviders = Arrays.asList(defaultProviders());
 
     protected File[] inputDirectories;
+    
+    private boolean validateXML = true;
 
     public AllureReportGenerator(final File... inputDirectories) {
         this.inputDirectories = inputDirectories;
@@ -36,13 +38,17 @@ public class AllureReportGenerator {
         }
         copyAttachments(inputDirectories, reportDataDirectory);
 
-        TestSuiteFiles testSuiteFiles = new TestSuiteFiles(inputDirectories);
+        TestSuiteFiles testSuiteFiles = new TestSuiteFiles(validateXML, inputDirectories);
         String testRun = testSuiteFiles.generateTestRun();
         
         for (final DataProvider provider : dataProviders) {
             provider.provide(testRun, reportDataDirectory);
         }
 
+    }
+
+    public void setValidateXML(boolean validateXML) {
+        this.validateXML = validateXML;
     }
 
     public static DataProvider[] defaultProviders() {
