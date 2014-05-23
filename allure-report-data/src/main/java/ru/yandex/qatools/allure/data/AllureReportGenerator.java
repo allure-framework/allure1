@@ -21,13 +21,15 @@ public class AllureReportGenerator {
     private List<DataProvider> dataProviders = Arrays.asList(defaultProviders());
 
     protected File[] inputDirectories;
+    
+    private boolean validateXML = true;
 
     public AllureReportGenerator(final File... inputDirectories) {
         this.inputDirectories = inputDirectories;
     }
 
-    public void generate(final File reportDirectory) {
-        final File reportDataDirectory = new File(reportDirectory, DATA_SUFFIX);
+    public void generate(File reportDirectory) {
+        File reportDataDirectory = new File(reportDirectory, DATA_SUFFIX);
 
         if (!(reportDataDirectory.exists() || reportDataDirectory.mkdirs())) {
             throw new RuntimeException(
@@ -36,17 +38,17 @@ public class AllureReportGenerator {
         }
         copyAttachments(inputDirectories, reportDataDirectory);
 
-        final TestSuiteFiles testSuiteFiles = new TestSuiteFiles(inputDirectories);
-        final String testRun = testSuiteFiles.generateTestRun();
+        TestSuiteFiles testSuiteFiles = new TestSuiteFiles(validateXML, inputDirectories);
+        String testRun = testSuiteFiles.generateTestRun();
         
-        for (final File skippedSuiteFile: testSuiteFiles.getSkippedSuiteFiles()){
-            //TODO: here we can log invalid suite files (https://github.com/allure-framework/allure-core/issues/183)
-        }
-
         for (final DataProvider provider : dataProviders) {
             provider.provide(testRun, reportDataDirectory);
         }
 
+    }
+
+    public void setValidateXML(boolean validateXML) {
+        this.validateXML = validateXML;
     }
 
     public static DataProvider[] defaultProviders() {
@@ -59,8 +61,8 @@ public class AllureReportGenerator {
         };
     }
 
-    public static void copyAttachments(final File[] dirs, final File outputDirectory) {
-        for (final File attach : listAttachmentFiles(dirs)) {
+    public static void copyAttachments(File[] dirs, File outputDirectory) {
+        for (File attach : listAttachmentFiles(dirs)) {
             try {
                 copyAttachment(attach, new File(outputDirectory, attach.getName()));
             } catch (IOException e) {
@@ -69,7 +71,7 @@ public class AllureReportGenerator {
         }
     }
 
-    public static void copyAttachment(final File srcFile, final File destFile) throws IOException {
+    public static void copyAttachment(File srcFile, File destFile) throws IOException {
         if (!srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) {
             FileUtils.copyFile(srcFile, destFile);
         }

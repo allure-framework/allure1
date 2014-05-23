@@ -5,9 +5,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import static ru.yandex.qatools.allure.config.AllureModelUtils.getAllureSchemaValidator;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
@@ -29,26 +27,28 @@ public class TestSuiteFiles {
 
     private final String suiteFiles;
     
-    private final List<File> skippedSuiteFiles = new ArrayList<>();
+    private final boolean validateXML; 
+    
+    public TestSuiteFiles(boolean validateXML, File... dirs) {
+        Collection<File> testSuitesFiles = listTestSuiteFiles(dirs);
 
-    public TestSuiteFiles(final File... dirs) {
-        final Collection<File> testSuitesFiles = listTestSuiteFiles(dirs);
-
-        final ListFiles listFiles = createListFiles(testSuitesFiles);
+        ListFiles listFiles = createListFiles(testSuitesFiles);
         suiteFiles = listFilesToString(listFiles);
+        this.validateXML = validateXML;
 
     }
 
-    private ListFiles createListFiles(final Collection<File> files) {
-        final ListFiles listFiles = new ListFiles();
-        Validator validator;
-        for (final File file : files) {
+    private ListFiles createListFiles(Collection<File> files) {
+        ListFiles listFiles = new ListFiles();
+        for (File file : files) {
             try {
-                validator = getAllureSchemaValidator();
-                validator.validate(new StreamSource(file));
+                if (validateXML){
+                    Validator validator = getAllureSchemaValidator();
+                    validator.validate(new StreamSource(file));
+                }
                 listFiles.getFiles().add(file.toURI().toString());
             } catch (Exception e) {
-                skippedSuiteFiles.add(file);
+                //TODO: log validation error (#183)
             }
         }
         return listFiles;
@@ -69,7 +69,4 @@ public class TestSuiteFiles {
         );
     }
 
-    public List<File> getSkippedSuiteFiles() {
-        return skippedSuiteFiles;
-    }
 }
