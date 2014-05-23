@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure;
 
-import org.apache.commons.io.IOUtils;
 import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.model.Status;
@@ -10,8 +9,6 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import ru.yandex.qatools.allure.storages.StepStorage;
 import ru.yandex.qatools.allure.storages.TestCaseStorage;
 import ru.yandex.qatools.allure.storages.TestSuiteStorage;
-
-import java.io.IOException;
 
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeTestSuiteResult;
 
@@ -23,8 +20,6 @@ public class Allure {
 
     public static final Allure LIFECYCLE = new Allure();
 
-    private static final String VERSION_FILE_NAME = "version.txt";
-
     private final StepStorage stepStorage = new StepStorage();
 
     private final TestCaseStorage testCaseStorage = new TestCaseStorage();
@@ -33,14 +28,7 @@ public class Allure {
 
     private final Object lock = new Object();
 
-    private String version;
-
     private Allure() {
-        try {
-            version = IOUtils.toString(getClass().getClassLoader().getResourceAsStream(VERSION_FILE_NAME));
-        } catch (IOException e) {
-            version = "unknown";
-        }
     }
 
     public void fire(StepStartedEvent event) {
@@ -130,6 +118,6 @@ public class Allure {
     }
 
     public String getVersion() {
-        return version;
+        return AllureConfig.newInstance().getVersion();
     }
 }
