@@ -62,6 +62,7 @@ public class AllureAttachAspects {
         } else if (result instanceof byte[]) {
             bytes = (byte[]) result;
         }
+
         Allure.LIFECYCLE.fire(new MakeAttachmentEvent(bytes, attachTitle, attachment.type()));
     }
 
