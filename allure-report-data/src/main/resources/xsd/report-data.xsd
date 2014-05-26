@@ -153,6 +153,7 @@
 
     <xsd:complexType name="defect-item">
         <xsd:all>
+            <xsd:element name="uid" type="xsd:string"/>
             <xsd:element name="failure" type="alr:failure"/>
             <xsd:element name="test-cases" type="alr:allure-test-cases-info"/>
         </xsd:all>

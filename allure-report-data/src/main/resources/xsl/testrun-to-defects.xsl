@@ -51,6 +51,7 @@
         <xsl:for-each-group select="current-group()"
                             group-by="utils:getMessageMask(failure/message)">
             <xsl:element name="defect-item">
+                <xsl:call-template name="add-uid-node"/>
                 <xsl:element name="failure">
                     <xsl:element name="message">
                         <xsl:choose>
@@ -73,5 +74,11 @@
                 </xsl:element>
             </xsl:element>
         </xsl:for-each-group>
+    </xsl:template>
+
+    <xsl:template name="add-uid-node">
+        <xsl:element name="uid">
+            <xsl:value-of select="utils:generateUid()"/>
+        </xsl:element>
     </xsl:template>
 </xsl:stylesheet>

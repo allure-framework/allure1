@@ -6,9 +6,7 @@ angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, 
         return $state.is(statename);
     };
     $scope.setDefect = function(defect) {
-        //TODO @charlie: here should be:
-        //$state.go('defects.defect', {defectUid: defect.uid});
-        $state.go('defects.defect', {defectUid: defect.failure.message});
+        $state.go('defects.defect', {defectUid: defect.uid});
     };
     $scope.select = function(direction) {
         var index = defectList.indexOf($scope.defect),
@@ -42,11 +40,7 @@ angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, 
         delete $scope.testcase.uid;
         delete $scope.defect;
         if(params.defectUid) {
-            //TODO @charlie: here should be:
-            //$scope.defect = defectList.findBy('uid', params.defectUid);
-            $scope.defect = defectList.items.filter(function(defect) {
-                return defect.failure.message === params.defectUid;
-            })[0];
+            $scope.defect = defectList.findBy('uid', params.defectUid);
         }
         if(params.testcaseUid) {
             $scope.testcase.uid = params.testcaseUid;
