@@ -1,122 +1,177 @@
 package ru.yandex.qatools.allure;
 
 import io.airlift.command.*;
-import io.airlift.command.Cli.CliBuilder;
+import org.apache.commons.io.IOUtils;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.data.AllureReportGenerator;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.jar.JarFile;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.jar.JarEntry;
-import java.util.jar.Manifest;
+import java.util.jar.JarFile;
 
+/**
+ * @author Dmitry Baev charlie@yandex-team.ru
+ *         Date: 23.05.14
+ */
+@Command(name = "allure", description = "allure report generation utility")
 public class AllureCli {
 
-    private static final String DEFAULT_OUTPUT_PATH = "output";
     private static final String REPORT_FACE_DIRECTORY = "allure-report-face";
 
+    private static final String DEFAULT_OUTPUT_PATH = "output";
+
+    @Inject
+    public HelpOption helpOption;
+
+    @Option(type = OptionType.COMMAND,
+            name = {"-o", "--outputPath"},
+            description = "Directory to output report files to (default is \"" + DEFAULT_OUTPUT_PATH + "\")")
+    public String outputPath = DEFAULT_OUTPUT_PATH;
+
+    @Arguments(title = "input directories",
+            description = "A list of input directories to be processed")
+    public List<String> inputPaths;
+
+    @Option(name = {"--version"})
+    public boolean version;
+
+    @SuppressWarnings("unused")
+    @Option(name = {"-v", "--verbose"})
+    public boolean verbose;
+
     public static void main(String[] args) {
-
-        final CliBuilder<Runnable> builder = Cli.<Runnable>builder("allure")
-                .withDescription("Allure command line client")
-                .withDefaultCommand(Help.class)
-                .withCommands(Help.class, GenerateCommand.class, ShowVersionCommand.class);
-
-        final Cli<Runnable> parser = builder.build();
-
-        parser.parse(args).run();
-
-    }
-
-    @Command(name = "generate", description = "Generate HTML report from XML files")
-    public static class GenerateCommand implements Runnable {
-
-        @Option(type = OptionType.COMMAND, name = {"-o", "--outputPath"}, description = "Directory to output report files to (default is \"" + DEFAULT_OUTPUT_PATH + "\")")
-        public String outputPath = DEFAULT_OUTPUT_PATH;
-
-        @Arguments(title = "inputPaths", required = true, description = "A list of input directories to be processed")
-        public List<String> inputPaths;
-
-        public void run() {
-
-            try {
-                final File outputDirectory = new File(outputPath);
-                if (!outputDirectory.exists()) {
-                    outputDirectory.mkdir();
-                }
-                final List<File> inputDirectories = new ArrayList<>();
-                for (final String inputDirectory : inputPaths) {
-                    inputDirectories.add(new File(inputDirectory));
-                }
-                final AllureReportGenerator generator = new AllureReportGenerator(inputDirectories.toArray(new File[inputDirectories.size()]));
-                generator.generate(outputDirectory);
-                final String reportFaceWildcard = REPORT_FACE_DIRECTORY + File.separator + ".*";
-                copyStaticReportData(getCurrentJarFilePath(), outputDirectory, reportFaceWildcard);
-                System.out.println("Successfully generated report to " + outputDirectory.getAbsolutePath() + ".");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-
+        AllureCli allure;
+        try {
+            allure = SingleCommand.singleCommand(AllureCli.class).parse(args);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+            System.exit(1);
+            return;
         }
 
-        private static void copyStaticReportData(final File currentJarFile, final File outputDirectory, final String wildcard) throws IOException {
-            final JarFile jar = new java.util.jar.JarFile(currentJarFile);
-            final Enumeration entries = jar.entries();
-            while (entries.hasMoreElements()) {
-                final JarEntry file = (java.util.jar.JarEntry) entries.nextElement();
-                if (file.getName().matches(wildcard)) {
-                    final String newFileName = file.getName().replace(REPORT_FACE_DIRECTORY + File.separator, "");
-                    if (newFileName.length() > 0) {
-                        final String newFilePath = outputDirectory + File.separator + newFileName;
-                        final File f = new File(newFilePath);
-                        if (file.isDirectory() && !f.exists()) {
-                            f.mkdir();
-                            continue;
-                        }
-                        final InputStream inputStream = jar.getInputStream(file);
-                        final FileOutputStream fileOutputStream = new FileOutputStream(f);
-                        while (inputStream.available() > 0) {
-                            fileOutputStream.write(inputStream.read());
-                        }
-                        fileOutputStream.close();
-                        inputStream.close();
+        if (allure.helpOption.showHelpIfRequested()) {
+            return;
+        }
+
+        allure.run();
+    }
+
+    public void run() {
+        if (version) {
+            version();
+            return;
+        }
+
+        generate();
+    }
+
+    /**
+     * Generate allure report to outputPath using data from inputPaths
+     */
+    public void generate() {
+        try {
+            File outputDirectory = new File(outputPath);
+            if (!outputDirectory.exists() && !outputDirectory.mkdirs()) {
+                throw new RuntimeException("Can't create output directory " + outputPath);
+            }
+
+            List<File> inputDirectories = new ArrayList<>();
+            for (String inputPath : inputPaths) {
+                File inputDirectory = new File(inputPath);
+                if (inputDirectory.exists() && inputDirectory.canRead()) {
+                    inputDirectories.add(inputDirectory);
+                }
+            }
+
+            AllureReportGenerator generator = new AllureReportGenerator(
+                    inputDirectories.toArray(new File[inputDirectories.size()])
+            );
+
+            generator.generate(outputDirectory);
+
+            unpackReport(currentJar(), REPORT_FACE_DIRECTORY, outputDirectory);
+            System.out.println(String.format(
+                    "Successfully generated report to %s.",
+                    outputDirectory.getAbsolutePath()
+            ));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Unpack files from jar by path
+     *
+     * @param jar             - jar to unpack
+     * @param path            - path in jar to be unpacked
+     * @param outputDirectory - unpack to this directory
+     * @throws IOException
+     */
+    private static void unpackReport(JarFile jar, String path, File outputDirectory) throws IOException {
+        Enumeration entries = jar.entries();
+        while (entries.hasMoreElements()) {
+            JarEntry file = (JarEntry) entries.nextElement();
+            if (file.getName().startsWith(path)) {
+                System.out.println("copy " + file.getName());
+                String newFileName = file.getName().replace(path, "");
+                if (newFileName.length() > 0) {
+                    String newFilePath = outputDirectory + newFileName;
+                    System.out.println("copy to " + newFilePath);
+
+                    File f = new File(newFilePath);
+
+                    if (f.exists()) {
+                        continue;
                     }
+
+                    if (file.isDirectory() && !f.mkdirs()) {
+                        throw new RuntimeException(String.format("Can't create directory <%s>", f.getPath()));
+                    }
+
+                    if (file.isDirectory()) {
+                        continue;
+                    }
+
+                    copy(jar, file, f);
                 }
-            }
-        }
-
-        private static File getCurrentJarFilePath() {
-            return new File(AllureCli.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        }
-    }
-
-    @Command(name = "version", description = "Show client version")
-    public static class ShowVersionCommand implements Runnable {
-
-        @Override
-        public void run() {
-            try {
-                final URL url = ((URLClassLoader) getClass().getClassLoader()).findResource("META-INF/MANIFEST.MF");
-                final Manifest manifest = new Manifest(url.openStream());
-                final String specificationVersion = manifest.getMainAttributes().getValue("Specification-Version");
-                if (specificationVersion != null) {
-                    System.out.println(specificationVersion);
-                } else {
-                    System.out.println("Failed to load version from MANIFEST.MF. This is probably a bug.");
-                }
-            } catch (IOException e) {
-                System.out.println("Failed to load version because of exception.");
-                throw new RuntimeException(e);
             }
         }
     }
 
+    /**
+     * Copy JarEntry to file
+     *
+     * @param jar  from this archive will be copied
+     * @param from JarEntry to copy
+     * @param to   in which will be copied
+     * @throws IOException
+     */
+    private static void copy(JarFile jar, JarEntry from, File to) throws IOException {
+        try (InputStream is = jar.getInputStream(from); FileOutputStream os = new FileOutputStream(to)) {
+            IOUtils.copy(is, os);
+        }
+    }
 
+    /**
+     * @return current Jar file
+     * @throws IOException
+     */
+    public static JarFile currentJar() throws IOException {
+        String path = AllureCli.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+        return new JarFile(path);
+    }
+
+    /**
+     * Show allure cli version
+     */
+    public void version() {
+        System.out.println(AllureConfig.newInstance().getVersion());
+    }
 }
