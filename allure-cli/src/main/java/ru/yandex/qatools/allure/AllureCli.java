@@ -20,7 +20,7 @@ import java.util.jar.JarFile;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 23.05.14
  */
-@Command(name = "allure", description = "allure report generation utility")
+@Command(name = "allure", description = "Allure report generation utility")
 public class AllureCli {
 
     private static final String REPORT_FACE_DIRECTORY = "allure-report-face";
@@ -109,9 +109,9 @@ public class AllureCli {
     /**
      * Unpack files from jar by path
      *
-     * @param jar             - jar to unpack
-     * @param path            - path in jar to be unpacked
-     * @param outputDirectory - unpack to this directory
+     * @param jar             jar to unpack
+     * @param path            path in jar to be unpacked
+     * @param outputDirectory unpack to this directory
      * @throws IOException
      */
     private static void unpackReport(JarFile jar, String path, File outputDirectory) throws IOException {
@@ -160,6 +160,7 @@ public class AllureCli {
     }
 
     /**
+     * Return JarFile object for the jar file CLI resides in 
      * @return current Jar file
      * @throws IOException
      */
@@ -169,7 +170,7 @@ public class AllureCli {
     }
 
     /**
-     * Show allure cli version
+     * Show CLI version
      */
     public void version() {
         System.out.println(AllureConfig.newInstance().getVersion());
