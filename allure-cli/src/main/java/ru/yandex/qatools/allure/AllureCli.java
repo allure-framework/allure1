@@ -37,7 +37,7 @@ public class AllureCli {
 
     @Arguments(title = "input directories",
             description = "A list of input directories to be processed")
-    public List<String> inputPaths;
+    public List<String> inputPaths = new ArrayList<>();
 
     @Option(name = {"--version"})
     public boolean version;
