@@ -10,6 +10,8 @@ import ru.yandex.qatools.allure.storages.StepStorage;
 import ru.yandex.qatools.allure.storages.TestCaseStorage;
 import ru.yandex.qatools.allure.storages.TestSuiteStorage;
 
+import java.util.Iterator;
+
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeTestSuiteResult;
 
 /**
@@ -93,6 +95,21 @@ public class Allure {
         TestSuiteResult testSuite = testSuiteStorage.get(suiteUid);
         event.process(testSuite);
         testSuiteStorage.remove(suiteUid);
+
+        if (AllureConfig.newInstance().isRemovePassedTests()) {
+            Iterator<TestCaseResult> iterator = testSuite.getTestCases().iterator();
+            while (iterator.hasNext()) {
+                TestCaseResult testCase = iterator.next();
+                if (Status.PASSED.equals(testCase.getStatus())) {
+                    iterator.remove();
+                }
+            }
+
+            if (!testSuite.getTestCases().isEmpty()) {
+                writeTestSuiteResult(testSuite);
+            }
+            return;
+        }
 
         writeTestSuiteResult(testSuite);
     }
