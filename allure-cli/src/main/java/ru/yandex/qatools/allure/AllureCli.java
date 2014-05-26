@@ -59,6 +59,11 @@ public class AllureCli {
         if (allure.helpOption.showHelpIfRequested()) {
             return;
         }
+        
+        if (allure.inputPaths.isEmpty()){
+            System.out.println("No directories for input XML files specified.");
+            return;
+        }
 
         allure.run();
     }
@@ -93,6 +98,11 @@ public class AllureCli {
             AllureReportGenerator generator = new AllureReportGenerator(
                     inputDirectories.toArray(new File[inputDirectories.size()])
             );
+            
+            if (generator.getTestRunGenerator().getListFiles().getFiles().isEmpty()){
+                System.out.println("No valid Allure XML files found in specified directory.");
+                return;
+            }
 
             generator.generate(outputDirectory);
 

@@ -17,7 +17,7 @@ import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTr
  *         Date: 02.12.13
  */
 
-public class TestSuiteFiles {
+public class TestRunGenerator {
 
     public static final String SUITES_TO_TEST_RUN_1_XSL = "xsl/suites-to-testrun-1.xsl";
 
@@ -25,15 +25,14 @@ public class TestSuiteFiles {
 
     public static final String SUITES_TO_TEST_RUN_3_XSL = "xsl/suites-to-testrun-3.xsl";
 
-    private final String suiteFiles;
+    private final ListFiles listFiles;
     
     private final boolean validateXML; 
     
-    public TestSuiteFiles(boolean validateXML, File... dirs) {
+    public TestRunGenerator(boolean validateXML, File... dirs) {
         Collection<File> testSuitesFiles = listTestSuiteFiles(dirs);
 
-        ListFiles listFiles = createListFiles(testSuitesFiles);
-        suiteFiles = listFilesToString(listFiles);
+        listFiles = createListFiles(testSuitesFiles);
         this.validateXML = validateXML;
 
     }
@@ -60,7 +59,8 @@ public class TestSuiteFiles {
         return stringWriter.toString();
     }
 
-    public String generateTestRun() {
+    public String generate() {
+        String suiteFiles = listFilesToString(listFiles);
         return applyTransformations(
                 suiteFiles,
                 SUITES_TO_TEST_RUN_1_XSL,
@@ -69,4 +69,7 @@ public class TestSuiteFiles {
         );
     }
 
+    public ListFiles getListFiles() {
+        return listFiles;
+    }
 }

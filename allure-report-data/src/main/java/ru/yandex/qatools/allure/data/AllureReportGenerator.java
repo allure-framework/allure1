@@ -22,10 +22,13 @@ public class AllureReportGenerator {
 
     protected File[] inputDirectories;
     
+    protected TestRunGenerator testRunGenerator;
+
     private boolean validateXML = true;
 
     public AllureReportGenerator(final File... inputDirectories) {
         this.inputDirectories = inputDirectories;
+        this.testRunGenerator = new TestRunGenerator(validateXML, inputDirectories);
     }
 
     public void generate(File reportDirectory) {
@@ -38,8 +41,7 @@ public class AllureReportGenerator {
         }
         copyAttachments(inputDirectories, reportDataDirectory);
 
-        TestSuiteFiles testSuiteFiles = new TestSuiteFiles(validateXML, inputDirectories);
-        String testRun = testSuiteFiles.generateTestRun();
+        String testRun = testRunGenerator.generate();
         
         for (final DataProvider provider : dataProviders) {
             provider.provide(testRun, reportDataDirectory);
@@ -75,5 +77,13 @@ public class AllureReportGenerator {
         if (!srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) {
             FileUtils.copyFile(srcFile, destFile);
         }
+    }
+
+    public TestRunGenerator getTestRunGenerator() {
+        return testRunGenerator;
+    }
+
+    public File[] getInputDirectories() {
+        return inputDirectories;
     }
 }
