@@ -60,9 +60,7 @@ describe('DefectsCtrl', function () {
     });
 
     it('should find and select defect by uid', function() {
-        //TODO @charlie: here should be:
-        //scope.$broadcast('$stateChangeSuccess', null, {defectUid: 3});
-        scope.$broadcast('$stateChangeSuccess', null, {defectUid: 'Assertion Error: expected 3 to be 4'});
+        scope.$broadcast('$stateChangeSuccess', null, {defectUid: 3});
         expect(scope.defect.uid).toBe(3);
     });
 
