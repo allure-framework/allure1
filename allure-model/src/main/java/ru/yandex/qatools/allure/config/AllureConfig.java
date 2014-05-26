@@ -1,12 +1,10 @@
 package ru.yandex.qatools.allure.config;
 
-import org.apache.commons.io.IOUtils;
 import ru.yandex.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.properties.annotations.Property;
 import ru.yandex.qatools.properties.annotations.Resource;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
@@ -28,6 +26,9 @@ public class AllureConfig {
 
     @Property("allure.report.remove.attachments")
     private String removeAttachments = "a^";
+
+    @Property("allure.report.remove.passed.tests")
+    private boolean removePassedTests = false;
 
     @Property("allure.results.testsuite.file.regex")
     private String testSuiteFileRegex = ".*-testsuite\\.xml";
@@ -59,6 +60,10 @@ public class AllureConfig {
 
     public String getRemoveAttachments() {
         return removeAttachments;
+    }
+
+    public boolean isRemovePassedTests() {
+        return removePassedTests;
     }
 
     public String getTestSuiteFileRegex() {
