@@ -17,7 +17,9 @@ import java.io.InputStream;
  *         Date: 20.01.14
  */
 public final class AllureModelUtils {
-    private AllureModelUtils() {
+
+    AllureModelUtils() {
+        throw new IllegalStateException("Don't instance AllureModelUtils");
     }
 
     public static Validator getAllureSchemaValidator() throws SAXException {

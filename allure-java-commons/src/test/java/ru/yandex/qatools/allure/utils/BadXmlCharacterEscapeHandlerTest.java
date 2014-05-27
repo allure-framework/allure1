@@ -29,7 +29,7 @@ import static org.junit.Assert.assertTrue;
  *         Date: 27.03.14
  */
 @RunWith(Parameterized.class)
-public class XmlEscapeHandlerTest {
+public class BadXmlCharacterEscapeHandlerTest {
 
     private File testSuiteResultFile;
 
@@ -42,7 +42,7 @@ public class XmlEscapeHandlerTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    public XmlEscapeHandlerTest(String character) {
+    public BadXmlCharacterEscapeHandlerTest(String character) {
         this.character = character;
     }
 
@@ -60,7 +60,7 @@ public class XmlEscapeHandlerTest {
         m = JAXBContext.newInstance(TestSuiteResult.class).createMarshaller();
         m.setProperty(
                 CharacterEscapeHandler.class.getName(),
-                XmlEscapeHandler.getInstance()
+                BadXmlCharacterEscapeHandler.getInstance()
         );
 
         result = new TestSuiteResult().withName("name-and-кириллицей-also");

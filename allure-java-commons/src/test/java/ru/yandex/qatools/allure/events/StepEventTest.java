@@ -39,11 +39,11 @@ public class StepEventTest {
 
     @Test
     public void testStepStartedEvent() throws Exception {
-        new StepStartedEvent("name").process(step);
+        new StepStartedEvent("name").withTitle("title").process(step);
         verify(step).setName("name");
         verify(step).setStart(anyLong());
         verify(step).setStatus(Status.PASSED);
-        verify(step).setTitle(null);
+        verify(step).setTitle("title");
         verifyNoMoreInteractions(step);
     }
 

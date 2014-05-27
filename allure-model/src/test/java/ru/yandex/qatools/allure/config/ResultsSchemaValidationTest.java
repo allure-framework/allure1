@@ -1,11 +1,9 @@
-package ru.yandex.qatools.allure.model;
+package ru.yandex.qatools.allure.config;
 
 import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import ru.yandex.qatools.allure.config.AllureConfig;
-import ru.yandex.qatools.allure.config.AllureModelUtils;
 
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;

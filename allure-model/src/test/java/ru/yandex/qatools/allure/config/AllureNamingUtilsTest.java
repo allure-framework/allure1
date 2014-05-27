@@ -1,11 +1,10 @@
-package ru.yandex.qatools.allure.model;
+package ru.yandex.qatools.allure.config;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FilenameFilter;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -29,6 +28,11 @@ public class AllureNamingUtilsTest {
         when(directory.canRead()).thenReturn(true);
     }
 
+    @Test(expected = IllegalStateException.class)
+    public void createInstanceTest() throws Exception {
+        new AllureNamingUtils();
+    }
+
     @Test
     public void generatedTestSuiteFileNamesMustBeFoundByListTestSuiteFilesMethod() {
         File[] testSuiteFiles = new File[]{
@@ -38,5 +42,16 @@ public class AllureNamingUtilsTest {
 
         when(directory.listFiles(any(FileFilter.class))).thenReturn(testSuiteFiles);
         assertThat(listTestSuiteFiles(directory).size(), equalTo(testSuiteFiles.length));
+    }
+
+    @Test
+    public void ListAttachmentFilesTest() {
+        File[] attachmentFiles = new File[]{
+                new File("a-attachment"),
+                new File("b-attachment.xml")
+        };
+
+        when(directory.listFiles(any(FileFilter.class))).thenReturn(attachmentFiles);
+        assertThat(listAttachmentFiles(directory).size(), equalTo(attachmentFiles.length));
     }
 }

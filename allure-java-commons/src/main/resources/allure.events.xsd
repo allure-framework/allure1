@@ -7,26 +7,8 @@
             xmlns:ns="urn:events.allure.qatools.yandex.ru"
             targetNamespace="urn:events.allure.qatools.yandex.ru">
 
+
     <xsd:element name="test-suite-started-event" type="ns:abstract-test-suite-started-event"/>
-    <xsd:element name="test-suite-finished-event" type="ns:abstract-test-suite-finished-event"/>
-
-    <xsd:element name="test-case-started-event" type="ns:abstract-test-case-started-event"/>
-    <xsd:element name="test-case-status-change-event" type="ns:abstract-test-case-status-change-event"/>
-    <xsd:element name="test-case-finished-event" type="ns:abstract-test-case-finished-event"/>
-
-    <xsd:element name="test-case-add-parameter-event" type="ns:abstract-test-case-add-parameter-event"/>
-
-    <xsd:element name="step-started-event" type="ns:abstract-step-started-event"/>
-    <xsd:element name="step-failure-event" type="ns:abstract-step-failure-event"/>
-    <xsd:element name="step-canceled-event" type="ns:abstract-step-canceled-event"/>
-    <xsd:element name="step-finished-event" type="ns:abstract-step-finished-event"/>
-
-    <xsd:element name="make-attach-event" type="ns:abstract-make-attach-event"/>
-    <xsd:element name="make-attachment-event" type="ns:abstract-make-attachment-event"/>
-
-    <xsd:element name="clear-step-storage-event" type="ns:clear-step-storage-event"/>
-    <xsd:element name="clear-test-storage-event" type="ns:clear-test-storage-event"/>
-
     <xsd:complexType name="abstract-test-suite-started-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -42,6 +24,8 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="test-suite-finished-event" type="ns:abstract-test-suite-finished-event"/>
     <xsd:complexType name="abstract-test-suite-finished-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -53,6 +37,8 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="test-case-started-event" type="ns:abstract-test-case-started-event"/>
     <xsd:complexType name="abstract-test-case-started-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -68,6 +54,8 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="test-case-status-change-event" type="ns:abstract-test-case-status-change-event"/>
     <xsd:complexType name="abstract-test-case-status-change-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -79,6 +67,8 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="test-case-finished-event" type="ns:abstract-test-case-finished-event"/>
     <xsd:complexType name="abstract-test-case-finished-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -87,6 +77,8 @@
         </xsd:annotation>
     </xsd:complexType>
 
+
+    <xsd:element name="test-case-add-parameter-event" type="ns:abstract-test-case-add-parameter-event"/>
     <xsd:complexType name="abstract-test-case-add-parameter-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -99,6 +91,8 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="step-started-event" type="ns:abstract-step-started-event"/>
     <xsd:complexType name="abstract-step-started-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -111,6 +105,8 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="step-failure-event" type="ns:abstract-step-failure-event"/>
     <xsd:complexType name="abstract-step-failure-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -122,6 +118,8 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="step-canceled-event" type="ns:abstract-step-canceled-event"/>
     <xsd:complexType name="abstract-step-canceled-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -134,6 +132,7 @@
     </xsd:complexType>
 
 
+    <xsd:element name="step-finished-event" type="ns:abstract-step-finished-event"/>
     <xsd:complexType name="abstract-step-finished-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -142,6 +141,8 @@
         </xsd:annotation>
     </xsd:complexType>
 
+
+    <xsd:element name="make-attach-event" type="ns:abstract-make-attach-event"/>
     <xsd:complexType name="abstract-make-attach-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -155,6 +156,8 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="make-attachment-event" type="ns:abstract-make-attachment-event"/>
     <xsd:complexType name="abstract-make-attachment-event" abstract="true">
         <xsd:annotation>
             <xsd:appinfo>
@@ -168,9 +171,27 @@
         </xsd:all>
     </xsd:complexType>
 
+
+    <xsd:element name="remove-attachment-event" type="ns:abstract-remove-attachment-event"/>
+    <xsd:complexType name="abstract-remove-attachment-event" abstract="true">
+        <xsd:annotation>
+            <xsd:appinfo>
+                <itn:implements>ru.yandex.qatools.allure.events.StepEvent</itn:implements>
+            </xsd:appinfo>
+        </xsd:annotation>
+        <xsd:all>
+            <xsd:element name="pattern" type="ns:pattern" nillable="true"/>
+        </xsd:all>
+    </xsd:complexType>
+
+
+    <xsd:element name="clear-step-storage-event" type="ns:clear-step-storage-event"/>
     <xsd:complexType name="clear-step-storage-event"/>
 
+
+    <xsd:element name="clear-test-storage-event" type="ns:clear-test-storage-event"/>
     <xsd:complexType name="clear-test-storage-event"/>
+
 
     <xsd:complexType name="labels">
         <xsd:sequence>
@@ -187,5 +208,7 @@
     <xsd:complexType name="label"/>
 
     <xsd:complexType name="throwable"/>
+
+    <xsd:complexType name="pattern"/>
 
 </xsd:schema>

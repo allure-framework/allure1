@@ -11,15 +11,25 @@ import static ru.yandex.qatools.allure.utils.AllureResultsUtils.deleteAttachment
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 30.04.14
+ *         <p/>
+ *         Using to remove attachments from step.
  */
-public class RemoveAttachmentsEvent implements StepEvent {
+public class RemoveAttachmentsEvent extends AbstractRemoveAttachmentEvent {
 
-    public final Pattern pattern;
-
+    /**
+     * Constructs an new event with pattern compiled from specified regex.
+     *
+     * @param regex with using to match attachments source
+     */
     public RemoveAttachmentsEvent(String regex) {
-        pattern = Pattern.compile(regex);
+        setPattern(Pattern.compile(regex));
     }
 
+    /**
+     * Remove attachments matches pattern from step and all step substeps
+     *
+     * @param context from which attachments will be removed
+     */
     @Override
     public void process(Step context) {
         Iterator<Attachment> iterator = context.getAttachments().listIterator();

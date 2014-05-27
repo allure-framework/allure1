@@ -1,12 +1,10 @@
 package ru.yandex.qatools.allure.config;
 
-import org.apache.commons.io.IOUtils;
 import ru.yandex.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.properties.annotations.Property;
 import ru.yandex.qatools.properties.annotations.Resource;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
@@ -22,6 +20,8 @@ public class AllureConfig {
      * Allure.getVersion() added in version 1.3.6
      */
     private static final String DEFAULT_VERSION = "1.3.6";
+
+    private static final File DEFAULT_RESULTS_DIRECTORY = new File("target/allure-results");
 
     @Property("allure.model.schema.file.name")
     private String schemaFileName = "allure.xsd";
@@ -45,7 +45,7 @@ public class AllureConfig {
     private String attachmentFileSuffix = "-attachment";
 
     @Property("allure.results.directory")
-    private File resultsDirectory = new File("target/allure-results");
+    private File resultsDirectory = DEFAULT_RESULTS_DIRECTORY;
 
     private String version = null;
 
@@ -83,6 +83,10 @@ public class AllureConfig {
 
     public File getResultsDirectory() {
         return resultsDirectory;
+    }
+
+    public static File getDefaultResultsDirectory() {
+        return DEFAULT_RESULTS_DIRECTORY;
     }
 
     public String getVersion() {

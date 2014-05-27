@@ -7,13 +7,26 @@ import ru.yandex.qatools.allure.model.Step;
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
+ *         <p/>
+ *         Using to start new step
+ * @see ru.yandex.qatools.allure.Allure
  */
 public class StepStartedEvent extends AbstractStepStartedEvent {
 
+    /**
+     * Constructs an new event with specified name
+     *
+     * @param name initial name value
+     */
     public StepStartedEvent(String name) {
         setName(name);
     }
 
+    /**
+     * Sets name, status, start time and title to specified step
+     *
+     * @param step which will be changed
+     */
     @Override
     public void process(Step step) {
         step.setName(getName());
@@ -22,4 +35,14 @@ public class StepStartedEvent extends AbstractStepStartedEvent {
         step.setTitle(getTitle());
     }
 
+    /**
+     * Sets title using fluent-api
+     *
+     * @param title value to set
+     * @return modified instance
+     */
+    public StepStartedEvent withTitle(String title) {
+        setTitle(title);
+        return this;
+    }
 }
