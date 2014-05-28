@@ -1,4 +1,6 @@
+/*global angular*/
 angular.module('allure.testcase.statusSwitcher', []).directive('statusSwitcher', function($storage, status) {
+    "use strict";
     function StatusesStore() {
         function defaults(value, defaultVal) {
             return value !== null ? value : defaultVal;
@@ -10,7 +12,7 @@ angular.module('allure.testcase.statusSwitcher', []).directive('statusSwitcher',
             CANCELED: defaults(store.getItem('CANCELED'), true),
             BROKEN:  defaults(store.getItem('BROKEN'), true),
             FAILED:  defaults(store.getItem('FAILED'), true)
-        }
+        };
     }
     StatusesStore.prototype.toggleStatus = function(status) {
         var value = !this.statuses[status];
@@ -36,10 +38,10 @@ angular.module('allure.testcase.statusSwitcher', []).directive('statusSwitcher',
             $scope.getClassName = function(status) {
                 var cls = ['btn-status-'+status.toLowerCase()];
                 if($scope.statuses[status]) {
-                    cls.push('active')
+                    cls.push('active');
                 }
                 return cls.join(' ');
-            }
+            };
         }
-    }
+    };
 });

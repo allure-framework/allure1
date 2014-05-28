@@ -7,7 +7,9 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
             chartWidth = angular.element(elm).width()/2,
             chartHeight = barHeight * data.length,
             x = this.x = d3.scale.linear().domain([0, d3.max(data, function (d) {
-                return d3.max(d, function(d) { return d.time.stop; });
+                return d3.max(d, function(d) {
+                    return d.time.stop;
+                });
             })]).nice().range([0, chartWidth]),
             y = this.y = d3.scale.ordinal().domain(data.map(function (d, i) {
                 return i;
@@ -22,8 +24,10 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
 
         this.svg.select('.x-axis-group.axis').attr({transform: 'translate(0,' + (chartHeight) + ')'}).call(xAxis);
 
-        var stripesPlaceholder = this.svg.select('.container-group').selectAll('line.x'); //create empty set of lines
-        stripesPlaceholder.data(x.ticks()).enter().append('line') //fill the set real data
+        //create empty set of lines
+        var stripesPlaceholder = this.svg.select('.container-group').selectAll('line.x');
+        //fill the set real data
+        stripesPlaceholder.data(x.ticks()).enter().append('line')
             .style({ 'stroke': "#000000", 'stroke-opacity': 0.1, 'stroke-width': '0.5px' })
             .attr({ x1: x, x2: x, y1: 0, y2: chartHeight });
 
@@ -35,7 +39,8 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
             .text("Time from start, ms");
 
         this.rows = this.svg.select('.chart-group').selectAll('g').data(data).enter().append('g');
-        this.bars = this.rows.selectAll('.bar').data(function(d){ return d; }).enter().append('rect');
+        this.bars = this.rows.selectAll('.bar')
+            .data(function(d){ return d; }).enter().append('rect');
 
         var barGap = barHeight / 4,
             barThickness = barHeight - barGap;
@@ -122,14 +127,14 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
             this.addTimestamp = function(timestamp) {
                 data.push(timestamp);
                 if(updateTimeout) {
-                    $timeout.cancel(updateTimeout)
+                    $timeout.cancel(updateTimeout);
                 }
                 updateTimeout = $timeout(onTimestampChange, 100);
             };
             this.removeTimestamp = function(timestamp) {
                 data.splice(data.indexOf(timestamp), 1);
                 if(updateTimeout) {
-                    $timeout.cancel(updateTimeout)
+                    $timeout.cancel(updateTimeout);
                 }
                 updateTimeout = $timeout(onTimestampChange, 100);
             };
@@ -155,5 +160,5 @@ directive('timestamp', function() {
                 ctrl.removeTimestamp(scope.data);
             });
         }
-    }
+    };
 });

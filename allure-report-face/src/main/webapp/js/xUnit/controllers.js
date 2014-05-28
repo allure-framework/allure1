@@ -4,7 +4,7 @@ angular.module('allure.xUnit.controllers', [])
         'use strict';
         function setTestsuite(testsuiteUid) {
             var testsuite = $scope.testsuites.filter(function(testsuite) {
-                return testsuite.uid === testsuiteUid
+                return testsuite.uid === testsuiteUid;
             })[0];
             if($scope.testsuite !== testsuite) {
                 $scope.testsuite = testsuite;
@@ -21,7 +21,7 @@ angular.module('allure.xUnit.controllers', [])
         $scope.time = testsuites.time;
         $scope.statistic = $scope.testsuites.reduce(function(statistic, testsuite) {
             ['passed', 'pending', 'canceled', 'broken', 'failed', 'total'].forEach(function(status) {
-                statistic[status] += testsuite.statistic[status]
+                statistic[status] += testsuite.statistic[status];
             });
             return statistic;
         }, {
@@ -30,7 +30,7 @@ angular.module('allure.xUnit.controllers', [])
         $scope.testcase = {};
         $scope.$watch('testcase.uid', function(testcaseUid, oldUid) {
             if(testcaseUid && testcaseUid !== oldUid) {
-                $state.go('home.testsuite.testcase', {testcaseUid: testcaseUid})
+                $state.go('home.testsuite.testcase', {testcaseUid: testcaseUid});
             }
         });
         $scope.$on('$stateChangeSuccess', function(event, state, params) {

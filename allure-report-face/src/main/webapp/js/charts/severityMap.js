@@ -16,7 +16,9 @@ angular.module('allure.charts.severityMap', ['allure.charts.util']).directive('s
 
         x.domain(severities);
         y.domain([0, d3.max(data, function(d) {
-            return d3.max(d, function(d) {return d.testcases.length});
+            return d3.max(d, function(d) {
+                return d.testcases.length;
+            });
         })]).nice();
         status.domain(data[0].map(function(d) {
             return d.status;
@@ -41,18 +43,24 @@ angular.module('allure.charts.severityMap', ['allure.charts.util']).directive('s
 
         this.bars = svg.select('.chart-group').selectAll('.status').data(data).enter()
             .append('g').attr("transform", function(d) { return "translate(" + x(d[0].severity) + ",0)"; });
-        this.bars.selectAll('.bar').data(function(d) {return d;}).enter().append('rect').attr({
-            x: function(d) {return status(d.status);},
-            y: 0,
-            height: 0,
-            width: status.rangeBand(),
-            class: function (d) {
-                return 'bar fill-' + d.status.toLowerCase();
-            }
-        }).transition().duration(500).attr({
-            height: function(d) { return y.range()[0] - y(d.testcases.length); },
-            y: function(d) { return -y.range()[0] + y(d.testcases.length); }
-        });
+        this.bars.selectAll('.bar').data(function(d) {
+                return d;
+            })
+            .enter().append('rect')
+            .attr({
+                x: function(d) {return status(d.status);},
+                y: 0,
+                height: 0,
+                width: status.rangeBand(),
+                'class': function (d) {
+                    return 'bar fill-' + d.status.toLowerCase();
+                }
+            })
+            .transition().duration(500)
+            .attr({
+                height: function(d) { return y.range()[0] - y(d.testcases.length); },
+                y: function(d) { return -y.range()[0] + y(d.testcases.length); }
+            });
 
         this.tooltip = new d3Tooltip(this.bars.selectAll('.bar'),
             '<div><strong><span ng-pluralize count="testcases.length" when="{\'one\': \'{} testcase\', \'other\': \'{} testcases\'}"></span> {{status | lowercase}}</strong></div>' +
@@ -73,8 +81,8 @@ angular.module('allure.charts.severityMap', ['allure.charts.util']).directive('s
             $scope.$watch('data', function (data) {
                 var map = severity.all.map(function (severity) {
                         return status.all.map(function (status) {
-                            return {severity: severity, status: status, testcases: []}
-                        })
+                            return {severity: severity, status: status, testcases: []};
+                        });
                     }),
                     severities = severity.all;
                 data.forEach(function (testcase) {

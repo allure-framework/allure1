@@ -1,7 +1,16 @@
 /*global angular*/
 angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, $state, orderByFilter, status, WatchingStore, Collection, defects) {
     "use strict";
-    var store = new WatchingStore('defectsSettings');
+    $scope.defects = orderByFilter(defects.defectsList, function(defectType) {
+        return status.getSortOrder(defectType.status);
+    });
+    var store = new WatchingStore('defectsSettings'),
+        defectList = new Collection($scope.defects.reduce(function(defects, type) {
+            type.defects.forEach(function(defect) {
+                defect.type = type.status;
+            });
+            return defects.concat(type.defects);
+        }, []));
     $scope.isState = function(statename) {
         return $state.is(statename);
     };
@@ -13,9 +22,6 @@ angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, 
             defect = direction < 0 ? defectList.getPrevious(index) : defectList.getNext(index);
         $scope.setDefect(defect);
     };
-    $scope.defects = orderByFilter(defects.defectsList, function(defectType) {
-        return status.getSortOrder(defectType.status);
-    });
     $scope.showStatuses = {};
     $scope.testcase = {};
     $scope.sorting = {
@@ -25,12 +31,6 @@ angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, 
     status.all.forEach(function(status) {
         $scope.showStatuses[status] = true;
     });
-    var defectList = new Collection($scope.defects.reduce(function(defects, type) {
-        type.defects.forEach(function(defect) {
-            defect.type = type.status;
-        });
-        return defects.concat(type.defects);
-    }, []));
     $scope.$watch('testcase.uid', function(testcaseUid, oldUid) {
         if(testcaseUid && testcaseUid !== oldUid) {
             $state.go('defects.defect.testcase', {testcaseUid: testcaseUid});

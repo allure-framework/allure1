@@ -48,7 +48,9 @@ angular.module('allure.table', [])
         };
         this.transclude = $transclude;
         $scope.getWidth = function(column) {
-            var totalFlex = $scope.columns.reduce(function(total, col) {return total + col.flex;}, 0);
+            var totalFlex = $scope.columns.reduce(function(total, col) {
+                return total + col.flex;
+            }, 0);
             return 100/totalFlex*column.flex + '%';
         };
         $scope.columns = [];

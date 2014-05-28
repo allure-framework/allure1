@@ -2,6 +2,11 @@
 angular.module('allure.features', [])
 .controller('FeaturesCtrl', function($scope, $state, status, features) {
     "use strict";
+    function getTotalPercents(item) {
+        return item.percents.reduce(function(total, current) {
+            return total+current.value;
+        }, 0);
+    }
     function calculatePercents(item) {
         item.percents = status.all.map(function(status) {
             status = status.toLowerCase();
@@ -13,7 +18,7 @@ angular.module('allure.features', [])
                 status: status
             };
         });
-        if(item.percents.reduce(function(total, current) {return total+current.value;}, 0) > 100) {
+        if(getTotalPercents(item) > 100) {
             var highValue = item.percents.reduce(function(max, current) {
                 return max.value > current.value ? max : current;
             }, {value:0});
@@ -33,9 +38,10 @@ angular.module('allure.features', [])
     function findStory(storyUid) {
         var story;
         $scope.features.some(function(feature) {
-            return story = feature.stories.filter(function(story) {
+            story = feature.stories.filter(function(story) {
                 return story.uid === storyUid;
             })[0];
+            return story;
         });
         //noinspection JSUnusedAssignment
         return story;
