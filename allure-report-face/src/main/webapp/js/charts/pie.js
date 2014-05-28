@@ -88,16 +88,24 @@ angular.module('allure.charts.pie', ['allure.charts.util']).directive('pieChart'
             angle = (data.endAngle + data.startAngle) / 2,
             x = r * Math.sin(angle),
             y = -r * Math.cos(angle);
-        this.sectors.filter(function() {return this === sector; }).transition().duration(500).attr({
-            transform: 'translate(' + x + ',' + y + ')'
-        });
+        this.sectors.filter(function() {
+                return this === sector;
+            })
+            .transition().duration(500)
+            .attr({
+                transform: 'translate(' + x + ',' + y + ')'
+            });
         data.selected = true;
         this.$scope.selected = data.data.name.toUpperCase();
     };
     PieChart.prototype.deactivateAllSectors = function() {
-        this.sectors.each(function(d) {d.selected = false;}).transition().duration(500).attr({
-            transform: 'translate(0, 0)'
-        });
+        this.sectors.each(function(d) {
+                d.selected = false;
+            })
+            .transition().duration(500)
+            .attr({
+                transform: 'translate(0, 0)'
+            });
         delete this.$scope.selected;
     };
     PieChart.prototype.setTooltipFormat = function(format) {
@@ -124,7 +132,7 @@ angular.module('allure.charts.pie', ['allure.charts.util']).directive('pieChart'
                 var format = $scope.tooltipTpl || '<div><b>{{value}} {{value == 1 ? "test" : "tests"}} ({{data.part * 100 | number:0}}%)</b></div>' +
                     '<div>{{data.name}}</div>';
                 $scope.chart = new PieChart(elm[0], $scope, data);
-                $scope.chart.setTooltipFormat(format)
+                $scope.chart.setTooltipFormat(format);
             });
             $scope.$on('$destroy', function() {
                 $scope.chart.destroy();

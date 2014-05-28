@@ -19,6 +19,22 @@ angular.module('allure.testcase.controllers', [])
                 return attachment.uid === uid;
             })[0];
         }
+
+        $scope.testcase = testcase;
+        var baseState = $state.current.data.baseState,
+            allAttachments = new Collection(getAllAttachments());
+        $scope.failure = testcase.failure;
+
+        function findFailedStep(step) {
+            var hasFailed = step.steps.some(findFailedStep);
+            if(isFailed(step) && !hasFailed) {
+                step.failure = $scope.failure;
+                return true;
+            }
+            return hasFailed;
+        }
+        findFailedStep($scope.testcase);
+
         $scope.isState = function(state) {
             return $state.is(baseState+'.'+state);
         };
@@ -35,21 +51,6 @@ angular.module('allure.testcase.controllers', [])
             var index = allAttachments.indexOf($scope.attachment);
             setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).uid);
         };
-
-        $scope.testcase = testcase;
-        var baseState = $state.current.data.baseState,
-            allAttachments = new Collection(getAllAttachments());
-        $scope.failure = testcase.failure;
-
-        function findFailedStep(step) {
-            var hasFailed = step.steps.some(findFailedStep);
-            if(isFailed(step) && !hasFailed) {
-                step.failure = $scope.failure;
-                return true;
-            }
-            return hasFailed;
-        }
-        findFailedStep($scope.testcase);
 
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.attachment;

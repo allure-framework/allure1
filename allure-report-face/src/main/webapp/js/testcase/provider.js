@@ -1,4 +1,6 @@
+/*global angular*/
 angular.module('allure.testcase.provider', []).provider('testcase', function($stateProvider) {
+    "use strict";
     function processResponse(response) {
         return response.data;
     }
@@ -31,8 +33,8 @@ angular.module('allure.testcase.provider', []).provider('testcase', function($st
                 })
                 .state(baseState+'.testcase.attachment.expanded', {
                     url: '/expanded'
-                })
+                });
         },
         $get: [function() {}]
-    }
+    };
 });

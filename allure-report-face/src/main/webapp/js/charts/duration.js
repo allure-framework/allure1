@@ -1,5 +1,6 @@
 /* globals angular */
 angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip, d3timeFilter) {
+    "use strict";
     function DurationBars(element, data) {
         var width = angular.element(element).width()/2.2,
             height = width*0.6,
@@ -12,7 +13,10 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
             y = d3.scale.sqrt().range([height, 0 ], 1),
             bins;
 
-        x.domain([0, Math.max(d3.max(data, function(d) {return d.time.duration;}), 1)]);
+        var maxDuration = d3.max(data, function(d) {
+            return d.time.duration;
+        });
+        x.domain([0, Math.max(maxDuration, 1)]);
         bins = d3.layout.histogram().value(function(d) {
             return d.time.duration;
         }).bins(x.ticks())(data).map(function(bin) {
@@ -23,7 +27,10 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
                 testcases: bin
             };
         });
-        y.domain([0, d3.max(bins, function(d) {return d.y;})]).nice();
+        var maxCount = d3.max(bins, function(d) {
+            return d.y;
+        });
+        y.domain([0, maxCount]).nice();
 
         svg.select('.x-axis-group.axis').call(
             d3.svg.axis().scale(x).orient('bottom').tickFormat(d3timeFilter)
@@ -38,12 +45,12 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
             bars = container.selectAll(".bar").data(bins).enter().append('rect').classed('bar fill-default', true);
 
         bars.attr({
-            x: function(d) { return x(d.x)+1 },
+            x: function(d) { return x(d.x)+1; },
             width: x(bins[0].dx)-2,
             y: median,
             height: height - median
         }).transition().duration(500).attr({
-            y: function(d) { return y(d.y) },
+            y: function(d) { return y(d.y); },
             height: function(d) {return height - y(d.y);}
         });
 

@@ -1,13 +1,16 @@
+/*global angular*/
 angular.module('allure.pane', []).directive('paneSet', function() {
+    "use strict";
     return {
         controller: 'PanesController'
-    }
+    };
 }).directive('pane', function() {
+    "use strict";
     function Pane(elem) {
         this.elem = elem;
     }
     Pane.prototype.setPosition = function(left, width) {
-        this.elem.css({left: left+'%', width: width+'%'})
+        this.elem.css({left: left+'%', width: width+'%'});
     };
     Pane.prototype.isExpanded = function() {
         return false;
@@ -27,10 +30,11 @@ angular.module('allure.pane', []).directive('paneSet', function() {
             });
             scope.$on('$destroy', function() {
                 PanesCtrl.removePane(pane);
-            })
+            });
         }
     };
 }).controller('PanesController', function($scope, screenTest) {
+    "use strict";
     var panes = [];
     this.addPane = function(pane) {
         panes.push(pane);
@@ -45,7 +49,7 @@ angular.module('allure.pane', []).directive('paneSet', function() {
     };
 
     function paneNeedOverlay(index) {
-        return index < panes.length-2 || (index < panes.length-1 && panes[panes.length-1].isExpanded())
+        return index < panes.length-2 || (index < panes.length-1 && panes[panes.length-1].isExpanded());
     }
 
     function paneShouldBeAtRight(index, expanded) {
@@ -64,42 +68,43 @@ angular.module('allure.pane', []).directive('paneSet', function() {
             if(screenTest.isNarrow()) {
                 offset+=25;
                 width = 100-offset;
-                pane.setPosition(offset, width)
+                pane.setPosition(offset, width);
             } else {
-                pane.setPosition(50, 50)
+                pane.setPosition(50, 50);
             }
 
         } else {
-            pane.setPosition(offset, width)
+            pane.setPosition(offset, width);
         }
     }
     $scope.$on('screenTestChange', this.updatePositions);
-}).factory('screenTest', function($document, $rootScope, $window) {
-    function testVisibility(cls) {
-        var el = angular.element('<div />').addClass(cls).appendTo('body'),
-            visible = el.css('display') !== 'none';
-        el.remove();
-        return visible;
-    }
-    angular.element($window).on('resize', function() {
-        angular.forEach(breakpoints, function(value, point) {
-            breakpoints[point] = testVisibility('visible-'+point);
-        });
-        $rootScope.$broadcast('screenTestChange', breakpoints);
-    });
-
-    var body = $document.find('body'),
-        breakpoints = {
+}).factory('screenTest', function($rootScope, $window) {
+    "use strict";
+    var breakpoints = {
             xs: testVisibility('visible-xs'),
             sm: testVisibility('visible-sm'),
             md: testVisibility('visible-md'),
             lg: testVisibility('visible-lg')
         };
+    angular.element($window).on('resize', onResize);
 
     return {
         size: breakpoints,
         isNarrow: function() {
             return breakpoints.xs || breakpoints.sm;
         }
+    };
+
+    function onResize() {
+        angular.forEach(breakpoints, function(value, point) {
+            breakpoints[point] = testVisibility('visible-'+point);
+        });
+        $rootScope.$broadcast('screenTestChange', breakpoints);
+    }
+    function testVisibility(cls) {
+        var el = angular.element('<div />').addClass(cls).appendTo('body'),
+            visible = el.css('display') !== 'none';
+        el.remove();
+        return visible;
     }
 });
