@@ -1,7 +1,6 @@
-package ru.yandex.qatools.allure.model;
+package ru.yandex.qatools.allure.config;
 
 import org.junit.Test;
-import ru.yandex.qatools.allure.config.AllureConfig;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

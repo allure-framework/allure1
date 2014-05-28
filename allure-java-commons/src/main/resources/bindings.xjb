@@ -28,4 +28,8 @@
         <jaxb:class ref="java.lang.Throwable"/>
     </jaxb:bindings>
 
+    <jaxb:bindings node="//xsd:complexType[@name='pattern']">
+        <jaxb:class ref="java.util.regex.Pattern"/>
+    </jaxb:bindings>
+
 </jaxb:bindings>

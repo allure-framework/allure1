@@ -140,4 +140,13 @@ public class TestCaseEventTest {
         verifyNoMoreInteractions(parameters);
         verifyNoMoreInteractions(testCase);
     }
+
+    @Test
+    public void testCasePendingEventTest() throws Exception {
+        Throwable throwable = new Exception("atata");
+        new TestCasePendingEvent().withThrowable(throwable).process(testCase);
+        verify(testCase).setStatus(Status.PENDING);
+        verify(testCase).setFailure(any(Failure.class));
+        verifyNoMoreInteractions(testCase);
+    }
 }

@@ -16,6 +16,8 @@ import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachmentW
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
+ *
+ *         @deprecated since 1.4
  */
 @Deprecated
 public class MakeAttachEvent extends AbstractMakeAttachEvent {
@@ -28,7 +30,7 @@ public class MakeAttachEvent extends AbstractMakeAttachEvent {
 
     @Override
     public void process(Step step) {
-        Attachment attachment = writeSafety(getAttach(), getTitle());
+        Attachment attachment = writeSafely(getAttach(), getTitle());
 
         step.getAttachments().add(attachment);
     }
@@ -43,7 +45,7 @@ public class MakeAttachEvent extends AbstractMakeAttachEvent {
         throw new AllureException("Attach-method should be return 'java.lang.String' or 'java.io.File'.");
     }
 
-    private static Attachment writeSafety(Object attachment, String title) {
+    private static Attachment writeSafely(Object attachment, String title) {
         try {
             return write(attachment, title);
         } catch (Exception e) {
