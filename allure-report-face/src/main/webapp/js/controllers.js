@@ -30,6 +30,13 @@ angular.module('allure.controllers', [])
         }, Number.POSITIVE_INFINITY);
     })
 
+    .controller('NavbarCtrl', function($scope, $http) {
+        'use strict';
+        return $http.get('data/report.json').then(function(response) {
+            $scope.size = response.data.size;
+        });
+    })
+
     .controller('TabsController', function($scope, $state) {
         'use strict';
         $scope.isCurrent = function(state) {

@@ -45,9 +45,10 @@
 <script type="text/ng-template" id="testcaseAttachment.tpl">
     <span class="glyphicon glyphicon-file" tooltip="{{attachment.type}}"></span>
     <span>{{attachment.title}}</span>
-    <div class="pull-right">
-        <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{'data/'+attachment.source}}">View raw</a>
-    </div>
+    <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{'data/'+attachment.source}}" class="pull-right attachment_size">
+        <i class="glyphicon glyphicon-floppy-open"></i>
+        <i>{{attachment.size | filesize}}</i>
+    </a>
 </script>
 <script type="text/ng-template" id="testcaseStep.tpl">
     <div class="list-item" ng-click="expanded = !expanded" ng-class="{clickable: hasContent}">

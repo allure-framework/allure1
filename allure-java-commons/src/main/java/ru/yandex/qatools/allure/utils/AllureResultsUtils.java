@@ -212,7 +212,7 @@ public final class AllureResultsUtils {
                 FileUtils.writeByteArrayToFile(file, attachment);
             }
         }
-        return new Attachment().withTitle(title).withSource(source).withType(type);
+        return new Attachment().withTitle(title).withSource(source).withType(type).withSize(attachment.length);
     }
 
     /**

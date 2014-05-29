@@ -69,15 +69,6 @@
             <xsl:attribute name="uid">
                 <xsl:value-of select="utils:generateUid()"/>
             </xsl:attribute>
-            <xsl:attribute name="title">
-                <xsl:value-of select="@title"/>
-            </xsl:attribute>
-            <xsl:attribute name="source">
-                <xsl:value-of select="@source"/>
-            </xsl:attribute>
-            <xsl:attribute name="type">
-                <xsl:value-of select="@type"/>
-            </xsl:attribute>
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
     </xsl:template>

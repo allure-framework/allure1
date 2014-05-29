@@ -20,7 +20,7 @@ public class XUnitDataProvider implements DataProvider {
     public static final String XUNIT_JSON = "xunit.json";
 
     @Override
-    public void provide(String testPack, File outputDirectory) {
+    public long provide(String testPack, File outputDirectory) {
         String allureXUnitBody = applyTransformation(testPack, TEST_RUN_TO_XUNIT_XSL);
 
         AllureXUnit allureXUnit = JAXB.unmarshal(
@@ -28,6 +28,6 @@ public class XUnitDataProvider implements DataProvider {
                 AllureXUnit.class
         );
 
-        serialize(outputDirectory, XUNIT_JSON, allureXUnit);
+        return serialize(outputDirectory, XUNIT_JSON, allureXUnit);
     }
 }

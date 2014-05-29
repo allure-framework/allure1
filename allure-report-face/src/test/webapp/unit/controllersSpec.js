@@ -48,4 +48,22 @@ describe('controllers', function () {
             ]);
         });
     });
+
+    describe('NavbarCtrl', function() {
+        function createController() {
+            var scope = $rootScope.$new();
+            scope = scope.$new();
+            $controller('NavbarCtrl', {
+                $scope: scope
+            });
+            return scope;
+        }
+
+        it('should detect that all tests passed', inject(function($httpBackend) {
+            $httpBackend.expectGET('data/report.json').respond({size: 123});
+            var scope = createController();
+            $httpBackend.flush();
+            expect(scope.size).toBe(123);
+        }));
+    });
 });

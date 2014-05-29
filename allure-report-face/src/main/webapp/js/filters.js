@@ -1,9 +1,15 @@
-/*global angular*/
+/*global angular, filesize*/
 angular.module('allure.filters', [])
     .filter('interpolate', ['version', function (version) {
         'use strict';
         return function (text) {
             return String(text).replace(/\%VERSION\%/mg, version);
+        };
+    }])
+    .filter('filesize', [function () {
+        'use strict';
+        return function (size) {
+            return size ? filesize(size, {base: 2, round: 1}) : size;
         };
     }])
     .constant('d3', window.d3)

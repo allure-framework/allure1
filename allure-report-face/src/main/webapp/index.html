@@ -19,6 +19,8 @@
 
     <script src="vendor/highlight.pack.js"></script>
 
+    <script src="vendor/filesize.js"></script>
+
     <script src="js/app.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
@@ -41,12 +43,9 @@
     <script src="js/scrollfix/scrollfix.js"></script>
 </head>
 <body class="b-page">
-<header class="b-page__nav navbar navbar-static-top" role="navigation">
+<header class="b-page__nav navbar navbar-static-top" role="navigation" ng-controller="NavbarCtrl">
     <div class="nav navbar-header">
         <a class="navbar-brand allure-logo" href="#">Allure</a>
-    </div>
-    <div class="nav navbar-text navbar-right">
-        Version: ${project.version}
     </div>
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown feedback">
@@ -61,6 +60,12 @@
             </div>
         </li>
     </ul>
+    <div class="nav navbar-text navbar-right">
+        Version: ${project.version}
+    </div>
+    <div class="nav navbar-text navbar-right">
+        Report data size: {{size | filesize}}
+    </div>
 </header>
 <div class="dashboard" ng-controller="TabsController">
     <ul class="b-vert list-unstyled">

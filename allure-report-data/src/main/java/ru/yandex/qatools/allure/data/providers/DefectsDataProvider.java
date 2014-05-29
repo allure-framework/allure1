@@ -20,7 +20,7 @@ public class DefectsDataProvider implements DataProvider {
     public static final String ERRORS_JSON = "defects.json";
 
     @Override
-    public void provide(String testPack, File outputDirectory) {
+    public long provide(String testPack, File outputDirectory) {
         
         String allureErrorsBody = applyTransformation(testPack, TEST_RUN_TO_ERRORS_XSL);
 
@@ -29,6 +29,6 @@ public class DefectsDataProvider implements DataProvider {
                 AllureDefects.class
         );
 
-        serialize(outputDirectory, ERRORS_JSON, allureDefects);
+        return serialize(outputDirectory, ERRORS_JSON, allureDefects);
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1400681607876" stop="1400681627123">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1401358615200" stop="1401358636112">
     <name>my.company.NonAsciiTest</name>
     <test-cases>
-        <test-case start="1400681608883" stop="1400681608930" status="broken">
+        <test-case start="1401358616545" stop="1401358616586" status="broken">
             <name>test_raise_cyrilling</name>
             <description type="text">Этот тест выкидывает исключение с русскими буквами</description>
             <failure>
@@ -33,7 +33,7 @@
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1400681608883" stop="1400681608891" status="passed">
+        <test-case start="1401358616545" stop="1401358616548" status="passed">
             <name>test_pass</name>
             <description type="text">Этот тест проходит</description>
             <steps/>
