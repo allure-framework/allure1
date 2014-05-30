@@ -5,6 +5,9 @@ import java.lang.annotation.*;
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 10.24.13
+ *         <p/>
+ *         Use this annotation to set test suite and test case title.
+ *         Tilte overrides default name in report.
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
@@ -12,5 +15,4 @@ import java.lang.annotation.*;
 public @interface Title {
 
     String value();
-
 }
