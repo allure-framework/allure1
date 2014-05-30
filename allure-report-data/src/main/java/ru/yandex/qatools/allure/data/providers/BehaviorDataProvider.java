@@ -22,7 +22,7 @@ public class BehaviorDataProvider implements DataProvider {
     private static final String BEHAVIOR_JSON = "behavior.json";
 
     @Override
-    public void provide(String testPack, File outputDirectory) {
+    public long provide(String testPack, File outputDirectory) {
         String allureFeaturesBody = applyTransformations(
                 testPack,
                 TEST_RUN_TO_FEATURES_1_XSL,
@@ -34,6 +34,6 @@ public class BehaviorDataProvider implements DataProvider {
                 AllureBehavior.class
         );
 
-        serialize(outputDirectory, BEHAVIOR_JSON, allureBehavior);
+        return serialize(outputDirectory, BEHAVIOR_JSON, allureBehavior);
     }
 }

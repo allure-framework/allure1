@@ -49,6 +49,7 @@
         <xsd:attribute name="title" type="xsd:string" use="required"/>
         <xsd:attribute name="source" type="xsd:string" use="required"/>
         <xsd:attribute name="type" type="xsd:string" use="required"/>
+        <xsd:attribute name="size" type="xsd:int" use="required"/>
         <xsd:attribute name="uid" type="xsd:string" use="required"/>
     </xsd:complexType>
 

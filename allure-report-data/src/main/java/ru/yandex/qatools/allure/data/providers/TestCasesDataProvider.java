@@ -21,7 +21,7 @@ public class TestCasesDataProvider implements DataProvider {
     private static final String TESTCASE_JSON_SUFFIX = "-testcase.json";
 
     @Override
-    public void provide(String testPack, File outputDirectory) {
+    public long provide(String testPack, File outputDirectory) {
         String allureTestCasePackBody = applyTransformation(testPack, TESTRUN_TO_TESTCASE_PACK_XSL);
 
         AllureTestCasePack allureTestCasePack = JAXB.unmarshal(
@@ -29,12 +29,15 @@ public class TestCasesDataProvider implements DataProvider {
                 AllureTestCasePack.class
         );
 
+        long count = 0;
         for (AllureTestCase testCase : allureTestCasePack.getTestCases()) {
-            serialize(
+            count += serialize(
                     outputDirectory,
                     testCase.getUid() + TESTCASE_JSON_SUFFIX,
                     testCase
             );
         }
+
+        return count;
     }
 }

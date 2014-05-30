@@ -8,6 +8,14 @@ import java.io.File;
  */
 public interface DataProvider {
 
-    void provide(String testPack, File outputDirectory);
+    /**
+     * Provide some info to specified directory
+     *
+     * @param testPack        marshaled {@link ru.yandex.qatools.allure.data.AllureTestRun}
+     *                        with info about tests
+     * @param outputDirectory specified directory
+     * @return number of bytes written to outputDirectory
+     */
+    long provide(String testPack, File outputDirectory);
 
 }

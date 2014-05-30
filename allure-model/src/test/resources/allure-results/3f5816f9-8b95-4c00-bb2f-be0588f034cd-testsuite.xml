@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1400681607868" stop="1400681627106">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1401358615191" stop="1401358636081">
     <name>my.company.AfterClassTest</name>
     <test-cases>
-        <test-case start="1400681607928" stop="1400681608186" status="failed">
+        <test-case start="1401358615257" stop="1401358615267" status="passed">
+            <name>firstTest</name>
+            <steps/>
+            <attachments/>
+            <labels/>
+        </test-case>
+        <test-case start="1401358615258" stop="1401358615841" status="failed">
             <name>secondTest</name>
             <failure>
                 <message>AssertionError: </message>
@@ -34,13 +40,7 @@
             <attachments/>
             <labels/>
         </test-case>
-        <test-case start="1400681607928" stop="1400681607939" status="passed">
-            <name>firstTest</name>
-            <steps/>
-            <attachments/>
-            <labels/>
-        </test-case>
-        <test-case start="1400681608188" stop="1400681608188" status="failed">
+        <test-case start="1401358615843" stop="1401358615843" status="failed">
             <name>my.company.AfterClassTest</name>
             <title>AfterClassTest</title>
             <failure>

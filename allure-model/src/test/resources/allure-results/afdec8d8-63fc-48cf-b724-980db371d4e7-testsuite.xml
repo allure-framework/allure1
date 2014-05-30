@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1400681607874" stop="1400681627001">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1401358615198" stop="1401358635941">
     <name>my.company.BeforeClassTest</name>
     <test-cases>
-        <test-case start="1400681608228" stop="1400681608229" status="failed">
+        <test-case start="1401358615890" stop="1401358615891" status="failed">
             <name>my.company.BeforeClassTest</name>
             <title>BeforeClassTest</title>
             <failure>

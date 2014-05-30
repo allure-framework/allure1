@@ -1,13 +1,13 @@
 package ru.yandex.qatools.allure.data;
 
-import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.data.providers.*;
 
-import java.io.*;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.listAttachmentFiles;
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.copyAttachments;
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.writeReportSize;
 
 
 /**
@@ -21,7 +21,7 @@ public class AllureReportGenerator {
     private List<DataProvider> dataProviders = Arrays.asList(defaultProviders());
 
     protected File[] inputDirectories;
-    
+
     protected TestRunGenerator testRunGenerator;
 
     private boolean validateXML = true;
@@ -39,18 +39,15 @@ public class AllureReportGenerator {
                     String.format("Can't create data directory <%s>", reportDataDirectory.getAbsolutePath())
             );
         }
-        copyAttachments(inputDirectories, reportDataDirectory);
+        long reportSize = copyAttachments(inputDirectories, reportDataDirectory);
 
         String testRun = testRunGenerator.generate();
-        
+
         for (final DataProvider provider : dataProviders) {
-            provider.provide(testRun, reportDataDirectory);
+            reportSize += provider.provide(testRun, reportDataDirectory);
         }
 
-    }
-
-    public void setValidateXML(boolean validateXML) {
-        this.validateXML = validateXML;
+        writeReportSize(reportSize, reportDataDirectory);
     }
 
     public static DataProvider[] defaultProviders() {
@@ -63,20 +60,9 @@ public class AllureReportGenerator {
         };
     }
 
-    public static void copyAttachments(File[] dirs, File outputDirectory) {
-        for (File attach : listAttachmentFiles(dirs)) {
-            try {
-                copyAttachment(attach, new File(outputDirectory, attach.getName()));
-            } catch (IOException e) {
-                throw new ReportGenerationException(e);
-            }
-        }
-    }
 
-    public static void copyAttachment(File srcFile, File destFile) throws IOException {
-        if (!srcFile.getCanonicalPath().equals(destFile.getCanonicalPath())) {
-            FileUtils.copyFile(srcFile, destFile);
-        }
+    public void setValidateXML(boolean validateXML) {
+        this.validateXML = validateXML;
     }
 
     public TestRunGenerator getTestRunGenerator() {

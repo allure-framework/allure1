@@ -20,7 +20,7 @@ public class GraphDataProvider implements DataProvider {
     private static final String GRAPH_JSON = "graph.json";
 
     @Override
-    public void provide(String testPack, File outputDirectory) {
+    public long provide(String testPack, File outputDirectory) {
         String allureGraphBody = applyTransformation(testPack, TEST_RUN_TO_GRAPH_XSL);
 
         AllureGraph allureGraph = JAXB.unmarshal(
@@ -28,6 +28,6 @@ public class GraphDataProvider implements DataProvider {
                 AllureGraph.class
         );
 
-        serialize(outputDirectory, GRAPH_JSON, allureGraph);
+        return serialize(outputDirectory, GRAPH_JSON, allureGraph);
     }
 }

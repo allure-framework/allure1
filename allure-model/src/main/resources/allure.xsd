@@ -106,6 +106,7 @@
         <xs:attribute name="title" type="xs:string" use="required"/>
         <xs:attribute name="source" type="xs:string" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
+        <xs:attribute name="size" type="xs:int"/>
     </xs:complexType>
 
     <xs:simpleType name="attachment-type">

@@ -10,6 +10,10 @@
     <xsd:element name="allure-test-suite" type="alr:allure-test-suite"/>
     <xsd:element name="allure-test-case" type="alr:allure-test-case"/>
 
+    <xsd:complexType name="allure-report-size">
+        <xsd:attribute name="size" type="xsd:long" use="required"/>
+    </xsd:complexType>
+
     <!--All data about test run-->
     <xsd:complexType name="allure-test-run">
         <xsd:sequence>
