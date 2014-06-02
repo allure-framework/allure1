@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.copyAttachments;
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.writeReportSize;
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.writeAllureReportInfo;
 
 
 /**
@@ -36,6 +36,8 @@ public class AllureReportGenerator {
     }
 
     public void generate(File reportDirectory) {
+        long start = System.currentTimeMillis();
+
         final File reportDataDirectory = createDirectory(reportDirectory, DATA_SUFFIX);
 
         long attachmentsSize = copyAttachments(inputDirectories, reportDataDirectory);
@@ -54,7 +56,13 @@ public class AllureReportGenerator {
         try {
             service.shutdown();
             service.awaitTermination(1, TimeUnit.HOURS);
-            writeReportSize(reportSize.get(), reportDataDirectory);
+            long stop = System.currentTimeMillis();
+
+            AllureReportInfo reportInfo = new AllureReportInfo();
+            reportInfo.setSize(reportSize.get());
+            reportInfo.setTime(stop - start);
+
+            writeAllureReportInfo(reportInfo, reportDataDirectory);
         } catch (InterruptedException e) {
             throw new ReportGenerationException(e);
         }

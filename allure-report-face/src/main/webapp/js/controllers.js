@@ -33,7 +33,7 @@ angular.module('allure.controllers', [])
     .controller('NavbarCtrl', function($scope, $http) {
         'use strict';
         return $http.get('data/report.json').then(function(response) {
-            $scope.size = response.data.size;
+            $scope.report = response.data;
         });
     })
 

@@ -64,7 +64,10 @@
         Version: ${project.version}
     </div>
     <div class="nav navbar-text navbar-right">
-        Report data size: {{size | filesize}}
+        Data size: {{report.size | filesize}}
+    </div>
+    <div class="nav navbar-text navbar-right">
+        Generated in: {{report.time | time}}
     </div>
 </header>
 <div class="dashboard" ng-controller="TabsController">
