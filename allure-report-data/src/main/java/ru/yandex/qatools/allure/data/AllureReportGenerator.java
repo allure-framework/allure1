@@ -5,6 +5,10 @@ import ru.yandex.qatools.allure.data.providers.*;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.copyAttachments;
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.writeReportSize;
@@ -32,22 +36,42 @@ public class AllureReportGenerator {
     }
 
     public void generate(File reportDirectory) {
-        File reportDataDirectory = new File(reportDirectory, DATA_SUFFIX);
+        final File reportDataDirectory = createDirectory(reportDirectory, DATA_SUFFIX);
 
-        if (!(reportDataDirectory.exists() || reportDataDirectory.mkdirs())) {
+        long attachmentsSize = copyAttachments(inputDirectories, reportDataDirectory);
+        final AtomicLong reportSize = new AtomicLong(attachmentsSize);
+        final String testRun = testRunGenerator.generate();
+
+        ExecutorService service = Executors.newFixedThreadPool(dataProviders.size());
+        for (final DataProvider provider : dataProviders) {
+            service.execute(new Runnable() {
+                @Override
+                public void run() {
+                    reportSize.addAndGet(provider.provide(testRun, reportDataDirectory));
+                }
+            });
+        }
+        try {
+            service.shutdown();
+            service.awaitTermination(1, TimeUnit.HOURS);
+            writeReportSize(reportSize.get(), reportDataDirectory);
+        } catch (InterruptedException e) {
+            throw new ReportGenerationException(e);
+        }
+    }
+
+    private static File createDirectory(File parent, String name) {
+        File created = new File(parent, name);
+        checkDirectory(created);
+        return created;
+    }
+
+    private static void checkDirectory(File directory) {
+        if (!(directory.exists() || directory.mkdirs())) {
             throw new RuntimeException(
-                    String.format("Can't create data directory <%s>", reportDataDirectory.getAbsolutePath())
+                    String.format("Can't create data directory <%s>", directory.getAbsolutePath())
             );
         }
-        long reportSize = copyAttachments(inputDirectories, reportDataDirectory);
-
-        String testRun = testRunGenerator.generate();
-
-        for (final DataProvider provider : dataProviders) {
-            reportSize += provider.provide(testRun, reportDataDirectory);
-        }
-
-        writeReportSize(reportSize, reportDataDirectory);
     }
 
     public static DataProvider[] defaultProviders() {
@@ -60,7 +84,7 @@ public class AllureReportGenerator {
         };
     }
 
-
+    @SuppressWarnings("unused")
     public void setValidateXML(boolean validateXML) {
         this.validateXML = validateXML;
     }
@@ -69,6 +93,7 @@ public class AllureReportGenerator {
         return testRunGenerator;
     }
 
+    @SuppressWarnings("unused")
     public File[] getInputDirectories() {
         return inputDirectories;
     }
