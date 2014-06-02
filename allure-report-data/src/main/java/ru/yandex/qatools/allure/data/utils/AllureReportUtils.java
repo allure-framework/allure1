@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import org.apache.commons.io.FileUtils;
-import ru.yandex.qatools.allure.data.AllureReportSize;
+import ru.yandex.qatools.allure.data.AllureReportInfo;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
 import java.io.*;
@@ -112,15 +112,13 @@ public final class AllureReportUtils {
     }
 
     /**
-     * Serialize {@link ru.yandex.qatools.allure.data.AllureReportSize} created
-     * from specified size to output directory
+     * Serialize {@link ru.yandex.qatools.allure.data.AllureReportInfo}  to
+     * specified directory
      *
-     * @param size            size of the report
+     * @param info            to serialize
      * @param outputDirectory output directory
      */
-    public static void writeReportSize(long size, File outputDirectory) {
-        AllureReportSize reportSize = new AllureReportSize();
-        reportSize.setSize(size);
-        serialize(outputDirectory, REPORT_FILE_NAME, reportSize);
+    public static void writeAllureReportInfo(AllureReportInfo info, File outputDirectory) {
+        serialize(outputDirectory, REPORT_FILE_NAME, info);
     }
 }

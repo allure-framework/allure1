@@ -63,7 +63,7 @@ describe('controllers', function () {
             $httpBackend.expectGET('data/report.json').respond({size: 123});
             var scope = createController();
             $httpBackend.flush();
-            expect(scope.size).toBe(123);
+            expect(scope.report).toEqual({size: 123});
         }));
     });
 });
