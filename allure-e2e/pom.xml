@@ -3,7 +3,7 @@
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.4.0-SNAPSHOT</version>
+        <version>1.4.0.RC3</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <artifactId>allure-e2e</artifactId>
@@ -132,7 +132,7 @@
                     <executable>java</executable>
                     <arguments>
                         <argument>-classpath</argument>
-                        <classpath/>
+                        <classpath />
                         <mainClass>ru.yandex.qatools.allure.data.DummyReportGenerator</mainClass>
                         <argument>${allure.results.directory}</argument>
                         <argument>${allure.report.directory}</argument>
