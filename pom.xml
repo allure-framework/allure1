@@ -61,6 +61,11 @@
         <url>https://github.com/allure-framework/allure-core/issues</url>
     </issueManagement>
 
+    <ciManagement>
+        <system>TeamCity</system>
+        <url>http://teamcity.qatools.ru/</url>
+    </ciManagement>
+
     <developers>
         <developer>
             <id>eroshenkoam</id>
@@ -81,6 +86,17 @@
             <organization>Yandex</organization>
         </developer>
     </developers>
+
+    <mailingLists>
+        <mailingList>
+            <name>Allure Mailing List</name>
+            <post>allure@yandex-team.ru</post>
+        </mailingList>
+    </mailingLists>
+
+    <prerequisites>
+        <maven>3.0.5</maven>
+    </prerequisites>
 
     <build>
         <pluginManagement>
