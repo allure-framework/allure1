@@ -91,7 +91,25 @@ angular.module('allure.testcase.controllers', [])
             }
             return '('+result.join(', ')+')';
         };
+        $scope.toggleExpand = function() {
+            $scope.expanded = !$scope.expanded;
+        };
         $scope.expanded = isFailed($scope.step);
+        function getAttachments(step) {
+            var attachments = step.attachments;
+            step.steps.forEach(function(step) {
+                attachments = attachments.concat(getAttachments(step));
+            });
+            return attachments;
+        }
+        var nestedAttachments = getAttachments($scope.step);
+        $scope.$watch('attachment', function(attachment) {
+            if(!$scope.expanded) {
+                $scope.expanded = nestedAttachments.indexOf(attachment) > -1;
+            }
+        });
+
+
         $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0 || $scope.step.failure;
     })
 

@@ -24,6 +24,7 @@ describe('Testcase controllers', function() {
             this.summary = {steps: 0};
             this.attachments = attachments || [];
             this.failure = failure;
+            this.steps = [];
         }
 
         function createController(scopeValues) {
@@ -44,6 +45,14 @@ describe('Testcase controllers', function() {
         it('should not expand passed steps' , function() {
             var scope = createController({ step: new Step('Dummy step') });
             expect(scope.expanded).toBeFalsy();
+        });
+
+        it("should expand step when attachment preset in scope", function() {
+            var attachment = {title: 'file'};
+            var scope = createController({ step: new Step('Dummy step', [attachment]) });
+            $rootScope.attachment = attachment;
+            $rootScope.$apply();
+            expect(scope.expanded).toBeTruthy();
         });
 
         it('should detect empty content', function() {

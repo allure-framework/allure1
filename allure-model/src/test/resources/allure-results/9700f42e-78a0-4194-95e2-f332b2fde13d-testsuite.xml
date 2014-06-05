@@ -39,9 +39,14 @@ many lines in description</description>
                 <step start="1401358616466" stop="1401358616468" status="failed">
                     <name>makeThisTestFailed</name>
                     <title>Make this test failed</title>
-                    <attachments>
-                        <attachment title="TXT Attachment" source="b331a5914c7e78df1aaaad982bbe6b0c657aaa0391d15e105af376daf6b439cc-attachment.txt" type="text/plain" size="4396"/>
-                    </attachments>
+                    <steps>
+                        <step start="1401358616467" stop="1401358616468" status="failed">
+                            <name>makeAttach</name>
+                            <attachments>
+                                <attachment title="TXT Attachment" source="b331a5914c7e78df1aaaad982bbe6b0c657aaa0391d15e105af376daf6b439cc-attachment.txt" type="text/plain" size="4396"/>
+                            </attachments>
+                        </step>
+                    </steps>
                 </step>
             </steps>
             <attachments>
