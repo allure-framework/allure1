@@ -33,12 +33,10 @@ public class AllureTestListenerXmlValidationTest {
         resultsDir = Files.createTempDirectory(ALLURE_RESULTS);
         AllureResultsUtils.setResultsDirectory(resultsDir.toFile());
 
-        AllureTestListener allureListener = new AllureTestListener();
         TestNG testNG = new TestNG();
         testNG.setDefaultSuiteName(DEFAULT_SUITE_NAME);
         testNG.setTestClasses(new Class[]{TestDataClass.class});
         testNG.setUseDefaultListeners(false);
-        testNG.addListener(allureListener);
 
         testNG.run();
     }
