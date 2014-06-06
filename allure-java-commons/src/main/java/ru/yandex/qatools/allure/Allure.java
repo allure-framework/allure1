@@ -1,7 +1,19 @@
 package ru.yandex.qatools.allure;
 
 import ru.yandex.qatools.allure.config.AllureConfig;
-import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
+import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
+import ru.yandex.qatools.allure.events.RemoveAttachmentsEvent;
+import ru.yandex.qatools.allure.events.StepEvent;
+import ru.yandex.qatools.allure.events.StepFinishedEvent;
+import ru.yandex.qatools.allure.events.StepStartedEvent;
+import ru.yandex.qatools.allure.events.TestCaseEvent;
+import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
+import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteEvent;
+import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.experimental.LifecycleListener;
+import ru.yandex.qatools.allure.experimental.ListenersNotifier;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.model.TestCaseResult;
@@ -30,6 +42,8 @@ public class Allure {
 
     private final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
 
+    private final ListenersNotifier notifier = new ListenersNotifier();
+
     /**
      * Package private. Use Allure.LIFECYCLE singleton
      */
@@ -46,6 +60,8 @@ public class Allure {
         Step step = new Step();
         event.process(step);
         stepStorage.put(step);
+
+        notifier.fire(event);
     }
 
     /**
@@ -57,6 +73,8 @@ public class Allure {
     public void fire(StepEvent event) {
         Step step = stepStorage.getLast();
         event.process(step);
+
+        notifier.fire(event);
     }
 
     /**
@@ -69,6 +87,8 @@ public class Allure {
         Step step = stepStorage.pollLast();
         event.process(step);
         stepStorage.getLast().getSteps().add(step);
+
+        notifier.fire(event);
     }
 
     /**
@@ -87,6 +107,8 @@ public class Allure {
         synchronized (TEST_SUITE_ADD_CHILD_LOCK) {
             testSuiteStorage.get(event.getSuiteUid()).getTestCases().add(testCase);
         }
+
+        notifier.fire(event);
     }
 
     /**
@@ -98,6 +120,8 @@ public class Allure {
     public void fire(TestCaseEvent event) {
         TestCaseResult testCase = testCaseStorage.get();
         event.process(testCase);
+
+        notifier.fire(event);
     }
 
     /**
@@ -123,6 +147,8 @@ public class Allure {
 
         stepStorage.remove();
         testCaseStorage.remove();
+
+        notifier.fire(event);
     }
 
     /**
@@ -134,6 +160,8 @@ public class Allure {
     public void fire(TestSuiteEvent event) {
         TestSuiteResult testSuite = testSuiteStorage.get(event.getUid());
         event.process(testSuite);
+
+        notifier.fire(event);
     }
 
     /**
@@ -150,6 +178,8 @@ public class Allure {
         testSuiteStorage.remove(suiteUid);
 
         writeTestSuiteResult(testSuite);
+
+        notifier.fire(event);
     }
 
     /**
@@ -160,6 +190,8 @@ public class Allure {
     @SuppressWarnings("unused")
     public void fire(ClearStepStorageEvent event) {
         stepStorage.remove();
+
+        notifier.fire(event);
     }
 
     /**
@@ -170,6 +202,21 @@ public class Allure {
     @SuppressWarnings("unused")
     public void fire(ClearTestStorageEvent event) {
         testCaseStorage.remove();
+
+        notifier.fire(event);
+    }
+
+    /**
+     * Experimental. Can be removed in next releases.
+     * <p/>
+     * Add specified listener to notifier.
+     *
+     * @param listener to add
+     * @see ru.yandex.qatools.allure.experimental.LifecycleListener
+     * @since 1.4.0
+     */
+    public void addListener(LifecycleListener listener) {
+        notifier.addListener(listener);
     }
 
     /**

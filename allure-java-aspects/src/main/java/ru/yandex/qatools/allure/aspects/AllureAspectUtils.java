@@ -9,6 +9,7 @@ import java.util.Arrays;
  *         Date: 24.10.13
  */
 public final class AllureAspectUtils {
+
     private AllureAspectUtils() {
     }
 
