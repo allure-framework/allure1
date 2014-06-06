@@ -1,25 +1,30 @@
 package ru.yandex.qatools.allure.utils;
 
-import com.google.common.io.Files;
-import org.apache.commons.io.FileUtils;
+import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MimeTypes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.config.AllureConfig;
+import ru.yandex.qatools.allure.exceptions.AllureException;
 import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.PropertyException;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.nio.file.Files;
+import java.security.MessageDigest;
 
-import static com.google.common.hash.Hashing.sha256;
+import static javax.xml.bind.Marshaller.JAXB_ENCODING;
 import static javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
-import static org.apache.commons.io.Charsets.UTF_8;
 import static org.apache.tika.mime.MimeTypes.getDefaultMimeTypes;
 import static ru.yandex.qatools.allure.config.AllureConfig.getDefaultResultsDirectory;
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName;
@@ -34,7 +39,13 @@ public final class AllureResultsUtils {
 
     private static File resultsDirectory;
 
-    private static final String ESCAPE_HANDLER_PROPERTY = "com.sun.xml.bind.marshaller.CharacterEscapeHandler";
+    private static final int POSITIVE = 1;
+
+    private static final int HEX = 16;
+
+    private static final String UTF_8 = "UTF-8";
+
+    private static final String ESCAPE_HANDLER_PROPERTY = CharacterEscapeHandler.class.getName();
 
     private static final Object RESULT_DIRECTORY_LOCK = new Object();
 
@@ -69,7 +80,8 @@ public final class AllureResultsUtils {
     /**
      * Create results directory. First step try to create {@link #CONFIG#getResultsDirectory()},
      * if cannot, try to create {@link ru.yandex.qatools.allure.config.AllureConfig#getDefaultResultsDirectory},
-     * and if cannot, returns {@link com.google.common.io.Files#createTempDir()}
+     * and if cannot, returns a new <code>File</code> instance by converting the "allure-results"
+     * pathname string into an abstract pathname.
      *
      * @return created results directory
      */
@@ -95,7 +107,11 @@ public final class AllureResultsUtils {
                 resultsDirectory.getAbsolutePath()
         ));
 
-        return Files.createTempDir();
+        try {
+            return Files.createTempDirectory("allure-results").toFile();
+        } catch (IOException e) {
+            throw new AllureException("Can't create results directory", e);
+        }
     }
 
     /**
@@ -129,13 +145,60 @@ public final class AllureResultsUtils {
         File testSuiteResultFile = new File(getResultsDirectory(), generateTestSuiteFileName());
 
         try {
-            Marshaller m = JAXBContext.newInstance(TestSuiteResult.class).createMarshaller();
-            m.setProperty(JAXB_FORMATTED_OUTPUT, true);
-            m.setProperty(ESCAPE_HANDLER_PROPERTY, BadXmlCharacterEscapeHandler.getInstance());
-
-            m.marshal(new ObjectFactory().createTestSuite(testSuite), testSuiteResultFile);
+            marshaller(TestSuiteResult.class).marshal(
+                    new ObjectFactory().createTestSuite(testSuite),
+                    testSuiteResultFile
+            );
         } catch (Exception e) {
             LOGGER.error("Error while marshaling testSuite", e);
+        }
+    }
+
+    /**
+     * Creates a new {@link javax.xml.bind.Marshaller} for given class.
+     * If marshaller created successfully, try to set following properties:
+     * {@link Marshaller#JAXB_FORMATTED_OUTPUT}, {@link Marshaller#JAXB_ENCODING},
+     * {@link #ESCAPE_HANDLER_PROPERTY} using {@link #setPropertySafely(javax.xml.bind.Marshaller, String, Object)}
+     *
+     * @param clazz specified class
+     * @return a created marshaller
+     * @throws AllureException if can't create marshaller for given class.
+     */
+    public static Marshaller marshaller(Class<?> clazz) {
+        Marshaller m = createMarshallerForClass(clazz);
+        setPropertySafely(m, JAXB_FORMATTED_OUTPUT, true);
+        setPropertySafely(m, JAXB_ENCODING, UTF_8);
+        setPropertySafely(m, ESCAPE_HANDLER_PROPERTY, BadXmlCharacterEscapeHandler.getInstance());
+        return m;
+    }
+
+    /**
+     * Creates a new {@link javax.xml.bind.Marshaller} for given class.
+     *
+     * @param clazz specified class
+     * @return a created marshaller
+     * @throws AllureException if can't create marshaller for given class.
+     */
+    public static Marshaller createMarshallerForClass(Class<?> clazz) {
+        try {
+            return JAXBContext.newInstance(clazz).createMarshaller();
+        } catch (JAXBException e) {
+            throw new AllureException("Can't create marshaller for class " + clazz);
+        }
+    }
+
+    /**
+     * Try to set specified property to given marshaller
+     *
+     * @param marshaller specified marshaller
+     * @param name       name of property to set
+     * @param value      value of property to set
+     */
+    public static void setPropertySafely(Marshaller marshaller, String name, Object value) {
+        try {
+            marshaller.setProperty(name, value);
+        } catch (PropertyException e) {
+            LOGGER.error(String.format("Can't set \"%s\" property to given marshaller", name), e);
         }
     }
 
@@ -182,7 +245,7 @@ public final class AllureResultsUtils {
     public static Attachment writeAttachmentWithErrorMessage(Throwable throwable, String title) {
         String message = throwable.getMessage();
         try {
-            return writeAttachment(message.getBytes(UTF_8), title);
+            return writeAttachment(message.getBytes(CONFIG.getAttachmentsEncoding()), title);
         } catch (Exception e) {
             e.addSuppressed(throwable);
             LOGGER.error(String.format("Can't write attachment \"%s\"", title), e);
@@ -209,7 +272,9 @@ public final class AllureResultsUtils {
         File file = new File(getResultsDirectory(), source);
         synchronized (ATTACHMENTS_LOCK) {
             if (!file.exists()) {
-                FileUtils.writeByteArrayToFile(file, attachment);
+                try (FileOutputStream fos = new FileOutputStream(file)) {
+                    fos.write(attachment);
+                }
             }
         }
         return new Attachment().withTitle(title).withSource(source).withType(type).withSize(attachment.length);
@@ -230,13 +295,18 @@ public final class AllureResultsUtils {
     }
 
     /**
-     * Generate attachment name as sha256 of attachment content
+     * Generate attachment name. As prefix uses sha256 of given content
      *
      * @param attachment content
      * @return generated name, looks like \"{sha256}-attachment\"
      */
     public static String generateAttachmentName(byte[] attachment) {
-        String prefix = sha256().hashBytes(attachment).toString();
+        String prefix = "unknown";
+        try {
+            byte[] bytes = MessageDigest.getInstance("SHA-256").digest(attachment);
+            prefix = new BigInteger(POSITIVE, bytes).toString(HEX);
+        } catch (Exception ignored) {
+        }
         return prefix + CONFIG.getAttachmentFileSuffix();
     }
 

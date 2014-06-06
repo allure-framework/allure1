@@ -10,7 +10,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
+
 
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru

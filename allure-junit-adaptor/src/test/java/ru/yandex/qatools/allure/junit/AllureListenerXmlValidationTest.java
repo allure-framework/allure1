@@ -16,7 +16,7 @@ import java.io.File;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru

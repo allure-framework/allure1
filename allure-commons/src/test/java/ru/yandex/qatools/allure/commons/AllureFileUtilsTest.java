@@ -1,4 +1,4 @@
-package ru.yandex.qatools.allure.config;
+package ru.yandex.qatools.allure.commons;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -6,18 +6,20 @@ import org.junit.Test;
 import java.io.File;
 import java.io.FileFilter;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.*;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listAttachmentFiles;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName;
 
 /**
- * @author Artem Eroshenko eroshenkoam@yandex-team.ru
- *         Date: 12/25/13
+ * @author Dmitry Baev charlie@yandex-team.ru
+ *         Date: 06.06.14
  */
-public class AllureNamingUtilsTest {
+public class AllureFileUtilsTest {
 
     private File directory;
 
@@ -30,7 +32,7 @@ public class AllureNamingUtilsTest {
 
     @Test(expected = IllegalStateException.class)
     public void createInstanceTest() throws Exception {
-        new AllureNamingUtils();
+        new AllureFileUtils();
     }
 
     @Test

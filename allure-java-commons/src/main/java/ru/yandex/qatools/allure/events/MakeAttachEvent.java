@@ -1,7 +1,6 @@
 package ru.yandex.qatools.allure.events;
 
-import org.apache.commons.io.Charsets;
-import org.apache.commons.io.FileUtils;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.exceptions.AllureException;
 import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.AttachmentType;
@@ -9,6 +8,8 @@ import ru.yandex.qatools.allure.model.Step;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachment;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachmentWithErrorMessage;
@@ -16,8 +17,7 @@ import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachmentW
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
- *
- *         @deprecated since 1.4
+ * @deprecated since 1.4
  */
 @Deprecated
 public class MakeAttachEvent extends AbstractMakeAttachEvent {
@@ -37,9 +37,12 @@ public class MakeAttachEvent extends AbstractMakeAttachEvent {
 
     private static Attachment write(Object attachment, String title) throws IOException {
         if (attachment instanceof String) {
-            return writeAttachment(((String) attachment).getBytes(Charsets.UTF_8), title);
+            return writeAttachment(
+                    ((String) attachment).getBytes(AllureConfig.newInstance().getAttachmentsEncoding()),
+                    title
+            );
         } else if (attachment instanceof File) {
-            byte[] bytes = FileUtils.readFileToByteArray((File) attachment);
+            byte[] bytes = Files.readAllBytes(Paths.get(((File) attachment).toURI()));
             return writeAttachment(bytes, title);
         }
         throw new AllureException("Attach-method should be return 'java.lang.String' or 'java.io.File'.");

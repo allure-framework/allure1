@@ -7,14 +7,19 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import ru.yandex.qatools.allure.Allure;
-import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
+import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
+import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
+import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
+import ru.yandex.qatools.allure.events.TestCasePendingEvent;
+import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
 import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import static org.apache.commons.lang3.StringUtils.defaultIfEmpty;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -119,7 +124,7 @@ public class AllureRunListener extends RunListener {
 
     public String getIgnoredMessage(Description description) {
         Ignore ignore = description.getAnnotation(Ignore.class);
-        return defaultIfEmpty(ignore == null ? "" : ignore.value(), "Test ignored (without reason)!");
+        return ignore == null || ignore.value().isEmpty() ? "Test ignored (without reason)!" : ignore.value();
     }
 
     public void startFakeTestCase(Description description) {

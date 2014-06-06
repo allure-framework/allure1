@@ -129,6 +129,10 @@
             <artifactId>lambdaj</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-commons</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
