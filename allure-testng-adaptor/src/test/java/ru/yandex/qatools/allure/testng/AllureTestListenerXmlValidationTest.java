@@ -14,8 +14,8 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
 import static java.nio.file.FileVisitResult.*;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
 /**
  * @author Kirill Kozlov kozlov.k.e@gmail.com

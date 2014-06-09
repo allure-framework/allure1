@@ -7,8 +7,8 @@ import java.io.File;
 import java.io.StringWriter;
 import java.util.Collection;
 
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.getAllureSchemaValidator;
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
 import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
 
 

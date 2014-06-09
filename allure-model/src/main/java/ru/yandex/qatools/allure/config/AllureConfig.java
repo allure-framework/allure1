@@ -5,6 +5,7 @@ import ru.yandex.qatools.properties.annotations.Property;
 import ru.yandex.qatools.properties.annotations.Resource;
 
 import java.io.File;
+import java.nio.charset.Charset;
 
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
@@ -13,13 +14,6 @@ import java.io.File;
 @SuppressWarnings("unused")
 @Resource.Classpath("allure.properties")
 public class AllureConfig {
-
-    private static final String VERSION_FILE_NAME = "version.txt";
-
-    /**
-     * Allure.getVersion() added in version 1.3.6
-     */
-    private static final String DEFAULT_VERSION = "1.3.6";
 
     private static final File DEFAULT_RESULTS_DIRECTORY = new File("target/allure-results");
 
@@ -47,7 +41,10 @@ public class AllureConfig {
     @Property("allure.results.directory")
     private File resultsDirectory = DEFAULT_RESULTS_DIRECTORY;
 
-    private String version = null;
+    @Property("allure.attachments.encoding")
+    private String attachmentsEncoding = "UTF-8";
+
+    private String version = getClass().getPackage().getImplementationVersion();
 
     public AllureConfig() {
         PropertyLoader.populate(this);
@@ -85,12 +82,20 @@ public class AllureConfig {
         return resultsDirectory;
     }
 
+    public Charset getAttachmentsEncoding() {
+        try {
+            return Charset.forName(attachmentsEncoding);
+        } catch (Exception ignored) {
+            return Charset.defaultCharset();
+        }
+    }
+
     public static File getDefaultResultsDirectory() {
         return DEFAULT_RESULTS_DIRECTORY;
     }
 
     public String getVersion() {
-        return getClass().getPackage().getImplementationVersion();
+        return version;
     }
 
     public static AllureConfig newInstance() {

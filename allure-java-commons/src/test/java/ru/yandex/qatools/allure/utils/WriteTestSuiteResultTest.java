@@ -12,7 +12,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
 
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru

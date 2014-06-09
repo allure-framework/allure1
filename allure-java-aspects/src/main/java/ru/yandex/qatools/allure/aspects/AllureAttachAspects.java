@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure.aspects;
 
-import org.apache.commons.io.Charsets;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -9,8 +8,11 @@ import org.aspectj.lang.reflect.MethodSignature;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.annotations.Attach;
 import ru.yandex.qatools.allure.annotations.Attachment;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.events.MakeAttachEvent;
 import ru.yandex.qatools.allure.events.MakeAttachmentEvent;
+
+import java.nio.charset.Charset;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -56,13 +58,8 @@ public class AllureAttachAspects {
                 joinPoint.getArgs()
         );
 
-        byte[] bytes = null;
-        if (result instanceof String) {
-            bytes = ((String) result).getBytes(Charsets.UTF_8);
-        } else if (result instanceof byte[]) {
-            bytes = (byte[]) result;
-        }
-
+        Charset charset = AllureConfig.newInstance().getAttachmentsEncoding();
+        byte[] bytes = (result instanceof byte[]) ? (byte[]) result : result.toString().getBytes(charset);
         Allure.LIFECYCLE.fire(new MakeAttachmentEvent(bytes, attachTitle, attachment.type()));
     }
 

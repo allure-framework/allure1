@@ -7,8 +7,20 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.xml.sax.SAXException;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
-import ru.yandex.qatools.allure.events.*;
-import ru.yandex.qatools.allure.model.*;
+import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
+import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
+import ru.yandex.qatools.allure.events.MakeAttachEvent;
+import ru.yandex.qatools.allure.events.StepFinishedEvent;
+import ru.yandex.qatools.allure.events.StepStartedEvent;
+import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
+import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
+import ru.yandex.qatools.allure.model.Attachment;
+import ru.yandex.qatools.allure.model.AttachmentType;
+import ru.yandex.qatools.allure.model.Step;
+import ru.yandex.qatools.allure.model.TestCaseResult;
+import ru.yandex.qatools.allure.model.TestSuiteResult;
 import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import javax.xml.transform.stream.StreamSource;
@@ -18,8 +30,14 @@ import java.io.IOException;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.*;
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.listTestSuiteFiles;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru

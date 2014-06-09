@@ -26,6 +26,7 @@
 
     <modules>
         <module>allure-model</module>
+        <module>allure-commons</module>
         <module>allure-java-annotations</module>
         <module>allure-java-commons</module>
         <module>allure-java-aspects</module>
@@ -189,6 +190,11 @@
             <dependency>
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-model</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.yandex.qatools.allure</groupId>
+                <artifactId>allure-commons</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

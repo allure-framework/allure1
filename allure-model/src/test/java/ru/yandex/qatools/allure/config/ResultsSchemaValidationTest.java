@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure.config;
 
-import org.apache.commons.io.filefilter.RegexFileFilter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -8,10 +7,10 @@ import org.junit.runners.Parameterized;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
+import java.io.FilenameFilter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
-
 
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
@@ -30,17 +29,26 @@ public class ResultsSchemaValidationTest {
 
     @Parameterized.Parameters
     public static Collection<Object[]> getTestSuiteFileCollection() {
-        AllureConfig resultsConfig = AllureConfig.newInstance();
         Collection<Object[]> testSuiteFileCollection = new ArrayList<>();
-        URL url = ClassLoader.getSystemResource(ALLURE_RESULTS_DIRECTORY_PATH);
+        URL url = ResultsSchemaValidationTest.class.getClassLoader().getResource(ALLURE_RESULTS_DIRECTORY_PATH);
+
         if (url != null) {
             File results = new File(url.getFile());
 
-            for (String testSuiteFilePath : results.list(new RegexFileFilter(resultsConfig.getTestSuiteFileRegex()))) {
+            for (String testSuiteFilePath : getTestSiteFilesInDirectory(results)) {
                 testSuiteFileCollection.add(new Object[]{new File(results, testSuiteFilePath)});
             }
         }
         return testSuiteFileCollection;
+    }
+
+    private static String[] getTestSiteFilesInDirectory(File directory) {
+        return directory.list(new FilenameFilter() {
+            @Override
+            public boolean accept(File dir, String name) {
+                return name.matches(AllureConfig.newInstance().getTestSuiteFileRegex());
+            }
+        });
     }
 
     @Test

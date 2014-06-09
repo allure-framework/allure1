@@ -11,7 +11,7 @@ import ru.yandex.qatools.allure.data.ReportGenerationException;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.listAttachmentFiles;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listAttachmentFiles;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
