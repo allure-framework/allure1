@@ -198,7 +198,7 @@ public final class AllureResultsUtils {
         try {
             marshaller.setProperty(name, value);
         } catch (PropertyException e) {
-            LOGGER.error(String.format("Can't set \"%s\" property to given marshaller", name), e);
+            LOGGER.warn(String.format("Can't set \"%s\" property to given marshaller", name), e);
         }
     }
 
