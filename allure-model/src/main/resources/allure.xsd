@@ -16,6 +16,7 @@
         </xs:all>
         <xs:attribute name="start" type="xs:long" use="required"/>
         <xs:attribute name="stop" type="xs:long" use="required"/>
+        <xs:attribute name="version" type="xs:string"/>
     </xs:complexType>
 
     <xs:complexType name="test-cases-result">

@@ -175,6 +175,7 @@ public class Allure {
         String suiteUid = event.getUid();
         TestSuiteResult testSuite = testSuiteStorage.get(suiteUid);
         event.process(testSuite);
+        testSuite.setVersion(getVersion());
         testSuiteStorage.remove(suiteUid);
 
         writeTestSuiteResult(testSuite);
