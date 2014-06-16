@@ -7,6 +7,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import ru.yandex.qatools.allure.Allure;
+import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
 import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
 import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
@@ -50,6 +51,8 @@ public class AllureRunListener extends RunListener {
         AnnotationManager am = new AnnotationManager(description.getAnnotations());
 
         am.update(event);
+
+        event.withLabels(AllureModelUtils.createTestFrameworkLabel("JUnit"));
 
         getLifecycle().fire(event);
     }

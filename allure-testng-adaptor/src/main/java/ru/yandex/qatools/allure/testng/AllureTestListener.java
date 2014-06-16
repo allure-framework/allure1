@@ -1,12 +1,23 @@
 package ru.yandex.qatools.allure.testng;
 
-import org.testng.*;
+import org.testng.ITestContext;
+import org.testng.ITestListener;
+import org.testng.ITestResult;
+import org.testng.SkipException;
 import ru.yandex.qatools.allure.Allure;
-import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.config.AllureModelUtils;
+import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
+import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
+import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
+import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
 import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.lang.annotation.Annotation;
-import java.util.*;
+import java.util.Collections;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -27,8 +38,8 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onStart(ITestContext iTestContext) {
         getLifecycle().fire(new TestSuiteStartedEvent(
-                suiteUid, iTestContext.getCurrentXmlTest().getSuite().getName())
-        );
+                suiteUid, iTestContext.getCurrentXmlTest().getSuite().getName()
+        ).withLabels(AllureModelUtils.createTestFrameworkLabel("TestNG")));
     }
 
     @Override
@@ -57,7 +68,7 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         getLifecycle().fire(new TestCaseFailureEvent()
-                .withThrowable(iTestResult.getThrowable())
+                        .withThrowable(iTestResult.getThrowable())
         );
         fireFinishTest();
     }
@@ -74,7 +85,7 @@ public class AllureTestListener implements ITestListener {
         }
 
         getLifecycle().fire(new TestCaseCanceledEvent()
-                .withThrowable(throwable)
+                        .withThrowable(throwable)
         );
         fireFinishTest();
     }
@@ -82,7 +93,7 @@ public class AllureTestListener implements ITestListener {
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
         getLifecycle().fire(new TestCaseFailureEvent()
-                .withThrowable(iTestResult.getThrowable())
+                        .withThrowable(iTestResult.getThrowable())
         );
         fireFinishTest();
     }
@@ -96,7 +107,7 @@ public class AllureTestListener implements ITestListener {
         Object[] parameters = iTestResult.getParameters();
         if (parameters != null && parameters.length > 0) {
             sb.append("[");
-            for (Object parameter: parameters) {
+            for (Object parameter : parameters) {
                 sb.append(parameter).append(",");
             }
             sb.replace(sb.length() - 1, sb.length(), "]");

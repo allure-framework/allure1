@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure;
 
 import ru.yandex.qatools.allure.config.AllureConfig;
+import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
 import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
 import ru.yandex.qatools.allure.events.RemoveAttachmentsEvent;
@@ -175,7 +176,10 @@ public class Allure {
         String suiteUid = event.getUid();
         TestSuiteResult testSuite = testSuiteStorage.get(suiteUid);
         event.process(testSuite);
+
         testSuite.setVersion(getVersion());
+        testSuite.getLabels().add(AllureModelUtils.createProgrammingLanguageLabel());
+
         testSuiteStorage.remove(suiteUid);
 
         writeTestSuiteResult(testSuite);

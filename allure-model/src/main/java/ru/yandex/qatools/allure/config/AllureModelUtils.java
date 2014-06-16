@@ -43,6 +43,14 @@ public final class AllureModelUtils {
         return createLabel(LabelName.SEVERITY, level.value());
     }
 
+    public static Label createProgrammingLanguageLabel() {
+        return createLabel(LabelName.LANGUAGE, "JAVA");
+    }
+
+    public static Label createTestFrameworkLabel(String testFrameworkName) {
+        return createLabel(LabelName.FRAMEWORK, testFrameworkName);
+    }
+
     public static Label createLabel(LabelName name, String value) {
         return new Label().withName(name.value()).withValue(value);
     }
