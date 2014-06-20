@@ -110,6 +110,7 @@
         <xs:attribute name="size" type="xs:int"/>
     </xs:complexType>
 
+    <!--Deprecated, will be removed in 1.4.0-->
     <xs:simpleType name="attachment-type">
         <xs:restriction base="xs:string">
             <xs:enumeration value="txt"/>

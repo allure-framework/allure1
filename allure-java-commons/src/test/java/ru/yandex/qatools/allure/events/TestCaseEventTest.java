@@ -35,6 +35,7 @@ public class TestCaseEventTest {
         verify(testCase).setLabels(Collections.<Label>emptyList());
         verify(testCase).setStart(anyLong());
         verify(testCase).setStatus(Status.PASSED);
+        verify(testCase).getParameters();
         verifyNoMoreInteractions(testCase);
     }
 
@@ -47,6 +48,7 @@ public class TestCaseEventTest {
         verify(testCase).setLabels(Collections.<Label>emptyList());
         verify(testCase).setStart(anyLong());
         verify(testCase).setStatus(Status.PASSED);
+        verify(testCase).getParameters();
         verifyNoMoreInteractions(testCase);
     }
 
@@ -63,6 +65,7 @@ public class TestCaseEventTest {
         verify(testCase).setLabels(Collections.<Label>emptyList());
         verify(testCase).setStart(anyLong());
         verify(testCase).setStatus(Status.PASSED);
+        verify(testCase).getParameters();
         verifyNoMoreInteractions(testCase);
     }
 
@@ -76,6 +79,7 @@ public class TestCaseEventTest {
         verify(testCase).setLabels(Arrays.asList(label));
         verify(testCase).setStart(anyLong());
         verify(testCase).setStatus(Status.PASSED);
+        verify(testCase).getParameters();
         verifyNoMoreInteractions(testCase);
     }
 
