@@ -1,6 +1,6 @@
 # Allure
 
-[![release](http://github-release-version.herokuapp.com/github/allure-framework/allure-core/badge.png?style=flat)](https://github.com/allure-framework/allure-core/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core)
+[![release](http://github-release-version.herokuapp.com/github/allure-framework/allure-core/release.svg?style=flat)](https://github.com/allure-framework/allure-core/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core)
 
 
 ![image](https://raw.github.com/allure-framework/allure-core/master/allure-dashboard.png)
