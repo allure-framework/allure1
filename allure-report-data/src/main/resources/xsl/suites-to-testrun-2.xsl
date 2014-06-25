@@ -204,7 +204,8 @@
         </xsl:if>
     </xsl:template>
 
-    <xsl:template match="@start | @stop | @status | @version">
+    <!--@severity added for compatibility with 1.3.9-->
+    <xsl:template match="@start | @stop | @status | @version | @severity">
     </xsl:template>
 
     <xsl:template match="@*|node()">
