@@ -4,6 +4,7 @@ describe('FeaturesCtrl', function () {
     var $rootScope, $controller,
         state, scope;
     beforeEach(module('allure.features'));
+    beforeEach(module('allure.services'));
     beforeEach(inject(function (_$controller_, _$rootScope_) {
         $controller = _$controller_;
         $rootScope = _$rootScope_;
@@ -21,7 +22,7 @@ describe('FeaturesCtrl', function () {
             total: statistic.reduce(function(r, i) { return r+i; }, 0)
         };
         this.testCases = range(this.statistic.total).map(function(_, index) {
-            return {uid: uid+'_'+index}
+            return {uid: uid+'_'+index};
         });
     }
 
@@ -33,7 +34,7 @@ describe('FeaturesCtrl', function () {
                 stat[status] += story.statistic[status];
             });
             return stat;
-        }, {passed: 0, canceled:0, broken:0, failed:0, pending: 0, total:0})
+        }, {passed: 0, canceled:0, broken:0, failed:0, pending: 0, total:0});
     }
 
     function range(count) {
@@ -68,12 +69,6 @@ describe('FeaturesCtrl', function () {
         expect(scope.features[1].percents.map(function(percent) {
             return percent.ratio;
         })).toEqual([96, 0.5, 0.5, 3, 0]);
-    });
-
-    it('should limit min percent value in  statistics', function() {
-        expect(scope.features[1].percents.map(function(percent) {
-            return percent.value;
-        })).toEqual([91, 3, 3, 3, 0]);
     });
 
     it('should convert statistics to percents in stories', function() {
@@ -131,7 +126,7 @@ describe('FeaturesCtrl', function () {
             scope.$broadcast('$stateChangeSuccess', null, {storyUid: 2});
             expect(scope.features[1].expanded).toBeTruthy();
             expect(scope.features.filter(function(feature) {
-                return feature.expanded
+                return feature.expanded;
             }).length).toBe(1);
         });
 

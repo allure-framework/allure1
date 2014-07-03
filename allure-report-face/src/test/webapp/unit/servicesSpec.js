@@ -183,4 +183,37 @@ describe('service', function () {
             expect(collection.getNext(5)).toBe(items[5]);
         });
     });
+
+    describe('percents', function() {
+        var percents;
+        beforeEach(inject(function(_percents_) {
+            percents = _percents_;
+        }));
+
+        it('should convert statistics to percents', function() {
+            expect(percents({
+                total: 4,
+                passed: 1,
+                failed: 1,
+                broken: 1,
+                canceled: 1,
+                pending: 0
+            }).map(function(percent) {
+                return percent.ratio;
+            })).toEqual([25, 25, 25, 25, 0]);
+        });
+
+        it('should limit min percent value in  statistics', function() {
+            var result = percents({
+                total: 200,
+                passed: 192,
+                failed: 1,
+                broken: 1,
+                canceled: 6,
+                pending: 0
+            });
+            expect(result.map(function(r) {return r.ratio;})).toEqual([0.5, 0.5, 3, 96, 0]);
+            expect(result.map(function(r) {return r.value;})).toEqual([3, 3, 3, 91, 0]);
+        });
+    });
 });

@@ -9,6 +9,10 @@ import ru.yandex.qatools.htmlelements.element.HtmlElement;
 @Block(@FindBy(css = ".b-vert"))
 public class Tabs extends HtmlElement {
 
+    @Name("Overview")
+    @FindBy(css = "[ui-sref=\"overview\"]")
+    private Button overview;
+
     @Name("Defects")
     @FindBy(css = "[ui-sref=\"defects\"]")
     private Button defects;
@@ -28,6 +32,8 @@ public class Tabs extends HtmlElement {
     @Name("Timeline")
     @FindBy(css = "[ui-sref=\"timeline\"]")
     private Button timeline;
+
+    public Button overview() { return overview; }
 
     public Button defects() {
         return defects;

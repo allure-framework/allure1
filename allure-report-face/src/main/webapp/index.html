@@ -30,6 +30,7 @@
     <script src="js/directives.js"></script>
     <script src="js/table/table.js"></script>
     <script src="js/pane/pane.js"></script>
+    <script src="js/overview/OverviewCtrl.js"></script>
     <script src="js/xUnit/controllers.js"></script>
     <script src="js/testcase/statusSwitcher.js"></script>
     <script src="js/testcase/provider.js"></script>
@@ -74,6 +75,10 @@
 </header>
 <div class="dashboard" ng-controller="TabsController">
     <ul class="b-vert list-unstyled">
+        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('overview')}"><div class="b-vert__title" ui-sref="overview">
+            <div class="b-vert__icon glyphicon glyphicon-home"></div>
+            Overview
+        </div></li>
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('defects')}"><div class="b-vert__title" ui-sref="defects">
             <div class="b-vert__icon glyphicon glyphicon-flag"></div>
             Defects
