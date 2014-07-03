@@ -1,31 +1,9 @@
 /*global angular*/
 angular.module('allure.features', [])
-.controller('FeaturesCtrl', function($scope, $state, status, features) {
+.controller('FeaturesCtrl', function($scope, $state, percents, status, features) {
     "use strict";
-    function getTotalPercents(item) {
-        return item.percents.reduce(function(total, current) {
-            return total+current.value;
-        }, 0);
-    }
     function calculatePercents(item) {
-        item.percents = status.all.map(function(status) {
-            status = status.toLowerCase();
-            var value = item.statistic[status]/item.statistic.total*100 || 0;
-            return {
-                count: item.statistic[status],
-                ratio: value,
-                value: value > 0 ? Math.max(value, 3) : 0,
-                status: status
-            };
-        });
-        if(getTotalPercents(item) > 100) {
-            var highValue = item.percents.reduce(function(max, current) {
-                return max.value > current.value ? max : current;
-            }, {value:0});
-            highValue.value = item.percents.reduce(function(value, current) {
-                return current === highValue ? value : value - current.value;
-            }, 100);
-        }
+        item.percents = percents(item.statistic);
     }
     function getChartData() {
         var unstable = $scope.unstableStories.length,

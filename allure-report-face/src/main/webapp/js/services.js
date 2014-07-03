@@ -128,5 +128,34 @@ angular.module('allure.services', [])
                 return result;
             }
         };
+    })
+    .factory('percents', function(status) {
+        function getTotalPercents(percents) {
+            return percents.reduce(function(total, current) {
+                return total+current.value;
+            }, 0);
+        }
+        function calculatePercents(statistic) {
+            var percents = status.all.map(function(status) {
+                status = status.toLowerCase();
+                var value = statistic[status]/statistic.total*100 || 0;
+                return {
+                    count: statistic[status],
+                    ratio: value,
+                    value: value > 0 ? Math.max(value, 3) : 0,
+                    status: status
+                };
+            });
+            if(getTotalPercents(percents) > 100) {
+                var highValue = percents.reduce(function(max, current) {
+                    return max.value > current.value ? max : current;
+                }, {value:0});
+                highValue.value = percents.reduce(function(value, current) {
+                    return current === highValue ? value : value - current.value;
+                }, 100);
+            }
+            return percents;
+        }
+        return calculatePercents;
     });
 })();

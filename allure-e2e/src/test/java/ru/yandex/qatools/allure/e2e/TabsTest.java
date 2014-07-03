@@ -33,6 +33,12 @@ public class TabsTest {
     }
 
     @Test
+    public void overviewTab() throws Exception {
+        page.tabs().overview().click();
+        checkHash("#/");
+    }
+
+    @Test
     public void defectsTab() throws Exception {
         page.tabs().defects().click();
         checkHash("#/defects");

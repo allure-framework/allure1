@@ -2,7 +2,7 @@
 angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui.router',
         'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.table', 'allure.pane',
         'allure.scrollfix', 'allure.charts', 'allure.testcase', 'allure.xUnit.controllers', 'allure.features',
-        'allure.defects'])
+        'allure.defects', 'allure.overview'])
     .config(function($tooltipProvider) {
         "use strict";
         $tooltipProvider.options({appendToBody:true});
@@ -27,6 +27,22 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
         }
         $urlRouterProvider.otherwise("/home");
         $stateProvider
+            .state('overview', {
+                url: '/',
+                templateUrl: "templates/overview.html",
+                controller: 'OverviewCtrl',
+                resolve: {
+                    overview: function($http) {
+                        return $http.get('data/environment-attachment.json').then(processResponse);
+                    },
+                    defects: function($http) {
+                        return $http.get('data/defects.json').then(processResponse);
+                    },
+                    testsuites: function($http) {
+                        return $http.get('data/xunit.json').then(processResponse);
+                    }
+                }
+            })
             .state('defects', {
                 url: '/defects',
                 templateUrl: "templates/defects.html",

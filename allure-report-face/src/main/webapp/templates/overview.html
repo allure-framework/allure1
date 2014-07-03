@@ -1,0 +1,38 @@
+<div class="b-island tab-content-fill overview" pane-set>
+    <div class="pane_col" pane style="width: 50%">
+        <div class="pane_content">
+            <h2 class="text-center">{{overview.title}}</h2>
+            <div class="progress">
+                <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in percents"
+                     tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
+                    <span>{{percent.count}}</span>
+                </div>
+            </div>
+            <table class="table table-striped">
+                <tr ng-repeat="param in overview.environment">
+                    <td>{{param.name}}</td>
+                    <td ng-bind-html="param.value | linky"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="pane_col" pane>
+        <div class="pane_content">
+            <h3>Top defects
+                <small><a ui-sref="defects">view all</a></small>
+            </h3>
+            <h4 class="text-success" ng-show="defects.length == 0">No defects, all tests passed!</h4>
+            <div ng-repeat="type in defects">
+                <h4 class="text-status-{{type.status|lowercase}}">{{type.title}} (status: {{type.status | lowercase}})</h4>
+                <div class="overview_group">
+                        <div class=" list-item clickable" ng-repeat="defect in type.defects" ui-sref="defects.defect({defectUid: defect.uid})">
+                            <span class="label label-status-{{type.status|lowercase}}">{{defect.testCases.length}}</span>
+                            <span class="text-status-{{type.status|lowercase}}">{{defect.failure.message}}</span>
+                        </div>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
