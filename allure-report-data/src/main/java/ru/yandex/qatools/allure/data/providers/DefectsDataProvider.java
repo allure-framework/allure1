@@ -20,7 +20,7 @@ public class DefectsDataProvider implements DataProvider {
     public static final String ERRORS_JSON = "defects.json";
 
     @Override
-    public long provide(String testPack, File outputDirectory) {
+    public long provide(String testPack, File[] inputDirectories, File outputDirectory) {
         
         String allureErrorsBody = applyTransformation(testPack, TEST_RUN_TO_ERRORS_XSL);
 

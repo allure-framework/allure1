@@ -33,7 +33,7 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
                 controller: 'OverviewCtrl',
                 resolve: {
                     overview: function($http) {
-                        return $http.get('data/environment-attachment.json').then(processResponse);
+                        return $http.get('data/environment.json').then(processResponse);
                     },
                     defects: function($http) {
                         return $http.get('data/defects.json').then(processResponse);

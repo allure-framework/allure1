@@ -1,7 +1,10 @@
 <div class="b-island tab-content-fill overview" pane-set>
     <div class="pane_col" pane style="width: 50%">
         <div class="pane_content">
-            <h2 class="text-center">{{overview.title}}</h2>
+            <div class="pane__header">
+                <h2>{{overview.name}}</h2>
+                <div class="text-muted">id: {{overview.id}}</div>
+            </div>
             <div class="progress">
                 <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in percents"
                      tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
@@ -9,7 +12,7 @@
                 </div>
             </div>
             <table class="table table-striped">
-                <tr ng-repeat="param in overview.environment">
+                <tr ng-repeat="param in overview.parameter">
                     <td>{{param.name}}</td>
                     <td ng-bind-html="param.value | linky"></td>
                 </tr>

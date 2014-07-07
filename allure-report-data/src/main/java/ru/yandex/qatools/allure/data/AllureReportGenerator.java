@@ -1,17 +1,15 @@
 package ru.yandex.qatools.allure.data;
 
-import ru.yandex.qatools.allure.data.providers.*;
+import ru.yandex.qatools.allure.data.providers.DataProvider;
+import ru.yandex.qatools.allure.data.utils.Async;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.copyAttachments;
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.createDirectory;
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.writeAllureReportInfo;
+import static ru.yandex.qatools.allure.data.utils.ServiceLoaderUtils.load;
 
 
 /**
@@ -22,7 +20,7 @@ public class AllureReportGenerator {
 
     private static final String DATA_SUFFIX = "data";
 
-    private List<DataProvider> dataProviders = Arrays.asList(defaultProviders());
+    private List<DataProvider> dataProviders = load(DataProvider.class);
 
     protected File[] inputDirectories;
 
@@ -39,57 +37,23 @@ public class AllureReportGenerator {
         long start = System.currentTimeMillis();
 
         final File reportDataDirectory = createDirectory(reportDirectory, DATA_SUFFIX);
-
-        long attachmentsSize = copyAttachments(inputDirectories, reportDataDirectory);
-        final AtomicLong reportSize = new AtomicLong(attachmentsSize);
+        final AtomicLong reportSize = new AtomicLong(0);
         final String testRun = testRunGenerator.generate();
 
-        ExecutorService service = Executors.newFixedThreadPool(dataProviders.size());
-        for (final DataProvider provider : dataProviders) {
-            service.execute(new Runnable() {
-                @Override
-                public void run() {
-                    reportSize.addAndGet(provider.provide(testRun, reportDataDirectory));
-                }
-            });
-        }
-        try {
-            service.shutdown();
-            service.awaitTermination(1, TimeUnit.HOURS);
-            long stop = System.currentTimeMillis();
+        new Async<DataProvider>() {
+            @Override
+            public void async(DataProvider provider) {
+                reportSize.addAndGet(provider.provide(testRun, inputDirectories, reportDataDirectory));
+            }
+        }.execute(dataProviders);
 
-            AllureReportInfo reportInfo = new AllureReportInfo();
-            reportInfo.setSize(reportSize.get());
-            reportInfo.setTime(stop - start);
+        long stop = System.currentTimeMillis();
 
-            writeAllureReportInfo(reportInfo, reportDataDirectory);
-        } catch (InterruptedException e) {
-            throw new ReportGenerationException(e);
-        }
-    }
+        AllureReportInfo reportInfo = new AllureReportInfo();
+        reportInfo.setSize(reportSize.get());
+        reportInfo.setTime(stop - start);
 
-    private static File createDirectory(File parent, String name) {
-        File created = new File(parent, name);
-        checkDirectory(created);
-        return created;
-    }
-
-    private static void checkDirectory(File directory) {
-        if (!(directory.exists() || directory.mkdirs())) {
-            throw new RuntimeException(
-                    String.format("Can't create data directory <%s>", directory.getAbsolutePath())
-            );
-        }
-    }
-
-    public static DataProvider[] defaultProviders() {
-        return new DataProvider[]{
-                new XUnitDataProvider(),
-                new GraphDataProvider(),
-                new TestCasesDataProvider(),
-                new BehaviorDataProvider(),
-                new DefectsDataProvider()
-        };
+        writeAllureReportInfo(reportInfo, reportDataDirectory);
     }
 
     @SuppressWarnings("unused")

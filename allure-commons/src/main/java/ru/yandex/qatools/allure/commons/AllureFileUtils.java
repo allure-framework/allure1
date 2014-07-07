@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.commons;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.CanReadFileFilter;
 import org.apache.commons.io.filefilter.IOFileFilter;
+import org.apache.commons.io.filefilter.NameFileFilter;
 import org.apache.commons.io.filefilter.RegexFileFilter;
 import ru.yandex.qatools.allure.config.AllureConfig;
 
@@ -56,6 +57,19 @@ public final class AllureFileUtils {
     public static Collection<File> listFilesByRegex(String regex, File... directories) {
         return listFiles(directories,
                 new RegexFileFilter(regex),
+                CanReadFileFilter.CAN_READ);
+    }
+
+    /**
+     * Returns list of files with specified name in given directories
+     *
+     * @param name        file name
+     * @param directories to find
+     * @return list of files matches specified regex in specified directories
+     */
+    public static Collection<File> listFilesByName(String name, File... directories) {
+        return listFiles(directories,
+                new NameFileFilter(name),
                 CanReadFileFilter.CAN_READ);
     }
 
