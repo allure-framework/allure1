@@ -35,7 +35,6 @@
         <module>allure-report-data</module>
         <module>allure-report-face</module>
         <module>allure-maven-plugin</module>
-        <module>allure-cli</module>
     </modules>
 
     <organization>
