@@ -1,5 +1,8 @@
 package ru.yandex.qatools.allure.data;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
@@ -19,6 +22,8 @@ import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTr
 
 public class TestRunGenerator {
 
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
     public static final String SUITES_TO_TEST_RUN_1_XSL = "xsl/suites-to-testrun-1.xsl";
 
     public static final String SUITES_TO_TEST_RUN_2_XSL = "xsl/suites-to-testrun-2.xsl";
@@ -26,9 +31,9 @@ public class TestRunGenerator {
     public static final String SUITES_TO_TEST_RUN_3_XSL = "xsl/suites-to-testrun-3.xsl";
 
     private final ListFiles listFiles;
-    
-    private final boolean validateXML; 
-    
+
+    private final boolean validateXML;
+
     public TestRunGenerator(boolean validateXML, File... dirs) {
         Collection<File> testSuitesFiles = listTestSuiteFiles(dirs);
 
@@ -41,13 +46,13 @@ public class TestRunGenerator {
         ListFiles listFiles = new ListFiles();
         for (File file : files) {
             try {
-                if (validateXML){
+                if (validateXML) {
                     Validator validator = getAllureSchemaValidator();
                     validator.validate(new StreamSource(file));
                 }
                 listFiles.getFiles().add(file.toURI().toString());
             } catch (Exception e) {
-                //TODO: log validation error (#183)
+                logger.error("File " + file + " skipped.", e);
             }
         }
         return listFiles;

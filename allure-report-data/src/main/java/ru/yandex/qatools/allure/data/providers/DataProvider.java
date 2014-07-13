@@ -5,6 +5,9 @@ import java.io.File;
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.12.13
+ *         <p/>
+ *         Used to provide data to output directory. Find provides using Java SPI
+ * @see ru.yandex.qatools.allure.data.utils.ServiceLoaderUtils
  */
 public interface DataProvider {
 
@@ -16,6 +19,6 @@ public interface DataProvider {
      * @param outputDirectory specified directory
      * @return number of bytes written to outputDirectory
      */
-    long provide(String testPack, File outputDirectory);
+    long provide(String testPack, File[] inputDirectories, File outputDirectory);
 
 }

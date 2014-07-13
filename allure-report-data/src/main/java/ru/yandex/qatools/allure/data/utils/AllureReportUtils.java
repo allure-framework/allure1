@@ -4,14 +4,16 @@ import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
-import org.apache.commons.io.FileUtils;
 import ru.yandex.qatools.allure.data.AllureReportInfo;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
-import java.io.*;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
-
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.listAttachmentFiles;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -25,6 +27,35 @@ public final class AllureReportUtils {
      * Don't use instance of this class
      */
     AllureReportUtils() {
+    }
+
+    /**
+     * Create directory with given name in specified directory. Check created directory using
+     * {@link #checkDirectory(java.io.File)}
+     *
+     * @param parent specified parent directory
+     * @param name   given name for directory to create
+     * @return created directory
+     * @throws ReportGenerationException if can't create specified directory
+     */
+    public static File createDirectory(File parent, String name) {
+        File created = new File(parent, name);
+        checkDirectory(created);
+        return created;
+    }
+
+    /**
+     * If directory doesn't exists try to create it.
+     *
+     * @param directory given directory to check
+     * @throws ReportGenerationException if can't create specified directory
+     */
+    public static void checkDirectory(File directory) {
+        if (!(directory.exists() || directory.mkdirs())) {
+            throw new ReportGenerationException(
+                    String.format("Can't create data directory <%s>", directory.getAbsolutePath())
+            );
+        }
     }
 
     /**
@@ -72,44 +103,6 @@ public final class AllureReportUtils {
         return new DataOutputStream(new FileOutputStream(new File(directory, name)));
     }
 
-    /**
-     * Copies all files from specified input directories to a new location
-     * preserving the file date.
-     *
-     * @param inputDirectories input directories
-     * @param outputDirectory  output directory
-     * @return size in bytes of copied attachments
-     */
-    public static long copyAttachments(File[] inputDirectories, File outputDirectory) {
-        long size = 0;
-        for (File attach : listAttachmentFiles(inputDirectories)) {
-            try {
-                copyAttachment(attach, new File(outputDirectory, attach.getName()));
-                size += attach.length();
-            } catch (IOException e) {
-                throw new ReportGenerationException(e);
-            }
-        }
-        return size;
-    }
-
-    /**
-     * Copies a file to a new location preserving the file date using
-     * {@link org.apache.commons.io.FileUtils#copyFile(java.io.File, java.io.File)}
-     * if source and destination are not some
-     *
-     * @param from source file
-     * @param to   destination file
-     * @throws NullPointerException if source or destination is {@code null}
-     * @throws IOException          if source or destination is invalid or an IO error
-     *                              occurs during copying
-     * @see org.apache.commons.io.FileUtils#copyFile(java.io.File, java.io.File)
-     */
-    public static void copyAttachment(File from, File to) throws IOException {
-        if (!from.getCanonicalPath().equals(to.getCanonicalPath())) {
-            FileUtils.copyFile(from, to);
-        }
-    }
 
     /**
      * Serialize {@link ru.yandex.qatools.allure.data.AllureReportInfo}  to

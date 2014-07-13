@@ -38,6 +38,9 @@ public class AllureConfig {
     @Property("allure.results.attachment.file.suffix")
     private String attachmentFileSuffix = "-attachment";
 
+    @Property("allure.results.environment.file.name")
+    private String environmentFileName = "environment.xml";
+
     @Property("allure.results.directory")
     private File resultsDirectory = DEFAULT_RESULTS_DIRECTORY;
 
@@ -76,6 +79,10 @@ public class AllureConfig {
 
     public String getAttachmentFileSuffix() {
         return attachmentFileSuffix;
+    }
+
+    public String getEnvironmentFileName() {
+        return environmentFileName;
     }
 
     public File getResultsDirectory() {
