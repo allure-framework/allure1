@@ -2,7 +2,7 @@
 describe('FeaturesCtrl', function () {
     'use strict';
     var $rootScope, $controller,
-        state, scope;
+        state, scope, watchingStoreSpy;
     beforeEach(module('allure.features'));
     beforeEach(module('allure.services'));
     beforeEach(inject(function (_$controller_, _$rootScope_) {
@@ -47,8 +47,9 @@ describe('FeaturesCtrl', function () {
         $controller('FeaturesCtrl', {
             $scope: scope,
             $state: state = jasmine.createSpyObj('state', ['go']),
-            status: {
-                all: ['FAILED', 'BROKEN', 'CANCELED', 'PASSED', 'PENDING']
+            WatchingStore: function() {
+                watchingStoreSpy = jasmine.createSpyObj('WatchingStore', ['bindProperty']);
+                return watchingStoreSpy;
             },
             features: {features: features}
         });
@@ -65,48 +66,22 @@ describe('FeaturesCtrl', function () {
         ]);
     });
 
-    it('should convert statistics to percents in features', function() {
-        expect(scope.features[1].percents.map(function(percent) {
-            return percent.ratio;
-        })).toEqual([96, 0.5, 0.5, 3, 0]);
-    });
-
-    it('should convert statistics to percents in stories', function() {
-        expect(scope.features[0].stories[0].percents.map(function(percent) {
-            return percent.value;
-        })).toEqual([0, 25, 0, 75, 0]);
-    });
-
-    it('should create data for pieChart', function() {
-        expect(scope.chartData).toEqual([{value : 1, part : 1/3, name : 'passed'}, {value : 2, part : 2/3, name : 'failed'}]);
-    });
-
-    it('should create list with all unstable stories', function() {
-        expect(scope.allStories.map(function(story) {
-            return story.title;
-        })).toEqual(['simple story', 'success story', 'bad story']);
-    });
-
     it('should deselect story when corresponding feature has closed', function() {
-        scope.story = scope.allStories[0];
+        scope.story = scope.features[0].stories[0];
         scope.expandFeature(scope.features[0], false);
         expect(state.go).toHaveBeenCalled();
     });
 
     it('should not deselect story when closed another feature', function() {
-        scope.story = scope.allStories[0];
+        scope.story = scope.features[0].stories[0];
         scope.expandFeature(scope.features[1], false);
         expect(state.go).not.toHaveBeenCalled();
     });
 
-    it('should select and deselect story', function() {
-        var story = scope.allStories[1];
+    it('should select', function() {
+        var story = scope.features[1].stories[1];
         scope.setStory(story);
         expect(state.go).toHaveBeenCalledWith('features.story', {storyUid: story.uid});
-
-        scope.story = story;
-        scope.setStory(story);
-        expect(state.go).toHaveBeenCalledWith('features');
     });
 
     it('should call testcase route when it has been selected', function() {
