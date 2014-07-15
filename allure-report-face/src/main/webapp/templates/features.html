@@ -1,55 +1,55 @@
-<div class="features b-island tab-content-fill" pane-set ng-show="features.length">
-    <div class="pane_col features__list" pane>
+<div class="b-island tab-content-fill" pane-set ng-show="features.length">
+    <div class="pane_col" pane pane-expanded="isState('features')">
         <div class="pane_overlay clickable" ui-sref="features.story"></div>
         <div class="pane_content">
-            <div class="features__title b-island__title">Functional requirements</div>
+            <div class="b-island__title">Functional requirements</div>
             <h3 class="pane__header">Features</h3>
-            <div class="feature" ng-repeat="feature in features | orderBy:'title'">
-                <div class="item" ng-click="expandFeature(feature, !feature.expanded)">
-                    <div class="item__icon" ng-class="feature.expanded ? 'arrow-down' : 'glyphicon glyphicon-play'"></div>
-                    <div class="progress percents pull-right">
-                        <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in feature.percents"
-                             tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
-                            <span ng-show="percent.value > 3">{{percent.count}}</span>
-                        </div>
-                    </div>
-                    <div class="pull-right text-muted"><i ng-pluralize count="feature.stories.length" when="{one: '{} story', other: '{} stories'}"></i>&nbsp;</div>
-                    {{feature.title}}
-                </div>
-                <ul ng-if="feature.expanded" class="list-unstyled item__subitems">
-                    <li class="item" ng-repeat="story in feature.stories | orderBy:'title'" ng-click="setStory(story)" ng-class="{item_active: story == $parent.story}">
-                        <div class="progress percents pull-right">
-                            <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
-                                 tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
-                                <span ng-show="percent.value > 3">{{percent.count}}</span>
-                            </div>
-                        </div>
-                        <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
-                        {{story.title}}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="pane_col features__info" ng-if="!story">
-        <div class="pane_content">
-            <div class="features__title b-island__title">Info</div>
-            <h3 class="pane__header">There are {{allStories.length}} stories, {{unstableStories.length}} unstable</h3>
-            <ul class="list-unstyled stories">
-                <li class="item" ng-repeat="story in unstableStories" ng-click="setStory(story)">
-                    <div class="progress percents pull-right">
-                        <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
-                             tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
-                            <span ng-show="percent.value > 3">{{percent.count}}</span>
-                        </div>
-                    </div>
-                    <div class="pull-right text-muted"><i ng-pluralize count="story.testcases.length" when="{one: '{} test case', other: '{} test cases'}"></i>&nbsp;</div>
-                    {{story.title}}
-                </li>
-            </ul>
-            <hr>
-            <h4 ng-bind="summaryText"></h4>
-            <div class="features__info__chart pie-chart" pie-chart selected="currentStatus" data="chartData" tooltip-tpl="chartTooltip"></div>
+            <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
+                <tbody>
+                    <tr ng-repeat-start="feature in list.items" class="feature clickable" ng-click="expandFeature(feature, !feature.expanded)" ng-class="{'feature_expanded': feature.expanded}">
+                        <td allure-table-col="{heading:'Title', predicate: 'title', flex: 6}" class="line-ellipsis" title="{{feature.title}}">
+                            <span class="feature_icon"></span>
+                            {{feature.title}}
+                        </td>
+                        <td allure-table-col="{heading: 'Canceled', predicate: 'statistic.canceled', class:'text-center', reverse: true}" class="text-center">
+                            <span class="label label-default" ng-show="feature.statistic.canceled > 0">{{feature.statistic.canceled}}</span>
+                        </td>
+                        <td allure-table-col="{heading: 'Pending', predicate: 'statistic.pending', class:'text-center', reverse: true}" class="text-center">
+                            <span class="label label-info" ng-show="feature.statistic.pending > 0">{{feature.statistic.pending}}</span>
+                        </td>
+                        <td allure-table-col="{heading: 'Broken', predicate: 'statistic.broken', class:'text-center', reverse: true}" class="text-center">
+                            <span class="label label-warning" ng-show="feature.statistic.broken > 0">{{feature.statistic.broken}}</span>
+                        </td>
+                        <td allure-table-col="{heading: 'Failed', predicate: 'statistic.failed', class:'text-center', reverse: true}" class="text-center">
+                            <span class="label label-danger" ng-show="feature.statistic.failed > 0">{{feature.statistic.failed}}</span>
+                        </td>
+                        <td allure-table-col="{heading: 'Total', predicate: 'statistic.total', class:'text-center', reverse: true}" class="text-center">
+                            {{feature.statistic.total}}
+                        </td>
+                    </tr>
+                    <tr ng-if="feature.expanded" class="story clickable" ng-click="setStory(story)" ng-class="{active: isActive(story)}" ng-repeat="story in feature.stories">
+                        <td class="story_title line-ellipsis" title="{{story.title}}">
+                            {{story.title}}
+                        </td>
+                        <td class="text-center">
+                            <span class="label label-default" ng-show="story.statistic.canceled > 0">{{story.statistic.canceled}}</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="label label-info" ng-show="story.statistic.pending > 0">{{story.statistic.pending}}</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="label label-warning" ng-show="story.statistic.broken > 0">{{story.statistic.broken}}</span>
+                        </td>
+                        <td class="text-center">
+                            <span class="label label-danger" ng-show="story.statistic.failed > 0">{{story.statistic.failed}}</span>
+                        </td>
+                        <td class="text-center">
+                            {{story.statistic.total}}
+                        </td>
+                    </tr>
+                    <tr ng-repeat-end></tr>
+                </tbody>
+            </table>
         </div>
     </div>
     <div class="pane_col features__view" ng-if="story" pane pane-expanded="isState('features.story.expanded')">
