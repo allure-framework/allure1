@@ -61,19 +61,6 @@ public final class AllureFileUtils {
     }
 
     /**
-     * Returns list of files with specified name in given directories
-     *
-     * @param name        file name
-     * @param directories to find
-     * @return list of files matches specified regex in specified directories
-     */
-    public static Collection<File> listFilesByName(String name, File... directories) {
-        return listFiles(directories,
-                new NameFileFilter(name),
-                CanReadFileFilter.CAN_READ);
-    }
-
-    /**
      * Returns list of files matches filters in specified directories
      *
      * @param directories which will using to find files
