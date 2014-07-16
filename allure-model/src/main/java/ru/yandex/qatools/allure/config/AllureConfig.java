@@ -39,10 +39,10 @@ public class AllureConfig {
     private String attachmentFileSuffix = "-attachment";
 
     @Property("allure.results.environment.xml.file.name")
-    private String environmentXmlFileRegex = ".*environment.xml";
+    private String environmentXmlFileRegex = ".*environment\\.xml";
 
     @Property("allure.results.environment.properties.file.name")
-    private String environmentPropertiesFileRegex = ".*environment.properties";
+    private String environmentPropertiesFileRegex = ".*environment\\.properties";
 
     @Property("allure.results.directory")
     private File resultsDirectory = DEFAULT_RESULTS_DIRECTORY;
