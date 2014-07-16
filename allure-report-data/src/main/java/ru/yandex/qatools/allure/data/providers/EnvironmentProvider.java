@@ -3,14 +3,20 @@ package ru.yandex.qatools.allure.data.providers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.config.AllureConfig;
+import ru.yandex.qatools.allure.model.ParameterKind;
 import ru.yandex.qatools.commons.model.Environment;
+import ru.yandex.qatools.commons.model.Parameter;
 
 import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Properties;
 
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFilesByName;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFilesByRegex;
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
 import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
 
@@ -38,9 +44,20 @@ public class EnvironmentProvider implements DataProvider {
                 Environment.class
         );
 
-        for (File file : listFilesByName(AllureConfig.newInstance().getEnvironmentFileName(), inputDirectories)) {
+        for (File file : listFilesByRegex(AllureConfig.newInstance().getEnvironmentXmlFileRegex(), inputDirectories)) {
             try {
-                merge(global, file);
+                Environment environment = JAXB.unmarshal(file, Environment.class);
+                merge(global, environment);
+            } catch (Exception e) {
+                logger.error("Can't unmarshal file " + file + " to environment bean.");
+            }
+        }
+
+        for (File file : listFilesByRegex(AllureConfig.newInstance().getEnvironmentPropertiesFileRegex(), inputDirectories)) {
+            try {
+                Properties properties = new Properties();
+                properties.load(new FileInputStream(file));
+                merge(global, properties);
             } catch (Exception e) {
                 logger.error("Can't unmarshal file " + file + " to environment bean.");
             }
@@ -49,11 +66,25 @@ public class EnvironmentProvider implements DataProvider {
         return serialize(outputDirectory, ENVIRONMENT_JSON, global);
     }
 
-    public void merge(Environment global, File file) throws JAXBException {
-        Environment environment = JAXB.unmarshal(file, Environment.class);
-
+    public void merge(Environment global, Environment environment) throws JAXBException {
         global.setId(environment.getId());
         global.setName(environment.getName());
         global.getParameter().addAll(environment.getParameter());
+    }
+
+    public void merge(Environment global, Properties properties) throws JAXBException {
+        global.getParameter().addAll(convertToParameters(properties));
+    }
+
+    public Collection<Parameter> convertToParameters(Properties properties) {
+        Collection<Parameter> parameters = new ArrayList<>();
+        for (Object key : properties.keySet()) {
+            Parameter parameter = new Parameter();
+            parameter.setName(key.toString());
+            parameter.setName(key.toString());
+            parameter.setValue(properties.getProperty(key.toString()));
+            parameters.add(parameter);
+        }
+        return parameters;
     }
 }
