@@ -26,16 +26,6 @@ public final class ServiceLoaderUtils {
     }
 
     /**
-     * Invoke to find all services for given service type using current tread context class loader
-     *
-     * @param serviceType given service type
-     * @return List of found services
-     */
-    public static <T> List<T> load(Class<T> serviceType) {
-        return load(Thread.currentThread().getContextClassLoader(), serviceType);
-    }
-
-    /**
      * Invoke to find all services for given service type using specified class loader
      *
      * @param classLoader specified class loader

@@ -20,7 +20,7 @@ public class AllureReportGenerator {
 
     private static final String DATA_SUFFIX = "data";
 
-    private List<DataProvider> dataProviders = load(DataProvider.class);
+    private ClassLoader classLoader;
 
     protected File[] inputDirectories;
 
@@ -29,8 +29,17 @@ public class AllureReportGenerator {
     private boolean validateXML = true;
 
     public AllureReportGenerator(final File... inputDirectories) {
-        this.inputDirectories = inputDirectories;
         this.testRunGenerator = new TestRunGenerator(validateXML, inputDirectories);
+        this.classLoader = getClass().getClassLoader();
+        this.inputDirectories = inputDirectories;
+    }
+
+    public ClassLoader getClassLoader() {
+        return classLoader;
+    }
+
+    public void setClassLoader(ClassLoader classLoader) {
+        this.classLoader = classLoader;
     }
 
     public void generate(File reportDirectory) {
@@ -39,6 +48,8 @@ public class AllureReportGenerator {
         final File reportDataDirectory = createDirectory(reportDirectory, DATA_SUFFIX);
         final AtomicLong reportSize = new AtomicLong(0);
         final String testRun = testRunGenerator.generate();
+
+        List<DataProvider> dataProviders = load(getClassLoader(), DataProvider.class);
 
         new Async<DataProvider>() {
             @Override
@@ -59,10 +70,6 @@ public class AllureReportGenerator {
     @SuppressWarnings("unused")
     public void setValidateXML(boolean validateXML) {
         this.validateXML = validateXML;
-    }
-
-    public TestRunGenerator getTestRunGenerator() {
-        return testRunGenerator;
     }
 
     @SuppressWarnings("unused")
