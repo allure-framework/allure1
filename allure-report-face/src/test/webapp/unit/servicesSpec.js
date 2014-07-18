@@ -8,8 +8,8 @@ describe('service', function () {
             expect(status.getSortOrder('FAILED')).toEqual(0);
             expect(status.getSortOrder('BROKEN')).toEqual(1);
             expect(status.getSortOrder('CANCELED')).toEqual(2);
-            expect(status.getSortOrder('PASSED')).toEqual(3);
-            expect(status.getSortOrder('PENDING')).toEqual(4);
+            expect(status.getSortOrder('PENDING')).toEqual(3);
+            expect(status.getSortOrder('PASSED')).toEqual(4);
         }));
     });
 
@@ -200,7 +200,7 @@ describe('service', function () {
                 pending: 0
             }).map(function(percent) {
                 return percent.ratio;
-            })).toEqual([25, 25, 25, 25, 0]);
+            })).toEqual([25, 25, 25, 0, 25]);
         });
 
         it('should limit min percent value in  statistics', function() {
@@ -212,8 +212,8 @@ describe('service', function () {
                 canceled: 6,
                 pending: 0
             });
-            expect(result.map(function(r) {return r.ratio;})).toEqual([0.5, 0.5, 3, 96, 0]);
-            expect(result.map(function(r) {return r.value;})).toEqual([3, 3, 3, 91, 0]);
+            expect(result.map(function(r) {return r.ratio;})).toEqual([0.5, 0.5, 3, 0, 96]);
+            expect(result.map(function(r) {return r.value;})).toEqual([3, 3, 3, 0, 91]);
         });
     });
 });

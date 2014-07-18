@@ -1,7 +1,10 @@
 /*global angular*/
 angular.module('allure.features', [])
-.controller('FeaturesCtrl', function($scope, $state, features, WatchingStore, Collection) {
+.controller('FeaturesCtrl', function($scope, $state, features, percents, WatchingStore, Collection) {
     "use strict";
+    function calculatePercents(item) {
+        item.percents = percents(item.statistic);
+    }
     function findStory(storyUid) {
         var story;
         $scope.features.some(function(feature) {
@@ -39,6 +42,10 @@ angular.module('allure.features', [])
     };
     var store = new WatchingStore('featuresSettings');
     $scope.features = features.features;
+    $scope.features.forEach(calculatePercents);
+    $scope.features.forEach(function(feature) {
+        feature.stories.forEach(calculatePercents);
+    });
 
     $scope.sorting = {
         predicate: store.bindProperty($scope, 'sorting.predicate', 'statistic.failed'),

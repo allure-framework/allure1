@@ -4,6 +4,7 @@ describe('Testcases status switcher', function () {
     var store;
 
     beforeEach(module('allure.testcase.statusSwitcher'));
+    beforeEach(module('allure.services'));
     beforeEach(module(function($provide) {
         store = {};
         $provide.value('$storage', function() {
@@ -19,7 +20,6 @@ describe('Testcases status switcher', function () {
                 }
             };
         });
-        $provide.value('status', {all:  ['FAILED', 'BROKEN', 'CANCELED', 'PASSED', 'PENDING']})
     }));
     //FIXME: duplicate of template
     beforeEach(inject(function($templateCache) {
@@ -89,7 +89,7 @@ describe('Testcases status switcher', function () {
         var switcher = createElement({});
         expect(switcher.el.find('.btn').map(function(index, btn) {
             return angular.element(btn).text().trim();
-        }).toArray()).toEqual(['pending', 'passed', 'canceled', 'broken', 'failed'])
+        }).toArray()).toEqual(['failed', 'broken', 'canceled', 'pending', 'passed'])
     });
 
     describe('statistics', function() {
