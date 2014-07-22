@@ -49,9 +49,9 @@ describe('filter', function () {
             return sceValue.$$unwrapTrustedValue();
         }
         it('should find and wrap external links', inject(function(linkyFilter) {
-            expect(expandSce(linkyFilter('http://yandex.ru/'))).toBe('<a href="http://yandex.ru/">http://yandex.ru/</a>');
-            expect(expandSce(linkyFilter('ssh://host'))).toBe('<a href="ssh://host">ssh://host</a>');
-            expect(expandSce(linkyFilter('http://'))).toBe('<a href="http://">http://</a>');
+            expect(expandSce(linkyFilter('http://yandex.ru/'))).toBe('<a href="http://yandex.ru/" target="_blank">http://yandex.ru/</a>');
+            expect(expandSce(linkyFilter('ssh://host'))).toBe('<a href="ssh://host" target="_blank">ssh://host</a>');
+            expect(expandSce(linkyFilter('http://'))).toBe('<a href="http://" target="_blank">http://</a>');
         }));
 
         it('should pass text without links', inject(function(linkyFilter) {
