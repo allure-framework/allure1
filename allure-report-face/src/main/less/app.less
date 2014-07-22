@@ -10,16 +10,27 @@
 @import "features";
 @import "xunit";
 
-.b-page__nav .navbar-header {
-  width: 138px;
-  .allure-logo {
-    background: url(../img/allure-logo.png) 10px center no-repeat;
-    font-size: 1.4em;
-    padding-left: 55px;
-    font-weight: bold;
-    &, &:hover {
-      color: #333
+.b-page__nav {
+  min-width: 850px;
+  .navbar-header {
+    width: 138px;
+    float: left;
+    .allure-logo {
+      background: url(../img/allure-logo.png) 10px center no-repeat;
+      font-size: 1.4em;
+      padding-left: 55px;
+      font-weight: bold;
+      &, &:hover {
+        color: #333
+      }
     }
+  }
+  .navbar-text {
+    margin-left: 5px;
+    margin-right: 5px;
+  }
+  .navbar-right {
+    float: right;
   }
 }
 

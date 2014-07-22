@@ -71,7 +71,7 @@ angular.module('allure.filters', [])
     .filter('linky', ['$sce', function($sce) {
         "use strict";
         function addLink(text) {
-            return ['<a href="', text, '">', text, '</a>'].join('');
+            return ['<a href="', text, '" target="_blank">', text, '</a>'].join('');
         }
         var LINKY_URL_REGEXP = /^(\w)+:\/\/.*/;
 
