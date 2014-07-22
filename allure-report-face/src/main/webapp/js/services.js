@@ -15,7 +15,7 @@ angular.module('allure.services', [])
     })
 
     .value('status', {
-        all: ['FAILED', 'BROKEN', 'CANCELED', 'PASSED', 'PENDING'],
+        all: ['FAILED', 'BROKEN', 'CANCELED', 'PENDING', 'PASSED'],
         getSortOrder: function (status) {
             return this.all.indexOf(status);
         }

@@ -28,7 +28,7 @@ angular.module('allure.testcase.statusSwitcher', []).directive('statusSwitcher',
         },
         link: function($scope) {
             $scope.statuses = store.statuses;
-            $scope.sortedStatuses = angular.copy(status.all).reverse();
+            $scope.sortedStatuses = angular.copy(status.all);
             $scope.toggle = function(status) {
                 store.toggleStatus(status);
             };
