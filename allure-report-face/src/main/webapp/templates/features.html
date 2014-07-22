@@ -11,18 +11,18 @@
                             <span class="feature_icon"></span>
                             {{feature.title}}
                         </td>
-                        <td allure-table-col="{heading: 'Canceled', predicate: 'statistic.canceled', class:'text-center', reverse: true}" class="text-center">
-                            <span class="label label-default" ng-show="feature.statistic.canceled > 0">{{feature.statistic.canceled}}</span>
+                        <td allure-table-col="{heading: 'Failed', predicate: 'statistic.failed', class:'text-center', reverse: true}" class="text-center" colspan="5">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in feature.percents"
+                                     tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
+                                    <span>{{percent.count}}</span>
+                                </div>
+                            </div>
                         </td>
-                        <td allure-table-col="{heading: 'Pending', predicate: 'statistic.pending', class:'text-center', reverse: true}" class="text-center">
-                            <span class="label label-info" ng-show="feature.statistic.pending > 0">{{feature.statistic.pending}}</span>
-                        </td>
-                        <td allure-table-col="{heading: 'Broken', predicate: 'statistic.broken', class:'text-center', reverse: true}" class="text-center">
-                            <span class="label label-warning" ng-show="feature.statistic.broken > 0">{{feature.statistic.broken}}</span>
-                        </td>
-                        <td allure-table-col="{heading: 'Failed', predicate: 'statistic.failed', class:'text-center', reverse: true}" class="text-center">
-                            <span class="label label-danger" ng-show="feature.statistic.failed > 0">{{feature.statistic.failed}}</span>
-                        </td>
+                        <td allure-table-col="{heading: 'Broken', predicate: 'statistic.broken', class:'text-center', reverse: true}" class="ng-hide"></td>
+                        <td allure-table-col="{heading: 'Canceled', predicate: 'statistic.canceled', class:'text-center', reverse: true}" class="ng-hide"></td>
+                        <td allure-table-col="{heading: 'Pending', predicate: 'statistic.pending', class:'text-center', reverse: true}" class="ng-hide"></td>
+                        <td allure-table-col="{heading: 'Passed', predicate: 'statistic.passed', class:'text-center', reverse: true}" class="ng-hide"></td>
                         <td allure-table-col="{heading: 'Total', predicate: 'statistic.total', class:'text-center', reverse: true}" class="text-center">
                             {{feature.statistic.total}}
                         </td>
@@ -31,17 +31,14 @@
                         <td class="story_title line-ellipsis" title="{{story.title}}">
                             {{story.title}}
                         </td>
-                        <td class="text-center">
-                            <span class="label label-default" ng-show="story.statistic.canceled > 0">{{story.statistic.canceled}}</span>
-                        </td>
-                        <td class="text-center">
-                            <span class="label label-info" ng-show="story.statistic.pending > 0">{{story.statistic.pending}}</span>
-                        </td>
-                        <td class="text-center">
-                            <span class="label label-warning" ng-show="story.statistic.broken > 0">{{story.statistic.broken}}</span>
-                        </td>
-                        <td class="text-center">
-                            <span class="label label-danger" ng-show="story.statistic.failed > 0">{{story.statistic.failed}}</span>
+                        <!--<td></td>-->
+                        <td class="text-center" colspan="5">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in story.percents"
+                                     tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
+                                    <span>{{percent.count}}</span>
+                                </div>
+                            </div>
                         </td>
                         <td class="text-center">
                             {{story.statistic.total}}
