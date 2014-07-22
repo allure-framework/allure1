@@ -1,6 +1,6 @@
 /*globals angular*/
 angular.module('allure.xUnit.controllers', [])
-    .controller('HomeCtrl', function ($scope, $state, percents, testsuites) {
+    .controller('HomeCtrl', function ($scope, $state, testsuites) {
         'use strict';
         function setTestsuite(testsuiteUid) {
             var testsuite = $scope.testsuites.filter(function(testsuite) {
@@ -18,9 +18,6 @@ angular.module('allure.xUnit.controllers', [])
             return $state.is(statename);
         };
         $scope.testsuites = testsuites.testSuites;
-        $scope.testsuites.forEach(function(suite) {
-            suite.percents = percents(suite.statistic);
-        });
         $scope.time = testsuites.time;
         $scope.statistic = $scope.testsuites.reduce(function(statistic, testsuite) {
             ['passed', 'pending', 'canceled', 'broken', 'failed', 'total'].forEach(function(status) {
@@ -30,7 +27,6 @@ angular.module('allure.xUnit.controllers', [])
         }, {
             passed: 0, pending: 0, canceled: 0, failed: 0, broken: 0, total: 0
         });
-        $scope.percents = percents($scope.statistic);
         $scope.testcase = {};
         $scope.$watch('testcase.uid', function(testcaseUid, oldUid) {
             if(testcaseUid && testcaseUid !== oldUid) {

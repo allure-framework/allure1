@@ -20,13 +20,17 @@
                 <b>Total {{testsuites.length}} suites <span ng-hide="testsuites.length == (testsuites | filter:statusFilter).length">({{(testsuites | filter:statusFilter).length}} shown)</span></b>
             </td>
             <td class="line-nobreak">{{time.duration | time}}</td>
-            <td class="text-center" colspan="5">
-                <div class="progress">
-                    <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in percents"
-                         tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
-                        <span>{{percent.count}}</span>
-                    </div>
-                </div>
+            <td class="text-center">
+                <span class="label label-default" ng-show="statistic.canceled > 0">{{statistic.canceled}}</span>
+            </td>
+            <td class="text-center">
+                <span class="label label-info" ng-show="statistic.pending > 0">{{statistic.pending}}</span>
+            </td>
+            <td class="text-center">
+                <span class="label label-warning" ng-show="statistic.broken > 0">{{statistic.broken}}</span>
+            </td>
+            <td class="text-center">
+                <span class="label label-danger" ng-show="statistic.failed > 0">{{statistic.failed}}</span>
             </td>
             <td class="text-center">
                 {{statistic.total}}
@@ -39,18 +43,18 @@
             <td allure-table-col="{heading: 'Duration', predicate: 'time.duration', flex: 2, reverse: true}" class="line-ellipsis" title="{{testsuite.time.duration | time}}">
                 {{testsuite.time.duration | time}}
             </td>
-            <td allure-table-col="{heading: 'Failed', predicate: 'statistic.failed', class:'text-center', reverse: true}" class="text-center" colspan="5">
-                <div class="progress">
-                    <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in testsuite.percents"
-                         tooltip="{{percent.count}} {{percent.status}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
-                        <span>{{percent.count}}</span>
-                    </div>
-                </div>
+            <td allure-table-col="{heading: 'Canceled', predicate: 'statistic.canceled', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-default" ng-show="testsuite.statistic.canceled > 0">{{testsuite.statistic.canceled}}</span>
             </td>
-            <td allure-table-col="{heading: 'Broken', predicate: 'statistic.broken', class:'text-center', reverse: true}" class="ng-hide"></td>
-            <td allure-table-col="{heading: 'Canceled', predicate: 'statistic.canceled', class:'text-center', reverse: true}" class="ng-hide"></td>
-            <td allure-table-col="{heading: 'Pending', predicate: 'statistic.pending', class:'text-center', reverse: true}" class="ng-hide"></td>
-            <td allure-table-col="{heading: 'Passed', predicate: 'statistic.passed', class:'text-center', reverse: true}" class="ng-hide"></td>
+            <td allure-table-col="{heading: 'Pending', predicate: 'statistic.pending', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-info" ng-show="testsuite.statistic.pending > 0">{{testsuite.statistic.pending}}</span>
+            </td>
+            <td allure-table-col="{heading: 'Broken', predicate: 'statistic.broken', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-warning" ng-show="testsuite.statistic.broken > 0">{{testsuite.statistic.broken}}</span>
+            </td>
+            <td allure-table-col="{heading: 'Failed', predicate: 'statistic.failed', class:'text-center', reverse: true}" class="text-center">
+                <span class="label label-danger" ng-show="testsuite.statistic.failed > 0">{{testsuite.statistic.failed}}</span>
+            </td>
             <td allure-table-col="{heading: 'Total', predicate: 'statistic.total', class:'text-center', reverse: true}" class="text-center">
                 {{testsuite.statistic.total}}
             </td>

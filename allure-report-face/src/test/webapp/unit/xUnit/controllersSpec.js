@@ -4,7 +4,6 @@ describe('xUnit controllers', function () {
     var $controller, $rootScope;
 
     beforeEach(module('allure.xUnit.controllers'));
-    beforeEach(module('allure.services'));
     beforeEach(inject(function (_$controller_, _$rootScope_) {
         $controller = _$controller_;
         $rootScope = _$rootScope_;
