@@ -51,7 +51,7 @@ many lines in description</description>
             </steps>
             <attachments>
                 <attachment title="JSON Attachment" source="c5a63c63adb9adda21cbdd82dbd649ac4cb661acde06e27add40f32b60886acf-attachment.txt" type="text/plain" size="3106"/>
-                <attachment title="XML Attachment" source="6deda11b86bff62c7252fc47a68ed8d632c4dff891f3641e38f7259bc419c9bf-attachment.txt" type="text/plain" size="65"/>
+                <attachment title="XML Attachment" source="6deda11b86bff62c7252fc47a68ed8d632c4dff891f3641e38f7259bc419c9bf-attachment.txt" type="text/xml" size="65"/>
                 <attachment title="JPG Attachment" source="ad720ddaaa92f973fa78080750eeeca731d32de1cebb6d105c0bce46f7f8c548-attachment.png" type="image/png" size="33713"/>
             </attachments>
             <labels>

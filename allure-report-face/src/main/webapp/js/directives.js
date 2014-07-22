@@ -9,7 +9,7 @@ angular.module('allure.directives', [])
                 }
                 var result;
                 if(attrs.language) {
-                    result = hljs.highlight(code, attrs.language).value;
+                    result = hljs.highlight(attrs.language, code).value;
                 }
                 else {
                     result = hljs.highlightAuto(code).value;
