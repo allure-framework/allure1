@@ -68,6 +68,9 @@ Expected: element text is "Yandex"
                 <attachment title="Response" source="d72542d32857f29666f65242d65c5a9ec440275676bd1fb4e83394cd6b984635-attachment.txt" type="text/plain" size="51"/>
                 <attachment title="Page Screenshot" source="172c376f87a25351926b1777522ccb6d8e854fda6fb1bd315f2b7a2932b98778-attachment.png" type="image/png" size="15990"/>
             </attachments>
+            <parameters>
+                <parameter name="pageUrl" value="http://ya.ru" kind="environment-variable" />
+            </parameters>
             <labels>
                 <label name="story" value="WebdriverScreenshot"/>
             </labels>
