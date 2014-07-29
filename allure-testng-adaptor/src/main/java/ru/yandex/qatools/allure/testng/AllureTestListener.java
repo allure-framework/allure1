@@ -39,7 +39,10 @@ public class AllureTestListener implements ITestListener {
     public void onStart(ITestContext iTestContext) {
         getLifecycle().fire(new TestSuiteStartedEvent(
                 suiteUid, iTestContext.getCurrentXmlTest().getSuite().getName()
-        ).withLabels(AllureModelUtils.createTestFrameworkLabel("TestNG")));
+        ).withLabels(
+                AllureModelUtils.createTestFrameworkLabel("TestNG"),
+                AllureModelUtils.createFeatureLabel(iTestContext.getName())
+        ));
     }
 
     @Override
