@@ -1,9 +1,11 @@
 package ru.yandex.qatools.allure.testng;
 
+import org.testng.IConfigurationListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import org.testng.SkipException;
+import org.testng.TestException;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
@@ -26,7 +28,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 22.11.13
  */
-public class AllureTestListener implements ITestListener {
+public class AllureTestListener implements ITestListener, IConfigurationListener {
 
     private Allure lifecycle = Allure.LIFECYCLE;
 
@@ -34,6 +36,34 @@ public class AllureTestListener implements ITestListener {
 
     private Set<String> startedTestNames = Collections.newSetFromMap(
             new ConcurrentHashMap<String, Boolean>());
+
+
+    @Override
+    public void onConfigurationSuccess(ITestResult iTestResult) {
+        //nothing
+    }
+
+    @Override
+    public void onConfigurationFailure(ITestResult iTestResult) {
+        if (!startedTestNames.contains(getName(iTestResult))) {
+            onTestStart(iTestResult);
+        }
+
+        Throwable throwable = iTestResult.getThrowable();
+        if (throwable == null) {
+            throwable = new TestException("Test configuration failure");
+        }
+
+        getLifecycle().fire(new TestCaseCanceledEvent()
+                        .withThrowable(throwable)
+        );
+        fireFinishTest();
+    }
+
+    @Override
+    public void onConfigurationSkip(ITestResult iTestResult) {
+        //nothing
+    }
 
     @Override
     public void onStart(ITestContext iTestContext) {
