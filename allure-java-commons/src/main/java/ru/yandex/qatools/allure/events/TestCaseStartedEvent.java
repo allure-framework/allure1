@@ -2,16 +2,10 @@ package ru.yandex.qatools.allure.events;
 
 import ru.yandex.qatools.allure.model.Description;
 import ru.yandex.qatools.allure.model.Label;
-import ru.yandex.qatools.allure.model.Parameter;
-import ru.yandex.qatools.allure.model.ParameterKind;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -46,27 +40,7 @@ public class TestCaseStartedEvent extends AbstractTestCaseStartedEvent {
         testCase.setTitle(getTitle());
         testCase.setDescription(getDescription());
         testCase.setLabels(getLabels());
-        testCase.getParameters().addAll(getSystemProperties());
     }
-
-    private List<Parameter> getSystemProperties() {
-        List<Parameter> results = new ArrayList<>();
-        Properties properties = System.getProperties();
-        Enumeration<?> enumeration = System.getProperties().propertyNames();
-        while (enumeration.hasMoreElements()) {
-            try {
-                String propertyName = (String) enumeration.nextElement();
-                results.add(new Parameter()
-                                .withName(propertyName)
-                                .withValue(properties.getProperty(propertyName))
-                                .withKind(ParameterKind.SYSTEM_PROPERTY)
-                );
-            } catch (Exception ignored) {
-            }
-        }
-        return results;
-    }
-
 
     /**
      * Sets title using fluent-api
