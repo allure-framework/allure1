@@ -13,6 +13,22 @@ public final class AllureAspectUtils {
     private AllureAspectUtils() {
     }
 
+    public static String getParametersAsString(Object[] parameters) {
+        if (parameters == null || parameters.length == 0) {
+            return "";
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append("[");
+        for (int i = 0; i < parameters.length; i++) {
+            builder.append(arrayToString(parameters[i]));
+            if (i < parameters.length - 1) {
+                builder.append(", ");
+            }
+        }
+        builder.append("]");
+        return builder.toString();
+    }
+
     public static String getTitle(String namePattern, String methodName, Object[] parameters) {
         String finalPattern = namePattern.replaceAll("\\{method\\}", methodName);
         int paramsCount = parameters == null ? 0 : parameters.length;
