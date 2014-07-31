@@ -2,12 +2,17 @@ package ru.yandex.qatools.allure.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.properties.annotations.Property;
 import ru.yandex.qatools.properties.annotations.Resource;
+import ru.yandex.qatools.properties.annotations.Use;
 
 import java.io.File;
 import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
 
 /**
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
@@ -53,6 +58,10 @@ public class AllureConfig {
 
     @Property("allure.attachments.encoding")
     private String attachmentsEncoding = "UTF-8";
+
+    @Use(AllureStatusFilterConverter.class)
+    @Property("allure.results.testcases.status.filter")
+    private Collection<Status> resultsTestCasesStatusFilter = new HashSet<>();
 
     private String version = getClass().getPackage().getImplementationVersion();
 
@@ -115,6 +124,16 @@ public class AllureConfig {
 
     public String getVersion() {
         return version;
+    }
+
+    public Collection<Status> getResultsTestCasesStatusFilter() {
+        if (resultsTestCasesStatusFilter.contains(Status.FAILED) ||
+                resultsTestCasesStatusFilter.contains(Status.BROKEN)) {
+            LOGGER.trace("Property \"allure.results.testcases.status.filter\" should not " +
+                    "contain \"failed\" or \"broken\" status");
+            resultsTestCasesStatusFilter.removeAll(Arrays.asList(Status.FAILED, Status.BROKEN));
+        }
+        return resultsTestCasesStatusFilter;
     }
 
     public static AllureConfig newInstance() {
