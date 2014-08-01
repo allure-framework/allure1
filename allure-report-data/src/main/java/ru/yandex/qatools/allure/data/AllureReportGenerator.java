@@ -22,7 +22,7 @@ public class AllureReportGenerator {
 
     private ClassLoader classLoader;
 
-    protected File[] inputDirectories;
+    protected final File[] inputDirectories;
 
     protected TestRunGenerator testRunGenerator;
 
@@ -38,6 +38,7 @@ public class AllureReportGenerator {
         return classLoader;
     }
 
+    @SuppressWarnings("unused")
     public void setClassLoader(ClassLoader classLoader) {
         this.classLoader = classLoader;
     }
