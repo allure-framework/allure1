@@ -324,7 +324,7 @@ public final class AllureResultsUtils {
         try {
             return types.forName(type).getExtension();
         } catch (Exception e) {
-            LOGGER.warn("Can't detect extension for MIME-type", e);
+            LOGGER.warn("Can't detect extension for MIME-type " + type, e);
             return "";
         }
     }
