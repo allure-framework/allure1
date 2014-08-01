@@ -33,7 +33,7 @@ public class AllureRunListener extends RunListener {
     private final Map<String, String> suites = new HashMap<>();
 
     @Override
-    public void testRunStarted(Description description) throws Exception {
+    public void testRunStarted(Description description) {
         if (description == null) {
             // If you don't pass junit provider - surefire (<= 2.17) pass null instead of description
             return;

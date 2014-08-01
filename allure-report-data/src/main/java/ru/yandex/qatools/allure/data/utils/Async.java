@@ -13,9 +13,11 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class Async<T> {
 
+    public static final int N_THREADS = 5;
+
     public void execute(List<T> dataArray) {
         try {
-            ExecutorService service = Executors.newCachedThreadPool();
+            ExecutorService service = Executors.newFixedThreadPool(N_THREADS);
             for (final T data : dataArray) {
                 service.execute(new Runnable() {
                     @Override

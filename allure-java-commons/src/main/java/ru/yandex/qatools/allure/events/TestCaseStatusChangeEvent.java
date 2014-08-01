@@ -84,6 +84,7 @@ public abstract class TestCaseStatusChangeEvent extends AbstractTestCaseStatusCh
     private String getStackTrace(Throwable throwable) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw, true);
+        // NOSONAR
         throwable.printStackTrace(pw);
         return sw.getBuffer().toString();
     }

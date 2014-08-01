@@ -33,7 +33,7 @@ public final class ServiceLoaderUtils {
      * @return List of found services
      */
     public static <T> List<T> load(ClassLoader classLoader, Class<T> serviceType) {
-        List<T> foundServices = new ArrayList<T>();
+        List<T> foundServices = new ArrayList<>();
         Iterator<T> iterator = ServiceLoader.load(serviceType, classLoader).iterator();
 
         while (checkHasNextSafely(iterator)) {
@@ -42,6 +42,7 @@ public final class ServiceLoaderUtils {
                 foundServices.add(item);
                 LOGGER.info(String.format("Found %s [%s]", serviceType.getSimpleName(), item.toString()));
             } catch (ServiceConfigurationError e) {
+                LOGGER.trace("Can't find services using Java SPI", e);
                 LOGGER.error(e.getMessage());
             }
         }
@@ -64,6 +65,7 @@ public final class ServiceLoaderUtils {
             */
             return iterator.hasNext();
         } catch (Exception e) {
+            LOGGER.trace("Can't load some service using Java SPI", e);
             LOGGER.error(e.getMessage());
             return false;
         }

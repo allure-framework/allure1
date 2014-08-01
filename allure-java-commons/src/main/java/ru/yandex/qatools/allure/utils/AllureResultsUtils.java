@@ -183,7 +183,7 @@ public final class AllureResultsUtils {
         try {
             return JAXBContext.newInstance(clazz).createMarshaller();
         } catch (JAXBException e) {
-            throw new AllureException("Can't create marshaller for class " + clazz);
+            throw new AllureException("Can't create marshaller for class " + clazz, e);
         }
     }
 
@@ -231,6 +231,7 @@ public final class AllureResultsUtils {
                     : writeAttachment(attachment, title, type);
 
         } catch (Exception e) {
+            LOGGER.trace("Error while saving attachment " + title + ":" + type , e);
             return writeAttachmentWithErrorMessage(e, title);
         }
     }
@@ -305,7 +306,8 @@ public final class AllureResultsUtils {
         try {
             byte[] bytes = MessageDigest.getInstance("SHA-256").digest(attachment);
             prefix = new BigInteger(POSITIVE, bytes).toString(HEX);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOGGER.trace("Error while generate attachment name, using default one", e);
         }
         return prefix + CONFIG.getAttachmentFileSuffix();
     }
@@ -322,7 +324,7 @@ public final class AllureResultsUtils {
         try {
             return types.forName(type).getExtension();
         } catch (Exception e) {
-            LOGGER.warn("Can't detect extension for MIME-type", e);
+            LOGGER.warn("Can't detect extension for MIME-type " + type, e);
             return "";
         }
     }

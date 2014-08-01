@@ -9,7 +9,7 @@ import org.xml.sax.SAXException;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
 import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
-import ru.yandex.qatools.allure.events.MakeAttachEvent;
+import ru.yandex.qatools.allure.events.MakeAttachmentEvent;
 import ru.yandex.qatools.allure.events.StepFinishedEvent;
 import ru.yandex.qatools.allure.events.StepStartedEvent;
 import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
@@ -17,7 +17,6 @@ import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
 import ru.yandex.qatools.allure.model.Attachment;
-import ru.yandex.qatools.allure.model.AttachmentType;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
@@ -27,6 +26,7 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -45,6 +45,7 @@ import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFile
  */
 public class AllureLifecycleTest {
 
+    private static final String UTF_8 = "UTF-8";
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -70,13 +71,13 @@ public class AllureLifecycleTest {
         assertEquals(testSuite.getTestCases().get(0), testCase);
 
         Step parentStep = fireStepStart();
-        Attachment firstAttach = fireMakeAttach();
+        Attachment firstAttach = fireMakeAttachment();
 
         assertThat(parentStep.getAttachments(), hasSize(1));
         assertEquals(parentStep.getAttachments().get(0), firstAttach);
 
         Step nestedStep = fireStepStart();
-        Attachment secondAttach = fireMakeAttach();
+        Attachment secondAttach = fireMakeAttachment();
 
         assertFalse(firstAttach == secondAttach);
 
@@ -90,7 +91,7 @@ public class AllureLifecycleTest {
 
         fireStepFinished();
 
-        Attachment testCaseAttachment = fireMakeAttach();
+        Attachment testCaseAttachment = fireMakeAttachment();
 
         fireTestCaseFinished();
 
@@ -196,11 +197,11 @@ public class AllureLifecycleTest {
         return step;
     }
 
-    public Attachment fireMakeAttach() {
+    public Attachment fireMakeAttachment() throws UnsupportedEncodingException {
         Step lastStep = Allure.LIFECYCLE.getStepStorage().getLast();
         int attachmentsCount = lastStep.getAttachments().size();
 
-        Allure.LIFECYCLE.fire(new MakeAttachEvent("some.attach.title", AttachmentType.TXT, "attach.body"));
+        Allure.LIFECYCLE.fire(new MakeAttachmentEvent("some.attach.title".getBytes(UTF_8), "attach.body", ""));
 
         assertThat(lastStep.getAttachments().size(), is(attachmentsCount + 1));
         Attachment attachment = lastStep.getAttachments().get(attachmentsCount);

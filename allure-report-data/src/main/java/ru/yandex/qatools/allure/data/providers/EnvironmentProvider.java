@@ -3,7 +3,6 @@ package ru.yandex.qatools.allure.data.providers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.config.AllureConfig;
-import ru.yandex.qatools.allure.model.ParameterKind;
 import ru.yandex.qatools.commons.model.Environment;
 import ru.yandex.qatools.commons.model.Parameter;
 
@@ -49,17 +48,17 @@ public class EnvironmentProvider implements DataProvider {
                 Environment environment = JAXB.unmarshal(file, Environment.class);
                 merge(global, environment);
             } catch (Exception e) {
-                logger.error("Can't unmarshal file " + file + " to environment bean.");
+                logger.error("Can't unmarshal file " + file + " to environment bean.", e);
             }
         }
 
         for (File file : listFilesByRegex(AllureConfig.newInstance().getEnvironmentPropertiesFileRegex(), inputDirectories)) {
-            try {
+            try (FileInputStream fis = new FileInputStream(file)) {
                 Properties properties = new Properties();
-                properties.load(new FileInputStream(file));
+                properties.load(fis);
                 merge(global, properties);
             } catch (Exception e) {
-                logger.error("Can't unmarshal file " + file + " to environment bean.");
+                logger.error("Can't unmarshal file " + file + " to environment bean.", e);
             }
         }
 
