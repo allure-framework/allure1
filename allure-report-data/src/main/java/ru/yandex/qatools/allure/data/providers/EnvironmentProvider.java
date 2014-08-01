@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 
+import static java.lang.String.format;
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFilesByRegex;
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
 import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
@@ -48,7 +49,7 @@ public class EnvironmentProvider implements DataProvider {
                 Environment environment = JAXB.unmarshal(file, Environment.class);
                 merge(global, environment);
             } catch (Exception e) {
-                logger.error("Can't unmarshal file " + file + " to environment bean.", e);
+                logger.error(format("Can't unmarshal environment file %s to environment bean.", file), e);
             }
         }
 
@@ -58,7 +59,7 @@ public class EnvironmentProvider implements DataProvider {
                 properties.load(fis);
                 merge(global, properties);
             } catch (Exception e) {
-                logger.error("Can't unmarshal file " + file + " to environment bean.", e);
+                logger.error(format("Can't read properties file %s to environment bean.", file), e);
             }
         }
 

@@ -1,5 +1,7 @@
 package ru.yandex.qatools.allure.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.properties.annotations.Property;
 import ru.yandex.qatools.properties.annotations.Resource;
@@ -14,6 +16,8 @@ import java.nio.charset.Charset;
 @SuppressWarnings("unused")
 @Resource.Classpath("allure.properties")
 public class AllureConfig {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(AllureConfig.class);
 
     private static final File DEFAULT_RESULTS_DIRECTORY = new File("target/allure-results");
 
@@ -99,7 +103,8 @@ public class AllureConfig {
     public Charset getAttachmentsEncoding() {
         try {
             return Charset.forName(attachmentsEncoding);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOGGER.trace("Can't find attachments encoding \"" + attachmentsEncoding, "\" use default", e);
             return Charset.defaultCharset();
         }
     }

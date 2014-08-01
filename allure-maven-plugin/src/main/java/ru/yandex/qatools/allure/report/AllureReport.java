@@ -66,7 +66,7 @@ public class AllureReport extends AbstractAllureReport {
             );
 
         } catch (MojoExecutionException e) {
-            throw new MavenReportException(e.getMessage());
+            throw new MavenReportException("Can't unpack report face", e);
         }
     }
 

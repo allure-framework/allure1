@@ -40,7 +40,7 @@ public class ListenersNotifier extends LifecycleListener {
         ));
     }
 
-    protected void loadListeners(ServiceLoader<LifecycleListener> loader) {
+    private void loadListeners(ServiceLoader<LifecycleListener> loader) {
         Iterator<LifecycleListener> iterator = loader.iterator();
         while (hasNextSafely(iterator)) {
             try {
@@ -53,7 +53,7 @@ public class ListenersNotifier extends LifecycleListener {
         }
     }
 
-    protected boolean hasNextSafely(Iterator iterator) {
+    private boolean hasNextSafely(Iterator iterator) {
         try {
             return iterator.hasNext();
         } catch (Exception e) {

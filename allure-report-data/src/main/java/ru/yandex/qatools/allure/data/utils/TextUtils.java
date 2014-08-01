@@ -4,7 +4,6 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -78,14 +77,15 @@ public final class TextUtils {
 
     public static String underscoreCapFirstWords(String text) {
         Matcher matcher = Pattern.compile("(^|\\w|\\s)([A-Z]+)([a-z]+)").matcher(text);
-
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
+        int last = 0;
         while (matcher.find()) {
-            matcher.appendReplacement(stringBuffer, matcher.group().toLowerCase());
+            sb.append(text.substring(last, matcher.start()));
+            sb.append(matcher.group(0).toLowerCase());
+            last = matcher.end();
         }
-        matcher.appendTail(stringBuffer);
-
-        return stringBuffer.toString();
+        sb.append(text.substring(last));
+        return sb.toString();
     }
 
     public static String splitCamelCaseWordsWithLowdashes(String camelCaseString) {
