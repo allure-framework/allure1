@@ -1,5 +1,8 @@
 package ru.yandex.qatools.allure.data;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +12,12 @@ import java.util.List;
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
  *         Date: 1/22/14
  */
-public class DummyReportGenerator {
+public final class DummyReportGenerator {
+
+    public static final Logger LOGGER = LoggerFactory.getLogger(DummyReportGenerator.class);
+
+    DummyReportGenerator() {
+    }
 
     /**
      * Generate Allure report data from directories with allure report results.
@@ -19,7 +27,7 @@ public class DummyReportGenerator {
      */
     public static void main(String[] args) {
         if (args.length < 2) {
-            System.out.println("There must be at least two arguments");
+            LOGGER.error("There must be at least two arguments");
             return;
         }
         int lastIndex = args.length - 1;

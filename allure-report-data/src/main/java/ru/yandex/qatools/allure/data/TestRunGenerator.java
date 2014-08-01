@@ -43,19 +43,19 @@ public class TestRunGenerator {
     }
 
     private ListFiles createListFiles(Collection<File> files) {
-        ListFiles listFiles = new ListFiles();
+        ListFiles lf = new ListFiles();
         for (File file : files) {
             try {
                 if (validateXML) {
                     Validator validator = getAllureSchemaValidator();
                     validator.validate(new StreamSource(file));
                 }
-                listFiles.getFiles().add(file.toURI().toString());
+                lf.getFiles().add(file.toURI().toString());
             } catch (Exception e) {
                 logger.error("File " + file + " skipped.", e);
             }
         }
-        return listFiles;
+        return lf;
     }
 
     private String listFilesToString(final ListFiles listFiles) {
@@ -74,6 +74,7 @@ public class TestRunGenerator {
         );
     }
 
+    @SuppressWarnings("unused")
     public ListFiles getListFiles() {
         return listFiles;
     }
