@@ -28,7 +28,7 @@
         <module>allure-model</module>
         <module>allure-commons</module>
         <module>allure-java-annotations</module>
-        <module>allure-java-commons</module>
+        <module>allure-java-adaptor-api</module>
         <module>allure-java-aspects</module>
         <module>allure-junit-adaptor</module>
         <module>allure-testng-adaptor</module>
@@ -253,7 +253,7 @@
             </dependency>
             <dependency>
                 <groupId>ru.yandex.qatools.allure</groupId>
-                <artifactId>allure-java-commons</artifactId>
+                <artifactId>allure-adaptor-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

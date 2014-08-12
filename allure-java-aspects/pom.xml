@@ -19,7 +19,7 @@
     <dependencies>
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-java-commons</artifactId>
+            <artifactId>allure-adaptor-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.aspectj</groupId>
