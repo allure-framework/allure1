@@ -4,6 +4,7 @@ import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
 import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
+import ru.yandex.qatools.allure.events.TestCasesFilterStatusEvent;
 import ru.yandex.qatools.allure.events.RemoveAttachmentsEvent;
 import ru.yandex.qatools.allure.events.StepEvent;
 import ru.yandex.qatools.allure.events.StepFinishedEvent;
@@ -182,7 +183,12 @@ public class Allure {
 
         testSuiteStorage.remove(suiteUid);
 
-        writeTestSuiteResult(testSuite);
+        new TestCasesFilterStatusEvent(AllureConfig.newInstance().getResultsTestCasesStatusFilter())
+                .process(testSuite);
+
+        if (!testSuite.getTestCases().isEmpty()) {
+            writeTestSuiteResult(testSuite);
+        }
 
         notifier.fire(event);
     }
