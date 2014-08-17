@@ -47,6 +47,12 @@ describe('Timeline', function() {
         expect(elem.find('.bar').length).toBe(4);
     });
 
+    it('should add link to testcase', function() {
+        createTimeline();
+        var find = elem.find('.chart-group > g > a')[0].href.baseVal;
+        expect(find).toBe('#/home//uid/expanded');
+    });
+
     it('should filter tests with zero duration', function() {
         createTimeline();
         scope.times.push({time: {start: 33, duration: 0, stop: 33}, title: 'test4', uid: 'uid4', status: 'FAILED'});
