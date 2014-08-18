@@ -11,11 +11,10 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static ru.yandex.qatools.allure.Helpers.existsAndVisible;
-import static ru.yandex.qatools.htmlelements.matchers.WrapsElementMatchers.exists;
 import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.should;
 import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.timeoutHasExpired;
 
-public class DefectsTabTest {
+public class TimelineTabTest {
 
     @Rule
     public JSErrorsRule jsErrorsRule = new JSErrorsRule();
@@ -25,24 +24,23 @@ public class DefectsTabTest {
     @Before
     public void openBrowser() throws Exception {
         page = new Page(jsErrorsRule.driver());
-        assertThat(page.tabContent(), should(existsAndVisible())
-                .whileWaitingUntil(timeoutHasExpired(SECONDS.toMillis(3))));
-        page.tabs().defects().click();
-        assertThat(page.defectsTabContent().defectAt(0), should(existsAndVisible())
+        page.tabs().timeline().click();
+        assertThat(page.timelineTab().barAt(0), should(existsAndVisible())
                 .whileWaitingUntil(timeoutHasExpired(SECONDS.toMillis(3))));
     }
 
 
     @Test
     public void shouldNotSeeAnOpenTestcase() throws Exception {
-        assertThat(page.defectsTabContent().currentDefect(), should(not(existsAndVisible()))
+        assertThat(page.timelineTab().testcasePane(), should(not(existsAndVisible()))
                 .whileWaitingUntil(timeoutHasExpired(SECONDS.toMillis(3))));
     }
 
     @Test
-    public void shouldOpenDefectOnClick() throws Exception {
-        page.defectsTabContent().defectAt(0).click();
+    public void shouldOpenTestcaseOnClick() throws Exception {
+        page.timelineTab().barAt(0).click();
 
-        assertThat(page.defectsTabContent().currentDefect(), should(exists()));
+        assertThat(page.timelineTab().testcasePane(), should(existsAndVisible())
+                .whileWaitingUntil(timeoutHasExpired(SECONDS.toMillis(3))));
     }
 }
