@@ -27,7 +27,7 @@
                             {{feature.statistic.total}}
                         </td>
                     </tr>
-                    <tr ng-if="feature.expanded" class="story clickable" ng-click="setStory(story)" ng-class="{active: isActive(story)}" ng-repeat="story in feature.stories">
+                    <tr ng-if="feature.expanded" class="story clickable" ng-click="setStory(story)" ng-class="{active: isActive(story)}" ng-repeat="story in feature.stories | orderBy:sorting.predicate:sorting.reverse">
                         <td class="story_title line-ellipsis" title="{{story.title}}">
                             {{story.title}}
                         </td>
