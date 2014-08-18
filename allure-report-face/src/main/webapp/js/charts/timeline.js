@@ -40,7 +40,13 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
 
         this.rows = this.svg.select('.chart-group').selectAll('g').data(data).enter().append('g');
         this.bars = this.rows.selectAll('.bar')
-            .data(function(d){ return d; }).enter().append('rect');
+            .data(function(d){ return d; }).enter()
+            .append('a').attr({
+                'xlink:href': function(d) {
+                    return '#/home//' + d.uid + '/expanded'
+                }
+            })
+            .append('rect');
 
         var barGap = barHeight / 4,
             barThickness = barHeight - barGap;
