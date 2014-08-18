@@ -1,0 +1,97 @@
+{
+  "index":  
+        {
+            "FEEDBACK": "Provide Feedback",
+            "MAIL": "Mail list",
+            "DATA_SIZE": "Data size",
+            "GENERATED": "Generated in",
+            "VERSION": "Version",
+            "OVERVIEW": "Overview",
+            "DEFECTS": "Defects",
+            "XUNIT": "xUnit",
+            "BEHAVIORS": "Behaviors",
+            "GRAPH": "Graph",
+            "TIMELINE": "Timeline",
+            "BROKEN_REPORT_1": "Your report seems to be broken! Check out ",
+            "BROKEN_REPORT_2": "our FAQ",
+            "BROKEN_REPORT_3": " to find a reason",
+            "MESSAGE": "Message",
+            "DEBUG": "Debug"
+        },
+        
+  "timeline":  
+        {
+            "HEADER": "Timeline",
+            "STARTED": "Started",
+            "AT": "at"
+        },
+        
+  "overview":  
+        {
+            "TOP": "Top defects",
+            "ALL": "show all",
+            "NO_DEFECTS": "No defects, all tests passed!",
+            "STATUS": "status"
+        },
+        
+  "graph":  
+        {
+            "DONE": "All Done. Good job!",
+            "PROBLEMS": "Some Problems Here...",
+            "SEVERITY": "Severity",
+            "DURATIONS": "Durations"
+        },
+        
+  "features":  
+        {
+            "REQUIREMENTS": "Functional requirements",
+            "FEATURES": "Features",
+            "STORY": "Story"
+        },
+        
+  "defects":  
+        {
+            "NO_DEFECTS": "No defects in test run. Good job!"
+        },
+        
+  "testrun":  
+        {
+            "SUMMARY": "Summary",
+            "TESTRUN": "Test run",
+            "SUITES": "Test suites",
+            "STARTED": "Started",
+            "AT": "At",
+            "PASSED": "PASSED",
+            "TOTAL_1": "Total",
+            "TOTAL_2": "suites",
+            "TOTAL_3": "shown"
+        },
+        
+  "testsuite":  
+        {
+            "TESTSUITE": "Testsuite"
+        },
+        
+  "attachment":  
+        {
+            "ATTACHMENT": "Attachment",
+            "NOT_FOUND": "Attachment not found"
+        },
+        
+  "list":  
+        {
+            "TC_1": "Test cases",
+            "TC_2": "total",
+            "TC_3": "shown",
+            "MORE": "Show more"
+        },  
+        
+  "testcase":  
+        {
+            "TESTCASE": "Testcase",
+            "SEVERITY": "Severity",
+            "TEST_PASSED": "The test has passed!",
+            "SHOW_TRACE": "Show stacktrace",
+            "HIDE_TRACE": "Hide stacktrace"
+        }  
+}

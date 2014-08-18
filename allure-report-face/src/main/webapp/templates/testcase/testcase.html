@@ -1,4 +1,4 @@
-<div class="b-island__title">Testcase</div>
+<div class="b-island__title">{{'testcase.TESTCASE' | translate}}</div>
 <div class="pane__header title-status-{{testcase.status | lowercase}}">
     <h3>
         <div class="pane__header_controls pull-right">
@@ -8,7 +8,7 @@
         </div>
         <span class="icon-status-{{testcase.status | lowercase}}"></span>
         {{testcase.title}}
-        <small>Severity: {{testcase.severity}}</small>
+        <small>{{'testcase.SEVERITY' | translate}}: {{testcase.severity}}</small>
     </h3>
     <div class="text-muted" ng-show="testcase.name">
         {{testcase.name}} <copy-button text="testcase.name"></copy-button>
@@ -27,7 +27,7 @@
         <ng-include src="'testcaseStep.tpl'"></ng-include>
     </div>
     <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
-        The test has passed!
+        {{'testcase.TEST_PASSED' | translate}}
     </div>
     <div class="list-item clickable" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.uid)" ng-class="{active:attachment==$parent.attachment}">
         <ng-include src="'testcaseAttachment.tpl'"></ng-include>
@@ -37,8 +37,8 @@
 <script type="text/ng-template" id="testcaseFailure.tpl">
     <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status !== 'PASSED'" ng-controller="angular.noop">
         <span class="preformated-text" ng-click="testcaseExpanded = !testcaseExpanded">{{failure.message}}</span>
-        <span class="pull-right btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-hide="testcaseExpanded" ng-click="testcaseExpanded = true">Show stacktrace</span>
-        <span class="pull-right btn btn-default btn-sm active btn-status-{{testcase.status|lowercase}}" ng-show="testcaseExpanded" ng-click="testcaseExpanded = false">Hide stacktrace</span>
+        <span class="pull-right btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-hide="testcaseExpanded" ng-click="testcaseExpanded = true">{{'testcase.SHOW_TRASE' | translate}}</span>
+        <span class="pull-right btn btn-default btn-sm active btn-status-{{testcase.status|lowercase}}" ng-show="testcaseExpanded" ng-click="testcaseExpanded = false">{{'testcase.HIDE_TRACE' | translate}}</span>
         <div ng-show="testcaseExpanded" class="testcase__stacktrace preformated-text">{{failure.stackTrace}}</div>
     </div>
 </script>

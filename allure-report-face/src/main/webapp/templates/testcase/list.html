@@ -1,4 +1,4 @@
-<h4 class="pull-left">Test cases ({{testcases.length}} total<span ng-hide="getVisibleCount() == testcases.length">, {{getVisibleCount()}} shown</span>)</h4>
+<h4 class="pull-left">{{'list.TC_1' | translate}} ({{testcases.length}} {{'list.TC_2' | translate}}<span ng-hide="getVisibleCount() == testcases.length">, {{getVisibleCount()}} {{'list.TC_3' | translate}}</span>)</h4>
 <div ng-show="list.items.length > 0" on-keynav="select($direction)">
     <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
         <tbody>
@@ -16,7 +16,7 @@
         </tr>
         <tr ng-show="(testcases | filter:statusFilter).length > testcasesLimit">
             <td colspan="4" class="text-center clickable" ng-click="$parent.testcasesLimit = testcasesLimit+100">
-                <a>Show more tescases</a>
+                <a>{{'list.MORE' | translate}}</a>
             </td>
         </tr>
         </tbody>
