@@ -34,7 +34,6 @@
         <module>allure-testng-adaptor</module>
         <module>allure-report-data</module>
         <module>allure-report-face</module>
-        <module>allure-maven-plugin</module>
     </modules>
 
     <organization>
