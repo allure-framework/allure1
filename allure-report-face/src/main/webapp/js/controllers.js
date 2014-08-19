@@ -21,12 +21,17 @@ angular.module('allure.controllers', [])
         }, this);
     })
 
-    .controller('TimelineCtrl', function($scope, testcases) {
+    .controller('TimelineCtrl', function($scope, $state, testcases) {
         "use strict";
+        $scope.isState = function(statename) {
+            return $state.is(statename);
+        };
+        $scope.openTestcase = function(testcase) {
+            $state.go('timeline.testcase', {testcaseUid: testcase.uid});
+        };
         $scope.testcases = testcases.testCases;
         $scope.startTime = $scope.testcases.reduce(function(min, testcase) {
             return Math.min(min, testcase.time.start);
-
         }, Number.POSITIVE_INFINITY);
     })
 

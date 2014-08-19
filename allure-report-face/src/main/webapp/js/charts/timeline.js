@@ -1,5 +1,5 @@
 /* globals angular */
-angular.module('allure.charts.timeline', ['allure.charts.util']).directive('timeline', function (d3, d3Util, d3Tooltip, $state, timeFilter) {
+angular.module('allure.charts.timeline', ['allure.charts.util']).directive('timeline', function (d3, d3Util, d3Tooltip, timeFilter) {
     'use strict';
     function Timeline(elm, data) {
         var scale = 3,
@@ -79,6 +79,9 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
         transclude: true,
         replace: true,
         template: '<div ng-transclude=""></div>',
+        scope: {
+            onItemClick: '&'
+        },
         controller: function($scope, $element, $timeout) {
             var updateTimeout;
             function normalizeTimes(data) {
@@ -122,6 +125,9 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
                     }
                     var sortedData = normalizeTimes(angular.copy(data));
                     $scope.chart = new Timeline($element[0], groupItems(sortedData));
+                    $scope.chart.bars.on('click', function(d) {
+                        $scope.onItemClick({item: d});
+                    });
                 };
 
             this.addTimestamp = function(timestamp) {
