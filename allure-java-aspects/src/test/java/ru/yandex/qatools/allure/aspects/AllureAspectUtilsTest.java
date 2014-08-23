@@ -36,7 +36,7 @@ public class AllureAspectUtilsTest {
         int secondArg = 2454575;
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с массивом строк сформировано неверно", title,
+        assertThat("Method with String[] and int arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -46,7 +46,7 @@ public class AllureAspectUtilsTest {
         Integer secondArg = 1546825;
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с массивом длинных целых чисел сформировано неверно", title,
+        assertThat("Method with long[] and Integer arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -55,7 +55,7 @@ public class AllureAspectUtilsTest {
         int[] firstArg = {1, 2, 3};
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, true});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), true};
-        assertThat("Название метода с массивом целых чисел сформировано неверно", title,
+        assertThat("Method with int[] and String arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -65,7 +65,7 @@ public class AllureAspectUtilsTest {
         String secondArg = "aaabbbbccdddd";
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с массивом коротких целых чисел сформировано неверно", title,
+        assertThat("Method with short[] and String arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -75,7 +75,7 @@ public class AllureAspectUtilsTest {
         double secondArg = 25.546548946;
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с массивом символов сформировано неверно", title,
+        assertThat("Method with char[] and double arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -85,7 +85,7 @@ public class AllureAspectUtilsTest {
         char secondArg = 'x';
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с массивом байтов сформировано неверно", title,
+        assertThat("Method with byte[] and char arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -95,7 +95,7 @@ public class AllureAspectUtilsTest {
         float secondArg = 0.00005F;
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с массивом логических переменных сформировано неверно", title,
+        assertThat("Method with boolean[] and float arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -105,7 +105,7 @@ public class AllureAspectUtilsTest {
         byte secondArg = 127;
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с массивом чисел с плавающей запятой сформировано неверно", title,
+        assertThat("Method with float[] and byte arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -115,7 +115,7 @@ public class AllureAspectUtilsTest {
         short secondArg = -5462;
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с массивом чисел с плавающей запятой двойной точности сформировано неверно", title,
+        assertThat("Method with double[] and short arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -125,7 +125,7 @@ public class AllureAspectUtilsTest {
         String secondArg = "second arg";
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, firstArg, secondArg};
-        assertThat("Название метода без массивов сформировано неверно", title,
+        assertThat("Method with double and String arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format("{0} (first arg:{1}, second arg:{2})", args)));
     }
 
@@ -135,7 +135,7 @@ public class AllureAspectUtilsTest {
         long secondArg = 1000000000000L;
         String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
-        assertThat("Название метода с пустым массивом сформировано неверно", title,
+        assertThat("Method with empty String[] and long arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
     }
 
@@ -143,7 +143,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithoutParams() {
         String title = getTitle("{method}", METHOD_NAME, null, null);
         Object[] args = {METHOD_NAME};
-        assertThat("Title without params test", title,
+        assertThat("Method without arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format("{0}", args)));
     }
 
@@ -151,7 +151,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithNullParam() {
         String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, null, new Object[]{null});
         Object[] args = {METHOD_NAME, null};
-        assertThat("Название метода с null-параметром", title,
+        assertThat("Method with null String argument is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
     }
 
@@ -160,7 +160,7 @@ public class AllureAspectUtilsTest {
         String[] firstArg = new String[]{null, "something"};
         String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, null, new Object[]{firstArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg)};
-        assertThat("Название метода с массивом, в котором есть null", title,
+        assertThat("Method with String[] argument that has nulls is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
     }
 
@@ -169,7 +169,7 @@ public class AllureAspectUtilsTest {
         Object[] firstArg = new Object[]{new String[]{"a", "b"}, "something", null};
         String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, null, new Object[]{firstArg});
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg)};
-        assertThat("Название метода с массивом массивов, в котором есть null", title,
+        assertThat("Method with array of arrays argument that has nulls is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
     }
 
@@ -178,7 +178,7 @@ public class AllureAspectUtilsTest {
         String thisObject = "something";
         String title = getTitle(NAME_PATTERN_WITH_THIS, METHOD_NAME, thisObject, new Object[]{});
         Object[] args = {METHOD_NAME, thisObject};
-        assertThat("Название метода с массивом массивов, в котором есть {this}", title,
+        assertThat("Method with {this} is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_THIS, args)));
     }
 }
