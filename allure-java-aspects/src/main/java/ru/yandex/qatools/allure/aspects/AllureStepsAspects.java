@@ -64,6 +64,6 @@ public class AllureStepsAspects {
     public String createTitle(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Step step = methodSignature.getMethod().getAnnotation(Step.class);
-        return step == null ? "" : getTitle(step.value(), methodSignature.getName(), joinPoint.getArgs());
+        return step == null ? "" : getTitle(step.value(), methodSignature.getName(), joinPoint.getThis(), joinPoint.getArgs());
     }
 }

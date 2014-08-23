@@ -37,6 +37,7 @@ public class AllureAttachAspects {
         String attachTitle = AllureAspectUtils.getTitle(
                 attachment.value(),
                 methodSignature.getName(),
+                joinPoint.getThis(),
                 joinPoint.getArgs()
         );
 
