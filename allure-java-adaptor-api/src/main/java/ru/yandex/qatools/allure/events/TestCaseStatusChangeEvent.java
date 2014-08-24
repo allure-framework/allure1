@@ -65,7 +65,7 @@ public abstract class TestCaseStatusChangeEvent extends AbstractTestCaseStatusCh
      * @param throwable the throwable to get a message for
      * @return the message
      */
-    private String getMessage(Throwable throwable) {
+    public static String getMessage(Throwable throwable) {
         return String.format("%s: %s", throwable.getClass().getSimpleName(), throwable.getMessage());
     }
 
@@ -82,7 +82,7 @@ public abstract class TestCaseStatusChangeEvent extends AbstractTestCaseStatusCh
      * <code>printStackTrace(PrintWriter)</code> method
      */
     @SuppressWarnings("all")
-    private String getStackTrace(Throwable throwable) {
+    public static String getStackTrace(Throwable throwable) {
         StringWriter sw = new StringWriter();
         PrintWriter pw = new PrintWriter(sw, true);
         throwable.printStackTrace(pw);

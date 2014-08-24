@@ -1,7 +1,10 @@
 package ru.yandex.qatools.allure.events;
 
+import ru.yandex.qatools.allure.model.Failure;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
+
+import static ru.yandex.qatools.allure.events.TestCaseStatusChangeEvent.*;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -22,6 +25,7 @@ public class StepFailureEvent extends AbstractStepFailureEvent {
     public void process(Step step) {
         Status status = throwable instanceof AssertionError ? Status.FAILED : Status.BROKEN;
         step.setStatus(status);
+        step.setFailure(new Failure().withMessage(getMessage(getThrowable())).withStackTrace(getStackTrace(throwable)));
     }
 
     /**

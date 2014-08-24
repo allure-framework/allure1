@@ -25,16 +25,6 @@ angular.module('allure.testcase.controllers', [])
             allAttachments = new Collection(getAllAttachments());
         $scope.failure = testcase.failure;
 
-        function findFailedStep(step) {
-            var hasFailed = step.steps.some(findFailedStep);
-            if(isFailed(step) && !hasFailed) {
-                step.failure = $scope.failure;
-                return true;
-            }
-            return hasFailed;
-        }
-        findFailedStep($scope.testcase);
-
         $scope.isState = function(state) {
             return $state.is(baseState+'.'+state);
         };

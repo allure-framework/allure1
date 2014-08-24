@@ -49,6 +49,7 @@
             <xsl:call-template name="add-time-node"/>
             <xsl:call-template name="add-summary-node"/>
             <xsl:call-template name="add-status-node"/>
+            <xsl:call-template name="add-failure-node"/>
 
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
@@ -154,6 +155,14 @@
         <xsl:element name="status">
             <xsl:value-of select="@status"/>
         </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="add-failure-node">
+        <xsl:if test="failure">
+            <xsl:element name="failure">
+                <xsl:value-of select="failure"/>
+            </xsl:element>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template name="add-uid-node">

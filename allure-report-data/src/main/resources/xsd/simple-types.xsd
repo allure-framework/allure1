@@ -65,9 +65,15 @@
         </xsd:sequence>
     </xsd:complexType>
 
+    <xsd:complexType name="failure">
+        <xsd:sequence>
+            <xsd:element name="message" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="stackTrace" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
     <xsd:complexType name="status"/>
     <xsd:complexType name="severity-level"/>
-    <xsd:complexType name="failure"/>
     <xsd:complexType name="label"/>
     <xsd:complexType name="description"/>
     <xsd:complexType name="parameter"/>
