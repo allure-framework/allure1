@@ -133,6 +133,7 @@
             <xsd:element name="attachments" type="alr:attachments" minOccurs="0"/>
             <xsd:element name="steps" type="alr:allure-steps" minOccurs="0"/>
             <xsd:element name="status" type="alr:status"/>
+            <xsd:element name="failure" type="alr:failure" minOccurs="0"/>
         </xsd:all>
     </xsd:complexType>
 

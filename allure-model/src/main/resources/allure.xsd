@@ -53,6 +53,7 @@
             <xs:element name="title" type="xs:string" minOccurs="0"/>
             <xs:element name="attachments" type="qa:attachments" minOccurs="0"/>
             <xs:element name="steps" type="qa:steps" minOccurs="0"/>
+            <xs:element name="failure" type="qa:failure" minOccurs="0"/>
         </xs:all>
         <xs:attribute name="start" type="xs:long" use="required"/>
         <xs:attribute name="stop" type="xs:long" use="required"/>

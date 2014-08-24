@@ -16,7 +16,7 @@
 </div>
 <div class="testcase__content" on-keynav="select($direction)">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
-    <div ng-include="'testcaseFailure.tpl'"></div>
+    <div ng-repeat="step in [testcase]" ng-include="'testcaseFailure.tpl'"></div>
     <div class="environments">
         <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">
             <div class="pull-left environment_name text-muted">{{property.name}}:</div>
@@ -35,11 +35,11 @@
 </div>
 <br/>
 <script type="text/ng-template" id="testcaseFailure.tpl">
-    <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status !== 'PASSED'" ng-controller="angular.noop">
-        <span class="preformated-text" ng-click="testcaseExpanded = !testcaseExpanded">{{failure.message}}</span>
-        <span class="pull-right btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-hide="testcaseExpanded" ng-click="testcaseExpanded = true">Show stacktrace</span>
-        <span class="pull-right btn btn-default btn-sm active btn-status-{{testcase.status|lowercase}}" ng-show="testcaseExpanded" ng-click="testcaseExpanded = false">Hide stacktrace</span>
-        <div ng-show="testcaseExpanded" class="testcase__stacktrace preformated-text">{{failure.stackTrace}}</div>
+    <div class="testcase__status alert-status-{{step.status | lowercase}}" ng-show="step.status !== 'PASSED'" ng-controller="angular.noop">
+        <span class="preformated-text" ng-click="testcaseExpanded = !testcaseExpanded">{{step.failure.message}}</span>
+        <span class="pull-right btn btn-default btn-sm btn-status-{{step.status|lowercase}}" ng-hide="testcaseExpanded" ng-click="testcaseExpanded = true">Show stacktrace</span>
+        <span class="pull-right btn btn-default btn-sm active btn-status-{{step.status|lowercase}}" ng-show="testcaseExpanded" ng-click="testcaseExpanded = false">Hide stacktrace</span>
+        <div ng-show="testcaseExpanded" class="testcase__stacktrace preformated-text">{{step.failure.stackTrace}}</div>
     </div>
 </script>
 <script type="text/ng-template" id="testcaseAttachment.tpl">

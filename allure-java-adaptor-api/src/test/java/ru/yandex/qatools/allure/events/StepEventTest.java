@@ -2,9 +2,11 @@ package ru.yandex.qatools.allure.events;
 
 import org.junit.Before;
 import org.junit.Test;
+import ru.yandex.qatools.allure.model.Failure;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -27,6 +29,7 @@ public class StepEventTest {
     public void testStepFailureEventFailed() throws Exception {
         new StepFailureEvent().withThrowable(new AssertionError()).process(step);
         verify(step).setStatus(Status.FAILED);
+        verify(step).setFailure(any(Failure.class));
         verifyNoMoreInteractions(step);
     }
 
@@ -34,6 +37,7 @@ public class StepEventTest {
     public void testStepFailureEventBroken() throws Exception {
         new StepFailureEvent().withThrowable(new Exception()).process(step);
         verify(step).setStatus(Status.BROKEN);
+        verify(step).setFailure(any(Failure.class));
         verifyNoMoreInteractions(step);
     }
 
