@@ -1,5 +1,6 @@
 /* import basics */
 @import "vendor/bootstrap/bootstrap";
+@import "vendor/loading-bar/loading-bar";
 @import "highlight-github";
 @import "islands/islands";
 @import "base";
@@ -12,6 +13,7 @@
 
 .b-page__nav {
   min-width: 850px;
+  margin-bottom: 0;
   .navbar-header {
     width: 138px;
     float: left;
@@ -34,7 +36,24 @@
   }
 }
 
-
+.loader {
+  position: relative;
+  width: 100%;
+  #loading-bar .bar, #loading-bar-spinner {
+    position: absolute;
+    z-index: 1000;
+  }
+  #loading-bar .bar {
+    background: #FFDD00;
+    .peg {
+      .box-shadow(#FFDD00 1px 0 6px 1px);
+    }
+  }
+  #loading-bar-spinner .spinner-icon {
+    border-top-color: #FFDD00;
+    border-left-color: #FFDD00;
+  }
+}
 
 .dashboard {
   position: absolute;

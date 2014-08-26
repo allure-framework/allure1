@@ -18,6 +18,7 @@
     <script src="vendor/angular/plugins/angular-ui-router.min.js"></script>
     <script src="vendor/angular/plugins/localstorageprovider.js"></script>
     <script src="vendor/angular/plugins/ui-bootstrap-tpls.js"></script>
+    <script src="vendor/angular/plugins/loading-bar.js"></script>
 
     <script src="vendor/highlight.pack.js"></script>
 
@@ -73,6 +74,7 @@
         Generated in: {{report.time | time}}
     </div>
 </header>
+<div class="loader"></div>
 <div class="dashboard" ng-controller="TabsController">
     <ul class="b-vert list-unstyled">
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('overview')}"><div class="b-vert__title" ui-sref="overview">
