@@ -15,23 +15,22 @@ describe('Timeline', function() {
             scope.$digest();
         });
     }
+
     function createTimeline() {
-        createElement('<div timeline range="range"><timestamp data="time" ng-repeat="time in times"></div>', {times: [
-            {time: {start: 0, duration: 15, stop: 15}, title: 'test', uid: 'uid', status: 'PASSED'},
-            {time: {start: 5, duration: 17, stop: 22}, title: 'test2', uid: 'uid2', status: 'BROKEN'},
-            {time: {start: 15, duration: 11, stop: 26}, title: 'test3', uid: 'uid3', status: 'PASSED'}
-        ]});
+        createElement('<div timeline range="range" on-item-click="onItemClick(item)"><timestamp data="time" ng-repeat="time in times"></div>',
+            {
+                times: [
+                    {time: {start: 0, duration: 15, stop: 15}, title: 'test', uid: 'uid', status: 'PASSED'},
+                    {time: {start: 5, duration: 17, stop: 22}, title: 'test2', uid: 'uid2', status: 'BROKEN'},
+                    {time: {start: 15, duration: 11, stop: 26}, title: 'test3', uid: 'uid3', status: 'PASSED'}
+                ],
+                onItemClick: jasmine.createSpy('onItemClick')
+            }
+        );
         $timeout.flush();
     }
 
     beforeEach(module('allure.charts.timeline', function($provide, $filterProvider) {
-        $provide.value('$state', {
-            includes: function() {
-                return !!this.params.id;
-            },
-            go: jasmine.createSpy('goSpy'),
-            params: {}
-        });
         $filterProvider.register('time', function() {
             return angular.identity;
         });
@@ -66,6 +65,12 @@ describe('Timeline', function() {
     it('should group simultaneous timestamps', function() {
         createTimeline();
         expect(elem.find('.chart-group>g').length).toBe(2);
+    });
+
+    it('should open testcase on click', function() {
+        createTimeline();
+        jasmine.qatools.triggerMouseEvent(elem.find('.bar')[0], 'click');
+        expect(scope.onItemClick).toHaveBeenCalled();
     });
 
     afterEach(function() {

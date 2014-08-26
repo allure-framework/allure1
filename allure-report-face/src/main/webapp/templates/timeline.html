@@ -3,8 +3,12 @@
         <h3>{{'timeline.HEADER' | translate}}</h3>
         <div class="text-muted">{{'timeline.STARTED' | translate}} {{startTime | date:'mediumDate'}} {{'timeline.AT' | translate}} {{startTime | date:'HH:mm:ss'}}</div>
     </div>
-    <div timeline>
+    <div timeline on-item-click="openTestcase(item)">
         <timestamp data="testcase" ng-repeat="testcase in testcases"></timestamp>
+    </div>
+    <div pane-set class="timeline_pane" ng-show="!isState('timeline')">
+        <div class="pane_col timeline_pane_overlay" pane pane-expanded="'true'" ui-sref="timeline"></div>
+        <div ui-view="testcase"></div>
     </div>
 </div>
 

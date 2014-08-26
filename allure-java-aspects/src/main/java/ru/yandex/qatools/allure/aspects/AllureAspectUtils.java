@@ -29,8 +29,10 @@ public final class AllureAspectUtils {
         return builder.toString();
     }
 
-    public static String getTitle(String namePattern, String methodName, Object[] parameters) {
-        String finalPattern = namePattern.replaceAll("\\{method\\}", methodName);
+    public static String getTitle(String namePattern, String methodName, Object instance, Object[] parameters) {
+        String finalPattern = namePattern
+                .replaceAll("\\{method\\}", methodName)
+                .replaceAll("\\{this\\}", String.valueOf(instance));
         int paramsCount = parameters == null ? 0 : parameters.length;
         Object[] results = new Object[paramsCount];
         for (int i = 0; i < paramsCount; i++) {

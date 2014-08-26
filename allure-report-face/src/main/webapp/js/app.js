@@ -110,6 +110,7 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
         testcaseProvider.attachStates('defects.defect');
         testcaseProvider.attachStates('features.story');
         testcaseProvider.attachStates('home.testsuite');
+        testcaseProvider.attachStates('timeline');
     })
     .config(function($translateProvider) {
             $translateProvider.useStaticFilesLoader({
