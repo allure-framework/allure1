@@ -26,7 +26,8 @@ angular.module('allure.testcase.controllers', [])
         $scope.failure = testcase.failure;
 
         function findFailedStep(step) {
-            var hasFailed = step.steps.some(findFailedStep);
+            var hasFailed = step.steps.reverse().some(findFailedStep);
+            step.steps.reverse();
             if(isFailed(step) && !hasFailed) {
                 step.failure = $scope.failure;
                 return true;
