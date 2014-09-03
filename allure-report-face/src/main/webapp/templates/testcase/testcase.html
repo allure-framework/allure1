@@ -36,10 +36,11 @@
 <br/>
 <script type="text/ng-template" id="testcaseFailure.tpl">
     <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status !== 'PASSED'" ng-controller="angular.noop">
-        <span class="preformated-text" ng-click="testcaseExpanded = !testcaseExpanded">{{failure.message}}</span>
-        <span class="pull-right btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-hide="testcaseExpanded" ng-click="testcaseExpanded = true">Show stacktrace</span>
-        <span class="pull-right btn btn-default btn-sm active btn-status-{{testcase.status|lowercase}}" ng-show="testcaseExpanded" ng-click="testcaseExpanded = false">Hide stacktrace</span>
-        <div ng-show="testcaseExpanded" class="testcase__stacktrace preformated-text">{{failure.stackTrace}}</div>
+        <span class="preformated-text" ng-click="stacktraceExpanded = !stacktraceExpanded" ng-class="{'testcase__status--raw': stacktraceRaw}">{{failure.message}}</span>
+        <span class="pull-right btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-click="stacktraceRaw = !stacktraceRaw" ng-class="{'active': stacktraceRaw}">Raw</span>
+        <span class="pull-right btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-hide="stacktraceExpanded" ng-click="stacktraceExpanded = true">Show stacktrace</span>
+        <span class="pull-right btn btn-default btn-sm active btn-status-{{testcase.status|lowercase}}" ng-show="stacktraceExpanded" ng-click="stacktraceExpanded = false">Hide stacktrace</span>
+        <div ng-show="stacktraceExpanded" class="testcase__stacktrace preformated-text" ng-class="{'testcase__status--raw': stacktraceRaw}">{{failure.stackTrace}}</div>
     </div>
 </script>
 <script type="text/ng-template" id="testcaseAttachment.tpl">
