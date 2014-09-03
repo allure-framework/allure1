@@ -15,7 +15,7 @@ public class TimelineTab extends HtmlElement {
     private List<HtmlElement> bars;
 
     @Name("Testcase")
-    @FindBy(css=".pane_col_last")
+    @FindBy(css="[ui-view=\"testcase\"] .pane_col")
     private HtmlElement testcase;
 
     public HtmlElement barAt(int index) {
