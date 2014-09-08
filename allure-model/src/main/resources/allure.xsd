@@ -140,6 +140,7 @@
             <xs:enumeration value="severity"/>
             <xs:enumeration value="language"/>
             <xs:enumeration value="framework"/>
+            <xs:enumeration value="issue"/>
         </xs:restriction>
     </xs:simpleType>
 

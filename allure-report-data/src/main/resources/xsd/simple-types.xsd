@@ -64,6 +64,17 @@
             <xsd:element name="parameter" type="alr:parameter" minOccurs="0" maxOccurs="unbounded"/>
         </xsd:sequence>
     </xsd:complexType>
+    
+    <xsd:complexType name="issues">
+        <xsd:sequence>
+            <xsd:element name="issue" type="alr:issue" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="issue">
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="url" type="xsd:string"/>
+    </xsd:complexType>
 
     <xsd:complexType name="status"/>
     <xsd:complexType name="severity-level"/>

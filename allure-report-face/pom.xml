@@ -130,6 +130,7 @@
             <properties>
                 <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                 <allure.report.directory>${project.build.directory}/allure-report</allure.report.directory>
+                <allure.issues.tracker.pattern>http://github.com/allure-framework/allure-core/issues/%s</allure.issues.tracker.pattern>
             </properties>
 
             <dependencies>
@@ -182,6 +183,12 @@
                                 <argument>${allure.results.directory}</argument>
                                 <argument>${allure.report.directory}</argument>
                             </arguments>
+                            <systemProperties>
+                                <property>
+                                    <key>allure.issues.tracker.pattern</key>
+                                    <value>${allure.issues.tracker.pattern}</value>
+                                </property>
+                            </systemProperties>
                         </configuration>
                     </plugin>
                     <plugin>

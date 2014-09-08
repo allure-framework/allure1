@@ -15,6 +15,11 @@ public class SimpleClass {
     @Severity(SeverityLevel.BLOCKER)
     @Features("some.feature")
     @Stories("some.story")
+    @Issue("some.simple.issue")
+    @Issues({
+        @Issue("some.nested.issue.1"),
+        @Issue("some.nested.issue.2")
+    })
     public void simpleMethod() {
     }
 }

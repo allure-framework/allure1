@@ -13,6 +13,12 @@
     <div class="text-muted" ng-show="testcase.name">
         {{testcase.name}} <copy-button text="testcase.name"></copy-button>
     </div>
+    <div class="issues" ng-show="testcase.issues">
+        Issues:
+        <span class="issue" ng-repeat="issue in testcase.issues">
+            <a ng-href="{{issue.url}}">{{issue.name}}</a><span ng-show="!$last">,</span>
+        </span>
+    </div>
 </div>
 <div class="testcase__content" on-keynav="select($direction)">
     <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>

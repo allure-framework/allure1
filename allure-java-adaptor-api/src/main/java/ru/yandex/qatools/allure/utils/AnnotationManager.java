@@ -54,6 +54,16 @@ public class AnnotationManager {
             event.setDescription(getDescription());
         }
 
+        if (isIssueAnnotationPresent()) {
+            event.getLabels().add(createIssueLabel(getIssueKey()));
+        }
+
+        if (isIssuesAnnotationPresent()) {
+            for (String issueKey: getIssueKeys()){
+                event.getLabels().add(createIssueLabel(issueKey));
+            }
+        }
+
         event.getLabels().addAll(getStoryLabels());
         event.getLabels().addAll(getFeatureLabels());
     }
@@ -75,6 +85,16 @@ public class AnnotationManager {
 
         if (isSeverityAnnotationPresent()) {
             event.getLabels().add(createSeverityLabel(getSeverity()));
+        }
+        
+        if (isIssueAnnotationPresent()) {
+            event.getLabels().add(createIssueLabel(getIssueKey()));
+        }
+        
+        if (isIssuesAnnotationPresent()) {
+            for (String issueKey: getIssueKeys()){
+                event.getLabels().add(createIssueLabel(issueKey));
+            }
         }
 
         event.getLabels().addAll(getStoryLabels());
@@ -120,6 +140,22 @@ public class AnnotationManager {
     public boolean isFeaturesAnnotationPresent() {
         return isAnnotationPresent(Features.class);
     }
+    
+    /**
+     * @return true if {@link ru.yandex.qatools.allure.annotations.Issues}
+     * annotation present in {@link #annotations} and false otherwise
+     */
+    public boolean isIssuesAnnotationPresent() {
+        return isAnnotationPresent(Issues.class);
+    }
+    
+    /**
+     * @return true if {@link ru.yandex.qatools.allure.annotations.Issue}
+     * annotation present in {@link #annotations} and false otherwise
+     */
+    public boolean isIssueAnnotationPresent() {
+        return isAnnotationPresent(Issue.class);
+    }
 
     /**
      * Find first {@link ru.yandex.qatools.allure.annotations.Title} annotation
@@ -156,6 +192,16 @@ public class AnnotationManager {
     }
 
     /**
+     * Find first {@link ru.yandex.qatools.allure.annotations.Issue} annotation
+     *
+     * @return issue key or null if annotation is not present
+     */
+    public String getIssueKey() {
+        Issue issue = getAnnotation(Issue.class);
+        return issue == null ? null : issue.value();
+    }
+
+    /**
      * Construct label for all {@link ru.yandex.qatools.allure.annotations.Stories} annotations
      * using {@link ru.yandex.qatools.allure.config.AllureModelUtils#createStoryLabel(String)}
      *
@@ -189,6 +235,23 @@ public class AnnotationManager {
             result.add(createFeatureLabel(feature));
         }
         return result;
+    }
+
+    /**
+     * Find {@link ru.yandex.qatools.allure.annotations.Issues} annotation and return respective key
+     *
+     * @return issue keys or empty array if annotation isn't present
+     */
+    public String[] getIssueKeys() {
+        Issues issues = getAnnotation(Issues.class);
+        if (issues == null) {
+            return new String[0];
+        }
+        List<String> keys = new ArrayList<>();
+        for (Issue issue: issues.value()){
+            keys.add(issue.value());
+        }
+        return keys.toArray(new String[keys.size()]);
     }
 
     /**

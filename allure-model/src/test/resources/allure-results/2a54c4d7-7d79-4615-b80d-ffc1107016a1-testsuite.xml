@@ -47,6 +47,8 @@ Expected: is &lt;4&gt;
             <labels>
                 <label name="story" value="SuccessStory"/>
                 <label name="feature" value="SimpleStories"/>
+                <label name="issue" value="360"/>
+                <label name="issue" value="361"/>
             </labels>
         </test-case>
         <test-case start="1401358635179" stop="1401358635181" status="broken">
@@ -91,5 +93,7 @@ Expected: is &lt;4&gt;
             <labels/>
         </test-case>
     </test-cases>
-    <labels/>
+    <labels>
+        <label name="issue" value="359"/>
+    </labels>
 </ns2:test-suite>

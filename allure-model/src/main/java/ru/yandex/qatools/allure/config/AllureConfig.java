@@ -54,6 +54,13 @@ public class AllureConfig {
     @Property("allure.attachments.encoding")
     private String attachmentsEncoding = "UTF-8";
 
+    /**
+     * Pattern containing issue tracker base URL and one %s placeholder which will be replaced by issue name.
+     * Example: http://example.com/%s and @Issue("SOME-123") will give you http://example.com/SOME-123
+     */
+    @Property("allure.issues.tracker.pattern")
+    private String issueTrackerPattern = "%s";
+
     private String version = getClass().getPackage().getImplementationVersion();
 
     public AllureConfig() {
@@ -115,6 +122,10 @@ public class AllureConfig {
 
     public String getVersion() {
         return version;
+    }
+
+    public String getIssueTrackerPattern() {
+        return issueTrackerPattern;
     }
 
     public static AllureConfig newInstance() {

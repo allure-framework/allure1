@@ -38,6 +38,7 @@
             <xsl:call-template name="add-summary-node"/>
             <xsl:call-template name="add-severity-node"/>
             <xsl:call-template name="add-status-node"/>
+            <xsl:call-template name="add-issues-node"/>
 
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
@@ -155,7 +156,37 @@
             <xsl:value-of select="@status"/>
         </xsl:element>
     </xsl:template>
-
+    
+    <xsl:template name="add-issues-node">
+        <xsl:choose>
+            <xsl:when test="count(labels/label[@name='issue']) > 0 or count(../../labels/label[@name='issue']) > 0">
+                <xsl:element name="issues">
+                    <xsl:for-each select="../../labels/label[@name='issue']">
+                        <xsl:call-template name="add-issue-node">
+                            <xsl:with-param name="name" select="@value"/>
+                            <xsl:with-param name="url" select="utils:getIssueUrl(@value)"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                    <xsl:for-each select="labels/label[@name='issue']">
+                        <xsl:call-template name="add-issue-node">
+                            <xsl:with-param name="name" select="@value"/>
+                            <xsl:with-param name="url" select="utils:getIssueUrl(@value)"/>
+                        </xsl:call-template>
+                    </xsl:for-each>
+                </xsl:element>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    
+    <xsl:template name="add-issue-node">
+        <xsl:param name="name"/>
+        <xsl:param name="url"/>
+        <xsl:element name="issue">
+            <xsl:attribute name="name" select="$name" />
+            <xsl:attribute name="url" select="$url" />
+        </xsl:element>
+    </xsl:template>
+    
     <xsl:template name="add-uid-node">
         <xsl:param name="name"/>
         <xsl:element name="uid">
