@@ -50,6 +50,10 @@ public final class AllureModelUtils {
     public static Label createTestFrameworkLabel(String testFrameworkName) {
         return createLabel(LabelName.FRAMEWORK, testFrameworkName);
     }
+    
+    public static Label createIssueLabel(String issueKey) {
+        return createLabel(LabelName.ISSUE, issueKey);
+    }
 
     public static Label createLabel(LabelName name, String value) {
         return new Label().withName(name.value()).withValue(value);

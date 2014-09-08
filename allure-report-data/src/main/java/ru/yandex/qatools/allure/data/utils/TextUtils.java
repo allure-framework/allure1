@@ -1,5 +1,7 @@
 package ru.yandex.qatools.allure.data.utils;
 
+import ru.yandex.qatools.allure.config.AllureConfig;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
@@ -102,5 +104,9 @@ public final class TextUtils {
 
     public static String getMessageMask(String message) {
         return message.replaceAll("\\s+", " ");
+    }
+    
+    public static String getIssueUrl(String name){
+        return String.format(AllureConfig.newInstance().getIssueTrackerPattern(), name);
     }
 }

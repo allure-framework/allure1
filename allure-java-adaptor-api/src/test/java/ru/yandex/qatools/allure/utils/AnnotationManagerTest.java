@@ -11,9 +11,6 @@ import ru.yandex.qatools.allure.utils.testdata.SimpleClass;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
-import static ch.lambdaj.Lambda.extract;
-import static ch.lambdaj.Lambda.on;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -42,6 +39,8 @@ public class AnnotationManagerTest {
         assertTrue(annotationManager.isStoriesAnnotationPresent());
         assertTrue(annotationManager.isFeaturesAnnotationPresent());
         assertTrue(annotationManager.isDescriptionAnnotationPresent());
+        assertTrue(annotationManager.isIssueAnnotationPresent());
+        assertTrue(annotationManager.isIssuesAnnotationPresent());
         assertFalse(annotationManager.isAnnotationPresent(Step.class));
     }
 
@@ -90,6 +89,9 @@ public class AnnotationManagerTest {
         assertTrue(event.getLabels().contains(createStoryLabel("some.story")));
         assertTrue(event.getLabels().contains(createFeatureLabel("some.feature")));
         assertFalse(event.getLabels().contains(createSeverityLabel(SeverityLevel.BLOCKER)));
+        assertTrue(event.getLabels().contains(createIssueLabel("some.simple.issue")));
+        assertTrue(event.getLabels().contains(createIssueLabel("some.nested.issue.1")));
+        assertTrue(event.getLabels().contains(createIssueLabel("some.nested.issue.2")));
     }
 
     @Test
@@ -106,5 +108,8 @@ public class AnnotationManagerTest {
         assertTrue(event.getLabels().contains(createStoryLabel("some.story")));
         assertTrue(event.getLabels().contains(createFeatureLabel("some.feature")));
         assertTrue(event.getLabels().contains(createSeverityLabel(SeverityLevel.BLOCKER)));
+        assertTrue(event.getLabels().contains(createIssueLabel("some.simple.issue")));
+        assertTrue(event.getLabels().contains(createIssueLabel("some.nested.issue.1")));
+        assertTrue(event.getLabels().contains(createIssueLabel("some.nested.issue.2")));
     }
 }
