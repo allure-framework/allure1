@@ -21,9 +21,9 @@
         <div class="pane_content">
             <h3 class="pane__header title-status-{{defect.type|lowercase}}">
                 <div class="pane__header_controls pull-right">
-                    <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('defects.defect.expanded')" ui-sref="defects.defect.expanded"></span>
-                    <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('defects.defect.expanded')" ui-sref="defects.defect"></span>
-                    <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ui-sref="defects"></span>
+                    <span class="fa fa-expand clickable" tooltip="Expand" ng-hide="isState('defects.defect.expanded')" ui-sref="defects.defect.expanded"></span>
+                    <span class="fa fa-compress clickable" tooltip="Collapse" ng-show="isState('defects.defect.expanded')" ui-sref="defects.defect"></span>
+                    <span class="fa fa-close clickable" tooltip="Close" ui-sref="defects"></span>
                 </div>
                 Defect
             </h3>

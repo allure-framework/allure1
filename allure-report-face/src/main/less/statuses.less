@@ -21,32 +21,27 @@
 
 .icon-status-pending {
   color: @brand-info;
-  .glyphicon;
-  .glyphicon-adjust;
+  .fa-icon-mixin(@fa-var-adjust);
 }
 
 .icon-status-canceled {
   color: @gray-light;
-  .glyphicon;
-  .glyphicon-question-sign;
+  .fa-icon-mixin(@fa-var-question-circle);
 }
 
 .icon-status-passed {
   color: @brand-success;
-  .glyphicon;
-  .glyphicon-ok-sign;
+  .fa-icon-mixin(@fa-var-check-circle);
 }
 
 .icon-status-broken {
   color: @brand-warning;
-  .glyphicon;
-  .glyphicon-exclamation-sign;
+  .fa-icon-mixin(@fa-var-exclamation-circle);
 }
 
 .icon-status-failed {
   color: @brand-danger;
-  .glyphicon;
-  .glyphicon-remove-sign;
+  .fa-icon-mixin(@fa-var-times-circle);
 }
 
 .title-status-pending { border-color: @brand-info }
@@ -78,30 +73,25 @@
 
 .icon-severity-blocker {
   color: @brand-danger;
-  .glyphicon;
-  .glyphicon-warning-sign;
+  .fa-icon-mixin(@fa-var-warning);
 }
 
 .icon-severity-critical {
   color: @brand-danger;
-  .glyphicon;
-  .glyphicon-arrow-up;
+  .fa-icon-mixin(@fa-var-arrow-up);
 }
 
 .icon-severity-normal {
   color: @brand-success;
-  .glyphicon;
-  .glyphicon-arrow-up;
+  .fa-icon-mixin(@fa-var-arrow-up);
 }
 
 .icon-severity-minor {
   color: @brand-success;
-  .glyphicon;
-  .glyphicon-arrow-down;
+  .fa-icon-mixin(@fa-var-arrow-down);
 }
 
 .icon-severity-trivial {
   color: @brand-success;
-  .glyphicon;
-  .glyphicon-chevron-down;
+  .fa-icon-mixin(@fa-var-chevron-down);
 }

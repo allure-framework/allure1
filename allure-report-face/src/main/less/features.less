@@ -1,13 +1,12 @@
 .feature {
   &_icon {
     font-size: 10px;
-    .glyphicon;
-    .glyphicon-plus;
+    .fa-icon-mixin(@fa-var-plus);
   }
   &_expanded {
     border-bottom: 2px solid @table-border-color;
     .feature_icon {
-      .glyphicon-minus;
+      .fa-icon-mixin(@fa-var-minus);
     }
   }
 }
