@@ -2,9 +2,9 @@
 <div class="pane__header title-status-{{testcase.status | lowercase}}">
     <h3>
         <div class="pane__header_controls pull-right">
-            <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('testcase.expanded')" ng-click="go('testcase.expanded')"></span>
-            <span class="glyphicon glyphicon-resize-small clickable" tooltip="Collapse" ng-show="isState('testcase.expanded')" ng-click="go('testcase')"></span>
-            <span class="glyphicon glyphicon-remove clickable" tooltip="Close" ng-click="closeTestcase()"></span>
+            <span class="fa fa-expand clickable" tooltip="Expand" ng-hide="isState('testcase.expanded')" ng-click="go('testcase.expanded')"></span>
+            <span class="fa fa-compress clickable" tooltip="Collapse" ng-show="isState('testcase.expanded')" ng-click="go('testcase')"></span>
+            <span class="fa fa-close clickable" tooltip="Close" ng-click="closeTestcase()"></span>
         </div>
         <span class="icon-status-{{testcase.status | lowercase}}"></span>
         {{testcase.title}}
@@ -14,9 +14,10 @@
         {{testcase.name}} <copy-button text="testcase.name"></copy-button>
     </div>
     <div class="issues" ng-show="testcase.issues">
+        <span class="fa fa-bug"/>
         Issues:
         <span class="issue" ng-repeat="issue in testcase.issues">
-            <a ng-href="{{issue.url}}">{{issue.name}}</a><span ng-show="!$last">,</span>
+            <a ng-href="{{issue.url}}" target="_blank">{{issue.name}}</a><span ng-show="!$last">,</span>
         </span>
     </div>
 </div>
@@ -50,10 +51,10 @@
     </div>
 </script>
 <script type="text/ng-template" id="testcaseAttachment.tpl">
-    <span class="glyphicon glyphicon-file" tooltip="{{attachment.type}}"></span>
+    <span class="fa fa-file" tooltip="{{attachment.type}}"></span>
     <span>{{attachment.title}}</span>
     <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{'data/'+attachment.source}}" class="pull-right attachment_size">
-        <i class="glyphicon glyphicon-floppy-open"></i>
+        <i class="fa fa-floppy-o"></i>
         <i>{{attachment.size | filesize}}</i>
     </a>
 </script>

@@ -1,6 +1,7 @@
 /* import basics */
 @import "vendor/bootstrap/bootstrap";
 @import "vendor/loading-bar/loading-bar";
+@import "vendor/font-awesome/font-awesome";
 @import "highlight-github";
 @import "islands/islands";
 @import "base";
@@ -70,7 +71,7 @@
   width: 8%;
   min-width: 80px;
   max-width: 138px;
-  .glyphicon {
+  .fa {
     display: block;
     font-size: 250%;
     margin: 0 auto;
@@ -178,5 +179,12 @@
   }
   &_item {
     margin-left: 20px;
+  }
+}
+
+.fa-icon-mixin(@content) {
+  .fa-icon();
+  &:before {
+    content: @content;
   }
 }
