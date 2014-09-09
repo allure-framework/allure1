@@ -1,4 +1,6 @@
-<div class="b-island__title">Testcase</div>
+<div class="b-island__title">
+    Test case<span ng-show="testcase.name" class="text-muted">: {{testcase.name}} <copy-button text="testcase.name"></copy-button></span>
+</div>
 <div class="pane__header title-status-{{testcase.status | lowercase}}">
     <h3>
         <div class="pane__header_controls pull-right">
@@ -10,9 +12,6 @@
         {{testcase.title}}
         <small>Severity: {{testcase.severity}}</small>
     </h3>
-    <div class="text-muted" ng-show="testcase.name">
-        {{testcase.name}} <copy-button text="testcase.name"></copy-button>
-    </div>
     <div class="issues" ng-show="testcase.issues">
         <span class="fa fa-bug"/>
         Issues:
