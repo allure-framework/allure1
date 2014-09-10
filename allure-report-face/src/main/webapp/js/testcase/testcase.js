@@ -51,6 +51,57 @@ angular.module('allure.testcase.controllers', [])
             var index = allAttachments.indexOf($scope.attachment);
             setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).uid);
         };
+        
+        $scope.getIconClass = function(attachmentType) {
+            switch (attachmentType) {
+                case 'text/plain': return 'fa fa-file-text-o';
+                
+                case 'image/bmp':
+                case 'image/png':
+                case 'image/gif':
+                case 'image/tiff':
+                case 'image/jpeg': return 'fa fa-file-image-o';
+                
+                case 'text/html':
+                case 'application/xml':
+                case 'text/xml':
+                case 'text/json':
+                case 'application/json':
+                case 'text/yaml':
+                case 'application/yaml':
+                case 'application/x-yaml': 
+                case 'text/x-yaml': return 'fa fa-file-code-o';
+                
+                case 'application/pdf': return 'fa fa-file-pdf-o';
+                
+                case 'application/x-compressed':
+                case 'application/x-zip-compressed':
+                case 'application/zip':
+                case 'multipart/x-zip':
+                case 'application/x-gzip':
+                case 'application/x-bzip':
+                case 'application/x-tar':
+                case 'application/x-rar-compressed': return 'fa fa-file-archive-o';
+                
+                case 'application/msword':
+                case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': return 'fa fa-file-word-o';
+                    
+                case 'application/excel':
+                case 'application/vnd.ms-excel':
+                case 'application/x-excel':
+                case 'application/x-msexcel':
+                case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': return 'fa fa-file-excel-o';
+                
+                case 'application/mspowerpoint':
+                case 'application/powerpoint':
+                case 'application/vnd.ms-powerpoint':
+                case 'application/x-mspowerpoint':
+                case 'application/vnd.openxmlformats-officedocument.presentationml.presentation': 
+                    return 'fa fa-file-powerpoint-o';
+                
+                default: return 'fa fa-file-o';
+            }
+        };
 
         $scope.$on('$stateChangeSuccess', function(event, state, params) {
             delete $scope.attachment;

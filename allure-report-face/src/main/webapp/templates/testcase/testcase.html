@@ -50,7 +50,7 @@
     </div>
 </script>
 <script type="text/ng-template" id="testcaseAttachment.tpl">
-    <span class="fa fa-file" tooltip="{{attachment.type}}"></span>
+    <span ng-class="getIconClass(attachment.type)" tooltip="{{attachment.type}}"></span>
     <span>{{attachment.title}}</span>
     <a target="_blank" ng-click="$event.stopPropagation()" ng-href="{{'data/'+attachment.source}}" class="pull-right attachment_size">
         <i class="fa fa-floppy-o"></i>
