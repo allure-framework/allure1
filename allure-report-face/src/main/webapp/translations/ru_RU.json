@@ -1,0 +1,97 @@
+{
+  "index":  
+        {
+            "FEEDBACK": "Обратная связь",
+            "MAIL": "Написать письмо",
+            "GENERATED": "Сформировано за",
+            "VERSION": "Версия",
+            "DATA_SIZE": "Объем данных",
+            "OVERVIEW": "Обзор",
+            "DEFECTS": "Дефекты",
+            "XUNIT": "xUnit",
+            "BEHAVIORS": "Результаты",
+            "GRAPH": "Графики",
+            "TIMELINE": "Временая шкала",
+            "BROKEN_REPORT_1": "Отчет сформирован некорректно! Проверьте ",
+            "BROKEN_REPORT_2": "наше FAQ",
+            "BROKEN_REPORT_3": " для поиска причины",
+            "MESSAGE": "Сообщение",
+            "DEBUG": "Отладка"
+        },
+        
+  "timeline":  
+        {
+            "HEADER": "Временая шкала",
+            "STARTED": "Сессия запущена",
+            "AT": "в"
+        },
+        
+  "overview":  
+        {
+            "TOP": "TOP дефекты",
+            "ALL": "показать все",
+            "NO_DEFECTS": "Дефектов нет, все тесты пройдены успешно!",
+            "STATUS": "статус"
+        },
+        
+  "graph":  
+        {
+            "DONE": "Все тесты пройдены успешно!",
+            "PROBLEMS": "Имеются проблемы...",
+            "SEVERITY": "Severity",
+            "DURATIONS": "Длительность"
+        },
+        
+  "features":  
+        {
+            "REQUIREMENTS": "Функциональные требования",
+            "FEATURES": "Функциональность",
+            "STORY": "Сценарий"
+        },
+        
+  "defects":  
+        {
+            "NO_DEFECTS": "Дефектов нет, отличная работа!"
+        },
+        
+  "testrun":  
+        {
+            "SUMMARY": "Информация",
+            "TESTRUN": "Сессия тестирования",
+            "SUITES": "Тестовые сценарии",
+            "STARTED": "Сессия запущена",
+            "AT": "в",
+            "PASSED": "PASSED",
+            "TOTAL_1": "Всего сценариев:",
+            "TOTAL_2": "",
+            "TOTAL_3": "показано"
+        },
+        
+  "testsuite":  
+        {
+            "TESTSUITE": "Тестовый сценарий"
+        },
+        
+  "attachment":  
+        {
+            "ATTACHMENT": "Приложение",
+            "NOT_FOUND": "Приложение не найдено"
+        },
+        
+  "list":  
+        {
+            "TC_1": "Тестовые случаи",
+            "TC_2": "всего",
+            "TC_3": "показано",
+            "MORE": "Показать еще"
+        },  
+        
+  "testcase":  
+        {
+            "TESTCASE": "Тестовый случай",
+            "SEVERITY": "Severity",
+            "TEST_PASSED": "Тест пройден успешно!",
+            "SHOW_TRACE": "Показать stacktrace",
+            "HIDE_TRACE": "Скрыть stacktrace"
+        }
+}

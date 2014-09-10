@@ -1,6 +1,6 @@
 package ru.yandex.qatools.allure;
 
-import org.apache.commons.io.IOUtils;
+import com.google.common.io.Resources;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.openqa.selenium.Dimension;
@@ -11,6 +11,8 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.IOException;
 
+import static com.google.common.base.Charsets.UTF_8;
+import static com.google.common.io.Resources.getResource;
 import static org.junit.Assert.assertEquals;
 
 public class JSErrorsRule extends TestWatcher {
@@ -23,7 +25,7 @@ public class JSErrorsRule extends TestWatcher {
 
     public JSErrorsRule() {
         try {
-            loggingJS = IOUtils.toString(ClassLoader.getSystemResourceAsStream("log.js"));
+            loggingJS = Resources.toString(getResource("log.js"), UTF_8);
         } catch (IOException e) {
             loggingJS = "";
         }
@@ -44,7 +46,8 @@ public class JSErrorsRule extends TestWatcher {
     @Override
     protected void succeeded(Description description) {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
-        assertEquals("Should be no errors in javascript", executor.executeScript("return window.allureErrors.length"), 0L);
+        assertEquals("Should be no errors in javascript",
+                executor.executeScript("return window.allureErrors.length"), 0L);
     }
 
     @Override

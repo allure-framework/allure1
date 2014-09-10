@@ -8,8 +8,8 @@ import ru.yandex.qatools.allure.Page;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.Assert.assertEquals;
 import static ru.yandex.qatools.allure.Helpers.existsAndVisible;
+import static ru.yandex.qatools.allure.UrlFragmentMatcher.hasFragment;
 import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.should;
 import static ru.yandex.qatools.matchers.decorators.MatcherDecorators.timeoutHasExpired;
 
@@ -27,44 +27,42 @@ public class TabsTest {
     }
 
     public void checkHash(String expectedHash) {
-        String url = rule.driver().getCurrentUrl();
-        String hash = url.substring(url.indexOf('#'));
-        assertEquals(expectedHash, hash);
+        assertThat(rule.driver(), should(hasFragment(expectedHash)).whileWaitingUntil(timeoutHasExpired(SECONDS.toMillis(3))));
     }
 
     @Test
     public void defectsTab() throws Exception {
         page.tabs().defects().click();
-        checkHash("#/defects");
+        checkHash("/defects");
     }
 
     @Test
     public void overviewTab() throws Exception {
         page.tabs().overview().click();
-        checkHash("#/");
+        checkHash("/");
     }
 
     @Test
     public void homeTab() throws Exception {
-        checkHash("#/home");
+        checkHash("/home");
     }
 
     @Test
     public void behaviorsTab() throws Exception {
         page.tabs().behaviours().click();
-        checkHash("#/features");
+        checkHash("/features");
     }
 
     @Test
     public void graphTab() throws Exception {
         page.tabs().graph().click();
-        checkHash("#/graph");
+        checkHash("/graph");
     }
 
     @Test
     public void timelineTab() throws Exception {
         page.tabs().timeline().click();
-        checkHash("#/timeline");
+        checkHash("/timeline");
     }
 
 }

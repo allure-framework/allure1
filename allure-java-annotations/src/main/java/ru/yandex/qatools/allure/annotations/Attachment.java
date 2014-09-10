@@ -15,7 +15,7 @@ import java.lang.annotation.*;
  *         {@link ru.yandex.qatools.allure.annotations.Attachment} returns
  *         either String or byte array which should be added to report:
  *         {@code
- *         @Attachment(name = "Page screenshot", type = "image/png")
+ *         @Attachment(value = "Page screenshot", type = "image/png")
  *         public byte[] saveScreenshot(byte[] screenShot) {
  *             return screenShot;
  *         }

@@ -2,8 +2,8 @@
     <div class="pane_col" pane pane-expanded="isState('features')">
         <div class="pane_overlay clickable" ui-sref="features.story"></div>
         <div class="pane_content">
-            <div class="b-island__title">Functional requirements</div>
-            <h3 class="pane__header">Features</h3>
+            <div class="b-island__title">{{'features.REQUIREMENTS' | translate}}</div>
+            <h3 class="pane__header">{{'features.FEATURES' | translate}}</h3>
             <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
                 <tbody>
                     <tr ng-repeat-start="feature in list.items" class="feature clickable" ng-click="expandFeature(feature, !feature.expanded)" ng-class="{'feature_expanded': feature.expanded}">
@@ -27,7 +27,7 @@
                             {{feature.statistic.total}}
                         </td>
                     </tr>
-                    <tr ng-if="feature.expanded" class="story clickable" ng-click="setStory(story)" ng-class="{active: isActive(story)}" ng-repeat="story in feature.stories">
+                    <tr ng-if="feature.expanded" class="story clickable" ng-click="setStory(story)" ng-class="{active: isActive(story)}" ng-repeat="story in feature.stories | orderBy:sorting.predicate:sorting.reverse">
                         <td class="story_title line-ellipsis" title="{{story.title}}">
                             {{story.title}}
                         </td>
@@ -52,7 +52,7 @@
     <div class="pane_col features__view" ng-if="story" pane pane-expanded="isState('features.story.expanded')">
         <div class="pane_content">
             <div class="pane_overlay clickable" ui-sref="features.story.testcase"></div>
-            <div class="features__title b-island__title">Story</div>
+            <div class="features__title b-island__title">{{'features.STORY' | translate}}</div>
             <h3 class="pane__header">
                 <div class="pane__header_controls pull-right">
                     <span class="glyphicon glyphicon-resize-full clickable" tooltip="Expand" ng-hide="isState('features.story.expanded')" ui-sref="features.story.expanded"></span>
@@ -66,8 +66,5 @@
         </div>
     </div>
     <div ui-view="testcase"></div>
-</div>
-<div class="tab-blank tab-content-fill" pane-set ng-hide="features.length">
-    <p class="tab-blank__text">Behaviors info not found. <br/> <a href="https://github.com/allure-framework/allure-core/blob/master/docs/behaviors.md">How can I provide info?</a></p>
 </div>
 

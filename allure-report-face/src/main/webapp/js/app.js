@@ -2,7 +2,7 @@
 angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui.router',
         'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.table', 'allure.pane',
         'allure.scrollfix', 'allure.charts', 'allure.testcase', 'allure.xUnit.controllers', 'allure.features',
-        'allure.defects', 'allure.overview'])
+        'allure.defects', 'allure.overview', 'pascalprecht.translate'])
     .config(function($tooltipProvider) {
         "use strict";
         $tooltipProvider.options({appendToBody:true});
@@ -110,4 +110,17 @@ angular.module('allure', ['ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui
         testcaseProvider.attachStates('defects.defect');
         testcaseProvider.attachStates('features.story');
         testcaseProvider.attachStates('home.testsuite');
-    });
+        testcaseProvider.attachStates('timeline');
+    })
+    .config(function($translateProvider) {
+            $translateProvider.useStaticFilesLoader({
+                    prefix: 'translations/',
+                    suffix: '.json'
+            });
+            $translateProvider.use('en_US');  
+    })
+    .controller('translator', ['$scope', '$translate', function($scope, $translate) {  
+            $scope.switchLanguage = function (key) {
+                    $translate.use(key);
+            };
+    }]);

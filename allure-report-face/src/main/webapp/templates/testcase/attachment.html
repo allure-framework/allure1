@@ -1,4 +1,4 @@
-<div class="b-island__title">Attachment</div>
+<div class="b-island__title">{{'attachment.ATTACHMENT' | translate}}</div>
 <div ng-controller="AttachmentPreviewCtrl" class="attachment">
     <div class="pane__header">
         <h3>
@@ -22,5 +22,5 @@
             <iframe style="width: 100%; min-height: 600px;" frameborder="0" ng-src="{{getSourceUrl(attachment)}}" on-error="onError()"></iframe>
         </div>
     </div>
-    <p ng-show="notFound"><i class="text-muted">Attachment not found</i></p>
+    <p ng-show="notFound"><i class="text-muted">{{'attachment.NOT_FOUND' | translate}}</i></p>
 </div>

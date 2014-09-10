@@ -21,12 +21,12 @@
     </div>
     <div class="pane_col" pane>
         <div class="pane_content">
-            <h3>Top defects
-                <small><a ui-sref="defects">view all</a></small>
+            <h3>{{'overview.TOP' | translate}}
+                <small><a ui-sref="defects">{{'overview.ALL' | translate}}</a></small>
             </h3>
-            <h4 class="text-success" ng-show="defects.length == 0">No defects, all tests passed!</h4>
+            <h4 class="text-success" ng-show="defects.length == 0">{{'overview.NO_DEFECTS' | translate}}</h4>
             <div ng-repeat="type in defects">
-                <h4 class="text-status-{{type.status|lowercase}}">{{type.title}} (status: {{type.status | lowercase}})</h4>
+                <h4 class="text-status-{{type.status|lowercase}}">{{type.title}} ({{'overview.STATUS' | translate}}: {{type.status | lowercase}})</h4>
                 <div class="overview_group">
                         <div class=" list-item clickable" ng-repeat="defect in type.defects" ui-sref="defects.defect({defectUid: defect.uid})">
                             <span class="label label-status-{{type.status|lowercase}}">{{defect.testCases.length}}</span>

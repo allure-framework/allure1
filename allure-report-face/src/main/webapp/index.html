@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="allure">
+<html lang="en" ng-app="allure" ng-controller='translator'>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -18,6 +18,8 @@
     <script src="vendor/angular/plugins/angular-ui-router.min.js"></script>
     <script src="vendor/angular/plugins/localstorageprovider.js"></script>
     <script src="vendor/angular/plugins/ui-bootstrap-tpls.js"></script>
+    <script src="vendor/angular/angular-translate.js"></script>
+    <script src="vendor/angular/angular-translate-loader-static-files.js"></script>
 
     <script src="vendor/highlight.pack.js"></script>
 
@@ -52,61 +54,66 @@
     </div>
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown feedback">
-            <a class="clickable" dropdown-toggle>Provide Feedback <b class="caret"></b></a>
+            <a class="clickable" dropdown-toggle>{{'index.FEEDBACK' | translate}} <b class="caret"></b></a>
             <div class="b-popup b-island b-island_mode_fly b-popup_show_bottom-center" role="menu">
                 <div class="b-popup__content">
                     <a class="feedback_item" target="_blank" href="https://github.com/allure-framework/allure-core/wiki/FAQ-and-Troubleshooting">FAQ</a>
                     <a class="feedback_item" target="_blank" href="https://github.com/allure-framework/allure-core/issues/new">GitHub</a>
-                    <a class="feedback_item" href="mailto:allure@yandex-team.ru">Mail list</a>
+                    <a class="feedback_item" href="mailto:allure@yandex-team.ru">{{'index.MAIL' | translate}}</a>
                 </div>
                 <div class="b-popup__tail"></div>
             </div>
         </li>
     </ul>
     <div class="nav navbar-text navbar-right">
-        Version: ${project.version}
+        {{'index.VERSION' | translate}}: ${project.version}
     </div>
     <div class="nav navbar-text navbar-right">
-        Data size: {{report.size | filesize}}
+        {{'index.DATA_SIZE' | translate}}: {{report.size | filesize}}
     </div>
     <div class="nav navbar-text navbar-right">
-        Generated in: {{report.time | time}}
+        {{'index.GENERATED' | translate}}: {{report.time | time}}
+    </div>
+    <div class="nav navbar-text navbar-left">
+        <a class="clickable" ng-click="switchLanguage('en_US')">English</a>
+        |
+        <a class="clickable" ng-click="switchLanguage('ru_RU')">Русский</a>
     </div>
 </header>
 <div class="dashboard" ng-controller="TabsController">
     <ul class="b-vert list-unstyled">
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('overview')}"><div class="b-vert__title" ui-sref="overview">
             <div class="b-vert__icon glyphicon glyphicon-home"></div>
-            Overview
+            {{'index.OVERVIEW' | translate}}
         </div></li>
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('defects')}"><div class="b-vert__title" ui-sref="defects">
             <div class="b-vert__icon glyphicon glyphicon-flag"></div>
-            Defects
+            {{'index.DEFECTS' | translate}}
         </div></li>
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('home')}"><div class="b-vert__title" ui-sref="home">
             <div class="b-vert__icon glyphicon glyphicon-briefcase"></div>
-            xUnit
+            {{'index.XUNIT' | translate}}
         </div></li>
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('features')}"><div class="b-vert__title" ui-sref="features">
             <div class="b-vert__icon glyphicon glyphicon-list"></div>
-            Behaviors
+            {{'index.BEHAVIORS' | translate}}
         </div></li>
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('graph')}"><div class="b-vert__title" ui-sref="graph">
             <div class="b-vert__icon glyphicon glyphicon-stats"></div>
-            Graph
+            {{'index.GRAPH' | translate}}
         </div></li>
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('timeline')}"><div class="b-vert__title" ui-sref="timeline">
             <div class="b-vert__icon glyphicon glyphicon-time"></div>
-            Timeline
+            {{'index.TIMELINE' | translate}}
         </div></li>
     </ul>
     <div ui-view class="tab-content"></div>
 </div>
 <div class="alert alert-warning error-message" ng-show="error">
-    <p>Your report seems to be broken! Check out <a href="https://github.com/allure-framework/allure-core/wiki/FAQ-and-Troubleshooting">our FAQ</a> to find a reason</p>
-    <p>Message: {{error.message || error.status}}</p>
+    <p>{{'index.BROKEN_REPORT_1' | translate}} <a href="https://github.com/allure-framework/allure-core/wiki/FAQ-and-Troubleshooting">{{'index.BROKEN_REPORT_2' | translate}}</a> {{'index.BROKEN_REPORT_3' | translate}}</p>
+    <p>{{'index.MESSAGE' | translate}}: {{error.message || error.status}}</p>
     <hr/>
-    <p>Debug: {{error}}</p>
+    <p>{{'index.DEBUG' | translate}}: {{error}}</p>
 </div>
 </body>
 </html>
