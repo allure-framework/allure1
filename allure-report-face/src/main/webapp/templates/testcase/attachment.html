@@ -16,6 +16,9 @@
             <img ng-src="{{getSourceUrl(attachment)}}" alt="Attachment image" ng-class="{'zoom-in': !isExpanded(), 'zoom-out': isExpanded()}" ng-click="toggleExpanded()" on-error="onError()" />
         </div>
         <div ng-switch-when="text">
+            <pre><code>{{attachText}}</code></pre>
+        </div>
+        <div ng-switch-when="code">
             <pre><code data-language="{{language}}" highlight="attachText"></code></pre>
         </div>
         <div ng-switch-default>

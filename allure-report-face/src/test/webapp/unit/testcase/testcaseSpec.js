@@ -104,21 +104,21 @@ describe('Testcase controllers', function() {
         createDetectImageTest('image/jpeg');
         createDetectImageTest('image/png');
 
-        function createDetectTextTest(language) {
+        function createDetectTextTest(language, type) {
             it('should detect '+language, function() {
                 var filename = 'report.'+language.toLowerCase();
                 $httpBackend.expectGET('data/'+filename).respond(backendDefinitions[filename]);
                 var scope = createController({type: language, name: 'report', source:'report.'+language.toLowerCase()});
-                expect(scope.type).toBe('text');
+                expect(scope.type).toBe(type);
 
                 $httpBackend.flush();
                 expect(scope.attachText).toBe(backendDefinitions['report.'+language.toLowerCase()]);
             });
         }
 
-        createDetectTextTest('text/xml');
-        createDetectTextTest('application/json');
-        createDetectTextTest('text/plain');
+        createDetectTextTest('text/xml', 'code');
+        createDetectTextTest('application/json', 'code');
+        createDetectTextTest('text/plain', 'text');
 
         it("should extract 'json' from 'application/json'", function() {
             $httpBackend.expectGET('data/report.json').respond(backendDefinitions['report.json']);
@@ -143,7 +143,7 @@ describe('Testcase controllers', function() {
             expect(scope.type).toBe('image');
             scope.attachment = {type: 'text/html', name: 'report', source:'report.html'};
             scope.$apply();
-            expect(scope.type).toBeUndefined();
+            expect(scope.type).toBe('html');
         });
 
         describe('expanded state', function() {
