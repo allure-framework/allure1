@@ -1,6 +1,34 @@
 /*global angular:true */
 angular.module('allure.testcase.controllers', [])
-    .controller('TestcaseCtrl', function($scope, $state, testcase, treeUtils, Collection) {
+    .factory('attachmentType', function() {
+        return function(type) {
+            switch(type) {
+                case 'image/bmp':
+                case 'image/gif':
+                case 'image/tiff':
+                case 'image/jpeg':
+                case 'image/jpg':
+                case 'image/png':
+                case 'image/*':
+                    return "image";
+                case 'text/xml':
+                case 'application/xml':
+                case 'application/json':
+                case 'text/json':
+                case 'text/yaml':
+                case 'application/yaml':
+                case 'application/x-yaml':
+                case 'text/x-yaml':
+                    return "code";
+                case 'text/plain':
+                case 'text/*':
+                    return "text";
+                case 'text/html':
+                    return "html";
+            }
+        }
+    })
+    .controller('TestcaseCtrl', function($scope, $state, testcase, attachmentType, treeUtils, Collection) {
         "use strict";
         function isFailed(step) {
             return ['FAILED', 'BROKEN', 'CANCELED'].indexOf(step.status) !== -1;
@@ -52,54 +80,16 @@ angular.module('allure.testcase.controllers', [])
             setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).uid);
         };
         
-        $scope.getIconClass = function(attachmentType) {
-            switch (attachmentType) {
-                case 'text/plain': return 'fa fa-file-text-o';
-                
-                case 'image/bmp':
-                case 'image/png':
-                case 'image/gif':
-                case 'image/tiff':
-                case 'image/jpeg': return 'fa fa-file-image-o';
-                
-                case 'text/html':
-                case 'application/xml':
-                case 'text/xml':
-                case 'text/json':
-                case 'application/json':
-                case 'text/yaml':
-                case 'application/yaml':
-                case 'application/x-yaml': 
-                case 'text/x-yaml': return 'fa fa-file-code-o';
-                
-                case 'application/pdf': return 'fa fa-file-pdf-o';
-                
-                case 'application/x-compressed':
-                case 'application/x-zip-compressed':
-                case 'application/zip':
-                case 'multipart/x-zip':
-                case 'application/x-gzip':
-                case 'application/x-bzip':
-                case 'application/x-tar':
-                case 'application/x-rar-compressed': return 'fa fa-file-archive-o';
-                
-                case 'application/msword':
-                case 'application/vnd.openxmlformats-officedocument.wordprocessingml.document': return 'fa fa-file-word-o';
-                    
-                case 'application/excel':
-                case 'application/vnd.ms-excel':
-                case 'application/x-excel':
-                case 'application/x-msexcel':
-                case 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': return 'fa fa-file-excel-o';
-                
-                case 'application/mspowerpoint':
-                case 'application/powerpoint':
-                case 'application/vnd.ms-powerpoint':
-                case 'application/x-mspowerpoint':
-                case 'application/vnd.openxmlformats-officedocument.presentationml.presentation': 
-                    return 'fa fa-file-powerpoint-o';
-                
-                default: return 'fa fa-file-o';
+        $scope.getIconClass = function(type) {
+            switch (attachmentType(type)) {
+                case 'text':
+                    return 'fa fa-file-text-o';
+                case 'image':
+                    return 'fa fa-file-image-o';
+                case 'code':
+                    return 'fa fa-file-code-o';
+                default:
+                    return 'fa fa-file-o';
             }
         };
 
@@ -164,7 +154,7 @@ angular.module('allure.testcase.controllers', [])
         $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0 || $scope.step.failure;
     })
 
-    .controller('AttachmentPreviewCtrl', function ($scope, $http, $state) {
+    .controller('AttachmentPreviewCtrl', function ($scope, $http, $state, attachmentType) {
         "use strict";
         function fileGetContents(url) {
             //get raw file content without parsing
@@ -189,27 +179,10 @@ angular.module('allure.testcase.controllers', [])
         };
         $scope.$watch('attachment', function(attachment) {
             $scope.notFound = false;
-            delete $scope.language;
-            //noinspection FallthroughInSwitchStatementJS
-            switch (attachment.type) {
-                case 'image/jpeg':
-                case 'image/jpg':
-                case 'image/png':
-                case 'image/*':
-                    $scope.type = "image";
-                    break;
-                case 'text/xml':
-                case 'application/xml':
-                case 'application/json':
-                    $scope.language = attachment.type.split('/').pop();
-                //fallthrough
-                case 'text/plain':
-                case 'text/*':
-                    $scope.type = "text";
-                    fileGetContents($scope.getSourceUrl(attachment));
-                    break;
-                default:
-                    delete $scope.type;
+            $scope.type = attachmentType(attachment.type);
+            $scope.language = $scope.type === 'code' ? attachment.type.split('/').pop() : undefined;
+            if($scope.type === 'text' || $scope.type === 'code') {
+                fileGetContents($scope.getSourceUrl(attachment));
             }
         });
     });
