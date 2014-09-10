@@ -65,13 +65,13 @@
         </li>
     </ul>
     <div class="nav navbar-text navbar-right">
-        Version: ${project.version}
+        <strong>Version:</strong> ${project.version}
     </div>
     <div class="nav navbar-text navbar-right">
-        Data size: {{report.size | filesize}}
+        <strong>Data size:</strong> {{report.size | filesize}}
     </div>
     <div class="nav navbar-text navbar-right">
-        Generated in: {{report.time | time}}
+        <strong>Generated in:</strong> {{report.time | time}}
     </div>
 </header>
 <div class="loader"></div>

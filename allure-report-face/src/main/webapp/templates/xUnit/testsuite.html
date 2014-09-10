@@ -1,4 +1,6 @@
-<div class="b-island__title">Testsuite</div>
+<div class="b-island__title">
+    Test suite<span ng-show="testsuite.name" class="text-muted">: {{testsuite.name}} <copy-button text="testsuite.name"></copy-button></span>
+</div>
 <div class="pane__header">
     <h3>
         <div class="pane__header_controls pull-right">
@@ -8,9 +10,6 @@
         </div>
         {{testsuite.title}}
     </h3>
-    <div ng-show="testsuite.name">
-        <span class="text-muted">{{testsuite.name}}</span> <copy-button text="testsuite.name"></copy-button>
-    </div>
 </div>
 <div class="alert alert-bordered" ng-show="testsuite.description">
     <b>Description:</b><span class="preformated-text" text-cut="testsuite.description.value"></span>

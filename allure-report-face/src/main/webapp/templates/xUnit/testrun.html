@@ -1,14 +1,15 @@
-<div class="b-island__title">Summary</div>
+<div class="b-island__title">
+    Test run:
+    <span class="text-muted">started {{time.start | date:'mediumDate'}} at {{time.start | date:'HH:mm:ss'}}
+        ({{time.duration | time}})
+    </span>
+</div>
 <div class="pane__header">
-    <h3>Test run
-        (<span ng-pluralize count="testsuites.length" when="{one: '{} testsuite', other: '{} testsuites'}"></span>,
-        <span ng-pluralize count="statistic.total" when="{one: '{} testcase', other: '{} testcases'}"></span>)
+    <h3>Total:
+        <span ng-pluralize count="testsuites.length" when="{one: '{} test suite', other: '{} test suites'}"></span>,
+        <span ng-pluralize count="statistic.total" when="{one: '{} test case', other: '{} test cases'}"></span>
         <span class="label label-success" ng-show="statistic.total == statistic.passed">PASSED</span>
     </h3>
-
-    <div class="text-muted">Started {{time.start | date:'mediumDate'}} at {{time.start | date:'HH:mm:ss'}}
-        ({{time.duration | time}})
-    </div>
 </div>
 <div ng-controller="TestSuitesCtrl" on-keynav="select($direction)">
     <div status-switcher statuses="showStatuses" class="pull-right"></div>
