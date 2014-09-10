@@ -86,6 +86,9 @@ describe('Testcase controllers', function() {
             $controller('AttachmentPreviewCtrl', {
                 $scope: scope,
                 $state: stateMock = {
+                    current: {
+                        data: { baseState: 'home.testsuite' }
+                    },
                     go: jasmine.createSpy('gotoStateSpy'),
                     is: jasmine.createSpy('isStateSpy')
                 }

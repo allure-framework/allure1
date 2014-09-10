@@ -58,8 +58,8 @@ angular.module('allure.features', [])
         $scope.list.sort($scope.sorting);
     }, true);
     $scope.testcase = {};
-    $scope.$watch('testcase.uid', function(testcaseUid) {
-        if(testcaseUid) {
+    $scope.$watch('testcase.uid', function(testcaseUid, oldTestcaseUid) {
+        if(testcaseUid && oldTestcaseUid !== testcaseUid) {
             $state.go('features.story.testcase', {testcaseUid: testcaseUid});
         }
     });
