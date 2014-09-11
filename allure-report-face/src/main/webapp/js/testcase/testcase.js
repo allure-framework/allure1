@@ -170,10 +170,10 @@ angular.module('allure.testcase.controllers', [])
             return 'data/'+attachment.source;
         };
         $scope.isExpanded = function() {
-            return $state.is('home.testsuite.testcase.attachment.expanded');
+            return $state.is($state.current.data.baseState+'.testcase.attachment.expanded');
         };
         $scope.toggleExpanded = function() {
-            $state.go('home.testsuite.testcase.attachment'+
+            $state.go($state.current.data.baseState+'.testcase.attachment'+
                 ($scope.isExpanded() ? '' : '.expanded')
             );
         };

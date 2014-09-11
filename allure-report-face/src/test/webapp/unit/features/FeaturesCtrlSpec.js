@@ -53,6 +53,7 @@ describe('FeaturesCtrl', function () {
             },
             features: {features: features}
         });
+        scope.$apply();
         return scope;
     }
 
