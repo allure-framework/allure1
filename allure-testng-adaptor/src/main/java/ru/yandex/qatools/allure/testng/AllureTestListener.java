@@ -70,9 +70,8 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
 
     @Override
     public void onStart(ITestContext iTestContext) {
-    	String suiteName=iTestContext.getSuite().getName();
         getLifecycle().fire(new TestSuiteStartedEvent(
-                getSuiteUid(suiteName), suiteName
+                getSuiteUid(iTestContext), iTestContext.getSuite().getName()
         ).withLabels(
                 AllureModelUtils.createTestFrameworkLabel("TestNG"),
                 AllureModelUtils.createFeatureLabel(iTestContext.getName())
@@ -81,16 +80,15 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
 
     @Override
     public void onFinish(ITestContext iTestContext) {
-        getLifecycle().fire(new TestSuiteFinishedEvent(getSuiteUid(iTestContext.getSuite().getName())));
+        getLifecycle().fire(new TestSuiteFinishedEvent(getSuiteUid(iTestContext)));
     }
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
         String testName = getName(iTestResult);
-        String suiteName=iTestResult.getTestContext().getSuite().getName();
         startedTestNames.add(testName);
 
-        TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(suiteName), testName);
+        TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestResult.getTestContext()), testName);
         AnnotationManager am = new AnnotationManager(getMethodAnnotations(iTestResult));
 
         am.update(event);
@@ -164,16 +162,15 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     void setLifecycle(Allure lifecycle) {
         this.lifecycle = lifecycle;
     }
-    
-    
-    
-    String getSuiteUid(String suiteName) {
+
+    String getSuiteUid(ITestContext iTestContext) {
     	String uid;
-    	if (suiteUid.containsKey(suiteName)){
-    		uid=suiteUid.get(suiteName);
+    	String suite=iTestContext.getSuite().getName();
+    	if (suiteUid.containsKey(suite)){
+    		uid=suiteUid.get(suite);
     	} else {
     		uid=UUID.randomUUID().toString();
-    		suiteUid.put(suiteName, uid);
+    		suiteUid.put(suite, uid);
     	}
         return uid;
     }
