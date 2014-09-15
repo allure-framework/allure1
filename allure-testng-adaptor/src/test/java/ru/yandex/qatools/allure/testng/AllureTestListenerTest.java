@@ -38,7 +38,7 @@ public class AllureTestListenerTest {
 
         testngListener.onTestSkipped(testResult);
 
-        String suiteUid = testngListener.getSuiteUid();
+        String suiteUid = testngListener.getSuiteUid(DEFAULT_TEST_NAME);
         verify(allure).fire(eq(new TestCaseStartedEvent(suiteUid, DEFAULT_TEST_NAME)));
     }
 
@@ -96,7 +96,7 @@ public class AllureTestListenerTest {
 
         testngListener.onTestStart(testResult);
 
-        String suiteUid = testngListener.getSuiteUid();
+        String suiteUid = testngListener.getSuiteUid(DEFAULT_TEST_NAME);
         String testName = String.format("%s[%s,%s]",
                 DEFAULT_TEST_NAME, Double.toString(doubleParameter), stringParameter);
         verify(allure).fire(eq(new TestCaseStartedEvent(suiteUid, testName)));
