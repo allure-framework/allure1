@@ -85,7 +85,8 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-        String testName = getName(iTestResult);
+    	String suitePrefix=getCurrentSuitePrefix(iTestResult);
+        String testName = getName(iTestResult).replace(suitePrefix,"");
         startedTestNames.add(testName);
 
         TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestResult.getTestContext()), testName);
@@ -139,7 +140,8 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     }
 
     private String getName(ITestResult iTestResult) {
-        StringBuilder sb = new StringBuilder(iTestResult.getName());
+    	String suitePrefix = getCurrentSuitePrefix(iTestResult);
+        StringBuilder sb = new StringBuilder(suitePrefix + iTestResult.getName());
         Object[] parameters = iTestResult.getParameters();
         if (parameters != null && parameters.length > 0) {
             sb.append("[");
@@ -150,7 +152,11 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         }
         return sb.toString();
     }
-
+    
+    private String getCurrentSuitePrefix(ITestResult iTestResult){
+    	return "{" +iTestResult.getTestContext().getSuite().getName() +"}";
+    }
+    
     private void fireFinishTest() {
         getLifecycle().fire(new TestCaseFinishedEvent());
     }
