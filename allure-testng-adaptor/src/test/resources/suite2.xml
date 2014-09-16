@@ -1,0 +1,10 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+  
+<suite name="Test Suite2" verbose="1" >
+  <test name="SmokeTest2">
+    <classes>
+       <class name="ru.yandex.qatools.allure.testng.testdata.TestDataClass" />
+    </classes>
+  </test>
+ 
+</suite>
