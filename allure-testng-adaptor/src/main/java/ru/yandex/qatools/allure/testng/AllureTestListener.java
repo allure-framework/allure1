@@ -72,9 +72,10 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     public void onStart(ITestContext iTestContext) {
         getLifecycle().fire(new TestSuiteStartedEvent(
                 getSuiteUid(iTestContext), iTestContext.getSuite().getName()
+        ).withTitle(
+                getCurrentSuiteTitle(iTestContext)
         ).withLabels(
-                AllureModelUtils.createTestFrameworkLabel("TestNG"),
-                AllureModelUtils.createFeatureLabel(iTestContext.getName())
+                AllureModelUtils.createTestFrameworkLabel("TestNG")
         ));
     }
 
@@ -85,10 +86,10 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
 
     @Override
     public void onTestStart(ITestResult iTestResult) {
-    	String suitePrefix=getCurrentSuitePrefix(iTestResult);
-        String testName = getName(iTestResult).replace(suitePrefix,"");
+        String suitePrefix = getCurrentSuitePrefix(iTestResult);
+        String testName = getName(iTestResult);
         startedTestNames.add(testName);
-
+        testName = testName.replace(suitePrefix, "");
         TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestResult.getTestContext()), testName);
         AnnotationManager am = new AnnotationManager(getMethodAnnotations(iTestResult));
 
@@ -140,7 +141,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     }
 
     private String getName(ITestResult iTestResult) {
-    	String suitePrefix = getCurrentSuitePrefix(iTestResult);
+        String suitePrefix = getCurrentSuitePrefix(iTestResult);
         StringBuilder sb = new StringBuilder(suitePrefix + iTestResult.getName());
         Object[] parameters = iTestResult.getParameters();
         if (parameters != null && parameters.length > 0) {
@@ -153,8 +154,21 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         return sb.toString();
     }
     
+    private String getCurrentSuiteTitle(ITestContext iTestContext) {
+        String suite = iTestContext.getSuite().getName();
+        String xmlTest = iTestContext.getCurrentXmlTest().getName();
+        String params = "";
+        
+        if (iTestContext.getCurrentXmlTest().getLocalParameters().size() > 0) {
+            params = iTestContext.getCurrentXmlTest().getLocalParameters()
+                    .toString().replace("{", "[").replace("}", "]");
+        }
+
+        return suite + " : " + xmlTest + params;
+    }
+    
     private String getCurrentSuitePrefix(ITestResult iTestResult){
-    	return "{" +iTestResult.getTestContext().getSuite().getName() +"}";
+        return "{" + getCurrentSuiteTitle(iTestResult.getTestContext()) + "}";
     }
     
     private void fireFinishTest() {
@@ -169,15 +183,20 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         this.lifecycle = lifecycle;
     }
 
+    /**
+     * Package private. Used in unit test.
+     *
+     * @return UID for the current suite
+     */
     String getSuiteUid(ITestContext iTestContext) {
-    	String uid;
-    	String suite=iTestContext.getSuite().getName();
-    	if (suiteUid.containsKey(suite)){
-    		uid=suiteUid.get(suite);
-    	} else {
-    		uid=UUID.randomUUID().toString();
-    		suiteUid.put(suite, uid);
-    	}
+        String uid;
+        String suite = getCurrentSuiteTitle(iTestContext);
+        if (suiteUid.containsKey(suite)){
+            uid = suiteUid.get(suite);
+        } else {
+            uid = UUID.randomUUID().toString();
+            suiteUid.put(suite, uid);
+        }
         return uid;
     }
 }
