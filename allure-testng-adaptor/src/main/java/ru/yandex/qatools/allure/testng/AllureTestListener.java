@@ -92,7 +92,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         testName = testName.replace(suitePrefix, "");
         TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestResult.getTestContext()), testName);
         AnnotationManager am = new AnnotationManager(getMethodAnnotations(iTestResult));
-
+        am.setDefaults(getClassAnnotations(iTestResult));
         am.update(event);
 
         getLifecycle().fire(event);
@@ -140,6 +140,13 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         return iTestResult.getMethod().getConstructorOrMethod().getMethod().getAnnotations();
     }
 
+    public Annotation[] getClassAnnotations(ITestResult iTestResult) {
+    	if (iTestResult.getInstance() == null) {
+    		return null;
+    	}
+        return iTestResult.getInstance().getClass().getAnnotations();
+    }
+    
     private String getName(ITestResult iTestResult) {
         String suitePrefix = getCurrentSuitePrefix(iTestResult);
         StringBuilder sb = new StringBuilder(suitePrefix + iTestResult.getName());

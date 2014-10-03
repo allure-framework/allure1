@@ -19,7 +19,7 @@ import static ru.yandex.qatools.allure.config.AllureModelUtils.*;
  */
 public class AnnotationManager {
 
-    private Collection<Annotation> annotations;
+    private Map<Class<? extends Annotation>,Annotation> annotations = new HashMap<Class<? extends Annotation>, Annotation>();
 
     /**
      * Construct AnnotationManager using given annotations
@@ -27,7 +27,7 @@ public class AnnotationManager {
      * @param annotations initial value for annotations
      */
     public AnnotationManager(Collection<Annotation> annotations) {
-        this.annotations = annotations;
+        populateAnnotations(annotations);
     }
 
     /**
@@ -36,9 +36,41 @@ public class AnnotationManager {
      * @param annotations initial value for annotations
      */
     public AnnotationManager(Annotation... annotations) {
-        this.annotations = Arrays.asList(annotations);
+        populateAnnotations(Arrays.asList(annotations));
     }
-
+    
+    /**
+     * Used to populate Map with given annotations
+     *
+     * @param annotations initial value for annotations
+     */
+    private void populateAnnotations(Collection<Annotation> annotations){
+        for (Annotation each : annotations){
+    	    this.annotations.put(each.annotationType(), each);
+        }
+    }
+    
+    /**
+     * Set default values for annotations.
+     * Initial annotation take precedence over the default annotation when both annotation types are present
+     *
+     * @param annotations default value for annotations 
+     */
+    public void setDefaults(Annotation[] defaultAnnotations){
+    	if (defaultAnnotations == null) {
+            return;
+        }
+    	for (Annotation each : defaultAnnotations){
+    	    Class<? extends Annotation> key = each.annotationType();
+            if (Title.class.equals(key) || Description.class.equals(key)){
+                continue;
+            }
+            if (!annotations.containsKey(key)){
+                annotations.put(key,each);
+            }
+        }
+    } 
+    
     /**
      * Sets into specified {@link ru.yandex.qatools.allure.events.TestSuiteStartedEvent}
      * information from Allure annotations.
@@ -263,12 +295,7 @@ public class AnnotationManager {
      * false otherwise
      */
     public <T extends Annotation> boolean isAnnotationPresent(Class<T> annotationType) {
-        for (Annotation each : annotations) {
-            if (each.annotationType().equals(annotationType)) {
-                return true;
-            }
-        }
-        return false;
+        return annotations.containsKey(annotationType);
     }
 
     /**
@@ -279,12 +306,8 @@ public class AnnotationManager {
      * {@link #annotations} doesn't contains such
      */
     public <T extends Annotation> T getAnnotation(Class<T> annotationType) {
-        for (Annotation each : annotations) {
-            if (each.annotationType().equals(annotationType)) {
-                return annotationType.cast(each);
-            }
-        }
-        return null;
+        Annotation value = annotations.get(annotationType);
+        return annotationType.cast(value);
     }
 
 
