@@ -2,6 +2,7 @@
   
 <suite name="Test Suite1" verbose="1" >
   <test name="SmokeTest1">
+  <parameter name="param2 " value="value2"></parameter>
     <classes>
        <class name="ru.yandex.qatools.allure.testng.testdata.TestDataClass" />
     </classes>

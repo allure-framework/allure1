@@ -5,6 +5,7 @@ import org.mockito.InOrder;
 import org.testng.ISuite;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.xml.XmlTest;
 
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
@@ -21,6 +22,7 @@ public class AllureTestListenerTest {
 
     private static final String DEFAULT_TEST_NAME = "test";
     private static final String DEFAULT_SUITE_NAME = "suite";
+    private static final String DEFAULT_XML_TEST_NAME = "testxml";
     
     private AllureTestListener testngListener;
     private Allure allure;
@@ -35,8 +37,11 @@ public class AllureTestListenerTest {
         
         ISuite suite=mock(ISuite.class);
     	when(suite.getName()).thenReturn(DEFAULT_SUITE_NAME);
+    	XmlTest xmlTest=mock(XmlTest.class);
+    	when(xmlTest.getName()).thenReturn(DEFAULT_XML_TEST_NAME);
     	testContext = mock(ITestContext.class);
     	when(testContext.getSuite()).thenReturn(suite);
+    	when(testContext.getCurrentXmlTest()).thenReturn(xmlTest);
     }
 
     @Test
