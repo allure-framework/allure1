@@ -19,9 +19,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.nio.file.Files;
-import java.security.MessageDigest;
+import java.util.UUID;
 
 import static javax.xml.bind.Marshaller.JAXB_ENCODING;
 import static javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
@@ -38,10 +37,6 @@ import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuit
 public final class AllureResultsUtils {
 
     private static File resultsDirectory;
-
-    private static final int POSITIVE = 1;
-
-    private static final int HEX = 16;
 
     private static final String UTF_8 = "UTF-8";
 
@@ -231,7 +226,7 @@ public final class AllureResultsUtils {
                     : writeAttachment(attachment, title, type);
 
         } catch (Exception e) {
-            LOGGER.trace("Error while saving attachment " + title + ":" + type , e);
+            LOGGER.trace("Error while saving attachment " + title + ":" + type, e);
             return writeAttachmentWithErrorMessage(e, title);
         }
     }
@@ -256,7 +251,7 @@ public final class AllureResultsUtils {
 
     /**
      * Write attachment with specified type. Generate attachment name uses
-     * {@link #generateAttachmentName(byte[])}, attachment extension uses
+     * {@link #generateAttachmentName()}, attachment extension uses
      * {@link #getExtensionByMimeType(String)}
      *
      * @param attachment byte array with attachment
@@ -266,7 +261,7 @@ public final class AllureResultsUtils {
      * @throws IOException if can't write attachment
      */
     public static Attachment writeAttachment(byte[] attachment, String title, String type) throws IOException {
-        String name = generateAttachmentName(attachment);
+        String name = generateAttachmentName();
         String extension = getExtensionByMimeType(type);
         String source = name + extension;
 
@@ -296,20 +291,12 @@ public final class AllureResultsUtils {
     }
 
     /**
-     * Generate attachment name. As prefix uses sha256 of given content
+     * Generate attachment name.
      *
-     * @param attachment content
-     * @return generated name, looks like \"{sha256}-attachment\"
+     * @return generated name, looks like \"{uuid}-attachment\"
      */
-    public static String generateAttachmentName(byte[] attachment) {
-        String prefix = "unknown";
-        try {
-            byte[] bytes = MessageDigest.getInstance("SHA-256").digest(attachment);
-            prefix = new BigInteger(POSITIVE, bytes).toString(HEX);
-        } catch (Exception e) {
-            LOGGER.trace("Error while generate attachment name, using default one", e);
-        }
-        return prefix + CONFIG.getAttachmentFileSuffix();
+    public static String generateAttachmentName() {
+        return UUID.randomUUID().toString() + CONFIG.getAttachmentFileSuffix();
     }
 
     /**
