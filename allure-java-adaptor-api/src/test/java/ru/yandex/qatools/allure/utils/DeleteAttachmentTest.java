@@ -47,24 +47,9 @@ public class DeleteAttachmentTest {
 
         assertThat(resultsDirectory, contains(firstSource));
 
-        Attachment second = save(ATTACHMENT);
-        assertNotNull(second);
-        String secondSource = second.getSource();
-        assertNotNull(secondSource);
-
-        assertEquals(firstSource, secondSource);
-
-        assertThat(resultsDirectory, contains(secondSource));
-
         deleteAttachment(first);
 
         assertThat(resultsDirectory, notContains(firstSource));
-        assertThat(resultsDirectory, notContains(secondSource));
-
-        deleteAttachment(second);
-
-        assertThat(resultsDirectory, notContains(firstSource));
-        assertThat(resultsDirectory, notContains(secondSource));
     }
 
     public Attachment save(String string) throws IOException {
