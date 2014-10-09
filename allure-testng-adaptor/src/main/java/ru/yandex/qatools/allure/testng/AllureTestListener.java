@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.testng;
 import org.testng.IConfigurationListener;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
+import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.SkipException;
 import org.testng.TestException;
@@ -12,6 +13,7 @@ import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
 import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
 import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
+import ru.yandex.qatools.allure.events.TestCasePendingEvent;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
@@ -77,6 +79,22 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         ).withLabels(
                 AllureModelUtils.createTestFrameworkLabel("TestNG")
         ));
+        addPendingMethods(iTestContext);
+    }
+    
+    
+    private void addPendingMethods(ITestContext iTestContext) {
+        for (ITestNGMethod method: iTestContext.getExcludedMethods()) {
+            if (method.isTest() && !method.getEnabled()) {
+                TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestContext), method.getMethodName());
+                AnnotationManager am = new AnnotationManager(method.getConstructorOrMethod().getMethod().getAnnotations());
+                am.setDefaults(method.getInstance().getClass().getAnnotations());
+                am.update(event);
+                getLifecycle().fire(event);
+                getLifecycle().fire(new TestCasePendingEvent());
+                fireFinishTest();
+            }
+        }
     }
 
     @Override
@@ -174,7 +192,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         return suite + " : " + xmlTest + params;
     }
     
-    private String getCurrentSuitePrefix(ITestResult iTestResult){
+    private String getCurrentSuitePrefix(ITestResult iTestResult) {
         return "{" + getCurrentSuiteTitle(iTestResult.getTestContext()) + "}";
     }
     
@@ -198,7 +216,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     String getSuiteUid(ITestContext iTestContext) {
         String uid;
         String suite = getCurrentSuiteTitle(iTestContext);
-        if (suiteUid.containsKey(suite)){
+        if (suiteUid.containsKey(suite)) {
             uid = suiteUid.get(suite);
         } else {
             uid = UUID.randomUUID().toString();

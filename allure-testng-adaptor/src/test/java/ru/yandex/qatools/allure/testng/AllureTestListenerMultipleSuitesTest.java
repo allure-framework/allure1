@@ -6,8 +6,16 @@ import org.testng.TestNG;
 import com.beust.jcommander.internal.Lists;
 
 import ru.yandex.qatools.allure.config.AllureModelUtils;
+import ru.yandex.qatools.allure.model.ObjectFactory;
+import ru.yandex.qatools.allure.model.Status;
+import ru.yandex.qatools.allure.model.TestCaseResult;
+import ru.yandex.qatools.allure.model.TestSuiteResult;
 import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 
@@ -34,7 +42,7 @@ public class AllureTestListenerMultipleSuitesTest {
     public void setUp() throws IOException {
         resultsDir = Files.createTempDirectory(ALLURE_RESULTS);
         AllureResultsUtils.setResultsDirectory(resultsDir.toFile());
-        List<String> suites=Lists.newArrayList();
+        List<String> suites = Lists.newArrayList();
         suites.add(getClass().getResource(SUITE1).getFile());
         suites.add(getClass().getResource(SUITE2).getFile());
         TestNG testNG = new TestNG();
@@ -67,9 +75,22 @@ public class AllureTestListenerMultipleSuitesTest {
     @Test
     public void validateSuiteFilesSameSize() {
     	Iterator<File> iterator = listTestSuiteFiles(resultsDir.toFile()).iterator();
-    	File file1=iterator.next();
-    	File file2=iterator.next();
+    	File file1 = iterator.next();
+    	File file2 = iterator.next();
     	assertThat(file1.length(), is(file2.length()));
+    }
+    
+    @Test 
+    public void validatePendingTest() throws JAXBException {
+        File resultfile = listTestSuiteFiles(resultsDir.toFile()).iterator().next();
+        JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        @SuppressWarnings("unchecked")
+        JAXBElement<TestSuiteResult> unmarshalledObject =
+                (JAXBElement<TestSuiteResult>) unmarshaller.unmarshal(resultfile);
+        TestCaseResult testResult = unmarshalledObject.getValue().getTestCases().get(0);
+        
+        assertThat(testResult.getStatus(), is(Status.PENDING));  
     }
     
     private static void deleteNotEmptyDirectory(Path path) throws IOException {
