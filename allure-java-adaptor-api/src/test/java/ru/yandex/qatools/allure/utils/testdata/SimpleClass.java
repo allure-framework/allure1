@@ -8,6 +8,11 @@ import ru.yandex.qatools.allure.model.SeverityLevel;
  *         Date: 14.12.13
  */
 
+@Title("default.title")
+@Description("default.description")
+@Features("default.feature")
+@Stories("default.story")
+@Issue("default.issue")
 public class SimpleClass {
 
     @Title("some.title")
@@ -22,4 +27,14 @@ public class SimpleClass {
     })
     public void simpleMethod() {
     }
+    
+    public void defaultMethod(){	
+    }
+    
+    @Severity(SeverityLevel.CRITICAL)
+    @Issue("initial.issue")
+    public void combinedMethod(){
+    }
+    
+    
 }

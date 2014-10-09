@@ -2,6 +2,7 @@ package ru.yandex.qatools.allure.utils;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
@@ -11,6 +12,9 @@ import ru.yandex.qatools.allure.utils.testdata.SimpleClass;
 import java.lang.annotation.Annotation;
 import java.util.List;
 
+import static org.hamcrest.Matchers.nullValue;
+import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -24,7 +28,15 @@ import static ru.yandex.qatools.allure.config.AllureModelUtils.*;
 public class AnnotationManagerTest {
 
     private AnnotationManager annotationManager;
-
+    
+    private AnnotationManager setAnnotationManager(String method) throws Exception{
+        Annotation[] annotations = SimpleClass.class.getMethod(method).getAnnotations();
+        Annotation[] defaultAnnotations = SimpleClass.class.getAnnotations();
+        annotationManager = new AnnotationManager(annotations);
+        annotationManager.setDefaults(defaultAnnotations);
+        return annotationManager;
+    }
+    
     @Before
     public void setUpCaseAnnotations() throws Exception {
         Annotation[] annotations = SimpleClass.class.getMethod("simpleMethod").getAnnotations();
@@ -86,12 +98,16 @@ public class AnnotationManagerTest {
         assertThat(description.getValue(), is("some.description"));
         assertThat(description.getType(), is(DescriptionType.TEXT));
 
-        assertTrue(event.getLabels().contains(createStoryLabel("some.story")));
-        assertTrue(event.getLabels().contains(createFeatureLabel("some.feature")));
-        assertFalse(event.getLabels().contains(createSeverityLabel(SeverityLevel.BLOCKER)));
-        assertTrue(event.getLabels().contains(createIssueLabel("some.simple.issue")));
-        assertTrue(event.getLabels().contains(createIssueLabel("some.nested.issue.1")));
-        assertTrue(event.getLabels().contains(createIssueLabel("some.nested.issue.2")));
+        assertThat(event.getLabels(), not(hasItems(
+                createSeverityLabel(SeverityLevel.BLOCKER)
+        )));
+        assertThat(event.getLabels(), hasItems(
+                createStoryLabel("some.story"), 
+                createFeatureLabel("some.feature"),
+                createIssueLabel("some.simple.issue"),
+                createIssueLabel("some.nested.issue.1"),
+                createIssueLabel("some.nested.issue.2")
+        ));   
     }
 
     @Test
@@ -105,11 +121,72 @@ public class AnnotationManagerTest {
         assertThat(description.getValue(), is("some.description"));
         assertThat(description.getType(), is(DescriptionType.TEXT));
 
-        assertTrue(event.getLabels().contains(createStoryLabel("some.story")));
-        assertTrue(event.getLabels().contains(createFeatureLabel("some.feature")));
-        assertTrue(event.getLabels().contains(createSeverityLabel(SeverityLevel.BLOCKER)));
-        assertTrue(event.getLabels().contains(createIssueLabel("some.simple.issue")));
-        assertTrue(event.getLabels().contains(createIssueLabel("some.nested.issue.1")));
-        assertTrue(event.getLabels().contains(createIssueLabel("some.nested.issue.2")));
+        assertThat(event.getLabels(), hasItems(
+                createStoryLabel("some.story"), 
+                createFeatureLabel("some.feature"),
+                createSeverityLabel(SeverityLevel.BLOCKER),
+                createIssueLabel("some.simple.issue"),
+                createIssueLabel("some.nested.issue.1"),
+                createIssueLabel("some.nested.issue.2")
+        ));        
     }
+    
+    @Test
+    public void testInitialValuesUpdateTestCaseStartedEvent() throws Exception {
+        AnnotationManager annotationManager = setAnnotationManager("simpleMethod");
+
+        TestCaseStartedEvent event = new TestCaseStartedEvent("some.uid", "some.name");
+        annotationManager.update(event);
+
+        assertThat(event.getTitle(), equalTo("some.title"));
+
+        Description description = annotationManager.getDescription();
+        assertThat(description.getValue(), is("some.description"));
+        assertThat(description.getType(), is(DescriptionType.TEXT));
+
+        assertThat(event.getLabels(), hasItems(
+                createStoryLabel("some.story"), 
+                createFeatureLabel("some.feature"),
+                createSeverityLabel(SeverityLevel.BLOCKER),
+                createIssueLabel("some.simple.issue"),
+                createIssueLabel("some.nested.issue.1"),
+                createIssueLabel("some.nested.issue.2")
+        ));
+    }
+
+    @Test
+    public void testDefaultValuesUpdateTestCaseStartedEvent() throws Exception {
+        AnnotationManager annotationManager = setAnnotationManager("defaultMethod");
+
+        TestCaseStartedEvent event = new TestCaseStartedEvent("some.uid", "some.name");
+        annotationManager.update(event);
+
+        assertThat(event.getTitle(), is(nullValue()));
+        Description description = annotationManager.getDescription();
+        assertThat(description, is(nullValue()));
+        assertThat(event.getLabels(), hasItems(
+                createStoryLabel("default.story"), 
+                createFeatureLabel("default.feature"),
+                createIssueLabel("default.issue")
+        ));
+    }
+    
+    @Test
+    public void testCombinedValuesUpdateTestCaseStartedEvent() throws Exception {
+        AnnotationManager annotationManager = setAnnotationManager("combinedMethod");
+
+        TestCaseStartedEvent event = new TestCaseStartedEvent("some.uid", "some.name");
+        annotationManager.update(event);
+       
+        assertThat(event.getTitle(), is(nullValue()));
+        Description description = annotationManager.getDescription();
+        assertThat(description, is(nullValue()));
+        assertThat(event.getLabels(), hasItems(
+                createStoryLabel("default.story"), 
+                createFeatureLabel("default.feature"),
+                createSeverityLabel(SeverityLevel.CRITICAL),
+                createIssueLabel("initial.issue")
+        ));
+    }
+    
 }
