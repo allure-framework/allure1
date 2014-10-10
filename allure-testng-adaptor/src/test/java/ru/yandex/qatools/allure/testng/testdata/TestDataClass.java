@@ -37,4 +37,8 @@ public class TestDataClass {
     public void parametrizedTest(int parameter) {
         assertThat(parameter, equalTo(2));
     }
+    
+    @Test(enabled = false)
+    public void pendingTest(){ 
+    }
 }

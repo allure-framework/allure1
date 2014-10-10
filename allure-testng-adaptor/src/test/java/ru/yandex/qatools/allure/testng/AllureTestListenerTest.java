@@ -91,7 +91,7 @@ public class AllureTestListenerTest {
         when(testResult.getTestContext()).thenReturn(testContext);
         when(testResult.getThrowable()).thenReturn(new NullPointerException());
         when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
-
+        
         doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
 
         testngListener.onTestSkipped(testResult);
@@ -110,7 +110,7 @@ public class AllureTestListenerTest {
         when(testResult.getTestContext()).thenReturn(testContext);
         when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
         when(testResult.getParameters()).thenReturn(new Object[] { doubleParameter, stringParameter});
-
+        
         doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
 
         testngListener.onTestStart(testResult);
