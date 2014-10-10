@@ -38,7 +38,7 @@ public class TestDataClass {
         assertThat(parameter, equalTo(2));
     }
     
-    @Test(enabled = false)
+    @Test(enabled = false, description = "This is pending test")
     public void pendingTest(){ 
     }
 }
