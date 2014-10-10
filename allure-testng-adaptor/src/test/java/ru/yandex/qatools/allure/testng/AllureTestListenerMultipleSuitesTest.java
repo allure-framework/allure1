@@ -91,6 +91,7 @@ public class AllureTestListenerMultipleSuitesTest {
         TestCaseResult testResult = unmarshalledObject.getValue().getTestCases().get(0);
         
         assertThat(testResult.getStatus(), is(Status.PENDING));  
+        assertThat(testResult.getDescription().getValue(), is("This is pending test"));
     }
     
     private static void deleteNotEmptyDirectory(Path path) throws IOException {

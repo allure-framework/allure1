@@ -17,6 +17,7 @@ import ru.yandex.qatools.allure.events.TestCasePendingEvent;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
+import ru.yandex.qatools.allure.model.Description;
 import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.lang.annotation.Annotation;
@@ -86,7 +87,11 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     private void addPendingMethods(ITestContext iTestContext) {
         for (ITestNGMethod method: iTestContext.getExcludedMethods()) {
             if (method.isTest() && !method.getEnabled()) {
+                Description description = new Description().withValue(method.getDescription());
                 TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestContext), method.getMethodName());
+                if (description.getValue() != null) {
+                    event.setDescription(description);
+                }
                 AnnotationManager am = new AnnotationManager(method.getConstructorOrMethod().getMethod().getAnnotations());
                 am.setDefaults(method.getInstance().getClass().getAnnotations());
                 am.update(event);
@@ -108,7 +113,11 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         String testName = getName(iTestResult);
         startedTestNames.add(testName);
         testName = testName.replace(suitePrefix, "");
+        Description description = new Description().withValue(iTestResult.getMethod().getDescription());
         TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestResult.getTestContext()), testName);
+        if (description.getValue() != null) {
+            event.setDescription(description);
+        }
         AnnotationManager am = new AnnotationManager(getMethodAnnotations(iTestResult));
         am.setDefaults(getClassAnnotations(iTestResult));
         am.update(event);
