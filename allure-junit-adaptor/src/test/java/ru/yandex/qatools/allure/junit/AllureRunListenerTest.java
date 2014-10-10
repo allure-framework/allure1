@@ -8,7 +8,12 @@ import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import ru.yandex.qatools.allure.Allure;
-import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
+import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
+import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
+import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
+import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
 
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
@@ -16,7 +21,17 @@ import java.util.Collections;
 import java.util.Map;
 
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+import static ru.yandex.qatools.allure.utils.AnnotationManager.withExecutorInfo;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -52,7 +67,9 @@ public class AllureRunListenerTest {
         runListener.testStarted(description);
 
         inOrder(allure).verify(allure).fire(eq(new ClearStepStorageEvent()));
-        inOrder(allure).verify(allure).fire(eq(new TestCaseStartedEvent("some.uid", "some.method.name")));
+        inOrder(allure).verify(allure).fire(eq(
+                withExecutorInfo(new TestCaseStartedEvent("some.uid", "some.method.name"))
+        ));
     }
 
     @Test

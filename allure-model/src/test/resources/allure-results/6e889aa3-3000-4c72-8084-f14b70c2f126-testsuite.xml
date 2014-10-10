@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1401358615198" stop="1401358635941">
-    <name>my.company.BeforeClassTest</name>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1412949538848" stop="1412949559858" version="1.4.4-SNAPSHOT">
+    <name>my.company.BeforeClassFailTest</name>
     <test-cases>
-        <test-case start="1401358615890" stop="1401358615891" status="failed">
-            <name>my.company.BeforeClassTest</name>
-            <title>BeforeClassTest</title>
+        <test-case start="1412949539770" stop="1412949539779" status="broken">
+            <name>my.company.BeforeClassFailTest</name>
+            <title>BeforeClassFailTest</title>
             <failure>
-                <message>AssertionError: </message>
-                <stack-trace>java.lang.AssertionError
-	at org.junit.Assert.fail(Assert.java:86)
-	at org.junit.Assert.fail(Assert.java:95)
-	at my.company.BeforeClassTest.beforeClass(BeforeClassTest.java:17)
+                <message>RuntimeException: bye-bye</message>
+                <stack-trace>java.lang.RuntimeException: bye-bye
+	at my.company.BeforeClassFailTest.setUp(BeforeClassFailTest.java:14)
 	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
 	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -19,7 +17,6 @@
 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:44)
 	at org.junit.internal.runners.statements.RunBefores.evaluate(RunBefores.java:24)
-	at org.junit.internal.runners.statements.RunAfters.evaluate(RunAfters.java:27)
 	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
 	at org.junit.runners.Suite.runChild(Suite.java:127)
 	at org.junit.runners.Suite.runChild(Suite.java:26)
@@ -51,5 +48,8 @@
             <labels/>
         </test-case>
     </test-cases>
-    <labels/>
+    <labels>
+        <label name="framework" value="JUnit"/>
+        <label name="language" value="JAVA"/>
+    </labels>
 </ns2:test-suite>

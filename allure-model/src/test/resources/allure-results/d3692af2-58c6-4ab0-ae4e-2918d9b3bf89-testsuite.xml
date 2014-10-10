@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1401358615200" stop="1401358636112">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1412949538851" stop="1412949560013" version="1.4.4-SNAPSHOT">
     <name>my.company.NonAsciiTest</name>
     <test-cases>
-        <test-case start="1401358616545" stop="1401358616586" status="broken">
+        <test-case start="1412949540562" stop="1412949540660" status="broken">
             <name>test_raise_cyrilling</name>
             <description type="text">Этот тест выкидывает исключение с русскими буквами</description>
             <failure>
@@ -31,15 +31,24 @@
             </failure>
             <steps/>
             <attachments/>
-            <labels/>
+            <labels>
+                <label name="host" value="my.cool.host.com"/>
+                <label name="thread" value="pool-1-thread-8"/>
+            </labels>
         </test-case>
-        <test-case start="1401358616545" stop="1401358616548" status="passed">
+        <test-case start="1412949540562" stop="1412949540565" status="passed">
             <name>test_pass</name>
             <description type="text">Этот тест проходит</description>
             <steps/>
             <attachments/>
-            <labels/>
+            <labels>
+                <label name="host" value="my.cool.host.com"/>
+                <label name="thread" value="pool-1-thread-9"/>
+            </labels>
         </test-case>
     </test-cases>
-    <labels/>
+    <labels>
+        <label name="framework" value="JUnit"/>
+        <label name="language" value="JAVA"/>
+    </labels>
 </ns2:test-suite>

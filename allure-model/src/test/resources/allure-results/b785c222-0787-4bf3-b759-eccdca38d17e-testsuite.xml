@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1401358615200" stop="1401358636173">
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1412949538852" stop="1412949560076" version="1.4.4-SNAPSHOT">
     <name>my.company.SimpleTest</name>
     <test-cases>
-        <test-case start="1401358635176" stop="1401358635177" status="failed">
+        <test-case start="1412949558829" stop="1412949558830" status="failed">
             <name>failedSimpleTest</name>
             <failure>
                 <message>AssertionError: 5 is not 2 + 2
@@ -36,9 +36,12 @@ Expected: is &lt;4&gt;
             </failure>
             <steps/>
             <attachments/>
-            <labels/>
+            <labels>
+                <label name="host" value="my.cool.host.com"/>
+                <label name="thread" value="pool-1-thread-27"/>
+            </labels>
         </test-case>
-        <test-case start="1401358635177" stop="1401358635177" status="passed">
+        <test-case start="1412949558829" stop="1412949558829" status="passed">
             <name>longTitleTest</name>
             <title>Test what do nothing and always passed right, but have a very long title, over 100 symbols, seriously</title>
             <description type="text">I hate descriptions! See the title!</description>
@@ -47,11 +50,11 @@ Expected: is &lt;4&gt;
             <labels>
                 <label name="story" value="SuccessStory"/>
                 <label name="feature" value="SimpleStories"/>
-                <label name="issue" value="360"/>
-                <label name="issue" value="361"/>
+                <label name="host" value="my.cool.host.com"/>
+                <label name="thread" value="pool-1-thread-9"/>
             </labels>
         </test-case>
-        <test-case start="1401358635179" stop="1401358635181" status="broken">
+        <test-case start="1412949558829" stop="1412949558832" status="broken">
             <name>brokenSimpleTest</name>
             <failure>
                 <message>ArrayIndexOutOfBoundsException: 1</message>
@@ -79,9 +82,12 @@ Expected: is &lt;4&gt;
             </failure>
             <steps/>
             <attachments/>
-            <labels/>
+            <labels>
+                <label name="host" value="my.cool.host.com"/>
+                <label name="thread" value="pool-1-thread-25"/>
+            </labels>
         </test-case>
-        <test-case start="1401358635180" stop="1401358635181" status="pending">
+        <test-case start="1412949558831" stop="1412949558832" status="pending">
             <name>my.company.SimpleTest</name>
             <title>skippedSimpleTest</title>
             <failure>
@@ -94,6 +100,7 @@ Expected: is &lt;4&gt;
         </test-case>
     </test-cases>
     <labels>
-        <label name="issue" value="359"/>
+        <label name="framework" value="JUnit"/>
+        <label name="language" value="JAVA"/>
     </labels>
 </ns2:test-suite>
