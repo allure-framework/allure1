@@ -21,7 +21,7 @@ angular.module('allure.controllers', [])
         }, this);
     })
 
-    .controller('TimelineCtrl', function($scope, $state, testcases) {
+    .controller('TimelineCtrl', function($scope, $state, data) {
         "use strict";
         $scope.isState = function(statename) {
             return $state.is(statename);
@@ -29,10 +29,22 @@ angular.module('allure.controllers', [])
         $scope.openTestcase = function(testcase) {
             $state.go('timeline.testcase', {testcaseUid: testcase.uid});
         };
-        $scope.testcases = testcases.testCases;
-        $scope.startTime = $scope.testcases.reduce(function(min, testcase) {
+        $scope.hosts = data.hosts;
+        $scope.allCases = $scope.hosts.reduce(function(result, host) {
+            return host.threads.reduce(function(result, thread) {
+                return result.concat(thread.testCases);
+            }, result);
+        }, []);
+        $scope.startTime = $scope.allCases.reduce(function(min, testcase) {
             return Math.min(min, testcase.time.start);
         }, Number.POSITIVE_INFINITY);
+        $scope.allCases.forEach(function(testcase) {
+            testcase.time.start -= $scope.startTime;
+            testcase.time.stop -= $scope.startTime;
+        });
+        $scope.timeRange = [0, $scope.allCases.reduce(function(max, testcase) {
+            return Math.max(max, testcase.time.stop)
+        }, Number.NEGATIVE_INFINITY)]
     })
 
     .controller('NavbarCtrl', function($scope, $http) {

@@ -27,8 +27,22 @@
   opacity: 0.7;
 }
 
-.timeline .axis path {
-  fill: none;
+.timeline {
+  .tick-line {
+    stroke: #000;
+    stroke-opacity: 0.1;
+    stroke-width: 0.5px;
+  }
+  &-group-title {
+    font-size: 10px;
+  }
+  &-group-cover {
+    fill: rgb(246, 245, 243);
+    shape-rendering: crispEdges;
+  }
+  .axis path {
+    fill: none;
+  }
 }
 
 .axis path, .axis line {
