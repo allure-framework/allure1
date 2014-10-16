@@ -5,3 +5,4 @@ ru.yandex.qatools.allure.data.providers.TestCasesDataProvider
 ru.yandex.qatools.allure.data.providers.XUnitDataProvider
 ru.yandex.qatools.allure.data.providers.AttachmentsProvider
 ru.yandex.qatools.allure.data.providers.EnvironmentProvider
+ru.yandex.qatools.allure.data.providers.TimelineDataProvider

@@ -6,13 +6,18 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.JUnitCore;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.junit.testdata.SimpleTestClass;
+import ru.yandex.qatools.allure.junit.testdata.TestClassWithExceptionInBefore;
 import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -22,12 +27,27 @@ import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFile
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 20.01.14
  */
+@RunWith(Parameterized.class)
 public class AllureListenerXmlValidationTest {
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     public File resultsDirectory;
+
+    public Class<?> testClass;
+
+    public AllureListenerXmlValidationTest(Class<?> testClass) {
+        this.testClass = testClass;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(
+                new Object[]{SimpleTestClass.class},
+                new Object[]{TestClassWithExceptionInBefore.class}
+        );
+    }
 
     @Before
     public void setUp() throws Exception {
@@ -36,7 +56,7 @@ public class AllureListenerXmlValidationTest {
 
         JUnitCore core = new JUnitCore();
         core.addListener(new AllureRunListener());
-        core.run(SimpleTestClass.class);
+        core.run(testClass);
     }
 
     @Test

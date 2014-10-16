@@ -55,6 +55,14 @@ public final class AllureModelUtils {
         return createLabel(LabelName.ISSUE, issueKey);
     }
 
+    public static Label createHostLabel(String host) {
+        return createLabel(LabelName.HOST, host);
+    }
+
+    public static Label createThreadLabel(String thread) {
+        return createLabel(LabelName.THREAD, thread);
+    }
+
     public static Label createLabel(LabelName name, String value) {
         return new Label().withName(name.value()).withValue(value);
     }
