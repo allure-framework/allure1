@@ -47,4 +47,11 @@
         </xsd:sequence>
     </xsd:complexType>
 
+    <xsd:element name="allure-timeline" type="alr:allure-timeline"/>
+    <xsd:complexType name="allure-timeline">
+        <xsd:sequence>
+            <xsd:element name="hosts" type="alr:hosts" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
 </xsd:schema>

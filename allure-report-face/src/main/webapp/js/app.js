@@ -92,7 +92,9 @@ angular.module('allure', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'l
                 templateUrl: "templates/timeline.html",
                 controller: 'TimelineCtrl',
                 resolve: {
-                    testcases: testcasesResolve
+                    data: function($http) {
+                        return $http.get('data/timeline.json').then(processResponse);
+                    }
                 }
             })
             .state('features', {

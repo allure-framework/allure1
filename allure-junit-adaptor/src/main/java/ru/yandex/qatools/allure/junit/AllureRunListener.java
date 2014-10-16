@@ -133,9 +133,10 @@ public class AllureRunListener extends RunListener {
     public void startFakeTestCase(Description description) {
         String uid = getSuiteUid(description);
 
-        TestCaseStartedEvent event = new TestCaseStartedEvent(uid, description.getClassName());
-        String methodName = description.getMethodName();
-        event.setTitle(methodName == null ? description.getTestClass().getSimpleName() : methodName);
+        String name = description.isTest() ? description.getMethodName() : description.getClassName();
+        TestCaseStartedEvent event = new TestCaseStartedEvent(uid, name);
+        AnnotationManager am = new AnnotationManager(description.getAnnotations());
+        am.update(event);
 
         fireClearStepStorage();
         getLifecycle().fire(event);

@@ -14,6 +14,7 @@ import ru.yandex.qatools.allure.events.*;
 import java.lang.annotation.Annotation;
 
 import static org.mockito.Mockito.*;
+import static ru.yandex.qatools.allure.utils.AnnotationManager.withExecutorInfo;
 
 /**
  * @author Kirill Kozlov kozlov.k.e@gmail.com
@@ -58,7 +59,7 @@ public class AllureTestListenerTest {
         testngListener.onTestSkipped(testResult);
 
         String suiteUid = testngListener.getSuiteUid(testContext);
-        verify(allure).fire(eq(new TestCaseStartedEvent(suiteUid, DEFAULT_TEST_NAME)));
+        verify(allure).fire(eq(withExecutorInfo(new TestCaseStartedEvent(suiteUid, DEFAULT_TEST_NAME))));
     }
 
     @Test
@@ -134,6 +135,6 @@ public class AllureTestListenerTest {
         String suiteUid = testngListener.getSuiteUid(testContext);
         String testName = String.format("%s[%s,%s]",
                 DEFAULT_TEST_NAME, Double.toString(doubleParameter), stringParameter);
-        verify(allure).fire(eq(new TestCaseStartedEvent(suiteUid, testName)));
+        verify(allure).fire(eq(withExecutorInfo(new TestCaseStartedEvent(suiteUid, testName))));
     }
 }

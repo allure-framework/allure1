@@ -6,9 +6,7 @@
                 <h3>Timeline</h3>
                 <div class="text-muted">Started {{startTime | date:'mediumDate'}} at {{startTime | date:'HH:mm:ss'}}</div>
             </div>
-            <div timeline on-item-click="openTestcase(item)">
-                <timestamp data="testcase" ng-repeat="testcase in testcases"></timestamp>
-            </div>
+            <div timeline="hosts" range="timeRange" on-item-click="openTestcase(item)"></div>
         </div>
     </div>
     <div ui-view="testcase"></div>

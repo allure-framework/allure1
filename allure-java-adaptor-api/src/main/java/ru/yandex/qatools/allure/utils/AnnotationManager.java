@@ -1,15 +1,33 @@
 package ru.yandex.qatools.allure.utils;
 
-import ru.yandex.qatools.allure.annotations.*;
+import ru.yandex.qatools.allure.annotations.Description;
+import ru.yandex.qatools.allure.annotations.Features;
+import ru.yandex.qatools.allure.annotations.Issue;
+import ru.yandex.qatools.allure.annotations.Issues;
+import ru.yandex.qatools.allure.annotations.Severity;
+import ru.yandex.qatools.allure.annotations.Stories;
+import ru.yandex.qatools.allure.annotations.Title;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.SeverityLevel;
 
 import java.lang.annotation.Annotation;
-import java.util.*;
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import static ru.yandex.qatools.allure.config.AllureModelUtils.*;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createHostLabel;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createIssueLabel;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createSeverityLabel;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createStoryLabel;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createThreadLabel;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -19,7 +37,7 @@ import static ru.yandex.qatools.allure.config.AllureModelUtils.*;
  */
 public class AnnotationManager {
 
-    private Map<Class<? extends Annotation>,Annotation> annotations = new HashMap<Class<? extends Annotation>, Annotation>();
+    private Map<Class<? extends Annotation>, Annotation> annotations = new HashMap<>();
 
     /**
      * Construct AnnotationManager using given annotations
@@ -38,39 +56,39 @@ public class AnnotationManager {
     public AnnotationManager(Annotation... annotations) {
         populateAnnotations(Arrays.asList(annotations));
     }
-    
+
     /**
      * Used to populate Map with given annotations
      *
      * @param annotations initial value for annotations
      */
-    private void populateAnnotations(Collection<Annotation> annotations){
-        for (Annotation each : annotations){
-    	    this.annotations.put(each.annotationType(), each);
+    private void populateAnnotations(Collection<Annotation> annotations) {
+        for (Annotation each : annotations) {
+            this.annotations.put(each.annotationType(), each);
         }
     }
-    
+
     /**
      * Set default values for annotations.
      * Initial annotation take precedence over the default annotation when both annotation types are present
      *
-     * @param annotations default value for annotations 
+     * @param defaultAnnotations default value for annotations
      */
-    public void setDefaults(Annotation[] defaultAnnotations){
-    	if (defaultAnnotations == null) {
+    public void setDefaults(Annotation[] defaultAnnotations) {
+        if (defaultAnnotations == null) {
             return;
         }
-    	for (Annotation each : defaultAnnotations){
-    	    Class<? extends Annotation> key = each.annotationType();
-            if (Title.class.equals(key) || Description.class.equals(key)){
+        for (Annotation each : defaultAnnotations) {
+            Class<? extends Annotation> key = each.annotationType();
+            if (Title.class.equals(key) || Description.class.equals(key)) {
                 continue;
             }
-            if (!annotations.containsKey(key)){
-                annotations.put(key,each);
+            if (!annotations.containsKey(key)) {
+                annotations.put(key, each);
             }
         }
-    } 
-    
+    }
+
     /**
      * Sets into specified {@link ru.yandex.qatools.allure.events.TestSuiteStartedEvent}
      * information from Allure annotations.
@@ -91,7 +109,7 @@ public class AnnotationManager {
         }
 
         if (isIssuesAnnotationPresent()) {
-            for (String issueKey: getIssueKeys()){
+            for (String issueKey : getIssueKeys()) {
                 event.getLabels().add(createIssueLabel(issueKey));
             }
         }
@@ -118,19 +136,37 @@ public class AnnotationManager {
         if (isSeverityAnnotationPresent()) {
             event.getLabels().add(createSeverityLabel(getSeverity()));
         }
-        
+
         if (isIssueAnnotationPresent()) {
             event.getLabels().add(createIssueLabel(getIssueKey()));
         }
-        
+
         if (isIssuesAnnotationPresent()) {
-            for (String issueKey: getIssueKeys()){
+            for (String issueKey : getIssueKeys()) {
                 event.getLabels().add(createIssueLabel(issueKey));
             }
         }
 
         event.getLabels().addAll(getStoryLabels());
         event.getLabels().addAll(getFeatureLabels());
+        withExecutorInfo(event);
+    }
+
+    /**
+     * Add information about host and thread to specified test case started event
+     *
+     * @param event given event to update
+     * @return updated event
+     */
+    public static TestCaseStartedEvent withExecutorInfo(TestCaseStartedEvent event) {
+        try {
+            event.getLabels().add(createHostLabel(InetAddress.getLocalHost().getHostName()));
+        } catch (Exception ignored) {
+            //create a default host if can't get current hostname
+            event.getLabels().add(createHostLabel("default"));
+        }
+        event.getLabels().add(createThreadLabel(Thread.currentThread().getName()));
+        return event;
     }
 
     /**
@@ -172,7 +208,7 @@ public class AnnotationManager {
     public boolean isFeaturesAnnotationPresent() {
         return isAnnotationPresent(Features.class);
     }
-    
+
     /**
      * @return true if {@link ru.yandex.qatools.allure.annotations.Issues}
      * annotation present in {@link #annotations} and false otherwise
@@ -180,7 +216,7 @@ public class AnnotationManager {
     public boolean isIssuesAnnotationPresent() {
         return isAnnotationPresent(Issues.class);
     }
-    
+
     /**
      * @return true if {@link ru.yandex.qatools.allure.annotations.Issue}
      * annotation present in {@link #annotations} and false otherwise
@@ -280,7 +316,7 @@ public class AnnotationManager {
             return new String[0];
         }
         List<String> keys = new ArrayList<>();
-        for (Issue issue: issues.value()){
+        for (Issue issue : issues.value()) {
             keys.add(issue.value());
         }
         return keys.toArray(new String[keys.size()]);

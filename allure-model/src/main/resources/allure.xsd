@@ -141,6 +141,8 @@
             <xs:enumeration value="language"/>
             <xs:enumeration value="framework"/>
             <xs:enumeration value="issue"/>
+            <xs:enumeration value="host"/>
+            <xs:enumeration value="thread"/>
         </xs:restriction>
     </xs:simpleType>
 
