@@ -29,6 +29,19 @@ angular.module('allure.controllers', [])
         $scope.openTestcase = function(testcase) {
             $state.go('timeline.testcase', {testcaseUid: testcase.uid});
         };
+
+        data.hosts.forEach(function(host) {
+            host.threads.sort(function(thread1, thread2) {
+                var byTime= function(a, b) {
+                    return a.time.start - b.time.start;
+                };
+
+                var cases1 = thread1.testCases.sort(byTime),
+                    cases2 = thread2.testCases.sort(byTime);
+                return cases1[0].time.start - cases2[0].time.start;
+            });
+        });
+
         $scope.hosts = data.hosts;
         $scope.allCases = $scope.hosts.reduce(function(result, host) {
             return host.threads.reduce(function(result, thread) {
