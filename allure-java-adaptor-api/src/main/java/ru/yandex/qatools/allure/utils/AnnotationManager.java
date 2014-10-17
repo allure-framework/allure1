@@ -13,6 +13,7 @@ import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.SeverityLevel;
 
 import java.lang.annotation.Annotation;
+import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.String.format;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createHostLabel;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createIssueLabel;
@@ -165,7 +167,11 @@ public class AnnotationManager {
             //create a default host if can't get current hostname
             event.getLabels().add(createHostLabel("default"));
         }
-        event.getLabels().add(createThreadLabel(Thread.currentThread().getName()));
+
+        event.getLabels().add(createThreadLabel(format("%s.%s",
+                ManagementFactory.getRuntimeMXBean().getName(),
+                Thread.currentThread().getName())
+        ));
         return event;
     }
 
