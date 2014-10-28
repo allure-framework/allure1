@@ -26,15 +26,100 @@
         <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>font-awesome</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>3.2.0-2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>d3js</artifactId>
+            <version>3.4.11</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angularjs</artifactId>
+            <version>1.2.26</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angular-ui-router</artifactId>
+            <version>0.2.10-1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angular-ui-bootstrap</artifactId>
+            <version>0.11.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angular-loading-bar</artifactId>
+            <version>0.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angular-translate</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angular-translate-interpolation-messageformat</artifactId>
+            <version>0.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>angular-translate-loader-static-files</artifactId>
+            <version>2.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>messageformat.js</artifactId>
+            <version>0.1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>highlightjs</artifactId>
+            <version>8.2-1</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <sourceDirectory>src/main/webapp</sourceDirectory>
         <testSourceDirectory>src/test/webapp</testSourceDirectory>
 
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <id>copy</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>unpack-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/webjars</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.lesscss</groupId>
                 <artifactId>lesscss-maven-plugin</artifactId>
-                <version>1.3.3</version>
+                <version>1.7.0.1.1</version>
                 <configuration>
                     <sourceDirectory>${project.basedir}/src/main/less</sourceDirectory>
                     <outputDirectory>${project.basedir}/src/main/webapp/css</outputDirectory>
@@ -45,6 +130,8 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>build-styles</id>
+                        <phase>compile</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
@@ -63,6 +150,10 @@
                                 <include>index.html</include>
                             </includes>
                             <filtering>true</filtering>
+                        </resource>
+                        <resource>
+                            <directory>${project.build.directory}/webjars/META-INF/resources</directory>
+                            <filtering>false</filtering>
                         </resource>
                     </webResources>
                 </configuration>
@@ -87,15 +178,12 @@
                     <jasmineTargetDir>${project.build.directory}/surefire-reports</jasmineTargetDir>
                     <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                     <preloadSources>
-                        <source>src/main/webapp/vendor/jquery/jquery-2.0.3.min.js</source>
-                        <source>src/main/webapp/vendor/d3/d3.v3.min.js</source>
-                        <source>src/main/webapp/vendor/angular/angular.js</source>
-                        <source>src/main/webapp/vendor/angular/angular-route.min.js</source>
-                        <source>src/main/webapp/vendor/angular/angular-animate.min.js</source>
-                        <source>src/test/webapp/vendor/angular/angular-mocks.js</source>
+                        <source>target/webjars/META-INF/resources/webjars/jquery/2.1.1/jquery.js</source>
+                        <source>target/webjars/META-INF/resources/webjars/d3js/3.4.11/d3.js</source>
+                        <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular.js</source>
+                        <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular-animate.js</source>
+                        <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular-mocks.js</source>
                         <source>src/test/webapp/vendor/qatools-jasmine.js</source>
-                        <source>src/main/webapp/vendor/angular/plugins/angular-translate.js</source>
-                        <source>src/main/webapp/vendor/angular/plugins/angular-translate-loader-static-files.js</source>
                     </preloadSources>
                 </configuration>
             </plugin>
@@ -202,6 +290,11 @@
                                 <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                                     <contextPath>/data</contextPath>
                                     <resourceBase>target/allure-report/data/</resourceBase>
+                                    <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
+                                </contextHandler>
+                                <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
+                                    <contextPath>/webjars</contextPath>
+                                    <resourceBase>target/webjars/META-INF/resources</resourceBase>
                                     <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
                                 </contextHandler>
                             </contextHandlers>

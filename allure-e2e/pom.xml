@@ -96,6 +96,12 @@
                             <resources>
                                 <resource>
                                     <directory>
+                                        ${project.basedir}/../allure-report-face/target/webjars/META-INF/resources
+                                    </directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                                <resource>
+                                    <directory>
                                         ${project.basedir}/../allure-report-face/src/main/webapp
                                     </directory>
                                     <excludes>
