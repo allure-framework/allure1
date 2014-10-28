@@ -63,7 +63,7 @@ angular.module('allure.charts.severityMap', ['allure.charts.util']).directive('s
             });
 
         this.tooltip = new d3Tooltip(this.bars.selectAll('.bar'),
-            '<div><strong><span ng-pluralize count="testcases.length" when="{\'one\': \'{} testcase\', \'other\': \'{} testcases\'}"></span> {{status | lowercase}}</strong></div>' +
+            '<div><strong><span>{{ \'graph.CASES\' | translate:"{ amount: testcases.length }":"messageformat" }}</span> {{status | lowercase | translate}}</strong></div>' +
                 '<ul><li ng-repeat="testcase in testcases | limitTo:10">{{testcase.title}}</li></ul>' +
                 '<div ng-if="testcases.length > 10"><i>and {{testcases.length-10}} more</i></div>',
             {tooltipCls: 'd3-tooltip d3-tooltip-list'}

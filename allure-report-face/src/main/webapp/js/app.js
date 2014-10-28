@@ -1,5 +1,5 @@
 /*global angular */
-angular.module('allure', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui.router',
+angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui.router',
         'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.table', 'allure.pane',
         'allure.scrollfix', 'allure.charts', 'allure.testcase', 'allure.xUnit.controllers', 'allure.features',
         'allure.defects', 'allure.overview'])
@@ -117,4 +117,13 @@ angular.module('allure', ['angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'l
         testcaseProvider.attachStates('features.story');
         testcaseProvider.attachStates('home.testsuite');
         testcaseProvider.attachStates('timeline');
+    })
+    .config(function($translateProvider) { 
+        $translateProvider.useStaticFilesLoader({
+          prefix: 'translations/',
+          suffix: '.json'
+        });
+        $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
+        $translateProvider.preferredLanguage('en');
+        $translateProvider.fallbackLanguage('en');
     });

@@ -105,33 +105,12 @@ angular.module('allure.testcase.controllers', [])
         function isFailed(step) {
             return ['FAILED', 'BROKEN', 'SKIPPED'].indexOf(step.status) !== -1;
         }
-        var stepPlural = {
-                one: ' sub-step',
-                other: ' sub-steps'
-            },
-            attachmentPlural = {
-                one: ' attachment',
-                other: ' attachments'
-            };
         $scope.getStepClass = function(step) {
             if(isFailed(step)) {
                 return 'text-status-'+step.status.toLowerCase();
             }
             return '';
-        };
-        $scope.formatSummary = function(step) {
-            var result = [];
-            if(step.summary.steps + step.summary.attachments === 0) {
-                return '';
-            }
-            if(step.summary.steps) {
-                result.push(step.summary.steps + stepPlural[$locale.pluralCat(step.summary.steps)]);
-            }
-            if(step.summary.attachments) {
-                result.push(step.summary.attachments + attachmentPlural[$locale.pluralCat(step.summary.attachments)]);
-            }
-            return '('+result.join(', ')+')';
-        };
+        };        
         $scope.toggleExpand = function() {
             $scope.expanded = !$scope.expanded;
         };

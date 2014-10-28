@@ -1,0 +1,144 @@
+{
+    "Report started at": "Генерация отчета запущена в",
+    "Report finished at": "Генерация отчета завершена в",
+    "Browser": "Браузер",
+    "Test stand": "Тестовый стенд",
+    
+    "Product defects": "Дефекты продукта",
+    "Test defects": "Дефекты тестов",
+    
+    "Title": "Название",
+    "Duration": "Длительность",
+    "Status": "Статус",
+    
+    "Count": "Кол-во",
+    "Defect": "Дефект",
+    
+    "FAILED": "ПРОВАЛЕНО",
+    "BROKEN": "СЛОМАНО",
+    "CANCELED": "ОТМЕНЕНО",
+    "PENDING": "ПРОПУЩЕНО",
+    "PASSED": "УСПЕШНО",
+    
+    "Failed": "Провалено",
+    "Broken": "Сломано",
+    "Canceled": "Отменено",
+    "Pending": "Пропущено",
+    "Passed": "Успешно",
+    
+    "Total": "Всего {{statistic}}",
+    "failed": "провалено {{statistic}}",
+    "broken": "сломано {{statistic}}",
+    "canceled": "отменено {{statistic}}",
+    "pending": "пропущено {{statistic}}",
+    "passed": "успешно {{statistic}}",
+    
+    "BLOCKER": "БЛОКИРУЮЩАЯ", 
+    "CRITICAL": "КРИТИЧНАЯ", 
+    "NORMAL":   "НОРМАЛЬНАЯ", 
+    "MINOR":    "НЕЗНАЧИТЕЛЬНАЯ", 
+    "TRIVIAL":   "ТРИВИАЛЬНАЯ",
+    
+    "tooltip":  
+          {
+              "EXPAND": "Развернуть",
+              "COLLAPSE": "Свернуть",
+              "CLOSE": "Закрыть",  
+              "ATTACHMENT_IMAGE": "Изображение"          
+          },
+  "index":  
+        {
+            "FEEDBACK": "Обратная связь",
+            "MAIL": "Написать письмо",
+            "GENERATED": "Сформировано за:",
+            "VERSION": "Версия:",
+            "DATA_SIZE": "Объем данных:",
+            "OVERVIEW": "Обзор",
+            "DEFECTS": "Дефекты",
+            "XUNIT": "xUnit",
+            "BEHAVIORS": "Результаты",
+            "GRAPH": "Графики",
+            "TIMELINE": "Временная шкала",
+            "BROKEN_REPORT": "Отчет сформирован некорректно! Ознакомьтесь <a href='{{url}}'>с разделом FAQ</a> для поиска причины",
+            "MESSAGE": "Сообщение: ",
+            "DEBUG": "Отладка: "
+        },
+        
+  "timeline":  
+        {
+            "HEADER": "Временная шкала",
+            "TIMEDATE": "Сессия тестирования запущена {{date}} в {{time}}"
+        },
+        
+  "overview":  
+        {
+            "TOP": "TOP дефекты",
+            "ALL": "показать все",
+            "NO_DEFECTS": "Дефектов нет, все тесты пройдены успешно!",
+            "STATUS": "статус: "
+        },
+        
+  "graph":  
+        {
+            "STATUS": "Статус",
+            "SEVERITY": "Серьезность",
+            "DURATION": "Длительность",
+            "TESTS": "{amount, plural, one{# тест} few{# теста} other{# тестов}}",
+            "CASES": "{amount, plural, one{# тестовый случай} few{# тестовых случая} other{# тестовых случаев}}"
+        },
+        
+  "features":  
+        {
+            "REQUIREMENTS": "Функциональные требования",
+            "FEATURES": "Функциональность",
+            "STORY": "Сценарий"
+        },
+        
+  "defects":  
+        {
+            "STATISTIC": "{amount, plural, one{# дефект} few{# дефекта} other{# дефектов}}",
+            "NO_DEFECTS": "Дефектов нет, отличная работа!"
+        },
+        
+  "testrun":  
+        {
+            "SUMMARY": "Информация",
+            "TESTRUN": "Сессия тестирования:",
+            "TEST_SUITES": "Тестовые сценарии",
+            "TIMEDATE": "запущена {{date}} в {{time}} ({{duration}})",
+            "STATISTIC": "Всего: {suites, plural, one{# тестовый сценарий} few{# тестовых сценария} other{# тестовых сценариев}}, {cases, plural, one{# тестовый случай} few{# тестовых случая} other{# тестовых случаев}}",
+            "PASSED": "УСПЕШНО",
+            "TOTAL": "Всего {amount, plural, one{# сценарий} few{# сценария} other{# сценариев}}",
+            "VISIBLE": "{{visible == amount ? '' : ' ('+visible+' показано)'}}"
+        },
+        
+  "testsuite":  
+        {
+            "TESTSUITE": "Тестовый сценарий",
+            "DESCRIPTION": "Описание"
+        },
+        
+  "attachment":  
+        {
+            "ATTACHMENT": "Приложение",
+            "NOT_FOUND": "Приложение не найдено"
+        },
+        
+  "list":  
+        {
+            "TEST_CASES": "Тестовые случаи ({{amount}} всего{{visible == amount ? ')' : ', '+visible+' отображено)'}}",
+            "MORE": "Показать еще"
+        },  
+        
+  "testcase":  
+        {
+            "TESTCASE": "Тестовый случай",
+            "SEVERITY": "Серьезность: {{severity}}",
+            "ISSUES": "Дефекты",
+            "TEST_PASSED": "Тест пройден успешно!",
+            "RAW": "Исходник",
+            "STACKTRACE": "Трассировка",
+            "SUBSTEPS": "{substeps, plural, one{# подшаг} few{# подшага} other{# подшагов}}",
+            "ATTACHMENTS": "{attachments, plural, one{# приложение} few{# приложения} other{# приложений}}"
+        }
+}

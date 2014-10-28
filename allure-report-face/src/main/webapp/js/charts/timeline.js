@@ -27,7 +27,7 @@ angular.module('allure.charts.timeline', ['allure.charts.util']).directive('time
             .attr({ 'class': 'tick-line', x1: x, x2: x, y1: 0, y2: chartHeight });
 
         this.createHosts(data, barHeight);
-        this.tooltip = new d3Tooltip(this.svg.selectAll('.bar'), '<div>{{title}} ({{status}})</div><div><b>{{time.start | time}} - {{time.stop | time}}</b></div>');
+        this.tooltip = new d3Tooltip(this.svg.selectAll('.bar'), '<div>{{title}} ({{status | translate}})</div><div><b>{{time.start | time}} - {{time.stop | time}}</b></div>');
     }
     Timeline.prototype  = {
         createHosts: function (data, barHeight) {
