@@ -1,0 +1,144 @@
+{
+    "Report started at": "Report started at",
+    "Report finished at": "Report finished at",
+    "Browser": "Browser",
+    "Test stand": "Test stand",
+    
+    "Product defects": "Product defects",
+    "Test defects": "Test defects",
+    
+    "Title": "Title",
+    "Duration": "Duration",
+    "Status": "Status",
+    
+    "Count": "Count",
+    "Defect": "Defect",
+    
+    "FAILED": "FAILED",
+    "BROKEN": "BROKEN",
+    "CANCELED": "CANCELED",
+    "PENDING": "PENDING",
+    "PASSED": "PASSED",
+    
+    "Failed": "Failed",
+    "Broken": "Broken",
+    "Canceled": "Canceled",
+    "Pending": "Pending",
+    "Passed": "Passed",
+    
+    "Total": "Total {{statistic}}",
+    "failed": "failed {{statistic}}",
+    "broken": "broken {{statistic}}",
+    "canceled": "canceled {{statistic}}",
+    "pending": "pending {{statistic}}",
+    "passed": "passed {{statistic}}",
+    
+    "BLOCKER": "BLOCKER", 
+    "CRITICAL": "CRITICAL", 
+    "NORMAL":   "NORMAL", 
+    "MINOR":    "MINOR", 
+    "TRIVIAL":   "TRIVIAL",
+    
+    "tooltip":  
+          {
+              "EXPAND": "Expand",
+              "COLLAPSE": "Collapse",
+              "CLOSE": "Close",  
+              "ATTACHMENT_IMAGE": "Attachment image"          
+          },
+    "index":  
+          {
+              "FEEDBACK": "Provide Feedback",
+              "MAIL": "Mail list",
+              "DATA_SIZE": "Data size:",
+              "GENERATED": "Generated in:",
+              "VERSION": "Version:",
+              "OVERVIEW": "Overview",
+              "DEFECTS": "Defects",
+              "XUNIT": "xUnit",
+              "BEHAVIORS": "Behaviors",
+              "GRAPH": "Graph",
+              "TIMELINE": "Timeline",
+              "BROKEN_REPORT": "Your report seems to be broken! Check out <a href='{{url}}'>our FAQ</a> to find a reason",
+              "MESSAGE": "Message: ",
+              "DEBUG": "Debug: "
+          },
+
+    "timeline":  
+          {              
+              "HEADER": "Timeline",
+              "TIMEDATE": "Started {{date}} at {{time}}"
+          },
+
+    "overview":  
+          {
+              "TOP": "Top defects",
+              "ALL": "show all",
+              "NO_DEFECTS": "No defects, all tests passed!",
+              "STATUS": "status: "
+          },
+
+    "graph":  
+          {
+              "STATUS": "Status",
+              "SEVERITY": "Severity",
+              "DURATION": "Duration",
+              "TESTS": "{amount, plural, one{# test} other{# tests}}",
+              "CASES": "{amount, plural, one{# test case} other{# test cases}}"
+          },
+
+    "features":  
+          {
+              "REQUIREMENTS": "Functional requirements",
+              "FEATURES": "Features",
+              "STORY": "Story"
+          },
+
+    "defects":  
+          {
+              "STATISTIC": "{amount, plural, one{# defect} other{# defects}}",
+              "NO_DEFECTS": "No defects in test run. Good job!"
+          },
+
+    "testrun":  
+          {
+              "SUMMARY": "Summary",
+              "TESTRUN": "Test run:",
+              "TEST_SUITES": "Test suites",
+              "TIMEDATE": "started {{date}} At {{time}} ({{duration}})",
+              "STATISTIC": "Total: {suites, plural, one{# test suite} other{# test suites}}, {cases, plural, one{# test case} other{# test cases}}",
+              "PASSED": "PASSED",
+              "TOTAL": "Total {amount, plural, one{# suite} other{# suites}}",
+              "VISIBLE": "{{visible == amount ? '' : ' ('+visible+' shown)'}}"
+          },
+
+    "testsuite":  
+          {
+              "TESTSUITE": "Testsuite",
+              "DESCRIPTION": "Description"
+          },
+
+    "attachment":  
+          {
+              "ATTACHMENT": "Attachment",
+              "NOT_FOUND": "Attachment not found"
+          },
+
+    "list":  
+          {
+              "TEST_CASES": "Test cases ({{amount}} total{{visible == amount ? ')' : ', '+visible+' shown)'}}",
+              "MORE": "Show more"
+          },  
+
+    "testcase":  
+          {
+              "TESTCASE": "Testcase",
+              "SEVERITY": "Severity: {{severity}}",
+              "ISSUES": "Issues:",
+              "TEST_PASSED": "The test has passed!",
+              "RAW": "Raw",
+              "STACKTRACE": "Stacktrace",
+              "SUBSTEPS": "{substeps, plural, one{# sub-step} other{# sub-steps}}",
+              "ATTACHMENTS": "{attachments, plural, one{# attachment} other{# attachments}}"
+          }  
+}

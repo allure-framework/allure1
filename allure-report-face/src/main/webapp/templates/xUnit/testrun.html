@@ -1,24 +1,21 @@
 <div class="b-island__title">
-    Test run:
-    <span class="text-muted">started {{time.start | date:'mediumDate'}} at {{time.start | date:'HH:mm:ss'}}
-        ({{time.duration | time}})
-    </span>
+    {{'testrun.TESTRUN' | translate}}
+    <span class="text-muted" translate="testrun.TIMEDATE" translate-value-date="{{time.start | date:'mediumDate'}}" translate-value-time="{{time.start | date:'HH:mm:ss'}}" translate-value-duration="{{time.duration | time}}"></span>
 </div>
 <div class="pane__header">
-    <h3>Total:
-        <span ng-pluralize count="testsuites.length" when="{one: '{} test suite', other: '{} test suites'}"></span>,
-        <span ng-pluralize count="statistic.total" when="{one: '{} test case', other: '{} test cases'}"></span>
-        <span class="label label-success" ng-show="statistic.total == statistic.passed">PASSED</span>
+    <h3>{{'testrun.STATISTIC' | translate:'{suites: testsuites.length, cases: statistic.total}':'messageformat'}}
+        <span class="label label-success" ng-show="statistic.total == statistic.passed">{{'testrun.PASSED' | translate}}</span>
     </h3>
 </div>
 <div ng-controller="TestSuitesCtrl" on-keynav="select($direction)">
     <div status-switcher statuses="showStatuses" class="pull-right"></div>
-    <h4 class="pull-left">Test suites</h4>
+    <h4 class="pull-left">{{'testrun.TEST_SUITES' | translate}}</h4>
     <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
         <tbody>
         <tr class="total-row">
             <td class="line-ellipsis">
-                <b>Total {{testsuites.length}} suites <span ng-hide="testsuites.length == (testsuites | filter:statusFilter).length">({{(testsuites | filter:statusFilter).length}} shown)</span></b>
+                {{'testrun.TOTAL' | translate:'{amount: testsuites.length}':'messageformat'}}
+                <b translate="testrun.VISIBLE" translate-value-amount="{{testsuites.length}}" translate-value-visible="{{(testsuites | filter:statusFilter).length}}"></b>
             </td>
             <td class="line-nobreak">{{time.duration | time}}</td>
             <td class="text-center">

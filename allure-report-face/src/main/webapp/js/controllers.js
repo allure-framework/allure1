@@ -47,10 +47,25 @@ angular.module('allure.controllers', [])
         }, Number.NEGATIVE_INFINITY)]
     })
 
-    .controller('NavbarCtrl', function($scope, $http) {
+    .controller('NavbarCtrl', function($scope, $http, $translate, $rootScope) {
         'use strict';
+       
+        $scope.setLang = function(langKey) {
+			$translate.use(langKey.locale);
+                        $scope.selectedLang=langKey;
+        };
+		        
         return $http.get('data/report.json').then(function(response) {
             $scope.report = response.data;
+            $scope.langs = [{
+                name: "ENG" ,
+                locale: "en"    
+            }, {
+                name: "РУС", 
+                locale: "ru"      
+            }];
+            $scope.selectedLang=$scope.langs[0];
+            $translate.use($scope.selectedLang.locale);
         });
     })
 

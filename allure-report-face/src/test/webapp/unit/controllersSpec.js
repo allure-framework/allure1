@@ -4,6 +4,7 @@ describe('controllers', function () {
     var $controller, $rootScope;
 
     beforeEach(module('allure.controllers'));
+    beforeEach(module('pascalprecht.translate'));
     beforeEach(inject(function (_$controller_, _$rootScope_) {
         $controller = _$controller_;
         $rootScope = _$rootScope_;

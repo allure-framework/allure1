@@ -1,20 +1,20 @@
 <div class="b-island__title">
-    Test case<span ng-show="testcase.name" class="text-muted">: {{testcase.name}} <copy-button text="testcase.name"></copy-button></span>
+    {{'testcase.TESTCASE' | translate}}<span ng-show="testcase.name" class="text-muted">: {{testcase.name}} <copy-button text="testcase.name"></copy-button></span>
 </div>
 <div class="pane__header title-status-{{testcase.status | lowercase}}">
     <h3>
         <div class="pane__header_controls pull-right">
-            <span class="fa fa-expand clickable" tooltip="Expand" ng-hide="isState('testcase.expanded')" ng-click="go('testcase.expanded')"></span>
-            <span class="fa fa-compress clickable" tooltip="Collapse" ng-show="isState('testcase.expanded')" ng-click="go('testcase')"></span>
-            <span class="fa fa-close clickable" tooltip="Close" ng-click="closeTestcase()"></span>
+            <span class="fa fa-expand clickable" tooltip="{{'tooltip.EXPAND' | translate}}" ng-hide="isState('testcase.expanded')" ng-click="go('testcase.expanded')"></span>
+            <span class="fa fa-compress clickable" tooltip="{{'tooltip.COLLAPSE' | translate}}" ng-show="isState('testcase.expanded')" ng-click="go('testcase')"></span>
+            <span class="fa fa-close clickable" tooltip="{{'tooltip.CLOSE' | translate}}" ng-click="closeTestcase()"></span>
         </div>
         <span class="icon-status-{{testcase.status | lowercase}}"></span>
         {{testcase.title}}
-        <small>Severity: {{testcase.severity}}</small>
+        <small translate="testcase.SEVERITY" translate-value-severity="{{testcase.severity | translate}}"></small>
     </h3>
     <div class="issues" ng-show="testcase.issues">
         <span class="fa fa-bug"/>
-        Issues:
+        {{'testcase.ISSUES' | translate}}
         <span class="issue" ng-repeat="issue in testcase.issues">
             <a ng-href="{{issue.url}}" target="_blank">{{issue.name}}</a><span ng-show="!$last">,</span>
         </span>
@@ -33,7 +33,7 @@
         <ng-include src="'testcaseStep.tpl'"></ng-include>
     </div>
     <div class="testcase__status alert-status-passed" ng-show="testcase.status == 'PASSED'">
-        The test has passed!
+        {{'testcase.TEST_PASSED' | translate}}
     </div>
     <div class="list-item clickable" ng-repeat="attachment in testcase.attachments" ng-click="setAttachment(attachment.uid)" ng-class="{active:attachment==$parent.attachment}">
         <ng-include src="'testcaseAttachment.tpl'"></ng-include>
@@ -43,8 +43,8 @@
 <script type="text/ng-template" id="testcaseFailure.tpl">
     <div class="testcase__status alert-status-{{testcase.status | lowercase}}" ng-show="testcase.status !== 'PASSED'" ng-controller="angular.noop">
         <div class="btn-group pull-right ">
-            <span class="btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-click="stacktraceRaw = !stacktraceRaw" ng-class="{'active': stacktraceRaw}">Raw</span>
-            <span class="btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-click="stacktraceExpanded = !stacktraceExpanded" ng-class="{'active': stacktraceExpanded}">Stacktrace</span>
+            <span class="btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-click="stacktraceRaw = !stacktraceRaw" ng-class="{'active': stacktraceRaw}">{{'testcase.RAW' | translate}}</span>
+            <span class="btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-click="stacktraceExpanded = !stacktraceExpanded" ng-class="{'active': stacktraceExpanded}">{{'testcase.STACKTRACE' | translate}}</span>
         </div>
 
         <span class="preformated-text" ng-click="stacktraceExpanded = !stacktraceExpanded" ng-class="{'testcase__status--raw': stacktraceRaw}">{{failure.message}}</span>
@@ -65,7 +65,9 @@
         <b class="step__expand" ng-show="hasContent && expanded">-</b>
         <span class="step__time text-muted">[{{step.time.start | date:'HH:mm:ss.sss'}}]</span>
         <span class="step__title long-line" ng-class="getStepClass(step)">{{step.title}}</span>
-        <span class="text-muted">{{formatSummary(step)}}</span>
+        <span class="text-muted" ng-hide="step.summary.steps==0">{{'testcase.SUBSTEPS' | translate:"{substeps: step.summary.steps}":"messageformat"}}</span>
+        <span class="text-muted" ng-hide="step.summary.steps==0 || step.summary.attachments==0">, </span>
+        <span class="text-muted" ng-hide="step.summary.attachments==0">{{'testcase.ATTACHMENTS' | translate:"{attachments: step.summary.attachments}":"messageformat"}}</span>
     </div>
     <div class="step__content" ng-if="expanded">
         <div ng-repeat="step in step.steps" ng-controller="StepCtrl">

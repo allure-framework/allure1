@@ -129,8 +129,8 @@ angular.module('allure.charts.pie', ['allure.charts.util']).directive('pieChart'
         },
         link: function ($scope, elm) {
             $scope.$watch('data', function (data) {
-                var format = $scope.tooltipTpl || '<div><b>{{value}} {{value == 1 ? "test" : "tests"}} ({{data.part * 100 | number:0}}%)</b></div>' +
-                    '<div>{{data.name}}</div>';
+                var format = $scope.tooltipTpl || '<div><b>{{ \'graph.TESTS\' | translate:"{ amount: value }":"messageformat" }} ({{data.part * 100 | number:0}}%)</b></div>' +
+                    '<div>{{data.name | translate}}</div>';
                 $scope.chart = new PieChart(elm[0], $scope, data);
                 $scope.chart.setTooltipFormat(format);
             });

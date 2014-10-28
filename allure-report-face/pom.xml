@@ -94,6 +94,8 @@
                         <source>src/main/webapp/vendor/angular/angular-animate.min.js</source>
                         <source>src/test/webapp/vendor/angular/angular-mocks.js</source>
                         <source>src/test/webapp/vendor/qatools-jasmine.js</source>
+                        <source>src/main/webapp/vendor/angular/plugins/angular-translate.js</source>
+                        <source>src/main/webapp/vendor/angular/plugins/angular-translate-loader-static-files.js</source>
                     </preloadSources>
                 </configuration>
             </plugin>
