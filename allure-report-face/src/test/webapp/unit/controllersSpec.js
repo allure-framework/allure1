@@ -4,7 +4,6 @@ describe('controllers', function () {
     var $controller, $rootScope;
 
     beforeEach(module('allure.controllers'));
-    beforeEach(module('pascalprecht.translate'));
     beforeEach(inject(function (_$controller_, _$rootScope_) {
         $controller = _$controller_;
         $rootScope = _$rootScope_;
@@ -89,11 +88,13 @@ describe('controllers', function () {
 
 
     describe('NavbarCtrl', function() {
+        var $translate;
         function createController() {
             var scope = $rootScope.$new();
             scope = scope.$new();
             $controller('NavbarCtrl', {
-                $scope: scope
+                $scope: scope,
+                $translate: $translate = jasmine.createSpyObj('$translate', ['use'])
             });
             return scope;
         }
