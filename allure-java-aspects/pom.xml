@@ -12,7 +12,7 @@
     <name>Allure Java Aspects</name>
 
     <properties>
-        <aspectj.version>1.8.2</aspectj.version>
+        <aspectj.version>1.8.3</aspectj.version>
         <sonar.exclusions>**/aspects/**</sonar.exclusions>
     </properties>
 
