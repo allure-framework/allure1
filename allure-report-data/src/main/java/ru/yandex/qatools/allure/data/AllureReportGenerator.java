@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.createDirectory;
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.deleteFile;
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.writeAllureReportInfo;
 import static ru.yandex.qatools.allure.data.utils.ServiceLoaderUtils.load;
 
@@ -48,16 +49,23 @@ public class AllureReportGenerator {
 
         final File reportDataDirectory = createDirectory(reportDirectory, DATA_SUFFIX);
         final AtomicLong reportSize = new AtomicLong(0);
-        final String testRun = testRunGenerator.generate();
+
+        final File testRun = testRunGenerator.generate();
 
         List<DataProvider> dataProviders = load(getClassLoader(), DataProvider.class);
 
         new Async<DataProvider>() {
             @Override
             public void async(DataProvider provider) {
-                reportSize.addAndGet(provider.provide(testRun, inputDirectories, reportDataDirectory));
+                reportSize.addAndGet(provider.provide(
+                        testRun,
+                        inputDirectories,
+                        reportDataDirectory
+                ));
             }
         }.execute(dataProviders);
+
+        deleteFile(testRun);
 
         long stop = System.currentTimeMillis();
 

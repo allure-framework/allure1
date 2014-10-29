@@ -23,7 +23,7 @@ public class AttachmentsProvider implements DataProvider {
      * @return size in bytes of copied attachments
      */
     @Override
-    public long provide(String testPack, File[] inputDirectories, File outputDirectory) {
+    public long provide(File testPack, File[] inputDirectories, File outputDirectory) {
         long size = 0;
         for (File attach : listAttachmentFiles(inputDirectories)) {
             try {

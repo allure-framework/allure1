@@ -7,11 +7,13 @@ import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
-import java.io.StringWriter;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Collection;
 
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.getAllureSchemaValidator;
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.deleteFile;
 import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
 
 
@@ -24,11 +26,11 @@ public class TestRunGenerator {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
-    public static final String SUITES_TO_TEST_RUN_1_XSL = "xsl/suites-to-testrun-1.xsl";
+    public static final String SUITES_TO_TEST_RUN_XSL_1 = "xsl/suites-to-testrun-1.xsl";
 
-    public static final String SUITES_TO_TEST_RUN_2_XSL = "xsl/suites-to-testrun-2.xsl";
+    public static final String SUITES_TO_TEST_RUN_XSL_2 = "xsl/suites-to-testrun-2.xsl";
 
-    public static final String SUITES_TO_TEST_RUN_3_XSL = "xsl/suites-to-testrun-3.xsl";
+    public static final String SUITES_TO_TEST_RUN_XSL_3 = "xsl/suites-to-testrun-3.xsl";
 
     private final ListFiles listFiles;
 
@@ -37,7 +39,7 @@ public class TestRunGenerator {
     public TestRunGenerator(boolean validateXML, File... dirs) {
         Collection<File> testSuitesFiles = listTestSuiteFiles(dirs);
 
-        listFiles = createListFiles(testSuitesFiles);
+        this.listFiles = createListFiles(testSuitesFiles);
         this.validateXML = validateXML;
 
     }
@@ -58,21 +60,31 @@ public class TestRunGenerator {
         return lf;
     }
 
-    private String listFilesToString(final ListFiles listFiles) {
-        final StringWriter stringWriter = new StringWriter();
-        JAXB.marshal(new ObjectFactory().createListFiles(listFiles), stringWriter);
-        return stringWriter.toString();
+    public File generate() {
+        File xml = null;
+
+        try {
+            xml = createListFiles();
+
+            return applyTransformations(
+                    xml,
+                    SUITES_TO_TEST_RUN_XSL_1,
+                    SUITES_TO_TEST_RUN_XSL_2,
+                    SUITES_TO_TEST_RUN_XSL_3
+            );
+        } catch (Exception e) {
+            throw new ReportGenerationException(e);
+        } finally {
+            deleteFile(xml);
+        }
     }
 
-    public String generate() {
-        String suiteFiles = listFilesToString(listFiles);
-        return applyTransformations(
-                suiteFiles,
-                SUITES_TO_TEST_RUN_1_XSL,
-                SUITES_TO_TEST_RUN_2_XSL,
-                SUITES_TO_TEST_RUN_3_XSL
-        );
+    public File createListFiles() throws IOException {
+        File xml = Files.createTempFile("list-files", ".xml").toFile();
+        JAXB.marshal(new ObjectFactory().createListFiles(listFiles), xml);
+        return xml;
     }
+
 
     @SuppressWarnings("unused")
     public ListFiles getListFiles() {

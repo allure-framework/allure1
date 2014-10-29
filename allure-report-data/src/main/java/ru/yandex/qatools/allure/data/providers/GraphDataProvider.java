@@ -2,32 +2,28 @@ package ru.yandex.qatools.allure.data.providers;
 
 import ru.yandex.qatools.allure.data.AllureGraph;
 
-import javax.xml.bind.JAXB;
-import java.io.File;
-import java.io.StringReader;
-
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
-import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformation;
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.12.13
  */
-public class GraphDataProvider implements DataProvider {
+public class GraphDataProvider extends AbstractDataProvider {
 
     private static final String TEST_RUN_TO_GRAPH_XSL = "xsl/testrun-to-graph.xsl";
 
     private static final String GRAPH_JSON = "graph.json";
 
     @Override
-    public long provide(String testPack, File[] inputDirectories, File outputDirectory) {
-        String allureGraphBody = applyTransformation(testPack, TEST_RUN_TO_GRAPH_XSL);
+    public String[] getXslTransformations() {
+        return new String[]{TEST_RUN_TO_GRAPH_XSL};
+    }
 
-        AllureGraph allureGraph = JAXB.unmarshal(
-                new StringReader(allureGraphBody),
-                AllureGraph.class
-        );
+    @Override
+    public String getJsonFileName() {
+        return GRAPH_JSON;
+    }
 
-        return serialize(outputDirectory, GRAPH_JSON, allureGraph);
+    @Override
+    public Class<?> getType() {
+        return AllureGraph.class;
     }
 }
