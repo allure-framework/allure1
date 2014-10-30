@@ -1,12 +1,15 @@
 package ru.yandex.qatools.allure.aspects;
 
 import org.junit.Test;
+import ru.yandex.qatools.allure.config.AllureConfig;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.cutEnd;
+import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getName;
 import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getTitle;
 
 /**
@@ -29,6 +32,9 @@ public class AllureAspectUtilsTest {
     private final static String TITLE_STRING_WITH_ONE_ARG = "{0} (arg:{1})";
 
     private final static String TITLE_STRING_WITH_THIS = "{0} this:{1} ()";
+
+    public static final String TOO_LONG_NAME = "this name pattern is too long, over 150 symbols! Guys, what are" +
+            " you thinking for when you made so long title??? Could you please made it more carefully...?";
 
     @Test
     public void getTitleWithStringArray() {
@@ -148,6 +154,13 @@ public class AllureAspectUtilsTest {
     }
 
     @Test
+    public void getTitleWithTooLongTitle() {
+        String title = getTitle(TOO_LONG_NAME, METHOD_NAME, null, null);
+        assertThat("Wrong title shortcut", title,
+                equalTo(cutEnd(TOO_LONG_NAME, AllureConfig.newInstance().getMaxTitleLength())));
+    }
+
+    @Test
     public void getTitleWithNullParam() {
         String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, null, new Object[]{null});
         Object[] args = {METHOD_NAME, null};
@@ -180,5 +193,21 @@ public class AllureAspectUtilsTest {
         Object[] args = {METHOD_NAME, thisObject};
         assertThat("Method with {this} is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_THIS, args)));
+    }
+
+    @Test
+    public void getNameLongMethodNameTest() throws Exception {
+        String name = getName(TOO_LONG_NAME, null);
+        assertThat("Invalid method name short cut", name,
+                equalTo("... 150 symbols! Guys, what are you thinking for when you made so long title??? Could" +
+                        " you please made it more carefully...?"));
+    }
+
+    @Test
+    public void getNameLongMethodNameAndParametersTest() throws Exception {
+        String name = getName(METHOD_NAME, new Object[]{TOO_LONG_NAME});
+        assertThat("Invalid method name short cut", name,
+                equalTo("getSomethingNew[this name pattern is too long, over 150 symbols! Guys, what are you " +
+                        "thinking for when you made so long t...]"));
     }
 }

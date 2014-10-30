@@ -54,6 +54,9 @@ public class AllureConfig {
     @Property("allure.attachments.encoding")
     private String attachmentsEncoding = "UTF-8";
 
+    @Property("allure.max.title.length")
+    private int maxTitleLength = 120;
+
     /**
      * Pattern containing issue tracker base URL and one %s placeholder which will be replaced by issue name.
      * Example: http://example.com/%s and @Issue("SOME-123") will give you http://example.com/SOME-123
@@ -93,6 +96,10 @@ public class AllureConfig {
 
     public String getAttachmentFileSuffix() {
         return attachmentFileSuffix;
+    }
+
+    public int getMaxTitleLength() {
+        return maxTitleLength;
     }
 
     public String getEnvironmentXmlFileRegex() {
