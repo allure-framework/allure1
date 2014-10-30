@@ -22,7 +22,7 @@
                 <span class="label label-default" ng-show="statistic.canceled > 0">{{statistic.canceled}}</span>
             </td>
             <td class="text-center">
-                <span class="label label-info" ng-show="statistic.pending > 0">{{statistic.pending}}</span>
+                <span class="label label-status-pending" ng-show="statistic.pending > 0">{{statistic.pending}}</span>
             </td>
             <td class="text-center">
                 <span class="label label-warning" ng-show="statistic.broken > 0">{{statistic.broken}}</span>
@@ -45,7 +45,7 @@
                 <span class="label label-default" ng-show="testsuite.statistic.canceled > 0">{{testsuite.statistic.canceled}}</span>
             </td>
             <td allure-table-col="{heading: 'Pending', predicate: 'statistic.pending', class:'text-center', reverse: true}" class="text-center">
-                <span class="label label-info" ng-show="testsuite.statistic.pending > 0">{{testsuite.statistic.pending}}</span>
+                <span class="label label-status-pending" ng-show="testsuite.statistic.pending > 0">{{testsuite.statistic.pending}}</span>
             </td>
             <td allure-table-col="{heading: 'Broken', predicate: 'statistic.broken', class:'text-center', reverse: true}" class="text-center">
                 <span class="label label-warning" ng-show="testsuite.statistic.broken > 0">{{testsuite.statistic.broken}}</span>
