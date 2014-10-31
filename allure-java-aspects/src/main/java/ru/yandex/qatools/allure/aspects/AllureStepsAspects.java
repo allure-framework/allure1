@@ -13,6 +13,7 @@ import ru.yandex.qatools.allure.events.StepFailureEvent;
 import ru.yandex.qatools.allure.events.StepFinishedEvent;
 import ru.yandex.qatools.allure.events.StepStartedEvent;
 
+import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getName;
 import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getParametersAsString;
 import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getTitle;
 
@@ -40,7 +41,7 @@ public class AllureStepsAspects {
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         StepStartedEvent startedEvent = new StepStartedEvent(
-                methodSignature.getName() + getParametersAsString(joinPoint.getArgs())
+                getName(methodSignature.getName(), joinPoint.getArgs())
         );
 
         if (!stepTitle.isEmpty()) {
