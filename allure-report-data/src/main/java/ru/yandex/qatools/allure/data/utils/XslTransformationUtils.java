@@ -1,18 +1,24 @@
 package ru.yandex.qatools.allure.data.utils;
 
+import net.sf.saxon.Controller;
 import net.sf.saxon.TransformerFactoryImpl;
-import org.apache.commons.io.IOUtils;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
-import java.io.StringWriter;
-import java.nio.charset.StandardCharsets;
+import java.io.Writer;
+import java.net.URL;
+import java.nio.file.Files;
+
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.deleteFile;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -23,37 +29,64 @@ public final class XslTransformationUtils {
     private XslTransformationUtils() {
     }
 
-    public static String applyTransformations(String xml, String... xslPaths) {
-        String result = xml;
-        for (String xsl : xslPaths) {
-            result = applyTransformation(result, xsl);
+    public static File applyTransformations(File xml, String... xslTransformations) {
+        File result = xml;
+        for (String xslResourceName : xslTransformations) {
+            File tmp = null;
+            try (InputStream inputStream = new FileInputStream(result)) {
+                tmp = applyTransformation(inputStream, xslResourceName);
+            } catch (IOException e) {
+                throw new ReportGenerationException(e);
+            } finally {
+                if (xml != result) {
+                    deleteFile(result);
+                }
+                result = tmp;
+            }
         }
         return result;
     }
 
-    public static String applyTransformation(String xml, String xslPath) {
-        return applyTransformation(
-                XslTransformationUtils.class.getClassLoader().getResourceAsStream(xslPath),
-                IOUtils.toInputStream(xml, StandardCharsets.UTF_8)
-        );
-    }
-
-    public static String applyTransformation(InputStream xml, InputStream xsl) {
-        Source xslSource = new StreamSource(xsl);
-        Source xmlSource = new StreamSource(xml);
-        return applyTransformation(xslSource, xmlSource);
-    }
-
-    public static String applyTransformation(Source xml, Source xsl) {
+    public static File applyTransformation(InputStream xml, String xslResourceName) {
         try {
-            Transformer transformer = new TransformerFactoryImpl().newTransformer(xsl);
-            StringWriter resultWriter = new StringWriter();
-            Result result = new StreamResult(resultWriter);
-            transformer.transform(xml, result);
-            return resultWriter.toString();
-        } catch (TransformerException e) {
+            File result = Files.createTempFile("xsl-transform", ".xml").toFile();
+            try (Writer resultWriter = new FileWriter(result)) {
+                applyTransformation(xml, xslResourceName, resultWriter);
+                return result;
+            }
+        } catch (IOException e) {
             throw new ReportGenerationException(e);
         }
     }
 
+    public static void applyTransformation(InputStream xml, String xslResourceName, Writer resultWriter) {
+        URL url = XslTransformationUtils.class.getClassLoader().getResource(xslResourceName);
+        if (url == null) {
+            throw new ReportGenerationException("Can't find resource " + xslResourceName);
+        }
+
+        try (InputStream inputStream = url.openStream()) {
+            applyTransformation(new StreamSource(xml), new StreamSource(inputStream, url.toString()), resultWriter);
+        } catch (IOException e) {
+            throw new ReportGenerationException(e);
+        }
+    }
+
+    public static void applyTransformation(Source xml, Source xsl, Writer resultWriter) {
+        Controller transformer = null;
+        try {
+            transformer = (Controller) new TransformerFactoryImpl().newTransformer(xsl);
+            Result result = new StreamResult(resultWriter);
+            transformer.transform(xml, result);
+        } catch (TransformerException e) {
+            throw new ReportGenerationException(e);
+        } finally {
+            if (transformer != null) {
+                transformer.reset();
+                transformer.clearParameters();
+                transformer.clearDocumentPool();
+                System.gc();
+            }
+        }
+    }
 }

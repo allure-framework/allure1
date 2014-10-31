@@ -2,33 +2,28 @@ package ru.yandex.qatools.allure.data.providers;
 
 import ru.yandex.qatools.allure.data.AllureDefects;
 
-import javax.xml.bind.JAXB;
-import java.io.File;
-import java.io.StringReader;
-
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
-import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformation;
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.12.13
  */
-public class DefectsDataProvider implements DataProvider {
+public class DefectsDataProvider extends AbstractDataProvider {
 
-    private static final String TEST_RUN_TO_ERRORS_XSL = "xsl/testrun-to-defects.xsl";
+    private static final String TEST_RUN_TO_DEFECTS_XSL = "xsl/testrun-to-defects.xsl";
 
-    public static final String ERRORS_JSON = "defects.json";
+    public static final String DEFECTS_JSON = "defects.json";
 
     @Override
-    public long provide(String testPack, File[] inputDirectories, File outputDirectory) {
-        
-        String allureErrorsBody = applyTransformation(testPack, TEST_RUN_TO_ERRORS_XSL);
+    public String[] getXslTransformations() {
+        return new String[]{TEST_RUN_TO_DEFECTS_XSL};
+    }
 
-        AllureDefects allureDefects = JAXB.unmarshal(
-                new StringReader(allureErrorsBody),
-                AllureDefects.class
-        );
+    @Override
+    public String getJsonFileName() {
+        return DEFECTS_JSON;
+    }
 
-        return serialize(outputDirectory, ERRORS_JSON, allureDefects);
+    @Override
+    public Class<?> getType() {
+        return AllureDefects.class;
     }
 }

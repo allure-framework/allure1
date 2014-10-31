@@ -19,6 +19,6 @@ public interface DataProvider {
      * @param outputDirectory specified directory
      * @return number of bytes written to outputDirectory
      */
-    long provide(String testPack, File[] inputDirectories, File outputDirectory);
+    long provide(File testPack, File[] inputDirectories, File outputDirectory);
 
 }

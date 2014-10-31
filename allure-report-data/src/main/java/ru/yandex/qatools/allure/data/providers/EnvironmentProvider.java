@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.data.providers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.config.AllureConfig;
+import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 import ru.yandex.qatools.commons.model.Environment;
 import ru.yandex.qatools.commons.model.Parameter;
 
@@ -10,21 +11,21 @@ import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.StringReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Properties;
 
 import static java.lang.String.format;
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFilesByRegex;
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
-import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.07.14
  */
-public class EnvironmentProvider implements DataProvider {
+public class EnvironmentProvider extends AbstractDataProvider {
+
+    public static final AllureConfig ALLURE_CONFIG = AllureConfig.newInstance();
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -32,19 +33,25 @@ public class EnvironmentProvider implements DataProvider {
 
     public static final String ENVIRONMENT_JSON = "environment.json";
 
-    @Override
-    public long provide(String testPack, File[] inputDirectories, File outputDirectory) {
-        String allureEnvironmentBody = applyTransformations(
-                testPack,
-                TESTRUN_TO_ENVIRONMENT_XSL
-        );
+    public Collection<File> environmentXml = new ArrayList<>();
 
+    public Collection<File> environmentProperties = new ArrayList<>();
+
+    @Override
+    public long provide(File testPack, File[] inputDirectories, File outputDirectory) {
+        environmentXml = listFilesByRegex(ALLURE_CONFIG.getEnvironmentXmlFileRegex(), inputDirectories);
+        environmentProperties = listFilesByRegex(ALLURE_CONFIG.getEnvironmentPropertiesFileRegex(), inputDirectories);
+        return super.provide(testPack, inputDirectories, outputDirectory);
+    }
+
+    @Override
+    protected <T> long serialize(File outputDirectory, Class<T> type, String name, Reader reader) {
         Environment global = JAXB.unmarshal(
-                new StringReader(allureEnvironmentBody),
+                reader,
                 Environment.class
         );
 
-        for (File file : listFilesByRegex(AllureConfig.newInstance().getEnvironmentXmlFileRegex(), inputDirectories)) {
+        for (File file : environmentXml) {
             try {
                 Environment environment = JAXB.unmarshal(file, Environment.class);
                 merge(global, environment);
@@ -53,7 +60,7 @@ public class EnvironmentProvider implements DataProvider {
             }
         }
 
-        for (File file : listFilesByRegex(AllureConfig.newInstance().getEnvironmentPropertiesFileRegex(), inputDirectories)) {
+        for (File file : environmentProperties) {
             try (FileInputStream fis = new FileInputStream(file)) {
                 Properties properties = new Properties();
                 properties.load(fis);
@@ -63,7 +70,22 @@ public class EnvironmentProvider implements DataProvider {
             }
         }
 
-        return serialize(outputDirectory, ENVIRONMENT_JSON, global);
+        return AllureReportUtils.serialize(outputDirectory, ENVIRONMENT_JSON, global);
+    }
+
+    @Override
+    public String[] getXslTransformations() {
+        return new String[]{TESTRUN_TO_ENVIRONMENT_XSL};
+    }
+
+    @Override
+    public String getJsonFileName() {
+        return null;
+    }
+
+    @Override
+    public Class<?> getType() {
+        return null;
     }
 
     public void merge(Environment global, Environment environment) throws JAXBException {

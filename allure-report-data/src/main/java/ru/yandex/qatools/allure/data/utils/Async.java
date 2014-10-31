@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class Async<T> {
 
-    public static final int N_THREADS = 5;
+    public static final int N_THREADS = 1;
 
     public void execute(List<T> dataArray) {
         try {
