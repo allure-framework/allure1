@@ -135,6 +135,7 @@
               "TESTCASE": "Testcase",
               "SEVERITY": "Severity: {{severity}}",
               "ISSUES": "Issues:",
+              "TEST_ID": "Test ID:",
               "TEST_PASSED": "The test has passed!",
               "RAW": "Raw",
               "STACKTRACE": "Stacktrace",

@@ -95,6 +95,7 @@
             <xsd:element name="severity" type="alr:severity-level"/>
             <xsd:element name="status" type="alr:status"/>
             <xsd:element name="issues" type="alr:issues"/>
+            <xsd:element name="testId" type="alr:testId" minOccurs="0"/>
             <xsd:element name="labels" type="alr:labels" minOccurs="0"/>
             <xsd:element name="parameters" type="alr:parameters" minOccurs="0"/>
         </xsd:all>

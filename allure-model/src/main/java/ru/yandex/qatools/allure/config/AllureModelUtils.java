@@ -55,6 +55,10 @@ public final class AllureModelUtils {
         return createLabel(LabelName.ISSUE, issueKey);
     }
 
+    public static Label createTestLabel(String testKey) {
+        return createLabel(LabelName.TEST_ID, testKey);
+    }
+
     public static Label createHostLabel(String host) {
         return createLabel(LabelName.HOST, host);
     }

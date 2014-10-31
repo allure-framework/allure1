@@ -64,6 +64,14 @@ public class AllureConfig {
     @Property("allure.issues.tracker.pattern")
     private String issueTrackerPattern = "%s";
 
+    /**
+     * Pattern containing Test Management System (TMS) and one %s placeholder which will be replaced by test id.
+     * Currently there is no special annotation to define TMS test id in your tests. Work in progress...
+     * Example: http://example.com/%s and <label name="testId" value="SOME-123"/> will give you http://example.com/SOME-123
+     */
+    @Property("allure.tests.management.pattern")
+    private String tmsPattern = "%s";
+
     private String version = getClass().getPackage().getImplementationVersion();
 
     public AllureConfig() {
@@ -133,6 +141,10 @@ public class AllureConfig {
 
     public String getIssueTrackerPattern() {
         return issueTrackerPattern;
+    }
+
+    public String getTmsPattern() {
+        return tmsPattern;
     }
 
     public static AllureConfig newInstance() {

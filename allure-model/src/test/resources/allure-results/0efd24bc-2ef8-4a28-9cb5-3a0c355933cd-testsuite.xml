@@ -9,6 +9,9 @@
             <labels>
                 <label name="host" value="my.cool.host.com"/>
                 <label name="thread" value="pool-1-thread-4"/>
+                <label name="issue" value="JIRA-1"/>
+                <label name="issue" value="JIRA-2"/>
+                <label name="testId" value="TMS-1"/>
             </labels>
         </test-case>
         <test-case start="1412949539363" stop="1412949539715" status="passed">
@@ -18,6 +21,7 @@
             <labels>
                 <label name="host" value="my.cool.host.com"/>
                 <label name="thread" value="pool-1-thread-1"/>
+                <label name="testId" value="TMS-1"/>
             </labels>
         </test-case>
         <test-case start="1412949539363" stop="1412949539372" status="passed">
@@ -27,6 +31,7 @@
             <labels>
                 <label name="host" value="my.cool.host.com"/>
                 <label name="thread" value="pool-1-thread-2"/>
+                <label name="issue" value="JIRA-1"/>
             </labels>
         </test-case>
         <test-case start="1412949539364" stop="1412949539746" status="passed">

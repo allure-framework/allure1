@@ -12,11 +12,18 @@
         {{testcase.title}}
         <small translate="testcase.SEVERITY" translate-value-severity="{{testcase.severity | translate}}"></small>
     </h3>
-    <div class="issues" ng-show="testcase.issues">
-        <span class="fa fa-bug"/>
-        {{'testcase.ISSUES' | translate}}
-        <span class="issue" ng-repeat="issue in testcase.issues">
-            <a ng-href="{{issue.url}}" target="_blank">{{issue.name}}</a><span ng-show="!$last">,</span>
+    <div class="external-system-references">
+        <span class="issues" ng-show="testcase.issues">
+            <span class="fa fa-bug"/>
+            {{'testcase.ISSUES' | translate}}
+            <span class="issue" ng-repeat="issue in testcase.issues">
+                <a ng-href="{{issue.url}}" target="_blank">{{issue.name}}</a><span ng-show="!$last">,</span>
+            </span>
+        </span>
+        <span class="testId" ng-show="testcase.testId">
+            <span class="fa fa-database"/>
+            {{'testcase.TEST_ID' | translate}}
+            <a ng-href="{{testcase.testId.url}}" target="_blank">{{testcase.testId.name}}</a>
         </span>
     </div>
 </div>

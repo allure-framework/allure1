@@ -40,4 +40,11 @@ public class AllureModelUtilsTest {
         assertThat(label.getName(), is(LabelName.SEVERITY.value()));
     }
 
+    @Test
+    public void createTestLabelTest() {
+        Label label = AllureModelUtils.createTestLabel("some-test");
+        assertThat(label.getValue(), is("some-test"));
+        assertThat(label.getName(), is(LabelName.TEST_ID.value()));
+    }
+
 }
