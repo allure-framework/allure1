@@ -109,4 +109,8 @@ public final class TextUtils {
     public static String getIssueUrl(String name){
         return String.format(AllureConfig.newInstance().getIssueTrackerPattern(), name);
     }
+
+    public static String getTestUrl(String name){
+        return String.format(AllureConfig.newInstance().getTmsPattern(), name);
+    }
 }

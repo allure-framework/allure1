@@ -39,6 +39,7 @@
             <xsl:call-template name="add-severity-node"/>
             <xsl:call-template name="add-status-node"/>
             <xsl:call-template name="add-issues-node"/>
+            <xsl:call-template name="add-test-node"/>
 
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
@@ -185,6 +186,17 @@
             <xsl:attribute name="name" select="$name" />
             <xsl:attribute name="url" select="$url" />
         </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="add-test-node">
+        <xsl:choose>
+            <xsl:when test="count(labels/label[@name='testId']) > 0">
+                <xsl:element name="testId">
+                    <xsl:attribute name="name" select="labels/label[@name='testId']/@value" />
+                    <xsl:attribute name="url" select="utils:getTestUrl(labels/label[@name='testId']/@value)" />
+                </xsl:element>
+            </xsl:when>
+        </xsl:choose>
     </xsl:template>
     
     <xsl:template name="add-uid-node">

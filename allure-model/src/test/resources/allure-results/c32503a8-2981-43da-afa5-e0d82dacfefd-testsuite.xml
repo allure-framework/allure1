@@ -47,6 +47,9 @@ Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
                 <label name="severity" value="normal"/>
                 <label name="host" value="my.cool.host.com"/>
                 <label name="thread" value="pool-1-thread-6"/>
+                <label name="issue" value="JIRA-1"/>
+                <label name="issue" value="JIRA-2"/>
+                <label name="testId" value="TMS-1"/>
             </labels>
             <parameters>
                 <parameter name="PATH" value="/Users/charlie/.rvm/gems/ruby-2.0.0-p481/bin:/Users/charlie/.rvm/gems/ruby-2.0.0-p481@global/bin:/Users/charlie/.rvm/rubies/ruby-2.0.0-p481/bin:/opt/local/bin:/opt/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/git/bin:/usr/local/MacGPG2/bin:/usr/texbin:/usr/local/Cellar/maven/3.0.5/libexec/bin:/Library/Java/JavaVirtualMachines/jdk1.7.0_21.jdk/Contents/Home/bin:/Users/charlie/.rvm/bin" kind="environment-variable"/>
@@ -107,6 +110,9 @@ Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
                 <label name="feature" value="Screenshot"/>
                 <label name="host" value="my.cool.host.com"/>
                 <label name="thread" value="pool-1-thread-5"/>
+                <label name="issue" value="JIRA-1"/>
+                <label name="issue" value="JIRA-2"/>
+                <label name="testId" value="TMS-1"/>
             </labels>
         </test-case>
         <test-case start="1412949539801" stop="1412949539862" status="broken">
@@ -174,6 +180,7 @@ Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
                 <label name="severity" value="blocker"/>
                 <label name="host" value="my.cool.host.com"/>
                 <label name="thread" value="pool-1-thread-7"/>
+                <label name="testId" value="TMS-1"/>
             </labels>
         </test-case>
     </test-cases>

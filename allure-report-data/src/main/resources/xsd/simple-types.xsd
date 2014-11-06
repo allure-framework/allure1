@@ -76,6 +76,11 @@
         <xsd:attribute name="url" type="xsd:string"/>
     </xsd:complexType>
 
+    <xsd:complexType name="testId">
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="url" type="xsd:string"/>
+    </xsd:complexType>
+
     <xsd:complexType name="status"/>
     <xsd:complexType name="severity-level"/>
     <xsd:complexType name="failure"/>
