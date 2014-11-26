@@ -7,10 +7,11 @@ import java.util.Deque;
 import java.util.LinkedList;
 
 /**
+ * Using to storage information about current step context
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 13.12.13
  *         <p/>
- *         Using to storage information about current step context
  * @see ru.yandex.qatools.allure.Allure
  */
 public class StepStorage extends InheritableThreadLocal<Deque<Step>> {

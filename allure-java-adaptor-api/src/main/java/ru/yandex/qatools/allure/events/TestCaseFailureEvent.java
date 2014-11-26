@@ -3,10 +3,12 @@ package ru.yandex.qatools.allure.events;
 import ru.yandex.qatools.allure.model.Status;
 
 /**
+ * Using to change testCase status to {@link ru.yandex.qatools.allure.model.Status#FAILED} or
+ * {@link ru.yandex.qatools.allure.model.Status#BROKEN}
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  *         <p/>
- *         Using to change testCase status to {@link ru.yandex.qatools.allure.model.Status#FAILED}
  * @see ru.yandex.qatools.allure.events.TestCaseStatusChangeEvent
  * @see ru.yandex.qatools.allure.Allure
  */

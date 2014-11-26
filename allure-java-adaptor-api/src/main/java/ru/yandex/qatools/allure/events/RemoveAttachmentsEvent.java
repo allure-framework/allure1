@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.deleteAttachment;
 
 /**
+ * Using to remove attachments from step.
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 30.04.14
- *         <p/>
- *         Using to remove attachments from step.
  */
 public class RemoveAttachmentsEvent extends AbstractRemoveAttachmentEvent {
 

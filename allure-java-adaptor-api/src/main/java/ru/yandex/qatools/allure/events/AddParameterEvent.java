@@ -5,11 +5,12 @@ import ru.yandex.qatools.allure.model.ParameterKind;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 
 /**
+ * Using to add parameters to TestCase. Parameters will be shown
+ * at Allure report.
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 20.01.14
  *         <p/>
- *         Using to add parameters to TestCase. Parameters will be shown
- *         at Allure report.
  * @see ru.yandex.qatools.allure.events.TestCaseEvent
  */
 public class AddParameterEvent extends AbstractTestCaseAddParameterEvent {

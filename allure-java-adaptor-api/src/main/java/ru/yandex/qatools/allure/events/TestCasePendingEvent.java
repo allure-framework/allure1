@@ -3,10 +3,11 @@ package ru.yandex.qatools.allure.events;
 import ru.yandex.qatools.allure.model.Status;
 
 /**
+ * Using to change testCase status to {@link ru.yandex.qatools.allure.model.Status#PENDING}
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  *         <p/>
- *         Using to change testCase status to {@link ru.yandex.qatools.allure.model.Status#PENDING}
  * @see ru.yandex.qatools.allure.events.TestCaseStatusChangeEvent
  * @see ru.yandex.qatools.allure.Allure
  */

@@ -6,10 +6,11 @@ import ru.yandex.qatools.allure.model.Step;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachmentSafely;
 
 /**
+ * Using to add attachments to tests.
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  *         <p/>
- *         Using to add attachments to tests.
  * @see ru.yandex.qatools.allure.events.StepEvent
  */
 public class MakeAttachmentEvent extends AbstractMakeAttachmentEvent {

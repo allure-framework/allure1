@@ -6,10 +6,11 @@ import java.io.IOException;
 import java.io.Writer;
 
 /**
+ * Doesn't marshall bad XML 1.0 characters.
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 13.12.13
  *         <p/>
- *         Doesn't marshall bad XML 1.0 characters.
  * @see CharacterEscapeHandler
  */
 public class BadXmlCharacterEscapeHandler implements CharacterEscapeHandler {

@@ -1,11 +1,12 @@
 package ru.yandex.qatools.allure.exceptions;
 
 /**
+ * Signals a Allure error. Thrown to indicate problems with Allure
+ * lifecycle.
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 10.24.13
  *         <p/>
- *         Signals a Allure error. Thrown to indicate problems with Allure
- *         lifecycle.
  * @see ru.yandex.qatools.allure.utils.AllureResultsUtils
  */
 @SuppressWarnings("unused")

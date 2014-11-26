@@ -7,10 +7,11 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import java.util.Arrays;
 
 /**
+ * Using to start new testSuite
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  *         <p/>
- *         Using to start new testSuite
  * @see ru.yandex.qatools.allure.Allure
  */
 public class TestSuiteStartedEvent extends AbstractTestSuiteStartedEvent {

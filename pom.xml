@@ -235,6 +235,15 @@
                 <groupId>org.codehaus.sonar</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.1</version>
+                <configuration>
+                    <author>false</author>
+                    <aggregate>true</aggregate>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
@@ -381,5 +390,4 @@
             </modules>
         </profile>
     </profiles>
-
 </project>
