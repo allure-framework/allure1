@@ -77,7 +77,7 @@ angular.module('allure.testcase.controllers', [])
         };
         $scope.select = function(direction) {
             var index = allAttachments.indexOf($scope.attachment);
-            setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).uid);
+            $scope.setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).uid);
         };
         
         $scope.getIconClass = function(type) {
