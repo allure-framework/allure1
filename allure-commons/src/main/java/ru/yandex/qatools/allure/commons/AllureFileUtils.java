@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
+ * Some file utils using mainly in tests. Class contains methods that can help to find attachments and
+ * allures xml in given directories
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.06.14
  */

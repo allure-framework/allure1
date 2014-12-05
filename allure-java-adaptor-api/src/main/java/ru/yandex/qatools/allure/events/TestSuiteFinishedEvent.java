@@ -3,10 +3,11 @@ package ru.yandex.qatools.allure.events;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 /**
+ * Using to finish testSuite
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  *         <p/>
- *         Using to finish testSuite
  * @see ru.yandex.qatools.allure.Allure
  */
 public class TestSuiteFinishedEvent extends AbstractTestSuiteFinishedEvent {

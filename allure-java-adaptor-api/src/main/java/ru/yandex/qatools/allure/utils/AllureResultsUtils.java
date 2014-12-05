@@ -29,10 +29,11 @@ import static ru.yandex.qatools.allure.config.AllureConfig.getDefaultResultsDire
 import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName;
 
 /**
+ * Using to write test results (test suites and attachments) to result directory
+ *
  * @author Artem Eroshenko eroshenkoam@yandex-team.ru
  *         Date: 1/17/14
  *         <p/>
- *         Using to write test results (test suites and attachments) to result directory
  */
 public final class AllureResultsUtils {
 

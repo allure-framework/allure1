@@ -4,10 +4,11 @@ import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
 
 /**
+ * Using to mark current step as failed and attach for it {@link Throwable}
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  *         <p/>
- *         Using to mark current step as failed and attach for it {@link Throwable}
  */
 public class StepFailureEvent extends AbstractStepFailureEvent {
 

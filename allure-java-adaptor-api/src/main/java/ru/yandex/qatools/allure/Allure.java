@@ -26,10 +26,10 @@ import ru.yandex.qatools.allure.storages.TestSuiteStorage;
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeTestSuiteResult;
 
 /**
+ * Allure Java API. Use this class to access to Allure lifecycle
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
- *         <p/>
- *         Allure Java API. Use this class to access to Allure lifecycle
  */
 public class Allure {
 

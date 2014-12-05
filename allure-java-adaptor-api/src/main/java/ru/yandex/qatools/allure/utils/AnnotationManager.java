@@ -32,10 +32,11 @@ import static ru.yandex.qatools.allure.config.AllureModelUtils.createStoryLabel;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createThreadLabel;
 
 /**
+ * Util, using to collect information from class and method annotations
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 13.12.13
  *         <p/>
- *         Util, using to collect information from class and method annotations
  */
 public class AnnotationManager {
 
@@ -169,8 +170,8 @@ public class AnnotationManager {
         }
 
         event.getLabels().add(createThreadLabel(format("%s.%s",
-                ManagementFactory.getRuntimeMXBean().getName(),
-                Thread.currentThread().getName())
+                        ManagementFactory.getRuntimeMXBean().getName(),
+                        Thread.currentThread().getName())
         ));
         return event;
     }

@@ -8,10 +8,11 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
+ * Abstract TestCase status event
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 13.05.14
  *         <p/>
- *         Abstract TestCase status event
  * @see ru.yandex.qatools.allure.events.TestCaseFailureEvent
  * @see ru.yandex.qatools.allure.events.TestCaseCanceledEvent
  * @see ru.yandex.qatools.allure.events.TestCasePendingEvent

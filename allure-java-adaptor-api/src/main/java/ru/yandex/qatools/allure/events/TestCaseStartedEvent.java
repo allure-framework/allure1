@@ -8,10 +8,11 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
 import java.util.Arrays;
 
 /**
+ * Using to start new testCase
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 11.11.13
  *         <p/>
- *         Using to start new testCase
  * @see ru.yandex.qatools.allure.Allure
  */
 public class TestCaseStartedEvent extends AbstractTestCaseStartedEvent {
