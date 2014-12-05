@@ -16,6 +16,8 @@ import java.util.LinkedList;
  */
 public class StepStorage extends InheritableThreadLocal<Deque<Step>> {
 
+    private static final String ROOT_STEP_NAME = "Root step";
+
     /**
      * Returns the current thread's "initial value". Construct an new
      * {@link java.util.Deque} with root step {@link #createRootStep()}
@@ -26,6 +28,29 @@ public class StepStorage extends InheritableThreadLocal<Deque<Step>> {
     protected Deque<Step> initialValue() {
         Deque<Step> queue = new LinkedList<>();
         queue.add(createRootStep());
+        return queue;
+    }
+
+    /**
+     * In case parent thread spawns child threads it is necessary to provide
+     * a copy of step storage for each thread, because {@link #initialValue()}
+     * will be triggered only once.
+     *
+     * In case only root step is recorded, then it gets copied to work around the
+     * fact that there is ArrayList used for keeping track of sub steps.
+     *
+     * @param parentValue value from parent thread
+     * @return local copy for us in this thread
+     */
+    @Override
+    protected Deque<Step> childValue(Deque<Step> parentValue) {
+        LinkedList<Step> queue = new LinkedList<>();
+        if (parentValue.size() == 1
+                && ROOT_STEP_NAME.equals(parentValue.getFirst().getName())) {
+            queue.add(createRootStep());
+        } else {
+            queue.addAll(parentValue);
+        }
         return queue;
     }
 
@@ -70,7 +95,7 @@ public class StepStorage extends InheritableThreadLocal<Deque<Step>> {
      */
     public Step createRootStep() {
         return new Step()
-                .withName("Root step")
+                .withName(ROOT_STEP_NAME)
                 .withTitle("Allure step processing error: if you see this step something went wrong.")
                 .withStart(System.currentTimeMillis())
                 .withStatus(Status.BROKEN);

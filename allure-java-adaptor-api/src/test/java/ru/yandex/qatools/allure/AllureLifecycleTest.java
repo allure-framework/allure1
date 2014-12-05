@@ -20,6 +20,9 @@ import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
+import ru.yandex.qatools.allure.storages.StepStorage;
+import ru.yandex.qatools.allure.storages.TestCaseStorage;
+import ru.yandex.qatools.allure.storages.TestSuiteStorage;
 import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import javax.xml.transform.stream.StreamSource;
@@ -27,6 +30,12 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -46,6 +55,7 @@ import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFile
 public class AllureLifecycleTest {
 
     private static final String UTF_8 = "UTF-8";
+
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
@@ -55,6 +65,13 @@ public class AllureLifecycleTest {
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
         AllureResultsUtils.setResultsDirectory(resultsDirectory);
+
+        StepStorage stepStorage = Allure.LIFECYCLE.getStepStorage();
+        stepStorage.remove();
+        TestCaseStorage testCaseStorage = Allure.LIFECYCLE.getTestCaseStorage();
+        testCaseStorage.remove();
+        TestSuiteStorage testSuiteStorage = Allure.LIFECYCLE.getTestSuiteStorage();
+        testSuiteStorage.remove("some.uid");
     }
 
     @Test
@@ -133,6 +150,34 @@ public class AllureLifecycleTest {
         assertFalse(testCase == afterClearing);
         checkTestCaseIsNew(afterClearing);
 
+    }
+
+    @Test
+    public void supportForConcurrentUseOfChildThreads() throws Exception {
+        final int threads = 20;
+        final Allure lifecycle = Allure.LIFECYCLE;
+        fireTestCaseStart();
+
+        ExecutorService service = Executors.newFixedThreadPool(threads);
+
+        final List<Callable<Object>> tasks = new ArrayList<>();
+        for (int i = 0; i < threads; i++) {
+            tasks.add(new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    for (int i = 0; i < 1000; i++) {
+                        lifecycle.fire(new StepStartedEvent("test-step"));
+                        lifecycle.fire(new StepFinishedEvent());
+                    }
+                    return "";
+                }
+            });
+        }
+
+        List<Future<Object>> futures = service.invokeAll(tasks);
+        for (Future<Object> future : futures) {
+            future.get();
+        }
     }
 
     private void checkTestCaseIsNew(TestCaseResult testCaseResult) {
