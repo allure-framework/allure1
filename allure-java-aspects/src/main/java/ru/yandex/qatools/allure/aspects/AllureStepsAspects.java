@@ -14,7 +14,6 @@ import ru.yandex.qatools.allure.events.StepFinishedEvent;
 import ru.yandex.qatools.allure.events.StepStartedEvent;
 
 import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getName;
-import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getParametersAsString;
 import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getTitle;
 
 /**
@@ -24,6 +23,8 @@ import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getTitle;
 @SuppressWarnings("unused")
 @Aspect
 public class AllureStepsAspects {
+
+    private static Allure ALLURE = Allure.LIFECYCLE;
 
     @Pointcut("@annotation(ru.yandex.qatools.allure.annotations.Step)")
     public void withStepAnnotation() {
@@ -48,23 +49,30 @@ public class AllureStepsAspects {
             startedEvent.setTitle(stepTitle);
         }
 
-        Allure.LIFECYCLE.fire(startedEvent);
+        ALLURE.fire(startedEvent);
     }
 
     @AfterThrowing(pointcut = "anyMethod() && withStepAnnotation()", throwing = "e")
     public void stepFailed(JoinPoint joinPoint, Throwable e) {
-        Allure.LIFECYCLE.fire(new StepFailureEvent().withThrowable(e));
-        Allure.LIFECYCLE.fire(new StepFinishedEvent());
+        ALLURE.fire(new StepFailureEvent().withThrowable(e));
+        ALLURE.fire(new StepFinishedEvent());
     }
 
     @AfterReturning(pointcut = "anyMethod() && withStepAnnotation()", returning = "result")
     public void stepStop(JoinPoint joinPoint, Object result) {
-        Allure.LIFECYCLE.fire(new StepFinishedEvent());
+        ALLURE.fire(new StepFinishedEvent());
     }
 
     public String createTitle(JoinPoint joinPoint) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Step step = methodSignature.getMethod().getAnnotation(Step.class);
         return step == null ? "" : getTitle(step.value(), methodSignature.getName(), joinPoint.getThis(), joinPoint.getArgs());
+    }
+
+    /**
+     * For tests only
+     */
+    static void setAllure(Allure allure) {
+        AllureStepsAspects.ALLURE = allure;
     }
 }
