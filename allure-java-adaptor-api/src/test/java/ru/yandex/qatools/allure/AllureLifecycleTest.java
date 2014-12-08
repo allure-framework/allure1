@@ -27,6 +27,12 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -133,6 +139,38 @@ public class AllureLifecycleTest {
         assertFalse(testCase == afterClearing);
         checkTestCaseIsNew(afterClearing);
 
+    }
+
+    @Test
+    public void supportForConcurrentUseOfChildThreads() throws Exception {
+        final int threads = 20;
+        final int stepsCount = 1000;
+
+        final Allure lifecycle = Allure.LIFECYCLE;
+        fireTestCaseStart();
+
+        ExecutorService service = Executors.newFixedThreadPool(threads);
+
+        final List<Callable<Object>> tasks = new ArrayList<>();
+        for (int i = 0; i < threads; i++) {
+            tasks.add(new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    for (int i = 0; i < stepsCount; i++) {
+                        lifecycle.fire(new StepStartedEvent("test-step"));
+                        lifecycle.fire(new StepFinishedEvent());
+                    }
+                    return "";
+                }
+            });
+        }
+
+        List<Future<Object>> futures = service.invokeAll(tasks);
+        for (Future<Object> future : futures) {
+            future.get();
+        }
+
+        assertThat(lifecycle.getStepStorage().pollLast().getSteps(), hasSize(threads * stepsCount));
     }
 
     private void checkTestCaseIsNew(TestCaseResult testCaseResult) {
