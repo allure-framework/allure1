@@ -89,9 +89,8 @@ public class Allure {
      * @param event to process
      */
     public void fire(StepFinishedEvent event) {
-        Step step = stepStorage.pollLast();
+        Step step = stepStorage.adopt();
         event.process(step);
-        stepStorage.getLast().getSteps().add(step);
 
         notifier.fire(event);
     }

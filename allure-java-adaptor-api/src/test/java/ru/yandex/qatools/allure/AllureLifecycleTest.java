@@ -27,6 +27,13 @@ import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -59,11 +66,12 @@ public class AllureLifecycleTest {
 
     @Test
     public void allureLifecycleTest() throws Exception {
-        TestSuiteResult testSuite = fireTestSuiteStart();
-        TestSuiteResult anotherTestSuite = fireCustomTestSuiteEvent();
+        String uid = UUID.randomUUID().toString();
+        TestSuiteResult testSuite = fireTestSuiteStart(uid);
+        TestSuiteResult anotherTestSuite = fireCustomTestSuiteEvent(uid);
         assertEquals(testSuite, anotherTestSuite);
 
-        TestCaseResult testCase = fireTestCaseStart();
+        TestCaseResult testCase = fireTestCaseStart(uid);
         TestCaseResult anotherTestCase = fireCustomTestCaseEvent();
         assertEquals(testCase, anotherTestCase);
 
@@ -101,19 +109,21 @@ public class AllureLifecycleTest {
         assertThat(testCase.getAttachments(), hasSize(1));
         assertEquals(testCase.getAttachments().get(0), testCaseAttachment);
 
-        fireTestSuiteFinished();
+        fireTestSuiteFinished(uid);
         validateTestSuite();
 
         assertThat(testSuite.getTestCases(), hasSize(1));
 
-        TestSuiteResult nextTestSuite = fireTestSuiteStart();
+        String otherUid = UUID.randomUUID().toString();
+        TestSuiteResult nextTestSuite = fireTestSuiteStart(otherUid);
         assertNotEquals(anotherTestSuite, nextTestSuite);
     }
 
     @Test
     public void allureClearStorageTest() {
-        TestSuiteResult testSuite = fireTestSuiteStart();
-        TestCaseResult testCase = fireTestCaseStart();
+        String suiteUid = UUID.randomUUID().toString();
+        TestSuiteResult testSuite = fireTestSuiteStart(suiteUid);
+        TestCaseResult testCase = fireTestCaseStart(suiteUid);
         assertThat(testSuite.getTestCases(), hasSize(1));
         assertEquals(testSuite.getTestCases().get(0), testCase);
 
@@ -133,6 +143,41 @@ public class AllureLifecycleTest {
         assertFalse(testCase == afterClearing);
         checkTestCaseIsNew(afterClearing);
 
+    }
+
+    @Test
+    public void supportForConcurrentUseOfChildThreads() throws Exception {
+        final int threads = 20;
+        final int stepsCount = 1000;
+
+        final Allure lifecycle = Allure.LIFECYCLE;
+
+        String suiteUid = UUID.randomUUID().toString();
+        fireTestSuiteStart(suiteUid);
+        fireTestCaseStart(suiteUid);
+
+        ExecutorService service = Executors.newFixedThreadPool(threads);
+
+        final List<Callable<Object>> tasks = new ArrayList<>();
+        for (int i = 0; i < threads; i++) {
+            tasks.add(new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    for (int i = 0; i < stepsCount; i++) {
+                        lifecycle.fire(new StepStartedEvent("test-step"));
+                        lifecycle.fire(new StepFinishedEvent());
+                    }
+                    return "";
+                }
+            });
+        }
+
+        List<Future<Object>> futures = service.invokeAll(tasks);
+        for (Future<Object> future : futures) {
+            future.get();
+        }
+
+        assertThat(lifecycle.getStepStorage().pollLast().getSteps(), hasSize(threads * stepsCount));
     }
 
     private void checkTestCaseIsNew(TestCaseResult testCaseResult) {
@@ -156,17 +201,17 @@ public class AllureLifecycleTest {
         Allure.LIFECYCLE.fire(new ClearStepStorageEvent());
     }
 
-    public TestSuiteResult fireTestSuiteStart() {
-        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent("some.uid", "some.suite.name"));
-        TestSuiteResult testSuite = Allure.LIFECYCLE.getTestSuiteStorage().get("some.uid");
+    public TestSuiteResult fireTestSuiteStart(String uid) {
+        Allure.LIFECYCLE.fire(new TestSuiteStartedEvent(uid, "some.suite.name"));
+        TestSuiteResult testSuite = Allure.LIFECYCLE.getTestSuiteStorage().get(uid);
         assertNotNull(testSuite);
         assertThat(testSuite.getName(), is("some.suite.name"));
         assertThat(testSuite.getTestCases(), hasSize(0));
         return testSuite;
     }
 
-    public void fireTestSuiteFinished() {
-        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent("some.uid"));
+    public void fireTestSuiteFinished(String uid) {
+        Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(uid));
     }
 
     public void validateTestSuite() throws SAXException, IOException {
@@ -177,8 +222,8 @@ public class AllureLifecycleTest {
         }
     }
 
-    public TestCaseResult fireTestCaseStart() {
-        Allure.LIFECYCLE.fire(new TestCaseStartedEvent("some.uid", "some.case.name"));
+    public TestCaseResult fireTestCaseStart(String uid) {
+        Allure.LIFECYCLE.fire(new TestCaseStartedEvent(uid, "some.case.name"));
         TestCaseResult testCase = Allure.LIFECYCLE.getTestCaseStorage().get();
         assertNotNull(testCase);
         assertThat(testCase.getName(), is("some.case.name"));
@@ -214,9 +259,9 @@ public class AllureLifecycleTest {
         Allure.LIFECYCLE.fire(new StepFinishedEvent());
     }
 
-    public TestSuiteResult fireCustomTestSuiteEvent() {
-        Allure.LIFECYCLE.fire(new ChangeTestSuiteTitleEvent("some.uid", "new.suite.title"));
-        TestSuiteResult testSuite = Allure.LIFECYCLE.getTestSuiteStorage().get("some.uid");
+    public TestSuiteResult fireCustomTestSuiteEvent(String uid) {
+        Allure.LIFECYCLE.fire(new ChangeTestSuiteTitleEvent(uid, "new.suite.title"));
+        TestSuiteResult testSuite = Allure.LIFECYCLE.getTestSuiteStorage().get(uid);
         assertNotNull(testSuite);
         assertThat(testSuite.getTitle(), is("new.suite.title"));
         return testSuite;
