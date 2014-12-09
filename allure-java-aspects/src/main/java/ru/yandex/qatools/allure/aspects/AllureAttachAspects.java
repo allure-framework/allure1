@@ -20,6 +20,8 @@ import java.nio.charset.Charset;
 @Aspect
 public class AllureAttachAspects {
 
+    private static Allure ALLURE = Allure.LIFECYCLE;
+
     /**
      * Pointcut for things annotated with {@link ru.yandex.qatools.allure.annotations.Attachment}
      */
@@ -57,7 +59,13 @@ public class AllureAttachAspects {
 
         Charset charset = AllureConfig.newInstance().getAttachmentsEncoding();
         byte[] bytes = (result instanceof byte[]) ? (byte[]) result : result.toString().getBytes(charset);
-        Allure.LIFECYCLE.fire(new MakeAttachmentEvent(bytes, attachTitle, attachment.type()));
+        ALLURE.fire(new MakeAttachmentEvent(bytes, attachTitle, attachment.type()));
     }
 
+    /**
+     * For tests only
+     */
+    static void setAllure(Allure allure) {
+        AllureAttachAspects.ALLURE = allure;
+    }
 }
