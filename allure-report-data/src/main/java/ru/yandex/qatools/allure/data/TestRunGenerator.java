@@ -7,7 +7,11 @@ import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collection;
 
@@ -81,7 +85,9 @@ public class TestRunGenerator {
 
     public File createListFiles() throws IOException {
         File xml = Files.createTempFile("list-files", ".xml").toFile();
-        JAXB.marshal(new ObjectFactory().createListFiles(listFiles), xml);
+        JAXB.marshal(new ObjectFactory().createListFiles(listFiles),
+                new OutputStreamWriter(new FileOutputStream(xml), StandardCharsets.UTF_8)
+        );
         return xml;
     }
 
