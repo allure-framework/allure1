@@ -22,6 +22,7 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import ru.yandex.qatools.allure.storages.StepStorage;
 import ru.yandex.qatools.allure.storages.TestCaseStorage;
 import ru.yandex.qatools.allure.storages.TestSuiteStorage;
+import ru.yandex.qatools.allure.utils.AllureShutdownHook;
 
 import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeTestSuiteResult;
 
@@ -49,6 +50,9 @@ public class Allure {
      * Package private. Use Allure.LIFECYCLE singleton
      */
     Allure() {
+        Runtime.getRuntime().addShutdownHook(new Thread(
+                new AllureShutdownHook(testSuiteStorage.getStartedSuites())
+        ));
     }
 
     /**
@@ -174,13 +178,15 @@ public class Allure {
      */
     public void fire(TestSuiteFinishedEvent event) {
         String suiteUid = event.getUid();
-        TestSuiteResult testSuite = testSuiteStorage.get(suiteUid);
+
+        TestSuiteResult testSuite = testSuiteStorage.remove(suiteUid);
+        if (testSuite == null) {
+            return;
+        }
         event.process(testSuite);
 
         testSuite.setVersion(getVersion());
         testSuite.getLabels().add(AllureModelUtils.createProgrammingLanguageLabel());
-
-        testSuiteStorage.remove(suiteUid);
 
         writeTestSuiteResult(testSuite);
 

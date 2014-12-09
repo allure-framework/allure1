@@ -14,6 +14,7 @@ import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteEvent;
 import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
 import ru.yandex.qatools.allure.experimental.testdata.SimpleListener;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.model.TestCaseResult;
@@ -110,7 +111,8 @@ public class ListenersNotifierTest {
 
     @Test
     public void testsuiteFinishedEventTest() throws Exception {
-        allure.fire(new TestSuiteFinishedEvent(""));
+        allure.fire(new TestSuiteStartedEvent("uid", "name"));
+        allure.fire(new TestSuiteFinishedEvent("uid"));
         assertThat(listener.get(SimpleListener.EventType.TESTSUITE_FINISHED_EVENT), is(1));
     }
 

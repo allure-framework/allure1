@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.storages;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -38,7 +39,14 @@ public class TestSuiteStorage {
      *
      * @param uid to remove
      */
-    public void remove(String uid) {
-        testSuiteData.remove(uid);
+    public TestSuiteResult remove(String uid) {
+        return testSuiteData.remove(uid);
+    }
+
+    /**
+     * Return all started suites
+     */
+    public Set<Map.Entry<String, TestSuiteResult>> getStartedSuites() {
+        return testSuiteData.entrySet();
     }
 }
