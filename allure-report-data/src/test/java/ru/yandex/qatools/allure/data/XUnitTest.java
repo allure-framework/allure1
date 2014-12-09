@@ -10,7 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 import static ch.lambdaj.Lambda.*;
+import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 /**
@@ -116,5 +119,12 @@ public class XUnitTest {
         int xUnitTestCasesCount = sum(allureXUnitData.getTestSuites(), on(AllureTestSuite.class).getTestCases().size());
         int resultsTestCasesCount = sum(testSuiteResults, on(TestSuiteResult.class).getTestCases().size());
         assertThat(xUnitTestCasesCount, equalTo(resultsTestCasesCount));
+    }
+
+    @Test
+    public void dataShouldNotBeEmpty() {
+        assertThat(testSuiteResults, is(not(empty())));
+        List<TestCaseResult> testCases = flatten(extract(testSuiteResults, on(TestSuiteResult.class).getTestCases()));
+        assertThat(testCases, is(not(empty())));
     }
 }

@@ -4,6 +4,7 @@
     <test-cases>
         <test-case start="1412949540562" stop="1412949540660" status="broken">
             <name>test_raise_cyrilling</name>
+            <title>test_raise_cyrilling (невероятный тест кодировки!)</title>
             <description type="text">Этот тест выкидывает исключение с русскими буквами</description>
             <failure>
                 <message>Exception: Невероятная проблема!</message>
