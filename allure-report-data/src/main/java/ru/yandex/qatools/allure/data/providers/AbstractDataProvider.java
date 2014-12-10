@@ -35,6 +35,11 @@ public abstract class AbstractDataProvider implements DataProvider {
         }
     }
 
+    @Override
+    public DataProviderPhase getPhase() {
+        return DataProviderPhase.DEFAULT;
+    }
+
     protected long serialize(File outputDirectory, File body) throws IOException {
         try (Reader reader = new FileReader(body)) {
             return serialize(outputDirectory, getType(), getJsonFileName(), reader);
