@@ -81,4 +81,10 @@ angular.module('allure.filters', [])
             }
             return $sce.trustAsHtml(LINKY_URL_REGEXP.test(text) ? addLink(text) : text);
         };
+    }])
+    .filter('trustAsHtml', ['$sce', function($sce) {
+        "use strict";
+        return function(value) {
+            return $sce.trustAsHtml(''+value);
+        };
     }]);

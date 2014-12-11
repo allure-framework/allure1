@@ -2,11 +2,34 @@
 <ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1412949538852" stop="1412949559021" version="1.4.4-SNAPSHOT">
     <name>my.company.ScreenshotTest</name>
     <title>Search tests</title>
-    <description type="text">This testsuite has tests what always are passing</description>
+    <description type="markdown">
+### H3
+after this line we should collapse all of that
+
+вавыа
+#### H4
+This testsuite has tests what *always are passing*
+
+* first
+* second
+    1. subsecind
+    1. subsubsecind
+* third</description>
     <test-cases>
         <test-case start="1412949551164" stop="1412949558737" status="passed">
             <name>wildcardSearch</name>
             <title>Wildcard search test</title>
+            <description type="markdown">### h3 *italic* **bold**
+allure core ![https://img.shields.io/teamcity/http/teamcity.qatools.ru/s/allure_core_master_deploy.svg?style=flat](https://img.shields.io/teamcity/http/teamcity.qatools.ru/s/allure_core_master_deploy.svg?style=flat)
+[repository](https://github.com/allure-framework/allure-core)
+
+just http://yandex.ru
+
+* first
+* second
+    1. subsecind
+    1. subsubsecind
+* third</description>
             <steps>
                 <step start="1412949554710" stop="1412949555508" status="passed">
                     <name>openMainPage</name>

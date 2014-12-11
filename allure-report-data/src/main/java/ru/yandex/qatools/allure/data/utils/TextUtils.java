@@ -1,5 +1,7 @@
 package ru.yandex.qatools.allure.data.utils;
 
+import org.pegdown.Extensions;
+import org.pegdown.PegDownProcessor;
 import ru.yandex.qatools.allure.config.AllureConfig;
 
 import java.math.BigInteger;
@@ -112,5 +114,9 @@ public final class TextUtils {
 
     public static String getTestUrl(String name){
         return String.format(AllureConfig.newInstance().getTmsPattern(), name);
+    }
+
+    public static String processMarkdown(String rawText) {
+        return new PegDownProcessor(Extensions.ALL + Extensions.SUPPRESS_ALL_HTML).markdownToHtml(rawText);
     }
 }

@@ -43,27 +43,33 @@ angular.module('allure.directives', [])
         return {
             restrict: 'A',
             replace: 'true',
-            template: '<div>' +
-                '<span ng-bind="beginning" ng-class="{clickable: ending}" ng-click="toggleShow(!show)"></span> ' +
-                '<span ng-show="show" ng-bind="ending"></span> ' +
+            template: '<div ng-switch="escapeHtml">' +
+                '<span class="text-cut-beginning" ng-bind="beginning" ng-switch-default></span> ' +
+                '<span class="text-cut-ending" ng-bind="ending" ng-show="show" ng-switch-default></span> ' +
+
+                '<span class="text-cut-beginning" ng-bind-html="beginning | trustAsHtml" ng-switch-when="false"></span> ' +
+                '<span class="text-cut-ending" ng-bind-html="ending | trustAsHtml" ng-show="show" ng-switch-when="false"></span> ' +
+
                 '<span class="text-right">' +
-                    '<span ng-click="toggleShow(!show)" ng-show="ending" class="pull-right expand-btn btn-link clickable" ng-bind="showText"></span>' +
-                '</div>' +
-            '</div>',
+                '<span ng-click="toggleShow(!show)" ng-show="ending" class="pull-right expand-btn btn-link clickable" ng-bind="showText"></span>' +
+                '</span>' +
+                '<br ng-show="ending"/>' +
+                '</div>',
             scope: {
-                textCut: '='
+                textCut: '=',
+                escapeHtml: '@'
             },
             link: function($scope) {
                 $scope.toggleShow = function(show) {
                     $scope.show = show;
                     $scope.showText = show ? 'collapse...' : 'show full...';
                 };
-                var divider = '\n\n';
+                var divider = '\n';
                 $scope.toggleShow(false);
                 $scope.$watch('textCut', function(text) {
                     var index = (text || '').indexOf(divider);
                     if(index !== -1) {
-                        $scope.beginning = text.substr(0, index - 1);
+                        $scope.beginning = text.substr(0, index);
                         $scope.ending = text.substr(index + 1);
                     }
                     else {

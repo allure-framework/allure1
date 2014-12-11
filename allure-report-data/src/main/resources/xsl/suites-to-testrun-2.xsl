@@ -74,6 +74,20 @@
             <xsl:apply-templates select="@*|node()"/>
         </xsl:element>
     </xsl:template>
+    
+    <xsl:template match="description">
+        <xsl:element name="description">
+            <xsl:attribute name="type" select="@type"/>
+            <xsl:choose>
+                <xsl:when test="@type='markdown'">
+                    <xsl:value-of select="utils:processMarkdown(text())"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="text()"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:element>
+    </xsl:template>
 
     <xsl:template name="add-time-node-for-test-run">
         <xsl:choose>

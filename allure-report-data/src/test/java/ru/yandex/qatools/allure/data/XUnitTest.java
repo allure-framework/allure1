@@ -36,22 +36,6 @@ public class XUnitTest {
     }
 
     @Test
-    public void xUnitSuiteDescriptionTest() throws Exception {
-        int size = testSuiteResults.size();
-        for (int i = 0; i < size; i++) {
-            Description xUnitDescription = allureXUnitData.getTestSuites().get(i).getDescription();
-            Description resultsDescription = testSuiteResults.get(i).getDescription();
-            assertThat(xUnitDescription == null, equalTo(resultsDescription == null));
-            if (xUnitDescription != null && resultsDescription != null) {
-                assertThat(
-                        xUnitDescription.getValue(),
-                        equalTo(resultsDescription.getValue())
-                );
-            }
-        }
-    }
-
-    @Test
     public void xUnitSeverityNotNullTest() {
         for (AllureTestSuite testSuite : allureXUnitData.getTestSuites()) {
             for (AllureTestCaseInfo testCase : testSuite.getTestCases()) {
