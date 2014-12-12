@@ -28,7 +28,8 @@
     </div>
 </div>
 <div class="testcase__content" on-keynav="select($direction)">
-    <div class="testcase__description preformated-text" text-cut="testcase.description.value" ng-show="testcase.description.value"></div>
+    <div class="testcase__description" text-cut="testcase.description.value" ng-show="testcase.description.value"
+            escape-html="{{testcase.description.type.toLowerCase() != 'markdown'}}"></div>
     <div ng-include="'testcaseFailure.tpl'"></div>
     <div class="environments">
         <div class="environment" ng-repeat="property in testcase.parameters | filter:{'kind':'ENVIRONMENT_VARIABLE'}">

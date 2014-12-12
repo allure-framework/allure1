@@ -139,6 +139,13 @@
             <artifactId>commons-io</artifactId>
         </dependency>
 
+        <!--markdown support-->
+        <dependency>
+            <groupId>org.pegdown</groupId>
+            <artifactId>pegdown</artifactId>
+            <version>1.4.2</version>
+        </dependency>
+
         <!--Testing-->
         <dependency>
             <groupId>junit</groupId>

@@ -12,7 +12,7 @@
     </h3>
 </div>
 <div class="alert alert-bordered" ng-show="testsuite.description">
-    <b>{{'testsuite.DESCRIPTION' | translate}}</b><span class="preformated-text" text-cut="testsuite.description.value"></span>
+    <b>{{'testsuite.DESCRIPTION' | translate}}</b><span text-cut="testsuite.description.value" escape-html="{{testsuite.description.type.toLowerCase() != 'markdown'}}"></span>
 </div>
 <div status-switcher statuses="showStatuses" class="pull-right" statistic="testsuite.statistic"></div>
 <div testcases-list="testsuite.testCases" statuses="showStatuses" selected-uid="testcase.uid"></div>

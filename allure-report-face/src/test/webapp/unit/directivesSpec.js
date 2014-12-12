@@ -15,23 +15,37 @@ describe('Allure directive', function () {
     }
 
     beforeEach(module('allure.directives'));
+    beforeEach(module('allure.filters'));
 
     describe('textCut', function() {
         function getBeginning() {
-            return elem.find('[ng-bind="beginning"]');
+            return elem.find('.text-cut-beginning');
         }
         function getToggleButton() {
             return elem.find('[ng-bind="showText"]');
         }
         function getEnding() {
-            return elem.find('[ng-bind="ending"]');
+            return elem.find('.text-cut-ending');
         }
         it('should convert undefined to empty string', function() {
             createElement('<div text-cut="text"></div>', {});
             expect(getBeginning().text()).toBe('');
         });
+
+        it('should escape text by default', function() {
+            createElement('<div text-cut="text"></div>', {text: '<br/>\n<div/>'});
+            expect(getBeginning().html()).toBe('&lt;br/&gt;');
+            expect(getEnding().html()).toBe('&lt;div/&gt;');
+        });
+
+        it('should not escape text when specified', function() {
+            createElement('<div text-cut="text" escape-html="false"></div>', {text: '<br/>\n<div></div>'});
+            expect(getBeginning().html()).toBe('<br>');
+            expect(getEnding().html()).toBe('<div></div>');
+        });
+
         it('should split text and hide ending', function() {
-            createElement('<div text-cut="text"></div>', {text: 'line\n\n2nd line'});
+            createElement('<div text-cut="text"></div>', {text: 'line\n2nd line'});
             expect(getToggleButton()).not.toHaveClass('ng-hide');
             expect(getEnding()).toHaveClass('ng-hide');
         });
@@ -43,12 +57,14 @@ describe('Allure directive', function () {
         });
 
         it('should toggle all text by button', function() {
-            createElement('<div text-cut="text"></div>', {text: 'line\n\n2nd line'});
+            createElement('<div text-cut="text"></div>', {text: 'line\n2nd line'});
             getToggleButton().click();
             expect(getEnding()).not.toHaveClass('ng-hide');
             getToggleButton().click();
             expect(getEnding()).toHaveClass('ng-hide');
         });
+
+
     });
 
     describe('onKeynav', function() {
