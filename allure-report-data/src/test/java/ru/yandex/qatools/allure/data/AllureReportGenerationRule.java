@@ -2,17 +2,20 @@ package ru.yandex.qatools.allure.data;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.junit.rules.ExternalResource;
 import ru.yandex.qatools.allure.commons.AllureFileUtils;
-import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.bind.JAXB;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFiles;
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
 
@@ -21,6 +24,8 @@ import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFile
  *         Date: 12/10/13
  */
 public class AllureReportGenerationRule extends ExternalResource {
+
+    private boolean deleteResultsDirectory = false;
 
     private final File reportDir;
 
@@ -33,6 +38,11 @@ public class AllureReportGenerationRule extends ExternalResource {
     private List<AllureTestCase> allureTestCases;
 
     private List<TestSuiteResult> testSuiteResults;
+
+    public AllureReportGenerationRule(String... resourceNames) {
+        this(FileUtils.getTempDirectory(), createResultsDirectoryFromResources(resourceNames));
+        deleteResultsDirectory = true;
+    }
 
     public AllureReportGenerationRule(File resultsDirectory) {
         this(FileUtils.getTempDirectory(), resultsDirectory);
@@ -51,6 +61,9 @@ public class AllureReportGenerationRule extends ExternalResource {
 
     protected void after() {
         FileUtils.deleteQuietly(this.reportDir);
+        if (deleteResultsDirectory) {
+            FileUtils.deleteQuietly(this.resultsDir);
+        }
     }
 
     public AllureXUnit getXUnitData() throws Exception {
@@ -90,4 +103,18 @@ public class AllureReportGenerationRule extends ExternalResource {
         return testSuiteResults;
     }
 
+    private static File createResultsDirectoryFromResources(String... resources) {
+        try {
+            File resultsDirectory = Files.createTempDirectory("results").toFile();
+            for (String resource : resources) {
+                IOUtils.copy(
+                        AllureReportGenerationRule.class.getClassLoader().getResourceAsStream(resource),
+                        new FileOutputStream(new File(resultsDirectory, UUID.randomUUID().toString() + "-testsuite.xml"))
+                );
+            }
+            return resultsDirectory;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
