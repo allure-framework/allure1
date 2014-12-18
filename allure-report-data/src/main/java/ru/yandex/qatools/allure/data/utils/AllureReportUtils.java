@@ -7,15 +7,12 @@ import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import ru.yandex.qatools.allure.data.AllureReportInfo;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
-import javax.xml.bind.JAXB;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -36,6 +33,7 @@ public final class AllureReportUtils {
      * Try to delete given file. Deletes the file or directory denoted by this abstract pathname.
      * If this pathname denotes a directory, then the directory must be empty in
      * order to be deleted.
+     *
      * @param file to delete
      * @return true if file deleted successfully
      */

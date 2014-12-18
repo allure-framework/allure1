@@ -25,7 +25,7 @@ import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFilesByRegex;
  */
 public class EnvironmentProvider extends AbstractDataProvider {
 
-    public static final AllureConfig ALLURE_CONFIG = AllureConfig.newInstance();
+    private static final AllureConfig ALLURE_CONFIG = AllureConfig.newInstance();
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -33,9 +33,9 @@ public class EnvironmentProvider extends AbstractDataProvider {
 
     public static final String ENVIRONMENT_JSON = "environment.json";
 
-    public Collection<File> environmentXml = new ArrayList<>();
+    private Collection<File> environmentXml = new ArrayList<>();
 
-    public Collection<File> environmentProperties = new ArrayList<>();
+    private Collection<File> environmentProperties = new ArrayList<>();
 
     @Override
     public long provide(File testPack, File[] inputDirectories, File outputDirectory) {
