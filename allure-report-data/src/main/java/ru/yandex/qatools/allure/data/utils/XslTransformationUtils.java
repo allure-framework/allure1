@@ -4,6 +4,7 @@ import net.sf.saxon.Controller;
 import net.sf.saxon.TransformerFactoryImpl;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
+import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.TransformerException;
@@ -80,6 +81,7 @@ public final class XslTransformationUtils {
         try {
             transformer = (Controller) new TransformerFactoryImpl().newTransformer(xsl);
             Result result = new StreamResult(resultWriter);
+            transformer.setOutputProperty(OutputKeys.ENCODING, StandardCharsets.UTF_8.name());
             transformer.transform(xml, result);
         } catch (TransformerException e) {
             throw new ReportGenerationException(e);
