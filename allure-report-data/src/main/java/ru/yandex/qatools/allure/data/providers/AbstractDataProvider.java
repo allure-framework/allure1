@@ -4,10 +4,8 @@ import ru.yandex.qatools.allure.data.ReportGenerationException;
 import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 
 import javax.xml.bind.JAXB;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.deleteFile;
 import static ru.yandex.qatools.allure.data.utils.XslTransformationUtils.applyTransformations;
@@ -36,7 +34,7 @@ public abstract class AbstractDataProvider implements DataProvider {
     }
 
     protected long serialize(File outputDirectory, File body) throws IOException {
-        try (Reader reader = new FileReader(body)) {
+        try (Reader reader = new InputStreamReader(new FileInputStream(body), StandardCharsets.UTF_8.name())) {
             return serialize(outputDirectory, getType(), getJsonFileName(), reader);
         }
     }
