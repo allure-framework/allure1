@@ -1,16 +1,13 @@
 package ru.yandex.qatools.allure.data;
 
-import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.yandex.qatools.allure.data.utils.XslTransformationUtils;
 
 import javax.xml.bind.JAXB;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
