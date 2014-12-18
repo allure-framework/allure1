@@ -3,14 +3,11 @@ package ru.yandex.qatools.allure.data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.bind.JAXB;
+import javax.xml.bind.*;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Collection;
@@ -85,9 +82,15 @@ public class TestRunGenerator {
 
     public File createListFiles() throws IOException {
         File xml = Files.createTempFile("list-files", ".xml").toFile();
-        JAXB.marshal(new ObjectFactory().createListFiles(listFiles),
-                new OutputStreamWriter(new FileOutputStream(xml), StandardCharsets.UTF_8)
-        );
+        JAXBElement<ListFiles> actions = new ObjectFactory().createListFiles(listFiles);
+        try {
+            JAXBContext jaxbContext = JAXBContext.newInstance(ListFiles.class.getPackage().getName());
+            Marshaller marshaller = jaxbContext.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_ENCODING, StandardCharsets.UTF_8.name());
+            marshaller.marshal(actions, xml);
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
         return xml;
     }
 
