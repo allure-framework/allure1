@@ -3,6 +3,8 @@ package ru.yandex.qatools.allure.data;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.FileUtils;
 import org.junit.rules.ExternalResource;
+import ru.yandex.qatools.allure.commons.AllureFileUtils;
+import ru.yandex.qatools.allure.data.utils.AllureReportUtils;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.bind.JAXB;
@@ -10,6 +12,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFiles;
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
 
@@ -26,6 +29,8 @@ public class AllureReportGenerationRule extends ExternalResource {
     private AllureXUnit allureXUnit;
 
     private AllureDefects allureDefects;
+
+    private List<AllureTestCase> allureTestCases;
 
     private List<TestSuiteResult> testSuiteResults;
 
@@ -62,6 +67,17 @@ public class AllureReportGenerationRule extends ExternalResource {
             allureDefects = mapper.readValue(new File(reportDir, "data/defects.json"), AllureDefects.class);
         }
         return allureDefects;
+    }
+
+    public List<AllureTestCase> getTestCasesData() throws Exception {
+        if (allureTestCases == null) {
+            allureTestCases = new ArrayList<>();
+            ObjectMapper mapper = new ObjectMapper();
+            for (File testCase : AllureFileUtils.listFilesByRegex(".*-testcase\\.json", new File(reportDir, "data"))) {
+                allureTestCases.add(mapper.readValue(testCase, AllureTestCase.class));
+            }
+        }
+        return allureTestCases;
     }
 
     public List<TestSuiteResult> getTestSuiteResults() {

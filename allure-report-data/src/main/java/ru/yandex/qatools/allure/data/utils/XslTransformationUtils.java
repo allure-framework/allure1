@@ -11,11 +11,14 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.deleteFile;
@@ -50,7 +53,7 @@ public final class XslTransformationUtils {
     public static File applyTransformation(InputStream xml, String xslResourceName) {
         try {
             File result = Files.createTempFile("xsl-transform", ".xml").toFile();
-            try (Writer resultWriter = new FileWriter(result)) {
+            try (Writer resultWriter = new OutputStreamWriter(new FileOutputStream(result), StandardCharsets.UTF_8)) {
                 applyTransformation(xml, xslResourceName, resultWriter);
                 return result;
             }
