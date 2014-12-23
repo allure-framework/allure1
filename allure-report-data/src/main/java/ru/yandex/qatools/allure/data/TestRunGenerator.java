@@ -8,11 +8,11 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
@@ -36,16 +36,26 @@ public class TestRunGenerator {
 
     public static final String SUITES_TO_TEST_RUN_XSL_3 = "xsl/suites-to-testrun-3.xsl";
 
+    public static final String MIGRATION_1 = "xsl/migrations/13-14.move-severity-to-labels.xsl";
+
     private final ListFiles listFiles;
 
     private final boolean validateXML;
 
     public TestRunGenerator(boolean validateXML, File... dirs) {
         Collection<File> testSuitesFiles = listTestSuiteFiles(dirs);
-
-        this.listFiles = createListFiles(testSuitesFiles);
+        Collection<File> migrated = migrate(testSuitesFiles);
+        this.listFiles = createListFiles(migrated);
         this.validateXML = validateXML;
 
+    }
+
+    private Collection<File> migrate(Collection<File> files) {
+        Collection<File> result = new ArrayList<>();
+        for (File file : files) {
+            result.add(applyTransformations(file, MIGRATION_1));
+        }
+        return result;
     }
 
     private ListFiles createListFiles(Collection<File> files) {
@@ -58,6 +68,7 @@ public class TestRunGenerator {
                 }
                 lf.getFiles().add(file.toURI().toString());
             } catch (Exception e) {
+                deleteFile(file);
                 logger.error("File " + file + " skipped.", e);
             }
         }
