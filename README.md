@@ -20,5 +20,5 @@ Currently Allure Framework is widely used in internal testing of [Yandex](http:/
 * [Releases and Changelog](https://github.com/allure-framework/allure-core/releases)
 
 ## Contact us
-Mailing list: [allure@yandex-team.ru](mailto:allure@yandex-team.ru)
-Gitter chat room: [https://gitter.im/allure-framework/allure-core](https://gitter.im/allure-framework/allure-core)
+* Mailing list: [allure@yandex-team.ru](mailto:allure@yandex-team.ru)
+* Gitter chat room: [https://gitter.im/allure-framework/allure-core](https://gitter.im/allure-framework/allure-core)
