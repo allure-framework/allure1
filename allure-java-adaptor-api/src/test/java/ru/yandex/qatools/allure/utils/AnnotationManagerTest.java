@@ -150,7 +150,8 @@ public class AnnotationManagerTest {
                 createSeverityLabel(SeverityLevel.BLOCKER),
                 createIssueLabel("some.simple.issue"),
                 createIssueLabel("some.nested.issue.1"),
-                createIssueLabel("some.nested.issue.2")
+                createIssueLabel("some.nested.issue.2"),
+                createTestLabel("test.case.id")
         ));
     }
 

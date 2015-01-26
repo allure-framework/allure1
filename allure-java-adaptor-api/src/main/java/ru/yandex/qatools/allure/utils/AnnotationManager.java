@@ -6,6 +6,7 @@ import ru.yandex.qatools.allure.annotations.Issue;
 import ru.yandex.qatools.allure.annotations.Issues;
 import ru.yandex.qatools.allure.annotations.Severity;
 import ru.yandex.qatools.allure.annotations.Stories;
+import ru.yandex.qatools.allure.annotations.TestCaseId;
 import ru.yandex.qatools.allure.annotations.Title;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
@@ -29,6 +30,7 @@ import static ru.yandex.qatools.allure.config.AllureModelUtils.createHostLabel;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createIssueLabel;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createSeverityLabel;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createStoryLabel;
+import static ru.yandex.qatools.allure.config.AllureModelUtils.createTestLabel;
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createThreadLabel;
 
 /**
@@ -150,6 +152,10 @@ public class AnnotationManager {
             }
         }
 
+        if (isTestCaseIdAnnotationPresent()) {
+            event.getLabels().add(createTestLabel(getTestCaseId()));
+        }
+
         event.getLabels().addAll(getStoryLabels());
         event.getLabels().addAll(getFeatureLabels());
         withExecutorInfo(event);
@@ -232,6 +238,10 @@ public class AnnotationManager {
         return isAnnotationPresent(Issue.class);
     }
 
+    public boolean isTestCaseIdAnnotationPresent() {
+        return isAnnotationPresent(TestCaseId.class);
+    }
+
     /**
      * Find first {@link ru.yandex.qatools.allure.annotations.Title} annotation
      *
@@ -274,6 +284,11 @@ public class AnnotationManager {
     public String getIssueKey() {
         Issue issue = getAnnotation(Issue.class);
         return issue == null ? null : issue.value();
+    }
+
+    private String getTestCaseId() {
+        TestCaseId testCaseId = getAnnotation(TestCaseId.class);
+        return testCaseId == null ? null : testCaseId.value();
     }
 
     /**
@@ -352,6 +367,5 @@ public class AnnotationManager {
         Annotation value = annotations.get(annotationType);
         return annotationType.cast(value);
     }
-
 
 }

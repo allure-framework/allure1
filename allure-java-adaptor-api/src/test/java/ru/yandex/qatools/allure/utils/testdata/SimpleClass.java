@@ -25,6 +25,7 @@ public class SimpleClass {
         @Issue("some.nested.issue.1"),
         @Issue("some.nested.issue.2")
     })
+    @TestCaseId("test.case.id")
     public void simpleMethod() {
     }
     
