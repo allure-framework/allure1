@@ -4,12 +4,12 @@ import ru.yandex.qatools.allure.data.providers.DataProvider;
 import ru.yandex.qatools.allure.data.utils.Async;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.createDirectory;
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.deleteFile;
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.writeAllureReportInfo;
+import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.*;
 import static ru.yandex.qatools.allure.data.utils.ServiceLoaderUtils.load;
 
 
@@ -53,6 +53,7 @@ public class AllureReportGenerator {
         final File testRun = testRunGenerator.generate();
 
         List<DataProvider> dataProviders = load(getClassLoader(), DataProvider.class);
+        Collections.sort(dataProviders, new DataProviderComparator());
 
         new Async<DataProvider>() {
             @Override
@@ -85,4 +86,14 @@ public class AllureReportGenerator {
     public File[] getInputDirectories() {
         return inputDirectories;
     }
+
+    protected static class DataProviderComparator implements Comparator<DataProvider> {
+
+        @Override
+        public int compare(DataProvider dp1, DataProvider dp2) {
+            return dp1.getPhase().compareTo(dp2.getPhase());
+        }
+
+    }
+
 }

@@ -36,6 +36,11 @@ public class AttachmentsProvider implements DataProvider {
         return size;
     }
 
+    @Override
+    public DataProviderPhase getPhase() {
+        return DataProviderPhase.DEFAULT;
+    }
+
     /**
      * Copies a file to a new location preserving the file date using
      * {@link org.apache.commons.io.FileUtils#copyFile(java.io.File, java.io.File)}

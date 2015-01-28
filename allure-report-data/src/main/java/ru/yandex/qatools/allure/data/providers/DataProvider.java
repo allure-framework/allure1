@@ -21,4 +21,12 @@ public interface DataProvider {
      */
     long provide(File testPack, File[] inputDirectories, File outputDirectory);
 
+    /**
+     * Provide phase in which data provider will be executed.
+     * Please see {@link DataProviderPhase} for possible values.
+     *
+     * @return ordering number
+     */
+    DataProviderPhase getPhase();
+
 }
