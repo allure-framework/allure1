@@ -2,7 +2,7 @@
     {{'testcase.TESTCASE' | translate}}<span ng-show="testcase.name" class="text-muted">: {{testcase.name}} <copy-button text="testcase.name"></copy-button></span>
 </div>
 <div class="pane__header title-status-{{testcase.status | lowercase}}">
-    <h3 title="testcase.name">
+    <h3 title="{{testcase.name}}">
         <div class="pane__header_controls pull-right">
             <span class="fa fa-expand clickable" tooltip="{{'tooltip.EXPAND' | translate}}" ng-hide="isState('testcase.expanded')" ng-click="go('testcase.expanded')"></span>
             <span class="fa fa-compress clickable" tooltip="{{'tooltip.COLLAPSE' | translate}}" ng-show="isState('testcase.expanded')" ng-click="go('testcase')"></span>

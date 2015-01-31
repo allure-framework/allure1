@@ -70,7 +70,7 @@ angular.module('allure.charts.duration', ['allure.charts.util']).directive('dura
 
         this.tooltip = new d3Tooltip(bars,
             '<div><strong><span>{{ \'graph.CASES\' | translate:"{ amount: testcases.length }":"messageformat" }}</span> {{status | lowercase}}</strong></div>' +
-                '<ul><li ng-repeat="testcase in testcases | limitTo:10" title="testcase.name">{{testcase.name | truncate}}</li></ul>' +
+                '<ul><li ng-repeat="testcase in testcases | limitTo:10" title="{{testcase.name}}">{{testcase.name | truncate}}</li></ul>' +
                 '<div ng-if="testcases.length > 10"><i>and {{testcases.length-10}} more</i></div>',
             {tooltipCls: 'd3-tooltip d3-tooltip-list'}
         );
