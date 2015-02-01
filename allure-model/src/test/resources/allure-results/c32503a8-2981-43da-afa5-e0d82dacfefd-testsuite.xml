@@ -7,7 +7,7 @@ many lines in description</description>
     <test-cases>
         <test-case start="1412949539800" stop="1412949540461" status="failed">
             <name>longAssertionTest</name>
-            <title>Test with long assertion text</title>
+            <title>Test with long assertion text an a lot of useless words, but maybe someone may find it interesting</title>
             <failure>
                 <message>AssertionError: 
 Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
