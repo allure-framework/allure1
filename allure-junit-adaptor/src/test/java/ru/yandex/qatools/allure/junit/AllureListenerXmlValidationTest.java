@@ -1,17 +1,11 @@
 package ru.yandex.qatools.allure.junit;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.JUnitCore;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.junit.testdata.SimpleTestClass;
 import ru.yandex.qatools.allure.junit.testdata.TestClassWithExceptionInBefore;
-import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
@@ -28,12 +22,7 @@ import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFile
  *         Date: 20.01.14
  */
 @RunWith(Parameterized.class)
-public class AllureListenerXmlValidationTest {
-
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    public File resultsDirectory;
+public class AllureListenerXmlValidationTest extends BasicListenerTest {
 
     public Class<?> testClass;
 
@@ -44,20 +33,11 @@ public class AllureListenerXmlValidationTest {
     @Parameterized.Parameters
     public static Collection<Object[]> data() {
         return Arrays.asList(
-                new Object[]{SimpleTestClass.class},
-                new Object[]{TestClassWithExceptionInBefore.class}
+                                new Object[]{SimpleTestClass.class},
+                                new Object[]{TestClassWithExceptionInBefore.class}
         );
     }
 
-    @Before
-    public void setUp() throws Exception {
-        resultsDirectory = folder.newFolder();
-        AllureResultsUtils.setResultsDirectory(resultsDirectory);
-
-        JUnitCore core = new JUnitCore();
-        core.addListener(new AllureRunListener());
-        core.run(testClass);
-    }
 
     @Test
     public void suiteFilesCountTest() throws Exception {
@@ -73,9 +53,9 @@ public class AllureListenerXmlValidationTest {
         }
     }
 
-    @After
-    public void tearDown() {
-        AllureResultsUtils.setResultsDirectory(null);
+    @Override
+    public Class<?> getTestClass() {
+        return testClass;
     }
 
 }
