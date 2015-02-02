@@ -47,4 +47,38 @@ public class AllureModelUtilsTest {
         assertThat(label.getName(), is(LabelName.TEST_ID.value()));
     }
 
+    @Test
+    public void shouldCreateProgrammingLabel() throws Exception {
+        Label label = AllureModelUtils.createProgrammingLanguageLabel();
+        assertThat(label.getName(), is(LabelName.LANGUAGE.value()));
+        assertThat(label.getValue(), is("JAVA"));
+    }
+
+    @Test
+    public void shouldCreateFrameworkLabel() throws Exception {
+        Label label = AllureModelUtils.createTestFrameworkLabel("framework");
+        assertThat(label.getName(), is(LabelName.FRAMEWORK.value()));
+        assertThat(label.getValue(), is("framework"));
+    }
+
+    @Test
+    public void shouldCreateIssueLabel() throws Exception {
+        Label label = AllureModelUtils.createIssueLabel("issue");
+        assertThat(label.getName(), is(LabelName.ISSUE.value()));
+        assertThat(label.getValue(), is("issue"));
+    }
+
+    @Test
+    public void shouldCreateHostLabel() throws Exception {
+        Label label = AllureModelUtils.createHostLabel("host");
+        assertThat(label.getName(), is(LabelName.HOST.value()));
+        assertThat(label.getValue(), is("host"));
+    }
+
+    @Test
+    public void shouldCreateThreadLabel() throws Exception {
+        Label label = AllureModelUtils.createThreadLabel("thread");
+        assertThat(label.getName(), is(LabelName.THREAD.value()));
+        assertThat(label.getValue(), is("thread"));
+    }
 }

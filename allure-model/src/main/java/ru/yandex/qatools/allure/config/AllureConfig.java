@@ -78,51 +78,51 @@ public class AllureConfig {
         PropertyLoader.populate(this);
     }
 
-    public String getSchemaFileName() {
+    public String getSchemaFileName() { // NOSONAR
         return schemaFileName;
     }
 
-    public String getRemoveAttachments() {
+    public String getRemoveAttachments() { // NOSONAR
         return removeAttachments;
     }
 
-    public String getTestSuiteFileRegex() {
+    public String getTestSuiteFileRegex() { // NOSONAR
         return testSuiteFileRegex;
     }
 
-    public String getTestSuiteFileSuffix() {
+    public String getTestSuiteFileSuffix() { // NOSONAR
         return testSuiteFileSuffix;
     }
 
-    public String getTestSuiteFileExtension() {
+    public String getTestSuiteFileExtension() { // NOSONAR
         return testSuiteFileExtension;
     }
 
-    public String getAttachmentFileRegex() {
+    public String getAttachmentFileRegex() { // NOSONAR
         return attachmentFileRegex;
     }
 
-    public String getAttachmentFileSuffix() {
+    public String getAttachmentFileSuffix() { // NOSONAR
         return attachmentFileSuffix;
     }
 
-    public int getMaxTitleLength() {
+    public int getMaxTitleLength() { // NOSONAR
         return maxTitleLength;
     }
 
-    public String getEnvironmentXmlFileRegex() {
+    public String getEnvironmentXmlFileRegex() { // NOSONAR
         return environmentXmlFileRegex;
     }
 
-    public String getEnvironmentPropertiesFileRegex() {
+    public String getEnvironmentPropertiesFileRegex() { // NOSONAR
         return environmentPropertiesFileRegex;
     }
 
-    public File getResultsDirectory() {
+    public File getResultsDirectory() { // NOSONAR
         return resultsDirectory;
     }
 
-    public Charset getAttachmentsEncoding() {
+    public Charset getAttachmentsEncoding() { // NOSONAR
         try {
             return Charset.forName(attachmentsEncoding);
         } catch (Exception e) {
@@ -131,23 +131,23 @@ public class AllureConfig {
         }
     }
 
-    public static File getDefaultResultsDirectory() {
+    public static File getDefaultResultsDirectory() { // NOSONAR
         return DEFAULT_RESULTS_DIRECTORY;
     }
 
-    public String getVersion() {
+    public String getVersion() { // NOSONAR
         return version;
     }
 
-    public String getIssueTrackerPattern() {
+    public String getIssueTrackerPattern() { // NOSONAR
         return issueTrackerPattern;
     }
 
-    public String getTmsPattern() {
+    public String getTmsPattern() { // NOSONAR
         return tmsPattern;
     }
 
-    public static AllureConfig newInstance() {
+    public static AllureConfig newInstance() { // NOSONAR
         return new AllureConfig();
     }
 
