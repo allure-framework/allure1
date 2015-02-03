@@ -50,12 +50,14 @@
   }
   &_controls {
     display: none;
-    .pane_col_last & {
-      display: block;
-    }
     opacity: 0.5;
     transition: opacity 0.5s;
     padding-right: 20px;
+    font-size: 24px;
+    margin-left: 10px;
+    .pane_col_last & {
+      display: block;
+    }
     .fa:hover {
       opacity: 0.8;
     }
@@ -63,4 +65,9 @@
   &:hover &_controls {
     opacity: 1;
   }
+}
+.pane__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
