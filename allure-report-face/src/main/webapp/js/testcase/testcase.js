@@ -26,12 +26,12 @@ angular.module('allure.testcase.controllers', [])
                 case 'text/html':
                     return "html";
             }
-        }
+        };
     })
     .controller('TestcaseCtrl', function($scope, $state, testcase, attachmentType, treeUtils, Collection) {
         "use strict";
         function isFailed(step) {
-            return ['FAILED', 'BROKEN', 'CANCELED'].indexOf(step.status) !== -1;
+            return ['FAILED', 'BROKEN', 'CANCELED', 'PENDING'].indexOf(step.status) !== -1;
         }
         function getAllAttachments() {
             var attachments = [];
@@ -103,14 +103,14 @@ angular.module('allure.testcase.controllers', [])
     .controller('StepCtrl', function($scope, $locale) {
         "use strict";
         function isFailed(step) {
-            return ['FAILED', 'BROKEN', 'SKIPPED'].indexOf(step.status) !== -1;
+            return ['FAILED', 'BROKEN', 'CANCELED', 'PENDING'].indexOf(step.status) !== -1;
         }
         $scope.getStepClass = function(step) {
             if(isFailed(step)) {
                 return 'text-status-'+step.status.toLowerCase();
             }
             return '';
-        };        
+        };   
         $scope.toggleExpand = function() {
             $scope.expanded = !$scope.expanded;
         };
