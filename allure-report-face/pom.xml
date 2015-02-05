@@ -5,7 +5,7 @@
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.4.6-SNAPSHOT</version>
+        <version>1.4.6</version>
     </parent>
 
     <artifactId>allure-report-face</artifactId>
