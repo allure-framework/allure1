@@ -140,6 +140,12 @@ final class PluginUtils {
         stats.total++;
     }
 
+    static def eq(Statistic stats, Statistic other) {
+        use(InvokerHelper) {
+            stats.getProperties() == other.getProperties();
+        }
+    }
+
 //    Other
 
     static def copy(Object from, Object to) {

@@ -63,7 +63,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
                 result.suite = new AllureTestSuiteInfo(
                         uid: suiteUids[source.suiteName],
                         name: source.suiteName,
-                        title: source.suiteTitle ?: TextUtils.humanize(source.suiteName)
+                        title: source.suiteTitle ?: source.suiteName ? TextUtils.humanize(source.suiteName) : "Unknown"
                 );
             }
 

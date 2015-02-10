@@ -55,8 +55,8 @@ class XUnitTest {
         assert suite.time.stop == 10
         assert suite.time.duration == 9
 
-        use(InvokerHelper) {
-            assert suite.statistic.getProperties() == new Statistic(passed: 1).getProperties()
+        use(PluginUtils) {
+            assert suite.statistic.eq(new Statistic(passed: 1, total: 1))
         }
 
         assert suite.testCases.size() == 1
@@ -106,8 +106,8 @@ class XUnitTest {
         assert suite1.time.stop == 10
         assert suite1.time.duration == 8
 
-        use(InvokerHelper) {
-            assert suite1.statistic.getProperties() == new Statistic(passed: 1, failed: 1).getProperties()
+        use(PluginUtils) {
+            assert suite1.statistic.eq(new Statistic(passed: 1, failed: 1, total: 2))
         }
 
         assert suite1.testCases.size() == 2
@@ -122,8 +122,8 @@ class XUnitTest {
         assert suite2.time.stop == 15
         assert suite2.time.duration == 8
 
-        use(InvokerHelper) {
-            assert suite2.statistic.getProperties() == new Statistic(broken: 1).getProperties()
+        use(PluginUtils) {
+            assert suite2.statistic.eq(new Statistic(broken: 1, total: 1))
         }
 
         assert suite2.testCases.size() == 1

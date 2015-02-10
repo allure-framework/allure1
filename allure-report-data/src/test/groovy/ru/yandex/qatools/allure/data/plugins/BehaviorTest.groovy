@@ -37,16 +37,16 @@ class BehaviorTest {
         assert feature.title == DEFAULT_FEATURE
         assert feature.stories.size() == 1
 
-        use(InvokerHelper) {
-            assert feature.statistic.getProperties() == new Statistic(failed: 1).getProperties()
+        use(PluginUtils) {
+            assert feature.statistic.eq(new Statistic(failed: 1, total: 1))
         }
 
         def story = feature.stories[0]
         assert story.title == DEFAULT_STORY
         assert story.testCases.size() == 1
 
-        use(InvokerHelper) {
-            assert story.statistic.getProperties() == new Statistic(failed: 1).getProperties()
+        use(PluginUtils) {
+            assert story.statistic.eq(new Statistic(failed: 1, total: 1))
         }
 
         def info = story.testCases[0]
@@ -79,16 +79,16 @@ class BehaviorTest {
         assert feature.title == "feature"
         assert feature.stories.size() == 1
 
-        use(InvokerHelper) {
-            assert feature.statistic.getProperties() == new Statistic(passed: 1).getProperties()
+        use(PluginUtils) {
+            assert feature.statistic.eq(new Statistic(passed: 1, total: 1))
         }
 
         def story = feature.stories[0]
         assert story.title == DEFAULT_STORY
         assert story.testCases.size() == 1
 
-        use(InvokerHelper) {
-            assert story.statistic.getProperties() == new Statistic(passed: 1).getProperties()
+        use(PluginUtils) {
+            assert story.statistic.eq(new Statistic(passed: 1, total: 1))
         }
 
         def info = story.testCases[0]
@@ -112,16 +112,16 @@ class BehaviorTest {
         assert feature.title == DEFAULT_FEATURE
         assert feature.stories.size() == 1
 
-        use(InvokerHelper) {
-            assert feature.statistic.getProperties() == new Statistic(broken: 1).getProperties()
+        use(PluginUtils) {
+            assert feature.statistic.eq(new Statistic(broken: 1, total: 1))
         }
 
         def story = feature.stories[0]
         assert story.title == "story"
         assert story.testCases.size() == 1
 
-        use(InvokerHelper) {
-            assert story.statistic.getProperties() == new Statistic(broken: 1).getProperties()
+        use(PluginUtils) {
+            assert story.statistic.eq(new Statistic(broken: 1, total: 1))
         }
 
         def info = story.testCases[0]
@@ -147,8 +147,8 @@ class BehaviorTest {
         assert features.collect { it.title }.containsAll(["feature1", "feature2"])
         assert features.each {
             item ->
-                use(InvokerHelper) {
-                    assert item.statistic.getProperties() == new Statistic(broken: 2).getProperties()
+                use(PluginUtils) {
+                    assert item.statistic.eq(new Statistic(broken: 2, total: 2))
                 }
         }
 
@@ -159,8 +159,8 @@ class BehaviorTest {
         features.each {
             it.stories.each {
                 item ->
-                    use(InvokerHelper) {
-                        assert item.statistic.getProperties() == new Statistic(broken: 1).getProperties()
+                    use(PluginUtils) {
+                        assert item.statistic.eq(new Statistic(broken: 1, total: 1))
                     }
                     assert item.testCases.size() == 1
                     def info = item.testCases[0]
