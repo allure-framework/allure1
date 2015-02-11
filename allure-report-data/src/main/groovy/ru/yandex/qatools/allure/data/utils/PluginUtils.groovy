@@ -56,7 +56,7 @@ final class PluginUtils {
             case MARKDOWN:
                 return new Description(value: TextUtils.processMarkdown(testCase.description.value), type: MARKDOWN);
         }
-        return null;
+        return testCase.description;
     }
 
     static def getTime(TestCaseResult testCase) {

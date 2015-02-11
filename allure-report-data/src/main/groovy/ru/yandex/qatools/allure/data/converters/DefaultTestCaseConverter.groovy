@@ -55,6 +55,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
                 result.time = source.time;
 
                 result.summary = (result.steps.summary.sum() ?: new Summary()) as Summary;
+                result.summary.steps += result.steps.size();
                 result.summary.attachments += result.attachments.size();
 
                 result.severity = source.severity;
@@ -78,13 +79,14 @@ class DefaultTestCaseConverter implements TestCaseConverter {
             def source = context.source;
 
             use([PluginUtils, SummaryCategory]) {
-                if (!result.title) {
+                if (!result.title && result.name) {
                     result.title = TextUtils.humanize(result.name);
                 }
 
                 result.time = source.time;
 
                 result.summary = result.steps.summary.sum() as Summary ?: new Summary();
+                result.summary.steps += result.steps.size();
                 result.summary.attachments += result.attachments.size();
             }
 
