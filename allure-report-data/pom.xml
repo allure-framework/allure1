@@ -14,6 +14,8 @@
     <name>Allure Report Data</name>
 
     <properties>
+        <sonar.sources>src/main/java,src/main/groovy</sonar.sources>
+
         <allure.model.test.resources.path>${project.build.directory}/allure-results</allure.model.test.resources.path>
         <gmaven.version>1.5</gmaven.version>
         <groovy.version>2.4.0</groovy.version>
