@@ -11,7 +11,9 @@ import ru.yandex.qatools.allure.data.io.TestCaseReader;
 import ru.yandex.qatools.allure.data.io.TestCaseWriter;
 import ru.yandex.qatools.allure.data.io.TestSuiteReader;
 import ru.yandex.qatools.allure.data.io.Writer;
+import ru.yandex.qatools.allure.data.plugins.AttachmentsProvider;
 import ru.yandex.qatools.allure.data.plugins.EnrichPlugin;
+import ru.yandex.qatools.allure.data.plugins.EnvironmentProvider;
 import ru.yandex.qatools.allure.data.plugins.Plugin;
 import ru.yandex.qatools.allure.data.plugins.TabPlugin;
 import ru.yandex.qatools.allure.data.plugins.WidgetPlugin;
@@ -82,6 +84,9 @@ public class AppInjector extends AbstractModule {
         bind(new TypeLiteral<Writer<AllureTestCase>>() {}).to(new TypeLiteral<TestCaseWriter>() {});
 
         bind(new TypeLiteral<TestCaseConverter>() {}).to(new TypeLiteral<DefaultTestCaseConverter>() {});
+
+        bind(EnvironmentProvider.class);
+        bind(AttachmentsProvider.class);
 
         bind(new TypeLiteral<List<TabPlugin>>() {}).toInstance(unmodifiableList(tabPlugins));
         bind(new TypeLiteral<List<WidgetPlugin>>() {}).toInstance(unmodifiableList(widgetPlugins));

@@ -6,7 +6,9 @@ import com.google.inject.Injector;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.Writer;
+import ru.yandex.qatools.allure.data.plugins.AttachmentsProvider;
 import ru.yandex.qatools.allure.data.plugins.EnrichPlugin;
+import ru.yandex.qatools.allure.data.plugins.EnvironmentProvider;
 import ru.yandex.qatools.allure.data.plugins.Plugin;
 import ru.yandex.qatools.allure.data.plugins.TabPlugin;
 import ru.yandex.qatools.allure.data.plugins.WidgetPlugin;
@@ -56,6 +58,12 @@ public class AllureReportGenerator {
     @Inject
     private List<EnrichPlugin> enrichPlugins;
 
+    @Inject
+    private AttachmentsProvider attachmentsProvider;
+
+    @Inject
+    private EnvironmentProvider environmentProvider;
+
     public AllureReportGenerator(final File... inputDirectories) {
         this.classLoader = getClass().getClassLoader();
         this.inputDirectories = inputDirectories;
@@ -91,6 +99,9 @@ public class AllureReportGenerator {
         for (WidgetPlugin plugin : widgetPlugins) {
             reportSize.addAndGet(plugin.getWidgetData().write(reportDataDirectory));
         }
+
+        reportSize.addAndGet(attachmentsProvider.provide());
+        reportSize.addAndGet(environmentProvider.provide());
 
         long stop = System.currentTimeMillis();
 
