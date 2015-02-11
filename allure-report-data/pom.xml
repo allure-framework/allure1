@@ -188,13 +188,6 @@
             <version>2.3.0</version>
         </dependency>
 
-        <!--XSLT 2.0-->
-        <dependency>
-            <groupId>net.sourceforge.saxon</groupId>
-            <artifactId>saxon</artifactId>
-            <version>9.1.0.8</version>
-        </dependency>
-
         <!--markdown support-->
         <dependency>
             <groupId>org.pegdown</groupId>
@@ -212,7 +205,7 @@
         <!--groovy-->
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
-            <artifactId>groovy-all</artifactId>
+            <artifactId>groovy</artifactId>
             <version>${groovy.version}</version>
             <classifier>indy</classifier>
         </dependency>
