@@ -165,6 +165,7 @@
                                 <include>webjars/messageformat.js/0.1.4/messageformat.js</include>
                                 <include>webjars/angular-translate-interpolation-messageformat/0.1.2/angular-translate-interpolation-messageformat.js</include>
                                 <include>webjars/highlightjs/8.2-1/highlight.min.js</include>
+                                <include>webjars/font-awesome/4.2.0/fonts/**</include>
                             </includes>
                             <directory>${project.build.directory}/webjars/META-INF/resources</directory>
                             <filtering>false</filtering>
