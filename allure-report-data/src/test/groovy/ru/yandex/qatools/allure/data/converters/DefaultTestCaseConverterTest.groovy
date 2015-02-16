@@ -2,6 +2,7 @@ package ru.yandex.qatools.allure.data.converters
 
 import org.junit.Test
 import ru.yandex.qatools.allure.data.io.TestCaseReader
+import ru.yandex.qatools.allure.data.utils.TextUtils
 import ru.yandex.qatools.allure.model.Attachment
 import ru.yandex.qatools.allure.model.Description
 import ru.yandex.qatools.allure.model.DescriptionType
@@ -11,6 +12,8 @@ import ru.yandex.qatools.allure.model.Step
 import ru.yandex.qatools.allure.model.TestCaseResult
 
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createSeverityLabel
+import static ru.yandex.qatools.allure.data.converters.DefaultTestCaseConverter.UNKNOWN_STEP_NAME
+import static ru.yandex.qatools.allure.data.converters.DefaultTestCaseConverter.UNKNOWN_TEST_CASE
 import static ru.yandex.qatools.allure.model.SeverityLevel.CRITICAL
 import static ru.yandex.qatools.allure.model.SeverityLevel.NORMAL
 import static ru.yandex.qatools.allure.model.Status.PASSED
@@ -294,6 +297,90 @@ class DefaultTestCaseConverterTest {
         def modify = converter.convert(origin)
 
         assert modify.attachments[0].uid
+    }
+
+    @Test
+    void shouldConvertTestCaseWithoutNameAndTitle() {
+        def origin = new TestCaseResult()
+        def modify = converter.convert(origin)
+
+        assert modify.name
+        assert modify.name == UNKNOWN_TEST_CASE
+
+        assert modify.title
+        assert modify.title == TextUtils.humanize(UNKNOWN_TEST_CASE)
+    }
+
+    @Test
+    void shouldConvertTestCaseWithoutName() {
+        def origin = new TestCaseResult(title: "some title")
+        def modify = converter.convert(origin)
+
+        assert modify.name
+        assert modify.name == UNKNOWN_TEST_CASE
+
+        assert modify.title
+        assert modify.title == "some title"
+    }
+
+    @Test
+    void shouldConvertTestCaseWithoutTitle() {
+        def origin = new TestCaseResult(name: "someName")
+        def modify = converter.convert(origin)
+
+        assert modify.name
+        assert modify.name == "someName"
+
+        assert modify.title
+        assert modify.title == "Some name"
+    }
+
+    @Test
+    void shouldConvertStepWithoutNameAndTitle() {
+        def origin = new TestCaseResult(
+                name: "name",
+                steps: [new Step()]
+        )
+        def modify = converter.convert(origin)
+
+        assert modify.steps
+        assert modify.steps.size() == 1
+        assert modify.steps[0].name
+        assert modify.steps[0].name == UNKNOWN_STEP_NAME
+        assert modify.steps[0].title
+        assert modify.steps[0].title == TextUtils.humanize(UNKNOWN_STEP_NAME)
+    }
+
+    @Test
+    void shouldConvertStepWithoutName() {
+        def origin = new TestCaseResult(
+                name: "name",
+                steps: [new Step(title: "some title")]
+        )
+        def modify = converter.convert(origin)
+
+        assert modify.steps
+        assert modify.steps.size() == 1
+        assert modify.steps[0].name
+        assert modify.steps[0].name == UNKNOWN_STEP_NAME
+        assert modify.steps[0].title
+        assert modify.steps[0].title == "some title"
+    }
+
+    @Test
+    void shouldConvertStepWithoutTitle() {
+        def origin = new TestCaseResult(
+                name: "name",
+                steps: [new Step(name: "someName")]
+        )
+        def modify = converter.convert(origin)
+
+        assert modify.steps
+        assert modify.steps.size() == 1
+        assert modify.steps[0].name
+        assert modify.steps[0].name == "someName"
+        assert modify.steps[0].title
+        assert modify.steps[0].title == "Some name"
     }
 
     static def checkLabel(List<Label> labels, LabelName name, String expectedValue) {
