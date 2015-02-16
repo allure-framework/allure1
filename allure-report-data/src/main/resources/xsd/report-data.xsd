@@ -74,6 +74,14 @@
         </xsd:all>
     </xsd:complexType>
 
+    <xsd:complexType name="allure-test-suite-info">
+        <xsd:all>
+            <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="title" type="xsd:string"/>
+        </xsd:all>
+    </xsd:complexType>
+
     <!--Info about Test Case-->
     <xsd:complexType name="allure-test-cases">
         <xsd:sequence>
@@ -98,6 +106,7 @@
             <xsd:element name="testId" type="alr:testId" minOccurs="0"/>
             <xsd:element name="labels" type="alr:labels" minOccurs="0"/>
             <xsd:element name="parameters" type="alr:parameters" minOccurs="0"/>
+            <xsd:element name="suite" type="alr:allure-test-suite-info" />
         </xsd:all>
     </xsd:complexType>
 

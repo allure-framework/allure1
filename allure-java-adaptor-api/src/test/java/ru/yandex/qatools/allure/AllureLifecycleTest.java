@@ -28,7 +28,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -178,6 +180,44 @@ public class AllureLifecycleTest {
         }
 
         assertThat(lifecycle.getStepStorage().pollLast().getSteps(), hasSize(threads * stepsCount));
+    }
+
+    @Test
+    public void supportForConcurrentUseOfChildThreadsTestCases() throws Exception {
+        final int threads = 20;
+        final int testCases = 1000;
+
+        final Allure lifecycle = Allure.LIFECYCLE;
+
+        String suiteUid = UUID.randomUUID().toString();
+        fireTestSuiteStart(suiteUid);
+        fireTestCaseStart(suiteUid);
+
+        ExecutorService service = Executors.newFixedThreadPool(threads);
+
+        final List<Callable<Object>> tasks = new ArrayList<>();
+
+        final String uid = UUID.randomUUID().toString();
+        lifecycle.fire(new TestSuiteStartedEvent(uid, uid));
+        for (int i = 0; i < threads; i++) {
+            tasks.add(new Callable<Object>() {
+                @Override
+                public Object call() throws Exception {
+                    for (int i = 0; i < testCases; i++) {
+                        lifecycle.fire(new TestCaseStartedEvent(uid, "test-case"));
+                        lifecycle.fire(new StepFinishedEvent());
+                    }
+                    return "";
+                }
+            });
+        }
+
+        List<Future<Object>> futures = service.invokeAll(tasks);
+        for (Future<Object> future : futures) {
+            future.get();
+        }
+
+        assertThat(lifecycle.getTestSuiteStorage().get(uid).getTestCases(), hasSize(threads * testCases));
     }
 
     private void checkTestCaseIsNew(TestCaseResult testCaseResult) {

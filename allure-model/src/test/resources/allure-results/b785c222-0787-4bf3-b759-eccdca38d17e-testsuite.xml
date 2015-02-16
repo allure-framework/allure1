@@ -94,7 +94,13 @@ Expected: is &lt;4&gt;
                 <message>Test ignored (without reason)!</message>
                 <stack-trace>There are no stack trace</stack-trace>
             </failure>
-            <steps/>
+            <steps>
+                <step start="1412949558831" stop="1412949558832" status="pending">
+                    <name>Future step</name>
+                    <attachments/>
+                    <steps/>
+                </step>
+            </steps>
             <attachments/>
             <labels/>
         </test-case>

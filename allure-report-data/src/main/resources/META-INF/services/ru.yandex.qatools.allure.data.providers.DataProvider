@@ -1,8 +1,0 @@
-ru.yandex.qatools.allure.data.providers.BehaviorDataProvider
-ru.yandex.qatools.allure.data.providers.DefectsDataProvider
-ru.yandex.qatools.allure.data.providers.GraphDataProvider
-ru.yandex.qatools.allure.data.providers.TestCasesDataProvider
-ru.yandex.qatools.allure.data.providers.XUnitDataProvider
-ru.yandex.qatools.allure.data.providers.AttachmentsProvider
-ru.yandex.qatools.allure.data.providers.EnvironmentProvider
-ru.yandex.qatools.allure.data.providers.TimelineDataProvider

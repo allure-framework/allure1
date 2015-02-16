@@ -53,62 +53,62 @@ public abstract class LifecycleListener {
     /**
      * Called when a step started
      */
-    public void fire(StepStartedEvent event) {
+    public void fire(StepStartedEvent event) { // NOSONAR
     }
 
     /**
      * Called when Allure process any custom step event, such as
      * {@link ru.yandex.qatools.allure.events.MakeAttachmentEvent}
      */
-    public void fire(StepEvent event) {
+    public void fire(StepEvent event) { // NOSONAR
     }
 
     /**
      * Called when a step finished
      */
-    public void fire(StepFinishedEvent event) {
+    public void fire(StepFinishedEvent event) { // NOSONAR
     }
 
     /**
      * Called when a test case started
      */
-    public void fire(TestCaseStartedEvent event) {
+    public void fire(TestCaseStartedEvent event) { // NOSONAR
     }
 
     /**
      * Called when Allure process any custom test case event, such as
      * {@link ru.yandex.qatools.allure.events.AddParameterEvent}
      */
-    public void fire(TestCaseEvent event) {
+    public void fire(TestCaseEvent event) { // NOSONAR
     }
 
     /**
      * Called when a test case finished
      */
-    public void fire(TestCaseFinishedEvent event) {
+    public void fire(TestCaseFinishedEvent event) { // NOSONAR
     }
 
     /**
      * Called when Allure process any custom test suite event
      */
-    public void fire(TestSuiteEvent event) {
+    public void fire(TestSuiteEvent event) { // NOSONAR
     }
 
     /**
      * Called when a test suite finished
      */
-    public void fire(TestSuiteFinishedEvent event) {
+    public void fire(TestSuiteFinishedEvent event) { // NOSONAR
     }
 
     /**
      * Called when Allure clear current step context.
      */
-    public void fire(ClearStepStorageEvent event) {
+    public void fire(ClearStepStorageEvent event) { // NOSONAR
     }
 
     /**
      * Called when Allure clear current test case context.
      */
-    public void fire(ClearTestStorageEvent event) {
+    public void fire(ClearTestStorageEvent event) { // NOSONAR
     }
 }

@@ -10,7 +10,7 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  *         <p/>
  * @see ru.yandex.qatools.allure.Allure
  */
-public class TestCaseStorage extends ThreadLocal<TestCaseResult> {
+public class TestCaseStorage extends InheritableThreadLocal<TestCaseResult> {
 
     /**
      * Returns the current thread's "initial value". Construct an new
