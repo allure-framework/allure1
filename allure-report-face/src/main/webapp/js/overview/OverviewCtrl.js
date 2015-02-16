@@ -2,8 +2,8 @@
 angular.module('allure.overview', []).controller('OverviewCtrl', function($scope, orderByFilter, status, percents, overview, defects, testsuites) {
     "use strict";
     $scope.overview = overview;
-    $scope.defects = orderByFilter(defects.defectsList, function(defectType) {
-        return status.getSortOrder(defectType.status);
+    $scope.defects = defects.defectsList.filter(function (defect) {
+        return defect.defects && defect.defects.length > 0;
     });
     $scope.defects.forEach(function(defect) {
         defect.defects = orderByFilter(defect.defects, function(defect) {
