@@ -17,7 +17,7 @@ import static ru.yandex.qatools.allure.model.Status.FAILED
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
  */
-class Defects implements TabPlugin {
+class Defects implements ProcessPlugin<AllureTestCase> {
 
     AllureDefects defects = new AllureDefects(defectsList: [
             new AllureDefect(title: "Product defects", status: FAILED),
@@ -44,8 +44,13 @@ class Defects implements TabPlugin {
     }
 
     @Override
-    TabData getTabData() {
-        return new TabData("defects.json", defects);
+    List<PluginData> getPluginData() {
+        return Arrays.asList(new PluginData("defects.json", defects));
+    }
+
+    @Override
+    Class<AllureTestCase> getType() {
+        return AllureTestCase;
     }
 
     @EqualsAndHashCode

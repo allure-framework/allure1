@@ -1,27 +1,18 @@
 package ru.yandex.qatools.allure.data.plugins;
 
-import java.io.File;
-
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 09.02.15
  */
-public abstract class PluginData {
+public class PluginData {
 
     private String name;
 
-    public PluginData(String name) {
+    private Object data;
+
+    public PluginData(String name, Object data) {
         this.name = name;
-    }
-
-    public abstract void setData(Object data);
-
-    public abstract Object getData();
-
-    public int write(File reportDirectory) {
-        return serialize(reportDirectory, getName(), getData());
+        this.data = data;
     }
 
     public String getName() {
@@ -30,5 +21,13 @@ public abstract class PluginData {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 }

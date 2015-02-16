@@ -7,13 +7,11 @@ import ru.yandex.qatools.allure.data.Host
 import ru.yandex.qatools.allure.data.Thread
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.02.15
  */
-class Timeline implements TabPlugin {
+class Timeline implements ProcessPlugin<AllureTestCase> {
 
     AllureTimeline timeline = new AllureTimeline();
 
@@ -44,8 +42,13 @@ class Timeline implements TabPlugin {
     }
 
     @Override
-    TabData getTabData() {
-        return new TabData("timeline.json", timeline);
+    List<PluginData> getPluginData() {
+        return Arrays.asList(new PluginData("timeline.json", timeline));
+    }
+
+    @Override
+    Class<AllureTestCase> getType() {
+        return AllureTestCase;
     }
 
     @EqualsAndHashCode

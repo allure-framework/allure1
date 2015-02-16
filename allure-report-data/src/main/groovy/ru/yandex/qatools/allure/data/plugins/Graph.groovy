@@ -4,13 +4,11 @@ import ru.yandex.qatools.allure.data.AllureGraph
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
  */
-class Graph implements TabPlugin {
+class Graph implements ProcessPlugin<AllureTestCase> {
 
     AllureGraph graph = new AllureGraph();
 
@@ -22,7 +20,12 @@ class Graph implements TabPlugin {
     }
 
     @Override
-    TabData getTabData() {
-        return new TabData("graph.json", graph);
+    List<PluginData> getPluginData() {
+        return Arrays.asList(new PluginData("graph.json", graph));
+    }
+
+    @Override
+    Class<AllureTestCase> getType() {
+        return AllureTestCase;
     }
 }

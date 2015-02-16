@@ -1,134 +1,66 @@
 package ru.yandex.qatools.allure.data;
 
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
+import ru.yandex.qatools.allure.data.converters.DefaultTestCaseConverter;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
-import ru.yandex.qatools.allure.data.io.Writer;
-import ru.yandex.qatools.allure.data.plugins.AttachmentsProvider;
-import ru.yandex.qatools.allure.data.plugins.EnrichPlugin;
-import ru.yandex.qatools.allure.data.plugins.EnvironmentProvider;
-import ru.yandex.qatools.allure.data.plugins.Plugin;
-import ru.yandex.qatools.allure.data.plugins.TabPlugin;
-import ru.yandex.qatools.allure.data.plugins.WidgetPlugin;
-import ru.yandex.qatools.allure.data.utils.PluginUtils;
+import ru.yandex.qatools.allure.data.io.ReportWriter;
+import ru.yandex.qatools.allure.data.io.TestCaseReader;
+import ru.yandex.qatools.allure.data.io.TestSuiteReader;
+import ru.yandex.qatools.allure.data.plugins.PluginLoader;
+import ru.yandex.qatools.allure.data.plugins.PluginLoaderImpl;
+import ru.yandex.qatools.allure.data.plugins.PluginManager;
+import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.TestCaseResult;
+import ru.yandex.qatools.commons.model.Environment;
 
 import java.io.File;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.createDirectory;
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.writeAllureReportInfo;
-
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
- *         Date: 31.10.13
+ *         Date: 12.02.15
  */
+@SuppressWarnings({"unused", "FieldCanBeLocal"})
 public class AllureReportGenerator {
 
-    private static final String DATA_SUFFIX = "data";
+    private final File[] inputDirectories;
 
-    private ClassLoader classLoader;
+    private Reader<TestCaseResult> testCaseReader;
 
-    protected final File[] inputDirectories;
+    private Reader<Attachment> attachmentReader;
 
-    private boolean validateXML = true;
+    private Reader<Environment> environmentReader;
 
-    @Inject
-    private Reader<TestCaseResult> resultReader;
+    private TestCaseConverter converter;
 
-    @Inject
-    private Writer<AllureTestCase> writer;
-
-    @Inject
-    private TestCaseConverter resultConverter;
-
-    @Inject
-    private List<Plugin> processPlugins;
-
-    @Inject
-    private List<TabPlugin> tabPlugins;
-
-    @Inject
-    private List<WidgetPlugin> widgetPlugins;
-
-    @Inject
-    private List<EnrichPlugin> enrichPlugins;
-
-    @Inject
-    private AttachmentsProvider attachmentsProvider;
-
-    @Inject
-    private EnvironmentProvider environmentProvider;
+    private PluginManager pluginManager;
 
     public AllureReportGenerator(final File... inputDirectories) {
-        this.classLoader = getClass().getClassLoader();
         this.inputDirectories = inputDirectories;
+        this.testCaseReader = new TestCaseReader(new TestSuiteReader(inputDirectories));
+        this.converter = new DefaultTestCaseConverter();
+
+        PluginLoader loader = new PluginLoaderImpl(getClass().getClassLoader());
+        this.pluginManager = new PluginManager(loader);
     }
 
-    public void generate(File reportDirectory) {
-        long start = System.currentTimeMillis();
 
-        final File reportDataDirectory = createDirectory(reportDirectory, DATA_SUFFIX);
-        final AtomicLong reportSize = new AtomicLong(0);
+    public void generate(File outputDirectory) {
+        ReportWriter writer = new ReportWriter(outputDirectory);
 
-        Injector injector = Guice.createInjector(new AppInjector(reportDataDirectory, inputDirectories));
-        injector.injectMembers(this);
+        process(attachmentReader, writer);
+        process(environmentReader, writer);
+        process(testCaseReader, writer);
 
-        for (TestCaseResult result : resultReader) {
-            AllureTestCase testCase = resultConverter.convert(result);
+        writer.write(pluginManager.getData(AllureTestCase.class));
+        writer.close();
+    }
 
-            for (Plugin plugin : enrichPlugins) {
-                plugin.process(testCase);
-            }
+    private <T> void process(Reader<T> reader, ReportWriter writer) {
+        for (T t : reader) {
+            pluginManager.prepare(t);
+            pluginManager.process(t);
 
-            for (Plugin plugin : processPlugins) {
-                plugin.process(PluginUtils.clone(testCase));
-            }
-
-            reportSize.addAndGet(writer.write(testCase));
+            writer.write(t);
         }
-
-        for (TabPlugin plugin : tabPlugins) {
-            reportSize.addAndGet(plugin.getTabData().write(reportDataDirectory));
-        }
-
-        for (WidgetPlugin plugin : widgetPlugins) {
-            reportSize.addAndGet(plugin.getWidgetData().write(reportDataDirectory));
-        }
-
-        reportSize.addAndGet(attachmentsProvider.provide());
-        reportSize.addAndGet(environmentProvider.provide());
-
-        long stop = System.currentTimeMillis();
-
-        AllureReportInfo reportInfo = new AllureReportInfo();
-        reportInfo.setSize(reportSize.get());
-        reportInfo.setTime(stop - start);
-
-        writeAllureReportInfo(reportInfo, reportDataDirectory);
-    }
-
-    @SuppressWarnings("unused")
-    public ClassLoader getClassLoader() {
-        return classLoader;
-    }
-
-    @SuppressWarnings("unused")
-    public void setClassLoader(ClassLoader classLoader) {
-        this.classLoader = classLoader;
-    }
-
-    @SuppressWarnings("unused")
-    public File[] getInputDirectories() {
-        return inputDirectories;
-    }
-
-    @SuppressWarnings("unused")
-    public void setValidateXML(boolean validateXML) {
-        this.validateXML = validateXML;
     }
 }

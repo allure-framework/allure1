@@ -15,7 +15,7 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
  */
-class Behavior implements TabPlugin {
+class Behavior implements ProcessPlugin<AllureTestCase> {
 
     AllureBehavior behavior = new AllureBehavior();
 
@@ -62,8 +62,13 @@ class Behavior implements TabPlugin {
     }
 
     @Override
-    TabData getTabData() {
-        return new TabData("behavior.json", behavior);
+    List<PluginData> getPluginData() {
+        return Arrays.asList(new PluginData("behavior.json", behavior));
+    }
+
+    @Override
+    Class<AllureTestCase> getType() {
+        return AllureTestCase;
     }
 
     @EqualsAndHashCode

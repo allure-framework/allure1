@@ -3,4 +3,3 @@ ru.yandex.qatools.allure.data.plugins.Timeline
 ru.yandex.qatools.allure.data.plugins.Behavior
 ru.yandex.qatools.allure.data.plugins.Defects
 ru.yandex.qatools.allure.data.plugins.Graph
-ru.yandex.qatools.allure.data.plugins.EnvironmentPlugin

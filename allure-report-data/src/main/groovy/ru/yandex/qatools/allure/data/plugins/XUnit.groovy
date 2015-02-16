@@ -9,13 +9,11 @@ import ru.yandex.qatools.allure.data.Statistic
 import ru.yandex.qatools.allure.data.Time
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
  */
-class XUnit implements TabPlugin {
+class XUnit implements ProcessPlugin<AllureTestCase> {
 
     AllureXUnit xUnit = new AllureXUnit(time: new Time(start: Long.MAX_VALUE, stop: Long.MIN_VALUE));
 
@@ -53,7 +51,12 @@ class XUnit implements TabPlugin {
     }
 
     @Override
-    TabData getTabData() {
-        return new TabData("xunit.json", xUnit);
+    List<PluginData> getPluginData() {
+        return Arrays.asList(new PluginData("xunit.json", xUnit));
+    }
+
+    @Override
+    Class<AllureTestCase> getType() {
+        return AllureTestCase;
     }
 }
