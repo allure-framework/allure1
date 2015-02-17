@@ -1,7 +1,6 @@
 package ru.yandex.qatools.allure.data.plugins
 
 import groovy.transform.EqualsAndHashCode
-import org.junit.Ignore
 import org.junit.Test
 
 /**
@@ -10,7 +9,6 @@ import org.junit.Test
  */
 class PluginManagerTest {
 
-    @Ignore("Not implemented yet")
     @Test
     void shouldNotFailIfProcessNull() {
 
@@ -33,7 +31,6 @@ class PluginManagerTest {
         manager.getData(Integer);
     }
 
-    @Ignore("Not implemented yet")
     @Test
     void shouldNotFailIfNullPlugins() {
 
@@ -47,7 +44,7 @@ class PluginManagerTest {
 
     @Test
     void shouldDoNothingIfNoPluginForTypePreparedObject() {
-        def loader = [loadPlugins: { [new SomePlugin()] }] as PluginLoader
+        def loader = [loadPlugins: { [new SomePreparePlugin()] }] as PluginLoader
         def manager = new PluginManager(loader)
 
         Integer number = 4;
@@ -57,24 +54,9 @@ class PluginManagerTest {
     }
 
     @Test
-    void shouldChangeBothPreparedObject() {
-        def plugin = new SomePlugin();
-        def loader = [loadPlugins: { [plugin] }] as PluginLoader
-        def manager = new PluginManager(loader)
-
-        def object1 = new SomeObject(someValue: "object1")
-        manager.prepare(object1)
-        assert object1.someValue == "object1_SUFFIX"
-
-        def object2 = new SomeObject(someValue: "object2")
-        manager.prepare(object2)
-        assert object2.someValue == "object2_SUFFIX"
-    }
-
-    @Test
-    void shouldChangePreparedObjectFewPlugins() {
-        def plugin1 = new SomePlugin(suffix: "_PLUGIN1")
-        def plugin2 = new SomePlugin(suffix: "_PLUGIN2")
+    void shouldChangePreparedObjects() {
+        def plugin1 = new SomePreparePlugin(suffix: "_PLUGIN1")
+        def plugin2 = new SomePreparePlugin(suffix: "_PLUGIN2")
         def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
         def manager = new PluginManager(loader)
 
@@ -87,15 +69,77 @@ class PluginManagerTest {
         assert object2.someValue == "object2_PLUGIN1_PLUGIN2"
     }
 
+    @Test
+    void shouldNotChangeProcessedObjects() {
+        def plugin1 = new SomeProcessPlugin(suffix: "_PLUGIN1")
+        def plugin2 = new SomeProcessPlugin(suffix: "_PLUGIN2")
+        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
+        def manager = new PluginManager(loader)
 
-    class SomePlugin implements PreparePlugin<SomeObject> {
+        def object1 = new SomeObject(someValue: "object1")
+        manager.process(object1)
+        assert object1.someValue == "object1"
+
+        def object2 = new SomeObject(someValue: "object2")
+        manager.process(object2)
+        assert object2.someValue == "object2"
+    }
+
+    @Test
+    void shouldUpdateDataWhenProcessObjects() {
+        def plugin1 = new SomeProcessPlugin(suffix: "_PLUGIN1")
+        def plugin2 = new SomeProcessPlugin(suffix: "_PLUGIN2")
+        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        def object1 = new SomeObject(someValue: "object1")
+        manager.process(object1)
+        def object2 = new SomeObject(someValue: "object2")
+        manager.process(object2)
+
+        def data = manager.getData(SomeObject)
+        assert data
+        assert data.size() == 4
+        assert data.collect { item -> (item.data as SomeObject).someValue }.containsAll([
+                "object1_PLUGIN1",
+                "object1_PLUGIN2",
+                "object2_PLUGIN1",
+                "object2_PLUGIN2"
+        ])
+        assert data.collect { item -> item.name }.containsAll([
+                "name_PLUGIN1",
+                "name_PLUGIN2",
+                "name_PLUGIN1",
+                "name_PLUGIN2"
+        ])
+    }
+
+    class SomePreparePlugin extends SomePlugin implements PreparePlugin<SomeObject> {
         def suffix = "_SUFFIX";
 
         @Override
         void prepare(SomeObject data) {
             data.someValue += suffix
         }
+    }
 
+    class SomeProcessPlugin extends SomePlugin implements ProcessPlugin<SomeObject> {
+        def suffix = "_SUFFIX"
+        List<PluginData> pluginData = []
+
+        @Override
+        void process(SomeObject data) {
+            data.someValue += suffix
+            pluginData.add(new PluginData("name" + suffix, data))
+        }
+
+        @Override
+        List<PluginData> getPluginData() {
+            return pluginData
+        }
+    }
+
+    abstract class SomePlugin implements Plugin<SomeObject> {
         @Override
         Class<SomeObject> getType() {
             return SomeObject

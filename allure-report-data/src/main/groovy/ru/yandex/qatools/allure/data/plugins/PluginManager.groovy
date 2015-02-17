@@ -1,4 +1,8 @@
 package ru.yandex.qatools.allure.data.plugins
+
+import com.google.inject.Inject
+import ru.yandex.qatools.allure.data.utils.PluginUtils
+
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 17.02.15
@@ -7,12 +11,16 @@ class PluginManager {
 
     def storage;
 
+    @Inject
     PluginManager(PluginLoader loader) {
         storage = new Storage(loader)
     }
 
 
     public <T> void prepare(T object) {
+        if (!object) {
+            return
+        }
         def plugins = storage.get(object.class, PreparePlugin)
 
         for (PreparePlugin<T> plugin : plugins) {
@@ -21,14 +29,20 @@ class PluginManager {
     }
 
     public <T> void process(T object) {
+        if (!object) {
+            return
+        }
         def plugins = storage.get(object.class, ProcessPlugin)
 
         for (ProcessPlugin<T> plugin : plugins) {
-            plugin.process(object)
+            plugin.process(PluginUtils.clone(object))
         }
     }
 
-    def getData(Class<?> type) {
+    List<PluginData> getData(Class<?> type) {
+        if (!type) {
+            []
+        }
         storage.get(type, ProcessPlugin).collect {
             it.pluginData
         }.flatten()
@@ -44,7 +58,9 @@ class PluginManager {
 
         Storage(PluginLoader loader) {
             for (Plugin plugin : loader.loadPlugins()) {
-                put(plugin)
+                if (plugin) {
+                    put(plugin)
+                }
             }
         }
 

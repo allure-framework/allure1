@@ -17,7 +17,7 @@ public class TestSuiteReader implements Reader<TestSuiteResult> {
     private final Iterator<File> testSuiteResultFiles;
 
     @Inject
-    public TestSuiteReader(@ResultDirectory File... resultDirectories) {
+    public TestSuiteReader(@ResultDirectories File... resultDirectories) {
         testSuiteResultFiles = AllureFileUtils.listTestSuiteFiles(resultDirectories).iterator();
     }
 
