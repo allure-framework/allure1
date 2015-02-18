@@ -1,12 +1,12 @@
 package ru.yandex.qatools.allure.data;
 
+import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
 import ru.yandex.qatools.allure.data.plugins.PluginManager;
-import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.commons.model.Environment;
 
@@ -17,14 +17,10 @@ import java.lang.Thread;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 12.02.15
  */
-@SuppressWarnings({"unused"})
 public class AllureReportGenerator {
 
     @Inject
     private Reader<TestCaseResult> testCaseReader;
-
-    @Inject
-    private Reader<Attachment> attachmentReader;
 
     @Inject
     private Reader<Environment> environmentReader;
@@ -40,16 +36,13 @@ public class AllureReportGenerator {
     }
 
     public AllureReportGenerator(ClassLoader pluginClassLoader, File... inputDirectories) {
-        Guice.createInjector(new AppInjector(
-                pluginClassLoader,
-                inputDirectories
-        )).injectMembers(this);
+        this(new AppInjector(pluginClassLoader, inputDirectories));
     }
 
     /**
      * For testing only
      */
-    AllureReportGenerator(AppInjector injector) {
+    AllureReportGenerator(AbstractModule injector) {
         Guice.createInjector(injector).injectMembers(this);
     }
 

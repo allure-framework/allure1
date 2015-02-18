@@ -26,15 +26,13 @@ public class EnvironmentReader implements Reader<Environment> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EnvironmentReader.class);
 
-    @Inject
-    private AllureConfig config;
-
     private Iterator<File> xmlIterator;
 
     private Iterator<File> propertiesIterator;
 
     @Inject
     public EnvironmentReader(@ResultDirectories File... inputDirectories) {
+        AllureConfig config = AllureConfig.newInstance();
         xmlIterator = listFilesByRegex(
                 config.getEnvironmentXmlFileRegex(),
                 inputDirectories
@@ -64,7 +62,7 @@ public class EnvironmentReader implements Reader<Environment> {
                         Environment result = new Environment();
                         result.getParameter().addAll(convertToParameters(properties));
                         return result;
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         LOGGER.error("Could not read environment .properties file " + file.getAbsolutePath(), e);
                         return next();
                     }
@@ -73,7 +71,7 @@ public class EnvironmentReader implements Reader<Environment> {
                     File file = xmlIterator.next();
                     try (FileInputStream fis = new FileInputStream(file)) {
                         return JAXB.unmarshal(fis, Environment.class);
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         LOGGER.error("Could not read environment .xml file " + file.getAbsolutePath(), e);
                         return next();
                     }
@@ -92,7 +90,7 @@ public class EnvironmentReader implements Reader<Environment> {
         Collection<Parameter> parameters = new ArrayList<>();
         for (Object key : properties.keySet()) {
             Parameter parameter = new Parameter();
-            parameter.setName(key.toString());
+            parameter.setKey(key.toString());
             parameter.setName(key.toString());
             parameter.setValue(properties.getProperty(key.toString()));
             parameters.add(parameter);

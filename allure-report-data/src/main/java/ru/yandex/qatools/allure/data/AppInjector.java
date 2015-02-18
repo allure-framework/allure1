@@ -12,6 +12,7 @@ import ru.yandex.qatools.allure.data.io.TestSuiteReader;
 import ru.yandex.qatools.allure.data.plugins.PluginClassLoader;
 import ru.yandex.qatools.allure.data.plugins.PluginLoader;
 import ru.yandex.qatools.allure.data.plugins.PluginLoaderSpi;
+import ru.yandex.qatools.allure.data.plugins.PluginManager;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 import ru.yandex.qatools.commons.model.Environment;
@@ -43,6 +44,7 @@ public class AppInjector extends AbstractModule {
         bind(new TypeLiteral<Reader<Environment>>() {}).to(new TypeLiteral<EnvironmentReader>() {});
 
         bind(PluginLoader.class).to(PluginLoaderSpi.class);
+        bind(PluginManager.class);
 
         bind(new TypeLiteral<TestCaseConverter>() {}).to(new TypeLiteral<DefaultTestCaseConverter>() {});
     }
