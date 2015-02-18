@@ -5,14 +5,13 @@ import com.google.inject.Inject;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
-import ru.yandex.qatools.allure.data.plugins.PluginLoader;
-import ru.yandex.qatools.allure.data.plugins.PluginLoaderSpi;
 import ru.yandex.qatools.allure.data.plugins.PluginManager;
 import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.commons.model.Environment;
 
 import java.io.File;
+import java.lang.Thread;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -36,20 +35,30 @@ public class AllureReportGenerator {
     @Inject
     private PluginManager pluginManager;
 
-    public AllureReportGenerator(final File... inputDirectories) {
-        //TODO we should have an ability to specify class loader
+    public AllureReportGenerator(File... inputDirectories) {
+        this(Thread.currentThread().getContextClassLoader(), inputDirectories);
+    }
+
+    public AllureReportGenerator(ClassLoader pluginClassLoader, File... inputDirectories) {
         Guice.createInjector(new AppInjector(
-                getClass().getClassLoader(),
+                pluginClassLoader,
                 inputDirectories
         )).injectMembers(this);
+    }
 
-        PluginLoader loader = new PluginLoaderSpi(getClass().getClassLoader());
-        this.pluginManager = new PluginManager(loader);
+    /**
+     * For testing only
+     */
+    AllureReportGenerator(AppInjector injector) {
+        Guice.createInjector(injector).injectMembers(this);
     }
 
     public void generate(File outputDirectory) {
         ReportWriter writer = new ReportWriter(outputDirectory);
+        generate(writer);
+    }
 
+    public void generate(ReportWriter writer) {
         for (TestCaseResult result : testCaseReader) {
             AllureTestCase testCase = converter.convert(result);
             pluginManager.prepare(testCase);
