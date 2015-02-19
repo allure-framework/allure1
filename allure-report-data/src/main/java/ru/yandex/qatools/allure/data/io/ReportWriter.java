@@ -70,10 +70,6 @@ public class ReportWriter {
         }
     }
 
-    public void write(Object object) {
-        //        do nothing
-    }
-
     public void close() {
         long stop = System.currentTimeMillis();
         AllureReportInfo info = new AllureReportInfo();
