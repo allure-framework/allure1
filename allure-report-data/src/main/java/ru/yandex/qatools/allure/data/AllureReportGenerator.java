@@ -11,7 +11,6 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.commons.model.Environment;
 
 import java.io.File;
-import java.lang.Thread;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -26,13 +25,16 @@ public class AllureReportGenerator {
     private Reader<Environment> environmentReader;
 
     @Inject
+    private Reader<AttachmentInfo> attachmentReader;
+
+    @Inject
     private TestCaseConverter converter;
 
     @Inject
     private PluginManager pluginManager;
 
     public AllureReportGenerator(File... inputDirectories) {
-        this(Thread.currentThread().getContextClassLoader(), inputDirectories);
+        this(AllureReportGenerator.class.getClassLoader(), inputDirectories);
     }
 
     public AllureReportGenerator(ClassLoader pluginClassLoader, File... inputDirectories) {
@@ -59,12 +61,19 @@ public class AllureReportGenerator {
             writer.write(testCase);
         }
 
+        pluginManager.writePluginData(AllureTestCase.class, writer);
+
         for (Environment environment : environmentReader) {
             pluginManager.prepare(environment);
             pluginManager.process(environment);
         }
 
+        pluginManager.writePluginData(Environment.class, writer);
 
+        for (AttachmentInfo attachment : attachmentReader) {
+            pluginManager.prepare(attachment);
+            writer.write(attachment);
+        }
 
         writer.close();
     }

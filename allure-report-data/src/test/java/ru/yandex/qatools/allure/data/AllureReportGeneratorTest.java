@@ -11,6 +11,7 @@ import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
 import ru.yandex.qatools.allure.data.plugins.PluginManager;
+import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.commons.model.Environment;
 
@@ -55,11 +56,18 @@ public class AllureReportGeneratorTest {
         Reader<Environment> environmentReader = mock(Reader.class);
         doReturn(Arrays.asList(environment).iterator()).when(environmentReader).iterator();
 
+        AttachmentInfo attachment = new AttachmentInfo();
+        attachment.setName("name");
+        attachment.setPath("path");
+        @SuppressWarnings("unchecked")
+        Reader<AttachmentInfo> attachmentReader = mock(Reader.class);
+        doReturn(Arrays.asList(attachment).iterator()).when(attachmentReader).iterator();
+
         PluginManager pluginManager = mock(PluginManager.class);
         ReportWriter writer = mock(ReportWriter.class);
 
         AllureReportGenerator generator = new AllureReportGenerator(new TestInjector(
-                testCaseResultReader, environmentReader, converter, pluginManager
+                testCaseResultReader, environmentReader, attachmentReader, converter, pluginManager
         ));
 
         generator.generate(writer);
@@ -70,12 +78,16 @@ public class AllureReportGeneratorTest {
         InOrder inOrder = inOrder(pluginManager);
         inOrder.verify(pluginManager).prepare(testCase);
         inOrder.verify(pluginManager).process(testCase);
+        inOrder.verify(pluginManager).writePluginData(AllureTestCase.class, writer);
         inOrder.verify(pluginManager).prepare(environment);
         inOrder.verify(pluginManager).process(environment);
+        inOrder.verify(pluginManager).writePluginData(Environment.class, writer);
+        inOrder.verify(pluginManager).prepare(attachment);
 
         verifyNoMoreInteractions(pluginManager);
 
         verify(writer).write(testCase);
+        verify(writer).write(attachment);
         verify(writer).close();
         verifyNoMoreInteractions(writer);
     }
@@ -99,12 +111,16 @@ public class AllureReportGeneratorTest {
 
         Reader<Environment> environmentReader;
 
+        Reader<AttachmentInfo> attachmentReader;
+
         PluginManager pluginManager;
 
         public TestInjector(Reader<TestCaseResult> testCaseReader, Reader<Environment> environmentReader,
-                            TestCaseConverter converter, PluginManager pluginManager) {
+                            Reader<AttachmentInfo> attachmentReader, TestCaseConverter converter,
+                            PluginManager pluginManager) {
             this.converter = converter;
             this.testCaseReader = testCaseReader;
+            this.attachmentReader = attachmentReader;
             this.environmentReader = environmentReader;
             this.pluginManager = pluginManager;
         }
@@ -113,6 +129,7 @@ public class AllureReportGeneratorTest {
         protected void configure() {
             bind(new TypeLiteral<Reader<TestCaseResult>>() {}).toProvider(Providers.of(testCaseReader));
             bind(new TypeLiteral<Reader<Environment>>() {}).toProvider(Providers.of(environmentReader));
+            bind(new TypeLiteral<Reader<AttachmentInfo>>() {}).toProvider(Providers.of(attachmentReader));
             bind(new TypeLiteral<TestCaseConverter>() {}).toProvider(Providers.of(converter));
             bind(PluginManager.class).toProvider(Providers.of(pluginManager));
         }

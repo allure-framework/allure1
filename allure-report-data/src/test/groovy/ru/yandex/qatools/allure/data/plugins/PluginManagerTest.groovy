@@ -10,8 +10,13 @@ import org.junit.Test
 class PluginManagerTest {
 
     @Test
-    void shouldNotFailIfProcessNull() {
+    void shouldNotFailIfLoadNull() {
+        def loader = [loadPlugins: { null }] as PluginLoader
+        new PluginManager(loader)
+    }
 
+    @Test
+    void shouldNotFailIfProcessNull() {
         def loader = [loadPlugins: { [] }] as PluginLoader
         def manager = new PluginManager(loader)
 
@@ -22,7 +27,6 @@ class PluginManagerTest {
 
     @Test
     void shouldNotFailIfNoPlugins() {
-
         def loader = [loadPlugins: { [] }] as PluginLoader
         def manager = new PluginManager(loader)
 
@@ -33,7 +37,6 @@ class PluginManagerTest {
 
     @Test
     void shouldNotFailIfNullPlugins() {
-
         def loader = [loadPlugins: { [null] }] as PluginLoader
         def manager = new PluginManager(loader)
 

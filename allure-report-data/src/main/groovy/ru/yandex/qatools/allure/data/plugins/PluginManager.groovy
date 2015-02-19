@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.data.plugins
 
 import com.google.inject.Inject
+import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
 /**
@@ -9,13 +10,12 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  */
 class PluginManager {
 
-    def storage;
+    Storage storage;
 
     @Inject
     PluginManager(PluginLoader loader) {
         storage = new Storage(loader)
     }
-
 
     public <T> void prepare(T object) {
         if (!object) {
@@ -23,8 +23,8 @@ class PluginManager {
         }
         def plugins = storage.get(object.class, PreparePlugin)
 
-        for (PreparePlugin<T> plugin : plugins) {
-            plugin.prepare(object)
+        plugins.each {
+            it.prepare(object)
         }
     }
 
@@ -34,12 +34,17 @@ class PluginManager {
         }
         def plugins = storage.get(object.class, ProcessPlugin)
 
-        for (ProcessPlugin<T> plugin : plugins) {
-            plugin.process(PluginUtils.clone(object))
+        plugins.each {
+            it.process(PluginUtils.clone(object))
         }
     }
 
-    List<PluginData> getData(Class<?> type) {
+    public <T> void writePluginData(Class<T> type, ReportWriter writer) {
+        writer.write(getData(type))
+    }
+
+
+    protected List<PluginData> getData(Class<?> type) {
         if (!type) {
             []
         }
@@ -48,7 +53,7 @@ class PluginManager {
         }.flatten()
     }
 
-    class Storage {
+    protected class Storage {
 
         private Map<Class, Map<Class, List<Plugin>>> storage = new HashMap<>().withDefault {
             new HashMap<>().withDefault {
@@ -57,9 +62,14 @@ class PluginManager {
         };
 
         Storage(PluginLoader loader) {
-            for (Plugin plugin : loader.loadPlugins()) {
-                if (plugin) {
-                    put(plugin)
+            def plugins = loader.loadPlugins()
+            if (!plugins) {
+                return
+            }
+
+            plugins.each {
+                if (it) {
+                    put(it)
                 }
             }
         }
@@ -76,6 +86,10 @@ class PluginManager {
                     storage[type][it].add(plugin)
                 }
             }
+        }
+
+        public Set<Class<?>> getTypes() {
+            return storage.keySet()
         }
     }
 }

@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.TypeLiteral;
 import ru.yandex.qatools.allure.data.converters.DefaultTestCaseConverter;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
+import ru.yandex.qatools.allure.data.io.AttachmentReader;
 import ru.yandex.qatools.allure.data.io.EnvironmentReader;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ResultDirectories;
@@ -39,9 +40,10 @@ public class AppInjector extends AbstractModule {
         bind(File[].class).annotatedWith(ResultDirectories.class).toInstance(inputDirectories);
         bind(ClassLoader.class).annotatedWith(PluginClassLoader.class).toInstance(classLoader);
 
-        bind(new TypeLiteral<Reader<TestSuiteResult>>() {}).to(new TypeLiteral<TestSuiteReader>() {});
-        bind(new TypeLiteral<Reader<TestCaseResult>>() {}).to(new TypeLiteral<TestCaseReader>() {});
-        bind(new TypeLiteral<Reader<Environment>>() {}).to(new TypeLiteral<EnvironmentReader>() {});
+        bind(new TypeLiteral<Reader<TestSuiteResult>>() {}).to(TestSuiteReader.class);
+        bind(new TypeLiteral<Reader<TestCaseResult>>() {}).to(TestCaseReader.class);
+        bind(new TypeLiteral<Reader<Environment>>() {}).to(EnvironmentReader.class);
+        bind(new TypeLiteral<Reader<AttachmentInfo>>() {}).to(AttachmentReader.class);
 
         bind(PluginLoader.class).to(PluginLoaderSpi.class);
         bind(PluginManager.class);

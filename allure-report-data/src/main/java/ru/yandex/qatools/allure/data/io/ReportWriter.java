@@ -1,9 +1,8 @@
 package ru.yandex.qatools.allure.data.io;
 
+import ru.yandex.qatools.allure.data.AllureReportInfo;
 import ru.yandex.qatools.allure.data.AllureTestCase;
 import ru.yandex.qatools.allure.data.plugins.PluginData;
-import ru.yandex.qatools.allure.model.Attachment;
-import ru.yandex.qatools.commons.model.Environment;
 
 import java.io.File;
 import java.util.List;
@@ -20,7 +19,7 @@ public class ReportWriter {
 
     private long start;
 
-    private long stop;
+    private long size = 0;
 
     public ReportWriter(File outputDirectory) {
         this.outputDirectory = outputDirectory;
@@ -28,7 +27,7 @@ public class ReportWriter {
     }
 
     public void write(AllureTestCase testCase) {
-        serialize(outputDirectory, testCase.getUid() + "-testcase.json", testCase);
+        size += serialize(outputDirectory, testCase.getUid() + "-testcase.json", testCase);
     }
 
     public void write(List<PluginData> pluginData) {
@@ -44,14 +43,18 @@ public class ReportWriter {
         if (pluginData == null) {
             return;
         }
-        serialize(outputDirectory, pluginData.getName(), pluginData.getData());
+        size += serialize(outputDirectory, pluginData.getName(), pluginData.getData());
     }
 
     public void write(Object object) {
-//        do nothing
+        //        do nothing
     }
 
     public void close() {
-        stop = System.currentTimeMillis();
+        long stop = System.currentTimeMillis();
+        AllureReportInfo info = new AllureReportInfo();
+        info.setTime(stop - start);
+        info.setSize(size);
+        serialize(outputDirectory, "report.json", info);
     }
 }
