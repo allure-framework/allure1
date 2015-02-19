@@ -1,10 +1,15 @@
 package ru.yandex.qatools.allure.data.io;
 
+import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.data.AllureReportInfo;
 import ru.yandex.qatools.allure.data.AllureTestCase;
+import ru.yandex.qatools.allure.data.AttachmentInfo;
 import ru.yandex.qatools.allure.data.plugins.PluginData;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
@@ -14,6 +19,8 @@ import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize;
  *         Date: 12.02.15
  */
 public class ReportWriter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportWriter.class);
 
     private File outputDirectory;
 
@@ -44,6 +51,23 @@ public class ReportWriter {
             return;
         }
         size += serialize(outputDirectory, pluginData.getName(), pluginData.getData());
+    }
+
+    public void write(AttachmentInfo attachmentInfo) {
+        if (attachmentInfo == null) {
+            return;
+        }
+        File from = new File(attachmentInfo.getPath());
+        File to = new File(outputDirectory, attachmentInfo.getName());
+        try {
+            if (!from.getCanonicalPath().equals(to.getCanonicalPath())) {
+                FileUtils.copyFile(from, to);
+            }
+        } catch (IOException e) {
+            LOGGER.error(String.format("Can't copy attachment %s from %s",
+                    attachmentInfo.getName(), attachmentInfo.getPath()));
+            LOGGER.trace("Can't copy attachment", e);
+        }
     }
 
     public void write(Object object) {
