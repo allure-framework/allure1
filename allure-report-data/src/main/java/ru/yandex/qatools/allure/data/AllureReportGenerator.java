@@ -64,6 +64,8 @@ public class AllureReportGenerator {
             pluginManager.process(environment);
         }
 
+
+
         writer.close();
     }
 }
