@@ -10,6 +10,8 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  */
 class GraphPlugin implements ProcessPlugin<AllureTestCase> {
 
+    public static final String GRAPH_JSON = "graph.json"
+
     AllureGraph graph = new AllureGraph();
 
     @Override
@@ -21,7 +23,7 @@ class GraphPlugin implements ProcessPlugin<AllureTestCase> {
 
     @Override
     List<PluginData> getPluginData() {
-        return Arrays.asList(new PluginData("graph.json", graph));
+        return Arrays.asList(new PluginData(GRAPH_JSON, graph));
     }
 
     @Override

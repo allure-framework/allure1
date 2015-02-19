@@ -19,6 +19,8 @@ import static ru.yandex.qatools.allure.model.Status.FAILED
  */
 class DefectsPlugin implements ProcessPlugin<AllureTestCase> {
 
+    public static final String DEFECTS_JSON = "defects.json"
+
     AllureDefects defects = new AllureDefects(defectsList: [
             new AllureDefect(title: "Product defects", status: FAILED),
             new AllureDefect(title: "Test defects", status: BROKEN)
@@ -45,7 +47,7 @@ class DefectsPlugin implements ProcessPlugin<AllureTestCase> {
 
     @Override
     List<PluginData> getPluginData() {
-        return Arrays.asList(new PluginData("defects.json", defects));
+        return Arrays.asList(new PluginData(DEFECTS_JSON, defects));
     }
 
     @Override

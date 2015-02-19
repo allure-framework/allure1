@@ -28,6 +28,35 @@ public final class AllureReportUtils {
     }
 
     /**
+     * Create directory with given name in specified directory. Check created directory using
+     * {@link #checkDirectory(java.io.File)}
+     *
+     * @param parent specified parent directory
+     * @param name   given name for directory to create
+     * @return created directory
+     * @throws ReportGenerationException if can't create specified directory
+     */
+    public static File createDirectory(File parent, String name) {
+        File created = new File(parent, name);
+        checkDirectory(created);
+        return created;
+    }
+
+    /**
+     * If directory doesn't exists try to create it.
+     *
+     * @param directory given directory to check
+     * @throws ReportGenerationException if can't create specified directory
+     */
+    public static void checkDirectory(File directory) {
+        if (!(directory.exists() || directory.mkdirs())) {
+            throw new ReportGenerationException(
+                    String.format("Can't create data directory <%s>", directory.getAbsolutePath())
+            );
+        }
+    }
+
+    /**
      * Serialize specified object to directory with specified name.
      *
      * @param directory write to

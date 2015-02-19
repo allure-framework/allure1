@@ -8,6 +8,8 @@ import ru.yandex.qatools.commons.model.Environment
  */
 class EnvironmentPlugin implements ProcessPlugin<Environment> {
 
+    public static final String ENVIRONMENT_JSON = "environment.json"
+
     Environment environment = new Environment(id: UUID.randomUUID().toString(), name: "Allure Test Pack");
 
     @Override
@@ -21,7 +23,7 @@ class EnvironmentPlugin implements ProcessPlugin<Environment> {
 
     @Override
     List<PluginData> getPluginData() {
-        [new PluginData("environment.json", environment)]
+        [new PluginData(ENVIRONMENT_JSON, environment)]
     }
 
     @Override

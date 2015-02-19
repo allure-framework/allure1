@@ -7,17 +7,28 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.mockito.InOrder;
+import ru.yandex.qatools.allure.commons.AllureFileUtils;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
+import ru.yandex.qatools.allure.data.plugins.BehaviorPlugin;
+import ru.yandex.qatools.allure.data.plugins.DefectsPlugin;
+import ru.yandex.qatools.allure.data.plugins.EnvironmentPlugin;
+import ru.yandex.qatools.allure.data.plugins.GraphPlugin;
 import ru.yandex.qatools.allure.data.plugins.PluginManager;
-import ru.yandex.qatools.allure.model.Attachment;
+import ru.yandex.qatools.allure.data.plugins.TimelinePlugin;
+import ru.yandex.qatools.allure.data.plugins.XUnitPlugin;
+import ru.yandex.qatools.allure.data.utils.DirectoryMatcher;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.commons.model.Environment;
 
 import java.io.File;
 import java.util.Arrays;
 
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 import static org.mockito.Matchers.eq;
@@ -26,6 +37,9 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listAttachmentFiles;
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFilesByRegex;
+import static ru.yandex.qatools.allure.data.utils.DirectoryMatcher.contains;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -99,8 +113,20 @@ public class AllureReportGeneratorTest {
         File[] listBefore = outputDirectory.listFiles();
         assumeTrue("Output directory must be empty ", listBefore != null && listBefore.length == 0);
         generator.generate(outputDirectory);
-        File[] listAfter = outputDirectory.listFiles();
-        assertTrue("Output directory must not be empty after generate", listAfter != null && listAfter.length > 0);
+
+        File dataDirectory = new File(outputDirectory, AllureReportGenerator.DATA_DIRECTORY_NAME);
+        assertTrue("Data directory should be created", dataDirectory.exists());
+
+        assertThat(dataDirectory, contains(XUnitPlugin.XUNIT_JSON));
+        assertThat(dataDirectory, contains(TimelinePlugin.TIMELINE_JSON));
+        assertThat(dataDirectory, contains(BehaviorPlugin.BEHAVIOR_JSON));
+        assertThat(dataDirectory, contains(DefectsPlugin.DEFECTS_JSON));
+        assertThat(dataDirectory, contains(EnvironmentPlugin.ENVIRONMENT_JSON));
+        assertThat(dataDirectory, contains(GraphPlugin.GRAPH_JSON));
+        assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));
+
+        assertThat(listAttachmentFiles(dataDirectory), not(empty()));
+        assertThat(listFilesByRegex(".+-testcase\\.json", dataDirectory), not(empty()));
     }
 
     class TestInjector extends AbstractModule {

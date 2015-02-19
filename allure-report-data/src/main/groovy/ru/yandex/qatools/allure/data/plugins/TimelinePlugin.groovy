@@ -13,6 +13,8 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  */
 class TimelinePlugin implements ProcessPlugin<AllureTestCase> {
 
+    public static final String TIMELINE_JSON = "timeline.json"
+
     AllureTimeline timeline = new AllureTimeline();
 
     private Map<String, Host> hosts = new HashMap<>();
@@ -43,7 +45,7 @@ class TimelinePlugin implements ProcessPlugin<AllureTestCase> {
 
     @Override
     List<PluginData> getPluginData() {
-        return Arrays.asList(new PluginData("timeline.json", timeline));
+        return Arrays.asList(new PluginData(TIMELINE_JSON, timeline));
     }
 
     @Override

@@ -22,6 +22,8 @@ public class ReportWriter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ReportWriter.class);
 
+    public static final String REPORT_JSON = "report.json";
+
     private File outputDirectory;
 
     private long start;
@@ -75,6 +77,6 @@ public class ReportWriter {
         AllureReportInfo info = new AllureReportInfo();
         info.setTime(stop - start);
         info.setSize(size);
-        serialize(outputDirectory, "report.json", info);
+        serialize(outputDirectory, REPORT_JSON, info);
     }
 }

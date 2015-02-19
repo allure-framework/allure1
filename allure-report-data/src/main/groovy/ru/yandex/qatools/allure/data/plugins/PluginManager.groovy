@@ -87,9 +87,5 @@ class PluginManager {
                 }
             }
         }
-
-        public Set<Class<?>> getTypes() {
-            return storage.keySet()
-        }
     }
 }

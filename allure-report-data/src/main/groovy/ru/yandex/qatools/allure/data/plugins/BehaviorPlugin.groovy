@@ -17,6 +17,8 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
  */
 class BehaviorPlugin implements ProcessPlugin<AllureTestCase> {
 
+    public static final String BEHAVIOR_JSON = "behavior.json"
+
     AllureBehavior behavior = new AllureBehavior();
 
     private Map<String, AllureFeature> features = new HashMap<>().withDefault {
@@ -63,7 +65,7 @@ class BehaviorPlugin implements ProcessPlugin<AllureTestCase> {
 
     @Override
     List<PluginData> getPluginData() {
-        return Arrays.asList(new PluginData("behavior.json", behavior));
+        return Arrays.asList(new PluginData(BEHAVIOR_JSON, behavior));
     }
 
     @Override

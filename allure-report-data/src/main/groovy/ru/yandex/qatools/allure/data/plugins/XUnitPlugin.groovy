@@ -15,6 +15,8 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  */
 class XUnitPlugin implements ProcessPlugin<AllureTestCase> {
 
+    public static final String XUNIT_JSON = "xunit.json"
+
     AllureXUnit xUnit = new AllureXUnit(time: new Time(start: Long.MAX_VALUE, stop: Long.MIN_VALUE));
 
     private Map<String, AllureTestSuite> testSuites = new HashMap<>();
@@ -52,7 +54,7 @@ class XUnitPlugin implements ProcessPlugin<AllureTestCase> {
 
     @Override
     List<PluginData> getPluginData() {
-        return Arrays.asList(new PluginData("xunit.json", xUnit));
+        return Arrays.asList(new PluginData(XUNIT_JSON, xUnit));
     }
 
     @Override
