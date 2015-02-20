@@ -14,6 +14,19 @@ angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAn
     .config(function($httpProvider) {
         "use strict";
         $httpProvider.defaults.cache = true;
+        $httpProvider.interceptors.push(['$q', function($q) {
+            return {
+                responseError: function(reason) {
+                    if(reason instanceof Error) {
+                        reason = {
+                            config: {},
+                            status: reason.message
+                        }
+                    }
+                    return $q.reject(reason);
+                }
+            };
+        }]);
     })
     .run(function($rootScope) {
         "use strict";
