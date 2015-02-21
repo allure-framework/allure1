@@ -175,9 +175,10 @@ public class AnnotationManager {
             event.getLabels().add(createHostLabel("default"));
         }
 
-        event.getLabels().add(createThreadLabel(format("%s.%s",
+        event.getLabels().add(createThreadLabel(format("%s.%s(%s)",
                         ManagementFactory.getRuntimeMXBean().getName(),
-                        Thread.currentThread().getName())
+                        Thread.currentThread().getName(),
+                        Thread.currentThread().getId())
         ));
         return event;
     }
