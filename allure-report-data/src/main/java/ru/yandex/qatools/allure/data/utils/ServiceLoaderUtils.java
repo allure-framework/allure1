@@ -64,7 +64,7 @@ public final class ServiceLoaderUtils {
             @see http://docs.oracle.com/javase/7/docs/api/java/util/ServiceLoader.html#iterator()
             */
             return iterator.hasNext();
-        } catch (Exception e) {
+        } catch (Exception | ServiceConfigurationError e) {
             LOGGER.trace("Can't load some service using Java SPI", e);
             LOGGER.error(e.getMessage());
             return false;
