@@ -1,6 +1,7 @@
 package ru.yandex.qatools.allure.data.plugins
 
 import com.google.inject.Inject
+import com.google.inject.Injector
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
@@ -10,11 +11,11 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  */
 class PluginManager {
 
-    Storage storage;
+    protected Storage storage;
 
     @Inject
-    PluginManager(PluginLoader loader) {
-        storage = new Storage(loader)
+    PluginManager(PluginLoader loader, Injector injector = null) {
+        storage = new Storage(loader, injector)
     }
 
     public <T> void prepare(T object) {
@@ -59,9 +60,9 @@ class PluginManager {
             new HashMap<>().withDefault {
                 new ArrayList<>()
             }
-        };
+        }
 
-        Storage(PluginLoader loader) {
+        Storage(PluginLoader loader, Injector injector) {
             def plugins = loader.loadPlugins()
             if (!plugins) {
                 return
@@ -69,6 +70,9 @@ class PluginManager {
 
             plugins.each {
                 if (it) {
+                    if (injector) {
+                        injector.injectMembers(it)
+                    }
                     put(it)
                 }
             }
