@@ -188,12 +188,12 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         return sb.toString();
     }
 
-    private String getCurrentSuiteTitle(ITestContext iTestContext) {
+    String getCurrentSuiteTitle(ITestContext iTestContext) {
         String suite = iTestContext.getSuite().getName();
         String xmlTest = iTestContext.getCurrentXmlTest().getName();
         String params = "";
 
-        if (iTestContext.getCurrentXmlTest().getLocalParameters().isEmpty()) {
+        if (!iTestContext.getCurrentXmlTest().getLocalParameters().isEmpty()) {
             params = iTestContext.getCurrentXmlTest().getLocalParameters()
                     .toString().replace("{", "[").replace("}", "]");
         }
