@@ -6,22 +6,12 @@
 
     <xsd:include schemaLocation="simple-types.xsd"/>
 
-    <xsd:element name="allure-test-run" type="alr:allure-test-run"/>
     <xsd:element name="allure-test-suite" type="alr:allure-test-suite"/>
     <xsd:element name="allure-test-case" type="alr:allure-test-case"/>
 
     <xsd:complexType name="allure-report-info">
         <xsd:attribute name="size" type="xsd:long"/>
         <xsd:attribute name="time" type="xsd:long"/>
-    </xsd:complexType>
-
-    <!--All data about test run-->
-    <xsd:complexType name="allure-test-run">
-        <xsd:sequence>
-            <xsd:element name="time" type="alr:time"/>
-            <xsd:element name="test-suites" type="alr:allure-test-suites" minOccurs="0"/>
-            <xsd:element name="test-cases" type="alr:allure-test-cases" minOccurs="0"/>
-        </xsd:sequence>
     </xsd:complexType>
 
     <!--Features and Stories-->

@@ -23,6 +23,10 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
  */
 class DefaultTestCaseConverter implements TestCaseConverter {
 
+    public static final String UNKNOWN_STEP_NAME = "UnknownStepName"
+    public static final String UNKNOWN_TEST_SUITE = "UnknownTestSuite"
+    public static final String UNKNOWN_TEST_CASE = "UnknownTestCase"
+
     def suiteUids = [:].withDefault {
         generateUid();
     }
@@ -48,9 +52,9 @@ class DefaultTestCaseConverter implements TestCaseConverter {
             use([PluginUtils, SummaryCategory]) {
                 result.uid = generateUid();
 
-                if (!result.title) {
-                    result.title = TextUtils.humanize(result.name);
-                }
+                result.name = source.name ?: UNKNOWN_TEST_CASE;
+                result.title = result.title ?: TextUtils.humanize(result.name);
+
                 result.description = source.convertedDescription;
                 result.time = source.time;
 
@@ -61,10 +65,14 @@ class DefaultTestCaseConverter implements TestCaseConverter {
                 result.severity = source.severity;
                 result.testId = source.testId
                 result.issues = source.issues;
+
+                def suiteName = source.suiteName ?: UNKNOWN_TEST_SUITE;
+                def suiteTitle = source.suiteTitle ?: TextUtils.humanize(suiteName);
+
                 result.suite = new AllureTestSuiteInfo(
                         uid: suiteUids[source.suiteName],
-                        name: source.suiteName,
-                        title: source.suiteTitle ?: source.suiteName ? TextUtils.humanize(source.suiteName) : "Unknown"
+                        name: suiteName,
+                        title: suiteTitle
                 );
             }
 
@@ -79,9 +87,8 @@ class DefaultTestCaseConverter implements TestCaseConverter {
             def source = context.source;
 
             use([PluginUtils, SummaryCategory]) {
-                if (!result.title && result.name) {
-                    result.title = TextUtils.humanize(result.name);
-                }
+                result.name = result.name ?: UNKNOWN_STEP_NAME;
+                result.title = result.title ?: TextUtils.humanize(result.name);
 
                 result.time = source.time;
 

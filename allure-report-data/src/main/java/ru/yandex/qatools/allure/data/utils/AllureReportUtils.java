@@ -21,24 +21,10 @@ import java.nio.charset.StandardCharsets;
  */
 public final class AllureReportUtils {
 
-    private static final String REPORT_FILE_NAME = "report.json";
-
     /**
      * Don't use instance of this class
      */
     AllureReportUtils() {
-    }
-
-    /**
-     * Try to delete given file. Deletes the file or directory denoted by this abstract pathname.
-     * If this pathname denotes a directory, then the directory must be empty in
-     * order to be deleted.
-     *
-     * @param file to delete
-     * @return true if file deleted successfully
-     */
-    public static boolean deleteFile(File file) {
-        return file != null && file.exists() && file.delete();
     }
 
     /**
@@ -113,17 +99,5 @@ public final class AllureReportUtils {
      */
     public static DataOutputStream createDataOutputStream(File directory, String name) throws FileNotFoundException {
         return new DataOutputStream(new FileOutputStream(new File(directory, name)));
-    }
-
-
-    /**
-     * Serialize {@link ru.yandex.qatools.allure.data.AllureReportInfo}  to
-     * specified directory
-     *
-     * @param info            to serialize
-     * @param outputDirectory output directory
-     */
-    public static void writeAllureReportInfo(AllureReportInfo info, File outputDirectory) {
-        serialize(outputDirectory, REPORT_FILE_NAME, info);
     }
 }

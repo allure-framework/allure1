@@ -4,7 +4,7 @@
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.4.8-SNAPSHOT</version>
+        <version>1.4.9-SNAPSHOT</version>
     </parent>
 
     <artifactId>allure-report-data</artifactId>
@@ -221,6 +221,12 @@
         <dependency>
             <groupId>com.googlecode.lambdaj</groupId>
             <artifactId>lambdaj</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
 

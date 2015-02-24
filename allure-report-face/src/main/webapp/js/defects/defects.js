@@ -1,8 +1,8 @@
 /*global angular*/
-angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, $state, orderByFilter, status, WatchingStore, Collection, defects) {
+angular.module('allure.defects', []).controller('DefectsCtrl', function($scope, $state, status, WatchingStore, Collection, defects) {
     "use strict";
-    $scope.defects = orderByFilter(defects.defectsList, function(defectType) {
-        return status.getSortOrder(defectType.status);
+    $scope.defects = defects.defectsList.filter(function(defect) {
+        return defect.defects && defect.defects.length > 0;
     });
     var store = new WatchingStore('defectsSettings'),
         defectList = new Collection($scope.defects.reduce(function(defects, type) {

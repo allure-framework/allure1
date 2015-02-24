@@ -58,10 +58,7 @@
               "XUNIT": "xUnit",
               "BEHAVIORS": "Behaviors",
               "GRAPH": "Graph",
-              "TIMELINE": "Timeline",
-              "BROKEN_REPORT": "Your report seems to be broken! Check out <a href='{{url}}'>our FAQ</a> to find a reason",
-              "MESSAGE": "Message: ",
-              "DEBUG": "Debug: "
+              "TIMELINE": "Timeline"
           },
 
     "timeline":  
