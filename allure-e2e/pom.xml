@@ -28,7 +28,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
@@ -133,7 +132,6 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.16</version>
                 <configuration>
                     <excludes>
                         <exclude>**/e2e/**</exclude>
@@ -176,6 +174,7 @@
                             <value>${jetty.port}</value>
                         </systemProperty>
                     </systemProperties>
+                    <daemon>true</daemon>
                 </configuration>
                 <executions>
                     <execution>
@@ -186,7 +185,6 @@
                         </goals>
                         <configuration>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
-                            <daemon>true</daemon>
                         </configuration>
                     </execution>
                     <execution>

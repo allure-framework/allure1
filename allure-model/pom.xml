@@ -18,19 +18,8 @@
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <schemaDirectory>src/main/resources</schemaDirectory>
-                    <readOnly>true</readOnly>
-                    <removeOldOutput>true</removeOldOutput>
-                    <verbose>true</verbose>
-                    <extension>true</extension>
                     <args>
                         <arg>-no-header</arg>
                         <arg>-Xxew</arg>
@@ -53,7 +42,7 @@
                         <plugin>
                             <groupId>org.jvnet.jaxb2_commons</groupId>
                             <artifactId>jaxb2-basics</artifactId>
-                            <version>0.6.5</version>
+                            <version>0.9.3</version>
                         </plugin>
                     </plugins>
                 </configuration>
@@ -77,18 +66,10 @@
         <dependency>
             <groupId>org.jvnet.jaxb2_commons</groupId>
             <artifactId>jaxb2-basics-runtime</artifactId>
-            <version>0.6.5</version>
         </dependency>
-
         <dependency>
             <groupId>ru.yandex.qatools.properties</groupId>
             <artifactId>properties-loader</artifactId>
-        </dependency>
-
-        <!--Logging-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -98,13 +79,10 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

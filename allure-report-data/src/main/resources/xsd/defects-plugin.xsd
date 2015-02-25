@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:alr="urn:data.allure.qatools.yandex.ru"
+            targetNamespace="urn:data.allure.qatools.yandex.ru">
+
+    <xsd:include schemaLocation="report-data.xsd"/>
+
+    <xsd:element name="allure-defects" type="alr:allure-defects"/>
+    <xsd:complexType name="allure-defects">
+        <xsd:sequence>
+            <xsd:element name="defects-list" type="alr:allure-defects-list" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="allure-defects-list">
+        <xsd:sequence>
+            <xsd:element name="defect" type="alr:allure-defect" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="allure-defect">
+        <xsd:all>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="status" type="alr:status"/>
+            <xsd:element name="defects" type="alr:defects"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="defects">
+        <xsd:sequence>
+            <xsd:element name="defect-item" type="alr:defect-item" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="defect-item">
+        <xsd:all>
+            <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="failure" type="alr:failure"/>
+            <xsd:element name="test-cases" type="alr:allure-test-cases-info"/>
+        </xsd:all>
+    </xsd:complexType>
+</xsd:schema>

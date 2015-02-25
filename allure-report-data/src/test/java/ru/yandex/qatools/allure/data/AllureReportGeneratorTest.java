@@ -7,8 +7,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.mockito.InOrder;
-import ru.yandex.qatools.allure.commons.AllureFileUtils;
-import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
@@ -19,7 +17,6 @@ import ru.yandex.qatools.allure.data.plugins.GraphPlugin;
 import ru.yandex.qatools.allure.data.plugins.PluginManager;
 import ru.yandex.qatools.allure.data.plugins.TimelinePlugin;
 import ru.yandex.qatools.allure.data.plugins.XUnitPlugin;
-import ru.yandex.qatools.allure.data.utils.DirectoryMatcher;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.commons.model.Environment;
 

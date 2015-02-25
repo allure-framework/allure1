@@ -11,13 +11,26 @@
 
     <artifactId>allure-report-plugin-api</artifactId>
 
+    <name>Allure Report Plugin Api</name>
 
     <dependencies>
         <dependency>
+            <groupId>ru.yandex.qatools.allure</groupId>
+            <artifactId>allure-model</artifactId>
+        </dependency>
+        <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>3.0</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jvnet.jaxb2.maven2</groupId>
+                <artifactId>maven-jaxb2-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
