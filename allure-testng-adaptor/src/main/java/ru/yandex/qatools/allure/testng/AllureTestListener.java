@@ -73,7 +73,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     @Override
     public void onStart(ITestContext iTestContext) {
         getLifecycle().fire(new TestSuiteStartedEvent(
-                getSuiteUid(iTestContext), iTestContext.getSuite().getName()
+                getSuiteUid(iTestContext), getCurrentSuiteTitle(iTestContext)
         ).withTitle(
                 getCurrentSuiteTitle(iTestContext)
         ).withLabels(
