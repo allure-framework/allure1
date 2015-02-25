@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:alr="urn:data.allure.qatools.yandex.ru"
+            targetNamespace="urn:data.allure.qatools.yandex.ru">
+
+    <xsd:include schemaLocation="report-data.xsd"/>
+
+    <xsd:element name="allure-graph" type="alr:allure-graph"/>
+    <xsd:complexType name="allure-graph">
+        <xsd:sequence>
+            <xsd:element name="test-cases" type="alr:allure-test-cases-info" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

@@ -26,34 +26,6 @@
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <bindingDirectory>src/main/resources/xsd</bindingDirectory>
-                    <schemaDirectory>src/main/resources/xsd</schemaDirectory>
-                    <readOnly>true</readOnly>
-                    <removeOldOutput>true</removeOldOutput>
-                    <verbose>true</verbose>
-                    <extension>true</extension>
-                    <args>
-                        <arg>-no-header</arg>
-                        <arg>-Xxew</arg>
-                        <arg>-Xxew:instantiate lazy</arg>
-                        <arg>-Xxew:delete</arg>
-                    </args>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.github.jaxb-xew-plugin</groupId>
-                            <artifactId>jaxb-xew-plugin</artifactId>
-                            <version>1.1</version>
-                        </plugin>
-                    </plugins>
-                </configuration>
             </plugin>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -162,16 +134,8 @@
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-report-plugin-api</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
 
         <!--Logging-->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
@@ -228,7 +192,5 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
-
 </project>

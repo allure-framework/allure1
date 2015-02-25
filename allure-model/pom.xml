@@ -18,19 +18,8 @@
             <plugin>
                 <groupId>org.jvnet.jaxb2.maven2</groupId>
                 <artifactId>maven-jaxb2-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <schemaDirectory>src/main/resources</schemaDirectory>
-                    <readOnly>true</readOnly>
-                    <removeOldOutput>true</removeOldOutput>
-                    <verbose>true</verbose>
-                    <extension>true</extension>
                     <args>
                         <arg>-no-header</arg>
                         <arg>-Xxew</arg>
