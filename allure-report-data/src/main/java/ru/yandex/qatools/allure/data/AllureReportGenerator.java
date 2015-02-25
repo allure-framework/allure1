@@ -61,6 +61,8 @@ public class AllureReportGenerator {
 
     public void generate(ReportWriter writer) {
         for (TestCaseResult result : testCaseReader) {
+            pluginManager.prepare(result);
+            
             AllureTestCase testCase = converter.convert(result);
             pluginManager.prepare(testCase);
             pluginManager.process(testCase);

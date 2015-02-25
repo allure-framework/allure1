@@ -1,3 +1,4 @@
+ru.yandex.qatools.allure.data.plugins.MigrationPlugin
 ru.yandex.qatools.allure.data.plugins.XUnitPlugin
 ru.yandex.qatools.allure.data.plugins.TimelinePlugin
 ru.yandex.qatools.allure.data.plugins.BehaviorPlugin

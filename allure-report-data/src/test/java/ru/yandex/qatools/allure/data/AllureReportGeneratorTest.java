@@ -90,6 +90,7 @@ public class AllureReportGeneratorTest {
         verifyNoMoreInteractions(converter);
 
         InOrder inOrder = inOrder(pluginManager);
+        inOrder.verify(pluginManager).prepare(result);
         inOrder.verify(pluginManager).prepare(testCase);
         inOrder.verify(pluginManager).process(testCase);
         inOrder.verify(pluginManager).writePluginData(AllureTestCase.class, writer);
@@ -153,10 +154,14 @@ public class AllureReportGeneratorTest {
 
         @Override
         protected void configure() {
-            bind(new TypeLiteral<Reader<TestCaseResult>>() {}).toProvider(Providers.of(testCaseReader));
-            bind(new TypeLiteral<Reader<Environment>>() {}).toProvider(Providers.of(environmentReader));
-            bind(new TypeLiteral<Reader<AttachmentInfo>>() {}).toProvider(Providers.of(attachmentReader));
-            bind(new TypeLiteral<TestCaseConverter>() {}).toProvider(Providers.of(converter));
+            bind(new TypeLiteral<Reader<TestCaseResult>>() {
+            }).toProvider(Providers.of(testCaseReader));
+            bind(new TypeLiteral<Reader<Environment>>() {
+            }).toProvider(Providers.of(environmentReader));
+            bind(new TypeLiteral<Reader<AttachmentInfo>>() {
+            }).toProvider(Providers.of(attachmentReader));
+            bind(new TypeLiteral<TestCaseConverter>() {
+            }).toProvider(Providers.of(converter));
             bind(PluginManager.class).toProvider(Providers.of(pluginManager));
         }
     }

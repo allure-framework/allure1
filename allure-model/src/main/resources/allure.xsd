@@ -39,6 +39,11 @@
         <xs:attribute name="start" type="xs:long" use="required"/>
         <xs:attribute name="stop" type="xs:long" use="required"/>
         <xs:attribute name="status" type="qa:status" use="required"/>
+        <xs:attribute name="severity" type="qa:severity-level">
+            <xs:annotation>
+                <xs:documentation>This is Deprecated. Use label with name 'severity' instead.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="steps">
@@ -128,6 +133,11 @@
             <xs:enumeration value="failed"/>
             <xs:enumeration value="broken"/>
             <xs:enumeration value="passed"/>
+            <xs:enumeration value="skipped">
+                <xs:annotation>
+                    <xs:documentation>This is Deprecated. Use canceled status instead.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="canceled"/>
             <xs:enumeration value="pending"/>
         </xs:restriction>
