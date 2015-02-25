@@ -14,7 +14,7 @@ class MigrationPluginTest {
 
     def plugin = new MigrationPlugin()
 
-    def severity = SeverityLevel.NORMAL
+    def severity = SeverityLevel.CRITICAL
 
     @Test
     void severityFieldMustBeMigratedToLabels() {
