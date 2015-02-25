@@ -18,7 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assume.assumeNotNull;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assume.assumeThat;
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
@@ -41,7 +41,7 @@ public class AllureTestListenerSuiteNameTest {
 
         List<String> suites = new ArrayList<>();
         URL resource = getClass().getClassLoader().getResource("suite3.xml");
-        assumeNotNull(resource);
+        assertNotNull("could not find suite3.xml", resource);
 
         //noinspection ConstantConditions
         suites.add(resource.getFile());

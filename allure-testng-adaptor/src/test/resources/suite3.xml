@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test suite tag">
+    <test name="Test tag by classes">
+        <parameter name="param1" value="val1"/>
+        <classes>
+            <class name="ru.yandex.qatools.allure.testng.testdata.SimpleTestngTest"/>
+        </classes>
+    </test>
+    <test name="Test tag by classes 2">
+        <parameter name="param1" value="val1"/>
+        <classes>
+            <class name="ru.yandex.qatools.allure.testng.testdata.SimpleTestngTest"/>
+        </classes>
+    </test>
+</suite>
