@@ -24,13 +24,13 @@ import java.io.File;
  * eroshenkoam
  * 03/02/15
  */
-public class AppInjector extends AbstractModule {
+public class AllureGuiceModule extends AbstractModule {
 
     private File[] inputDirectories;
 
     private ClassLoader classLoader;
 
-    public AppInjector(ClassLoader classLoader, File... inputDirectories) {
+    public AllureGuiceModule(ClassLoader classLoader, File... inputDirectories) {
         this.classLoader = classLoader;
         this.inputDirectories = inputDirectories;
     }

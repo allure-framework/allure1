@@ -42,14 +42,14 @@ public class AllureReportGenerator {
     }
 
     public AllureReportGenerator(ClassLoader pluginClassLoader, File... inputDirectories) {
-        this(new AppInjector(pluginClassLoader, inputDirectories));
+        this(new AllureGuiceModule(pluginClassLoader, inputDirectories));
     }
 
     /**
      * For testing only
      */
-    AllureReportGenerator(AbstractModule injector) {
-        Guice.createInjector(injector).injectMembers(this);
+    AllureReportGenerator(AbstractModule module) {
+        Guice.createInjector(module).injectMembers(this);
     }
 
     public void generate(File outputDirectory) {

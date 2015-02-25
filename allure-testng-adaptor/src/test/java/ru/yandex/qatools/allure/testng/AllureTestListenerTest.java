@@ -12,7 +12,11 @@ import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.*;
 
 import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static ru.yandex.qatools.allure.utils.AnnotationManager.withExecutorInfo;
 
@@ -136,5 +140,24 @@ public class AllureTestListenerTest {
         String testName = String.format("%s[%s,%s]",
                 DEFAULT_TEST_NAME, Double.toString(doubleParameter), stringParameter);
         verify(allure).fire(eq(withExecutorInfo(new TestCaseStartedEvent(suiteUid, testName))));
+    }
+
+    @Test
+    public void currentSuiteTitleTest() throws Exception {
+        Map<String, String> params = new HashMap<>();
+        params.put("key", "value");
+        XmlTest xmlTest = mock(XmlTest.class);
+        when(xmlTest.getLocalParameters()).thenReturn(params);
+        when(xmlTest.getName()).thenReturn("xmlName");
+
+        ITestContext iTestContext = mock(ITestContext.class);
+        when(iTestContext.getCurrentXmlTest()).thenReturn(xmlTest);
+
+        ISuite iSuite = mock(ISuite.class);
+        when(iSuite.getName()).thenReturn("name");
+        when(iTestContext.getSuite()).thenReturn(iSuite);
+
+        String name = testngListener.getCurrentSuiteTitle(iTestContext);
+        assertThat(name, is("name : xmlName[key=value]"));
     }
 }
