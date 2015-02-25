@@ -73,14 +73,6 @@ public class AllureTestListenerMultipleSuitesTest {
     }
     
     @Test
-    public void validateSuiteFilesSameSize() {
-    	Iterator<File> iterator = listTestSuiteFiles(resultsDir.toFile()).iterator();
-    	File file1 = iterator.next();
-    	File file2 = iterator.next();
-    	assertThat(file1.length(), is(file2.length()));
-    }
-    
-    @Test 
     public void validatePendingTest() throws JAXBException {
         File resultfile = listTestSuiteFiles(resultsDir.toFile()).iterator().next();
         JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);

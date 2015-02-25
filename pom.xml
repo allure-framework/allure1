@@ -32,6 +32,7 @@
         <module>allure-java-aspects</module>
         <module>allure-junit-adaptor</module>
         <module>allure-testng-adaptor</module>
+        <module>allure-report-plugin-api</module>
         <module>allure-report-data</module>
         <module>allure-report-face</module>
     </modules>
@@ -273,7 +274,11 @@
                 <artifactId>allure-testng-adaptor</artifactId>
                 <version>${project.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>ru.yandex.qatools.allure</groupId>
+                <artifactId>allure-report-plugin-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
             <dependency>
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-report-data</artifactId>
