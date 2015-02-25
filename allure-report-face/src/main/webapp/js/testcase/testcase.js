@@ -110,7 +110,8 @@ angular.module('allure.testcase.controllers', [])
                 return 'text-status-'+step.status.toLowerCase();
             }
             return '';
-        };   
+        };
+        $scope.isFailed = isFailed;
         $scope.toggleExpand = function() {
             $scope.expanded = !$scope.expanded;
         };

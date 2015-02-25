@@ -76,6 +76,7 @@
         <span class="text-muted" ng-hide="step.summary.steps==0">{{'testcase.SUBSTEPS' | translate:"{substeps: step.summary.steps}":"messageformat"}}</span>
         <span class="text-muted" ng-hide="step.summary.steps==0 || step.summary.attachments==0">, </span>
         <span class="text-muted" ng-hide="step.summary.attachments==0">{{'testcase.ATTACHMENTS' | translate:"{attachments: step.summary.attachments}":"messageformat"}}</span>
+        <span class="pull-right icon-status-{{step.status | lowercase}}" ng-show="isFailed(step)"></span>
     </div>
     <div class="step__content" ng-if="expanded">
         <div ng-repeat="step in step.steps" ng-controller="StepCtrl">
