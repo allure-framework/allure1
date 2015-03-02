@@ -53,6 +53,7 @@
               "DATA_SIZE": "Data size:",
               "GENERATED": "Generated in:",
               "VERSION": "Version:",
+              "COLLAPSE": "Collapse",
               "OVERVIEW": "Overview",
               "DEFECTS": "Defects",
               "XUNIT": "xUnit",

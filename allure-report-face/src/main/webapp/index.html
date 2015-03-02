@@ -93,7 +93,8 @@
 </header>
 <div class="loader"></div>
 <div class="dashboard" ng-controller="TabsController">
-    <ul class="b-vert list-unstyled">
+    <div class="b-vert" ng-class="{'b-vert_collapsed': isCollapsed() }">
+    <ul class="list-unstyled">
         <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('overview')}"><div class="b-vert__title" ui-sref="overview">
             <div class="b-vert__icon fa fa-home"></div>
             {{'index.OVERVIEW' | translate}}
@@ -119,6 +120,12 @@
             {{'index.TIMELINE' | translate}}
         </div></li>
     </ul>
+        <div title="{{'index.COLLAPSE' | translate}}" class="b-vert__item b-vert__collapse" ng-class="{'b-vert__item_state_selected': isCollapsed() }" ng-click="toggleCollapsed()">
+            <div class="b-vert__title">
+                <div class="b-vert__icon"></div>
+            </div>
+        </div>
+    </div>
     <div ui-view class="tab-content"></div>
 </div>
 <div class="alert alert-warning error-message" ng-show="error">
