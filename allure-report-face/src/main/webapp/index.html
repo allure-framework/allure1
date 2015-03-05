@@ -75,7 +75,7 @@
             <a class="clickable" dropdown-toggle>{{selectedLang.name}}<b class="caret"></b></a>
             <div class="b-popup b-island b-island_mode_fly b-popup_show_bottom-center" role="menu">
                 <div class="b-popup__content">
-                    <a ng-repeat="lang in langs" class="feedback_item" data-ng-click="setLang(lang)">{{lang.name}}</a>
+                    <a ng-repeat="lang in langs" class="feedback_item clickable" data-ng-click="setLang(lang)">{{lang.name}}</a>
                 </div>
             <div class="b-popup__tail"></div>
             </div>
