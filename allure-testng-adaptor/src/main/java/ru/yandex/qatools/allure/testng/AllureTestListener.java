@@ -1,30 +1,18 @@
 package ru.yandex.qatools.allure.testng;
 
-import org.testng.IConfigurationListener;
-import org.testng.ITestContext;
-import org.testng.ITestListener;
-import org.testng.ITestNGMethod;
-import org.testng.ITestResult;
-import org.testng.SkipException;
-import org.testng.TestException;
+import org.testng.*;
 import ru.yandex.qatools.allure.Allure;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
-import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
-import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
-import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
-import ru.yandex.qatools.allure.events.TestCasePendingEvent;
-import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
-import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
-import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
+import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.logging.Attachments;
+import ru.yandex.qatools.allure.logging.StandardOutputSetter;
+import ru.yandex.qatools.allure.logging.TestStepLogs;
 import ru.yandex.qatools.allure.model.Description;
 import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.lang.annotation.Annotation;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -33,9 +21,11 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 22.11.13
  */
-public class AllureTestListener implements ITestListener, IConfigurationListener {
+public class AllureTestListener implements ITestListener, IConfigurationListener, IExecutionListener {
 
     private Allure lifecycle = Allure.LIFECYCLE;
+
+    private AllureConfig config = AllureConfig.newInstance();
 
     private Map<String, String> suiteUid = new HashMap<String, String>();
 
@@ -121,6 +111,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         am.setDefaults(getClassAnnotations(iTestResult));
         am.update(event);
 
+        TestStepLogs.addLog();
         getLifecycle().fire(event);
     }
 
@@ -206,6 +197,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     }
 
     private void fireFinishTest() {
+        Attachments.addLogAttachment();
         getLifecycle().fire(new TestCaseFinishedEvent());
     }
 
@@ -232,5 +224,19 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
             suiteUid.put(suite, uid);
         }
         return uid;
+    }
+
+    @Override
+    public void onExecutionStart() {
+        if (config.attachLogs()) {
+            StandardOutputSetter.set();
+        }
+    }
+
+    @Override
+    public void onExecutionFinish() {
+        if (config.attachLogs()) {
+            StandardOutputSetter.reset();
+        }
     }
 }

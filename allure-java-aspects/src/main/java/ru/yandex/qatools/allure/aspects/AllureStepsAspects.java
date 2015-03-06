@@ -1,17 +1,15 @@
 package ru.yandex.qatools.allure.aspects;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.annotations.Step;
 import ru.yandex.qatools.allure.events.StepFailureEvent;
 import ru.yandex.qatools.allure.events.StepFinishedEvent;
 import ru.yandex.qatools.allure.events.StepStartedEvent;
+import ru.yandex.qatools.allure.logging.Attachments;
+import ru.yandex.qatools.allure.logging.TestStepLogs;
 
 import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getName;
 import static ru.yandex.qatools.allure.aspects.AllureAspectUtils.getTitle;
@@ -48,18 +46,23 @@ public class AllureStepsAspects {
         if (!stepTitle.isEmpty()) {
             startedEvent.setTitle(stepTitle);
         }
-
+        TestStepLogs.addLog();
         ALLURE.fire(startedEvent);
     }
 
     @AfterThrowing(pointcut = "anyMethod() && withStepAnnotation()", throwing = "e")
     public void stepFailed(JoinPoint joinPoint, Throwable e) {
         ALLURE.fire(new StepFailureEvent().withThrowable(e));
-        ALLURE.fire(new StepFinishedEvent());
+        finishStep();
     }
 
     @AfterReturning(pointcut = "anyMethod() && withStepAnnotation()", returning = "result")
     public void stepStop(JoinPoint joinPoint, Object result) {
+        finishStep();
+    }
+
+    private void finishStep() {
+        Attachments.addLogAttachment();
         ALLURE.fire(new StepFinishedEvent());
     }
 
