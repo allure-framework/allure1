@@ -165,6 +165,7 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
+                    <jvmArgs>-Xmx1024m -XX:MaxPermSize=512M</jvmArgs>
                     <webAppSourceDirectory>${allure.report.directory}</webAppSourceDirectory>
                     <scanIntervalSeconds>10</scanIntervalSeconds>
                     <stopKey>foo</stopKey>
