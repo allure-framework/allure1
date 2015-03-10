@@ -10,7 +10,7 @@
 
     <properties>
         <jetty.port>9990</jetty.port>
-        <jetty.version>9.2.9.v20150224</jetty.version>
+        <jetty.version>9.0.7.v20131107</jetty.version>
 
         <compiler.version>1.7</compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
