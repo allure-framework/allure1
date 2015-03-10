@@ -241,11 +241,6 @@
                     <aggregate>true</aggregate>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.18</version>
-            </plugin>
         </plugins>
     </build>
 
