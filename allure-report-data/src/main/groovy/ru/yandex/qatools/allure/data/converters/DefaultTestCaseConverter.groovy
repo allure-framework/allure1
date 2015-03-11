@@ -58,7 +58,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
                 result.description = source.convertedDescription;
                 result.time = source.time;
 
-                result.summary = (result.steps.summary.sum() ?: new Summary()) as Summary;
+                result.summary = result.steps.summary.sum(new Summary(steps: 0, attachments: 0)) as Summary
                 result.summary.steps += result.steps.size();
                 result.summary.attachments += result.attachments.size();
 
@@ -92,7 +92,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
 
                 result.time = source.time;
 
-                result.summary = result.steps.summary.sum() as Summary ?: new Summary();
+                result.summary = result.steps.summary.sum(new Summary(steps: 0, attachments: 0)) as Summary
                 result.summary.steps += result.steps.size();
                 result.summary.attachments += result.attachments.size();
             }
