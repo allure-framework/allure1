@@ -1,7 +1,10 @@
 package ru.yandex.qatools.allure.data.io;
 
 import com.google.inject.Inject;
-import ru.yandex.qatools.allure.model.*;
+import ru.yandex.qatools.allure.model.Label;
+import ru.yandex.qatools.allure.model.TestCaseResult;
+import ru.yandex.qatools.allure.model.TestSuiteResult;
+import ru.yandex.qatools.allure.model.Description;
 
 import java.util.Iterator;
 
