@@ -4,8 +4,11 @@ import com.google.inject.Inject;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
+import ru.yandex.qatools.allure.model.Description;
 
 import java.util.Iterator;
+
+import static ru.yandex.qatools.allure.data.utils.DescriptionUtils.mergeDescriptions;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -58,6 +61,8 @@ public class TestCaseReader implements Reader<TestCaseResult> {
                 result.getLabels().add(new Label().withName(SUITE_NAME).withValue(currentSuite.getName()));
                 result.getLabels().add(new Label().withName(SUITE_TITLE).withValue(currentSuite.getTitle()));
                 result.getLabels().addAll(currentSuite.getLabels());
+                Description description = mergeDescriptions(currentSuite, result);
+                result.setDescription(description);
 
                 return result;
             }
