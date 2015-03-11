@@ -8,6 +8,7 @@ import ru.yandex.qatools.allure.model.TestSuiteResult
 
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
+import static org.hamcrest.Matchers.nullValue
 import static ru.yandex.qatools.allure.data.utils.DescriptionUtils.mergeDescriptions
 
 /**
@@ -16,13 +17,26 @@ import static ru.yandex.qatools.allure.data.utils.DescriptionUtils.mergeDescript
  */
 class DescriptionUtilsTest {
 
+
     @Test
-    void descriptionsTextsShouldBeMerged() {
+    void descriptionsValuesShouldBeMergedWhenText() {
 
         def testCaseDescription = new Description(value: "TestCase Description", type: DescriptionType.TEXT)
         def testSuiteDescription = new Description(value: "TestSuite Description", type: DescriptionType.TEXT)
 
         String expectedDescriptionValue = testSuiteDescription.value + "\n" + testCaseDescription.value;
+
+        def mergedDescription = mergeDescriptions(testSuiteDescription, testCaseDescription)
+        assertThat(mergedDescription.value, equalTo(expectedDescriptionValue))
+    }
+
+    @Test
+    void descriptionsValuesShouldBeMergedWhenMarkdown() {
+
+        def testCaseDescription = new Description(value: "TestCase Description", type: DescriptionType.MARKDOWN)
+        def testSuiteDescription = new Description(value: "TestSuite Description", type: DescriptionType.MARKDOWN)
+
+        String expectedDescriptionValue = testSuiteDescription.value + "\n\n" + testCaseDescription.value;
 
         def mergedDescription = mergeDescriptions(testSuiteDescription, testCaseDescription)
         assertThat(mergedDescription.value, equalTo(expectedDescriptionValue))
@@ -78,6 +92,36 @@ class DescriptionUtilsTest {
     }
 
     @Test
+    void nullTestSuiteDescriptionShouldNotBeMergedWithTestCaseDescription() {
+
+        def testCaseDescription = new Description(value: "TestCase Description", type: DescriptionType.MARKDOWN)
+        def mergedDescription = mergeDescriptions(null, testCaseDescription)
+
+        assertThat(mergedDescription.type, equalTo(testCaseDescription.type))
+        assertThat(mergedDescription.value, equalTo(testCaseDescription.value))
+
+    }
+
+    @Test
+    void nullTestCaseDescriptionShouldBeMergedWithTestSuiteDescription() {
+
+        def testSuiteDescription = new Description(value: "TestSuite Description", type: DescriptionType.MARKDOWN)
+        def mergedDescription = mergeDescriptions(testSuiteDescription, null)
+
+        assertThat(mergedDescription.type, equalTo(testSuiteDescription.type))
+        assertThat(mergedDescription.value, equalTo(testSuiteDescription.value))
+
+    }
+
+    @Test
+    void bothNullTestCaseAndTestSuiteDescriptionShouldMergedIntoNullDescription() {
+
+        def mergedDescription = mergeDescriptions((Description) null, (Description) null)
+        assertThat(mergedDescription, nullValue())
+
+    }
+
+    @Test
     void testCaseAndTestSuiteMethodSignatureTest() {
 
         def testCaseDescription = new Description(value: "TestCase Description", type: DescriptionType.MARKDOWN)
@@ -85,7 +129,7 @@ class DescriptionUtilsTest {
 
         def testCase = new TestCaseResult(description: testCaseDescription)
         def testSuite = new TestSuiteResult(description: testSuiteDescription)
-        
+
         def actualDescription = mergeDescriptions(testSuite, testCase)
         def expectedDescription = mergeDescriptions(testSuiteDescription, testCaseDescription)
 
@@ -93,4 +137,5 @@ class DescriptionUtilsTest {
         assertThat(actualDescription.value, equalTo(expectedDescription.value))
 
     }
+
 }
