@@ -383,6 +383,19 @@ class DefaultTestCaseConverterTest {
         assert modify.steps[0].title == "Some name"
     }
 
+    @Test
+    void shouldSumSummaryRightWhenOnlyOneStep() {
+        def origin = new TestCaseResult(
+                steps: [new Step(attachments: [])],
+                attachments: []
+        )
+
+        def modify = converter.convert(origin)
+
+        assert modify.steps[0]?.summary?.steps == 0
+        assert modify.steps[0]?.summary?.attachments == 0
+    }
+
     static def checkLabel(List<Label> labels, LabelName name, String expectedValue) {
         def found = labels.find { it.name == name.value() }
         assert found
