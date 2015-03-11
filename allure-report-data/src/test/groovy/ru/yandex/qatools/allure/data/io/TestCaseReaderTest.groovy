@@ -3,9 +3,15 @@ package ru.yandex.qatools.allure.data.io
 import org.junit.Ignore
 import org.junit.Test
 import ru.yandex.qatools.allure.data.utils.PluginUtils
+import ru.yandex.qatools.allure.model.Description
+import ru.yandex.qatools.allure.model.DescriptionType
 import ru.yandex.qatools.allure.model.Label
 import ru.yandex.qatools.allure.model.TestCaseResult
 import ru.yandex.qatools.allure.model.TestSuiteResult
+
+import static org.hamcrest.MatcherAssert.assertThat
+import static org.hamcrest.Matchers.equalTo
+import static ru.yandex.qatools.allure.data.utils.DescriptionUtils.mergeDescriptions
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -103,6 +109,25 @@ class TestCaseReaderTest {
 
         def reader = getReader([testSuite]);
         reader.iterator().remove()
+    }
+
+    @Test
+    void shouldMergeTestSuiteIntoTestCaseDescription() {
+        def testCaseDescription = new Description(value: "Test Case Description", type: DescriptionType.TEXT)
+        def testCase = new TestCaseResult(description: testCaseDescription)
+
+        def testSuiteDescription = new Description(value: "Test Suite Description", type: DescriptionType.TEXT)
+        def testSuite = new TestSuiteResult(testCases: [testCase], description: testSuiteDescription)
+
+        def reader = getReader([testSuite])
+        def testCaseUnderTest = reader.iterator().next()
+
+        assert testCaseUnderTest.description != null
+
+        def expectedDescription = mergeDescriptions(testSuiteDescription, testCaseDescription);
+
+        assertThat(testCaseUnderTest.description.type, equalTo(expectedDescription.type))
+        assertThat(testCaseUnderTest.description.value, equalTo(expectedDescription.value))
     }
 
     static def getReader(List<TestSuiteResult> testSuites) {
