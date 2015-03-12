@@ -10,7 +10,7 @@
 
     <properties>
         <jetty.port>9990</jetty.port>
-        <jetty.version>9.2.3.v20140905</jetty.version>
+        <jetty.version>9.1.0.v20131115</jetty.version>
 
         <compiler.version>1.7</compiler.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,7 +35,6 @@
         <module>allure-report-plugin-api</module>
         <module>allure-report-data</module>
         <module>allure-report-face</module>
-        <module>allure-e2e</module>
     </modules>
 
     <organization>
