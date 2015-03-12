@@ -26,74 +26,6 @@
         <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>font-awesome</artifactId>
-            <version>4.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>bootstrap</artifactId>
-            <version>3.2.0-2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>d3js</artifactId>
-            <version>3.4.11</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>2.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angularjs</artifactId>
-            <version>1.2.26</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-ui-router</artifactId>
-            <version>0.2.10-1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-ui-bootstrap</artifactId>
-            <version>0.11.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-loading-bar</artifactId>
-            <version>0.6.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-translate</artifactId>
-            <version>2.4.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-translate-interpolation-messageformat</artifactId>
-            <version>0.1.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angular-translate-loader-static-files</artifactId>
-            <version>2.4.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>messageformat.js</artifactId>
-            <version>0.1.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>highlightjs</artifactId>
-            <version>8.2-1</version>
-        </dependency>
-    </dependencies>
-
     <build>
         <sourceDirectory>src/main/webapp</sourceDirectory>
         <testSourceDirectory>src/test/webapp</testSourceDirectory>
@@ -108,10 +40,78 @@
                         <id>copy</id>
                         <phase>compile</phase>
                         <goals>
-                            <goal>unpack-dependencies</goal>
+                            <goal>unpack</goal>
                         </goals>
                         <configuration>
                             <outputDirectory>${project.build.directory}/webjars</outputDirectory>
+
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>font-awesome</artifactId>
+                                    <version>4.2.0</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>bootstrap</artifactId>
+                                    <version>3.2.0-2</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>d3js</artifactId>
+                                    <version>3.4.11</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>jquery</artifactId>
+                                    <version>2.1.1</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>angularjs</artifactId>
+                                    <version>1.2.26</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>angular-ui-router</artifactId>
+                                    <version>0.2.10-1</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>angular-ui-bootstrap</artifactId>
+                                    <version>0.11.2</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>angular-loading-bar</artifactId>
+                                    <version>0.6.0</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>angular-translate</artifactId>
+                                    <version>2.4.1</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>angular-translate-interpolation-messageformat</artifactId>
+                                    <version>0.1.2</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>angular-translate-loader-static-files</artifactId>
+                                    <version>2.4.0</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>messageformat.js</artifactId>
+                                    <version>0.1.4</version>
+                                </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars</groupId>
+                                    <artifactId>highlightjs</artifactId>
+                                    <version>8.2-1</version>
+                                </artifactItem>
+                            </artifactItems>
                         </configuration>
                     </execution>
                 </executions>
