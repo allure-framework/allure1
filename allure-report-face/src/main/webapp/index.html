@@ -72,7 +72,7 @@
     </ul>
     <div class="nav navbar-nav navbar-right">
         <li class="dropdown">
-            <a class="clickable" dropdown-toggle>{{selectedLang.name}}<b class="caret"></b></a>
+            <a class="clickable" dropdown-toggle>{{(langs | filter:{locale: selectedLang})[0].name}}<b class="caret"></b></a>
             <div class="b-popup b-island b-island_mode_fly b-popup_show_bottom-center" role="menu">
                 <div class="b-popup__content">
                     <a ng-repeat="lang in langs" class="feedback_item clickable" data-ng-click="setLang(lang)">{{lang.name}}</a>

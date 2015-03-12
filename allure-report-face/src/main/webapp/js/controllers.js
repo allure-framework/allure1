@@ -47,11 +47,16 @@ angular.module('allure.controllers', [])
         }, Number.NEGATIVE_INFINITY)]
     })
 
-    .controller('NavbarCtrl', function($scope, $http, $translate) {
+    .controller('NavbarCtrl', function($scope, $window, $http, $storage, $translate) {
         'use strict';
+        function browserLanguage() {
+            return $window.navigator.language && $window.navigator.language.split('-').shift()
+        }
+        var locale = $storage('locale');
         $scope.setLang = function(langKey) {
-			$translate.use(langKey.locale);
-            $scope.selectedLang=langKey;
+            $scope.selectedLang = langKey.locale;
+            $translate.use($scope.selectedLang);
+            locale.setItem('lang', $scope.selectedLang)
         };
 
         $scope.langs = [{
@@ -61,8 +66,8 @@ angular.module('allure.controllers', [])
             name: "РУС",
             locale: "ru"
         }];
-        $scope.selectedLang=$scope.langs[0];
-        $translate.use($scope.selectedLang.locale);
+        $scope.selectedLang = locale.getItem('lang') || browserLanguage() || 'en';
+        $translate.use($scope.selectedLang);
 		        
         $http.get('data/report.json').then(function(response) {
             $scope.report = response.data;
