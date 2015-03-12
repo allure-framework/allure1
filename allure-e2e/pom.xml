@@ -173,17 +173,15 @@
                             <value>${jetty.port}</value>
                         </systemProperty>
                     </systemProperties>
+                    <daemon>true</daemon>
                 </configuration>
                 <executions>
                     <execution>
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>start</goal>
+                            <goal>run</goal>
                         </goals>
-                        <configuration>
-                            <scanIntervalSeconds>0</scanIntervalSeconds>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>stop-jetty</id>
