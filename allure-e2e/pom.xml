@@ -133,7 +133,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
-                    <argLine>-Xmx1024m -XX:MaxPermSize=512m</argLine>
                     <excludes>
                         <exclude>**/e2e/**</exclude>
                     </excludes>
@@ -165,9 +164,7 @@
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <configuration>
-                    <jvmArgs>-Xmx1024m -XX:MaxPermSize=512M</jvmArgs>
                     <webAppSourceDirectory>${allure.report.directory}</webAppSourceDirectory>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
                     <stopKey>foo</stopKey>
                     <stopPort>9999</stopPort>
                     <systemProperties>
@@ -176,14 +173,13 @@
                             <value>${jetty.port}</value>
                         </systemProperty>
                     </systemProperties>
-                    <daemon>true</daemon>
                 </configuration>
                 <executions>
                     <execution>
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>run</goal>
+                            <goal>start</goal>
                         </goals>
                         <configuration>
                             <scanIntervalSeconds>0</scanIntervalSeconds>
