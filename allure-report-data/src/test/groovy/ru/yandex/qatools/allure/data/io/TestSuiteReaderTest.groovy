@@ -1,5 +1,6 @@
 package ru.yandex.qatools.allure.data.io
 
+import org.apache.commons.io.FileUtils
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
@@ -41,6 +42,22 @@ class TestSuiteReaderTest {
 
         def reader = getReader([testSuite]);
         reader.iterator().remove()
+    }
+
+    @Test
+    void shouldSkipFileIfNotFound() {
+        def dir = folder.newFolder();
+        def testSuite = new TestSuiteResult(name: "name")
+
+        def file = new File(dir, generateTestSuiteFileName())
+        JAXB.marshal(new ObjectFactory().createTestSuite(testSuite), file)
+
+        def reader = new TestSuiteReader(dir);
+        FileUtils.deleteQuietly(file)
+
+        assert reader.iterator().hasNext()
+        assert reader.iterator().next() == null
+        assert !reader.iterator().hasNext()
     }
 
     def getReader(List<TestSuiteResult> results) {
