@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns2:test-suite xmlns:ns2="urn:model.allure.qatools.yandex.ru" start="1425482434748" stop="1425482435143"
+                version="1.4.8">
+    <name>my.company</name>
+    <test-cases>
+        <test-case start="1425482434807" stop="1425482435124" status="passed">
+            <name>&amp;1234567890someStep</name>
+            <title>Ω≈ç√∫˜≤≥ç!@#$%^*()йцукенгшщзхъфывапролджэёячсмитьбю</title>
+        </test-case>
+    </test-cases>
+</ns2:test-suite>

@@ -130,6 +130,20 @@ class TestCaseReaderTest {
         assertThat(testCaseUnderTest.description.value, equalTo(expectedDescription.value))
     }
 
+    @Test
+    void shouldEscapeInvalidXmlCharacters() {
+        def suiteReader = new TestSuiteReader(new File(getClass().classLoader.getResource("testresults").getFile()))
+        def reader = new TestCaseReader(suiteReader)
+
+        def iterator = reader.iterator()
+        assert iterator.hasNext()
+        def next = iterator.next()
+
+        assert next
+        assert next.name == '&1234567890someStep '
+        assert next.title == 'Ω≈ç√∫˜≤≥ç!@#\$%^*()йцукенгшщзхъфывапролджэёячсмитьбю  '
+    }
+
     static def getReader(List<TestSuiteResult> testSuites) {
         new TestCaseReader(new Reader<TestSuiteResult>() {
             @Override
