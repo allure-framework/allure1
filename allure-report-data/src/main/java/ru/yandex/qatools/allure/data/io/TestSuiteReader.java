@@ -9,8 +9,10 @@ import ru.yandex.qatools.allure.data.utils.BadXmlCharacterFilterReader;
 import javax.inject.Inject;
 import javax.xml.bind.JAXB;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Iterator;
 
 /**
@@ -43,8 +45,8 @@ public class TestSuiteReader implements Reader<TestSuiteResult> {
                 }
                 File next = testSuiteResultFiles.next();
                 try {
-                    FileReader fileReader = new FileReader(next);
-                    return JAXB.unmarshal(new BadXmlCharacterFilterReader(fileReader), TestSuiteResult.class);
+                    java.io.Reader reader = new InputStreamReader(new FileInputStream(next), StandardCharsets.UTF_8);
+                    return JAXB.unmarshal(new BadXmlCharacterFilterReader(reader), TestSuiteResult.class);
                 } catch (FileNotFoundException e) {
                     LOGGER.warn("Could not read testsuite.xml file", e);
                     return next();
