@@ -314,7 +314,7 @@
                                 </contextHandler>
                                 <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
                                     <contextPath>/webjars</contextPath>
-                                    <resourceBase>target/webjars/META-INF/resources</resourceBase>
+                                    <resourceBase>target/webjars/META-INF/resources/webjars/</resourceBase>
                                     <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
                                 </contextHandler>
                             </contextHandlers>
