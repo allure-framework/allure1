@@ -263,7 +263,7 @@
                                     <resources>
                                         <resource>
                                             <directory>
-                                                ${project.basedir}/../allure-model/src/test/resources/allure-results
+                                                ${project.parent.basedir}/allure-model/src/test/resources/allure-results
                                             </directory>
                                             <filtering>false</filtering>
                                         </resource>

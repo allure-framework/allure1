@@ -35,6 +35,7 @@
         <module>allure-report-plugin-api</module>
         <module>allure-report-data</module>
         <module>allure-report-face</module>
+        <module>allure-e2e</module>
     </modules>
 
     <organization>
@@ -114,7 +115,7 @@
                 <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>exec-maven-plugin</artifactId>
-                    <version>1.3.2</version>
+                    <version>1.2.1</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jvnet.jaxb2.maven2</groupId>
