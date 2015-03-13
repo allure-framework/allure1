@@ -18,6 +18,15 @@
         <div ng-switch-when="text">
             <pre><code>{{attachText}}</code></pre>
         </div>
+        <div ng-switch-when="csv">
+            <table class="test-list table table-hover table-condensed">
+                <tbody>
+                <tr ng-repeat="row in rows">
+                    <td ng-repeat="cell in row">{{cell}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
         <div ng-switch-when="code">
             <pre><code data-language="{{language}}" highlight="attachText"></code></pre>
         </div>
