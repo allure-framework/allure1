@@ -188,13 +188,14 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <keepServerAlive>true</keepServerAlive>
                     <jsSrcDir>src/main/webapp/js</jsSrcDir>
                     <jsTestSrcDir>src/test/webapp/unit</jsTestSrcDir>
                     <jasmineTargetDir>${project.build.directory}/surefire-reports</jasmineTargetDir>
                     <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                     <preloadSources>
                         <source>target/webjars/META-INF/resources/webjars/jquery/2.1.1/jquery.js</source>
-                        <source>target/webjars/META-INF/resources/webjars/d3js/3.4.11/d3.js</source>
+                        <source>target/webjars/META-INF/resources/webjars/d3js/3.4.11/d3.min.js</source>
                         <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular.js</source>
                         <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular-animate.js</source>
                         <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular-mocks.js</source>
@@ -205,13 +206,12 @@
             <plugin>
                 <groupId>com.github.timurstrekalov</groupId>
                 <artifactId>saga-maven-plugin</artifactId>
-                <version>1.5.2</version>
+                <version>1.5.3</version>
                 <executions>
                     <execution>
                         <goals>
                             <goal>coverage</goal>
                         </goals>
-                        <phase>none</phase>
                     </execution>
                 </executions>
                 <configuration>
