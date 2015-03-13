@@ -25,6 +25,8 @@ angular.module('allure.testcase.controllers', [])
                     return "text";
                 case 'text/html':
                     return "html";
+                case 'text/csv':
+                    return "csv";
             }
         };
     })
@@ -88,6 +90,8 @@ angular.module('allure.testcase.controllers', [])
                     return 'fa fa-file-image-o';
                 case 'code':
                     return 'fa fa-file-code-o';
+                case 'csv':
+                    return 'fa fa-table';
                 default:
                     return 'fa fa-file-o';
             }
@@ -140,6 +144,9 @@ angular.module('allure.testcase.controllers', [])
             //get raw file content without parsing
             $http.get(url, {transformResponse: []}).then(function(response) {
                 $scope.attachText = response.data;
+                if($scope.type === 'csv') {
+                    $scope.rows = d3.csv.parseRows(response.data);
+                }
             }, $scope.onError);
         }
 
@@ -161,7 +168,7 @@ angular.module('allure.testcase.controllers', [])
             $scope.notFound = false;
             $scope.type = attachmentType(attachment.type);
             $scope.language = $scope.type === 'code' ? attachment.type.split('/').pop() : undefined;
-            if($scope.type === 'text' || $scope.type === 'code') {
+            if($scope.type === 'text' || $scope.type === 'code' || $scope.type === 'csv') {
                 fileGetContents($scope.getSourceUrl(attachment));
             }
         });
