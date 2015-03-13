@@ -35,7 +35,7 @@
         <module>allure-report-plugin-api</module>
         <module>allure-report-data</module>
         <module>allure-report-face</module>
-        <module>allure-e2e</module>
+        <module>allure-report-preview</module>
     </modules>
 
     <organization>
