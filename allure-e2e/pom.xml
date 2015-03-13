@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>allure-e2e</artifactId>
+    <name>Allure E2E</name>
 
     <properties>
         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
@@ -35,7 +36,7 @@
                 <executions>
                     <execution>
                         <id>copy-allure-model-test-resources</id>
-                        <phase>compile</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
@@ -53,7 +54,7 @@
                     </execution>
                     <execution>
                         <id>copy-allure-report-face</id>
-                        <phase>compile</phase>
+                        <phase>generate-resources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
@@ -84,6 +85,7 @@
                 </executions>
                 <configuration>
                     <mainClass>ru.yandex.qatools.allure.data.DummyReportGenerator</mainClass>
+                    <longClasspath>true</longClasspath>
                     <arguments>
                         <argument>${allure.results.directory}</argument>
                         <argument>${allure.report.directory}</argument>
