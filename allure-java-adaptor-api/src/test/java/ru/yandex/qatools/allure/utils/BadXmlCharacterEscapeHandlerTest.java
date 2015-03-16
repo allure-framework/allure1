@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure.utils;
 
-import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -8,12 +7,9 @@ import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
-import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
@@ -32,8 +28,6 @@ import static org.junit.Assert.assertTrue;
 public class BadXmlCharacterEscapeHandlerTest {
 
     private File testSuiteResultFile;
-
-    private Marshaller m;
 
     private TestSuiteResult result;
 
@@ -57,19 +51,14 @@ public class BadXmlCharacterEscapeHandlerTest {
     @Before
     public void setUp() throws Exception {
         testSuiteResultFile = folder.newFile();
-        m = JAXBContext.newInstance(TestSuiteResult.class).createMarshaller();
-        m.setProperty(
-                CharacterEscapeHandler.class.getName(),
-                BadXmlCharacterEscapeHandler.getInstance()
-        );
-
         result = new TestSuiteResult().withName("name-and-кириллицей-also");
+        result.setTitle("prefix " + character + " suffix");
     }
 
     @Test
     public void dataWithInvalidCharacterTest() throws Exception {
-        result.setTitle("prefix " + character + " suffix");
-        m.marshal(new ObjectFactory().createTestSuite(result), testSuiteResultFile);
+        AllureResultsUtils.writeTestSuiteResult(result, testSuiteResultFile);
+
         Validator validator = AllureModelUtils.getAllureSchemaValidator();
         validator.validate(new StreamSource(testSuiteResultFile));
 
