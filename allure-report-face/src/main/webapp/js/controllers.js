@@ -86,10 +86,6 @@ angular.module('allure.controllers', [])
             settings.setItem('collapsed', !$scope.isCollapsed());
         };
 
-        if($scope.isCollapsed() == undefined) {
-            $scope.toggleCollapsed();
-        }
-
         $scope.isCurrent = function(state) {
             return $state.includes(state);
         };
