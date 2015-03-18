@@ -93,32 +93,39 @@
 </header>
 <div class="loader"></div>
 <div class="dashboard" ng-controller="TabsController">
-    <ul class="b-vert list-unstyled">
-        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('overview')}"><div class="b-vert__title" ui-sref="overview">
+    <div class="b-vert" ng-class="{'b-vert_collapsed': isCollapsed() }">
+    <ul class="list-unstyled">
+        <li title="{{'index.OVERVIEW' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('overview')}" ui-sref="overview"><div class="b-vert__title">
             <div class="b-vert__icon fa fa-home"></div>
             {{'index.OVERVIEW' | translate}}
         </div></li>
-        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('defects')}"><div class="b-vert__title" ui-sref="defects">
+        <li title="{{'index.DEFECTS' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('defects')}" ui-sref="defects"><div class="b-vert__title">
             <div class="b-vert__icon fa fa-flag"></div>
             {{'index.DEFECTS' | translate}}
         </div></li>
-        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('home')}"><div class="b-vert__title" ui-sref="home">
+        <li title="{{'index.XUNIT' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('home')}" ui-sref="home"><div class="b-vert__title">
             <div class="b-vert__icon fa fa-briefcase"></div>
             {{'index.XUNIT' | translate}}
         </div></li>
-        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('features')}"><div class="b-vert__title" ui-sref="features">
+        <li title="{{'index.BEHAVIORS' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('features')}" ui-sref="features"><div class="b-vert__title">
             <div class="b-vert__icon fa fa-list"></div>
             {{'index.BEHAVIORS' | translate}}
         </div></li>
-        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('graph')}"><div class="b-vert__title" ui-sref="graph">
+        <li title="{{'index.GRAPH' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('graph')}" ui-sref="graph"><div class="b-vert__title">
             <div class="b-vert__icon fa fa-bar-chart"></div>
             {{'index.GRAPH' | translate}}
         </div></li>
-        <li class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('timeline')}"><div class="b-vert__title" ui-sref="timeline">
+        <li title="{{'index.TIMELINE' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('timeline')}" ui-sref="timeline"><div class="b-vert__title">
             <div class="b-vert__icon fa fa-clock-o"></div>
             {{'index.TIMELINE' | translate}}
         </div></li>
     </ul>
+        <div title="{{'index.COLLAPSE' | translate}}" class="b-vert__item b-vert__collapse"  ng-click="toggleCollapsed()">
+            <div class="b-vert__title">
+                <div class="b-vert__icon"></div>
+            </div>
+        </div>
+    </div>
     <div ui-view class="tab-content"></div>
 </div>
 <div class="alert alert-warning error-message" ng-show="error">

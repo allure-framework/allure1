@@ -53,6 +53,7 @@
             "GENERATED": "Сформировано за:",
             "VERSION": "Версия:",
             "DATA_SIZE": "Объем данных:",
+            "COLLAPSE": "Свернуть",
             "OVERVIEW": "Обзор",
             "DEFECTS": "Дефекты",
             "XUNIT": "xUnit",

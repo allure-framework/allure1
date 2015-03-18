@@ -74,8 +74,18 @@ angular.module('allure.controllers', [])
         });
     })
 
-    .controller('TabsController', function($scope, $state) {
+    .controller('TabsController', function($scope, $state, $storage) {
         'use strict';
+        var settings = $storage('settings');
+
+        $scope.isCollapsed = function() {
+            return settings.getItem('collapsed');
+        };
+
+        $scope.toggleCollapsed = function() {
+            settings.setItem('collapsed', !$scope.isCollapsed());
+        };
+
         $scope.isCurrent = function(state) {
             return $state.includes(state);
         };
