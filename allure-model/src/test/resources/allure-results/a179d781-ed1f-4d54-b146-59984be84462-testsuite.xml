@@ -47,6 +47,8 @@
             </labels>
             <parameters>
                 <parameter name="Argument" value="0" kind="environment-variable"/>
+                <parameter name="param1" value="value1" kind="argument"/>
+                <parameter name="param2" value="value2" kind="argument"/>
             </parameters>
         </test-case>
         <test-case start="1412949540692" stop="1412949542295" status="passed">
@@ -88,7 +90,7 @@
                 <label name="thread" value="pool-1-thread-23"/>
             </labels>
             <parameters>
-                <parameter name="Argument" value="13" kind="environment-variable"/>
+                <parameter name="param" value="value" kind="argument"/>
             </parameters>
         </test-case>
         <test-case start="1412949540693" stop="1412949541752" status="canceled">

@@ -213,6 +213,32 @@ describe('Testcase controllers', function() {
             expect(scope.testcase.steps[1].steps[1].failure.error).toBe(scope.failure.error);
         });
 
+        describe('testcaseArguments checks', function () {
+            var testcase = {
+                parameters: [
+                    {kind: 'ARGUMENT'},
+                    {kind: 'SYSTEM_PROPERTY'}
+                ],
+                steps: []
+            };
+
+            it('should contain single argument of type "ARGUMENT"', function () {
+                scope = createController(testcase);
+                expect(scope.testcaseArguments.length).toBe(1);
+                expect(scope.testcaseArguments[0].kind).toBe(testcase.parameters[0].kind);
+            });
+            it('should contain empty array', function () {
+                testcase.parameters = [];
+                scope = createController(testcase);
+                expect(scope.testcaseArguments.length).toBe(0);
+            });
+            it('should contain empty array', function () {
+                testcase = {steps: []};
+                scope = createController(testcase);
+                expect(scope.testcaseArguments.length).toBe(0);
+            });
+        });
+
         describe('state checks', function() {
             beforeEach(function() {
                 scope = createController({steps: []});
