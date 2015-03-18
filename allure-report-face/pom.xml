@@ -21,6 +21,7 @@
         <sonar.javascript.jstestdriver.reportsPath>
             ${project.build.directory}/surefire-reports/
         </sonar.javascript.jstestdriver.reportsPath>
+        <sonar.javascript.lcov.reportPath>${project.build.directory}/site/coverage/total-coverage.dat</sonar.javascript.lcov.reportPath>
 
         <sonar.exclusions>vendor/**</sonar.exclusions>
         <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
@@ -216,9 +217,9 @@
                 </executions>
                 <configuration>
                     <outputStrategy>TOTAL</outputStrategy>
-                    <reportFormats>COBERTURA</reportFormats>
+                    <reportFormats>RAW</reportFormats>
                     <baseDir>http://0.0.0.0:${jasmine.serverPort}</baseDir>
-                    <outputDir>${project.build.directory}/site/cobertura</outputDir>
+                    <outputDir>${project.build.directory}/site/coverage</outputDir>
                     <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                     <noInstrumentPatterns>
                         <pattern>.*/spec/.*</pattern>
