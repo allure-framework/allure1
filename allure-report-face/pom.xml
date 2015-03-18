@@ -204,33 +204,66 @@
                     </preloadSources>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.github.timurstrekalov</groupId>
-                <artifactId>saga-maven-plugin</artifactId>
-                <version>1.5.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>coverage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <outputStrategy>TOTAL</outputStrategy>
-                    <reportFormats>RAW</reportFormats>
-                    <baseDir>http://0.0.0.0:${jasmine.serverPort}</baseDir>
-                    <outputDir>${project.build.directory}/site/coverage</outputDir>
-                    <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
-                    <noInstrumentPatterns>
-                        <pattern>.*/spec/.*</pattern>
-                        <pattern>.*/vendor/.*</pattern>
-                    </noInstrumentPatterns>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
     <profiles>
+        <profile>
+            <id>coverage</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.timurstrekalov</groupId>
+                        <artifactId>saga-maven-plugin</artifactId>
+                        <version>1.5.3</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>coverage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <reportFormats>RAW</reportFormats>
+                            <baseDir>http://0.0.0.0:${jasmine.serverPort}</baseDir>
+                            <outputDir>${project.build.directory}/site/coverage</outputDir>
+                            <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
+                            <noInstrumentPatterns>
+                                <pattern>.*/spec/.*</pattern>
+                                <pattern>.*/vendor/.*</pattern>
+                                <pattern>.*/webjars/.*</pattern>
+                            </noInstrumentPatterns>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.google.code.maven-replacer-plugin</groupId>
+                        <artifactId>replacer</artifactId>
+                        <version>1.5.3</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>replace</goal>
+                                </goals>
+                                <phase>verify</phase>
+                                <configuration>
+                                    <file>${project.build.directory}/site/coverage/total-coverage.dat</file>
+                                    <replacements>
+                                        <replacement>
+                                            <token>SF:*src/</token>
+                                            <value>SF:${project.basedir}/src/main/webapp/js/</value>
+                                        </replacement>
+                                    </replacements>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
         <profile>
             <id>dev</id>
             <properties>
