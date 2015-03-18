@@ -88,6 +88,7 @@
         <xsd:all>
             <xsd:element name="name" type="xsd:string" nillable="false"/>
             <xsd:element name="value" type="xsd:string" nillable="false"/>
+            <xsd:element name="kind" type="xsd:string" default="environment-variable"/>
         </xsd:all>
     </xsd:complexType>
 
