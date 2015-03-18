@@ -17,12 +17,6 @@
             <artifactId>allure-java-annotations</artifactId>
         </dependency>
 
-        <!--JAXB configuration-->
-        <dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-impl</artifactId>
-        </dependency>
-
         <!--Mime-types apache lib-->
         <dependency>
             <groupId>org.apache.tika</groupId>

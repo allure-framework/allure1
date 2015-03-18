@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure.utils;
 
-import com.sun.xml.bind.marshaller.CharacterEscapeHandler;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.mime.MimeTypes;
 import org.slf4j.Logger;
@@ -18,7 +17,10 @@ import javax.xml.bind.PropertyException;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.UUID;
 
@@ -40,8 +42,6 @@ public final class AllureResultsUtils {
     private static File resultsDirectory;
 
     private static final String UTF_8 = "UTF-8";
-
-    private static final String ESCAPE_HANDLER_PROPERTY = CharacterEscapeHandler.class.getName();
 
     private static final Object RESULT_DIRECTORY_LOCK = new Object();
 
@@ -131,19 +131,25 @@ public final class AllureResultsUtils {
     }
 
     /**
-     * Marshal {@link ru.yandex.qatools.allure.model.TestSuiteResult} to {@link #resultsDirectory}
-     * uses {@link BadXmlCharacterEscapeHandler}. Name of file generated uses
+     * Marshal given testSuite to results folder.
+     * Shortcut for #writeTestSuiteResult(TestSuiteResult, File)
+     */
+    public static void writeTestSuiteResult(TestSuiteResult testSuite) {
+        writeTestSuiteResult(testSuite, new File(getResultsDirectory(), generateTestSuiteFileName()));
+    }
+
+    /**
+     * Marshal {@link ru.yandex.qatools.allure.model.TestSuiteResult} to specified file
+     * uses {@link BadXmlCharacterFilterWriter}. Name of file generated uses
      * {@link ru.yandex.qatools.allure.config.AllureNamingUtils#generateTestSuiteFileName()}
      *
      * @param testSuite to marshal
      */
-    public static void writeTestSuiteResult(TestSuiteResult testSuite) {
-        File testSuiteResultFile = new File(getResultsDirectory(), generateTestSuiteFileName());
-
+    public static void writeTestSuiteResult(TestSuiteResult testSuite, File testSuiteResultFile) {
         try {
             marshaller(TestSuiteResult.class).marshal(
                     new ObjectFactory().createTestSuite(testSuite),
-                    testSuiteResultFile
+                    new BadXmlCharacterFilterWriter(testSuiteResultFile)
             );
         } catch (Exception e) {
             LOGGER.error("Error while marshaling testSuite", e);
@@ -153,8 +159,8 @@ public final class AllureResultsUtils {
     /**
      * Creates a new {@link javax.xml.bind.Marshaller} for given class.
      * If marshaller created successfully, try to set following properties:
-     * {@link Marshaller#JAXB_FORMATTED_OUTPUT}, {@link Marshaller#JAXB_ENCODING},
-     * {@link #ESCAPE_HANDLER_PROPERTY} using {@link #setPropertySafely(javax.xml.bind.Marshaller, String, Object)}
+     * {@link Marshaller#JAXB_FORMATTED_OUTPUT} and {@link Marshaller#JAXB_ENCODING}
+     * using {@link #setPropertySafely(javax.xml.bind.Marshaller, String, Object)}
      *
      * @param clazz specified class
      * @return a created marshaller
@@ -164,7 +170,6 @@ public final class AllureResultsUtils {
         Marshaller m = createMarshallerForClass(clazz);
         setPropertySafely(m, JAXB_FORMATTED_OUTPUT, true);
         setPropertySafely(m, JAXB_ENCODING, UTF_8);
-        setPropertySafely(m, ESCAPE_HANDLER_PROPERTY, BadXmlCharacterEscapeHandler.getInstance());
         return m;
     }
 
