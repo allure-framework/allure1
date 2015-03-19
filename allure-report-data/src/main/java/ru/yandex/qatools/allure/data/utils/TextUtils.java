@@ -4,10 +4,12 @@ import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import ru.yandex.qatools.allure.config.AllureConfig;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,13 +24,11 @@ public final class TextUtils {
 
     private static final String ALGORITHM = "MD5";
 
-    private static final String CHARSET = "UTF-8";
-
     private static final Integer RADIX = 16;
 
-    public static String generateUid(String s) throws Exception {
+    public static String generateUid(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
         MessageDigest md = MessageDigest.getInstance(ALGORITHM);
-        md.update(s.getBytes(CHARSET));
+        md.update(s.getBytes(StandardCharsets.UTF_8));
         return new BigInteger(1, md.digest()).toString(RADIX);
     }
 
@@ -37,10 +37,6 @@ public final class TextUtils {
         byte[] randomBytes = new byte[8];
         rand.nextBytes(randomBytes);
         return new BigInteger(1, randomBytes).toString(RADIX);
-    }
-
-    public static String dateToString(long timestamp) {
-        return new Date(timestamp).toString();
     }
 
     public static String humanize(String text) {

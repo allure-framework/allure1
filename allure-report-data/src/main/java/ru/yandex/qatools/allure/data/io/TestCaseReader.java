@@ -32,47 +32,48 @@ public class TestCaseReader implements Reader<TestCaseResult> {
 
     @Override
     public Iterator<TestCaseResult> iterator() {
-        return new Iterator<TestCaseResult>() {
-
-            private boolean nextSuite() {
-                if ((testCases == null || !testCases.hasNext()) && testSuites.hasNext()) {
-
-                    currentSuite = testSuites.next();
-                    testCases = currentSuite.getTestCases().iterator();
-
-                    return true;
-                }
-                return false;
-            }
-
-            @Override
-            public boolean hasNext() {
-                return testCases != null && testCases.hasNext() || nextSuite() && hasNext();
-            }
-
-            @Override
-            public TestCaseResult next() {
-                if (!hasNext()) {
-                    return null;
-                }
-
-                TestCaseResult result = testCases.next();
-
-                result.getLabels().add(new Label().withName(SUITE_NAME).withValue(currentSuite.getName()));
-                result.getLabels().add(new Label().withName(SUITE_TITLE).withValue(currentSuite.getTitle()));
-                result.getLabels().addAll(currentSuite.getLabels());
-                Description description = mergeDescriptions(currentSuite, result);
-                result.setDescription(description);
-
-                return result;
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-
-        };
+        return new TestCaseResultIterator();
     }
 
+    private class TestCaseResultIterator implements Iterator<TestCaseResult> {
+
+        private boolean nextSuite() {
+            if ((testCases == null || !testCases.hasNext()) && testSuites.hasNext()) {
+
+                currentSuite = testSuites.next();
+                testCases = currentSuite.getTestCases().iterator();
+
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return testCases != null && testCases.hasNext() || nextSuite() && hasNext();
+        }
+
+        @Override
+        public TestCaseResult next() {
+            if (!hasNext()) {
+                return null;
+            }
+
+            TestCaseResult result = testCases.next();
+
+            result.getLabels().add(new Label().withName(SUITE_NAME).withValue(currentSuite.getName()));
+            result.getLabels().add(new Label().withName(SUITE_TITLE).withValue(currentSuite.getTitle()));
+            result.getLabels().addAll(currentSuite.getLabels());
+            Description description = mergeDescriptions(currentSuite, result);
+            result.setDescription(description);
+
+            return result;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+    }
 }

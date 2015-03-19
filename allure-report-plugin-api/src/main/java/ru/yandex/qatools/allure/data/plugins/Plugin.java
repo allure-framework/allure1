@@ -17,7 +17,7 @@ public interface Plugin<T> {
     @Retention(RetentionPolicy.RUNTIME)
     public @interface Type {
 
-        Class<?> value();
+        Class value();
 
     }
 }

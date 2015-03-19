@@ -33,7 +33,7 @@ import java.util.ServiceLoader;
  */
 public class ListenersNotifier extends LifecycleListener {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(ListenersNotifier.class);
 
     private List<LifecycleListener> listeners = new ArrayList<>();
 
@@ -72,9 +72,9 @@ public class ListenersNotifier extends LifecycleListener {
             try {
                 LifecycleListener listener = iterator.next();
                 listeners.add(listener);
-                logger.info(String.format("Found %s: %s", LifecycleListener.class, listener.getClass()));
+                LOGGER.info(String.format("Found %s: %s", LifecycleListener.class, listener.getClass()));
             } catch (ServiceConfigurationError e) {
-                logger.error("iterator.next() failed", e);
+                LOGGER.error("iterator.next() failed", e);
             }
         }
     }
@@ -95,7 +95,7 @@ public class ListenersNotifier extends LifecycleListener {
 +            */
             return iterator.hasNext();
         } catch (Exception e) {
-            logger.error("iterator.hasNext() failed", e);
+            LOGGER.error("iterator.hasNext() failed", e);
             return false;
         }
     }
@@ -244,7 +244,7 @@ public class ListenersNotifier extends LifecycleListener {
      * This method log given exception in specified listener
      */
     private void logError(LifecycleListener listener, Exception e) {
-        logger.error("Error for listener " + listener.getClass(), e);
+        LOGGER.error("Error for listener " + listener.getClass(), e);
     }
 
     /**

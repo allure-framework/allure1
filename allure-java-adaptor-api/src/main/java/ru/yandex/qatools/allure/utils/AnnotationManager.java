@@ -1,5 +1,7 @@
 package ru.yandex.qatools.allure.utils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.annotations.Description;
 import ru.yandex.qatools.allure.annotations.Features;
 import ru.yandex.qatools.allure.annotations.Issue;
@@ -41,6 +43,8 @@ import static ru.yandex.qatools.allure.config.AllureModelUtils.createThreadLabel
  *         <p/>
  */
 public class AnnotationManager {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationManager.class);
 
     private Map<Class<? extends Annotation>, Annotation> annotations = new HashMap<>();
 
@@ -170,7 +174,8 @@ public class AnnotationManager {
     public static TestCaseStartedEvent withExecutorInfo(TestCaseStartedEvent event) {
         try {
             event.getLabels().add(createHostLabel(InetAddress.getLocalHost().getHostName()));
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+            LOGGER.warn("Can not get current hostname", e);
             //create a default host if can't get current hostname
             event.getLabels().add(createHostLabel("default"));
         }

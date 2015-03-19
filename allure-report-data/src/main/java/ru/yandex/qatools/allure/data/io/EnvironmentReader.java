@@ -46,44 +46,7 @@ public class EnvironmentReader implements Reader<Environment> {
 
     @Override
     public Iterator<Environment> iterator() {
-        return new Iterator<Environment>() {
-            @Override
-            public boolean hasNext() {
-                return xmlIterator.hasNext() || propertiesIterator.hasNext();
-            }
-
-            @Override
-            public Environment next() {
-                if (propertiesIterator.hasNext()) {
-                    File file = propertiesIterator.next();
-                    Properties properties = new Properties();
-                    try (FileInputStream fis = new FileInputStream(file)) {
-                        properties.load(fis);
-                        Environment result = new Environment();
-                        result.getParameter().addAll(convertToParameters(properties));
-                        return result;
-                    } catch (Exception e) {
-                        LOGGER.error("Could not read environment .properties file " + file.getAbsolutePath(), e);
-                        return next();
-                    }
-                }
-                if (xmlIterator.hasNext()) {
-                    File file = xmlIterator.next();
-                    try (FileInputStream fis = new FileInputStream(file)) {
-                        return JAXB.unmarshal(fis, Environment.class);
-                    } catch (Exception e) {
-                        LOGGER.error("Could not read environment .xml file " + file.getAbsolutePath(), e);
-                        return next();
-                    }
-                }
-                return null;
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        return new EnvironmentIterator();
     }
 
     public static Collection<Parameter> convertToParameters(Properties properties) {
@@ -98,4 +61,42 @@ public class EnvironmentReader implements Reader<Environment> {
         return parameters;
     }
 
+    private class EnvironmentIterator implements Iterator<Environment> {
+        @Override
+        public boolean hasNext() {
+            return xmlIterator.hasNext() || propertiesIterator.hasNext();
+        }
+
+        @Override
+        public Environment next() {
+            if (propertiesIterator.hasNext()) {
+                File file = propertiesIterator.next();
+                Properties properties = new Properties();
+                try (FileInputStream fis = new FileInputStream(file)) {
+                    properties.load(fis);
+                    Environment result = new Environment();
+                    result.getParameter().addAll(convertToParameters(properties));
+                    return result;
+                } catch (Exception e) {
+                    LOGGER.error("Could not read environment .properties file " + file.getAbsolutePath(), e);
+                    return next();
+                }
+            }
+            if (xmlIterator.hasNext()) {
+                File file = xmlIterator.next();
+                try (FileInputStream fis = new FileInputStream(file)) {
+                    return JAXB.unmarshal(fis, Environment.class);
+                } catch (Exception e) {
+                    LOGGER.error("Could not read environment .xml file " + file.getAbsolutePath(), e);
+                    return next();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
 }

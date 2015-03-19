@@ -32,31 +32,33 @@ public class TestSuiteReader implements Reader<TestSuiteResult> {
 
     @Override
     public Iterator<TestSuiteResult> iterator() {
-        return new Iterator<TestSuiteResult>() {
-            @Override
-            public boolean hasNext() {
-                return testSuiteResultFiles.hasNext();
-            }
+        return new TestSuiteResultIterator();
+    }
 
-            @Override
-            public TestSuiteResult next() {
-                if (!hasNext()) {
-                    return null;
-                }
-                File next = testSuiteResultFiles.next();
-                try {
-                    java.io.Reader reader = new InputStreamReader(new FileInputStream(next), StandardCharsets.UTF_8);
-                    return JAXB.unmarshal(new BadXmlCharacterFilterReader(reader), TestSuiteResult.class);
-                } catch (FileNotFoundException e) {
-                    LOGGER.warn("Could not read testsuite.xml file", e);
-                    return next();
-                }
-            }
+    private class TestSuiteResultIterator implements Iterator<TestSuiteResult> {
+        @Override
+        public boolean hasNext() {
+            return testSuiteResultFiles.hasNext();
+        }
 
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
+        @Override
+        public TestSuiteResult next() {
+            if (!hasNext()) {
+                return null;
             }
-        };
+            File next = testSuiteResultFiles.next();
+            try {
+                java.io.Reader reader = new InputStreamReader(new FileInputStream(next), StandardCharsets.UTF_8);
+                return JAXB.unmarshal(new BadXmlCharacterFilterReader(reader), TestSuiteResult.class);
+            } catch (FileNotFoundException e) {
+                LOGGER.warn("Could not read testsuite.xml file", e);
+                return next();
+            }
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }

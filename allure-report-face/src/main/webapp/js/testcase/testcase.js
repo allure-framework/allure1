@@ -1,7 +1,7 @@
 /*global angular:true */
 angular.module('allure.testcase.controllers', [])
     .factory('attachmentType', function() {
-        return function(type) {
+        return function(type) { //NOSONAR
             switch(type) {
                 case 'image/bmp':
                 case 'image/gif':
@@ -27,6 +27,7 @@ angular.module('allure.testcase.controllers', [])
                     return "html";
                 case 'text/csv':
                     return "csv";
+                default:
             }
         };
     })
@@ -81,7 +82,7 @@ angular.module('allure.testcase.controllers', [])
             var index = allAttachments.indexOf($scope.attachment);
             $scope.setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).uid);
         };
-        
+
         $scope.getIconClass = function(type) {
             switch (attachmentType(type)) {
                 case 'text':
@@ -104,7 +105,7 @@ angular.module('allure.testcase.controllers', [])
             }
         });
     })
-    .controller('StepCtrl', function($scope, $locale) {
+    .controller('StepCtrl', function($scope) {
         "use strict";
         function isFailed(step) {
             return ['FAILED', 'BROKEN', 'CANCELED', 'PENDING'].indexOf(step.status) !== -1;
