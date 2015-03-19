@@ -52,7 +52,6 @@ public class AllureGuiceModule extends AbstractModule {
         bind(PluginLoader.class).to(PluginLoaderSpi.class);
         bind(PluginManager.class);
 
-        bind(new TypeLiteral<TestCaseConverter>() {
-        }).to(new TypeLiteral<DefaultTestCaseConverter>() {});
+        bind(TestCaseConverter.class).to(DefaultTestCaseConverter.class);
     }
 }

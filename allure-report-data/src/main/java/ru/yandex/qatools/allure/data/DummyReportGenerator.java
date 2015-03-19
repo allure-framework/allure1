@@ -26,7 +26,7 @@ public final class DummyReportGenerator {
      *             results directories, last argument - the folder to generated data
      */
     public static void main(String[] args) {
-        if (args.length < 2) {
+        if (args.length < 2) { // NOSONAR
             LOGGER.error("There must be at least two arguments");
             return;
         }

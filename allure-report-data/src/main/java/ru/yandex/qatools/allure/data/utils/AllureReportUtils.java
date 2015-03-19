@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
-import ru.yandex.qatools.allure.data.AllureReportInfo;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
 import java.io.DataOutputStream;
