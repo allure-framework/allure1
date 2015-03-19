@@ -4,11 +4,7 @@ import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
 import ru.yandex.qatools.allure.config.AllureConfig;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,22 +15,15 @@ import java.util.regex.Pattern;
  */
 public final class TextUtils {
 
-    private TextUtils() {
-    }
-
-    private static final String ALGORITHM = "MD5";
-
     private static final Integer RADIX = 16;
+    public static final int UID_RANDOM_BYTES_COUNT = 8;
 
-    public static String generateUid(String s) throws NoSuchAlgorithmException, UnsupportedEncodingException {
-        MessageDigest md = MessageDigest.getInstance(ALGORITHM);
-        md.update(s.getBytes(StandardCharsets.UTF_8));
-        return new BigInteger(1, md.digest()).toString(RADIX);
+    private TextUtils() {
     }
 
     public static String generateUid() {
         SecureRandom rand = new SecureRandom();
-        byte[] randomBytes = new byte[8];
+        byte[] randomBytes = new byte[UID_RANDOM_BYTES_COUNT];
         rand.nextBytes(randomBytes);
         return new BigInteger(1, randomBytes).toString(RADIX);
     }
@@ -48,7 +37,7 @@ public final class TextUtils {
         String params = "";
         if (matcher.matches()) {
             result = matcher.group(1);
-            params = ' ' + matcher.group(2);
+            params = ' ' + matcher.group(2); // NOSONAR
         }
 
         result = simplify(result);

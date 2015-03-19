@@ -20,6 +20,7 @@ public class AllureConfig {
     private static final Logger LOGGER = LoggerFactory.getLogger(AllureConfig.class);
 
     private static final File DEFAULT_RESULTS_DIRECTORY = new File("target/allure-results");
+    public static final int DEFAULT_MAX_TITLE_LENGTH = 120;
 
     @Property("allure.model.schema.file.name")
     private String schemaFileName = "allure.xsd";
@@ -55,7 +56,7 @@ public class AllureConfig {
     private String attachmentsEncoding = "UTF-8";
 
     @Property("allure.max.title.length")
-    private int maxTitleLength = 120;
+    private int maxTitleLength = DEFAULT_MAX_TITLE_LENGTH;
 
     /**
      * Pattern containing issue tracker base URL and one %s placeholder which will be replaced by issue name.
