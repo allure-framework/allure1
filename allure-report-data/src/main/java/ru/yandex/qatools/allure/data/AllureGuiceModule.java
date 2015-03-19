@@ -40,14 +40,19 @@ public class AllureGuiceModule extends AbstractModule {
         bind(File[].class).annotatedWith(ResultDirectories.class).toInstance(inputDirectories);
         bind(ClassLoader.class).annotatedWith(PluginClassLoader.class).toInstance(classLoader);
 
-        bind(new TypeLiteral<Reader<TestSuiteResult>>() {}).to(TestSuiteReader.class);
-        bind(new TypeLiteral<Reader<TestCaseResult>>() {}).to(TestCaseReader.class);
-        bind(new TypeLiteral<Reader<Environment>>() {}).to(EnvironmentReader.class);
-        bind(new TypeLiteral<Reader<AttachmentInfo>>() {}).to(AttachmentReader.class);
+        bind(new TypeLiteral<Reader<TestSuiteResult>>() {
+        }).to(TestSuiteReader.class);
+        bind(new TypeLiteral<Reader<TestCaseResult>>() {
+        }).to(TestCaseReader.class);
+        bind(new TypeLiteral<Reader<Environment>>() {
+        }).to(EnvironmentReader.class);
+        bind(new TypeLiteral<Reader<AttachmentInfo>>() {
+        }).to(AttachmentReader.class);
 
         bind(PluginLoader.class).to(PluginLoaderSpi.class);
         bind(PluginManager.class);
 
-        bind(new TypeLiteral<TestCaseConverter>() {}).to(new TypeLiteral<DefaultTestCaseConverter>() {});
+        bind(new TypeLiteral<TestCaseConverter>() {
+        }).to(new TypeLiteral<DefaultTestCaseConverter>() {});
     }
 }

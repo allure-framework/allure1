@@ -17,7 +17,7 @@ import java.nio.charset.Charset;
 @Resource.Classpath("allure.properties")
 public class AllureConfig {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(AllureConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AllureConfig.class);
 
     private static final File DEFAULT_RESULTS_DIRECTORY = new File("target/allure-results");
 

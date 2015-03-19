@@ -28,29 +28,31 @@ public class AttachmentReader implements Reader<AttachmentInfo> {
 
     @Override
     public Iterator<AttachmentInfo> iterator() {
-        return new Iterator<AttachmentInfo>() {
-            @Override
-            public boolean hasNext() {
-                return iterator.hasNext();
+        return new AttachmentInfoIterator();
+    }
+
+    private class AttachmentInfoIterator implements Iterator<AttachmentInfo> {
+        @Override
+        public boolean hasNext() {
+            return iterator.hasNext();
+        }
+
+        @Override
+        public AttachmentInfo next() {
+            if (!hasNext()) {
+                return null;
             }
 
-            @Override
-            public AttachmentInfo next() {
-                if (!hasNext()) {
-                    return null;
-                }
+            File next = iterator.next();
+            AttachmentInfo info = new AttachmentInfo();
+            info.setName(next.getName());
+            info.setPath(next.getAbsolutePath());
+            return info;
+        }
 
-                File next = iterator.next();
-                AttachmentInfo info = new AttachmentInfo();
-                info.setName(next.getName());
-                info.setPath(next.getAbsolutePath());
-                return info;
-            }
-
-            @Override
-            public void remove() {
-                throw new UnsupportedOperationException();
-            }
-        };
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
     }
 }

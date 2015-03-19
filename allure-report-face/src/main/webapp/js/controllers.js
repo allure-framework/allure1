@@ -43,20 +43,20 @@ angular.module('allure.controllers', [])
             testcase.time.stop -= $scope.startTime;
         });
         $scope.timeRange = [0, $scope.allCases.reduce(function(max, testcase) {
-            return Math.max(max, testcase.time.stop)
-        }, Number.NEGATIVE_INFINITY)]
+            return Math.max(max, testcase.time.stop);
+        }, Number.NEGATIVE_INFINITY)];
     })
 
     .controller('NavbarCtrl', function($scope, $window, $http, $storage, $translate) {
         'use strict';
         function browserLanguage() {
-            return $window.navigator.language && $window.navigator.language.split('-').shift()
+            return $window.navigator.language && $window.navigator.language.split('-').shift();
         }
         var locale = $storage('locale');
         $scope.setLang = function(langKey) {
             $scope.selectedLang = langKey.locale;
             $translate.use($scope.selectedLang);
-            locale.setItem('lang', $scope.selectedLang)
+            locale.setItem('lang', $scope.selectedLang);
         };
 
         $scope.langs = [{
@@ -68,7 +68,7 @@ angular.module('allure.controllers', [])
         }];
         $scope.selectedLang = locale.getItem('lang') || browserLanguage() || 'en';
         $translate.use($scope.selectedLang);
-		        
+
         $http.get('data/report.json').then(function(response) {
             $scope.report = response.data;
         });

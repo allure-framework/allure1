@@ -17,9 +17,7 @@ import javax.xml.bind.PropertyException;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.UUID;
@@ -40,8 +38,6 @@ import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuit
 public final class AllureResultsUtils {
 
     private static File resultsDirectory;
-
-    private static final String UTF_8 = "UTF-8";
 
     private static final Object RESULT_DIRECTORY_LOCK = new Object();
 
@@ -169,7 +165,7 @@ public final class AllureResultsUtils {
     public static Marshaller marshaller(Class<?> clazz) {
         Marshaller m = createMarshallerForClass(clazz);
         setPropertySafely(m, JAXB_FORMATTED_OUTPUT, true);
-        setPropertySafely(m, JAXB_ENCODING, UTF_8);
+        setPropertySafely(m, JAXB_ENCODING, StandardCharsets.UTF_8);
         return m;
     }
 

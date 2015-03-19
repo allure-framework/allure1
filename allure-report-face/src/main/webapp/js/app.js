@@ -22,7 +22,7 @@ angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAn
                             config: {},
                             status: reason.message
                         }
-                    }
+                    };
                     return $q.reject(reason);
                 }
             };
@@ -131,7 +131,7 @@ angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAn
         testcaseProvider.attachStates('home.testsuite');
         testcaseProvider.attachStates('timeline');
     })
-    .config(function($translateProvider) { 
+    .config(function($translateProvider) {
         $translateProvider.useStaticFilesLoader({
           prefix: 'translations/',
           suffix: '.json'

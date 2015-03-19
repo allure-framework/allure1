@@ -49,7 +49,7 @@ public class StepStorage extends InheritableThreadLocal<Deque<Step>> {
      */
     @Override
     protected Deque<Step> childValue(Deque<Step> parentValue) {
-        LinkedList<Step> queue = new LinkedList<>();
+        Deque<Step> queue = new LinkedList<>();
         queue.add(parentValue.getFirst());
         return queue;
     }

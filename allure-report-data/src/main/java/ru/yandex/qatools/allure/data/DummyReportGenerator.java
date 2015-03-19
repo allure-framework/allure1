@@ -14,7 +14,7 @@ import java.util.List;
  */
 public final class DummyReportGenerator {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(DummyReportGenerator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DummyReportGenerator.class);
 
     DummyReportGenerator() {
     }
