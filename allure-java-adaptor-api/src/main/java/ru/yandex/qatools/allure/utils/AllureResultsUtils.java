@@ -165,7 +165,7 @@ public final class AllureResultsUtils {
     public static Marshaller marshaller(Class<?> clazz) {
         Marshaller m = createMarshallerForClass(clazz);
         setPropertySafely(m, JAXB_FORMATTED_OUTPUT, true);
-        setPropertySafely(m, JAXB_ENCODING, StandardCharsets.UTF_8);
+        setPropertySafely(m, JAXB_ENCODING, StandardCharsets.UTF_8.toString());
         return m;
     }
 
