@@ -55,7 +55,7 @@
             <span class="btn btn-default btn-sm btn-status-{{testcase.status|lowercase}}" ng-click="stacktraceExpanded = !stacktraceExpanded" ng-class="{'active': stacktraceExpanded}">{{'testcase.STACKTRACE' | translate}}</span>
         </div>
 
-        <span class="preformated-text" ng-click="stacktraceExpanded = !stacktraceExpanded" ng-class="{'testcase__status--raw': stacktraceRaw}">{{failure.message}}</span>
+        <span class="preformated-text" ng-class="{'testcase__status--raw': stacktraceRaw}">{{failure.message}}</span>
         <div ng-show="stacktraceExpanded" class="testcase__stacktrace preformated-text" ng-class="{'testcase__status--raw': stacktraceRaw}">{{failure.stackTrace}}</div>
     </div>
 </script>
