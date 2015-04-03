@@ -7,15 +7,12 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 import ru.yandex.qatools.allure.Allure;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
-import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
-import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
-import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
-import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
-import ru.yandex.qatools.allure.events.TestCasePendingEvent;
-import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
-import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
-import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
+import ru.yandex.qatools.allure.events.*;
+import ru.yandex.qatools.allure.logging.Attachments;
+import ru.yandex.qatools.allure.logging.StandardOutputSetter;
+import ru.yandex.qatools.allure.logging.TestStepLogs;
 import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.util.HashMap;
@@ -29,6 +26,8 @@ import java.util.UUID;
 public class AllureRunListener extends RunListener {
 
     private Allure lifecycle = Allure.LIFECYCLE;
+
+    private AllureConfig config = AllureConfig.newInstance();
 
     private final Map<String, String> suites = new HashMap<>();
 
@@ -53,6 +52,8 @@ public class AllureRunListener extends RunListener {
         am.update(event);
 
         fireClearStepStorage();
+
+        TestStepLogs.addLog();
         getLifecycle().fire(event);
     }
 
@@ -81,6 +82,7 @@ public class AllureRunListener extends RunListener {
 
     @Override
     public void testFinished(Description description) {
+        Attachments.addLogAttachment();
         getLifecycle().fire(new TestCaseFinishedEvent());
     }
 
@@ -90,9 +92,20 @@ public class AllureRunListener extends RunListener {
     }
 
     @Override
+    public void testRunStarted(Description description) throws Exception {
+        if (config.attachLogs()) {
+            StandardOutputSetter.set();
+        }
+    }
+
+    @Override
     public void testRunFinished(Result result) {
         for (String uid : getSuites().values()) {
             testSuiteFinished(uid);
+        }
+
+        if (config.attachLogs()) {
+            StandardOutputSetter.reset();
         }
     }
 

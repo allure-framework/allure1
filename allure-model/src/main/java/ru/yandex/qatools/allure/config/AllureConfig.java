@@ -55,6 +55,9 @@ public class AllureConfig {
     @Property("allure.attachments.encoding")
     private String attachmentsEncoding = "UTF-8";
 
+    @Property("allure.attachments.log")
+    private boolean attachLogs = false;
+
     @Property("allure.max.title.length")
     private int maxTitleLength = DEFAULT_MAX_TITLE_LENGTH;
 
@@ -130,6 +133,10 @@ public class AllureConfig {
             LOGGER.trace("Can't find attachments encoding \"" + attachmentsEncoding, "\" use default", e);
             return Charset.defaultCharset();
         }
+    }
+
+    public boolean attachLogs() {
+        return attachLogs;
     }
 
     public static File getDefaultResultsDirectory() { // NOSONAR
