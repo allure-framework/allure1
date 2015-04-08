@@ -1,9 +1,9 @@
 /*global describe:true, it:true, beforeEach:true, afterEach:true, expect:true, spyOn:true, module:true, inject:true, angular:true, jasmine:true */
-describe('FeaturesCtrl', function () {
+describe('BehaviorsCtrl', function () {
     'use strict';
     var $rootScope, $controller,
         state, scope, watchingStoreSpy;
-    beforeEach(module('allure.features'));
+    beforeEach(module('allure.behaviors'));
     beforeEach(module('allure.services'));
     beforeEach(inject(function (_$controller_, _$rootScope_) {
         $controller = _$controller_;
@@ -44,7 +44,7 @@ describe('FeaturesCtrl', function () {
     function createController(features) {
         var scope = $rootScope.$new();
         scope = scope.$new();
-        $controller('FeaturesCtrl', {
+        $controller('BehaviorsCtrl', {
             $scope: scope,
             $state: state = jasmine.createSpyObj('state', ['go']),
             WatchingStore: function() {
@@ -82,13 +82,13 @@ describe('FeaturesCtrl', function () {
     it('should select', function() {
         var story = scope.features[1].stories[1];
         scope.setStory(story);
-        expect(state.go).toHaveBeenCalledWith('features.story', {storyUid: story.uid});
+        expect(state.go).toHaveBeenCalledWith('behaviors.story', {storyUid: story.uid});
     });
 
     it('should call testcase route when it has been selected', function() {
         scope.testcase.uid = '1_2';
         scope.$apply();
-        expect(state.go).toHaveBeenCalledWith('features.story.testcase', {testcaseUid: '1_2'});
+        expect(state.go).toHaveBeenCalledWith('behaviors.story.testcase', {testcaseUid: '1_2'});
     });
 
     describe('state change', function() {

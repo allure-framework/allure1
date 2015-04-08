@@ -19,9 +19,9 @@ import static ru.yandex.qatools.allure.model.Status.PASSED
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.02.15
  */
-class BehaviorPluginTest {
+class BehaviorsPluginTest {
 
-    def plugin = new BehaviorPlugin()
+    def plugin = new BehaviorsPlugin()
 
     @Test
     void shouldBeDefaultWhenLabelsDoesNotExist() {
@@ -180,6 +180,6 @@ class BehaviorPluginTest {
     @Test
     void shouldGetRightDataName() {
         assert plugin.pluginData
-        assert plugin.pluginData.name == ["behavior.json"]
+        assert plugin.pluginData.name == ["behaviors.json"]
     }
 }
