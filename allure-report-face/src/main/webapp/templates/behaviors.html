@@ -1,6 +1,6 @@
 <div class="b-island tab-content-fill" pane-set ng-show="features.length">
-    <div class="pane_col" pane pane-expanded="isState('features')">
-        <div class="pane_overlay clickable" ui-sref="features.story"></div>
+    <div class="pane_col" pane pane-expanded="isState('behaviors')">
+        <div class="pane_overlay clickable" ui-sref="behaviors.story"></div>
         <div class="pane_content">
             <div class="b-island__title">{{'features.REQUIREMENTS' | translate}}</div>
             <h3 class="pane__header">{{'features.FEATURES' | translate}}</h3>
@@ -49,15 +49,15 @@
             </table>
         </div>
     </div>
-    <div class="pane_col features__view" ng-if="story" pane pane-expanded="isState('features.story.expanded')">
+    <div class="pane_col features__view" ng-if="story" pane pane-expanded="isState('behaviors.story.expanded')">
         <div class="pane_content">
-            <div class="pane_overlay clickable" ui-sref="features.story.testcase"></div>
+            <div class="pane_overlay clickable" ui-sref="behaviors.story.testcase"></div>
             <div class="features__title b-island__title">{{'features.STORY' | translate}}</div>
             <h3 class="pane__header">
                 <div class="pane__header_controls pull-right">
-                    <span class="fa fa-expand clickable" tooltip="{{'tooltip.EXPAND' | translate}}" ng-hide="isState('features.story.expanded')" ui-sref="features.story.expanded"></span>
-                    <span class="fa fa-compress clickable" tooltip="{{'tooltip.COLLAPSE' | translate}}" ng-show="isState('features.story.expanded')" ui-sref="features.story"></span>
-                    <span class="fa fa-close clickable" tooltip="{{'tooltip.CLOSE' | translate}}" ui-sref="features"></span>
+                    <span class="fa fa-expand clickable" tooltip="{{'tooltip.EXPAND' | translate}}" ng-hide="isState('behaviors.story.expanded')" ui-sref="behaviors.story.expanded"></span>
+                    <span class="fa fa-compress clickable" tooltip="{{'tooltip.COLLAPSE' | translate}}" ng-show="isState('behaviors.story.expanded')" ui-sref="behaviors.story"></span>
+                    <span class="fa fa-close clickable" tooltip="{{'tooltip.CLOSE' | translate}}" ui-sref="behaviors"></span>
                 </div>
                 {{story.title}}
             </h3>

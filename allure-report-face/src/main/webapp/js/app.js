@@ -1,7 +1,7 @@
 /*global angular */
 angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui.router',
         'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.table', 'allure.pane',
-        'allure.scrollfix', 'allure.charts', 'allure.testcase', 'allure.xUnit.controllers', 'allure.features',
+        'allure.scrollfix', 'allure.charts', 'allure.testcase', 'allure.xUnit.controllers', 'allure.behaviors',
         'allure.defects', 'allure.overview'])
     .config(function($tooltipProvider) {
         "use strict";
@@ -38,9 +38,6 @@ angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAn
         'use strict';
         function processResponse(response) {
             return response.data;
-        }
-        function testcasesResolve($http) {
-            return $http.get('data/graph.json').then(processResponse);
         }
         $urlRouterProvider.otherwise("/home");
         $stateProvider
@@ -97,7 +94,9 @@ angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAn
                 templateUrl: "templates/graph.html",
                 controller: 'GraphCtrl',
                 resolve: {
-                    testcases: testcasesResolve
+                    testcases: function($http) {
+                        return $http.get('data/graph.json').then(processResponse);
+                    }
                 }
             })
             .state('timeline', {
@@ -110,24 +109,24 @@ angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAn
                     }
                 }
             })
-            .state('features', {
-                url: '/features',
-                templateUrl: "templates/features.html",
-                controller: 'FeaturesCtrl',
+            .state('behaviors', {
+                url: '/behaviors',
+                templateUrl: "templates/behaviors.html",
+                controller: 'BehaviorsCtrl',
                 resolve: {
                     features: function($http) {
-                        return $http.get('data/behavior.json').then(processResponse);
+                        return $http.get('data/behaviors.json').then(processResponse);
                     }
                 }
             })
-            .state('features.story', {
+            .state('behaviors.story', {
                 url: '/:storyUid'
             })
-            .state('features.story.expanded', {
+            .state('behaviors.story.expanded', {
                 url: '/expanded'
             });
         testcaseProvider.attachStates('defects.defect');
-        testcaseProvider.attachStates('features.story');
+        testcaseProvider.attachStates('behaviors.story');
         testcaseProvider.attachStates('home.testsuite');
         testcaseProvider.attachStates('timeline');
     })

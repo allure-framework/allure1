@@ -1,6 +1,6 @@
 /*global angular*/
-angular.module('allure.features', [])
-.controller('FeaturesCtrl', function($scope, $state, features, percents, WatchingStore, Collection) {
+angular.module('allure.behaviors', [])
+.controller('BehaviorsCtrl', function($scope, $state, features, percents, WatchingStore, Collection) {
     "use strict";
     function calculatePercents(item) {
         item.percents = percents(item.statistic);
@@ -29,14 +29,14 @@ angular.module('allure.features', [])
         return $state.is(statename);
     };
     $scope.setStory = function(story) {
-        $state.go('features.story', {storyUid: story.uid});
+        $state.go('behaviors.story', {storyUid: story.uid});
     };
     $scope.isActive = function(story) {
         return $scope.story === story;
     };
     $scope.expandFeature = function(feature, expanded) {
         if(!expanded && feature.stories.indexOf($scope.story) !== -1) {
-            $state.go('features');
+            $state.go('behaviors');
         }
         feature.expanded = expanded;
     };
@@ -60,7 +60,7 @@ angular.module('allure.features', [])
     $scope.testcase = {};
     $scope.$watch('testcase.uid', function(testcaseUid, oldTestcaseUid) {
         if(testcaseUid && oldTestcaseUid !== testcaseUid) {
-            $state.go('features.story.testcase', {testcaseUid: testcaseUid});
+            $state.go('behaviors.story.testcase', {testcaseUid: testcaseUid});
         }
     });
     $scope.$on('$stateChangeSuccess', function(event, state, params) {

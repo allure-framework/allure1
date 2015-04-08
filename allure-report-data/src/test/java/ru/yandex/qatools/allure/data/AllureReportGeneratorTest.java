@@ -10,7 +10,7 @@ import org.mockito.InOrder;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
-import ru.yandex.qatools.allure.data.plugins.BehaviorPlugin;
+import ru.yandex.qatools.allure.data.plugins.BehaviorsPlugin;
 import ru.yandex.qatools.allure.data.plugins.DefectsPlugin;
 import ru.yandex.qatools.allure.data.plugins.EnvironmentPlugin;
 import ru.yandex.qatools.allure.data.plugins.GraphPlugin;
@@ -117,7 +117,7 @@ public class AllureReportGeneratorTest {
 
         assertThat(dataDirectory, contains(XUnitPlugin.XUNIT_JSON));
         assertThat(dataDirectory, contains(TimelinePlugin.TIMELINE_JSON));
-        assertThat(dataDirectory, contains(BehaviorPlugin.BEHAVIOR_JSON));
+        assertThat(dataDirectory, contains(BehaviorsPlugin.BEHAVIORS_JSON));
         assertThat(dataDirectory, contains(DefectsPlugin.DEFECTS_JSON));
         assertThat(dataDirectory, contains(EnvironmentPlugin.ENVIRONMENT_JSON));
         assertThat(dataDirectory, contains(GraphPlugin.GRAPH_JSON));
