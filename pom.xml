@@ -36,6 +36,7 @@
         <module>allure-report-data</module>
         <module>allure-report-face</module>
         <module>allure-report-preview</module>
+        <module>allure-bundle</module>
     </modules>
 
     <organization>
@@ -291,6 +292,12 @@
                 <groupId>ru.yandex.qatools.allure</groupId>
                 <artifactId>allure-report-data</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>ru.yandex.qatools.allure</groupId>
+                <artifactId>allure-report-face</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
             </dependency>
 
             <dependency>
