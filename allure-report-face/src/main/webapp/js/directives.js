@@ -1,5 +1,5 @@
 /*global angular, $, hljs */
-angular.module('allure.directives', [])
+angular.module('allure.core.directives', [])
     .directive('highlight', function() {
         'use strict';
         return function($scope, elm, attrs) {

@@ -16,10 +16,10 @@
     <script src="webjars/angularjs/1.2.26/angular.min.js"></script>
     <script src="webjars/angularjs/1.2.26/angular-animate.min.js"></script>
     <script src="webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js"></script>
-    <script src="webjars/angular-ui-router/0.2.10/angular-ui-router.js"></script>
+    <script src="webjars/angular-ui-router/0.2.13/angular-ui-router.js"></script>
     <script src="webjars/angular-loading-bar/0.6.0/loading-bar.js"></script>
-    <script src="webjars/angular-translate/2.4.1/angular-translate.js"></script>
-    <script src="webjars/angular-translate-loader-static-files/2.4.0/angular-translate-loader-static-files.js"></script>
+    <script src="webjars/angular-translate/2.6.0/angular-translate.js"></script>
+    <script src="webjars/angular-translate-loader-partial/2.6.0/angular-translate-loader-partial.js"></script>
     <script src="webjars/messageformat.js/0.1.4/messageformat.js"></script>
     <script src="webjars/angular-translate-interpolation-messageformat/0.1.2/angular-translate-interpolation-messageformat.js"></script>
     <script src="vendor/messageformat/ru.js"></script>
@@ -31,26 +31,39 @@
     <script src="vendor/filesize.js"></script>
 
     <script src="js/app.js"></script>
+    <script src="js/pluginApi.js"></script>
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/filters.js"></script>
     <script src="js/directives.js"></script>
     <script src="js/table/table.js"></script>
     <script src="js/pane/pane.js"></script>
-    <script src="js/overview/OverviewCtrl.js"></script>
-    <script src="js/xUnit/controllers.js"></script>
     <script src="js/testcase/statusSwitcher.js"></script>
     <script src="js/testcase/provider.js"></script>
     <script src="js/testcase/testcase.js"></script>
     <script src="js/testcase/list.js"></script>
-    <script src="js/behaviors/BehaviorsCtrl.js"></script>
-    <script src="js/defects/defects.js"></script>
     <script src="js/charts/charts.js"></script>
     <script src="js/charts/pie.js"></script>
     <script src="js/charts/timeline.js"></script>
     <script src="js/charts/duration.js"></script>
     <script src="js/charts/severityMap.js"></script>
     <script src="js/scrollfix/scrollfix.js"></script>
+
+    <script>
+        var allurePlugins = [
+            'defects',
+            'xunit',
+            'behaviors',
+            'graph',
+            'timeline'
+        ];
+        allurePlugins.forEach(function(plugin) {
+            document.write('<script src="plugins/'+plugin+'/script.js"><'+'/script>');
+        });
+        angular.module('allure', ['allure.core'].concat(allurePlugins.map(function(plugin) {
+            return 'allure.'+plugin;
+        })));
+    </script>
 </head>
 <body class="b-page">
 <header class="b-page__nav navbar navbar-static-top" role="navigation" ng-controller="NavbarCtrl">
@@ -95,30 +108,14 @@
 <div class="dashboard" ng-controller="TabsController">
     <div class="b-vert" ng-class="{'b-vert_collapsed': isCollapsed() }">
     <ul class="list-unstyled">
-        <li title="{{'index.OVERVIEW' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('overview')}" ui-sref="overview"><div class="b-vert__title">
-            <div class="b-vert__icon fa fa-home"></div>
-            {{'index.OVERVIEW' | translate}}
-        </div></li>
-        <li title="{{'index.DEFECTS' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('defects')}" ui-sref="defects"><div class="b-vert__title">
-            <div class="b-vert__icon fa fa-flag"></div>
-            {{'index.DEFECTS' | translate}}
-        </div></li>
-        <li title="{{'index.XUNIT' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('home')}" ui-sref="home"><div class="b-vert__title">
-            <div class="b-vert__icon fa fa-briefcase"></div>
-            {{'index.XUNIT' | translate}}
-        </div></li>
-        <li title="{{'index.BEHAVIORS' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('behaviors')}" ui-sref="behaviors"><div class="b-vert__title">
-            <div class="b-vert__icon fa fa-list"></div>
-            {{'index.BEHAVIORS' | translate}}
-        </div></li>
-        <li title="{{'index.GRAPH' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('graph')}" ui-sref="graph"><div class="b-vert__title">
-            <div class="b-vert__icon fa fa-bar-chart"></div>
-            {{'index.GRAPH' | translate}}
-        </div></li>
-        <li title="{{'index.TIMELINE' | translate}}" class="b-vert__item" ng-class="{'b-vert__item_state_selected': isCurrent('timeline')}" ui-sref="timeline"><div class="b-vert__title">
-            <div class="b-vert__icon fa fa-clock-o"></div>
-            {{'index.TIMELINE' | translate}}
-        </div></li>
+        <li ng-repeat="tab in tabs" class="b-vert__item"
+                title="{{tab.title | translate}}"
+                ng-class="{'b-vert__item_state_selected': isCurrent(tab.name)}">
+            <a ui-sref="{{tab.name}}" class="b-vert__title">
+                <div class="b-vert__icon" ng-class="tab.icon"></div>
+                {{tab.title | translate}}
+            </a>
+        </li>
     </ul>
         <div title="{{'index.COLLAPSE' | translate}}" class="b-vert__item b-vert__collapse"  ng-click="toggleCollapsed()">
             <div class="b-vert__title">

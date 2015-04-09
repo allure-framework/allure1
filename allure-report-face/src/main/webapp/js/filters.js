@@ -1,5 +1,5 @@
 /*global angular, filesize*/
-angular.module('allure.filters', [])
+angular.module('allure.core.filters', ['d3'])
     .filter('interpolate', ['version', function (version) {
         'use strict';
         return function (text) {
@@ -12,7 +12,6 @@ angular.module('allure.filters', [])
             return size ? filesize(size, {base: 2, round: 1}) : size;
         };
     }])
-    .constant('d3', window.d3)
     .filter('d3time', function(d3) {
         function getTotalHours(time) {
             return Math.floor(time.valueOf()/(3600*1000));

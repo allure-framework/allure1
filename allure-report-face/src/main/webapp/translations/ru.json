@@ -54,18 +54,7 @@
             "VERSION": "Версия:",
             "DATA_SIZE": "Объем данных:",
             "COLLAPSE": "Свернуть",
-            "OVERVIEW": "Обзор",
-            "DEFECTS": "Дефекты",
-            "XUNIT": "xUnit",
-            "BEHAVIORS": "Результаты",
-            "GRAPH": "Графики",
-            "TIMELINE": "Временная шкала"
-        },
-        
-  "timeline":  
-        {
-            "HEADER": "Временная шкала",
-            "TIMEDATE": "Сессия тестирования запущена {{date}} в {{time}}"
+            "OVERVIEW": "Обзор"
         },
         
   "overview":  
@@ -74,46 +63,6 @@
             "ALL": "показать все",
             "NO_DEFECTS": "Дефектов нет, все тесты пройдены успешно!",
             "STATUS": "статус: "
-        },
-        
-  "graph":  
-        {
-            "STATUS": "Статус",
-            "SEVERITY": "Серьезность",
-            "DURATION": "Длительность",
-            "TESTS": "{amount, plural, one{# тест} few{# теста} other{# тестов}}",
-            "CASES": "{amount, plural, one{# тестовый случай} few{# тестовых случая} other{# тестовых случаев}}"
-        },
-        
-  "features":  
-        {
-            "REQUIREMENTS": "Функциональные требования",
-            "FEATURES": "Функциональность",
-            "STORY": "Сценарий"
-        },
-        
-  "defects":  
-        {
-            "STATISTIC": "{amount, plural, one{# дефект} few{# дефекта} other{# дефектов}}",
-            "NO_DEFECTS": "Дефектов нет, отличная работа!"
-        },
-        
-  "testrun":  
-        {
-            "SUMMARY": "Информация",
-            "TESTRUN": "Сессия тестирования:",
-            "TEST_SUITES": "Тестовые сценарии",
-            "TIMEDATE": "запущена {{date}} в {{time}} ({{duration}})",
-            "STATISTIC": "Всего: {suites, plural, one{# тестовый сценарий} few{# тестовых сценария} other{# тестовых сценариев}}, {cases, plural, one{# тестовый случай} few{# тестовых случая} other{# тестовых случаев}}",
-            "PASSED": "УСПЕШНО",
-            "TOTAL": "Всего {amount, plural, one{# сценарий} few{# сценария} other{# сценариев}}",
-            "VISIBLE": "{{visible == amount ? '' : ' ('+visible+' показано)'}}"
-        },
-        
-  "testsuite":  
-        {
-            "TESTSUITE": "Тестовый сценарий",
-            "DESCRIPTION": "Описание"
         },
         
   "attachment":  

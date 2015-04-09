@@ -6,7 +6,7 @@ function getObjectValues(object) {
         return object[key];
     });
 }
-angular.module('allure.services', [])
+angular.module('allure.core.services', [])
     .value('severity', {
         all: ['BLOCKER', 'CRITICAL', 'NORMAL', 'MINOR', 'TRIVIAL'],
         getSortOrder: function (severity) {

@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('allure.table', [])
+angular.module('allure.core.table', [])
     .directive('allureTable', function () {
         "use strict";
         return {

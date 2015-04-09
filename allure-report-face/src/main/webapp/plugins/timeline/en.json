@@ -1,0 +1,7 @@
+{
+  "timeline": {
+    "TITLE": "Timeline",
+    "HEADER": "Timeline",
+    "TIMEDATE": "Started {{date}} at {{time}}"
+  }
+}

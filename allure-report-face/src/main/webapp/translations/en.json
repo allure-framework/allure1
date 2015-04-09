@@ -54,19 +54,9 @@
               "GENERATED": "Generated in:",
               "VERSION": "Version:",
               "COLLAPSE": "Collapse",
-              "OVERVIEW": "Overview",
-              "DEFECTS": "Defects",
-              "XUNIT": "xUnit",
-              "BEHAVIORS": "Behaviors",
-              "GRAPH": "Graph",
-              "TIMELINE": "Timeline"
+              "OVERVIEW": "Overview"
           },
 
-    "timeline":  
-          {              
-              "HEADER": "Timeline",
-              "TIMEDATE": "Started {{date}} at {{time}}"
-          },
 
     "overview":  
           {
@@ -74,46 +64,6 @@
               "ALL": "show all",
               "NO_DEFECTS": "No defects, all tests passed!",
               "STATUS": "status: "
-          },
-
-    "graph":  
-          {
-              "STATUS": "Status",
-              "SEVERITY": "Severity",
-              "DURATION": "Duration",
-              "TESTS": "{amount, plural, one{# test} other{# tests}}",
-              "CASES": "{amount, plural, one{# test case} other{# test cases}}"
-          },
-
-    "features":  
-          {
-              "REQUIREMENTS": "Functional requirements",
-              "FEATURES": "Features",
-              "STORY": "Story"
-          },
-
-    "defects":  
-          {
-              "STATISTIC": "{amount, plural, one{# defect} other{# defects}}",
-              "NO_DEFECTS": "No defects in test run. Good job!"
-          },
-
-    "testrun":  
-          {
-              "SUMMARY": "Summary",
-              "TESTRUN": "Test run:",
-              "TEST_SUITES": "Test suites",
-              "TIMEDATE": "started {{date}} At {{time}} ({{duration}})",
-              "STATISTIC": "Total: {suites, plural, one{# test suite} other{# test suites}}, {cases, plural, one{# test case} other{# test cases}}",
-              "PASSED": "PASSED",
-              "TOTAL": "Total {amount, plural, one{# suite} other{# suites}}",
-              "VISIBLE": "{{visible == amount ? '' : ' ('+visible+' shown)'}}"
-          },
-
-    "testsuite":  
-          {
-              "TESTSUITE": "Testsuite",
-              "DESCRIPTION": "Description"
           },
 
     "attachment":  

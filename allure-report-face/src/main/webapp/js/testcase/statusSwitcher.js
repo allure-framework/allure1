@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('allure.testcase.statusSwitcher', []).directive('statusSwitcher', function($storage, status) {
+angular.module('allure.core.testcase.statusSwitcher', []).directive('statusSwitcher', function($storage, status) {
     "use strict";
     function StatusesStore() {
         function defaults(value, defaultVal) {
