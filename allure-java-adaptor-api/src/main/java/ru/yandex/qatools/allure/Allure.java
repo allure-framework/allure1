@@ -89,10 +89,10 @@ public class Allure {
      * @param event to process
      */
     public void fire(StepFinishedEvent event) {
+        notifier.fire(event);
+        
         Step step = stepStorage.adopt();
         event.process(step);
-
-        notifier.fire(event);
     }
 
     /**
@@ -137,6 +137,8 @@ public class Allure {
      * @param event to process
      */
     public void fire(TestCaseFinishedEvent event) {
+        notifier.fire(event);
+        
         TestCaseResult testCase = testCaseStorage.get();
         event.process(testCase);
 
@@ -151,8 +153,6 @@ public class Allure {
 
         stepStorage.remove();
         testCaseStorage.remove();
-
-        notifier.fire(event);
     }
 
     /**
@@ -176,6 +176,8 @@ public class Allure {
      * @param event to process
      */
     public void fire(TestSuiteFinishedEvent event) {
+        notifier.fire(event);
+        
         String suiteUid = event.getUid();
 
         TestSuiteResult testSuite = testSuiteStorage.remove(suiteUid);
@@ -188,8 +190,6 @@ public class Allure {
         testSuite.getLabels().add(AllureModelUtils.createProgrammingLanguageLabel());
 
         writeTestSuiteResult(testSuite);
-
-        notifier.fire(event);
     }
 
     /**
