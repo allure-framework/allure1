@@ -1,18 +1,39 @@
 /*global angular */
-angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAnimate', 'ui.bootstrap', 'localStorageModule', 'ui.router',
-        'allure.filters', 'allure.services', 'allure.directives', 'allure.controllers', 'allure.table', 'allure.pane',
-        'allure.scrollfix', 'allure.charts', 'allure.testcase', 'allure.xUnit.controllers', 'allure.behaviors',
-        'allure.defects', 'allure.overview'])
-    .config(function($tooltipProvider) {
-        "use strict";
-        $tooltipProvider.options({appendToBody:true});
-    })
-    .config(function(cfpLoadingBarProvider) {
-        "use strict";
+(function() {
+    "use strict";
+    var module = angular.module('allure.core', [
+        //3rd-party
+        'pascalprecht.translate',
+        'angular-loading-bar',
+        'ngAnimate',
+        'ui.bootstrap',
+        'localStorageModule',
+        'ui.router',
+
+        //allure-core modules
+        'allure.core.filters',
+        'allure.core.services',
+        'allure.core.directives',
+        'allure.core.controllers',
+        'allure.core.table',
+        'allure.core.pane',
+        'allure.core.scrollfix',
+        'allure.core.charts',
+        'allure.core.testcase',
+
+        //plugins api
+        'allure.core.pluginApi'
+    ]);
+
+    module.config(function($tooltipProvider) {
+        $tooltipProvider.options({appendToBody: true});
+    });
+
+    module.config(function(cfpLoadingBarProvider) {
         cfpLoadingBarProvider.parentSelector = '.loader';
-    })
-    .config(function($httpProvider) {
-        "use strict";
+    });
+
+    module.config(function($httpProvider) {
         $httpProvider.defaults.cache = true;
         $httpProvider.interceptors.push(['$q', function($q) {
             return {
@@ -21,25 +42,25 @@ angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAn
                         reason = {
                             config: {},
                             status: reason.message
-                        }
-                    };
+                        };
+                    }
                     return $q.reject(reason);
                 }
             };
         }]);
-    })
-    .run(function($rootScope) {
-        "use strict";
+    });
+
+    module.run(function($rootScope) {
         $rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, rejection) {
             $rootScope.error = rejection;
         });
-    })
-    .config(function ($stateProvider, $urlRouterProvider, testcaseProvider) {
-        'use strict';
+    });
+
+    module.config(function($stateProvider, $urlRouterProvider) {
         function processResponse(response) {
             return response.data;
         }
-        $urlRouterProvider.otherwise("/home");
+        $urlRouterProvider.otherwise("/");
         $stateProvider
             .state('overview', {
                 url: '/',
@@ -56,86 +77,18 @@ angular.module('allure', ['pascalprecht.translate', 'angular-loading-bar', 'ngAn
                         return $http.get('data/xunit.json').then(processResponse);
                     }
                 }
-            })
-            .state('defects', {
-                url: '/defects',
-                templateUrl: "templates/defects.html",
-                controller: 'DefectsCtrl',
-                resolve: {
-                    defects: function($http) {
-                        return $http.get('data/defects.json').then(processResponse);
-                    }
-                }
-            })
-            .state('defects.defect', {
-                url: "/:defectUid"
-            })
-            .state('defects.defect.expanded', {
-                url: '/expanded'
-            })
-            .state('home', {
-                url: "/home",
-                templateUrl: "templates/home.html",
-                controller: 'HomeCtrl',
-                resolve: {
-                    testsuites: function($http) {
-                        return $http.get('data/xunit.json').then(processResponse);
-                    }
-                }
-            })
-            .state('home.testsuite', {
-                url: "/:testsuiteUid"
-            })
-            .state('home.testsuite.expanded', {
-                url: '/expanded'
-            })
-            .state('graph', {
-                url: '/graph',
-                templateUrl: "templates/graph.html",
-                controller: 'GraphCtrl',
-                resolve: {
-                    testcases: function($http) {
-                        return $http.get('data/graph.json').then(processResponse);
-                    }
-                }
-            })
-            .state('timeline', {
-                url: '/timeline',
-                templateUrl: "templates/timeline.html",
-                controller: 'TimelineCtrl',
-                resolve: {
-                    data: function($http) {
-                        return $http.get('data/timeline.json').then(processResponse);
-                    }
-                }
-            })
-            .state('behaviors', {
-                url: '/behaviors',
-                templateUrl: "templates/behaviors.html",
-                controller: 'BehaviorsCtrl',
-                resolve: {
-                    features: function($http) {
-                        return $http.get('data/behaviors.json').then(processResponse);
-                    }
-                }
-            })
-            .state('behaviors.story', {
-                url: '/:storyUid'
-            })
-            .state('behaviors.story.expanded', {
-                url: '/expanded'
             });
-        testcaseProvider.attachStates('defects.defect');
-        testcaseProvider.attachStates('behaviors.story');
-        testcaseProvider.attachStates('home.testsuite');
-        testcaseProvider.attachStates('timeline');
-    })
-    .config(function($translateProvider) {
-        $translateProvider.useStaticFilesLoader({
-          prefix: 'translations/',
-          suffix: '.json'
-        });
+
+    });
+
+    module.config(function($translateProvider, $translatePartialLoaderProvider) {
         $translateProvider.addInterpolation('$translateMessageFormatInterpolation');
+        $translatePartialLoaderProvider.addPart('translations');
+        $translateProvider.useLoader('$translatePartialLoader', {
+            urlTemplate: '{part}/{lang}.json'
+        });
         $translateProvider.preferredLanguage('en');
         $translateProvider.fallbackLanguage('en');
     });
+    angular.module('d3', []).constant('d3', window.d3);
+})();

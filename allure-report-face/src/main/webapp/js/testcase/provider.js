@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('allure.testcase.provider', []).provider('testcase', function($stateProvider) {
+angular.module('allure.core.testcase.provider', []).provider('testcase', function($stateProvider) {
     "use strict";
     function processResponse(response) {
         return response.data;

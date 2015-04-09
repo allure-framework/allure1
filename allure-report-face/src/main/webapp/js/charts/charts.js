@@ -1,5 +1,5 @@
 /* globals angular, d3 */
-angular.module('allure.charts.util', [],function ($provide) {
+angular.module('allure.core.charts.util', [],function ($provide) {
         'use strict';
         $provide.constant('d3', window.d3);
     }).config(function() {
@@ -142,4 +142,7 @@ angular.module('allure.charts.util', [],function ($provide) {
         };
         return Tooltip;
     });
-angular.module('allure.charts', ['allure.charts.timeline', 'allure.charts.pie', 'allure.charts.severityMap', 'allure.charts.duration']);
+angular.module('allure.core.charts', ['allure.core.charts.timeline', 'allure.core.charts.pie', 'allure.core.charts.severityMap', 'allure.core.charts.duration']);
+
+
+

@@ -1,5 +1,5 @@
 /* globals angular */
-angular.module('allure.charts.severityMap', ['allure.charts.util']).directive('severityMap', function (d3, d3Util, d3Tooltip, status, severity) {
+angular.module('allure.core.charts.severityMap', ['allure.core.charts.util']).directive('severityMap', function (d3, d3Util, d3Tooltip, status, severity) {
     'use strict';
     function SeverityMap(elm, severities, data) {
         var itemWidth = angular.element(elm).width()/14,

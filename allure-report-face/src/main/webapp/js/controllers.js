@@ -1,50 +1,25 @@
 /*global angular:true */
-angular.module('allure.controllers', [])
-    .controller('GraphCtrl', function($scope, testcases, status) {
+angular.module('allure.core.controllers', [])
+    .controller('OverviewCtrl', function($scope, orderByFilter, status, percents, overview, defects, testsuites) {
         "use strict";
-        $scope.testcases = testcases.testCases;
-        $scope.statistic = {
-            passed: 0, canceled: 0, failed: 0, broken: 0, pending: 0,
-            total: $scope.testcases.length
-        };
-        $scope.testcases.forEach(function(testcase) {
-            $scope.statistic[testcase.status.toLowerCase()]++;
+        $scope.overview = overview;
+        $scope.defects = defects.defectsList.filter(function(defect) {
+            return defect.defects && defect.defects.length > 0;
         });
-        $scope.testsPassed = ($scope.statistic.failed + $scope.statistic.broken) === 0;
-        $scope.chartData = status.all.map(function(statusName) {
-            var value = $scope.statistic[statusName.toLowerCase()];
-            return {
-                name: statusName.toLowerCase(),
-                value: value,
-                part: value/$scope.statistic.total
-            };
-        }, this);
-    })
-
-    .controller('TimelineCtrl', function($scope, $state, data) {
-        "use strict";
-        $scope.isState = function(statename) {
-            return $state.is(statename);
-        };
-        $scope.openTestcase = function(testcase) {
-            $state.go('timeline.testcase', {testcaseUid: testcase.uid});
-        };
-        $scope.hosts = data.hosts;
-        $scope.allCases = $scope.hosts.reduce(function(result, host) {
-            return host.threads.reduce(function(result, thread) {
-                return result.concat(thread.testCases);
-            }, result);
-        }, []);
-        $scope.startTime = $scope.allCases.reduce(function(min, testcase) {
-            return Math.min(min, testcase.time.start);
-        }, Number.POSITIVE_INFINITY);
-        $scope.allCases.forEach(function(testcase) {
-            testcase.time.start -= $scope.startTime;
-            testcase.time.stop -= $scope.startTime;
+        $scope.defects.forEach(function(defect) {
+            defect.defects = orderByFilter(defect.defects, function(defect) {
+                return defect.testCases.length;
+            }, true);
         });
-        $scope.timeRange = [0, $scope.allCases.reduce(function(max, testcase) {
-            return Math.max(max, testcase.time.stop);
-        }, Number.NEGATIVE_INFINITY)];
+        $scope.statistic = testsuites.testSuites.reduce(function(statistic, testsuite) {
+            ['passed', 'pending', 'canceled', 'broken', 'failed', 'total'].forEach(function(status) {
+                statistic[status] += testsuite.statistic[status];
+            });
+            return statistic;
+        }, {
+            passed: 0, pending: 0, canceled: 0, failed: 0, broken: 0, total: 0
+        });
+        $scope.percents = percents($scope.statistic);
     })
 
     .controller('NavbarCtrl', function($scope, $window, $http, $storage, $translate) {
@@ -60,7 +35,7 @@ angular.module('allure.controllers', [])
         };
 
         $scope.langs = [{
-            name: "ENG" ,
+            name: "ENG",
             locale: "en"
         }, {
             name: "РУС",
@@ -74,10 +49,11 @@ angular.module('allure.controllers', [])
         });
     })
 
-    .controller('TabsController', function($scope, $state, $storage) {
+    .controller('TabsController', function($scope, $state, $storage, allureTabs) {
         'use strict';
         var settings = $storage('settings');
 
+        $scope.tabs = allureTabs;
         $scope.isCollapsed = function() {
             return settings.getItem('collapsed');
         };

@@ -75,7 +75,7 @@
                                 <artifactItem>
                                     <groupId>org.webjars</groupId>
                                     <artifactId>angular-ui-router</artifactId>
-                                    <version>0.2.10-1</version>
+                                    <version>0.2.13</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.webjars</groupId>
@@ -90,7 +90,7 @@
                                 <artifactItem>
                                     <groupId>org.webjars</groupId>
                                     <artifactId>angular-translate</artifactId>
-                                    <version>2.4.1</version>
+                                    <version>2.6.0</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.webjars</groupId>
@@ -99,8 +99,8 @@
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.webjars</groupId>
-                                    <artifactId>angular-translate-loader-static-files</artifactId>
-                                    <version>2.4.0</version>
+                                    <artifactId>angular-translate-loader-partial</artifactId>
+                                    <version>2.6.0</version>
                                 </artifactItem>
                                 <artifactItem>
                                     <groupId>org.webjars</groupId>
@@ -159,10 +159,10 @@
                                 <include>webjars/angularjs/1.2.26/angular.min.js</include>
                                 <include>webjars/angularjs/1.2.26/angular-animate.min.js</include>
                                 <include>webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js</include>
-                                <include>webjars/angular-ui-router/0.2.10/angular-ui-router.js</include>
+                                <include>webjars/angular-ui-router/0.2.13/angular-ui-router.js</include>
                                 <include>webjars/angular-loading-bar/0.6.0/loading-bar.js</include>
                                 <include>webjars/angular-translate/2.4.1/angular-translate.js</include>
-                                <include>webjars/angular-translate-loader-static-files/2.4.0/angular-translate-loader-static-files.js</include>
+                                <include>webjars/angular-translate-loader-partial/2.6.0/angular-translate-loader-partial.js</include>
                                 <include>webjars/messageformat.js/0.1.4/messageformat.js</include>
                                 <include>webjars/angular-translate-interpolation-messageformat/0.1.2/angular-translate-interpolation-messageformat.js</include>
                                 <include>webjars/highlightjs/8.2-1/highlight.min.js</include>
@@ -190,8 +190,17 @@
                 </executions>
                 <configuration>
                     <keepServerAlive>true</keepServerAlive>
-                    <jsSrcDir>src/main/webapp/js</jsSrcDir>
-                    <jsTestSrcDir>src/test/webapp/unit</jsTestSrcDir>
+                    <jsSrcDir>src/main/webapp</jsSrcDir>
+                    <sourceIncludes>
+                        <sourceInclude>js/**</sourceInclude>
+                        <sourceInclude>plugins/**</sourceInclude>
+                    </sourceIncludes>
+                    <jsTestSrcDir>src/test/webapp</jsTestSrcDir>
+                    <specIncludes>
+                        <specInclude>vendor/**</specInclude>
+                        <specInclude>core/**</specInclude>
+                        <specInclude>plugins/**</specInclude>
+                    </specIncludes>
                     <jasmineTargetDir>${project.build.directory}/surefire-reports</jasmineTargetDir>
                     <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                     <preloadSources>
@@ -200,7 +209,6 @@
                         <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular.js</source>
                         <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular-animate.js</source>
                         <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular-mocks.js</source>
-                        <source>src/test/webapp/vendor/qatools-jasmine.js</source>
                     </preloadSources>
                 </configuration>
             </plugin>
@@ -233,7 +241,7 @@
                             <outputDir>${project.build.directory}/site/coverage</outputDir>
                             <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                             <noInstrumentPatterns>
-                                <pattern>.*/spec/.*</pattern>
+                                <pattern>.*/test/.*</pattern>
                                 <pattern>.*/vendor/.*</pattern>
                                 <pattern>.*/webjars/.*</pattern>
                             </noInstrumentPatterns>

@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('allure.testcase.testcasesList', []).directive('testcasesList', function() {
+angular.module('allure.core.testcase.testcasesList', []).directive('testcasesList', function() {
     'use strict';
     return {
         templateUrl: 'templates/testcase/list.html',
