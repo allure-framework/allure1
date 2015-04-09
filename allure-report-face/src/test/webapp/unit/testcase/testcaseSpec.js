@@ -204,13 +204,14 @@ describe('Testcase controllers', function() {
                 status: 'FAILED',
                 steps: [
                     new Step('PASSED'),
+                    new Step('FAILED'),
                     new Step('FAILED', [
                         new Step('PASSED'),
                         new Step('FAILED')
                     ])
                 ]
             });
-            expect(scope.testcase.steps[1].steps[1].failure.error).toBe(scope.failure.error);
+            expect(scope.testcase.steps[2].steps[1].failure.error).toBe(scope.failure.error);
         });
 
         describe('state checks', function() {
