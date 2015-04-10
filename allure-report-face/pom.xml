@@ -15,8 +15,8 @@
 
     <properties>
         <sonar.language>js</sonar.language>
-        <sonar.sources>src/main/webapp/js</sonar.sources>
-        <sonar.tests>src/test/webapp/unit</sonar.tests>
+        <sonar.sources>src/main/webapp/js,src/main/webapp/plugins</sonar.sources>
+        <sonar.tests>src/test/webapp/core,src/test/webapp/plugins</sonar.tests>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
         <sonar.javascript.jstestdriver.reportsPath>
             ${project.build.directory}/surefire-reports/
