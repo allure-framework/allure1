@@ -12,6 +12,8 @@
     <artifactId>allure-bundle</artifactId>
     <packaging>pom</packaging>
 
+    <name>Allure Bundle</name>
+
     <properties>
         <allure.bundle.directory>${project.build.directory}/bundle</allure.bundle.directory>
         <allure.face.directory>
