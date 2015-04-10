@@ -258,11 +258,12 @@
                                 </goals>
                                 <phase>verify</phase>
                                 <configuration>
+                                    <ignoreMissingFile>true</ignoreMissingFile>
                                     <file>${project.build.directory}/site/coverage/total-coverage.dat</file>
                                     <replacements>
                                         <replacement>
                                             <token>SF:*src/</token>
-                                            <value>SF:${project.basedir}/src/main/webapp/js/</value>
+                                            <value>SF:${project.basedir}/src/main/webapp/</value>
                                         </replacement>
                                     </replacements>
                                 </configuration>
