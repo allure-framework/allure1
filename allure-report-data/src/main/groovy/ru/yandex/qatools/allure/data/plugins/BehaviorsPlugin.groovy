@@ -29,6 +29,10 @@ class BehaviorsPlugin implements ProcessPlugin<AllureTestCase> {
         key -> new AllureStory(title: key.story, statistic: new Statistic());
     };
 
+    private Map<Key, Set<String>> cache = new HashMap<>().withDefault {
+        key -> new HashSet<>()
+    }
+
     @Override
     void process(AllureTestCase testCase) {
         if (!testCase.status) {
@@ -36,14 +40,14 @@ class BehaviorsPlugin implements ProcessPlugin<AllureTestCase> {
         }
 
         use(PluginUtils) {
-            for (def featureValue : testCase.getFeatureValues()) {
+            for (def featureValue : testCase.featureValues) {
                 if (!features.containsKey(featureValue)) {
                     behavior.features.add(features[featureValue]);
                 }
 
                 def feature = features[featureValue]
 
-                for (def storyValue : testCase.getStoryValues()) {
+                for (def storyValue : testCase.storyValues) {
                     def key = new Key(story: storyValue, feature: featureValue)
                     if (!stories.containsKey(key)) {
                         feature.stories.add(stories[key]);
@@ -55,8 +59,10 @@ class BehaviorsPlugin implements ProcessPlugin<AllureTestCase> {
                     story.statistic.update(testCase.status);
                     feature.statistic.update(testCase.status);
 
-                    use(PluginUtils) {
-                        story.testCases.add(testCase.toInfo());
+                    def info = testCase.toInfo()
+                    if (!cache.get(key).contains(info.uid)) {
+                        cache.get(key).add(info.uid)
+                        story.testCases.add(info);
                     }
                 }
             }
