@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.data.plugins
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.junit.Test
 import ru.yandex.qatools.allure.data.AllureTestCase
+import ru.yandex.qatools.allure.data.AllureTestCaseInfo
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
 import ru.yandex.qatools.allure.data.utils.PluginUtils
@@ -170,6 +171,21 @@ class BehaviorsPluginTest {
                     }
             }
         }
+    }
+
+    @Test
+    void shouldNotDuplicateTestCasesWithDuplicateLabels() {
+        def testCase = new AllureTestCase(
+                uid: "uid", name: "name", status: BROKEN,
+                labels: [createStoryLabel("story"), createStoryLabel("story"),
+                         createFeatureLabel("feature"), createFeatureLabel("feature")]
+        )
+
+        plugin.process(testCase)
+
+        def testCases = plugin.behavior.features.stories.testCases.flatten() as List<AllureTestCaseInfo>
+        assert testCases.size() == 1
+        assert testCases[0].uid == "uid"
     }
 
     @Test
