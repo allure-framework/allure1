@@ -95,6 +95,7 @@ public class AllureReportGeneratorTest {
         inOrder.verify(pluginManager).process(environment);
         inOrder.verify(pluginManager).writePluginData(Environment.class, writer);
         inOrder.verify(pluginManager).prepare(attachment);
+        inOrder.verify(pluginManager).writePluginResources(writer);
 
         verifyNoMoreInteractions(pluginManager);
 
@@ -112,7 +113,7 @@ public class AllureReportGeneratorTest {
         assumeTrue("Output directory must be empty ", listBefore != null && listBefore.length == 0);
         generator.generate(outputDirectory);
 
-        File dataDirectory = new File(outputDirectory, AllureReportGenerator.DATA_DIRECTORY_NAME);
+        File dataDirectory = new File(outputDirectory, ReportWriter.DATA_DIRECTORY_NAME);
         assertTrue("Data directory should be created", dataDirectory.exists());
 
         assertThat(dataDirectory, contains(XUnitPlugin.XUNIT_JSON));

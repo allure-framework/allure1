@@ -132,6 +132,16 @@ class PluginManagerTest {
         plugin.injectable == injectable
     }
 
+    @Test
+    void shouldNotFailIfNullData() {
+        def loader = [loadPlugins: { [new SomeProcessPluginWithNullData()] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        manager.process(new SomeObject())
+        manager.getData(null)
+        assert manager.getData(SomeObject) == [null] as List<PluginData>
+    }
+
     @EqualsAndHashCode
     class SomeInjectable {
         String value
@@ -180,6 +190,19 @@ class PluginManagerTest {
         @Override
         List<PluginData> getPluginData() {
             return pluginData
+        }
+    }
+
+    class SomeProcessPluginWithNullData extends SomePlugin implements ProcessPlugin<SomeObject> {
+
+        @Override
+        void process(SomeObject data) {
+            //do nothing
+        }
+
+        @Override
+        List<PluginData> getPluginData() {
+            return null
         }
     }
 

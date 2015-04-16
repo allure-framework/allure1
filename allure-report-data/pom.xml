@@ -171,6 +171,13 @@
             <classifier>indy</classifier>
         </dependency>
 
+        <!--Classpath resource scanner-->
+        <dependency>
+            <groupId>net.sf.corn</groupId>
+            <artifactId>corn-cps</artifactId>
+            <version>1.1.7</version>
+        </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

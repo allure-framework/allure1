@@ -20,8 +20,6 @@ import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.createDirect
  */
 public class AllureReportGenerator {
 
-    public static final String DATA_DIRECTORY_NAME = "data";
-
     @Inject
     private Reader<TestCaseResult> testCaseReader;
 
@@ -53,9 +51,7 @@ public class AllureReportGenerator {
     }
 
     public void generate(File outputDirectory) {
-        File reportDataDirectory = createDirectory(outputDirectory, DATA_DIRECTORY_NAME);
-
-        ReportWriter writer = new ReportWriter(reportDataDirectory);
+        ReportWriter writer = new ReportWriter(outputDirectory);
         generate(writer);
     }
 
@@ -83,6 +79,7 @@ public class AllureReportGenerator {
             writer.write(attachment);
         }
 
+        pluginManager.writePluginResources(writer);
         writer.close();
     }
 }

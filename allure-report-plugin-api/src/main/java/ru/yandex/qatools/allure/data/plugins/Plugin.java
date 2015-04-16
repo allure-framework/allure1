@@ -13,11 +13,10 @@ public interface Plugin<T> {
 
     Class<T> getType();
 
-    @Target({ElementType.TYPE, ElementType.PARAMETER})
+    @Target({ElementType.TYPE})
     @Retention(RetentionPolicy.RUNTIME)
-    public @interface Type {
+    @interface Name {
 
-        Class value();
-
+        String value();
     }
 }
