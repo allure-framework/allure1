@@ -80,6 +80,7 @@ public class AllureReportGenerator {
         }
 
         pluginManager.writePluginResources(writer);
+
         writer.close();
     }
 }
