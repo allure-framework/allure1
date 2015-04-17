@@ -161,7 +161,7 @@
                                 <include>webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js</include>
                                 <include>webjars/angular-ui-router/0.2.13/angular-ui-router.js</include>
                                 <include>webjars/angular-loading-bar/0.6.0/loading-bar.js</include>
-                                <include>webjars/angular-translate/2.4.1/angular-translate.js</include>
+                                <include>webjars/angular-translate/2.6.0/angular-translate.js</include>
                                 <include>webjars/angular-translate-loader-partial/2.6.0/angular-translate-loader-partial.js</include>
                                 <include>webjars/messageformat.js/0.1.4/messageformat.js</include>
                                 <include>webjars/angular-translate-interpolation-messageformat/0.1.2/angular-translate-interpolation-messageformat.js</include>
