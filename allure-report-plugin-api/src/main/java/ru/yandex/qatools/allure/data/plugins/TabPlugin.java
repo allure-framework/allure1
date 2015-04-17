@@ -1,14 +1,15 @@
 package ru.yandex.qatools.allure.data.plugins;
 
+import ru.yandex.qatools.allure.data.AllureTestCase;
+
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
- *         Date: 16.04.15
+ *         Date: 17.04.15
  */
-public interface TabPlugin<T> extends ProcessPlugin<T> {
+public abstract class TabPlugin implements ProcessPlugin<AllureTestCase> {
 
-    /**
-     * Returns the name of the plugin
-     * @return
-     */
-    String getName();
+    @Override
+    public Class<AllureTestCase> getType() {
+        return AllureTestCase.class;
+    }
 }
