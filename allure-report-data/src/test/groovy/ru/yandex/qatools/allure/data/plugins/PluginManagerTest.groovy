@@ -5,6 +5,9 @@ import com.google.inject.Guice
 import com.google.inject.Inject
 import groovy.transform.EqualsAndHashCode
 import org.junit.Test
+import ru.yandex.qatools.allure.data.AllureTestCase
+import ru.yandex.qatools.allure.data.io.ReportWriter
+import ru.yandex.qatools.allure.data.testdata.SomeTabPlugin
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -140,6 +143,16 @@ class PluginManagerTest {
         manager.process(new SomeObject())
         manager.getData(null)
         assert manager.getData(SomeObject) == [null] as List<PluginData>
+    }
+
+    @Test
+    void shouldWritePluginResources() {
+        def loader = [loadPlugins: { [new SomeTabPlugin(), new SomeProcessPlugin()] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        manager.process(new AllureTestCase(name: "my-name"))
+        def writer = [] as ReportWriter
+        manager.writePluginResources(writer)
     }
 
     @EqualsAndHashCode

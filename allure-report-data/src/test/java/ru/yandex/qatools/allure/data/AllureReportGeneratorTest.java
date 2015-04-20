@@ -116,12 +116,12 @@ public class AllureReportGeneratorTest {
         File dataDirectory = new File(outputDirectory, ReportWriter.DATA_DIRECTORY_NAME);
         assertTrue("Data directory should be created", dataDirectory.exists());
 
-        assertThat(dataDirectory, contains(XUnitPlugin.XUNIT_JSON));
-        assertThat(dataDirectory, contains(TimelinePlugin.TIMELINE_JSON));
-        assertThat(dataDirectory, contains(BehaviorsPlugin.BEHAVIORS_JSON));
-        assertThat(dataDirectory, contains(DefectsPlugin.DEFECTS_JSON));
-        assertThat(dataDirectory, contains(EnvironmentPlugin.ENVIRONMENT_JSON));
-        assertThat(dataDirectory, contains(GraphPlugin.GRAPH_JSON));
+        assertThat(dataDirectory, contains("xunit.json"));
+        assertThat(dataDirectory, contains("timeline.json"));
+        assertThat(dataDirectory, contains("behaviors.json"));
+        assertThat(dataDirectory, contains("defects.json"));
+        assertThat(dataDirectory, contains("environment.json"));
+        assertThat(dataDirectory, contains("graph.json"));
         assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));
 
         assertThat(listAttachmentFiles(dataDirectory), not(empty()));

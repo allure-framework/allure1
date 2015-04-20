@@ -2,16 +2,11 @@ package ru.yandex.qatools.allure.data.plugins
 
 import com.google.inject.Inject
 import com.google.inject.Injector
-import groovy.transform.stc.ClosureParams
-import groovy.transform.stc.FirstParam
 import net.sf.corn.cps.CPScanner
 import net.sf.corn.cps.ResourceFilter
 import org.apache.commons.io.FilenameUtils
-import org.apache.commons.io.IOUtils
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.utils.PluginUtils
-
-import java.nio.charset.StandardCharsets
 
 /**
  * Plugin manager helps you to find plugins and run
@@ -73,7 +68,7 @@ class PluginManager {
 
     void writePluginResources(ReportWriter writer) {
         def plugins = processPlugins.values().flatten()
-        def names = [ 'defects', 'xunit', 'behaviors', 'graph', 'timeline']
+        def names = ['defects', 'xunit', 'behaviors', 'graph', 'timeline']
 
         plugins.each { plugin ->
             if (plugin.class.isAnnotationPresent(Plugin.Name)) {
