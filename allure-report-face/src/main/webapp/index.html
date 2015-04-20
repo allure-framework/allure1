@@ -67,6 +67,8 @@
                     return 'allure.'+plugin;
                 })));
                 angular.bootstrap($('html'), ['allure']);
+            }).then(function() {
+                $(".preloader").hide();
             });
         });
     </script>
@@ -138,6 +140,12 @@
     <p>Message: {{error.status}}</p>
     <hr/>
     <p>Debug: {{error}}</p>
+</div>
+<div class="preloader">
+    <div class="alert alert-info">
+        <span class="fa fa-spinner fa-spin"></span>
+        Loading...
+    </div>
 </div>
 </body>
 </html>
