@@ -21,18 +21,32 @@ class BehaviorsPlugin extends TabPlugin {
     @Plugin.Data
     def behavior = new AllureBehavior();
 
-    private Map<String, AllureFeature> features = new HashMap<>().withDefault {
+    /**
+     * Storage for all features. You can find feature by name.
+     */
+    protected Map<String, AllureFeature> features = new HashMap<>().withDefault {
         key -> new AllureFeature(title: key, statistic: new Statistic())
     };
 
-    private Map<Key, AllureStory> stories = new HashMap<>().withDefault {
+    /**
+     * Storage for all stories. Stories can be found by {@link Key}.
+     */
+    protected Map<Key, AllureStory> stories = new HashMap<>().withDefault {
         key -> new AllureStory(title: key.story, statistic: new Statistic())
     };
 
+    /**
+     * This cache contains set of uids for each key pair (feature + story).
+     * An example if you specify one story for test case twice allure
+     * shows it in report only once.
+     */
     private Map<Key, Set<String>> cache = new HashMap<>().withDefault {
         key -> new HashSet<>()
     }
 
+    /**
+     * Process given test case and save its status to {@link #behavior}
+     */
     @Override
     void process(AllureTestCase testCase) {
         if (!testCase.status) {
@@ -69,8 +83,12 @@ class BehaviorsPlugin extends TabPlugin {
         }
     }
 
+    /**
+     * Feature - story pair.
+     * @see #stories
+     */
     @EqualsAndHashCode
-    class Key {
+    private static class Key {
         String feature;
         String story;
     }
