@@ -10,13 +10,7 @@ import org.mockito.InOrder;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
-import ru.yandex.qatools.allure.data.plugins.BehaviorsPlugin;
-import ru.yandex.qatools.allure.data.plugins.DefectsPlugin;
-import ru.yandex.qatools.allure.data.plugins.EnvironmentPlugin;
-import ru.yandex.qatools.allure.data.plugins.GraphPlugin;
 import ru.yandex.qatools.allure.data.plugins.PluginManager;
-import ru.yandex.qatools.allure.data.plugins.TimelinePlugin;
-import ru.yandex.qatools.allure.data.plugins.XUnitPlugin;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.commons.model.Environment;
 
@@ -101,7 +95,7 @@ public class AllureReportGeneratorTest {
 
         verify(writer).write(testCase);
         verify(writer).write(attachment);
-        verify(writer).close();
+        verify(writer).writeReportInfo();
         verifyNoMoreInteractions(writer);
     }
 

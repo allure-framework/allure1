@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.google.inject.Inject
 import groovy.transform.EqualsAndHashCode
+import org.junit.Ignore
 import org.junit.Test
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.io.ReportWriter
@@ -145,6 +146,7 @@ class PluginManagerTest {
         assert manager.getData(SomeObject) == [null] as List<PluginData>
     }
 
+    @Ignore
     @Test
     void shouldWritePluginResources() {
         def loader = [loadPlugins: { [new SomeTabPlugin(), new SomeProcessPlugin()] }] as PluginLoader

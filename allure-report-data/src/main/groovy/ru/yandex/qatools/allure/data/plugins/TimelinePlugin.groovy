@@ -24,17 +24,17 @@ class TimelinePlugin extends TabPlugin {
     @Override
     void process(AllureTestCase testCase) {
         use(PluginUtils) {
-            def hostName = testCase.getHostValue()
+            def hostName = testCase.hostValue
             if (!hosts.containsKey(hostName)) {
-                Host host = new Host(title: hostName)
+                def host = new Host(title: hostName)
                 hosts[hostName] = host
                 timeline.hosts.add(host)
             }
 
-            def threadName = testCase.getThreadValue()
+            def threadName = testCase.threadValue
             def key = new Key(host: hostName, thread: threadName)
             if (!threads.containsKey(key)) {
-                Thread thread = new Thread(title: threadName)
+                def thread = new Thread(title: threadName)
                 threads[key] = thread
                 hosts[hostName].threads.add(thread)
             }

@@ -12,8 +12,6 @@ import ru.yandex.qatools.commons.model.Environment;
 
 import java.io.File;
 
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.createDirectory;
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 12.02.15
@@ -81,6 +79,6 @@ public class AllureReportGenerator {
 
         pluginManager.writePluginResources(writer);
 
-        writer.close();
+        writer.writeReportInfo();
     }
 }

@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import com.google.inject.Injector
 import net.sf.corn.cps.CPScanner
 import net.sf.corn.cps.ResourceFilter
-import org.apache.commons.io.FilenameUtils
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
@@ -16,6 +15,8 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  *         Date: 17.02.15
  */
 class PluginManager {
+
+    public static final String PLUGINS_JSON = "plugins.json"
 
     protected final Storage<PreparePlugin> preparePlugins;
 
@@ -66,36 +67,28 @@ class PluginManager {
         processPlugins.get(type)*.pluginData?.flatten() as List<PluginData>
     }
 
+    /**
+     * Write plugin resources. For each plugin search resources using
+     * {@link #findPluginResources(ru.yandex.qatools.allure.data.plugins.ProcessPlugin)}
+     *
+     * @see ReportWriter
+     */
     void writePluginResources(ReportWriter writer) {
         def plugins = processPlugins.values().flatten()
-        def names = ['defects', 'xunit', 'behaviors', 'graph', 'timeline']
+        def names = []
 
         plugins.each { plugin ->
             if (plugin.class.isAnnotationPresent(Plugin.Name)) {
-                String pluginName = plugin.class.getAnnotation(Plugin.Name).value()
+                def pluginName = plugin.class.getAnnotation(Plugin.Name).value()
                 names.add(pluginName)
 
-                List<URL> resources = findPluginResources(plugin)
-
+                def resources = findPluginResources(plugin)
                 resources.each { resource ->
-                    copyResource(writer, pluginName, resource)
+                    writer.write(pluginName, resource)
                 }
             }
         }
-        writer.write(new PluginData("plugins.json", names))
-    }
-
-    /**
-     * Copy given URL resource to writer to plugins/${pluginName} folder
-     */
-    protected static void copyResource(ReportWriter writer, String pluginName, URL resource) {
-        def resourceName = FilenameUtils.getName(resource.toString())
-        def input = resource.openStream()
-
-        def output = writer.getPluginResourceOutputStream(pluginName, resourceName)
-        output << input
-        output.flush()
-        output.close()
+        writer.write(new PluginData(PLUGINS_JSON, names))
     }
 
     /**
