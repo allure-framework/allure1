@@ -107,7 +107,7 @@ class PluginManager {
      * Find all resources for plugin.
      */
     protected static List<URL> findPluginResources(ProcessPlugin plugin) {
-        def path = plugin.class.canonicalName.replaceAll('\\.', '/')
+        def path = plugin.class.canonicalName.replace('.', '/')
         def pattern = ~"^$path/.+\$"
         def result = []
         for (def resource : ClassPath.from(plugin.class.classLoader).resources) {
