@@ -5,7 +5,10 @@ import com.google.inject.Guice
 import com.google.inject.Inject
 import groovy.transform.EqualsAndHashCode
 import org.apache.commons.io.FilenameUtils
+import org.junit.ClassRule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
 
@@ -14,6 +17,9 @@ import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
  *         Date: 07.02.15
  */
 class PluginManagerTest {
+
+    @ClassRule
+    public static TemporaryFolder folder = new TemporaryFolder();
 
     @Test
     void shouldNotFailIfLoadNull() {
@@ -150,7 +156,7 @@ class PluginManagerTest {
         def plugin = new SomePluginWithResources()
         def loader = [loadPlugins: { [plugin] }] as PluginLoader
         def manager = new PluginManager(loader)
-        def writer = new DummyReportWriter()
+        def writer = new DummyReportWriter(folder.newFolder())
         manager.writePluginResources(writer)
 
         assert writer.writtenResources.size() == 1
@@ -167,7 +173,7 @@ class PluginManagerTest {
         def plugin2 = new SomeProcessPlugin()
         def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
         def manager = new PluginManager(loader)
-        def writer = new DummyReportWriter()
+        def writer = new DummyReportWriter(folder.newFolder())
 
         manager.writePluginList(writer)
 
@@ -180,6 +186,28 @@ class PluginManagerTest {
         assert object.contains("somePluginWithResources")
     }
 
+    @Test
+    void shouldWritePluginWidget() {
+        def plugin1 = new SomePluginWithWidget()
+        def plugin2 = new SomeProcessPlugin()
+        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
+        def manager = new PluginManager(loader)
+        def writer = new DummyReportWriter(folder.newFolder())
+
+        manager.writePluginWidgets(writer)
+
+        assert writer.writtenData.size() == 1
+        assert writer.writtenData.containsKey(PluginManager.WIDGETS_JSON)
+
+        def object = writer.writtenData.get(PluginManager.WIDGETS_JSON)
+        assert object instanceof List<Widget>
+        assert object.size() == 1
+
+        def widget = object.iterator().next()
+        assert widget.name == "name"
+        assert widget.type == WidgetType.STATS
+    }
+
     /**
      * Should use mock instead this class, but groovy mocks suck sometimes =(
      */
@@ -187,8 +215,8 @@ class PluginManagerTest {
         Map<String, List<String>> writtenResources = [:].withDefault {[]}
         Map<String, Object> writtenData = [:].withDefault {[]}
 
-        DummyReportWriter() {
-            super(null)
+        DummyReportWriter(File dir) {
+            super(dir)
         }
 
         @Override
@@ -215,6 +243,14 @@ class PluginManagerTest {
         @Override
         protected void configure() {
             bind(SomeInjectable).toInstance(injectable)
+        }
+    }
+
+    class SomePluginWithWidget extends SomeProcessPlugin implements WithWidget {
+
+        @Override
+        Widget getWidget() {
+            return new StatsWidget("name")
         }
     }
 

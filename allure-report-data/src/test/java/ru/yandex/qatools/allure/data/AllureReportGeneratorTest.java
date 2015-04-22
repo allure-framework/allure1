@@ -91,6 +91,7 @@ public class AllureReportGeneratorTest {
         inOrder.verify(pluginManager).prepare(attachment);
         inOrder.verify(pluginManager).writePluginResources(writer);
         inOrder.verify(pluginManager).writePluginList(writer);
+        inOrder.verify(pluginManager).writePluginWidgets(writer);
 
         verifyNoMoreInteractions(pluginManager);
 
@@ -117,6 +118,7 @@ public class AllureReportGeneratorTest {
         assertThat(dataDirectory, contains("defects.json"));
         assertThat(dataDirectory, contains("environment.json"));
         assertThat(dataDirectory, contains("graph.json"));
+        assertThat(dataDirectory, contains(PluginManager.WIDGETS_JSON));
         assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));
 
         assertThat(listAttachmentFiles(dataDirectory), not(empty()));

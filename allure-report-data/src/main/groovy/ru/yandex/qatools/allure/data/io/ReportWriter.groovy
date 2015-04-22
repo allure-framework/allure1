@@ -87,7 +87,7 @@ class ReportWriter {
     }
 
     /**
-     * Copy given URL resource to writer to plugins/${pluginName} folder
+     * Copy given URL resource to writer to plugins/${name} folder
      */
     protected void copyResource(String pluginName, URL resource) {
         def resourceName = FilenameUtils.getName(resource.toString())

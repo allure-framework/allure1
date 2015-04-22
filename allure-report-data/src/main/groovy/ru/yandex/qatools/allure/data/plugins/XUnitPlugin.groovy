@@ -14,7 +14,7 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  *         Date: 06.02.15
  */
 @Plugin.Name("xunit")
-class XUnitPlugin extends TabPlugin {
+class XUnitPlugin extends DefaultTabPlugin {
 
     @Plugin.Data
     def xUnit = new AllureXUnit(time: new Time(start: Long.MAX_VALUE, stop: Long.MIN_VALUE))

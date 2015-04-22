@@ -2,6 +2,7 @@ package ru.yandex.qatools.allure.data.plugins;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.yandex.qatools.allure.data.AllureTestCase;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -17,14 +18,14 @@ import java.util.Set;
  *         Date: 17.04.15
  * @see ProcessPlugin
  */
-public abstract class PluginWithResources<T> implements ProcessPlugin<T> {
+public abstract class DefaultPluginWithResources implements ProcessPlugin<AllureTestCase>, WithResources {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(PluginWithResources.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(DefaultPluginWithResources.class);
 
     /**
      * Plugin name should be always specified
      */
-    private String pluginName = getClass().isAnnotationPresent(Name.class) ?
+    private String name = getClass().isAnnotationPresent(Name.class) ?
             getClass().getAnnotation(Name.class).value() : null;
 
     /**
@@ -62,15 +63,15 @@ public abstract class PluginWithResources<T> implements ProcessPlugin<T> {
 
     /**
      * Get file name for field with {@link Data} annotation. If name
-     * is default then use {@link #pluginName} as file name and <code>.json</code>
+     * is default then use {@link #name} as file name and <code>.json</code>
      * as file extension.
      *
-     * @see #getPluginName()
+     * @see #getName()
      */
     private String getFileName(Field field) {
         String fileName = field.getAnnotation(Data.class).value();
         if ("##default".equals(fileName)) {
-            fileName = getPluginName() + ".json";
+            fileName = getName() + ".json";
         }
         return fileName;
     }
@@ -79,8 +80,9 @@ public abstract class PluginWithResources<T> implements ProcessPlugin<T> {
      * Get name of plugin. Name should be specified in {@link Name}
      * annotation.
      */
-    public String getPluginName() {
-        return pluginName;
+    @Override
+    public String getName() {
+        return name;
     }
 
     /**
@@ -89,7 +91,7 @@ public abstract class PluginWithResources<T> implements ProcessPlugin<T> {
      * annotation. Returns true if given class is valid plugin, false otherwise.
      * Plugin class should not be null.
      */
-    public static boolean isValid(Class<? extends PluginWithResources> pluginClass) {
+    public static boolean isValid(Class<? extends DefaultPluginWithResources> pluginClass) {
         return pluginClass != null && pluginClass.isAnnotationPresent(Name.class) &&
                 checkModifiers(pluginClass) && checkFieldsWithDataAnnotation(pluginClass);
     }
@@ -98,7 +100,7 @@ public abstract class PluginWithResources<T> implements ProcessPlugin<T> {
      * Check given class modifiers. Plugin with resources plugin should not be private or abstract
      * or interface.
      */
-    private static boolean checkModifiers(Class<? extends PluginWithResources> pluginClass) {
+    private static boolean checkModifiers(Class<? extends DefaultPluginWithResources> pluginClass) {
         int modifiers = pluginClass.getModifiers();
         return !Modifier.isAbstract(modifiers) &&
                 !Modifier.isInterface(modifiers) &&
@@ -109,7 +111,7 @@ public abstract class PluginWithResources<T> implements ProcessPlugin<T> {
      * Check fields with {@link Data} annotation. Firstly filter all declared fields
      * and then check it using {@link #shouldHasUniqueValues(List)}
      */
-    private static boolean checkFieldsWithDataAnnotation(Class<? extends PluginWithResources> pluginClass) {
+    private static boolean checkFieldsWithDataAnnotation(Class<? extends DefaultPluginWithResources> pluginClass) {
         List<Field> dataFields = new ArrayList<>();
         for (Field field : pluginClass.getDeclaredFields()) {
             if (field.isAnnotationPresent(Data.class)) {

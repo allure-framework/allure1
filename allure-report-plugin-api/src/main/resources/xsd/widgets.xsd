@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:alr="urn:data.allure.qatools.yandex.ru"
+            targetNamespace="urn:data.allure.qatools.yandex.ru">
+
+    <xsd:include schemaLocation="testcases.xsd"/>
+
+    <xsd:simpleType name="widget-type">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="stats"/>
+            <xsd:enumeration value="list"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <xsd:complexType name="stats-widget-item">
+        <xsd:all>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="statistic" type="alr:statistic"/>
+        </xsd:all>
+    </xsd:complexType>
+
+    <xsd:complexType name="list-widget-item">
+        <xsd:all>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+        </xsd:all>
+    </xsd:complexType>
+</xsd:schema>

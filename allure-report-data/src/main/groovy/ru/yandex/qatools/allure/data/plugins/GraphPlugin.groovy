@@ -9,7 +9,7 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  *         Date: 06.02.15
  */
 @Plugin.Name("graph")
-class GraphPlugin extends TabPlugin {
+class GraphPlugin extends DefaultTabPlugin {
 
     @Plugin.Data
     AllureGraph graph = new AllureGraph();

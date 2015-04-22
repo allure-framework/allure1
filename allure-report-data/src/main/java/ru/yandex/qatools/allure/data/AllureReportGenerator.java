@@ -79,6 +79,7 @@ public class AllureReportGenerator {
 
         pluginManager.writePluginResources(writer);
         pluginManager.writePluginList(writer);
+        pluginManager.writePluginWidgets(writer);
 
         writer.writeReportInfo();
     }

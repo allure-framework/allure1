@@ -18,7 +18,7 @@ import static ru.yandex.qatools.allure.model.Status.FAILED
  *         Date: 06.02.15
  */
 @Plugin.Name("defects")
-class DefectsPlugin extends TabPlugin {
+class DefectsPlugin extends DefaultTabPlugin {
 
     @Plugin.Data
     def defects = new AllureDefects(defectsList: [

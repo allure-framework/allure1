@@ -7,6 +7,7 @@ import ru.yandex.qatools.allure.data.AllureStory
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
+import ru.yandex.qatools.allure.data.StatsWidgetItem
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
 import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
@@ -16,7 +17,7 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
  *         Date: 06.02.15
  */
 @Plugin.Name("behaviors")
-class BehaviorsPlugin extends TabPlugin {
+class BehaviorsPlugin extends DefaultTabPlugin implements WithWidget {
 
     @Plugin.Data
     def behavior = new AllureBehavior();
@@ -81,6 +82,15 @@ class BehaviorsPlugin extends TabPlugin {
                 }
             }
         }
+    }
+
+    @Override
+    Widget getWidget() {
+        def widget = new StatsWidget(name)
+        widget.data = behavior.features.collect {
+            feature -> new StatsWidgetItem(title: feature.title, statistic: feature.statistic)
+        }
+        widget
     }
 
     /**
