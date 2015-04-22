@@ -144,18 +144,18 @@ final class PluginUtils {
 
     static <T> boolean eq(T stats, T other) {
         use(InvokerHelper) {
-            stats.getProperties() == other.getProperties();
+            stats.properties == other.properties;
         }
     }
 
     static def copy(Object from, Object to) {
         use(InvokerHelper) {
-            to.properties = from.properties;
+            to?.properties = from?.properties;
             to;
         }
     }
 
     static <T> T clone(T from) {
-        copy(from, from.class.newInstance());
+        copy(from, from?.class?.newInstance()) as T;
     }
 }

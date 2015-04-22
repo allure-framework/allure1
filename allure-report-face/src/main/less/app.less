@@ -14,6 +14,22 @@
 @import "features";
 @import "xunit";
 
+.preloader {
+  position: absolute;
+  z-index: 1001;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  .alert {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
 .b-page__nav {
   min-width: 850px;
   margin-bottom: 0;

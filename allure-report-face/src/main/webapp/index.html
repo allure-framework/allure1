@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" ng-app="allure">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
@@ -50,19 +50,27 @@
     <script src="js/scrollfix/scrollfix.js"></script>
 
     <script>
-        var allurePlugins = [
-            'defects',
-            'xunit',
-            'behaviors',
-            'graph',
-            'timeline'
-        ];
-        allurePlugins.forEach(function(plugin) {
-            document.write('<script src="plugins/'+plugin+'/script.js"><'+'/script>');
+        //FIXME: Think a bit more about this
+        $.getJSON('data/plugins.json').success(function(allurePlugins) {
+            var requests = allurePlugins.map(function(plugin) {
+                var script = document.createElement('script');
+                script.src = 'plugins/'+plugin+'/script.js';
+                document.body.appendChild(script);
+                var deferred = $.Deferred();
+                $(script).on('load', function() {
+                    deferred.resolve();
+                });
+                return deferred;
+            });
+            $.when.apply($, requests).done(function() {
+                angular.module('allure', ['allure.core'].concat(allurePlugins.map(function(plugin) {
+                    return 'allure.'+plugin;
+                })));
+                angular.bootstrap($('html'), ['allure']);
+            }).then(function() {
+                $(".preloader").hide();
+            });
         });
-        angular.module('allure', ['allure.core'].concat(allurePlugins.map(function(plugin) {
-            return 'allure.'+plugin;
-        })));
     </script>
 </head>
 <body class="b-page">
@@ -90,7 +98,7 @@
                 <div class="b-popup__content">
                     <a ng-repeat="lang in langs" class="feedback_item clickable" data-ng-click="setLang(lang)">{{lang.name}}</a>
                 </div>
-            <div class="b-popup__tail"></div>
+                <div class="b-popup__tail"></div>
             </div>
         </li>
     </div>
@@ -107,16 +115,16 @@
 <div class="loader"></div>
 <div class="dashboard" ng-controller="TabsController">
     <div class="b-vert" ng-class="{'b-vert_collapsed': isCollapsed() }">
-    <ul class="list-unstyled">
-        <li ng-repeat="tab in tabs" class="b-vert__item"
+        <ul class="list-unstyled">
+            <li ng-repeat="tab in tabs" class="b-vert__item"
                 title="{{tab.title | translate}}"
                 ng-class="{'b-vert__item_state_selected': isCurrent(tab.name)}">
-            <a ui-sref="{{tab.name}}" class="b-vert__title">
-                <div class="b-vert__icon" ng-class="tab.icon"></div>
-                {{tab.title | translate}}
-            </a>
-        </li>
-    </ul>
+                <a ui-sref="{{tab.name}}" class="b-vert__title">
+                    <div class="b-vert__icon" ng-class="tab.icon"></div>
+                    {{tab.title | translate}}
+                </a>
+            </li>
+        </ul>
         <div title="{{'index.COLLAPSE' | translate}}" class="b-vert__item b-vert__collapse"  ng-click="toggleCollapsed()">
             <div class="b-vert__title">
                 <div class="b-vert__icon"></div>
@@ -132,6 +140,12 @@
     <p>Message: {{error.status}}</p>
     <hr/>
     <p>Debug: {{error}}</p>
+</div>
+<div class="preloader">
+    <div class="alert alert-info">
+        <span class="fa fa-spinner fa-spin"></span>
+        Loading...
+    </div>
 </div>
 </body>
 </html>

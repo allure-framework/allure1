@@ -4,7 +4,10 @@ import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.google.inject.Inject
 import groovy.transform.EqualsAndHashCode
+import org.apache.commons.io.FilenameUtils
 import org.junit.Test
+import ru.yandex.qatools.allure.data.io.ReportWriter
+import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -132,6 +135,74 @@ class PluginManagerTest {
         plugin.injectable == injectable
     }
 
+    @Test
+    void shouldNotFailIfNullData() {
+        def loader = [loadPlugins: { [new SomeProcessPluginWithNullData()] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        manager.process(new SomeObject())
+        manager.getData(null)
+        assert manager.getData(SomeObject) == [null] as List<PluginData>
+    }
+
+    @Test
+    void shouldCopyPluginResources() {
+        def plugin = new SomePluginWithResources()
+        def loader = [loadPlugins: { [plugin] }] as PluginLoader
+        def manager = new PluginManager(loader)
+        def writer = new DummyReportWriter()
+        manager.writePluginResources(writer)
+
+        assert writer.writtenResources.size() == 1
+
+        def pluginResources = writer.writtenResources["somePluginWithResources"]
+        assert pluginResources
+        assert pluginResources.size() == 2
+        assert pluginResources.containsAll(["a.txt", "b.xml"])
+    }
+
+    @Test
+    void shouldWriteListOfPluginWithResources() {
+        def plugin1 = new SomePluginWithResources()
+        def plugin2 = new SomeProcessPlugin()
+        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
+        def manager = new PluginManager(loader)
+        def writer = new DummyReportWriter()
+
+        manager.writePluginList(writer)
+
+        assert writer.writtenData.size() == 1
+        assert writer.writtenData.containsKey(PluginManager.PLUGINS_JSON)
+
+        def object = writer.writtenData.get(PluginManager.PLUGINS_JSON)
+        assert object instanceof List<String>
+        assert object.size() == 1
+        assert object.contains("somePluginWithResources")
+    }
+
+    /**
+     * Should use mock instead this class, but groovy mocks suck sometimes =(
+     */
+    class DummyReportWriter extends ReportWriter {
+        Map<String, List<String>> writtenResources = [:].withDefault {[]}
+        Map<String, Object> writtenData = [:].withDefault {[]}
+
+        DummyReportWriter() {
+            super(null)
+        }
+
+        @Override
+        void write(PluginData data) {
+            assert !writtenData.containsKey(data.name)
+            writtenData.put(data.name, data.data)
+        }
+
+        @Override
+        void write(String pluginName, URL resource) {
+            writtenResources.get(pluginName).add(FilenameUtils.getName(resource.toString()))
+        }
+    }
+
     @EqualsAndHashCode
     class SomeInjectable {
         String value
@@ -180,6 +251,19 @@ class PluginManagerTest {
         @Override
         List<PluginData> getPluginData() {
             return pluginData
+        }
+    }
+
+    class SomeProcessPluginWithNullData extends SomePlugin implements ProcessPlugin<SomeObject> {
+
+        @Override
+        void process(SomeObject data) {
+            //do nothing
+        }
+
+        @Override
+        List<PluginData> getPluginData() {
+            return null
         }
     }
 

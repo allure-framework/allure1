@@ -8,10 +8,10 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
  */
-class GraphPlugin implements ProcessPlugin<AllureTestCase> {
+@Plugin.Name("graph")
+class GraphPlugin extends TabPlugin {
 
-    public static final String GRAPH_JSON = "graph.json"
-
+    @Plugin.Data
     AllureGraph graph = new AllureGraph();
 
     @Override
@@ -19,15 +19,5 @@ class GraphPlugin implements ProcessPlugin<AllureTestCase> {
         use(PluginUtils) {
             graph.testCases.add(testCase.toInfo());
         }
-    }
-
-    @Override
-    List<PluginData> getPluginData() {
-        return Arrays.asList(new PluginData(GRAPH_JSON, graph));
-    }
-
-    @Override
-    Class<AllureTestCase> getType() {
-        return AllureTestCase;
     }
 }

@@ -10,13 +10,7 @@ import org.mockito.InOrder;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
-import ru.yandex.qatools.allure.data.plugins.BehaviorsPlugin;
-import ru.yandex.qatools.allure.data.plugins.DefectsPlugin;
-import ru.yandex.qatools.allure.data.plugins.EnvironmentPlugin;
-import ru.yandex.qatools.allure.data.plugins.GraphPlugin;
 import ru.yandex.qatools.allure.data.plugins.PluginManager;
-import ru.yandex.qatools.allure.data.plugins.TimelinePlugin;
-import ru.yandex.qatools.allure.data.plugins.XUnitPlugin;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.commons.model.Environment;
 
@@ -95,12 +89,14 @@ public class AllureReportGeneratorTest {
         inOrder.verify(pluginManager).process(environment);
         inOrder.verify(pluginManager).writePluginData(Environment.class, writer);
         inOrder.verify(pluginManager).prepare(attachment);
+        inOrder.verify(pluginManager).writePluginResources(writer);
+        inOrder.verify(pluginManager).writePluginList(writer);
 
         verifyNoMoreInteractions(pluginManager);
 
         verify(writer).write(testCase);
         verify(writer).write(attachment);
-        verify(writer).close();
+        verify(writer).writeReportInfo();
         verifyNoMoreInteractions(writer);
     }
 
@@ -112,15 +108,15 @@ public class AllureReportGeneratorTest {
         assumeTrue("Output directory must be empty ", listBefore != null && listBefore.length == 0);
         generator.generate(outputDirectory);
 
-        File dataDirectory = new File(outputDirectory, AllureReportGenerator.DATA_DIRECTORY_NAME);
+        File dataDirectory = new File(outputDirectory, ReportWriter.DATA_DIRECTORY_NAME);
         assertTrue("Data directory should be created", dataDirectory.exists());
 
-        assertThat(dataDirectory, contains(XUnitPlugin.XUNIT_JSON));
-        assertThat(dataDirectory, contains(TimelinePlugin.TIMELINE_JSON));
-        assertThat(dataDirectory, contains(BehaviorsPlugin.BEHAVIORS_JSON));
-        assertThat(dataDirectory, contains(DefectsPlugin.DEFECTS_JSON));
-        assertThat(dataDirectory, contains(EnvironmentPlugin.ENVIRONMENT_JSON));
-        assertThat(dataDirectory, contains(GraphPlugin.GRAPH_JSON));
+        assertThat(dataDirectory, contains("xunit.json"));
+        assertThat(dataDirectory, contains("timeline.json"));
+        assertThat(dataDirectory, contains("behaviors.json"));
+        assertThat(dataDirectory, contains("defects.json"));
+        assertThat(dataDirectory, contains("environment.json"));
+        assertThat(dataDirectory, contains("graph.json"));
         assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));
 
         assertThat(listAttachmentFiles(dataDirectory), not(empty()));
