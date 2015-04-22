@@ -150,31 +150,56 @@ class PluginManagerTest {
         def plugin = new SomePluginWithResources()
         def loader = [loadPlugins: { [plugin] }] as PluginLoader
         def manager = new PluginManager(loader)
-
         def writer = new DummyReportWriter()
         manager.writePluginResources(writer)
 
-        assert writer.called.size() == 1
+        assert writer.writtenResources.size() == 1
 
-        def pluginResources = writer.called["somePluginWithResources"]
+        def pluginResources = writer.writtenResources["somePluginWithResources"]
         assert pluginResources
         assert pluginResources.size() == 2
         assert pluginResources.containsAll(["a.txt", "b.xml"])
+    }
+
+    @Test
+    void shouldWriteListOfPluginWithResources() {
+        def plugin1 = new SomePluginWithResources()
+        def plugin2 = new SomeProcessPlugin()
+        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
+        def manager = new PluginManager(loader)
+        def writer = new DummyReportWriter()
+
+        manager.writePluginList(writer)
+
+        assert writer.writtenData.size() == 1
+        assert writer.writtenData.containsKey(PluginManager.PLUGINS_JSON)
+
+        def object = writer.writtenData.get(PluginManager.PLUGINS_JSON)
+        assert object instanceof List<String>
+        assert object.size() == 1
+        assert object.contains("somePluginWithResources")
     }
 
     /**
      * Should use mock instead this class, but groovy mocks suck sometimes =(
      */
     class DummyReportWriter extends ReportWriter {
-        Map<String, List<String>> called = [:].withDefault {[]}
+        Map<String, List<String>> writtenResources = [:].withDefault {[]}
+        Map<String, Object> writtenData = [:].withDefault {[]}
 
         DummyReportWriter() {
             super(null)
         }
 
         @Override
+        void write(PluginData data) {
+            assert !writtenData.containsKey(data.name)
+            writtenData.put(data.name, data.data)
+        }
+
+        @Override
         void write(String pluginName, URL resource) {
-            called.get(pluginName).add(FilenameUtils.getName(resource.toString()))
+            writtenResources.get(pluginName).add(FilenameUtils.getName(resource.toString()))
         }
     }
 

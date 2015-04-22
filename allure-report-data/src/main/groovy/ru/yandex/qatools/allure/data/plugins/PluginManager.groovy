@@ -6,8 +6,6 @@ import com.google.inject.Injector
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
-import java.util.regex.Pattern
-
 /**
  * Plugin manager helps you to find plugins and run
  * only plugins you need.
