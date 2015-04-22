@@ -18,9 +18,11 @@ class PluginManager {
 
     public static final String PLUGINS_JSON = "plugins.json"
 
-    protected final Storage<PreparePlugin> preparePlugins;
+    protected final Storage<PreparePlugin> preparePlugins
 
-    protected final Storage<ProcessPlugin> processPlugins;
+    protected final Storage<ProcessPlugin> processPlugins
+
+    protected final List<TabPlugin> tabPlugins
 
     /**
      * Create an instance of plugin manager.
@@ -30,6 +32,7 @@ class PluginManager {
         def plugins = load(loader, injector)
         preparePlugins = new Storage<>(filterByType(plugins, PreparePlugin))
         processPlugins = new Storage<>(filterByType(plugins, ProcessPlugin))
+        tabPlugins = filterByType(processPlugins.values().flatten(), TabPlugin)
     }
 
     /**
@@ -68,27 +71,34 @@ class PluginManager {
     }
 
     /**
+     * Get list of names of tab plugins
+     */
+    List<String> getTabPluginNames() {
+        tabPlugins.collect { plugin ->
+            plugin.pluginName
+        }
+    }
+
+    /**
+     * Write list of tab plugins to {@link #PLUGINS_JSON}
+     */
+    void writePluginList(ReportWriter writer) {
+        writer.write(new PluginData(PLUGINS_JSON, tabPluginNames))
+    }
+
+    /**
      * Write plugin resources. For each plugin search resources using
      * {@link #findPluginResources(ru.yandex.qatools.allure.data.plugins.ProcessPlugin)}
      *
      * @see ReportWriter
      */
     void writePluginResources(ReportWriter writer) {
-        def plugins = processPlugins.values().flatten()
-        def names = []
-
-        plugins.each { plugin ->
-            if (plugin.class.isAnnotationPresent(Plugin.Name)) {
-                def pluginName = plugin.class.getAnnotation(Plugin.Name).value()
-                names.add(pluginName)
-
-                def resources = findPluginResources(plugin)
-                resources.each { resource ->
-                    writer.write(pluginName, resource)
-                }
+        tabPlugins.each { plugin ->
+            def resources = findPluginResources(plugin)
+            resources.each { resource ->
+                writer.write(plugin.pluginName, resource)
             }
         }
-        writer.write(new PluginData(PLUGINS_JSON, names))
     }
 
     /**
@@ -108,12 +118,20 @@ class PluginManager {
     protected static List<Plugin> load(PluginLoader loader, Injector injector) {
         def result = [] as List<Plugin>
         loader.loadPlugins().each {
-            if (it) {
+            if (isValidPlugin(it)) {
                 injector?.injectMembers(it)
                 result.add(it)
             }
         }
         result
+    }
+
+    /**
+     * Some checks for plugins.
+     * @see TabPlugin#isValid(java.lang.Class)
+     */
+    protected static boolean isValidPlugin(Plugin plugin) {
+        return plugin && (plugin instanceof TabPlugin ? TabPlugin.isValid(plugin.class) : true)
     }
 
     /**

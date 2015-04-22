@@ -46,7 +46,9 @@ class ReportWriter {
 
     @SuppressWarnings("GrMethodMayBeStatic")
     void write(Object object) {
-        throw new ReportGenerationException("Can't write object ${object.toString()}")
+        if (object) {
+            throw new ReportGenerationException("Can't write object ${object.toString()}")
+        }
     }
 
     void write(Collection items) {

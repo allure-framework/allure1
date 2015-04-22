@@ -4,11 +4,10 @@ import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.google.inject.Inject
 import groovy.transform.EqualsAndHashCode
-import org.junit.Ignore
+import org.apache.commons.io.FilenameUtils
 import org.junit.Test
-import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.io.ReportWriter
-import ru.yandex.qatools.allure.data.testdata.SomeTabPlugin
+import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -146,15 +145,37 @@ class PluginManagerTest {
         assert manager.getData(SomeObject) == [null] as List<PluginData>
     }
 
-    @Ignore
     @Test
-    void shouldWritePluginResources() {
-        def loader = [loadPlugins: { [new SomeTabPlugin(), new SomeProcessPlugin()] }] as PluginLoader
+    void shouldCopyPluginResources() {
+        def plugin = new SomePluginWithResources()
+        def loader = [loadPlugins: { [plugin] }] as PluginLoader
         def manager = new PluginManager(loader)
 
-        manager.process(new AllureTestCase(name: "my-name"))
-        def writer = [] as ReportWriter
+        def writer = new DummyReportWriter()
         manager.writePluginResources(writer)
+
+        assert writer.called.size() == 1
+
+        def pluginResources = writer.called["somePluginWithResources"]
+        assert pluginResources
+        assert pluginResources.size() == 2
+        assert pluginResources.containsAll(["a.txt", "b.xml"])
+    }
+
+    /**
+     * Should use mock instead this class, but groovy mocks suck sometimes =(
+     */
+    class DummyReportWriter extends ReportWriter {
+        Map<String, List<String>> called = [:].withDefault {[]}
+
+        DummyReportWriter() {
+            super(null)
+        }
+
+        @Override
+        void write(String pluginName, URL resource) {
+            called.get(pluginName).add(FilenameUtils.getName(resource.toString()))
+        }
     }
 
     @EqualsAndHashCode

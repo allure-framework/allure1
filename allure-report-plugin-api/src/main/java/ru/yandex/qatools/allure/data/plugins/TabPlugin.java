@@ -5,8 +5,11 @@ import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.data.AllureTestCase;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Base class for all tab plugins.
@@ -84,5 +87,56 @@ public abstract class TabPlugin implements ProcessPlugin<AllureTestCase> {
      */
     public String getPluginName() {
         return pluginName;
+    }
+
+    /**
+     * Verify plugin class. Tab plugin should not be private, abstract or interface.
+     * Also class should be annotated with {@link Plugin.Name}
+     * annotation. Returns true if given class is valid tab plugin, false otherwise.
+     * Plugin class should not be null.
+     */
+    public static boolean isValid(Class<? extends TabPlugin> pluginClass) {
+        return pluginClass != null && pluginClass.isAnnotationPresent(Name.class) &&
+                checkModifiers(pluginClass) && checkFieldsWithDataAnnotation(pluginClass);
+    }
+
+    /**
+     * Check given class modifiers. Tab plugin should not be private or abstract
+     * or interface.
+     */
+    private static boolean checkModifiers(Class<? extends TabPlugin> pluginClass) {
+        int modifiers = pluginClass.getModifiers();
+        return !Modifier.isAbstract(modifiers) &&
+                !Modifier.isInterface(modifiers) &&
+                !Modifier.isPrivate(modifiers);
+    }
+
+    /**
+     * Check fields with {@link Data} annotation. Firstly filter all declared fields
+     * and then check it using {@link #shouldHasUniqueValues(List)}
+     */
+    private static boolean checkFieldsWithDataAnnotation(Class<? extends TabPlugin> pluginClass) {
+        List<Field> dataFields = new ArrayList<>();
+        for (Field field : pluginClass.getDeclaredFields()) {
+            if (field.isAnnotationPresent(Data.class)) {
+                dataFields.add(field);
+            }
+        }
+        return shouldHasUniqueValues(dataFields);
+    }
+
+    /**
+     * Check that each given field has unique value in {@link Data} annotation.
+     */
+    private static boolean shouldHasUniqueValues(List<Field> dataFields) {
+        Set<String> dataValues = new HashSet<>();
+        for (Field field : dataFields) {
+            String value = field.getAnnotation(Data.class).value();
+            if (dataValues.contains(value)) {
+                return false;
+            }
+            dataValues.add(value);
+        }
+        return true;
     }
 }
