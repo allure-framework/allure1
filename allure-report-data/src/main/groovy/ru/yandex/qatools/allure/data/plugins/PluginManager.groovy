@@ -1,11 +1,12 @@
 package ru.yandex.qatools.allure.data.plugins
 
+import com.google.common.reflect.ClassPath
 import com.google.inject.Inject
 import com.google.inject.Injector
-import net.sf.corn.cps.CPScanner
-import net.sf.corn.cps.ResourceFilter
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.utils.PluginUtils
+
+import java.util.regex.Pattern
 
 /**
  * Plugin manager helps you to find plugins and run
@@ -105,13 +106,18 @@ class PluginManager {
     }
 
     /**
-     * Find all resources for plugin in current thread class loader.
+     * Find all resources for plugin.
      */
     protected static List<URL> findPluginResources(ProcessPlugin plugin) {
-        CPScanner.scanResources(new ResourceFilter()
-                .packageName(plugin.class.canonicalName)
-                .resourceName("*")
-        )
+        def path = plugin.class.canonicalName.replaceAll('\\.', '/')
+        def pattern = ~"^$path/.+\$"
+        def result = []
+        for (def resource : ClassPath.from(plugin.class.classLoader).resources) {
+            if (resource.resourceName =~ pattern) {
+                result.add(resource.url())
+            }
+        }
+        result
     }
 
     /**

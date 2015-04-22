@@ -90,6 +90,7 @@ public class AllureReportGeneratorTest {
         inOrder.verify(pluginManager).writePluginData(Environment.class, writer);
         inOrder.verify(pluginManager).prepare(attachment);
         inOrder.verify(pluginManager).writePluginResources(writer);
+        inOrder.verify(pluginManager).writePluginList(writer);
 
         verifyNoMoreInteractions(pluginManager);
 
