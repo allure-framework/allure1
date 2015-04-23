@@ -22,8 +22,8 @@
 
     <xsd:complexType name="list-widget-item">
         <xsd:all>
-            <xsd:element name="title" type="xsd:string"/>
             <xsd:element name="message" type="xsd:string"/>
+            <xsd:element name="status" type="alr:status"/>
         </xsd:all>
     </xsd:complexType>
 </xsd:schema>

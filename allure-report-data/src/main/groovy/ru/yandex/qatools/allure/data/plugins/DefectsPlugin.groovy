@@ -5,6 +5,7 @@ import ru.yandex.qatools.allure.data.AllureDefect
 import ru.yandex.qatools.allure.data.AllureDefects
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.DefectItem
+import ru.yandex.qatools.allure.data.ListWidgetItem
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 import ru.yandex.qatools.allure.model.Status
 
@@ -12,22 +13,28 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
 import static ru.yandex.qatools.allure.data.utils.TextUtils.getMessageMask
 import static ru.yandex.qatools.allure.model.Status.BROKEN
 import static ru.yandex.qatools.allure.model.Status.FAILED
+import static ru.yandex.qatools.allure.model.Status.PASSED
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
  */
 @Plugin.Name("defects")
-class DefectsPlugin extends DefaultTabPlugin {
+class DefectsPlugin extends DefaultTabPlugin implements WithWidget {
+
+    public static final int DEFECTS_IN_WIDGET = 10
 
     @Plugin.Data
     def defects = new AllureDefects(defectsList: [
             new AllureDefect(title: "Product defects", status: FAILED),
             new AllureDefect(title: "Test defects", status: BROKEN)
-    ]);
+    ])
 
     private Map<Key, DefectItem> defectItems = new HashMap<>()
 
+    /**
+     * Process given test cases and if it failed or broken add it to defects tab.
+     */
     @Override
     void process(AllureTestCase testCase) {
         if (!(testCase.status in [FAILED, BROKEN])) {
@@ -35,9 +42,9 @@ class DefectsPlugin extends DefaultTabPlugin {
         }
         Key key = new Key(uid: getMessageMask(testCase?.failure?.message), status: testCase.status)
         if (!defectItems.containsKey(key)) {
-            DefectItem item = new DefectItem(uid: generateUid(), failure: testCase.failure)
+            def item = new DefectItem(uid: generateUid(), failure: testCase.failure)
             defectItems.put(key, item);
-            defects.defectsList.find { it.status == testCase.status }?.defects?.add(item)
+            getDefect(testCase.status)?.defects?.add(item)
         }
 
         use(PluginUtils) {
@@ -45,6 +52,40 @@ class DefectsPlugin extends DefaultTabPlugin {
         }
     }
 
+    /**
+     * Creates a widget for defects. This widget will contains first {@link #DEFECTS_IN_WIDGET}
+     * defects from {@link #defects}.
+     */
+    @Override
+    Widget getWidget() {
+        def widget = new ListWidget(name)
+        def failed = getDefect(FAILED).defects.take(DEFECTS_IN_WIDGET)
+        def broken = getDefect(BROKEN).defects.take(DEFECTS_IN_WIDGET - failed.size())
+
+        widget.data = []
+        widget.data += failed.collect {
+            new ListWidgetItem(message: it?.failure?.message, status: FAILED)
+        }
+        widget.data += broken.collect {
+            new ListWidgetItem(message: it?.failure?.message, status: BROKEN)
+        }
+        if (widget.data.empty) {
+            widget.data.add(new ListWidgetItem(message: "There are no defects!", status: PASSED))
+        }
+        widget
+    }
+
+    /**
+     * Find defect by given status.
+     */
+    private AllureDefect getDefect(Status status) {
+        defects.defectsList.find { it.status == status }
+    }
+
+    /**
+     * Defect status - uid pair.
+     * @see #defects
+     */
     @EqualsAndHashCode
     class Key {
         Status status;

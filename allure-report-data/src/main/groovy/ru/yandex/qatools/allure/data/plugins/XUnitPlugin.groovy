@@ -6,6 +6,7 @@ import ru.yandex.qatools.allure.data.AllureTestSuite
 import ru.yandex.qatools.allure.data.AllureXUnit
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
+import ru.yandex.qatools.allure.data.StatsWidgetItem
 import ru.yandex.qatools.allure.data.Time
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
@@ -14,7 +15,7 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  *         Date: 06.02.15
  */
 @Plugin.Name("xunit")
-class XUnitPlugin extends DefaultTabPlugin {
+class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
 
     @Plugin.Data
     def xUnit = new AllureXUnit(time: new Time(start: Long.MAX_VALUE, stop: Long.MIN_VALUE))
@@ -50,5 +51,15 @@ class XUnitPlugin extends DefaultTabPlugin {
 
             xUnit.time.update(testCase.time)
         }
+    }
+
+    @Override
+    Widget getWidget() {
+        def widget = new StatsWidget(name)
+        def suites = xUnit.testSuites.take(10)
+        widget.data = suites.collect {
+            new StatsWidgetItem(title: it.title, statistic: it.statistic)
+        }
+        widget
     }
 }
