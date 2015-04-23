@@ -10,6 +10,6 @@ import ru.yandex.qatools.allure.data.WidgetType;
 public class StatsWidget extends DefaultWidget<StatsWidgetItem> {
 
     public StatsWidget(String name) {
-        super(WidgetType.STATS, name);
+        super(WidgetType.TITLE_STATISTICS, name);
     }
 }

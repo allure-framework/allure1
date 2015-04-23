@@ -205,7 +205,7 @@ class PluginManagerTest {
 
         def widget = object.iterator().next()
         assert widget.name == "name"
-        assert widget.type == WidgetType.STATS
+        assert widget.type == WidgetType.TITLE_STATISTICS
     }
 
     /**

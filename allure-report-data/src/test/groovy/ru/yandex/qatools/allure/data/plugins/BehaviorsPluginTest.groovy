@@ -6,6 +6,7 @@ import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestCaseInfo
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
+import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel
@@ -197,5 +198,28 @@ class BehaviorsPluginTest {
     void shouldGetRightDataName() {
         assert plugin.pluginData
         assert plugin.pluginData.name == ["behaviors.json"]
+    }
+
+    @Test
+    void shouldGenerateEmptyWidget() {
+        plugin.widget.name == plugin.name
+        plugin.widget.type == WidgetType.TITLE_STATISTICS
+        def widget = plugin.widget as StatsWidget
+        assert widget.data.empty
+    }
+
+    @Test
+    void shouldGenerateWidget() {
+        for (int i = 0; i < 20; i++) {
+            def testCase = new AllureTestCase(status: FAILED, labels: [createFeatureLabel("feature $i")])
+            plugin.process(testCase)
+        }
+
+        def widget = plugin.widget as StatsWidget
+        assert widget.data.size() == 10
+
+        assert widget.data*.title*.startsWith("feature ")
+        assert widget.data*.statistic*.equals(new Statistic(total: 1, passed: 0, failed: 1,
+                broken: 0, canceled: 0, pending: 0))
     }
 }

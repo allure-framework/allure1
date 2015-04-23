@@ -58,7 +58,7 @@ class DefectsPlugin extends DefaultTabPlugin implements WithWidget {
      */
     @Override
     Widget getWidget() {
-        def widget = new ListWidget(name)
+        def widget = new MessageStatusWidget(name)
         def failed = getDefect(FAILED).defects.take(DEFECTS_IN_WIDGET)
         def broken = getDefect(BROKEN).defects.take(DEFECTS_IN_WIDGET - failed.size())
 

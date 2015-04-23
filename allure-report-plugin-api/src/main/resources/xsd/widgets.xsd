@@ -8,8 +8,8 @@
 
     <xsd:simpleType name="widget-type">
         <xsd:restriction base="xsd:string">
-            <xsd:enumeration value="stats"/>
-            <xsd:enumeration value="list"/>
+            <xsd:enumeration value="title-statistics"/>
+            <xsd:enumeration value="message-status"/>
         </xsd:restriction>
     </xsd:simpleType>
 

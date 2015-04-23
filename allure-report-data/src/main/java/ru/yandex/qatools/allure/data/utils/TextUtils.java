@@ -90,7 +90,7 @@ public final class TextUtils {
     }
 
     public static String getMessageMask(String message) {
-        return message.replaceAll("\\s+", " ");
+        return message == null ? "" : message.replaceAll("\\s+", " ");
     }
     
     public static String getIssueUrl(String name){
