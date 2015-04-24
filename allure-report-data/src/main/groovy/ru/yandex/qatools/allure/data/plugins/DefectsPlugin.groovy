@@ -5,7 +5,7 @@ import ru.yandex.qatools.allure.data.AllureDefect
 import ru.yandex.qatools.allure.data.AllureDefects
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.DefectItem
-import ru.yandex.qatools.allure.data.ListWidgetItem
+import ru.yandex.qatools.allure.data.DefectsWidgetItem
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 import ru.yandex.qatools.allure.model.Status
 
@@ -58,19 +58,19 @@ class DefectsPlugin extends DefaultTabPlugin implements WithWidget {
      */
     @Override
     Widget getWidget() {
-        def widget = new MessageStatusWidget(name)
+        def widget = new DefectsWidget(name)
         def failed = getDefect(FAILED).defects.take(DEFECTS_IN_WIDGET)
         def broken = getDefect(BROKEN).defects.take(DEFECTS_IN_WIDGET - failed.size())
 
         widget.data = []
         widget.data += failed.collect {
-            new ListWidgetItem(message: it?.failure?.message, status: FAILED)
+            new DefectsWidgetItem(message: it?.failure?.message, status: FAILED, count: it.testCases.size())
         }
         widget.data += broken.collect {
-            new ListWidgetItem(message: it?.failure?.message, status: BROKEN)
+            new DefectsWidgetItem(message: it?.failure?.message, status: BROKEN, count: it.testCases.size())
         }
         if (widget.data.empty) {
-            widget.data.add(new ListWidgetItem(message: "There are no defects!", status: PASSED))
+            widget.data.add(new DefectsWidgetItem(message: "There are no defects!", status: PASSED))
         }
         widget
     }

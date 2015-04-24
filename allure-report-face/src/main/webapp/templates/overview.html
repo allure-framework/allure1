@@ -25,26 +25,11 @@
                 <h3>{{widget.name}}</h3>
                 <div ng-switch on="widget.type">
                     <widget-statistics ng-switch-when="TITLE_STATISTICS" data="widget.data"></widget-statistics>
-                    <widget-messages ng-switch-when="MESSAGE_STATUS" data="widget.data"></widget-messages>
+                    <widget-messages ng-switch-when="DEFECTS" data="widget.data"></widget-messages>
                     <widget-key-value ng-switch-when="KEY_VALUE" data="widget.data"></widget-key-value>
                     <div ng-switch-default>Type "{{widget.type}}" not supported for widgets.</div>
                 </div>
             </div>
-
-            <!--<h3>{{'overview.TOP' | translate}}-->
-                <!--<small><a ui-sref="defects">{{'overview.ALL' | translate}}</a></small>-->
-            <!--</h3>-->
-            <!--<h4 class="text-success" ng-show="defects.length == 0">{{'overview.NO_DEFECTS' | translate}}</h4>-->
-            <!--<div ng-repeat="type in defects">-->
-                <!--<h4 class="text-status-{{type.status|lowercase}}">{{type.title | translate}} ({{'overview.STATUS' | translate}}{{type.status | lowercase | translate}})</h4>-->
-                <!--<div class="overview_group">-->
-                        <!--<div class=" list-item clickable" ng-repeat="defect in type.defects" ui-sref="defects.defect({defectUid: defect.uid})">-->
-                            <!--<span class="label label-status-{{type.status|lowercase}}">{{defect.testCases.length}}</span>-->
-                            <!--<span class="text-status-{{type.status|lowercase}}">{{defect.failure.message}}</span>-->
-                        <!--</div>-->
-                    <!--</table>-->
-                <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
 </div>

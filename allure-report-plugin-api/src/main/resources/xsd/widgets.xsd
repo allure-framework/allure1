@@ -9,7 +9,7 @@
     <xsd:simpleType name="widget-type">
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="title-statistics"/>
-            <xsd:enumeration value="message-status"/>
+            <xsd:enumeration value="defects"/>
             <xsd:enumeration value="key-value"/>
         </xsd:restriction>
     </xsd:simpleType>
@@ -21,8 +21,9 @@
         </xsd:all>
     </xsd:complexType>
 
-    <xsd:complexType name="list-widget-item">
+    <xsd:complexType name="defects-widget-item">
         <xsd:all>
+            <xsd:element name="count" type="xsd:int"/>
             <xsd:element name="message" type="xsd:string"/>
             <xsd:element name="status" type="alr:status"/>
         </xsd:all>

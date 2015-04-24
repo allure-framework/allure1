@@ -207,8 +207,8 @@ class DefectsPluginTest {
     @Test
     void shouldGenerateEmptyWidget() {
         plugin.widget.name == plugin.name
-        plugin.widget.type == WidgetType.MESSAGE_STATUS
-        def widget = plugin.widget as MessageStatusWidget
+        plugin.widget.type == WidgetType.DEFECTS
+        def widget = plugin.widget as DefectsWidget
         assert widget.data.size() == 1
         assert widget.data.iterator().next().status == PASSED
     }
@@ -220,7 +220,7 @@ class DefectsPluginTest {
             plugin.process(testCase)
         }
 
-        def widget = plugin.widget as MessageStatusWidget
+        def widget = plugin.widget as DefectsWidget
         assert widget.data.size() == 10
 
         assert widget.data*.message*.startsWith("failure#")
@@ -237,7 +237,7 @@ class DefectsPluginTest {
             plugin.process(testCase)
         }
 
-        def widget = plugin.widget as MessageStatusWidget
+        def widget = plugin.widget as DefectsWidget
         assert widget.data.size() == 10
 
         assert widget.data*.message.take(6)*.startsWith("failure#")

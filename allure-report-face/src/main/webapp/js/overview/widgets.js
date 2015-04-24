@@ -16,7 +16,7 @@ module.directive('widgetStatistics', ['percents', function(percents) {
 module.directive('widgetMessages', [function() {
     return {
         restrict: 'E',
-        templateUrl: 'templates/overview/messages.html',
+        templateUrl: 'templates/overview/defects.html',
         scope: {
             data: '='
         },
