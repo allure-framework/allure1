@@ -1,7 +1,8 @@
 /*global angular:true */
 angular.module('allure.core.controllers', [])
-    .controller('OverviewCtrl', function($scope, orderByFilter, status, percents, overview, defects, testsuites) {
+    .controller('OverviewCtrl', function($scope, orderByFilter, status, percents, overview, defects, testsuites, widgets) {
         "use strict";
+        $scope.widgets = widgets;
         $scope.overview = overview;
         $scope.defects = defects.defectsList.filter(function(defect) {
             return defect.defects && defect.defects.length > 0;
@@ -19,6 +20,7 @@ angular.module('allure.core.controllers', [])
         }, {
             passed: 0, pending: 0, canceled: 0, failed: 0, broken: 0, total: 0
         });
+
         $scope.percents = percents($scope.statistic);
     })
 

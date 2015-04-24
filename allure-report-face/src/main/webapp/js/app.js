@@ -15,6 +15,7 @@
         'allure.core.services',
         'allure.core.directives',
         'allure.core.controllers',
+        'allure.core.widgets',
         'allure.core.table',
         'allure.core.pane',
         'allure.core.scrollfix',
@@ -75,6 +76,9 @@
                     },
                     testsuites: function($http) {
                         return $http.get('data/xunit.json').then(processResponse);
+                    },
+                    widgets: function($http) {
+                        return $http.get('data/widgets.json').then(processResponse);
                     }
                 }
             });

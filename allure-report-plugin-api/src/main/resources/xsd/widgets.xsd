@@ -10,6 +10,7 @@
         <xsd:restriction base="xsd:string">
             <xsd:enumeration value="title-statistics"/>
             <xsd:enumeration value="message-status"/>
+            <xsd:enumeration value="key-value"/>
         </xsd:restriction>
     </xsd:simpleType>
 
@@ -24,6 +25,13 @@
         <xsd:all>
             <xsd:element name="message" type="xsd:string"/>
             <xsd:element name="status" type="alr:status"/>
+        </xsd:all>
+    </xsd:complexType>
+    
+    <xsd:complexType name="key-value-widget-item">
+        <xsd:all>
+            <xsd:element name="key" type="xsd:string"/>
+            <xsd:element name="value" type="xsd:string"/>
         </xsd:all>
     </xsd:complexType>
 </xsd:schema>
