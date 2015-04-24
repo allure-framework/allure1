@@ -19,12 +19,15 @@ class PluginManager {
      * File with this name contains list of plugins with resources.
      */
     public static final String PLUGINS_JSON = "plugins.json"
+    public static final String WIDGETS_JSON = "widgets.json"
 
     protected final Storage<PreparePlugin> preparePlugins
 
     protected final Storage<ProcessPlugin> processPlugins
 
-    protected final List<PluginWithResources> pluginsWithResources
+    protected final List<DefaultPluginWithResources> pluginsWithResources
+
+    protected final List<WithWidget> pluginsWithWidgets
 
     /**
      * Create an instance of plugin manager.
@@ -33,8 +36,11 @@ class PluginManager {
     PluginManager(PluginLoader loader, Injector injector = null) {
         def plugins = load(loader, injector)
         preparePlugins = new Storage<>(filterByType(plugins, PreparePlugin))
-        processPlugins = new Storage<>(filterByType(plugins, ProcessPlugin))
-        pluginsWithResources = filterByType(processPlugins.values().flatten(), PluginWithResources)
+
+        def processors = filterByType(plugins, ProcessPlugin)
+        processPlugins = new Storage<>(processors)
+        pluginsWithResources = filterByType(processors, DefaultPluginWithResources)
+        pluginsWithWidgets = filterByType(processors, WithWidget)
     }
 
     /**
@@ -77,7 +83,7 @@ class PluginManager {
      */
     List<String> getPluginsWithResourcesNames() {
         pluginsWithResources.collect { plugin ->
-            plugin.pluginName
+            plugin.name
         }
     }
 
@@ -86,6 +92,13 @@ class PluginManager {
      */
     void writePluginList(ReportWriter writer) {
         writer.write(new PluginData(PLUGINS_JSON, pluginsWithResourcesNames))
+    }
+
+    /**
+     * Write plugins widgets to {@link #WIDGETS_JSON}
+     */
+    void writePluginWidgets(ReportWriter writer) {
+        writer.write(new PluginData(WIDGETS_JSON, pluginsWithWidgets*.widget))
     }
 
     /**
@@ -98,7 +111,7 @@ class PluginManager {
         pluginsWithResources.each { plugin ->
             def resources = findPluginResources(plugin)
             resources.each { resource ->
-                writer.write(plugin.pluginName, resource)
+                writer.write(plugin.name, resource)
             }
         }
     }
@@ -135,10 +148,10 @@ class PluginManager {
 
     /**
      * Some checks for plugins.
-     * @see PluginWithResources#isValid(java.lang.Class)
+     * @see DefaultPluginWithResources#isValid(java.lang.Class)
      */
     protected static boolean isValidPlugin(Plugin plugin) {
-        return plugin && (plugin instanceof PluginWithResources ? PluginWithResources.isValid(plugin.class) : true)
+        return plugin && (plugin instanceof DefaultPluginWithResources ? DefaultPluginWithResources.isValid(plugin.class) : true)
     }
 
     /**

@@ -12,7 +12,7 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  *         Date: 07.02.15
  */
 @Plugin.Name("timeline")
-class TimelinePlugin extends TabPlugin {
+class TimelinePlugin extends DefaultTabPlugin {
 
     @Plugin.Data
     def timeline = new AllureTimeline()

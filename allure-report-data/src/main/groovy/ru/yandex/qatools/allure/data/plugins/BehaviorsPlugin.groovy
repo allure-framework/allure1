@@ -7,16 +7,23 @@ import ru.yandex.qatools.allure.data.AllureStory
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
+import ru.yandex.qatools.allure.data.StatsWidgetItem
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
 import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
 
 /**
+ * Behaviors plugin add "Behaviors" tab to your report. This tab will
+ * sort your test cases by features and stories.
+ * (see http://en.wikipedia.org/wiki/Behavior-driven_development)
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
  */
 @Plugin.Name("behaviors")
-class BehaviorsPlugin extends TabPlugin {
+class BehaviorsPlugin extends DefaultTabPlugin implements WithWidget {
+
+    public static final int FEATURES_IN_WIDGET = 10
 
     @Plugin.Data
     def behavior = new AllureBehavior();
@@ -81,6 +88,20 @@ class BehaviorsPlugin extends TabPlugin {
                 }
             }
         }
+    }
+
+    /**
+     * Creates a widget from {@link #behavior} data. Takes first {@link #FEATURES_IN_WIDGET}
+     * features and their statistics.
+     */
+    @Override
+    Widget getWidget() {
+        def widget = new StatsWidget(name)
+        def features = behavior.features.take(FEATURES_IN_WIDGET)
+        widget.data = features.collect {
+            feature -> new StatsWidgetItem(title: feature.title, statistic: feature.statistic)
+        }
+        widget
     }
 
     /**

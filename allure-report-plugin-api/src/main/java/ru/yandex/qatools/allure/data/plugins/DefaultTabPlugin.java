@@ -9,7 +9,7 @@ import ru.yandex.qatools.allure.data.AllureTestCase;
  *         Date: 17.04.15
  * @see ProcessPlugin
  */
-public abstract class TabPlugin extends PluginWithResources<AllureTestCase> {
+public abstract class DefaultTabPlugin extends DefaultPluginWithResources {
 
     @Override
     public Class<AllureTestCase> getType() {
