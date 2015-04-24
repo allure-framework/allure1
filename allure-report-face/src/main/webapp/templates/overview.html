@@ -1,18 +1,11 @@
-<div class="b-island tab-content-fill overview" pane-set>
-    <div class="pane_col" pane style="width: 50%">
-
-    </div>
-    <div class="pane_col" pane>
-        <div class="pane_content">
-            <div ng-repeat="widget in widgets">
-                <h3>{{widget.name}}</h3>
-                <div ng-switch on="widget.type">
-                    <widget-statistics ng-switch-when="TITLE_STATISTICS" data="widget.data"></widget-statistics>
-                    <widget-messages ng-switch-when="DEFECTS" data="widget.data"></widget-messages>
-                    <widget-key-value ng-switch-when="KEY_VALUE" data="widget.data"></widget-key-value>
-                    <div ng-switch-default>Type "{{widget.type}}" not supported for widgets.</div>
-                </div>
-            </div>
+<div class="charts">
+    <div ng-repeat="widget in widgets" class="chart b-island widget">
+        <h3 class="widget_title">{{widget.name}}</h3>
+        <div ng-switch on="widget.type">
+            <widget-statistics ng-switch-when="TITLE_STATISTICS" data="widget.data"></widget-statistics>
+            <widget-messages ng-switch-when="DEFECTS" data="widget.data"></widget-messages>
+            <widget-key-value ng-switch-when="KEY_VALUE" data="widget.data"></widget-key-value>
+            <div ng-switch-default>Type "{{widget.type}}" not supported for widgets.</div>
         </div>
     </div>
 </div>
