@@ -2,7 +2,6 @@ package ru.yandex.qatools.allure.data.plugins;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.yandex.qatools.allure.data.AllureTestCase;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -18,19 +17,19 @@ import java.util.Set;
  *         Date: 17.04.15
  * @see ProcessPlugin
  */
-public abstract class DefaultPluginWithResources implements ProcessPlugin<AllureTestCase>, WithResources {
+public abstract class DefaultPluginWithResources implements WithResources, WithData {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(DefaultPluginWithResources.class);
 
     /**
      * Plugin name should be always specified
      */
-    private String name = getClass().isAnnotationPresent(Name.class) ?
-            getClass().getAnnotation(Name.class).value() : null;
+    private String name = getClass().isAnnotationPresent(Plugin.Name.class) ?
+            getClass().getAnnotation(Plugin.Name.class).value() : null;
 
     /**
      * This method creates a {@link PluginData} for each field with
-     * {@link Data} annotation.
+     * {@link Plugin.Data} annotation.
      *
      * @see #getFileName(Field)
      * @see #getFieldValue(Field)
@@ -39,7 +38,7 @@ public abstract class DefaultPluginWithResources implements ProcessPlugin<Allure
     public List<PluginData> getPluginData() {
         List<PluginData> results = new ArrayList<>();
         for (Field field : getClass().getDeclaredFields()) {
-            if (field.isAnnotationPresent(Data.class)) {
+            if (field.isAnnotationPresent(Plugin.Data.class)) {
                 String fileName = getFileName(field);
                 results.add(new PluginData(fileName, getFieldValue(field)));
             }
@@ -48,7 +47,7 @@ public abstract class DefaultPluginWithResources implements ProcessPlugin<Allure
     }
 
     /**
-     * Try to get field value. Field with {@link Data} annotation should
+     * Try to get field value. Field with {@link Plugin.Data} annotation should
      * be accessable.
      */
     private Object getFieldValue(Field field) {
@@ -62,14 +61,14 @@ public abstract class DefaultPluginWithResources implements ProcessPlugin<Allure
     }
 
     /**
-     * Get file name for field with {@link Data} annotation. If name
+     * Get file name for field with {@link Plugin.Data} annotation. If name
      * is default then use {@link #name} as file name and <code>.json</code>
      * as file extension.
      *
      * @see #getName()
      */
     private String getFileName(Field field) {
-        String fileName = field.getAnnotation(Data.class).value();
+        String fileName = field.getAnnotation(Plugin.Data.class).value();
         if ("##default".equals(fileName)) {
             fileName = getName() + ".json";
         }
@@ -77,7 +76,7 @@ public abstract class DefaultPluginWithResources implements ProcessPlugin<Allure
     }
 
     /**
-     * Get name of plugin. Name should be specified in {@link Name}
+     * Get name of plugin. Name should be specified in {@link Plugin.Name}
      * annotation.
      */
     @Override
@@ -87,12 +86,12 @@ public abstract class DefaultPluginWithResources implements ProcessPlugin<Allure
 
     /**
      * Verify plugin class. Plugin with resources plugin should not be private, abstract or interface.
-     * Also class should be annotated with {@link Name}
+     * Also class should be annotated with {@link Plugin.Name}
      * annotation. Returns true if given class is valid plugin, false otherwise.
      * Plugin class should not be null.
      */
     public static boolean isValid(Class<? extends DefaultPluginWithResources> pluginClass) {
-        return pluginClass != null && pluginClass.isAnnotationPresent(Name.class) &&
+        return pluginClass != null && pluginClass.isAnnotationPresent(Plugin.Name.class) &&
                 checkModifiers(pluginClass) && checkFieldsWithDataAnnotation(pluginClass);
     }
 
@@ -108,13 +107,13 @@ public abstract class DefaultPluginWithResources implements ProcessPlugin<Allure
     }
 
     /**
-     * Check fields with {@link Data} annotation. Firstly filter all declared fields
+     * Check fields with {@link Plugin.Data} annotation. Firstly filter all declared fields
      * and then check it using {@link #shouldHasUniqueValues(List)}
      */
     private static boolean checkFieldsWithDataAnnotation(Class<? extends DefaultPluginWithResources> pluginClass) {
         List<Field> dataFields = new ArrayList<>();
         for (Field field : pluginClass.getDeclaredFields()) {
-            if (field.isAnnotationPresent(Data.class)) {
+            if (field.isAnnotationPresent(Plugin.Data.class)) {
                 dataFields.add(field);
             }
         }
@@ -122,12 +121,12 @@ public abstract class DefaultPluginWithResources implements ProcessPlugin<Allure
     }
 
     /**
-     * Check that each given field has unique value in {@link Data} annotation.
+     * Check that each given field has unique value in {@link Plugin.Data} annotation.
      */
     private static boolean shouldHasUniqueValues(List<Field> dataFields) {
         Set<String> dataValues = new HashSet<>();
         for (Field field : dataFields) {
-            String value = field.getAnnotation(Data.class).value();
+            String value = field.getAnnotation(Plugin.Data.class).value();
             if (dataValues.contains(value)) {
                 return false;
             }

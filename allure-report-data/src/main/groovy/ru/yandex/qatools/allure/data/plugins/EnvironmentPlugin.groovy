@@ -7,11 +7,12 @@ import ru.yandex.qatools.commons.model.Environment
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 18.02.15
  */
-class EnvironmentPlugin implements ProcessPlugin<Environment>, WithWidget {
+class EnvironmentPlugin implements ProcessPlugin<Environment>, WithData, WithWidget {
 
     public static final String ENVIRONMENT_JSON = "environment.json"
 
-    Environment environment = new Environment(id: UUID.randomUUID().toString(), name: "Allure Test Pack");
+    Environment environment = new Environment(
+            id: UUID.randomUUID().toString(), name: "Allure Test Pack");
 
     @Override
     void process(Environment data) {
@@ -35,7 +36,9 @@ class EnvironmentPlugin implements ProcessPlugin<Environment>, WithWidget {
     @Override
     Widget getWidget() {
         def widget = new KeyValueWidget("environment")
-        widget.data = environment.parameter.take(10).collect { new KeyValueWidgetItem(key: it.key, value: it.value)}
+        widget.data = environment.parameter.take(10).collect {
+            new KeyValueWidgetItem(key: it.key, value: it.value)
+        }
         widget
     }
 }

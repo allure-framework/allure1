@@ -274,7 +274,7 @@ class PluginManagerTest {
         }
     }
 
-    class SomeProcessPlugin extends SomePlugin implements ProcessPlugin<SomeObject> {
+    class SomeProcessPlugin extends SomePlugin implements ProcessPlugin<SomeObject>, WithData {
         def suffix = "_SUFFIX"
         List<PluginData> pluginData = []
 
@@ -290,7 +290,7 @@ class PluginManagerTest {
         }
     }
 
-    class SomeProcessPluginWithNullData extends SomePlugin implements ProcessPlugin<SomeObject> {
+    class SomeProcessPluginWithNullData extends SomePlugin implements ProcessPlugin<SomeObject>, WithData {
 
         @Override
         void process(SomeObject data) {
