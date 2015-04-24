@@ -54,27 +54,41 @@
     <script src="js/scrollfix/scrollfix.js"></script>
 
     <script>
-        //FIXME: Think a bit more about this
-        $.getJSON('data/plugins.json').success(function(allurePlugins) {
-            var requests = allurePlugins.map(function(plugin) {
-                var script = document.createElement('script');
-                script.src = 'plugins/'+plugin+'/script.js';
-                document.body.appendChild(script);
-                var deferred = $.Deferred();
-                $(script).on('load', function() {
-                    deferred.resolve();
+        (function() {
+            function onLoad(error) {
+                $('.preloader').hide();
+                if(error) {
+                    $('.error-message [ng-bind="error|json"]').html(error);
+                }
+            }
+            window.onerror = onLoad;
+            $.getJSON('data/plugins.json').then(function(allurePlugins) {
+                var requests = allurePlugins.map(function(plugin) {
+                    var script = document.createElement('script');
+                    script.src = 'plugins/'+plugin+'/script.js';
+                    document.body.appendChild(script);
+                    var deferred = $.Deferred(),
+                        onError = window.onerror;
+                    window.onerror = function(e) {
+                        onError(e);
+                        deferred.reject();
+                    };
+                    $(script).on('load', deferred.resolve)
+                        .on('error', deferred.reject);
+                    return deferred;
                 });
-                return deferred;
-            });
-            $.when.apply($, requests).done(function() {
-                angular.module('allure', ['allure.core'].concat(allurePlugins.map(function(plugin) {
-                    return 'allure.'+plugin;
-                })));
-                angular.bootstrap($('html'), ['allure']);
+                return $.when.apply($, requests).then(function() {
+                    angular.module('allure', ['allure.core'].concat(allurePlugins.map(function(plugin) {
+                        return 'allure.'+plugin;
+                    })));
+                    angular.bootstrap($('html'), ['allure']);
+                })
             }).then(function() {
-                $(".preloader").hide();
+                onLoad();
+            }, function(error) {
+                onLoad(error)
             });
-        });
+        })();
     </script>
 </head>
 <body class="b-page">
@@ -143,7 +157,7 @@
     </p>
     <p>Message: {{error.status}}</p>
     <hr/>
-    <p>Debug: {{error}}</p>
+    <p>Debug: <span class="long-line" ng-bind="error|json"></span></p>
 </div>
 <div class="preloader">
     <div class="alert alert-info">
