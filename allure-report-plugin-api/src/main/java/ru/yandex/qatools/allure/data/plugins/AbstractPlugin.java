@@ -65,7 +65,7 @@ public abstract class AbstractPlugin implements WithResources, WithData, WithPri
 
     /**
      * Try to get field value. Field with {@link Plugin.Data} annotation should
-     * be accessable.
+     * be accessible.
      */
     private Object getFieldValue(Field field) {
         try {
