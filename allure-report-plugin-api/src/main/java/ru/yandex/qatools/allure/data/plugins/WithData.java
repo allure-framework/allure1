@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 24.04.15
- * @see DefaultPluginWithResources
+ * @see AbstractPlugin
  */
 public interface WithData {
 

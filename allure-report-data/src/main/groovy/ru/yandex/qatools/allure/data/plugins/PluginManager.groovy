@@ -167,11 +167,11 @@ class PluginManager {
 
     /**
      * Some checks for plugins.
-     * @see DefaultPluginWithResources#isValid(java.lang.Class)
+     * @see AbstractPlugin#isValid(java.lang.Class)
      */
     protected static boolean isValidPlugin(Plugin plugin) {
-        return plugin && (plugin instanceof DefaultPluginWithResources ?
-                DefaultPluginWithResources.isValid(plugin.class) : true)
+        return plugin && (plugin instanceof AbstractPlugin ?
+                AbstractPlugin.isValid(plugin.class) : true)
     }
 
     /**

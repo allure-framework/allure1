@@ -31,6 +31,17 @@ public interface Plugin<T> {
     }
 
     /**
+     * Using this annotation you can specify plugin priority. Plugins with higher
+     * priority will be processed first.
+     */
+    @Target({ElementType.TYPE})
+    @Retention(RetentionPolicy.RUNTIME)
+    @interface Priority {
+
+        int value();
+    }
+
+    /**
      * This annotation helps you to specify fields with data for plugin.
      */
     @Target({ElementType.FIELD})

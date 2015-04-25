@@ -17,15 +17,32 @@ import java.util.Set;
  *         Date: 17.04.15
  * @see ProcessPlugin
  */
-public abstract class DefaultPluginWithResources implements WithResources, WithData {
+public abstract class AbstractPlugin implements WithResources, WithData, WithPriority {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(DefaultPluginWithResources.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(AbstractPlugin.class);
 
-    /**
-     * Plugin name should be always specified
-     */
     private String name = getClass().isAnnotationPresent(Plugin.Name.class) ?
             getClass().getAnnotation(Plugin.Name.class).value() : null;
+
+    private int priority = getClass().isAnnotationPresent(Plugin.Priority.class) ?
+            getClass().getAnnotation(Plugin.Priority.class).value() : 0;
+
+    /**
+     * Get name of plugin. Name should be specified in {@link Plugin.Name}
+     * annotation.
+     */
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Get plugin priority. Plugins with higher priority will be processed firstly.
+     */
+    @Override
+    public int getPriority() {
+        return priority;
+    }
 
     /**
      * This method creates a {@link PluginData} for each field with
@@ -62,7 +79,7 @@ public abstract class DefaultPluginWithResources implements WithResources, WithD
 
     /**
      * Get file name for field with {@link Plugin.Data} annotation. If name
-     * is default then use {@link #name} as file name and <code>.json</code>
+     * is default then use {@link #name} as file name and <code>json</code>
      * as file extension.
      *
      * @see #getName()
@@ -76,21 +93,12 @@ public abstract class DefaultPluginWithResources implements WithResources, WithD
     }
 
     /**
-     * Get name of plugin. Name should be specified in {@link Plugin.Name}
-     * annotation.
-     */
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    /**
      * Verify plugin class. Plugin with resources plugin should not be private, abstract or interface.
      * Also class should be annotated with {@link Plugin.Name}
      * annotation. Returns true if given class is valid plugin, false otherwise.
      * Plugin class should not be null.
      */
-    public static boolean isValid(Class<? extends DefaultPluginWithResources> pluginClass) {
+    public static boolean isValid(Class<? extends AbstractPlugin> pluginClass) {
         return pluginClass != null && pluginClass.isAnnotationPresent(Plugin.Name.class) &&
                 checkModifiers(pluginClass) && checkFieldsWithDataAnnotation(pluginClass);
     }
@@ -99,7 +107,7 @@ public abstract class DefaultPluginWithResources implements WithResources, WithD
      * Check given class modifiers. Plugin with resources plugin should not be private or abstract
      * or interface.
      */
-    private static boolean checkModifiers(Class<? extends DefaultPluginWithResources> pluginClass) {
+    private static boolean checkModifiers(Class<? extends AbstractPlugin> pluginClass) {
         int modifiers = pluginClass.getModifiers();
         return !Modifier.isAbstract(modifiers) &&
                 !Modifier.isInterface(modifiers) &&
@@ -110,7 +118,7 @@ public abstract class DefaultPluginWithResources implements WithResources, WithD
      * Check fields with {@link Plugin.Data} annotation. Firstly filter all declared fields
      * and then check it using {@link #shouldHasUniqueValues(List)}
      */
-    private static boolean checkFieldsWithDataAnnotation(Class<? extends DefaultPluginWithResources> pluginClass) {
+    private static boolean checkFieldsWithDataAnnotation(Class<? extends AbstractPlugin> pluginClass) {
         List<Field> dataFields = new ArrayList<>();
         for (Field field : pluginClass.getDeclaredFields()) {
             if (field.isAnnotationPresent(Plugin.Data.class)) {
