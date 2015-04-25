@@ -21,6 +21,8 @@ class PluginManagerTest {
     @ClassRule
     public static TemporaryFolder folder = new TemporaryFolder();
 
+    def writer = new DummyReportWriter(folder.newFolder())
+
     @Test
     void shouldNotFailIfLoadNull() {
         def loader = [loadPlugins: { null }] as PluginLoader
@@ -34,7 +36,6 @@ class PluginManagerTest {
 
         manager.prepare(null)
         manager.process(null)
-        manager.getData(null);
     }
 
     @Test
@@ -44,7 +45,6 @@ class PluginManagerTest {
 
         manager.prepare(new Object())
         manager.process(new ArrayList())
-        manager.getData(Integer);
     }
 
     @Test
@@ -54,7 +54,8 @@ class PluginManagerTest {
 
         manager.prepare(new Object())
         manager.process(new ArrayList())
-        manager.getData(Integer);
+
+        assert manager.pluginsData == [] as List<PluginData>
     }
 
     @Test
@@ -112,7 +113,7 @@ class PluginManagerTest {
         def object2 = new SomeObject(someValue: "object2")
         manager.process(object2)
 
-        def data = manager.getData(SomeObject)
+        def data = manager.pluginsData
         assert data
         assert data.size() == 4
         assert data.collect { item -> (item.data as SomeObject).someValue }.containsAll([
@@ -147,8 +148,7 @@ class PluginManagerTest {
         def manager = new PluginManager(loader)
 
         manager.process(new SomeObject())
-        manager.getData(null)
-        assert manager.getData(SomeObject) == [null] as List<PluginData>
+        assert manager.pluginsData  == [null] as List<PluginData>
     }
 
     @Test
@@ -156,7 +156,6 @@ class PluginManagerTest {
         def plugin = new SomePluginWithResources()
         def loader = [loadPlugins: { [plugin] }] as PluginLoader
         def manager = new PluginManager(loader)
-        def writer = new DummyReportWriter(folder.newFolder())
         manager.writePluginResources(writer)
 
         assert writer.writtenResources.size() == 1
@@ -173,7 +172,6 @@ class PluginManagerTest {
         def plugin2 = new SomeProcessPlugin()
         def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
         def manager = new PluginManager(loader)
-        def writer = new DummyReportWriter(folder.newFolder())
 
         manager.writePluginList(writer)
 
@@ -192,7 +190,6 @@ class PluginManagerTest {
         def plugin2 = new SomeProcessPlugin()
         def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
         def manager = new PluginManager(loader)
-        def writer = new DummyReportWriter(folder.newFolder())
 
         manager.writePluginWidgets(writer)
 

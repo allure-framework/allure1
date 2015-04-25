@@ -84,11 +84,10 @@ public class AllureReportGeneratorTest {
         inOrder.verify(pluginManager).prepare(result);
         inOrder.verify(pluginManager).prepare(testCase);
         inOrder.verify(pluginManager).process(testCase);
-        inOrder.verify(pluginManager).writePluginData(AllureTestCase.class, writer);
         inOrder.verify(pluginManager).prepare(environment);
         inOrder.verify(pluginManager).process(environment);
-        inOrder.verify(pluginManager).writePluginData(Environment.class, writer);
         inOrder.verify(pluginManager).prepare(attachment);
+        inOrder.verify(pluginManager).writePluginData(writer);
         inOrder.verify(pluginManager).writePluginResources(writer);
         inOrder.verify(pluginManager).writePluginList(writer);
         inOrder.verify(pluginManager).writePluginWidgets(writer);

@@ -63,20 +63,17 @@ public class AllureReportGenerator {
             writer.write(testCase);
         }
 
-        pluginManager.writePluginData(AllureTestCase.class, writer);
-
         for (Environment environment : environmentReader) {
             pluginManager.prepare(environment);
             pluginManager.process(environment);
         }
-
-        pluginManager.writePluginData(Environment.class, writer);
 
         for (AttachmentInfo attachment : attachmentReader) {
             pluginManager.prepare(attachment);
             writer.write(attachment);
         }
 
+        pluginManager.writePluginData(writer);
         pluginManager.writePluginResources(writer);
         pluginManager.writePluginList(writer);
         pluginManager.writePluginWidgets(writer);
