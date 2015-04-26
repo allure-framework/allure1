@@ -205,6 +205,29 @@ class PluginManagerTest {
         assert widget.type == WidgetType.TITLE_STATISTICS
     }
 
+    @Test
+    void shouldProcessPluginsByPriority() {
+        def loader = [loadPlugins: { [
+                new SomeProcessPlugin(suffix: "without_lexSecond"),
+                new SomeOtherProcessPlugin(suffix: "without_lexFirst"),
+                new SomePluginWithLowPriority(suffix: "with_low"),
+                new SomePluginWithHighPriority(suffix: "with_high")
+        ] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        manager.process(new SomeObject(someValue: "value_"))
+
+        def data = manager.pluginsData
+        assert data
+        assert data.size() == 4
+        assert data.collect {(it.data as SomeObject).someValue} == [
+            "value_with_high",
+            "value_with_low",
+            "value_without_lexFirst",
+            "value_without_lexSecond"
+        ]
+    }
+
     /**
      * Should use mock instead this class, but groovy mocks suck sometimes =(
      */
@@ -241,6 +264,25 @@ class PluginManagerTest {
         protected void configure() {
             bind(SomeInjectable).toInstance(injectable)
         }
+    }
+
+    class SomePluginWithHighPriority extends SomeProcessPlugin implements WithPriority {
+
+        @Override
+        int getPriority() {
+            return 100
+        }
+    }
+
+    class SomePluginWithLowPriority extends SomeProcessPlugin implements WithPriority {
+
+        @Override
+        int getPriority() {
+            return 10
+        }
+    }
+
+    class SomeOtherProcessPlugin extends SomeProcessPlugin {
     }
 
     class SomePluginWithWidget extends SomeProcessPlugin implements WithWidget {

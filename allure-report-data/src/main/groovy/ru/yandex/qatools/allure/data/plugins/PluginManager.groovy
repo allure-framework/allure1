@@ -162,7 +162,18 @@ class PluginManager {
                 result.add(it)
             }
         }
-        result
+        result.sort(false, { first, second ->
+            getPriority(second as Plugin) <=> getPriority(first as Plugin) ?:
+                    first.class.simpleName <=> second.class.simpleName
+        })
+    }
+
+    /**
+     * Get priority of given plugin.
+     * @see WithPriority
+     */
+    protected static int getPriority(Plugin plugin) {
+        plugin instanceof WithPriority ? (plugin as WithPriority).priority : 0
     }
 
     /**
