@@ -12,6 +12,7 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  *         Date: 07.02.15
  */
 @Plugin.Name("timeline")
+@Plugin.Priority(200)
 class TimelinePlugin extends DefaultTabPlugin {
 
     @Plugin.Data

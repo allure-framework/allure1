@@ -150,7 +150,9 @@ class PluginManager {
 
     /**
      * Load all plugins using given {@link PluginLoader} then remove all null plugins
-     * and finally inject members to each plugin in case not null injector
+     * and finally inject members to each plugin in case not null injector. Plugins
+     * returned in order by priority. Plugins with higher priority will be first,
+     * if some plugins have equals priority then they will be ordered alphabetically.
      */
     protected static List<Plugin> load(PluginLoader loader, Injector injector) {
         def result = [] as List<Plugin>
