@@ -15,7 +15,7 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  *         Date: 06.02.15
  */
 @Plugin.Name("xunit")
-@Plugin.Priority(400)
+@Plugin.Priority(500)
 class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
 
     @Plugin.Data

@@ -20,7 +20,7 @@ import static ru.yandex.qatools.allure.model.Status.PASSED
  *         Date: 06.02.15
  */
 @Plugin.Name("defects")
-@Plugin.Priority(500)
+@Plugin.Priority(600)
 class DefectsPlugin extends DefaultTabPlugin implements WithWidget {
 
     public static final int DEFECTS_IN_WIDGET = 10

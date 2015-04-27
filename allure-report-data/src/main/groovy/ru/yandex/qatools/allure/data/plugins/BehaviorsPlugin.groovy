@@ -21,7 +21,7 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
  *         Date: 06.02.15
  */
 @Plugin.Name("behaviors")
-@Plugin.Priority(300)
+@Plugin.Priority(400)
 class BehaviorsPlugin extends DefaultTabPlugin implements WithWidget {
 
     public static final int FEATURES_IN_WIDGET = 10
