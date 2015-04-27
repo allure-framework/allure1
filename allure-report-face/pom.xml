@@ -112,6 +112,11 @@
                                     <artifactId>highlightjs</artifactId>
                                     <version>8.2-1</version>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.webjars.bower</groupId>
+                                    <artifactId>Sortable</artifactId>
+                                    <version>1.2.0</version>
+                                </artifactItem>
                             </artifactItems>
                         </configuration>
                     </execution>
@@ -167,6 +172,8 @@
                                 <include>webjars/angular-translate-interpolation-messageformat/0.1.2/angular-translate-interpolation-messageformat.js</include>
                                 <include>webjars/highlightjs/8.2-1/highlight.min.js</include>
                                 <include>webjars/font-awesome/4.2.0/fonts/**</include>
+                                <include>webjars/Sortable/1.2.0/ng-sortable.js</include>
+                                <include>webjars/Sortable/1.2.0/Sortable.min.js</include>
                             </includes>
                             <directory>${project.build.directory}/webjars/META-INF/resources</directory>
                             <filtering>false</filtering>

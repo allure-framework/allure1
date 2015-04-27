@@ -1,8 +1,7 @@
 /*global angular:true */
 angular.module('allure.core.controllers', [])
-    .controller('OverviewCtrl', function($scope, orderByFilter, status, percents, overview, defects, testsuites, widgets) {
+    .controller('OverviewCtrl', function($scope, $storage, orderByFilter, status, percents, overview, defects, testsuites, widgets) {
         "use strict";
-        $scope.widgets = widgets;
         $scope.overview = overview;
         $scope.defects = defects.defectsList.filter(function(defect) {
             return defect.defects && defect.defects.length > 0;
@@ -22,6 +21,35 @@ angular.module('allure.core.controllers', [])
         });
 
         $scope.percents = percents($scope.statistic);
+        //var storageKey = crc32(widgets);
+        var store = $storage('widgets'),
+            storedWidgets = store.getItem('widgets') || widgets.reduce(function(all, widget, index) {
+            all[index % 2].push(widget.name);
+            return all;
+        }, [[], []]);
+
+        $scope.widgets = storedWidgets.map(function(col) {
+            return col.map(function(widgetName) {
+                return widgets.filter(function(widget) {
+                    return widget.name === widgetName;
+                })[0];
+            })
+        });
+
+        $scope.onSort = function() {
+            store.setItem('widgets', $scope.widgets.map(function(col) {
+                return col.map(function(widget) {
+                    return widget.name;
+                });
+            }));
+        };
+
+        $scope.sortableConfig = {
+            group: 'widgets',
+            handle: ".widget_handle",
+            ghostClass: "widget-dragged",
+            onEnd: $scope.onSort
+        };
     })
 
     .controller('NavbarCtrl', function($scope, $window, $http, $storage, $translate) {

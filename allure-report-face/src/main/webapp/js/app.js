@@ -6,6 +6,7 @@
         'pascalprecht.translate',
         'angular-loading-bar',
         'ngAnimate',
+        'ng-sortable',
         'ui.bootstrap',
         'localStorageModule',
         'ui.router',
