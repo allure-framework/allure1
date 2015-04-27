@@ -21,8 +21,8 @@ angular.module('allure.core.controllers', [])
         });
 
         $scope.percents = percents($scope.statistic);
-        //var storageKey = crc32(widgets);
-        var store = $storage('widgets'),
+        
+        var store = $storage('allure-widgets'),
             storedWidgets = store.getItem('widgets') || widgets.reduce(function(all, widget, index) {
             all[index % 2].push(widget.name);
             return all;
