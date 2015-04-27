@@ -9,6 +9,7 @@ import org.junit.ClassRule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import ru.yandex.qatools.allure.data.WidgetType
+import ru.yandex.qatools.allure.data.Widgets
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
 
@@ -197,10 +198,14 @@ class PluginManagerTest {
         assert writer.writtenData.containsKey(PluginManager.WIDGETS_JSON)
 
         def object = writer.writtenData.get(PluginManager.WIDGETS_JSON)
-        assert object instanceof List<Widget>
-        assert object.size() == 1
 
-        def widget = object.iterator().next()
+        assert object instanceof Widgets
+        assert object.hash instanceof String
+        assert !object.hash.empty
+        assert object.data instanceof List<Widget>
+        assert object.data.size() == 1
+
+        def widget = object.data.iterator().next()
         assert widget.name == "name"
         assert widget.type == WidgetType.TITLE_STATISTICS
     }

@@ -3,15 +3,15 @@ angular.module('allure.core.controllers', [])
     .controller('OverviewCtrl', function($scope, $storage, widgets) {
         "use strict";
 
-        var store = $storage('allure-widgets'),
-            storedWidgets = store.getItem('widgets') || widgets.reduce(function(all, widget, index) {
+        var store = $storage('allure-widgets-' + widgets.hash),
+            storedWidgets = store.getItem('widgets') || widgets.data.reduce(function(all, widget, index) {
             all[index % 2].push(widget.name);
             return all;
         }, [[], []]);
 
         $scope.widgets = storedWidgets.map(function(col) {
             return col.map(function(widgetName) {
-                return widgets.filter(function(widget) {
+                return widgets.data.filter(function(widget) {
                     return widget.name === widgetName;
                 })[0];
             })

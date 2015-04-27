@@ -1,11 +1,15 @@
 package ru.yandex.qatools.allure.data.plugins
 
+import com.google.common.hash.Hashing
 import com.google.common.reflect.ClassPath
 import com.google.inject.Inject
 import com.google.inject.Injector
 import groovy.transform.CompileStatic
+import ru.yandex.qatools.allure.data.Widgets
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.utils.PluginUtils
+
+import java.nio.charset.StandardCharsets
 
 /**
  * Plugin manager helps you to find plugins and run
@@ -106,7 +110,10 @@ class PluginManager {
      * @see ReportWriter
      */
     void writePluginWidgets(ReportWriter writer) {
-        writer.write(new PluginData(WIDGETS_JSON, widgets))
+        def widgets = widgets
+        def widgetNames = widgets.collect { it.name }.sort().join("")
+        def hash = Hashing.sha1().hashString(widgetNames, StandardCharsets.UTF_8).toString()
+        writer.write(new PluginData(WIDGETS_JSON, new Widgets(hash: hash, data: widgets)))
     }
 
     /**
