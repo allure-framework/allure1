@@ -1,6 +1,6 @@
 # Allure
 
-[![release](http://github-release-version.herokuapp.com/github/allure-framework/allure-core/release.svg?style=flat)](https://github.com/allure-framework/allure-core/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core) [![build](https://img.shields.io/teamcity/http/teamcity.qatools.ru/s/allure_core_master_deploy.svg?style=flat)](http://teamcity.qatools.ru/viewType.html?buildTypeId=allure_core_master_deploy&guest=1)
+[![release](http://github-release-version.herokuapp.com/github/allure-framework/allure-core/release.svg?style=flat)](https://github.com/allure-framework/allure-core/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core) [![build](https://img.shields.io/jenkins/s/http/ci.qatools.ru/allure-core_master-deploy.svg?style=flat)](http://ci.qatools.ru/job/allure-core_master-deploy/lastBuild/)
 [![covarage](https://img.shields.io/sonar/http/sonar.qatools.ru/ru.yandex.qatools.allure:allure-core/coverage.svg?style=flat)](http://sonar.qatools.ru/dashboard/index/210)
 
 ![image](https://raw.github.com/allure-framework/allure-core/master/allure-dashboard.png)
@@ -12,11 +12,11 @@ Currently Allure Framework is widely used in internal testing of [Yandex](http:/
 
 ## Getting Started
 
-* [An example report](http://teamcity.qatools.ru/repository/download/allure_core_master_release/lastSuccessful/index.html#/home)
+* [An example report](http://ci.qatools.ru/job/allure-core_master-deploy/lastSuccessfulBuild/artifact/allure-report-preview/target/allure-report/index.html#/)
 * [Documentation](https://github.com/allure-framework/allure-core/wiki)
 * [Examples](https://github.com/allure-examples)
 * [Issue Tracking](https://github.com/allure-framework/allure-core/issues?labels=&milestone=&page=1&state=open)
-* [CI](http://teamcity.qatools.ru/)
+* [CI](http://ci.qatools.ru/)
 * [Releases and Changelog](https://github.com/allure-framework/allure-core/releases)
 
 ## Contact us
