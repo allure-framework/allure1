@@ -22,8 +22,20 @@ public class AddParameterEvent extends AbstractTestCaseAddParameterEvent {
      * @param value of parameter to add
      */
     public AddParameterEvent(String name, String value) {
+        this(name, value, ParameterKind.ENVIRONMENT_VARIABLE);
+    }
+
+    /**
+     * Constructs an new event with specified name and value
+     *
+     * @param name  of parameter to add
+     * @param value of parameter to add
+     * @param kind of parameter to add
+     */
+    public AddParameterEvent(String name, String value, ParameterKind kind) {
         setName(name);
         setValue(value);
+        setKind(kind.name());
     }
 
     /**
@@ -36,7 +48,7 @@ public class AddParameterEvent extends AbstractTestCaseAddParameterEvent {
         context.getParameters().add(new Parameter()
                         .withName(getName())
                         .withValue(getValue())
-                        .withKind(ParameterKind.ENVIRONMENT_VARIABLE)
+                        .withKind(ParameterKind.valueOf(getKind()))
         );
     }
 }
