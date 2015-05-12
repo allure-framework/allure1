@@ -1,4 +1,4 @@
-package ru.yandex.qatools.allure.data.utils;
+package ru.yandex.qatools.allure.commons;
 
 import java.io.FilterReader;
 import java.io.IOException;

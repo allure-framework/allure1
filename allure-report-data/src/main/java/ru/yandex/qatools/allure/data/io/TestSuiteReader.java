@@ -4,16 +4,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.commons.AllureFileUtils;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
-import ru.yandex.qatools.allure.data.utils.BadXmlCharacterFilterReader;
 
 import javax.inject.Inject;
-import javax.xml.bind.JAXB;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
 import java.util.Iterator;
+
+import static ru.yandex.qatools.allure.commons.AllureFileUtils.unmarshal;
 
 /**
  * eroshenkoam
@@ -48,10 +45,9 @@ public class TestSuiteReader implements Reader<TestSuiteResult> {
             }
             File next = testSuiteResultFiles.next();
             try {
-                java.io.Reader reader = new InputStreamReader(new FileInputStream(next), StandardCharsets.UTF_8);
-                return JAXB.unmarshal(new BadXmlCharacterFilterReader(reader), TestSuiteResult.class);
-            } catch (FileNotFoundException e) {
-                LOGGER.warn("Could not read testsuite.xml file", e);
+                return unmarshal(next);
+            } catch (IOException e) {
+                LOGGER.warn(String.format("Could not read <%s> file", next.getAbsoluteFile()), e);
                 return next();
             }
         }
