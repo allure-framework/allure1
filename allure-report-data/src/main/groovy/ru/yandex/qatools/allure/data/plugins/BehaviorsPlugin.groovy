@@ -101,7 +101,7 @@ class BehaviorsPlugin extends DefaultTabPlugin implements WithWidget {
         def features = behavior.features.take(FEATURES_IN_WIDGET)
         widget.data = features.collect {
             feature -> new StatsWidgetItem(title: feature.title, statistic: feature.statistic)
-        }
+        }.sort { it.title }
         widget
     }
 

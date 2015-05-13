@@ -34,7 +34,7 @@ class EnvironmentPlugin extends AbstractPlugin implements ProcessPlugin<Environm
         def widget = new KeyValueWidget(name)
         widget.data = environment.parameter.take(10).collect {
             new KeyValueWidgetItem(key: it.key, value: it.value)
-        }
+        }.sort { it.key }
         widget
     }
 }
