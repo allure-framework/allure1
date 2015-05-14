@@ -70,6 +70,10 @@ angular.module('allure.core.testcase.controllers', ['d3'])
 
         findFailedStep($scope.testcase);
 
+        $scope.testcaseArguments = testcase.parameters ? testcase.parameters.filter(function (el) {
+            return el.kind === "ARGUMENT";
+        }) : [];
+
         $scope.isState = function(state) {
             return $state.is(baseState + '.' + state);
         };

@@ -88,6 +88,7 @@
               "RAW": "Raw",
               "STACKTRACE": "Stacktrace",
               "SUBSTEPS": "{substeps, plural, one{# sub-step} other{# sub-steps}}",
-              "ATTACHMENTS": "{attachments, plural, one{# attachment} other{# attachments}}"
+              "ATTACHMENTS": "{attachments, plural, one{# attachment} other{# attachments}}",
+              "PARAMETERS" : "Parameters"
           }  
 }
