@@ -66,10 +66,11 @@ class DefectsPlugin extends DefaultTabPlugin implements WithWidget {
         widget.data = []
         widget.data += failed.collect {
             new DefectsWidgetItem(message: it?.failure?.message, status: FAILED, count: it.testCases.size())
-        }
+        }.sort { -it.count }
+
         widget.data += broken.collect {
             new DefectsWidgetItem(message: it?.failure?.message, status: BROKEN, count: it.testCases.size())
-        }
+        }.sort { -it.count }
         if (widget.data.empty) {
             widget.data.add(new DefectsWidgetItem(message: "There are no defects!", status: PASSED))
         }

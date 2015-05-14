@@ -60,7 +60,7 @@ class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
         def suites = xUnit.testSuites.take(10)
         widget.data = suites.collect {
             new StatsWidgetItem(title: it.title, statistic: it.statistic)
-        }
+        }.sort { it.title }
         widget
     }
 }
