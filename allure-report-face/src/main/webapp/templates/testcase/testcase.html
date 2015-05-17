@@ -11,6 +11,9 @@
         <span class="icon-status-{{testcase.status | lowercase}}"></span>
         {{testcase.title}}
         <small translate="testcase.SEVERITY" translate-value-severity="{{testcase.severity | translate}}"></small>
+        <div>
+            <small translate="testcase.DATETIME" translate-value-date="{{testcase.time.start | date:'mediumDate'}}" translate-value-time="{{testcase.time.start | date:'HH:mm:ss'}}"></small>
+        </div>
     </h3>
     <div class="external-system-references">
         <span ng-show="testcaseArguments.length > 0">

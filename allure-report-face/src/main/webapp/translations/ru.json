@@ -88,6 +88,7 @@
             "STACKTRACE": "Трассировка",
             "SUBSTEPS": "{substeps, plural, one{# подшаг} few{# подшага} other{# подшагов}}",
             "ATTACHMENTS": "{attachments, plural, one{# приложение} few{# приложения} other{# приложений}}",
-            "PARAMETERS" : "Параметры"
+            "PARAMETERS" : "Параметры",
+            "DATETIME": "Запущен {{date}} в {{time}}"
         }
 }
