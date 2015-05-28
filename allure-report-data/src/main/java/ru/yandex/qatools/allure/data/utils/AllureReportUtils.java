@@ -8,9 +8,9 @@ import ru.yandex.qatools.allure.data.ReportGenerationException;
 
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 
@@ -65,8 +65,22 @@ public final class AllureReportUtils {
      */
     public static int serialize(final File directory, String name, Object obj) {
         try {
+            return serialize(new FileOutputStream(new File(directory, name)), obj);
+        } catch (IOException e) {
+            throw new ReportGenerationException(e);
+        }
+    }
+
+    /**
+     * Serialize specified object to directory with specified name.
+     *
+     * @param obj object to serialize
+     * @return number of bytes written to directory
+     */
+    public static int serialize(OutputStream stream, Object obj) {
+        try {
             ObjectMapper mapper = createMapperWithJaxbAnnotationInspector();
-            DataOutputStream data = createDataOutputStream(directory, name);
+            DataOutputStream data = new DataOutputStream(stream);
 
             OutputStreamWriter writer = new OutputStreamWriter(data, StandardCharsets.UTF_8);
             mapper.writerWithDefaultPrettyPrinter().writeValue(writer, obj);
@@ -86,17 +100,5 @@ public final class AllureReportUtils {
         AnnotationIntrospector annotationInspector = new JaxbAnnotationIntrospector(TypeFactory.defaultInstance());
         mapper.getSerializationConfig().with(annotationInspector);
         return mapper;
-    }
-
-    /**
-     * Create Data Output Stream for file with specified name in specified directory
-     *
-     * @param directory to find file
-     * @param name      file to find
-     * @return Created {@link java.io.DataOutputStream}
-     * @throws FileNotFoundException
-     */
-    public static DataOutputStream createDataOutputStream(File directory, String name) throws FileNotFoundException {
-        return new DataOutputStream(new FileOutputStream(new File(directory, name)));
     }
 }

@@ -1,95 +1,205 @@
 package ru.yandex.qatools.allure.data.plugins
 
+import com.google.common.hash.Hashing
+import com.google.common.reflect.ClassPath
 import com.google.inject.Inject
 import com.google.inject.Injector
+import groovy.transform.CompileStatic
+import ru.yandex.qatools.allure.data.Widgets
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
+import java.nio.charset.StandardCharsets
+
 /**
+ * Plugin manager helps you to find plugins and run
+ * only plugins you need.
+ * <p/>
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 17.02.15
  */
+@CompileStatic
 class PluginManager {
 
-    protected Storage storage;
+    /**
+     * File with this name contains list of plugins with resources.
+     */
+    public static final String PLUGINS_JSON = "plugins.json"
+    public static final String WIDGETS_JSON = "widgets.json"
 
+    protected final PluginStorage<PreparePlugin> preparePlugins
+
+    protected final PluginStorage<ProcessPlugin> processPlugins
+
+    protected final List<WithResources> pluginsWithResources
+
+    protected final List<WithWidget> pluginsWithWidgets
+
+    protected final List<WithData> pluginsWithData
+
+    /**
+     * Create an instance of plugin manager.
+     */
     @Inject
     PluginManager(PluginLoader loader, Injector injector = null) {
-        storage = new Storage(loader, injector)
+        def plugins = load(loader, injector)
+        preparePlugins = new PluginStorage<>(filterByType(plugins, PreparePlugin))
+
+        def processors = filterByType(plugins, ProcessPlugin)
+        processPlugins = new PluginStorage<>(processors)
+        pluginsWithResources = filterByType(processors, WithResources)
+        pluginsWithWidgets = filterByType(processors, WithWidget)
+        pluginsWithData = filterByType(processors, WithData)
     }
 
+    /**
+     * Get list of names of plugins with resources.
+     */
+    List<String> getPluginsNames() {
+        pluginsWithResources.collect { plugin ->
+            plugin.name
+        }
+    }
+
+    /**
+     * Get all data for plugins with data.
+     */
+    List<PluginData> getPluginsData() {
+        pluginsWithData*.pluginData.flatten() as List<PluginData>
+    }
+
+    /**
+     * Get all plugin widgets.
+     */
+    List<Widget> getWidgets() {
+        pluginsWithWidgets*.widget
+    }
+
+    /**
+     * Find all prepare plugins an process given object for
+     * each of found plugins.
+     */
     public <T> void prepare(T object) {
-        if (!object) {
-            return
-        }
-        def plugins = storage.get(object.class, PreparePlugin)
-
-        plugins.each {
-            it.prepare(object)
-        }
+        def plugins = (preparePlugins.get(object?.class) ?: []) as List<PreparePlugin>
+        plugins*.prepare(object)
     }
 
+    /**
+     * Find all process plugins an process given object for
+     * each of found plugins.
+     */
     public <T> void process(T object) {
-        if (!object) {
-            return
+        def plugins = (processPlugins.get(object?.class) ?: []) as List<ProcessPlugin>
+        for (def plugin : plugins) {
+            plugin.process(PluginUtils.clone(object))
         }
-        def plugins = storage.get(object.class, ProcessPlugin)
+    }
 
+    /**
+     * Write list of plugins with resources to {@link #PLUGINS_JSON}
+     *
+     * @see ReportWriter
+     */
+    void writePluginList(ReportWriter writer) {
+        writer.write(new PluginData(PLUGINS_JSON, pluginsNames))
+    }
+
+    /**
+     * Write plugins widgets to {@link #WIDGETS_JSON}.
+     *
+     * @see ReportWriter
+     */
+    void writePluginWidgets(ReportWriter writer) {
+        def widgets = widgets
+        def widgetNames = widgets.collect { it.name }.sort().join("")
+        def hash = Hashing.sha1().hashString(widgetNames, StandardCharsets.UTF_8).toString()
+        writer.write(new PluginData(WIDGETS_JSON, new Widgets(hash: hash, data: widgets)))
+    }
+
+    /**
+     * Write plugin resources. For each plugin search resources using
+     * {@link #findPluginResources(WithResources)}
+     *
+     * @see ReportWriter
+     */
+    void writePluginResources(ReportWriter writer) {
+        pluginsWithResources.each { plugin ->
+            def resources = findPluginResources(plugin)
+            resources.each { resource ->
+                writer.write(plugin.name, resource)
+            }
+        }
+    }
+
+    /**
+     * Write plugins data to data directory.
+     *
+     * @see ReportWriter
+     */
+    void writePluginData(ReportWriter writer) {
+        writer.write(pluginsData)
+    }
+
+    /**
+     * Find all resources for plugin.
+     */
+    protected static List<URL> findPluginResources(WithResources plugin) {
+        def path = plugin.class.canonicalName.replace('.', '/')
+        def pattern = ~"^$path/.+\$"
+        def result = []
+        for (def resource : ClassPath.from(plugin.class.classLoader).resources) {
+            if (resource.resourceName =~ pattern) {
+                result.add(resource.url())
+            }
+        }
+        result
+    }
+
+    /**
+     * Load all plugins using given {@link PluginLoader} then remove all null plugins
+     * and finally inject members to each plugin in case not null injector. Plugins
+     * returned in order by priority. Plugins with higher priority will be first,
+     * if some plugins have equals priority then they will be ordered alphabetically.
+     */
+    protected static List<Plugin> load(PluginLoader loader, Injector injector) {
+        def result = [] as List<Plugin>
+
+        def plugins = loader.loadPlugins() ?: [] as List<Plugin>
         plugins.each {
-            it.process(PluginUtils.clone(object))
+            if (isValidPlugin(it)) {
+                injector?.injectMembers(it)
+                result.add(it)
+            }
         }
+        result.sort(false, { first, second ->
+            getPriority(second as Plugin) <=> getPriority(first as Plugin) ?:
+                    first.class.simpleName <=> second.class.simpleName
+        })
     }
 
-    public <T> void writePluginData(Class<T> type, ReportWriter writer) {
-        writer.write(getData(type))
+    /**
+     * Get priority of given plugin.
+     * @see WithPriority
+     */
+    protected static int getPriority(Plugin plugin) {
+        plugin instanceof WithPriority ? (plugin as WithPriority).priority : 0
     }
 
-
-    protected List<PluginData> getData(Class<?> type) {
-        if (!type) {
-            []
-        }
-        storage.get(type, ProcessPlugin).collect {
-            it.pluginData
-        }.flatten()
+    /**
+     * Some checks for plugins.
+     * @see AbstractPlugin#isValid(java.lang.Class)
+     */
+    protected static boolean isValidPlugin(Plugin plugin) {
+        return plugin && (plugin instanceof AbstractPlugin ?
+                AbstractPlugin.isValid(plugin.class) : true)
     }
 
-    protected class Storage {
-
-        private Map<Class, Map<Class, List<Plugin>>> storage = new HashMap<>().withDefault {
-            new HashMap<>().withDefault {
-                new ArrayList<>()
-            }
-        }
-
-        Storage(PluginLoader loader, Injector injector) {
-            def plugins = loader.loadPlugins()
-            if (!plugins) {
-                return
-            }
-
-            plugins.each {
-                if (it) {
-                    if (injector) {
-                        injector.injectMembers(it)
-                    }
-                    put(it)
-                }
-            }
-        }
-
-        public <T, S extends Plugin<T>> List<S> get(Class<T> objectType, Class<S> pluginType) {
-            storage[objectType]?.get(pluginType) as List<S> ?: []
-        }
-
-        public void put(Plugin plugin) {
-            def type = plugin.type
-            def classes = [ProcessPlugin, PreparePlugin]
-            classes.each {
-                if (it.isAssignableFrom(plugin.class)) {
-                    storage[type][it].add(plugin)
-                }
-            }
-        }
+    /**
+     * Find all plugins with specified type.
+     */
+    protected static <T> List<T> filterByType(List<? extends Plugin> plugins, Class<T> type) {
+        plugins.findAll {
+            type.isAssignableFrom((it as Object).class)
+        } as List<T>
     }
 }

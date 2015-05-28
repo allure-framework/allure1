@@ -1,5 +1,5 @@
 /* globals angular */
-angular.module('allure.charts.duration', ['allure.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip, d3timeFilter) {
+angular.module('allure.core.charts.duration', ['allure.core.charts.util']).directive('duration', function (d3, d3Util, d3Tooltip, d3timeFilter) {
     "use strict";
     function DurationBars(element, data) {
         var width = angular.element(element).width()/2.2,

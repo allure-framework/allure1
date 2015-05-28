@@ -4,13 +4,25 @@ import com.google.inject.AbstractModule
 import com.google.inject.Guice
 import com.google.inject.Inject
 import groovy.transform.EqualsAndHashCode
+import org.apache.commons.io.FilenameUtils
+import org.junit.ClassRule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
+import ru.yandex.qatools.allure.data.WidgetType
+import ru.yandex.qatools.allure.data.Widgets
+import ru.yandex.qatools.allure.data.io.ReportWriter
+import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.02.15
  */
 class PluginManagerTest {
+
+    @ClassRule
+    public static TemporaryFolder folder = new TemporaryFolder();
+
+    def writer = new DummyReportWriter(folder.newFolder())
 
     @Test
     void shouldNotFailIfLoadNull() {
@@ -25,7 +37,6 @@ class PluginManagerTest {
 
         manager.prepare(null)
         manager.process(null)
-        manager.getData(null);
     }
 
     @Test
@@ -35,7 +46,6 @@ class PluginManagerTest {
 
         manager.prepare(new Object())
         manager.process(new ArrayList())
-        manager.getData(Integer);
     }
 
     @Test
@@ -45,7 +55,8 @@ class PluginManagerTest {
 
         manager.prepare(new Object())
         manager.process(new ArrayList())
-        manager.getData(Integer);
+
+        assert manager.pluginsData == [] as List<PluginData>
     }
 
     @Test
@@ -103,7 +114,7 @@ class PluginManagerTest {
         def object2 = new SomeObject(someValue: "object2")
         manager.process(object2)
 
-        def data = manager.getData(SomeObject)
+        def data = manager.pluginsData
         assert data
         assert data.size() == 4
         assert data.collect { item -> (item.data as SomeObject).someValue }.containsAll([
@@ -132,6 +143,119 @@ class PluginManagerTest {
         plugin.injectable == injectable
     }
 
+    @Test
+    void shouldNotFailIfNullData() {
+        def loader = [loadPlugins: { [new SomeProcessPluginWithNullData()] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        manager.process(new SomeObject())
+        assert manager.pluginsData  == [null] as List<PluginData>
+    }
+
+    @Test
+    void shouldCopyPluginResources() {
+        def plugin = new SomePluginWithResources()
+        def loader = [loadPlugins: { [plugin] }] as PluginLoader
+        def manager = new PluginManager(loader)
+        manager.writePluginResources(writer)
+
+        assert writer.writtenResources.size() == 1
+
+        def pluginResources = writer.writtenResources["somePluginWithResources"]
+        assert pluginResources
+        assert pluginResources.size() == 2
+        assert pluginResources.containsAll(["a.txt", "b.xml"])
+    }
+
+    @Test
+    void shouldWriteListOfPluginWithResources() {
+        def plugin1 = new SomePluginWithResources()
+        def plugin2 = new SomeProcessPlugin()
+        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        manager.writePluginList(writer)
+
+        assert writer.writtenData.size() == 1
+        assert writer.writtenData.containsKey(PluginManager.PLUGINS_JSON)
+
+        def object = writer.writtenData.get(PluginManager.PLUGINS_JSON)
+        assert object instanceof List<String>
+        assert object.size() == 1
+        assert object.contains("somePluginWithResources")
+    }
+
+    @Test
+    void shouldWritePluginWidget() {
+        def plugin1 = new SomePluginWithWidget()
+        def plugin2 = new SomeProcessPlugin()
+        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        manager.writePluginWidgets(writer)
+
+        assert writer.writtenData.size() == 1
+        assert writer.writtenData.containsKey(PluginManager.WIDGETS_JSON)
+
+        def object = writer.writtenData.get(PluginManager.WIDGETS_JSON)
+
+        assert object instanceof Widgets
+        assert object.hash instanceof String
+        assert !object.hash.empty
+        assert object.data instanceof List<Widget>
+        assert object.data.size() == 1
+
+        def widget = object.data.iterator().next()
+        assert widget.name == "name"
+        assert widget.type == WidgetType.TITLE_STATISTICS
+    }
+
+    @Test
+    void shouldProcessPluginsByPriority() {
+        def loader = [loadPlugins: { [
+                new SomeProcessPlugin(suffix: "without_lexSecond"),
+                new SomeOtherProcessPlugin(suffix: "without_lexFirst"),
+                new SomePluginWithLowPriority(suffix: "with_low"),
+                new SomePluginWithHighPriority(suffix: "with_high")
+        ] }] as PluginLoader
+        def manager = new PluginManager(loader)
+
+        manager.process(new SomeObject(someValue: "value_"))
+
+        def data = manager.pluginsData
+        assert data
+        assert data.size() == 4
+        assert data.collect {(it.data as SomeObject).someValue} == [
+            "value_with_high",
+            "value_with_low",
+            "value_without_lexFirst",
+            "value_without_lexSecond"
+        ]
+    }
+
+    /**
+     * Should use mock instead this class, but groovy mocks suck sometimes =(
+     */
+    class DummyReportWriter extends ReportWriter {
+        Map<String, List<String>> writtenResources = [:].withDefault {[]}
+        Map<String, Object> writtenData = [:].withDefault {[]}
+
+        DummyReportWriter(File dir) {
+            super(dir)
+        }
+
+        @Override
+        void write(PluginData data) {
+            assert !writtenData.containsKey(data.name)
+            writtenData.put(data.name, data.data)
+        }
+
+        @Override
+        void write(String pluginName, URL resource) {
+            writtenResources.get(pluginName).add(FilenameUtils.getName(resource.toString()))
+        }
+    }
+
     @EqualsAndHashCode
     class SomeInjectable {
         String value
@@ -144,6 +268,33 @@ class PluginManagerTest {
         @Override
         protected void configure() {
             bind(SomeInjectable).toInstance(injectable)
+        }
+    }
+
+    class SomePluginWithHighPriority extends SomeProcessPlugin implements WithPriority {
+
+        @Override
+        int getPriority() {
+            return 100
+        }
+    }
+
+    class SomePluginWithLowPriority extends SomeProcessPlugin implements WithPriority {
+
+        @Override
+        int getPriority() {
+            return 10
+        }
+    }
+
+    class SomeOtherProcessPlugin extends SomeProcessPlugin {
+    }
+
+    class SomePluginWithWidget extends SomeProcessPlugin implements WithWidget {
+
+        @Override
+        Widget getWidget() {
+            return new StatsWidget("name")
         }
     }
 
@@ -167,7 +318,7 @@ class PluginManagerTest {
         }
     }
 
-    class SomeProcessPlugin extends SomePlugin implements ProcessPlugin<SomeObject> {
+    class SomeProcessPlugin extends SomePlugin implements ProcessPlugin<SomeObject>, WithData {
         def suffix = "_SUFFIX"
         List<PluginData> pluginData = []
 
@@ -180,6 +331,19 @@ class PluginManagerTest {
         @Override
         List<PluginData> getPluginData() {
             return pluginData
+        }
+    }
+
+    class SomeProcessPluginWithNullData extends SomePlugin implements ProcessPlugin<SomeObject>, WithData {
+
+        @Override
+        void process(SomeObject data) {
+            //do nothing
+        }
+
+        @Override
+        List<PluginData> getPluginData() {
+            return null
         }
     }
 

@@ -1,0 +1,10 @@
+{
+  "graph": {
+    "TITLE": "Графики",
+    "STATUS": "Статус",
+    "SEVERITY": "Серьезность",
+    "DURATION": "Длительность",
+    "TESTS": "{amount, plural, one{# тест} few{# теста} other{# тестов}}",
+    "CASES": "{amount, plural, one{# тестовый случай} few{# тестовых случая} other{# тестовых случаев}}"
+  }
+}

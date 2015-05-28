@@ -13,6 +13,20 @@
         <small translate="testcase.SEVERITY" translate-value-severity="{{testcase.severity | translate}}"></small>
     </h3>
     <div class="external-system-references">
+        <span ng-show="testcaseArguments.length > 0">
+            <span class="fa fa-sliders"/>
+            <span>{{'testcase.PARAMETERS' | translate}}: [</span>
+            <span ng-repeat="argument in testcaseArguments">
+                <span class="line-nobreak">
+                    <span>{{argument.name}} = "
+                        <span title = {{argument.value}} class="line-ellipsis parameter-value">{{argument.value}} </span>
+                        "
+                    </span>
+                    <span ng-show="!$last">;</span>
+                </span>
+            </span>
+            <span>]</span>
+        </span>
         <span class="issues" ng-show="testcase.issues">
             <span class="fa fa-bug"/>
             {{'testcase.ISSUES' | translate}}

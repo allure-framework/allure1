@@ -1,5 +1,5 @@
 /* globals angular */
-angular.module('allure.charts.timeline', ['allure.charts.util']).directive('timeline', function (d3, d3Util, d3Tooltip, timeFilter) {
+angular.module('allure.core.charts.timeline', ['allure.core.charts.util']).directive('timeline', function (d3, d3Util, d3Tooltip, timeFilter) {
     'use strict';
     function Timeline(elm, data, range) {
         var scale = 3,

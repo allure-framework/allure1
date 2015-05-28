@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('allure.pane', []).directive('paneSet', function() {
+angular.module('allure.core.pane', []).directive('paneSet', function() {
     "use strict";
     return {
         controller: 'PanesController'

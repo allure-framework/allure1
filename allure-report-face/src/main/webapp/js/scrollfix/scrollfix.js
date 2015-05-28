@@ -1,5 +1,5 @@
 /*global angular*/
-angular.module('allure.scrollfix', []).directive('uiScrollfix', ['$window', function ($window) {
+angular.module('allure.core.scrollfix', []).directive('uiScrollfix', ['$window', function ($window) {
     "use strict";
     return {
         require: '^?uiScrollfixTarget',

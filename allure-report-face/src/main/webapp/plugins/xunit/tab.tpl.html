@@ -1,0 +1,15 @@
+<div class="xunit b-island tab-content-fill" pane-set>
+    <div class="pane_col" pane pane-expanded="isState('xunit')">
+        <div class="pane_overlay clickable" ui-sref="xunit.testsuite"></div>
+        <div class="pane_content">
+            <ng-include src="'plugins/xunit/testrun.html'"></ng-include>
+        </div>
+    </div>
+    <div class="pane_col" pane ng-if="testsuite" pane-expanded="isState('xunit.testsuite.expanded')">
+        <div class="pane_overlay clickable" ui-sref="xunit.testsuite.testcase"></div>
+        <div class="pane_content">
+            <ng-include src="'plugins/xunit/testsuite.html'"></ng-include>
+        </div>
+    </div>
+    <div ui-view="testcase"></div>
+</div>

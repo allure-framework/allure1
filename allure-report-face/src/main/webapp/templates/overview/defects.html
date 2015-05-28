@@ -1,0 +1,4 @@
+<div class="list-item" ng-repeat="item in data">
+    <span class="label label-status-{{item.status|lowercase}}" ng-show="item.count > 0">{{item.count}}</span>
+    <span class="text-status-{{item.status|lowercase}}">{{item.message}}</span>
+</div>

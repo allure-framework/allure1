@@ -33,6 +33,19 @@
             afterEach(function() {
                 expect(tooltipsCount).toBe(0);
             });
+        },
+        fakePluginApi: function() {
+            beforeEach(module(function($provide) {
+                $provide.provider('testcase', function() {
+                    return jasmine.createSpyObj('testcaseProvider', ['$get', 'attachStates']);
+                });
+                $provide.provider('allureTabs', function() {
+                    var allureTabsProvider = jasmine.createSpyObj('allureTabsProvider', ['$get', 'addTranslation', 'addTab']);
+                    allureTabsProvider.tabs = [];
+                    allureTabsProvider.$get.andReturn(allureTabsProvider.tabs);
+                    return allureTabsProvider;
+                });
+            }));
         }
     };
     beforeEach(function() {

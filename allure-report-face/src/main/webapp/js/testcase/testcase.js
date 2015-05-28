@@ -1,8 +1,9 @@
 /*global angular:true */
-angular.module('allure.testcase.controllers', [])
+angular.module('allure.core.testcase.controllers', ['d3'])
     .factory('attachmentType', function() {
+        "use strict";
         return function(type) { //NOSONAR
-            switch(type) {
+            switch (type) {
                 case 'image/bmp':
                 case 'image/gif':
                 case 'image/tiff':
@@ -36,6 +37,7 @@ angular.module('allure.testcase.controllers', [])
         function isFailed(step) {
             return ['FAILED', 'BROKEN', 'CANCELED', 'PENDING'].indexOf(step.status) !== -1;
         }
+
         function getAllAttachments() {
             var attachments = [];
             treeUtils.walkAround($scope.testcase, 'steps', function(item) {
@@ -45,6 +47,7 @@ angular.module('allure.testcase.controllers', [])
             });
             return attachments.concat($scope.testcase.attachments);
         }
+
         function setAttachment(uid) {
             $scope.attachment = getAllAttachments().filter(function(attachment) {
                 return attachment.uid === uid;
@@ -64,19 +67,24 @@ angular.module('allure.testcase.controllers', [])
             }
             return hasFailed;
         }
+
         findFailedStep($scope.testcase);
 
+        $scope.testcaseArguments = testcase.parameters ? testcase.parameters.filter(function (el) {
+            return el.kind === "ARGUMENT";
+        }) : [];
+
         $scope.isState = function(state) {
-            return $state.is(baseState+'.'+state);
+            return $state.is(baseState + '.' + state);
         };
         $scope.closeTestcase = function() {
             $state.go(baseState);
         };
         $scope.go = function(state) {
-            $state.go(baseState+'.'+state);
+            $state.go(baseState + '.' + state);
         };
         $scope.setAttachment = function(attachmentUid) {
-            $state.go(baseState+'.testcase.attachment', {attachmentUid: attachmentUid});
+            $state.go(baseState + '.testcase.attachment', {attachmentUid: attachmentUid});
         };
         $scope.select = function(direction) {
             var index = allAttachments.indexOf($scope.attachment);
@@ -110,9 +118,10 @@ angular.module('allure.testcase.controllers', [])
         function isFailed(step) {
             return ['FAILED', 'BROKEN', 'CANCELED', 'PENDING'].indexOf(step.status) !== -1;
         }
+
         $scope.getStepClass = function(step) {
             if(isFailed(step)) {
-                return 'text-status-'+step.status.toLowerCase();
+                return 'text-status-' + step.status.toLowerCase();
             }
             return '';
         };
@@ -128,6 +137,7 @@ angular.module('allure.testcase.controllers', [])
             });
             return attachments;
         }
+
         var nestedAttachments = getAttachments($scope.step);
         $scope.$watch('attachment', function(attachment) {
             if(!$scope.expanded) {
@@ -139,7 +149,7 @@ angular.module('allure.testcase.controllers', [])
         $scope.hasContent = $scope.step.summary.steps > 0 || $scope.step.attachments.length > 0 || $scope.step.failure;
     })
 
-    .controller('AttachmentPreviewCtrl', function ($scope, $http, $state, attachmentType) {
+    .controller('AttachmentPreviewCtrl', function($scope, $http, $state, attachmentType, d3) {
         "use strict";
         function fileGetContents(url) {
             //get raw file content without parsing
@@ -155,13 +165,13 @@ angular.module('allure.testcase.controllers', [])
             $scope.notFound = true;
         };
         $scope.getSourceUrl = function(attachment) {
-            return 'data/'+attachment.source;
+            return 'data/' + attachment.source;
         };
         $scope.isExpanded = function() {
-            return $state.is($state.current.data.baseState+'.testcase.attachment.expanded');
+            return $state.is($state.current.data.baseState + '.testcase.attachment.expanded');
         };
         $scope.toggleExpanded = function() {
-            $state.go($state.current.data.baseState+'.testcase.attachment'+
+            $state.go($state.current.data.baseState + '.testcase.attachment' +
                 ($scope.isExpanded() ? '' : '.expanded')
             );
         };
@@ -174,4 +184,4 @@ angular.module('allure.testcase.controllers', [])
             }
         });
     });
-angular.module('allure.testcase', ['allure.testcase.statusSwitcher', 'allure.testcase.testcasesList', 'allure.testcase.controllers', 'allure.testcase.provider']);
+angular.module('allure.core.testcase', ['allure.core.testcase.statusSwitcher', 'allure.core.testcase.testcasesList', 'allure.core.testcase.controllers', 'allure.core.testcase.provider']);

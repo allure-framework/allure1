@@ -1,0 +1,11 @@
+<h2>{{name}}</h2>
+<table>
+    <table allure-table class="test-list table table-hover table-condensed">
+        <tbody>
+        <tr class="list-item" ng-repeat="item in data">
+            <td>{{item.key}}</td>
+            <td ng-bind-html="item.value | linky"></td>
+        </tr>
+        </tbody>
+    </table>
+</table>

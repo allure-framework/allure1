@@ -7,12 +7,29 @@
 @import "highlight-github";
 @import "islands/islands";
 @import "base";
-@import "pane";
 @import "statuses";
-@import "testcase";
-@import "charts";
-@import "features";
-@import "xunit";
+@import "blocks/pane";
+@import "blocks/testcase";
+@import "blocks/charts";
+@import "blocks/features";
+@import "blocks/xunit";
+@import "blocks/widget";
+
+.preloader {
+  position: absolute;
+  z-index: 1001;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  .alert {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
 
 .b-page__nav {
   min-width: 850px;

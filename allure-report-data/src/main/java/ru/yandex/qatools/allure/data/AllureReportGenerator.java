@@ -12,15 +12,11 @@ import ru.yandex.qatools.commons.model.Environment;
 
 import java.io.File;
 
-import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.createDirectory;
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 12.02.15
  */
 public class AllureReportGenerator {
-
-    public static final String DATA_DIRECTORY_NAME = "data";
 
     @Inject
     private Reader<TestCaseResult> testCaseReader;
@@ -53,9 +49,7 @@ public class AllureReportGenerator {
     }
 
     public void generate(File outputDirectory) {
-        File reportDataDirectory = createDirectory(outputDirectory, DATA_DIRECTORY_NAME);
-
-        ReportWriter writer = new ReportWriter(reportDataDirectory);
+        ReportWriter writer = new ReportWriter(outputDirectory);
         generate(writer);
     }
 
@@ -69,20 +63,21 @@ public class AllureReportGenerator {
             writer.write(testCase);
         }
 
-        pluginManager.writePluginData(AllureTestCase.class, writer);
-
         for (Environment environment : environmentReader) {
             pluginManager.prepare(environment);
             pluginManager.process(environment);
         }
-
-        pluginManager.writePluginData(Environment.class, writer);
 
         for (AttachmentInfo attachment : attachmentReader) {
             pluginManager.prepare(attachment);
             writer.write(attachment);
         }
 
-        writer.close();
+        pluginManager.writePluginData(writer);
+        pluginManager.writePluginResources(writer);
+        pluginManager.writePluginList(writer);
+        pluginManager.writePluginWidgets(writer);
+
+        writer.writeReportInfo();
     }
 }

@@ -1,0 +1,19 @@
+{
+  "xunit": {
+    "XUNIT": "xUnit"
+  },
+  "testrun": {
+    "SUMMARY": "Информация",
+    "TESTRUN": "Сессия тестирования:",
+    "TEST_SUITES": "Тестовые сценарии",
+    "TIMEDATE": "запущена {{date}} в {{time}} ({{duration}})",
+    "STATISTIC": "Всего: {suites, plural, one{# тестовый сценарий} few{# тестовых сценария} other{# тестовых сценариев}}, {cases, plural, one{# тестовый случай} few{# тестовых случая} other{# тестовых случаев}}",
+    "PASSED": "УСПЕШНО",
+    "TOTAL": "Всего {amount, plural, one{# сценарий} few{# сценария} other{# сценариев}}",
+    "VISIBLE": "{{visible == amount ? '' : ' ('+visible+' показано)'}}"
+  },
+  "testsuite": {
+    "TESTSUITE": "Тестовый сценарий",
+    "DESCRIPTION": "Описание"
+  }
+}

@@ -1,5 +1,5 @@
 /* globals angular */
-angular.module('allure.charts.pie', ['allure.charts.util']).directive('pieChart', function (d3, d3Util, d3Tooltip) {
+angular.module('allure.core.charts.pie', ['allure.core.charts.util']).directive('pieChart', function (d3, d3Util, d3Tooltip) {
     "use strict";
     function PieChart(elm, $scope, data) {
         var radius = angular.element(elm).width()/4,

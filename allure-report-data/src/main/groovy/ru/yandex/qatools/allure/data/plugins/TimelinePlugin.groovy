@@ -11,51 +11,42 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.02.15
  */
-class TimelinePlugin implements ProcessPlugin<AllureTestCase> {
+@Plugin.Name("timeline")
+@Plugin.Priority(200)
+class TimelinePlugin extends DefaultTabPlugin {
 
-    public static final String TIMELINE_JSON = "timeline.json"
+    @Plugin.Data
+    def timeline = new AllureTimeline()
 
-    AllureTimeline timeline = new AllureTimeline();
+    private Map<String, Host> hosts = [:]
 
-    private Map<String, Host> hosts = new HashMap<>();
-
-    private Map<Key, Thread> threads = new HashMap<>();
+    private Map<Key, Thread> threads = [:]
 
     @Override
     void process(AllureTestCase testCase) {
         use(PluginUtils) {
-            def hostName = testCase.getHostValue()
+            def hostName = testCase.hostValue
             if (!hosts.containsKey(hostName)) {
-                Host host = new Host(title: hostName);
-                hosts[hostName] = host;
-                timeline.hosts.add(host);
+                def host = new Host(title: hostName)
+                hosts[hostName] = host
+                timeline.hosts.add(host)
             }
 
-            def threadName = testCase.getThreadValue()
+            def threadName = testCase.threadValue
             def key = new Key(host: hostName, thread: threadName)
             if (!threads.containsKey(key)) {
-                Thread thread = new Thread(title: threadName);
-                threads[key] = thread;
-                hosts[hostName].threads.add(thread);
+                def thread = new Thread(title: threadName)
+                threads[key] = thread
+                hosts[hostName].threads.add(thread)
             }
 
-            threads[key].testCases.add(testCase.toInfo());
+            threads[key].testCases.add(testCase.toInfo())
         }
-    }
-
-    @Override
-    List<PluginData> getPluginData() {
-        return Arrays.asList(new PluginData(TIMELINE_JSON, timeline));
-    }
-
-    @Override
-    Class<AllureTestCase> getType() {
-        return AllureTestCase;
     }
 
     @EqualsAndHashCode
     class Key {
-        String host;
-        String thread;
+        String host
+        String thread
     }
 }

@@ -3,6 +3,7 @@ package ru.yandex.qatools.allure.data.plugins
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.junit.Test
 import ru.yandex.qatools.allure.data.AllureTestCase
+import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 import ru.yandex.qatools.allure.model.Failure
 
@@ -201,5 +202,45 @@ class DefectsPluginTest {
     void shouldGetRightDataName() {
         assert plugin.pluginData
         assert plugin.pluginData.name == ["defects.json"]
+    }
+
+    @Test
+    void shouldGenerateEmptyWidget() {
+        plugin.widget.name == plugin.name
+        plugin.widget.type == WidgetType.DEFECTS
+        def widget = plugin.widget as DefectsWidget
+        assert widget.data.size() == 1
+        assert widget.data.iterator().next().status == PASSED
+    }
+
+    @Test
+    void shouldGenerateWidget() {
+        for (int i = 0; i < 20; i++) {
+            def testCase = new AllureTestCase(status: FAILED, failure: new Failure(message: "failure#$i"))
+            plugin.process(testCase)
+        }
+
+        def widget = plugin.widget as DefectsWidget
+        assert widget.data.size() == 10
+
+        assert widget.data*.message*.startsWith("failure#")
+    }
+
+    @Test
+    void shouldGenerateWidgetWithBothStatuses() {
+        for (int i = 0; i < 6; i++) {
+            def testCase = new AllureTestCase(status: BROKEN, failure: new Failure(message: "broken#$i"))
+            plugin.process(testCase)
+        }
+        for (int i = 0; i < 6; i++) {
+            def testCase = new AllureTestCase(status: FAILED, failure: new Failure(message: "failed#$i"))
+            plugin.process(testCase)
+        }
+
+        def widget = plugin.widget as DefectsWidget
+        assert widget.data.size() == 10
+
+        assert widget.data*.message.take(6)*.startsWith("failure#")
+        assert widget.data*.message.takeRight(4)*.startsWith("broken#")
     }
 }

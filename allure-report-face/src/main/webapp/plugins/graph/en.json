@@ -1,0 +1,10 @@
+{
+  "graph": {
+    "TITLE": "Graph",
+    "STATUS": "Status",
+    "SEVERITY": "Severity",
+    "DURATION": "Duration",
+    "TESTS": "{amount, plural, one{# test} other{# tests}}",
+    "CASES": "{amount, plural, one{# test case} other{# test cases}}"
+  }
+}

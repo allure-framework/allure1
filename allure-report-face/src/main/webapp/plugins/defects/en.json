@@ -1,0 +1,7 @@
+{
+  "defects": {
+    "TITLE": "Defects",
+    "STATISTIC": "{amount, plural, one{# defect} other{# defects}}",
+    "NO_DEFECTS": "No defects in test run. Good job!"
+  }
+}

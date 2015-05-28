@@ -1,0 +1,47 @@
+.widgets {
+  padding: 20px 20px 20px 0;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  &_col {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    & + & {
+      padding-left: 15px;
+    }
+  }
+
+  .widget {
+    @block: .widget;
+    padding: 10px 15px;
+    margin-bottom: 15px;
+    position: relative;
+    &_title {
+      text-transform: capitalize;
+      margin-top: 0;
+    }
+    @{block}_handle {
+      opacity: 0;
+      color: @text-muted;
+      cursor: move;
+      &:hover {
+        color: @text-color;
+      }
+    }
+    &:hover @{block}_handle {
+      opacity: 1;
+    }
+    &-dragged {
+      border: 1px dashed @gray-light;
+      box-shadow: none;
+      min-height: 50px;
+      & > * {
+        display: none;
+      }
+    }
+  }
+}
