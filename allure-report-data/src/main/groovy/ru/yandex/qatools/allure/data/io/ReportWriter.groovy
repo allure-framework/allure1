@@ -56,17 +56,22 @@ class ReportWriter {
     }
 
     void write(AllureTestCase testCase) {
+        Objects.requireNonNull(testCase)
         serializeToData(testCase.uid + TESTCASE_SUFFIX, testCase);
     }
 
     void write(PluginData data) {
-        serializeToData(data?.name, data?.data);
+        Objects.requireNonNull(data)
+        serializeToData(data.name, data.data);
     }
 
     void write(AttachmentInfo attachmentInfo) {
+        Objects.requireNonNull(attachmentInfo)
         try {
-            Path from = Paths.get(attachmentInfo?.path)
-            Files.copy(from, getStreamToDataDirectory(attachmentInfo?.name))
+            Path from = Paths.get(attachmentInfo.path)
+            getStreamToDataDirectory(attachmentInfo.name).withCloseable { output ->
+                Files.copy(from, output)
+            }
         } catch (IOException e) {
             log.error("Can't copy attachment $attachmentInfo.name from $attachmentInfo.path", e)
         }
@@ -89,11 +94,14 @@ class ReportWriter {
     /**
      * Copy given URL resource to writer to plugins/${name} folder
      */
-    protected void copyResource(String pluginName, URL resource) {
+    private void copyResource(String pluginName, URL resource) {
         def resourceName = FilenameUtils.getName(resource.toString())
-        def output = getStreamToPluginDirectory(pluginName, resourceName)
-        output << resource.openStream()
-        output.close()
+
+        getStreamToPluginDirectory(pluginName, resourceName).withCloseable { output ->
+            resource.openStream().withCloseable { input ->
+                output << input
+            }
+        }
     }
 
     /**
@@ -101,7 +109,7 @@ class ReportWriter {
      * @see #size
      * @see ru.yandex.qatools.allure.data.utils.AllureReportUtils#serialize(java.io.File, java.lang.String, java.lang.Object)
      */
-    protected void serializeToData(String fileName, Object object) {
+    private void serializeToData(String fileName, Object object) {
         size += serialize(getStreamToDataDirectory(fileName), object)
     }
 
@@ -109,7 +117,7 @@ class ReportWriter {
      * Get stream to file with given name in data directory.
      * @see #getStream(java.io.File, java.lang.String)
      */
-    protected OutputStream getStreamToDataDirectory(String fileName) {
+    private OutputStream getStreamToDataDirectory(String fileName) {
         getStream(outputDataDirectory, fileName)
     }
 
@@ -117,7 +125,7 @@ class ReportWriter {
      * Get stream to file with given name in plugin directory with specified name.
      * @see #getStream(java.io.File, java.lang.String)
      */
-    protected OutputStream getStreamToPluginDirectory(String pluginName, String fileName) {
+    private OutputStream getStreamToPluginDirectory(String pluginName, String fileName) {
         def pluginDir = createDirectory(outputPluginsDirectory, pluginName);
         getStream(pluginDir, fileName)
     }
@@ -126,7 +134,7 @@ class ReportWriter {
      * Get output stream file with given name in specified directory.
      * @throw ReportGenerationException if can not create a file or stream.
      */
-    protected static OutputStream getStream(File directory, String fileName) {
+    private static OutputStream getStream(File directory, String fileName) {
         try {
             new FileOutputStream(new File(directory, fileName))
         } catch (Exception e) {

@@ -64,25 +64,24 @@ public final class AllureReportUtils {
      * @return number of bytes written to directory
      */
     public static int serialize(final File directory, String name, Object obj) {
-        try {
-            return serialize(new FileOutputStream(new File(directory, name)), obj);
+        try (FileOutputStream stream = new FileOutputStream(new File(directory, name))) {
+            return serialize(stream, obj);
         } catch (IOException e) {
             throw new ReportGenerationException(e);
         }
     }
 
     /**
-     * Serialize specified object to directory with specified name.
+     * Serialize specified object to directory with specified name. Given output stream will be closed.
      *
      * @param obj object to serialize
      * @return number of bytes written to directory
      */
     public static int serialize(OutputStream stream, Object obj) {
-        try {
-            ObjectMapper mapper = createMapperWithJaxbAnnotationInspector();
-            DataOutputStream data = new DataOutputStream(stream);
+        ObjectMapper mapper = createMapperWithJaxbAnnotationInspector();
 
-            OutputStreamWriter writer = new OutputStreamWriter(data, StandardCharsets.UTF_8);
+        try (DataOutputStream data = new DataOutputStream(stream);
+             OutputStreamWriter writer = new OutputStreamWriter(data, StandardCharsets.UTF_8)) {
             mapper.writerWithDefaultPrettyPrinter().writeValue(writer, obj);
             return data.size();
         } catch (IOException e) {
