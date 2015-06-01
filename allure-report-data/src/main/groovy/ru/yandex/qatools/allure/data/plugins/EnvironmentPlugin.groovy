@@ -17,10 +17,10 @@ class EnvironmentPlugin extends AbstractPlugin implements ProcessPlugin<Environm
 
     @Override
     void process(Environment data) {
-        if (data.id) {
-            environment.id = data.id
-            environment.name = data.name
-        };
+        environment.id = data.id ?: environment.id
+        environment.name = data.name ?: environment.name
+        environment.url = data.url ?: environment.url
+
         environment.parameter.addAll(data.parameter)
     }
 

@@ -5,6 +5,11 @@
             targetNamespace="urn:data.allure.qatools.yandex.ru">
 
     <xsd:complexType name="allure-report-info">
+        <xsd:sequence>
+            <xsd:element name="name" type="xsd:string"/>
+            <xsd:element name="id" type="xsd:string"/>
+            <xsd:element name="url" type="xsd:string"/>
+        </xsd:sequence>
         <xsd:attribute name="size" type="xsd:long"/>
         <xsd:attribute name="time" type="xsd:long"/>
     </xsd:complexType>

@@ -8,8 +8,9 @@
 
     <xs:complexType name="environment">
         <xs:sequence>
-            <xs:element name="id" type="xs:string"/>
-            <xs:element name="name" type="xs:string" minOccurs="0"/>
+            <xs:element name="id" type="xs:string" minOccurs="0"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="url" type="xs:string" minOccurs="0"/>
             <xs:element name="parameter" type="qa:parameter" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>

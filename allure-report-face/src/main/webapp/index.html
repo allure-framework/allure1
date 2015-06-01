@@ -96,6 +96,14 @@
     <div class="nav navbar-header">
         <a class="navbar-brand allure-logo" href="#">Allure</a>
     </div>
+    <div class="nav navbar-text">
+        <a ng-href="{{report.url}}" ng-if="report.url">
+            {{report.name}}
+        </a>
+        <span ng-if="!report.url">
+            {{report.name}}
+        </span>
+    </div>
     <ul class="nav navbar-nav navbar-right">
         <li class="dropdown feedback">
             <a class="clickable" dropdown-toggle>{{'index.FEEDBACK' | translate}} <b class="caret"></b></a>
