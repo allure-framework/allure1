@@ -7,6 +7,7 @@ import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AttachmentInfo
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.plugins.PluginData
+import ru.yandex.qatools.commons.model.Environment
 
 import java.nio.file.Files
 import java.nio.file.Path
@@ -38,6 +39,12 @@ class ReportWriter {
 
     private Long size = 0;
 
+    private String name
+
+    private String id
+
+    private String url
+
     ReportWriter(File outputDirectory) {
         this.outputDataDirectory = createDirectory(outputDirectory, DATA_DIRECTORY_NAME)
         this.outputPluginsDirectory = createDirectory(outputDirectory, PLUGINS_DIRECTORY_NAME)
@@ -62,6 +69,15 @@ class ReportWriter {
 
     void write(PluginData data) {
         Objects.requireNonNull(data)
+
+        //TODO :(
+        if (data.data instanceof Environment) {
+            Environment environment = data.data as Environment
+            name = environment.name
+            id = environment.id
+            url = environment.url
+        }
+
         serializeToData(data.name, data.data);
     }
 
@@ -87,7 +103,7 @@ class ReportWriter {
      */
     void writeReportInfo() {
         def stop = System.currentTimeMillis();
-        def info = new AllureReportInfo(time: stop - start, size: size)
+        def info = new AllureReportInfo(id: id, name: name, url: url, time: stop - start, size: size)
         serialize(getStreamToDataDirectory(REPORT_JSON), info);
     }
 

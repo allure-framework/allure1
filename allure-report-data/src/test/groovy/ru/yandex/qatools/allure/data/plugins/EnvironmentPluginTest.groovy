@@ -31,17 +31,55 @@ class EnvironmentPluginTest {
     @Test
     void shouldNotUpdateIdIfNull() {
         def id = plugin.environment.id
-        def name = plugin.environment.name
 
         def parameter = new Parameter(name: "pname", key: "pkey", value: "pvalue")
-        def env = new Environment(name: "name", parameter: [
+        def env = new Environment(name: "name", url: "url", parameter: [
                 parameter
         ])
         plugin.process(env)
 
         assert plugin.environment
         assert plugin.environment.id == id
+        assert plugin.environment.name == "name"
+        assert plugin.environment.url == "url"
+
+        assert plugin.environment.parameter.size() == 1
+        assert plugin.environment.parameter.contains(parameter)
+    }
+
+    @Test
+    void shouldNotUpdateNameIfNull() {
+        def name = plugin.environment.name
+
+        def parameter = new Parameter(name: "pname", key: "pkey", value: "pvalue")
+        def env = new Environment(id: "id", url: "url", parameter: [
+                parameter
+        ])
+        plugin.process(env)
+
+        assert plugin.environment
+        assert plugin.environment.id == "id"
         assert plugin.environment.name == name
+        assert plugin.environment.url == "url"
+
+        assert plugin.environment.parameter.size() == 1
+        assert plugin.environment.parameter.contains(parameter)
+    }
+
+    @Test
+    void shouldNotUpdateUrlIfNull() {
+        def url = plugin.environment.url
+
+        def parameter = new Parameter(name: "pname", key: "pkey", value: "pvalue")
+        def env = new Environment(id: "id", name: "name", parameter: [
+                parameter
+        ])
+        plugin.process(env)
+
+        assert plugin.environment
+        assert plugin.environment.id == "id"
+        assert plugin.environment.name == "name"
+        assert plugin.environment.url == url
 
         assert plugin.environment.parameter.size() == 1
         assert plugin.environment.parameter.contains(parameter)

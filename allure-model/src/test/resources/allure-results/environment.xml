@@ -1,6 +1,7 @@
 <qa:environment xmlns:qa="urn:model.commons.qatools.yandex.ru">
     <id>2a54c4d7-7d79-4615-b80d-ffc1107016a1</id>
     <name>Allure sample test pack</name>
+    <url>http://allure.qatools.ru/</url>
     <parameter>
         <name>Browser</name>
         <key>my.properties.browser</key>
