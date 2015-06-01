@@ -1,0 +1,20 @@
+<div class="xunit b-island tab-content-fill" pane-set>
+    <div class="pane_col" pane pane-expanded="true">
+        <div class="pane_content">
+            <div class="b-island__title">
+                <div ng-show="environment.url">
+                    Launch id: <a href="{{environment.url}}">{{environment.id}}</a>
+                </div>
+                <div ng-hide="environment.url">
+                    Launch id: {{environment.id}}
+                </div>
+            </div>
+            <div class="pane__header">
+                <h3>{{environment.name}}</h3>
+            </div>
+            <div class="list-item" ng-repeat="param in environment.parameter">
+                <span>{{param.key}} : {{param.value}}</span>
+            </div>
+        </div>
+    </div>
+</div>

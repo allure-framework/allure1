@@ -1,0 +1,6 @@
+{
+  "environment": {
+    "TITLE": "Environment",
+    "NO_CONTENT": "There is no environment variables"
+  }
+}
