@@ -68,6 +68,5 @@ public class WriteAttachmentTest {
         assertThat(attachment.getTitle(), is(TITLE));
         assertThat(resultsDirectory, contains(attachment.getSource()));
         assertThat(attachment.getType(), is(type));
-        assertThat(attachment.getSize(), is(bytes.length));
     }
 }

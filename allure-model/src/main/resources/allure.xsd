@@ -112,7 +112,11 @@
         <xs:attribute name="title" type="xs:string" use="required"/>
         <xs:attribute name="source" type="xs:string" use="required"/>
         <xs:attribute name="type" type="xs:string" use="required"/>
-        <xs:attribute name="size" type="xs:int"/>
+        <xs:attribute name="size" type="xs:int">
+            <xs:annotation>
+                <xs:documentation>Deprecated since 1.4.15. Size calculation moved to report phase.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
     <!--Deprecated, will be removed in 1.4.0-->
