@@ -1,6 +1,9 @@
 package ru.yandex.qatools.allure.data.converters
 
+import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TemporaryFolder
 import ru.yandex.qatools.allure.data.io.TestCaseReader
 import ru.yandex.qatools.allure.data.utils.TextUtils
 import ru.yandex.qatools.allure.model.Attachment
@@ -24,7 +27,19 @@ import static ru.yandex.qatools.allure.model.Status.PASSED
  */
 class DefaultTestCaseConverterTest {
 
-    def converter = new DefaultTestCaseConverter();
+    public static final String ATTACHMENT_SOURCE = "some-attachment.txt"
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder()
+
+    def converter
+
+    @Before
+    void setUp() throws Exception {
+        def dir = folder.newFolder()
+        new File(dir, ATTACHMENT_SOURCE).text = "some attachment content"
+        converter = new DefaultTestCaseConverter(dir)
+    }
 
     @Test
     void shouldConvertEmptyTestCase() {
@@ -297,6 +312,28 @@ class DefaultTestCaseConverterTest {
         def modify = converter.convert(origin)
 
         assert modify.attachments[0].uid
+    }
+
+    @Test
+    void shouldCalculateZeroSizeForNonExistingAttachments() {
+        def origin = new TestCaseResult(
+                name: "name",
+                attachments: [new Attachment()]
+        )
+        def modify = converter.convert(origin)
+
+        assert modify.attachments[0].size == 0
+    }
+
+    @Test
+    void shouldCalculateSizeForAttachments() {
+        def origin = new TestCaseResult(
+                name: "name",
+                attachments: [new Attachment(source: ATTACHMENT_SOURCE)]
+        )
+        def modify = converter.convert(origin)
+
+        assert modify.attachments[0].size == 23
     }
 
     @Test

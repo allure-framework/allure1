@@ -95,15 +95,15 @@ Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
                     <name>makeThisTestFailed</name>
                     <title>Make this test failed</title>
                     <attachments>
-                        <attachment title="TXT Attachment" source="01261e59-9b21-408d-9dff-34daec2addff-attachment.txt" type="text/plain" size="4396"/>
+                        <attachment title="TXT Attachment" source="01261e59-9b21-408d-9dff-34daec2addff-attachment.txt" type="text/plain"/>
                     </attachments>
                 </step>
             </steps>
             <attachments>
-                <attachment title="JSON Attachment" source="51aee409-51ce-44ee-a8c0-82e5a3c4fdad-attachment.txt" type="text/plain" size="3106"/>
-                <attachment title="XML Attachment" source="8bc0e8b2-b9f3-4d94-ae5e-99540156e65e-attachment.txt" type="text/plain" size="65"/>
-                <attachment title="JPG Attachment" source="8e86c8ae-c2cd-49d4-a1b8-87592aa6de02-attachment.png" type="image/png" size="33713"/>
-                <attachment title="CSV Attachment" source="b81da3c0-1b9d-4219-9e35-87e139ec446c-attachment.csv" type="text/csv" size="144"/>
+                <attachment title="JSON Attachment" source="51aee409-51ce-44ee-a8c0-82e5a3c4fdad-attachment.txt" type="text/plain"/>
+                <attachment title="XML Attachment" source="8bc0e8b2-b9f3-4d94-ae5e-99540156e65e-attachment.txt" type="text/plain"/>
+                <attachment title="JPG Attachment" source="8e86c8ae-c2cd-49d4-a1b8-87592aa6de02-attachment.png" type="image/png"/>
+                <attachment title="CSV Attachment" source="b81da3c0-1b9d-4219-9e35-87e139ec446c-attachment.csv" type="text/csv"/>
             </attachments>
             <labels>
                 <label name="severity" value="critical"/>

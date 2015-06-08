@@ -275,7 +275,7 @@ public final class AllureResultsUtils {
                 }
             }
         }
-        return new Attachment().withTitle(title).withSource(source).withType(type).withSize(attachment.length);
+        return new Attachment().withTitle(title).withSource(source).withType(type);
     }
 
     /**
