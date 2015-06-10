@@ -124,6 +124,12 @@ public class AllureReportGeneratorTest {
         assertThat(listFilesByRegex(".+-testcase\\.json", dataDirectory), not(empty()));
     }
 
+    @Test(expected = ReportGenerationException.class)
+    public void shouldFailIfNoResults() throws Exception {
+        AllureReportGenerator generator = new AllureReportGenerator(folder.newFolder());
+        generator.generate(folder.newFolder());
+    }
+
     class TestInjector extends AbstractModule {
 
         TestCaseConverter converter;
