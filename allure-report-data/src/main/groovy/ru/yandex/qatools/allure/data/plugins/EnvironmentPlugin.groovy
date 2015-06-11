@@ -32,7 +32,7 @@ class EnvironmentPlugin extends AbstractPlugin implements ProcessPlugin<Environm
     @Override
     Widget getWidget() {
         def widget = new KeyValueWidget(name)
-        widget.data = environment.parameter.take(10).collect {
+        widget.data = environment.parameter.collect {
             new KeyValueWidgetItem(key: it.key, value: it.value)
         }.sort { it.key }
         widget

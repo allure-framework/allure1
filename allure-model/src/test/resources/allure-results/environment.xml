@@ -8,8 +8,58 @@
         <value>Firefox</value>
     </parameter>
     <parameter>
-        <name>Test stand</name>
-        <key>my.properties.url</key>
+        <name>First test stand</name>
+        <key>my.first.url</key>
+        <value>http://ya.ru</value>
+    </parameter>
+    <parameter>
+        <name>Second test stand</name>
+        <key>my.second.url</key>
         <value>http://yandex.ru</value>
+    </parameter>
+    <parameter>
+        <name>Allure home page</name>
+        <key>allure.home.page</key>
+        <value>http://allure.qatools.ru</value>
+    </parameter>
+    <parameter>
+        <name>QATools team home page</name>
+        <key>qatools.home.page</key>
+        <value>http://qatools.ru</value>
+    </parameter>
+    <parameter>
+        <name>See more our team projects at</name>
+        <key>more.projects</key>
+        <value>http://github.com/qatools</value>
+    </parameter>
+    <parameter>
+        <name>You can contribute</name>
+        <key>help.us</key>
+        <value>https://github.com/allure-framework/allure-core/blob/master/CONTRIBUTING.md</value>
+    </parameter>
+    <parameter>
+        <name>more.properties1</name>
+        <key>x.more.properties1</key>
+        <value>some-value1</value>
+    </parameter>
+    <parameter>
+        <name>more.properties2</name>
+        <key>x.more.properties2</key>
+        <value>some-value2</value>
+    </parameter>
+    <parameter>
+        <name>more.properties3</name>
+        <key>x.more.properties3</key>
+        <value>some-value3</value>
+    </parameter>
+    <parameter>
+        <name>more.properties4</name>
+        <key>x.more.properties4</key>
+        <value>some-value4</value>
+    </parameter>
+    <parameter>
+        <name>more.properties5</name>
+        <key>x.more.properties5</key>
+        <value>some-value5</value>
     </parameter>
 </qa:environment>
