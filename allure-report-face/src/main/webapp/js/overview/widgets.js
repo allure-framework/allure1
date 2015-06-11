@@ -32,8 +32,13 @@
             scope: {
                 data: '='
             },
-            link: function($scope) {
-            }
+            controllerAs: 'ctrl',
+            controller: ['$scope', function($scope) {
+                this.dataLimit = 10;
+                this.showAll = function() {
+                    this.dataLimit = $scope.data.length;
+                }
+            }]
         }
     }]);
 })();
