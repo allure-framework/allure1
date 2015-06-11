@@ -54,9 +54,13 @@ public class AllureReportGenerator {
     }
 
     public void generate(ReportWriter writer) {
+        if (!testCaseReader.iterator().hasNext()) {
+            throw new ReportGenerationException("Could not find any allure results");
+        }
+
         for (TestCaseResult result : testCaseReader) {
             pluginManager.prepare(result);
-            
+
             AllureTestCase testCase = converter.convert(result);
             pluginManager.prepare(testCase);
             pluginManager.process(testCase);
