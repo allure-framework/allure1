@@ -1,0 +1,19 @@
+{
+  "xunit": {
+    "TITLE": "xUnit"
+  },
+  "testrun": {
+    "SUMMARY": "Sumario",
+    "TESTRUN": "Execução do teste:",
+    "TEST_SUITES": "Suites de teste",
+    "TIMEDATE": "inicio {{date}} às {{time}} ({{duration}})",
+    "STATISTIC": "Total: {suites, plural, one{# suite de teste} other{# suite de testes}}, {cases, plural, one{# caso de teste} other{# casos de teste}}",
+    "PASSED": "PASSOU",
+    "TOTAL": "Total {amount, plural, one{# suite} other{# suites}}",
+    "VISIBLE": "{{visible == amount ? '' : ' ('+visible+' shown)'}}"
+  },
+  "testsuite": {
+    "TESTSUITE": "Suite de teste",
+    "DESCRIPTION": "Descrição"
+  }
+}
