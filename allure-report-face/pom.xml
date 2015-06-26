@@ -349,7 +349,19 @@
                                     <value>${allure.tests.management.pattern}</value>
                                 </property>
                             </systemProperties>
+                            <additionalClasspathElements>
+                                <classpathElement>
+                                    ${settings.localRepository}/org/slf4j/slf4j-simple/1.7.12/slf4j-simple-1.7.12.jar
+                                </classpathElement>
+                            </additionalClasspathElements>
                         </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>slf4j-simple</artifactId>
+                                <version>1.7.12</version>
+                            </dependency>
+                        </dependencies>
                     </plugin>
                     <plugin>
                         <groupId>org.eclipse.jetty</groupId>

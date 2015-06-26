@@ -150,7 +150,15 @@
   &_item {
     display: block;
     padding: 10px;
-    text-align: center;
+    .fa {
+      visibility: hidden;
+      margin-right: 0.3em;
+    }
+    &-checked {
+      .fa {
+        visibility: visible;
+      }
+    }
   }
 }
 

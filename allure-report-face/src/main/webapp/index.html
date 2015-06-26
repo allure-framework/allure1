@@ -109,7 +109,7 @@
         <li class="dropdown feedback">
             <a class="clickable" dropdown-toggle>{{'index.FEEDBACK' | translate}} <b class="caret"></b></a>
             <div class="b-popup b-island b-island_mode_fly b-popup_show_bottom-center" role="menu">
-                <div class="b-popup__content">
+                <div class="b-popup__content text-center">
                     <a class="feedback_item" target="_blank" href="https://github.com/allure-framework/allure-core/wiki/FAQ-and-Troubleshooting">FAQ</a>
                     <a class="feedback_item" target="_blank" href="https://github.com/allure-framework/allure-core/issues/new">GitHub</a>
                     <a class="feedback_item" href="mailto:allure@yandex-team.ru">{{'index.MAIL' | translate}}</a>
@@ -122,8 +122,10 @@
         <li class="dropdown">
             <a class="clickable" dropdown-toggle>{{(langs | filter:{locale: selectedLang})[0].name}}<b class="caret"></b></a>
             <div class="b-popup b-island b-island_mode_fly b-popup_show_bottom-center" role="menu">
-                <div class="b-popup__content">
-                    <a ng-repeat="lang in langs" class="feedback_item clickable" data-ng-click="setLang(lang)">{{lang.name}}</a>
+                <div class="b-popup__content text-left">
+                    <a ng-repeat="lang in langs" class="feedback_item clickable" data-ng-click="setLang(lang)" ng-class="{'feedback_item-checked': lang.locale == selectedLang}">
+                        <span class="fa fa-check"></span>{{lang.name}}
+                    </a>
                 </div>
                 <div class="b-popup__tail"></div>
             </div>
