@@ -2,13 +2,13 @@ package ru.yandex.qatools.allure.testng;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.IConfigurationListener;
+import org.testng.ISuite;
+import org.testng.ISuiteListener;
 import org.testng.ITestContext;
-import org.testng.ITestListener;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
-import org.testng.SkipException;
-import org.testng.TestException;
+import org.testng.internal.IResultListener;
+
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.annotations.Parameter;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
@@ -28,9 +28,8 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -41,44 +40,37 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 22.11.13
  */
-public class AllureTestListener implements ITestListener, IConfigurationListener {
+public class AllureTestListener implements IResultListener, ISuiteListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AllureTestListener.class);
-
+    private static final String SUITE_UID = "SUITE_UID"; 
     private Allure lifecycle = Allure.LIFECYCLE;
-
-    private Map<String, String> suiteUid = new HashMap<>();
-
     private Set<String> startedTestNames = Collections.newSetFromMap(
             new ConcurrentHashMap<String, Boolean>());
-
-    @Override
-    public void onConfigurationSuccess(ITestResult iTestResult) {
-        //nothing
-    }
-
-    @Override
-    public void onConfigurationFailure(ITestResult iTestResult) {
-        if (!startedTestNames.contains(getName(iTestResult))) {
-            onTestStart(iTestResult);
+    
+    private enum ConfigMethodType {
+        BeforeSuite,BeforeTest,BeforeClass,BeforeGroups,BeforeMethod,
+        AfterSuite,AfterTest,AfterClass,AfterGroups,AfterMethod;
+        
+        public String getName() {
+            return "@" + this.name();
         }
-
-        Throwable throwable = iTestResult.getThrowable();
-        if (throwable == null) {
-            throwable = new TestException("Test configuration failure");
-        }
-
-        getLifecycle().fire(new TestCaseCanceledEvent()
-                        .withThrowable(throwable)
-        );
-        fireFinishTest();
+    }
+    
+    @Override
+    public void onStart(ISuite suite) {
+        //For future development
+        //Currently Allure model is not supporting TestNG Suite. 
+        //In Allure terminology Suite is a combination of TestNg Suite XML tag and TestNg Test XML tag
     }
 
     @Override
-    public void onConfigurationSkip(ITestResult iTestResult) {
-        //nothing
+    public void onFinish(ISuite suite) {
+        //For future development
+        //Currently Allure model is not supporting TestNG Suite. 
+        //In Allure terminology Suite is a combination of TestNg Suite XML tag and TestNg Test XML tag
     }
-
+    
     @Override
     public void onStart(ITestContext iTestContext) {
         getLifecycle().fire(new TestSuiteStartedEvent(
@@ -90,31 +82,54 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         ));
         addPendingMethods(iTestContext);
     }
-
-
-    private void addPendingMethods(ITestContext iTestContext) {
-        for (ITestNGMethod method : iTestContext.getExcludedMethods()) {
-            if (method.isTest() && !method.getEnabled()) {
-                Description description = new Description().withValue(method.getDescription());
-                TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestContext), method.getMethodName());
-                if (description.getValue() != null) {
-                    event.setDescription(description);
-                }
-                AnnotationManager am = new AnnotationManager(method.getConstructorOrMethod().getMethod().getAnnotations());
-                am.setDefaults(method.getInstance().getClass().getAnnotations());
-                am.update(event);
-                getLifecycle().fire(event);
-                getLifecycle().fire(new TestCasePendingEvent());
-                fireFinishTest();
-            }
-        }
-    }
-
+    
     @Override
     public void onFinish(ITestContext iTestContext) {
         getLifecycle().fire(new TestSuiteFinishedEvent(getSuiteUid(iTestContext)));
     }
+    
+    @Override
+    public void onConfigurationSuccess(ITestResult iTestResult) {
+        //Configuration method will be shown in the report on failure or on skip only
+    }
 
+    @Override
+    public void onConfigurationFailure(ITestResult iTestResult) {
+        if (isSuppressConfigEvent(iTestResult)) {
+            return;
+        }
+        String suiteUid = getSuiteUid(iTestResult.getTestContext());
+        if (isAfterSuiteConfigMethod(iTestResult)) {
+            String suiteTitle = getCurrentSuiteTitle(iTestResult.getTestContext());
+            getLifecycle().fire(new TestSuiteStartedEvent(suiteUid, suiteTitle).withTitle(suiteTitle));
+        }
+        Throwable throwable = iTestResult.getThrowable();
+        createConfigEvent(iTestResult);
+        getLifecycle().fire(new TestCaseFailureEvent().withThrowable(throwable));
+        fireFinishTest();
+        if (isAfterSuiteConfigMethod(iTestResult)) {
+            getLifecycle().fire(new TestSuiteFinishedEvent(suiteUid));
+        }
+    }
+
+    @Override
+    public void onConfigurationSkip(ITestResult iTestResult) {
+        if (isSuppressConfigEvent(iTestResult)) {
+            return;
+        }
+        String suiteUid = getSuiteUid(iTestResult.getTestContext());
+        if (isAfterSuiteConfigMethod(iTestResult)) {
+            String suiteTitle = getCurrentSuiteTitle(iTestResult.getTestContext());
+            getLifecycle().fire(new TestSuiteStartedEvent(suiteUid, suiteTitle).withTitle(suiteTitle));
+        }
+        createConfigEvent(iTestResult);
+        fireTestCaseCancel(iTestResult);
+        fireFinishTest();
+        if (isAfterSuiteConfigMethod(iTestResult)) {
+            getLifecycle().fire(new TestSuiteFinishedEvent(suiteUid));
+        }
+    } 
+    
     @Override
     public void onTestStart(ITestResult iTestResult) {
         ITestNGMethod method = iTestResult.getMethod();
@@ -122,8 +137,11 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         String testName = getName(iTestResult);
         startedTestNames.add(testName);
         testName = testName.replace(suitePrefix, "");
+        
+        String invoc = getMethodInvocationsAndSuccessPercentage(iTestResult);
         Description description = new Description().withValue(method.getDescription());
-        TestCaseStartedEvent event = new TestCaseStartedEvent(getSuiteUid(iTestResult.getTestContext()), testName);
+        String suiteUid = getSuiteUid(iTestResult.getTestContext());
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, testName + invoc);
         if (description.getValue() != null) {
             event.setDescription(description);
         }
@@ -134,7 +152,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         getLifecycle().fire(event);
         fireAddParameterEvents(iTestResult);
     }
-
+    
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         fireFinishTest();
@@ -149,27 +167,18 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
     }
 
     @Override
+    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
+        Throwable throwable = iTestResult.getThrowable();
+        getLifecycle().fire(new TestCaseCanceledEvent().withThrowable(throwable));
+        fireFinishTest();
+    }
+    
+    @Override
     public void onTestSkipped(ITestResult iTestResult) {
         if (!startedTestNames.contains(getName(iTestResult))) {
             onTestStart(iTestResult);
         }
-
-        Throwable throwable = iTestResult.getThrowable();
-        if (throwable == null) {
-            throwable = new SkipException("The test was skipped for some reason");
-        }
-
-        getLifecycle().fire(new TestCaseCanceledEvent()
-                        .withThrowable(throwable)
-        );
-        fireFinishTest();
-    }
-
-    @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult iTestResult) {
-        getLifecycle().fire(new TestCaseFailureEvent()
-                        .withThrowable(iTestResult.getThrowable())
-        );
+        fireTestCaseCancel(iTestResult);
         fireFinishTest();
     }
 
@@ -183,43 +192,7 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
         }
         return iTestResult.getInstance().getClass().getAnnotations();
     }
-
-    private String getName(ITestResult iTestResult) {
-        String suitePrefix = getCurrentSuitePrefix(iTestResult);
-        StringBuilder sb = new StringBuilder(suitePrefix);
-        sb.append(iTestResult.getName());
-        Object[] parameters = iTestResult.getParameters();
-        if (parameters != null && parameters.length > 0) {
-            sb.append("[");
-            for (Object parameter : parameters) {
-                sb.append(parameter).append(",");
-            }
-            sb.replace(sb.length() - 1, sb.length(), "]");
-        }
-        return sb.toString();
-    }
-
-    String getCurrentSuiteTitle(ITestContext iTestContext) {
-        String suite = iTestContext.getSuite().getName();
-        String xmlTest = iTestContext.getCurrentXmlTest().getName();
-        String params = "";
-
-        if (!iTestContext.getCurrentXmlTest().getLocalParameters().isEmpty()) {
-            params = iTestContext.getCurrentXmlTest().getLocalParameters()
-                    .toString().replace("{", "[").replace("}", "]");
-        }
-
-        return suite + " : " + xmlTest + params;
-    }
-
-    private String getCurrentSuitePrefix(ITestResult iTestResult) {
-        return "{" + getCurrentSuiteTitle(iTestResult.getTestContext()) + "}";
-    }
-
-    private void fireFinishTest() {
-        getLifecycle().fire(new TestCaseFinishedEvent());
-    }
-
+   
     Allure getLifecycle() {
         return lifecycle;
     }
@@ -235,15 +208,175 @@ public class AllureTestListener implements ITestListener, IConfigurationListener
      */
     String getSuiteUid(ITestContext iTestContext) {
         String uid;
-        String suite = getCurrentSuiteTitle(iTestContext);
-        if (suiteUid.containsKey(suite)) {
-            uid = suiteUid.get(suite);
+        if (iTestContext.getAttribute(SUITE_UID) != null) {
+            uid = (String) iTestContext.getAttribute(SUITE_UID);
         } else {
             uid = UUID.randomUUID().toString();
-            suiteUid.put(suite, uid);
+            iTestContext.setAttribute(SUITE_UID, uid);
         }
         return uid;
     }
+    
+    String getCurrentSuiteTitle(ITestContext iTestContext) {
+        String suite = iTestContext.getSuite().getName();
+        String xmlTest = iTestContext.getCurrentXmlTest().getName();
+        String params = "";
+
+        if (!iTestContext.getCurrentXmlTest().getLocalParameters().isEmpty()) {
+            params = iTestContext.getCurrentXmlTest().getLocalParameters()
+                    .toString().replace("{", "[").replace("}", "]");
+        }
+
+        return suite + " : " + xmlTest + params;
+    }
+    
+    private String getName(ITestResult iTestResult) {
+        String suitePrefix = getCurrentSuitePrefix(iTestResult);
+        StringBuilder sb = new StringBuilder(suitePrefix);
+        sb.append(iTestResult.getName());
+        Object[] parameters = iTestResult.getParameters();
+        if (parameters != null && parameters.length > 0) {
+            sb.append("[");
+            for (Object parameter : parameters) {
+                sb.append(parameter).append(",");
+            }
+            sb.replace(sb.length() - 1, sb.length(), "]");
+        }
+        return sb.toString();
+    }
+    
+    private String getCurrentSuitePrefix(ITestResult iTestResult) {
+        return "{" + getCurrentSuiteTitle(iTestResult.getTestContext()) + "}";
+    }
+  
+    private void addPendingMethods(ITestContext iTestContext) {
+        for (ITestNGMethod method : iTestContext.getExcludedMethods()) {
+            if (method.isTest() && !method.getEnabled()) {
+                Description description = new Description().withValue(method.getDescription());
+                String suiteUid = getSuiteUid(iTestContext);
+                TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, method.getMethodName());
+                if (description.getValue() != null) {
+                    event.setDescription(description);
+                }
+                Annotation[] annotations = method.getConstructorOrMethod().getMethod().getAnnotations();
+                AnnotationManager am = new AnnotationManager(annotations);
+                am.setDefaults(method.getInstance().getClass().getAnnotations());
+                am.update(event);
+                getLifecycle().fire(event);
+                getLifecycle().fire(new TestCasePendingEvent());
+                fireFinishTest();
+            }
+        }
+    }
+    
+    private String getMethodInvocationsAndSuccessPercentage(ITestResult iTestResult) {
+        int percentage = iTestResult.getMethod().getSuccessPercentage();
+        int curCount = iTestResult.getMethod().getCurrentInvocationCount() + 1;
+        int iCount = iTestResult.getMethod().getInvocationCount();
+        String invoc = "";
+        if (iCount > 1) {
+            invoc = ":" + curCount + "/" + iCount;
+            if (percentage > 0) { 
+                invoc = invoc + " " + percentage + "%";
+            }
+        }
+        return invoc;
+    }
+    
+    private ConfigMethodType getConfigMethodType(ITestResult iTestResult) {
+        if (iTestResult.getMethod().isBeforeSuiteConfiguration()){
+            return ConfigMethodType.BeforeSuite;
+        }
+        if (iTestResult.getMethod().isBeforeTestConfiguration()) {
+            return ConfigMethodType.BeforeTest;
+        }
+        if (iTestResult.getMethod().isBeforeClassConfiguration()) {
+            return ConfigMethodType.BeforeClass;
+        }
+        if (iTestResult.getMethod().isBeforeGroupsConfiguration()) {
+            return ConfigMethodType.BeforeGroups;
+        }
+        if (iTestResult.getMethod().isBeforeMethodConfiguration()) {
+            return ConfigMethodType.BeforeMethod;
+        }
+        if (iTestResult.getMethod().isAfterSuiteConfiguration()){
+            return ConfigMethodType.AfterSuite;
+        }
+        if (iTestResult.getMethod().isAfterTestConfiguration()) {
+            return ConfigMethodType.AfterTest;
+        }
+        if (iTestResult.getMethod().isAfterClassConfiguration()) {
+            return ConfigMethodType.AfterClass;
+        }
+        if (iTestResult.getMethod().isAfterGroupsConfiguration()) {
+            return ConfigMethodType.AfterGroups;
+        }
+        if (iTestResult.getMethod().isAfterMethodConfiguration()) {
+            return ConfigMethodType.AfterMethod;
+        }
+        return null;
+    }
+
+    private boolean isAfterSuiteConfigMethod(ITestResult iTestResult) {
+        if (getConfigMethodType(iTestResult).equals(ConfigMethodType.AfterSuite)) {
+            return true;
+        }
+        return false;
+    }
+        
+    /**
+     * Suppress duplicated configuration method events
+     */
+    @SuppressWarnings("unchecked")
+    private synchronized boolean isSuppressConfigEvent(ITestResult iTestResult) {
+        Set<String> methodNames;
+        ITestContext context = iTestResult.getTestContext();
+        String configType = getConfigMethodType(iTestResult).getName();
+        if (context.getAttribute(configType) == null) {
+            methodNames = new HashSet<>();
+            methodNames.add(iTestResult.getName());
+            context.setAttribute(configType, methodNames);
+            return false;
+        } else {
+            methodNames = (Set<String>) context.getAttribute(configType);
+            if (!methodNames.contains(iTestResult.getName())){
+                methodNames.add(iTestResult.getName());
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private void createConfigEvent(ITestResult iTestResult) {
+        String description = iTestResult.getMethod().getDescription();
+        if (description == null || description.isEmpty()) {
+            description = getConfigMethodType(iTestResult).getName();
+        }
+        String suiteUid = getSuiteUid(iTestResult.getTestContext());
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, iTestResult.getName());
+        event.setDescription(new Description().withValue(description));
+        AnnotationManager am = new AnnotationManager(getMethodAnnotations(iTestResult));
+        am.setDefaults(getClassAnnotations(iTestResult));
+        am.update(event);
+        getLifecycle().fire(event);
+    }
+
+    private void fireFinishTest() {
+        getLifecycle().fire(new TestCaseFinishedEvent());
+    }
+   
+    private void fireTestCaseCancel(ITestResult iTestResult) {
+        Throwable skipMessage = new Throwable() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String getMessage() {
+                return "Skipped due to dependency on other skipped or failed test methods";
+                }
+        };
+        getLifecycle().fire(new TestCaseCanceledEvent().withThrowable(skipMessage));
+    }
+    
 
     /**
      * Creates test case parameters in XML in case of parametrized test (see TestNG @DataProvider).

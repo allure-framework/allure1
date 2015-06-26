@@ -1,35 +1,35 @@
 package ru.yandex.qatools.allure.testng;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 import org.testng.TestNG;
 
 import com.beust.jcommander.internal.Lists;
 
+import ru.yandex.qatools.allure.commons.AllureFileUtils;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
-import ru.yandex.qatools.allure.model.ObjectFactory;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 
-import java.io.*;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Iterator;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
-import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
-import static java.nio.file.FileVisitResult.*;
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
+/**
+ * @author Michael Braiman braimanm@gmail.com
+ */
 public class AllureTestListenerMultipleSuitesTest {
 
     private static final String SUITE1 = "/suite1.xml";
@@ -55,12 +55,12 @@ public class AllureTestListenerMultipleSuitesTest {
     @After
     public void tearDown() throws IOException {
         AllureResultsUtils.setResultsDirectory(null);
-        deleteNotEmptyDirectory(resultsDir);
+        AllureTestUtils.deleteNotEmptyDirectory(resultsDir);
     }
 
     @Test
     public void suiteFilesCountTest() throws Exception {
-        assertThat(listTestSuiteFiles(resultsDir.toFile()).size(), is(2));
+        assertThat(listTestSuiteFiles(resultsDir.toFile()).size(), equalTo(2));
     }
 
     @Test
@@ -73,36 +73,12 @@ public class AllureTestListenerMultipleSuitesTest {
     }
     
     @Test
-    public void validatePendingTest() throws JAXBException {
-        File resultfile = listTestSuiteFiles(resultsDir.toFile()).iterator().next();
-        JAXBContext context = JAXBContext.newInstance(ObjectFactory.class);
-        Unmarshaller unmarshaller = context.createUnmarshaller();
-        @SuppressWarnings("unchecked")
-        JAXBElement<TestSuiteResult> unmarshalledObject =
-                (JAXBElement<TestSuiteResult>) unmarshaller.unmarshal(resultfile);
-        TestCaseResult testResult = unmarshalledObject.getValue().getTestCases().get(0);
-        
-        assertThat(testResult.getStatus(), is(Status.PENDING));  
-        assertThat(testResult.getDescription().getValue(), is("This is pending test"));
+    public void validatePendingTest() throws IOException {
+        TestSuiteResult testSuite = AllureFileUtils.unmarshalSuites(resultsDir.toFile()).get(0);
+        TestCaseResult testResult = testSuite.getTestCases().get(0);
+
+        assertThat(testResult.getStatus(), equalTo(Status.PENDING));  
+        assertThat(testResult.getDescription().getValue(), equalTo("This is pending test"));
     }
     
-    private static void deleteNotEmptyDirectory(Path path) throws IOException {
-        Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                Files.delete(file);
-                return CONTINUE;
-            }
-
-            @Override
-            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                if (exc == null) {
-                    Files.delete(dir);
-                    return CONTINUE;
-                } else {
-                    throw exc;
-                }
-            }
-        });
-    }
 }

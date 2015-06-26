@@ -10,6 +10,7 @@ import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.internal.ConstructorOrMethod;
 import org.testng.xml.XmlTest;
+
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.annotations.Parameter;
 import ru.yandex.qatools.allure.events.AddParameterEvent;
@@ -23,6 +24,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.UUID;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertEquals;
@@ -77,25 +79,13 @@ public class AllureTestListenerTest {
         when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
         when(testResult.getTestContext()).thenReturn(testContext);
         doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
-
+        
+        String uid = UUID.randomUUID().toString();
+        when(testContext.getAttribute("SUITE_UID")).thenReturn(uid);
         testngListener.onTestSkipped(testResult);
 
         String suiteUid = testngListener.getSuiteUid(testContext);
         verify(allure).fire(eq(withExecutorInfo(new TestCaseStartedEvent(suiteUid, DEFAULT_TEST_NAME))));
-    }
-
-    @Test
-    public void skipTestWithThrowable() {
-        Throwable throwable = new NullPointerException();
-        when(testResult.getTestContext()).thenReturn(testContext);
-        when(testResult.getThrowable()).thenReturn(throwable);
-        when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
-
-        doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
-
-        testngListener.onTestSkipped(testResult);
-
-        verify(allure).fire(eq(new TestCaseCanceledEvent().withThrowable(throwable)));
     }
 
     @Test
@@ -136,7 +126,9 @@ public class AllureTestListenerTest {
         when(testResult.getParameters()).thenReturn(new Object[] { doubleParameter, stringParameter, anotherStringParameter});
 
         doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
-
+        
+        String uid = UUID.randomUUID().toString();
+        when(testContext.getAttribute("SUITE_UID")).thenReturn(uid);
         testngListener.onTestStart(testResult);
 
         String suiteUid = testngListener.getSuiteUid(testContext);
