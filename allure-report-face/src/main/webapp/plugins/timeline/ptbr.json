@@ -1,0 +1,7 @@
+{
+  "timeline": {
+    "TITLE": "Linha do tempo",
+    "HEADER": "Linha do tempo",
+    "TIMEDATE": "Inicio {{date}} ás {{time}}"
+  }
+}

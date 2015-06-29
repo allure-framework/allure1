@@ -1,0 +1,7 @@
+{
+  "defects": {
+    "TITLE": "Erros",
+    "STATISTIC": "{amount, plural, one{# erro} other{# erros}}",
+    "NO_DEFECTS": "Nenhum erro ao executar os testes. Bom trabalho!"
+  }
+}
