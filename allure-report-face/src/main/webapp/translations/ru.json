@@ -79,9 +79,9 @@
         
   "testcase":  
         {
-            "TESTCASE": "Тестовый случай",
+            "TESTCASE": "Тестовый сценарий",
             "SEVERITY": "Серьезность: {{severity}}",
-            "ISSUES": "Дефекты",
+            "ISSUES": "Задачи",
             "TEST_ID": "ID теста:",
             "TEST_PASSED": "Тест пройден успешно!",
             "RAW": "Исходник",
