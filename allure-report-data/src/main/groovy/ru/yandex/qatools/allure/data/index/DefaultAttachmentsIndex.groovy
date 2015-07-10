@@ -1,7 +1,10 @@
 package ru.yandex.qatools.allure.data.index
 
+import com.google.inject.Inject
+import com.google.inject.Singleton
 import groovy.transform.CompileStatic
 import ru.yandex.qatools.allure.data.AttachmentInfo
+import ru.yandex.qatools.allure.data.io.ResultDirectories
 import ru.yandex.qatools.allure.data.plugins.AttachmentsIndex
 
 import static java.util.Collections.unmodifiableList
@@ -15,6 +18,7 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 10.07.15
  */
+@Singleton
 @CompileStatic
 class DefaultAttachmentsIndex implements AttachmentsIndex {
 
@@ -27,7 +31,8 @@ class DefaultAttachmentsIndex implements AttachmentsIndex {
      * @param directories the directories to find attachments.
      * Should not be empty.
      */
-    public DefaultAttachmentsIndex(File... directories) {
+    @Inject
+    public DefaultAttachmentsIndex(@ResultDirectories File... directories) {
         for (def file : listAttachmentFiles(directories)) {
             def uid = generateUid()
             def source = file.name

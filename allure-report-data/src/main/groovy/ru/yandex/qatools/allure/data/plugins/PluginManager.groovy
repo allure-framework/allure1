@@ -41,15 +41,13 @@ class PluginManager {
      * Create an instance of plugin manager.
      */
     @Inject
-    PluginManager(PluginLoader loader, Injector injector = null) {
-        def plugins = load(loader, injector)
-        preparePlugins = new PluginStorage<>(filterByType(plugins, PreparePlugin))
+    PluginManager(PluginsIndex index) {
+        preparePlugins = new PluginStorage<>(index.findAll(PreparePlugin))
+        processPlugins = new PluginStorage<>(index.findAll(ProcessPlugin))
 
-        def processors = filterByType(plugins, ProcessPlugin)
-        processPlugins = new PluginStorage<>(processors)
-        pluginsWithResources = filterByType(processors, WithResources)
-        pluginsWithWidgets = filterByType(processors, WithWidget)
-        pluginsWithData = filterByType(processors, WithData)
+        pluginsWithResources = index.findAll(WithResources)
+        pluginsWithWidgets = index.findAll(WithWidget)
+        pluginsWithData = index.findAll(WithData)
     }
 
     /**
@@ -153,53 +151,5 @@ class PluginManager {
             }
         }
         result
-    }
-
-    /**
-     * Load all plugins using given {@link PluginLoader} then remove all null plugins
-     * and finally inject members to each plugin in case not null injector. Plugins
-     * returned in order by priority. Plugins with higher priority will be first,
-     * if some plugins have equals priority then they will be ordered alphabetically.
-     */
-    protected static List<Plugin> load(PluginLoader loader, Injector injector) {
-        def result = [] as List<Plugin>
-
-        def plugins = loader.loadPlugins() ?: [] as List<Plugin>
-        plugins.each {
-            if (isValidPlugin(it)) {
-                injector?.injectMembers(it)
-                result.add(it)
-            }
-        }
-        result.sort(false, { first, second ->
-            getPriority(second as Plugin) <=> getPriority(first as Plugin) ?:
-                    first.class.simpleName <=> second.class.simpleName
-        })
-    }
-
-    /**
-     * Get priority of given plugin.
-     * @see WithPriority
-     */
-    protected static int getPriority(Plugin plugin) {
-        plugin instanceof WithPriority ? (plugin as WithPriority).priority : 0
-    }
-
-    /**
-     * Some checks for plugins.
-     * @see AbstractPlugin#isValid(java.lang.Class)
-     */
-    protected static boolean isValidPlugin(Plugin plugin) {
-        return plugin && (plugin instanceof AbstractPlugin ?
-                AbstractPlugin.isValid(plugin.class) : true)
-    }
-
-    /**
-     * Find all plugins with specified type.
-     */
-    protected static <T> List<T> filterByType(List<? extends Plugin> plugins, Class<T> type) {
-        plugins.findAll {
-            type.isAssignableFrom((it as Object).class)
-        } as List<T>
     }
 }

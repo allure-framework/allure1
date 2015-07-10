@@ -1,8 +1,5 @@
 package ru.yandex.qatools.allure.data.plugins
 
-import com.google.inject.AbstractModule
-import com.google.inject.Guice
-import com.google.inject.Inject
 import groovy.transform.EqualsAndHashCode
 import org.apache.commons.io.FilenameUtils
 import org.junit.ClassRule
@@ -10,6 +7,7 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.Widgets
+import ru.yandex.qatools.allure.data.index.DefaultPluginsIndex
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
 
@@ -26,14 +24,12 @@ class PluginManagerTest {
 
     @Test
     void shouldNotFailIfLoadNull() {
-        def loader = [loadPlugins: { null }] as PluginLoader
-        new PluginManager(loader)
+        createPluginManager(null)
     }
 
     @Test
     void shouldNotFailIfProcessNull() {
-        def loader = [loadPlugins: { [] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([])
 
         manager.prepare(null)
         manager.process(null)
@@ -41,8 +37,7 @@ class PluginManagerTest {
 
     @Test
     void shouldNotFailIfNoPlugins() {
-        def loader = [loadPlugins: { [] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([])
 
         manager.prepare(new Object())
         manager.process(new ArrayList())
@@ -50,8 +45,7 @@ class PluginManagerTest {
 
     @Test
     void shouldNotFailIfNullPlugins() {
-        def loader = [loadPlugins: { [null] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([null])
 
         manager.prepare(new Object())
         manager.process(new ArrayList())
@@ -61,8 +55,7 @@ class PluginManagerTest {
 
     @Test
     void shouldDoNothingIfNoPluginForTypePreparedObject() {
-        def loader = [loadPlugins: { [new SomePreparePlugin()] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([new SomePreparePlugin()])
 
         Integer number = 4;
         manager.prepare(number)
@@ -74,8 +67,7 @@ class PluginManagerTest {
     void shouldChangePreparedObjects() {
         def plugin1 = new SomePreparePlugin(suffix: "_PLUGIN1")
         def plugin2 = new SomePreparePlugin(suffix: "_PLUGIN2")
-        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([plugin1, plugin2])
 
         def object1 = new SomeObject(someValue: "object1")
         manager.prepare(object1)
@@ -90,8 +82,7 @@ class PluginManagerTest {
     void shouldNotChangeProcessedObjects() {
         def plugin1 = new SomeProcessPlugin(suffix: "_PLUGIN1")
         def plugin2 = new SomeProcessPlugin(suffix: "_PLUGIN2")
-        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([plugin1, plugin2])
 
         def object1 = new SomeObject(someValue: "object1")
         manager.process(object1)
@@ -106,8 +97,7 @@ class PluginManagerTest {
     void shouldUpdateDataWhenProcessObjects() {
         def plugin1 = new SomeProcessPlugin(suffix: "_PLUGIN1")
         def plugin2 = new SomeProcessPlugin(suffix: "_PLUGIN2")
-        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([plugin1, plugin2])
 
         def object1 = new SomeObject(someValue: "object1")
         manager.process(object1)
@@ -132,31 +122,17 @@ class PluginManagerTest {
     }
 
     @Test
-    void shouldInjectMembersToPlugins() {
-        def plugin = new SomePluginWithInjection()
-        def loader = [loadPlugins: { [plugin] }] as PluginLoader
-        def injectable = new SomeInjectable(value: "some nice value")
-        def injector = new SomeInjector(injectable: injectable)
-        //noinspection GroovyUnusedAssignment
-        def manager = new PluginManager(loader, Guice.createInjector(injector))
-
-        plugin.injectable == injectable
-    }
-
-    @Test
     void shouldNotFailIfNullData() {
-        def loader = [loadPlugins: { [new SomeProcessPluginWithNullData()] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([new SomeProcessPluginWithNullData()])
 
         manager.process(new SomeObject())
-        assert manager.pluginsData  == [null] as List<PluginData>
+        assert manager.pluginsData == [null] as List<PluginData>
     }
 
     @Test
     void shouldCopyPluginResources() {
         def plugin = new SomePluginWithResources()
-        def loader = [loadPlugins: { [plugin] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([plugin])
         manager.writePluginResources(writer)
 
         assert writer.writtenResources.size() == 1
@@ -171,8 +147,7 @@ class PluginManagerTest {
     void shouldWriteListOfPluginWithResources() {
         def plugin1 = new SomePluginWithResources()
         def plugin2 = new SomeProcessPlugin()
-        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([plugin1, plugin2])
 
         manager.writePluginList(writer)
 
@@ -189,8 +164,7 @@ class PluginManagerTest {
     void shouldWritePluginWidget() {
         def plugin1 = new SomePluginWithWidget()
         def plugin2 = new SomeProcessPlugin()
-        def loader = [loadPlugins: { [plugin1, plugin2] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        def manager = createPluginManager([plugin1, plugin2])
 
         manager.writePluginWidgets(writer)
 
@@ -212,33 +186,38 @@ class PluginManagerTest {
 
     @Test
     void shouldProcessPluginsByPriority() {
-        def loader = [loadPlugins: { [
+        def manager = createPluginManager([
                 new SomeProcessPlugin(suffix: "without_lexSecond"),
                 new SomeOtherProcessPlugin(suffix: "without_lexFirst"),
                 new SomePluginWithLowPriority(suffix: "with_low"),
                 new SomePluginWithHighPriority(suffix: "with_high")
-        ] }] as PluginLoader
-        def manager = new PluginManager(loader)
+        ])
 
         manager.process(new SomeObject(someValue: "value_"))
 
         def data = manager.pluginsData
         assert data
         assert data.size() == 4
-        assert data.collect {(it.data as SomeObject).someValue} == [
-            "value_with_high",
-            "value_with_low",
-            "value_without_lexFirst",
-            "value_without_lexSecond"
+        assert data.collect { (it.data as SomeObject).someValue } == [
+                "value_with_high",
+                "value_with_low",
+                "value_without_lexFirst",
+                "value_without_lexSecond"
         ]
+    }
+
+    PluginManager createPluginManager(List<Plugin> plugins) {
+        def loader = [loadPlugins: { plugins }] as PluginLoader
+        def index = new DefaultPluginsIndex(loader)
+        new PluginManager(index)
     }
 
     /**
      * Should use mock instead this class, but groovy mocks suck sometimes =(
      */
     class DummyReportWriter extends ReportWriter {
-        Map<String, List<String>> writtenResources = [:].withDefault {[]}
-        Map<String, Object> writtenData = [:].withDefault {[]}
+        Map<String, List<String>> writtenResources = [:].withDefault { [] }
+        Map<String, Object> writtenData = [:].withDefault { [] }
 
         DummyReportWriter(File dir) {
             super(dir)
@@ -253,21 +232,6 @@ class PluginManagerTest {
         @Override
         void write(String pluginName, URL resource) {
             writtenResources.get(pluginName).add(FilenameUtils.getName(resource.toString()))
-        }
-    }
-
-    @EqualsAndHashCode
-    class SomeInjectable {
-        String value
-    }
-
-    class SomeInjector extends AbstractModule {
-
-        SomeInjectable injectable;
-
-        @Override
-        protected void configure() {
-            bind(SomeInjectable).toInstance(injectable)
         }
     }
 
@@ -298,16 +262,6 @@ class PluginManagerTest {
         }
     }
 
-    class SomePluginWithInjection extends SomePlugin implements PreparePlugin<SomeObject> {
-
-        @Inject
-        SomeInjectable injectable;
-
-        @Override
-        void prepare(SomeObject data) {
-            //do nothing
-        }
-    }
 
     class SomePreparePlugin extends SomePlugin implements PreparePlugin<SomeObject> {
         def suffix = "_SUFFIX";
