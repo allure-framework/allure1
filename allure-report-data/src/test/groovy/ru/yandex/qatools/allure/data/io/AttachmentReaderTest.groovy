@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import ru.yandex.qatools.allure.data.index.DefaultAttachmentIndex
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -18,7 +19,6 @@ class AttachmentReaderTest {
     void shouldNotHasNextIfNoFiles() {
         def reader = getReader([]);
         assert !reader.iterator().hasNext()
-        assert reader.iterator().next() == null
     }
 
     @Test
@@ -28,14 +28,8 @@ class AttachmentReaderTest {
 
         def next = reader.iterator().next()
         assert next
-        assert next.name == "some-attachment.txt"
+        assert next.source == "some-attachment.txt"
         assert next.path
-    }
-
-    @Test(expected = UnsupportedOperationException)
-    void shouldNotRemoveFromIterator() {
-        def reader = getReader(["some"]);
-        reader.iterator().remove()
     }
 
     def getReader(List<String> attachmentNames) {
@@ -45,7 +39,7 @@ class AttachmentReaderTest {
             FileUtils.writeStringToFile(createFile(dir, it), "test-content")
         }
 
-        new AttachmentReader(dir);
+        new AttachmentReader(index: new DefaultAttachmentIndex(dir))
     }
 
     static def createFile(File dir, String name) {

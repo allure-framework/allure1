@@ -62,7 +62,7 @@ public class AllureReportGeneratorTest {
         doReturn(Arrays.asList(environment).iterator()).when(environmentReader).iterator();
 
         AttachmentInfo attachment = new AttachmentInfo();
-        attachment.setName("name");
+        attachment.setSource("name");
         attachment.setPath("path");
         @SuppressWarnings("unchecked")
         Reader<AttachmentInfo> attachmentReader = mock(Reader.class);

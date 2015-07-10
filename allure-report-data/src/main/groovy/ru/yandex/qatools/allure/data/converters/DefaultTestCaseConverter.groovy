@@ -9,7 +9,7 @@ import ru.yandex.qatools.allure.data.AllureStep
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestSuiteInfo
 import ru.yandex.qatools.allure.data.Summary
-import ru.yandex.qatools.allure.data.io.ResultDirectories
+import ru.yandex.qatools.allure.data.plugins.AttachmentIndex
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 import ru.yandex.qatools.allure.data.utils.SummaryCategory
 import ru.yandex.qatools.allure.data.utils.TextUtils
@@ -17,7 +17,6 @@ import ru.yandex.qatools.allure.model.Attachment
 import ru.yandex.qatools.allure.model.Step
 import ru.yandex.qatools.allure.model.TestCaseResult
 
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.listAttachmentFiles
 import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
 
 /**
@@ -30,19 +29,11 @@ class DefaultTestCaseConverter implements TestCaseConverter {
     public static final String UNKNOWN_TEST_SUITE = "UnknownTestSuite"
     public static final String UNKNOWN_TEST_CASE = "UnknownTestCase"
 
-    def attachments = [:].withDefault { 0 } as Map<String, Integer>
+    @Inject
+    AttachmentIndex attachmentsIndex
 
     def suiteUids = [:].withDefault {
         generateUid();
-    }
-
-    @Inject
-    DefaultTestCaseConverter(@ResultDirectories File... inputDirectories) {
-        def files = listAttachmentFiles(inputDirectories)
-        files.each { file ->
-            attachments[file.name] = file.size()
-        }
-
     }
 
     @Override
@@ -118,12 +109,14 @@ class DefaultTestCaseConverter implements TestCaseConverter {
     class AttachmentProcessor implements Converter<Attachment, AllureAttachment> {
         @Override
         public AllureAttachment convert(MappingContext<Attachment, AllureAttachment> context) {
-            def result = context.destination;
+            def result = context.destination
 
-            result.uid = generateUid();
-            result.size = attachments[result.source]
+            def info = attachmentsIndex.findBySource(result.source)
 
-            result;
+            result.uid = info?.uid ?: generateUid()
+            result.size = info?.size ?: 0
+
+            result
         }
     }
 }
