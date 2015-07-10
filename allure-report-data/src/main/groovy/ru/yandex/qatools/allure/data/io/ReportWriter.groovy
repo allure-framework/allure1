@@ -85,11 +85,11 @@ class ReportWriter {
         Objects.requireNonNull(attachmentInfo)
         try {
             Path from = Paths.get(attachmentInfo.path)
-            getStreamToDataDirectory(attachmentInfo.name).withCloseable { output ->
+            getStreamToDataDirectory(attachmentInfo.source).withCloseable { output ->
                 Files.copy(from, output)
             }
         } catch (IOException e) {
-            log.error("Can't copy attachment $attachmentInfo.name from $attachmentInfo.path", e)
+            log.error("Can't copy attachment $attachmentInfo.source from $attachmentInfo.path", e)
         }
     }
 
