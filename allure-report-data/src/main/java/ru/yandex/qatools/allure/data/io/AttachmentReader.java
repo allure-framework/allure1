@@ -2,7 +2,7 @@ package ru.yandex.qatools.allure.data.io;
 
 import com.google.inject.Inject;
 import ru.yandex.qatools.allure.data.AttachmentInfo;
-import ru.yandex.qatools.allure.data.plugins.AttachmentIndex;
+import ru.yandex.qatools.allure.data.plugins.AttachmentsIndex;
 
 import java.util.Iterator;
 
@@ -13,18 +13,18 @@ import java.util.Iterator;
 public class AttachmentReader implements Reader<AttachmentInfo> {
 
     @Inject
-    private AttachmentIndex index;
+    private AttachmentsIndex index;
 
     @Override
     public Iterator<AttachmentInfo> iterator() {
         return index.findAll().iterator();
     }
 
-    public AttachmentIndex getIndex() {
+    public AttachmentsIndex getIndex() {
         return index;
     }
 
-    public void setIndex(AttachmentIndex index) {
+    public void setIndex(AttachmentsIndex index) {
         this.index = index;
     }
 }

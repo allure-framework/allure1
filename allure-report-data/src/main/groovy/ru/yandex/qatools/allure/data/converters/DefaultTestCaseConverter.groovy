@@ -9,7 +9,7 @@ import ru.yandex.qatools.allure.data.AllureStep
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestSuiteInfo
 import ru.yandex.qatools.allure.data.Summary
-import ru.yandex.qatools.allure.data.plugins.AttachmentIndex
+import ru.yandex.qatools.allure.data.plugins.AttachmentsIndex
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 import ru.yandex.qatools.allure.data.utils.SummaryCategory
 import ru.yandex.qatools.allure.data.utils.TextUtils
@@ -30,7 +30,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
     public static final String UNKNOWN_TEST_CASE = "UnknownTestCase"
 
     @Inject
-    AttachmentIndex attachmentsIndex
+    AttachmentsIndex attachmentsIndex
 
     def suiteUids = [:].withDefault {
         generateUid();

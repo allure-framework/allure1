@@ -4,7 +4,7 @@ import org.apache.commons.io.FileUtils
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import ru.yandex.qatools.allure.data.index.DefaultAttachmentIndex
+import ru.yandex.qatools.allure.data.index.DefaultAttachmentsIndex
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -39,7 +39,7 @@ class AttachmentReaderTest {
             FileUtils.writeStringToFile(createFile(dir, it), "test-content")
         }
 
-        new AttachmentReader(index: new DefaultAttachmentIndex(dir))
+        new AttachmentReader(index: new DefaultAttachmentsIndex(dir))
     }
 
     static def createFile(File dir, String name) {
