@@ -2,24 +2,32 @@ package ru.yandex.qatools.allure.data.index
 
 import groovy.transform.CompileStatic
 import ru.yandex.qatools.allure.data.AttachmentInfo
-import ru.yandex.qatools.allure.data.plugins.AttachmentIndex
+import ru.yandex.qatools.allure.data.plugins.AttachmentsIndex
 
 import static java.util.Collections.unmodifiableList
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listAttachmentFiles
 import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
 
 /**
+ * The default implementation of {@link AttachmentsIndex}.
+ * There is two different indexes: by id and by source.
+ *
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 10.07.15
  */
 @CompileStatic
-class DefaultAttachmentIndex implements AttachmentIndex {
+class DefaultAttachmentsIndex implements AttachmentsIndex {
 
     Map<String, AttachmentInfo> byUid = new HashMap<>()
 
     Map<String, AttachmentInfo> bySource = new HashMap<>()
 
-    public DefaultAttachmentIndex(File... directories) {
+    /**
+     * Creates an instance of index.
+     * @param directories the directories to find attachments.
+     * Should not be empty.
+     */
+    public DefaultAttachmentsIndex(File... directories) {
         for (def file : listAttachmentFiles(directories)) {
             def uid = generateUid()
             def source = file.name
@@ -34,16 +42,25 @@ class DefaultAttachmentIndex implements AttachmentIndex {
         }
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     AttachmentInfo find(String uid) {
         byUid[uid]
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     AttachmentInfo findBySource(String source) {
         bySource[source]
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     List<AttachmentInfo> findAll() {
         unmodifiableList(byUid.values() as List<AttachmentInfo>)

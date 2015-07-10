@@ -4,7 +4,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import ru.yandex.qatools.allure.data.index.DefaultAttachmentIndex
+import ru.yandex.qatools.allure.data.index.DefaultAttachmentsIndex
 import ru.yandex.qatools.allure.data.io.TestCaseReader
 import ru.yandex.qatools.allure.data.utils.TextUtils
 import ru.yandex.qatools.allure.model.Attachment
@@ -40,7 +40,7 @@ class DefaultTestCaseConverterTest {
         def dir = folder.newFolder()
         new File(dir, ATTACHMENT_SOURCE).text = "some attachment content"
         converter = new DefaultTestCaseConverter()
-        converter.attachmentsIndex = new DefaultAttachmentIndex(dir)
+        converter.attachmentsIndex = new DefaultAttachmentsIndex(dir)
     }
 
     @Test
