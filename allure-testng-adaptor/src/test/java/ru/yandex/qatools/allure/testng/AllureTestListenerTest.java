@@ -141,7 +141,7 @@ public class AllureTestListenerTest {
 
         Iterator<AddParameterEvent> addParameterEvents = captor.getAllValues().iterator();
         assertParameterEvent("doubleParameter", doubleParameter + "", addParameterEvents.next(), false);
-        assertParameterEvent("valueFromAnnotation", stringParameter, addParameterEvents.next(), true);
+        assertParameterEvent("valueFromAnnotation", anotherStringParameter, addParameterEvents.next(), true);
         assertFalse(addParameterEvents.hasNext());
     }
 
@@ -158,7 +158,7 @@ public class AllureTestListenerTest {
     }
 
     @SuppressWarnings("UnusedParameters")
-    public Method parametrizedTestMethod(@Parameter double doubleParameter, @Parameter("valueFromAnnotation") String stringParameter, String notParameter) {
+    public Method parametrizedTestMethod(@Parameter double doubleParameter, String notParameter, @Parameter("valueFromAnnotation") String stringParameter) {
         try {
             return getClass().getDeclaredMethod("parametrizedTestMethod", double.class, String.class, String.class);
         } catch (NoSuchMethodException e) {
