@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
@@ -8,7 +9,6 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>allure-bundle</artifactId>
-    <packaging>pom</packaging>
 
     <name>Allure Bundle</name>
 
@@ -20,6 +20,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.2</version>
+        </dependency>
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-report-data</artifactId>
@@ -35,39 +40,8 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.8</version>
-                <executions>
-                    <execution>
-                        <id>copy-libs</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${allure.bundle.directory}/libs/</outputDirectory>
-                            <excludeArtifactIds>allure-report-face</excludeArtifactIds>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>unpack-face</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>unpack-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${allure.bundle.directory}/face/</outputDirectory>
-                            <includeArtifactIds>allure-report-face</includeArtifactIds>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>2.5.3</version>
-                <configuration>
-                </configuration>
                 <executions>
                     <execution>
                         <id>allure-bundle-zip</id>
@@ -78,10 +52,14 @@
                         <configuration>
                             <finalName>allure-bundle-${project.version}</finalName>
                             <descriptors>
-                                <descriptor>src/assembly/allure-bundle-zip.xml</descriptor>
+                                <descriptor>src/assembly/bundle.xml</descriptor>
                             </descriptors>
-                            <outputDirectory>${project.build.directory}</outputDirectory>
                             <appendAssemblyId>false</appendAssemblyId>
+                            <archive>
+                                <manifest>
+                                    <mainClass>ru.yandex.qatools.allure.AllureMain</mainClass>
+                                </manifest>
+                            </archive>
                         </configuration>
                     </execution>
                 </executions>
