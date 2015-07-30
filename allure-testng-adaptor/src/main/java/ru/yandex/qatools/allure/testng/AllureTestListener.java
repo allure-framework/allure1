@@ -318,10 +318,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
     }
 
     private boolean isAfterSuiteConfigMethod(ITestResult iTestResult) {
-        if (getConfigMethodType(iTestResult).equals(ConfigMethodType.AfterSuite)) {
-            return true;
-        }
-        return false;
+        return ConfigMethodType.AfterSuite.equals(getConfigMethodType(iTestResult));
     }
         
     /**
@@ -398,7 +395,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         for (int i = 0; i < parameters.length; i++) {
             Parameter parameter = getParameterAnnotation(parametersAnnotations[i]);
             if (parameter == null) {
-                return;
+                continue;
             }
 
             String name = getNameForParameter(parameter.value(), methodParameterNames, i);
