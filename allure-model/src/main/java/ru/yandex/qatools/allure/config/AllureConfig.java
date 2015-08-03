@@ -1,7 +1,5 @@
 package ru.yandex.qatools.allure.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.properties.annotations.Property;
 import ru.yandex.qatools.properties.annotations.Resource;
@@ -17,8 +15,6 @@ import java.nio.charset.StandardCharsets;
 @SuppressWarnings("unused")
 @Resource.Classpath("allure.properties")
 public class AllureConfig {
-
-    protected static final Logger LOGGER = LoggerFactory.getLogger(AllureConfig.class);
 
     protected static final File DEFAULT_RESULTS_DIRECTORY = new File("target/allure-results");
     public static final int DEFAULT_MAX_TITLE_LENGTH = 120;

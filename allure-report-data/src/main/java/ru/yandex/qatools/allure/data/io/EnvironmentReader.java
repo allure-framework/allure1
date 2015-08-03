@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.xml.bind.JAXB;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;

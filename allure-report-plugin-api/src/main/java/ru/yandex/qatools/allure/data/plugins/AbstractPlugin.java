@@ -19,7 +19,7 @@ import java.util.Set;
  */
 public abstract class AbstractPlugin implements WithResources, WithData, WithPriority {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(AbstractPlugin.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPlugin.class);
 
     private String name = getClass().isAnnotationPresent(Plugin.Name.class) ?
             getClass().getAnnotation(Plugin.Name.class).value() : null;

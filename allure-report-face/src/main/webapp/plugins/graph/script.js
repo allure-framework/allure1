@@ -24,5 +24,5 @@
                 part: value/$scope.statistic.total
             };
         }, this);
-    })
+    });
 })();
