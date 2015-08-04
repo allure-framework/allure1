@@ -64,8 +64,8 @@
     </issueManagement>
 
     <ciManagement>
-        <system>TeamCity</system>
-        <url>http://teamcity.qatools.ru/</url>
+        <system>Jenkins</system>
+        <url>http://ci.qatools.ru/</url>
     </ciManagement>
 
     <developers>
