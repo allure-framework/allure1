@@ -5,6 +5,7 @@ import ru.yandex.qatools.allure.model.DescriptionType;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
+import static java.lang.System.lineSeparator;
 import static org.jvnet.jaxb2_commons.lang.StringUtils.isEmpty;
 
 /**
@@ -37,14 +38,18 @@ public final class DescriptionUtils {
                     testCaseDescription.getType()
             );
 
-            String descriptionValue = descriptionType.equals(DescriptionType.MARKDOWN) ?
-                    String.format("%s\n\n%s", testSuiteDescription.getValue(), testCaseDescription.getValue()) :
-                    String.format("%s\n%s", testSuiteDescription.getValue(), testCaseDescription.getValue());
+            String descriptionValue = String.format("%s%s%s", testSuiteDescription.getValue(),
+                    getSeparator(descriptionType), testCaseDescription.getValue());
 
             description.setValue(descriptionValue);
             description.setType(descriptionType);
         }
         return description;
+    }
+
+    private static String getSeparator(DescriptionType descriptionType) {
+        return descriptionType.equals(DescriptionType.MARKDOWN) ?
+                lineSeparator() + lineSeparator() : lineSeparator();
     }
 
     private static DescriptionType getDescriptionType(DescriptionType suiteType, DescriptionType testCaseType) {

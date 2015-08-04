@@ -6,6 +6,7 @@ import ru.yandex.qatools.allure.model.DescriptionType
 import ru.yandex.qatools.allure.model.TestCaseResult
 import ru.yandex.qatools.allure.model.TestSuiteResult
 
+import static java.lang.System.lineSeparator
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static org.hamcrest.Matchers.nullValue
@@ -24,7 +25,7 @@ class DescriptionUtilsTest {
         def testCaseDescription = new Description(value: "TestCase Description", type: DescriptionType.TEXT)
         def testSuiteDescription = new Description(value: "TestSuite Description", type: DescriptionType.TEXT)
 
-        String expectedDescriptionValue = testSuiteDescription.value + "\n" + testCaseDescription.value;
+        String expectedDescriptionValue = testSuiteDescription.value + lineSeparator() + testCaseDescription.value;
 
         def mergedDescription = mergeDescriptions(testSuiteDescription, testCaseDescription)
         assertThat(mergedDescription.value, equalTo(expectedDescriptionValue))
@@ -36,7 +37,7 @@ class DescriptionUtilsTest {
         def testCaseDescription = new Description(value: "TestCase Description", type: DescriptionType.MARKDOWN)
         def testSuiteDescription = new Description(value: "TestSuite Description", type: DescriptionType.MARKDOWN)
 
-        String expectedDescriptionValue = testSuiteDescription.value + "\n\n" + testCaseDescription.value;
+        String expectedDescriptionValue = testSuiteDescription.value + lineSeparator() + lineSeparator() + testCaseDescription.value;
 
         def mergedDescription = mergeDescriptions(testSuiteDescription, testCaseDescription)
         assertThat(mergedDescription.value, equalTo(expectedDescriptionValue))

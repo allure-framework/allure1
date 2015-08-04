@@ -8,7 +8,6 @@ import org.testng.ITestContext;
 import org.testng.ITestNGMethod;
 import org.testng.ITestResult;
 import org.testng.internal.IResultListener;
-
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.annotations.Parameter;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
@@ -43,20 +42,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AllureTestListener implements IResultListener, ISuiteListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AllureTestListener.class);
-    private static final String SUITE_UID = "SUITE_UID"; 
+    private static final String SUITE_UID = "SUITE_UID";
     private Allure lifecycle = Allure.LIFECYCLE;
     private Set<String> startedTestNames = Collections.newSetFromMap(
             new ConcurrentHashMap<String, Boolean>());
-    
-    private enum ConfigMethodType {
-        BeforeSuite,BeforeTest,BeforeClass,BeforeGroups,BeforeMethod,
-        AfterSuite,AfterTest,AfterClass,AfterGroups,AfterMethod;
-        
-        public String getName() {
-            return "@" + this.name();
-        }
-    }
-    
+
     @Override
     public void onStart(ISuite suite) {
         //For future development
@@ -70,7 +60,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         //Currently Allure model is not supporting TestNG Suite. 
         //In Allure terminology Suite is a combination of TestNg Suite XML tag and TestNg Test XML tag
     }
-    
+
     @Override
     public void onStart(ITestContext iTestContext) {
         getLifecycle().fire(new TestSuiteStartedEvent(
@@ -82,12 +72,12 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         ));
         addPendingMethods(iTestContext);
     }
-    
+
     @Override
     public void onFinish(ITestContext iTestContext) {
         getLifecycle().fire(new TestSuiteFinishedEvent(getSuiteUid(iTestContext)));
     }
-    
+
     @Override
     public void onConfigurationSuccess(ITestResult iTestResult) {
         //Configuration method will be shown in the report on failure or on skip only
@@ -128,8 +118,8 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         if (isAfterSuiteConfigMethod(iTestResult)) {
             getLifecycle().fire(new TestSuiteFinishedEvent(suiteUid));
         }
-    } 
-    
+    }
+
     @Override
     public void onTestStart(ITestResult iTestResult) {
         ITestNGMethod method = iTestResult.getMethod();
@@ -137,7 +127,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         String testName = getName(iTestResult);
         startedTestNames.add(testName);
         testName = testName.replace(suitePrefix, "");
-        
+
         String invoc = getMethodInvocationsAndSuccessPercentage(iTestResult);
         Description description = new Description().withValue(method.getDescription());
         String suiteUid = getSuiteUid(iTestResult.getTestContext());
@@ -152,7 +142,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         getLifecycle().fire(event);
         fireAddParameterEvents(iTestResult);
     }
-    
+
     @Override
     public void onTestSuccess(ITestResult iTestResult) {
         fireFinishTest();
@@ -172,7 +162,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         getLifecycle().fire(new TestCaseCanceledEvent().withThrowable(throwable));
         fireFinishTest();
     }
-    
+
     @Override
     public void onTestSkipped(ITestResult iTestResult) {
         if (!startedTestNames.contains(getName(iTestResult))) {
@@ -192,7 +182,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         }
         return iTestResult.getInstance().getClass().getAnnotations();
     }
-   
+
     Allure getLifecycle() {
         return lifecycle;
     }
@@ -216,7 +206,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         }
         return uid;
     }
-    
+
     String getCurrentSuiteTitle(ITestContext iTestContext) {
         String suite = iTestContext.getSuite().getName();
         String xmlTest = iTestContext.getCurrentXmlTest().getName();
@@ -229,7 +219,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
 
         return suite + " : " + xmlTest + params;
     }
-    
+
     private String getName(ITestResult iTestResult) {
         String suitePrefix = getCurrentSuitePrefix(iTestResult);
         StringBuilder sb = new StringBuilder(suitePrefix);
@@ -244,11 +234,11 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         }
         return sb.toString();
     }
-    
+
     private String getCurrentSuitePrefix(ITestResult iTestResult) {
         return "{" + getCurrentSuiteTitle(iTestResult.getTestContext()) + "}";
     }
-  
+
     private void addPendingMethods(ITestContext iTestContext) {
         for (ITestNGMethod method : iTestContext.getExcludedMethods()) {
             if (method.isTest() && !method.getEnabled()) {
@@ -268,7 +258,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
             }
         }
     }
-    
+
     private String getMethodInvocationsAndSuccessPercentage(ITestResult iTestResult) {
         int percentage = iTestResult.getMethod().getSuccessPercentage();
         int curCount = iTestResult.getMethod().getCurrentInvocationCount() + 1;
@@ -276,51 +266,51 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         String invoc = "";
         if (iCount > 1) {
             invoc = ":" + curCount + "/" + iCount;
-            if (percentage > 0) { 
+            if (percentage > 0) {
                 invoc = invoc + " " + percentage + "%";
             }
         }
         return invoc;
     }
-    
+
     private ConfigMethodType getConfigMethodType(ITestResult iTestResult) {
-        if (iTestResult.getMethod().isBeforeSuiteConfiguration()){
-            return ConfigMethodType.BeforeSuite;
+        if (iTestResult.getMethod().isBeforeSuiteConfiguration()) {
+            return ConfigMethodType.BEFORE_SUITE;
         }
         if (iTestResult.getMethod().isBeforeTestConfiguration()) {
-            return ConfigMethodType.BeforeTest;
+            return ConfigMethodType.BEFORE_TEST;
         }
         if (iTestResult.getMethod().isBeforeClassConfiguration()) {
-            return ConfigMethodType.BeforeClass;
+            return ConfigMethodType.BEFORE_CLASS;
         }
         if (iTestResult.getMethod().isBeforeGroupsConfiguration()) {
-            return ConfigMethodType.BeforeGroups;
+            return ConfigMethodType.BEFORE_GROUPS;
         }
         if (iTestResult.getMethod().isBeforeMethodConfiguration()) {
-            return ConfigMethodType.BeforeMethod;
+            return ConfigMethodType.BEFORE_METHOD;
         }
-        if (iTestResult.getMethod().isAfterSuiteConfiguration()){
-            return ConfigMethodType.AfterSuite;
+        if (iTestResult.getMethod().isAfterSuiteConfiguration()) {
+            return ConfigMethodType.AFTER_SUITE;
         }
         if (iTestResult.getMethod().isAfterTestConfiguration()) {
-            return ConfigMethodType.AfterTest;
+            return ConfigMethodType.AFTER_TEST;
         }
         if (iTestResult.getMethod().isAfterClassConfiguration()) {
-            return ConfigMethodType.AfterClass;
+            return ConfigMethodType.AFTER_CLASS;
         }
         if (iTestResult.getMethod().isAfterGroupsConfiguration()) {
-            return ConfigMethodType.AfterGroups;
+            return ConfigMethodType.AFTER_GROUPS;
         }
         if (iTestResult.getMethod().isAfterMethodConfiguration()) {
-            return ConfigMethodType.AfterMethod;
+            return ConfigMethodType.AFTER_METHOD;
         }
         return null;
     }
 
     private boolean isAfterSuiteConfigMethod(ITestResult iTestResult) {
-        return ConfigMethodType.AfterSuite.equals(getConfigMethodType(iTestResult));
+        return ConfigMethodType.AFTER_SUITE.equals(getConfigMethodType(iTestResult));
     }
-        
+
     /**
      * Suppress duplicated configuration method events
      */
@@ -336,14 +326,14 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
             return false;
         } else {
             methodNames = (Set<String>) context.getAttribute(configType);
-            if (!methodNames.contains(iTestResult.getName())){
+            if (!methodNames.contains(iTestResult.getName())) {
                 methodNames.add(iTestResult.getName());
                 return false;
             }
         }
         return true;
     }
-    
+
     private void createConfigEvent(ITestResult iTestResult) {
         String description = iTestResult.getMethod().getDescription();
         if (description == null || description.isEmpty()) {
@@ -361,7 +351,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
     private void fireFinishTest() {
         getLifecycle().fire(new TestCaseFinishedEvent());
     }
-   
+
     private void fireTestCaseCancel(ITestResult iTestResult) {
         Throwable skipMessage = new Throwable() {
             private static final long serialVersionUID = 1L;
@@ -369,11 +359,11 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
             @Override
             public String getMessage() {
                 return "Skipped due to dependency on other skipped or failed test methods";
-                }
+            }
         };
         getLifecycle().fire(new TestCaseCanceledEvent().withThrowable(skipMessage));
     }
-    
+
 
     /**
      * Creates test case parameters in XML in case of parametrized test (see TestNG @DataProvider).
@@ -438,11 +428,11 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
      * you can see documentation at
      * https://docs.oracle.com/javase/tutorial/reflect/member/methodparameterreflection.html .
      */
-    private boolean canGetMethodParameterNames() { //NOSONAR
+    private boolean canGetMethodParameterNames() {
         try {
             Class.forName("java.lang.reflect.Parameter", false, getClass().getClassLoader());
             return true;
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) { //NOSONAR
             return false;
         }
     }
@@ -473,4 +463,24 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         return result;
     }
 
+    enum ConfigMethodType {
+        BEFORE_SUITE("BeforeSuite"), BEFORE_TEST("BeforeTest"), BEFORE_CLASS("BeforeClass"),
+        BEFORE_GROUPS("BeforeGroups"), BEFORE_METHOD("BeforeMethod"), AFTER_SUITE("AfterSuite"),
+        AFTER_TEST("AfterTest"), AFTER_CLASS("AfterClass"), AFTER_GROUPS("AfterGroups"),
+        AFTER_METHOD("AfterMethod");
+
+        private String title;
+
+        ConfigMethodType(String title) {
+            this.title = title;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getName() {
+            return "@" + this.getTitle();
+        }
+    }
 }

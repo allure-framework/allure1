@@ -12,7 +12,7 @@
                     data.percents = percents(data.statistic);
                 });
             }
-        }
+        };
     }]);
     module.directive('widgetMessages', [function() {
         return {
@@ -23,7 +23,7 @@
             },
             link: function($scope) {
             }
-        }
+        };
     }]);
     module.directive('widgetKeyValue', [function() {
         return {
@@ -39,6 +39,6 @@
                     this.dataLimit = $scope.data.length;
                 }
             }]
-        }
+        };
     }]);
 })();

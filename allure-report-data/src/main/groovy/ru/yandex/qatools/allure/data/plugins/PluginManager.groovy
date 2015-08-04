@@ -3,7 +3,6 @@ package ru.yandex.qatools.allure.data.plugins
 import com.google.common.hash.Hashing
 import com.google.common.reflect.ClassPath
 import com.google.inject.Inject
-import com.google.inject.Injector
 import groovy.transform.CompileStatic
 import ru.yandex.qatools.allure.data.Widgets
 import ru.yandex.qatools.allure.data.io.ReportWriter
