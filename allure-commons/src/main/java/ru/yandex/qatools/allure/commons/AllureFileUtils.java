@@ -126,6 +126,9 @@ public final class AllureFileUtils {
     public static List<File> listFiles(File[] directories, IOFileFilter fileFilter, IOFileFilter dirFilter) {
         List<File> files = new ArrayList<>();
         for (File directory : directories) {
+            if (!directory.isDirectory()) {
+                continue;
+            }
             Collection<File> filesInDirectory = FileUtils.listFiles(directory,
                     fileFilter,
                     dirFilter);

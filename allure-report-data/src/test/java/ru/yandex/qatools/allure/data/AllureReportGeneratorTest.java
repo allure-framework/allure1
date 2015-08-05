@@ -130,6 +130,13 @@ public class AllureReportGeneratorTest {
         generator.generate(folder.newFolder());
     }
 
+
+    @Test(expected = ReportGenerationException.class)
+    public void shouldFailIfNoResultsDirectory() throws Exception {
+        AllureReportGenerator generator = new AllureReportGenerator(new File("unknown-directory"));
+        generator.generate(folder.newFolder());
+    }
+
     class TestInjector extends AbstractModule {
 
         TestCaseConverter converter;
