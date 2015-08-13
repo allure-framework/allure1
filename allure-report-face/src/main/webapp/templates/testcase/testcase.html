@@ -86,7 +86,7 @@
         <b class="step__expand" ng-show="hasContent && !expanded">+</b>
         <b class="step__expand" ng-show="hasContent && expanded">-</b>
         <span class="step__time text-muted">[{{step.time.start | date:'HH:mm:ss.sss'}}]</span>
-        <span class="step__title long-line" ng-class="getStepClass(step)">{{step.title}}</span>
+        <span class="step__title" ng-class="getStepClass(step)">{{step.title}}</span>
         <span class="step__time text-muted">({{step.time.duration | time}})</span>
         <span class="text-muted" ng-hide="step.summary.steps==0">{{'testcase.SUBSTEPS' | translate:"{substeps: step.summary.steps}":"messageformat"}}</span>
         <span class="text-muted" ng-hide="step.summary.steps==0 || step.summary.attachments==0">, </span>
