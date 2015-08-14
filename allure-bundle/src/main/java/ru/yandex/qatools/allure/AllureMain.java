@@ -67,7 +67,7 @@ public class AllureMain {
                 try (FileOutputStream output = new FileOutputStream(dest);
                      InputStream input = info.url().openStream()) {
                     IOUtils.copy(input, output);
-                    LOGGER.info("{} successfully copied.", resourcePath);
+                    LOGGER.debug("{} successfully copied.", resourcePath);
                 }
             }
         }
