@@ -27,6 +27,7 @@
             <xsd:enumeration value="title-statistics"/>
             <xsd:enumeration value="defects"/>
             <xsd:enumeration value="key-value"/>
+            <xsd:enumeration value="total"/>
         </xsd:restriction>
     </xsd:simpleType>
 

@@ -25,6 +25,18 @@
             }
         };
     }]);
+    module.directive('widgetTotal', ['percents', function(percents) {
+        return {
+            restrict: 'E',
+            templateUrl: 'templates/overview/total.html',
+            scope: {
+                data: '='
+            },
+            link: function($scope) {
+                $scope.percents = percents($scope.data.statistic);
+            }
+        };
+    }]);
     module.directive('widgetKeyValue', [function() {
         return {
             restrict: 'E',

@@ -11,6 +11,7 @@
                 <widget-statistics ng-switch-when="TITLE_STATISTICS" data="widget.data"></widget-statistics>
                 <widget-messages ng-switch-when="DEFECTS" data="widget.data"></widget-messages>
                 <widget-key-value ng-switch-when="KEY_VALUE" data="widget.data"></widget-key-value>
+                <widget-total ng-switch-when="TOTAL" data="{'statistic': widget.statistic, 'time': widget.time}"></widget-total>
                 <div ng-switch-default>Type "{{widget.type}}" not supported for widgets.</div>
             </div>
         </div>
