@@ -28,6 +28,8 @@ angular.module('allure.core.testcase.controllers', ['d3'])
                     return "html";
                 case 'text/csv':
                     return "csv";
+                case 'image/svg+xml':
+                    return "svg";
                 default:
             }
         };
@@ -91,11 +93,12 @@ angular.module('allure.core.testcase.controllers', ['d3'])
             $scope.setAttachment((direction < 0 ? allAttachments.getPrevious(index) : allAttachments.getNext(index)).uid);
         };
 
-        $scope.getIconClass = function(type) {
+        $scope.getIconClass = function(type) { //NOSONAR
             switch (attachmentType(type)) {
                 case 'text':
                     return 'fa fa-file-text-o';
                 case 'image':
+                case 'svg':
                     return 'fa fa-file-image-o';
                 case 'code':
                     return 'fa fa-file-code-o';
