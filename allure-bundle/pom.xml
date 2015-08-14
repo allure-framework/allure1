@@ -11,13 +11,6 @@
 
     <name>Allure Bundle</name>
 
-    <properties>
-        <allure.bundle.directory>${project.build.directory}/bundle</allure.bundle.directory>
-        <allure.face.directory>
-            ${project.parent.basedir}/allure-report-face/target/allure-report-face-${project.version}/
-        </allure.face.directory>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>

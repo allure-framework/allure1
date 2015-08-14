@@ -40,7 +40,7 @@ public final class ServiceLoaderUtils {
             try {
                 T item = iterator.next();
                 foundServices.add(item);
-                LOGGER.info(String.format("Found %s [%s]", serviceType.getSimpleName(), item.toString()));
+                LOGGER.debug(String.format("Found %s [%s]", serviceType.getSimpleName(), item.toString()));
             } catch (ServiceConfigurationError e) {
                 LOGGER.trace("Can't find services using Java SPI", e);
                 LOGGER.error(e.getMessage());
