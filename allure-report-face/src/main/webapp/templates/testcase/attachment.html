@@ -30,6 +30,9 @@
         <div ng-switch-when="code">
             <pre><code data-language="{{language}}" highlight="attachText"></code></pre>
         </div>
+        <div ng-switch-when="svg" class="text-center">
+            <object type="image/svg+xml" data="{{getSourceUrl(attachment)}}">Your browser does not support SVG</object>
+        </div>
         <div ng-switch-default>
             <iframe style="width: 100%; min-height: 600px;" frameborder="0" ng-src="{{getSourceUrl(attachment)}}" on-error="onError()"></iframe>
         </div>
