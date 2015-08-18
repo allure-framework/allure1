@@ -1,0 +1,10 @@
+<div style="padding-bottom: 5px">
+    {{'testrun.TESTRUN' | translate}}
+    <span class="text-muted" translate="testrun.TIMEDATE" translate-value-date="{{data.time.start | date:'mediumDate'}}" translate-value-time="{{data.time.start | date:'HH:mm:ss'}}" translate-value-duration="{{data.time.duration | time}}"></span>
+</div>
+<div class="progress">
+    <div class="progress-bar progress-bar-{{percent.status}}" ng-repeat="percent in percents"
+         tooltip="{{percent.count}} {{percent.status | translate}} ({{percent.ratio|number:0}}%)" ng-style="{width: percent.value+'%'}">
+        <span>{{percent.count}}</span>
+    </div>
+</div>

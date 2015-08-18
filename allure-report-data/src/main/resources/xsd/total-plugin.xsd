@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:alr="urn:data.allure.qatools.yandex.ru"
+            targetNamespace="urn:data.allure.qatools.yandex.ru">
+
+    <xsd:include schemaLocation="report-data.xsd"/>
+
+    <xsd:element name="allure-total" type="alr:allure-total"/>
+    <xsd:complexType name="allure-total">
+        <xsd:sequence>
+            <xsd:element name="statistic" type="alr:statistic"/>
+            <xsd:element name="time" type="alr:time"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>
