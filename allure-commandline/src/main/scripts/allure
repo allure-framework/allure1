@@ -1,0 +1,62 @@
+#!/bin/bash
+
+if [ -z "$JAVA_HOME" ]; then
+
+    echo "'JAVA_HOME' is not set"
+    exit 1
+
+fi
+
+JAVA=${JAVA_HOME}/bin/java
+
+if [ ! -f "$JAVA" ]; then
+
+    echo "$JAVA_HOME: is not a valid java directory"
+    exit 1
+
+fi
+
+
+if [ -z "$ALLURE_HOME" ]; then
+
+    SOURCE="${BASH_SOURCE[0]}"
+    while [ -h "$SOURCE" ]; do
+        DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+        SOURCE="$(readlink "$SOURCE")"
+        [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+    done
+    DIR="$( cd -P "$( dirname "$SOURCE" )" && pwd )"
+    ALLURE_HOME="$DIR/.."
+
+fi
+
+ALLURE_ARGS=""
+
+add_allure_args () {
+
+    if [ ! -z "$2" ]; then
+        ALLURE_ARGS+="-D$2=$1 "
+    fi
+
+}
+
+ALLURE_CP="$ALLURE_HOME/lib/*"
+
+add_allure_cp () {
+
+    if [ ! -z "$1" ]; then
+        ALLURE_CP+=":$1"
+    fi
+
+}
+
+ALLURE_MAIN="ru.yandex.qatools.allure.CommandLine"
+
+add_allure_args ${ALLURE_BUNDLE_JAVA_OPTS} "allure.bundle.javaOpts"
+add_allure_args ${ALLURE_CONFIG} "allure.config"
+add_allure_args ${ALLURE_HOME} "allure.home"
+add_allure_cp "$ALLURE_HOME/conf"
+
+ALLURE_COMMAND="${JAVA} ${JAVA_ARGS} -cp \"${ALLURE_CP}\" ${ALLURE_ARGS} ${ALLURE_MAIN}"
+
+eval ${ALLURE_COMMAND} $@
