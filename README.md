@@ -12,7 +12,7 @@ Currently Allure Framework is widely used in internal testing of [Yandex](http:/
 
 ## Getting Started
 
-* [An example report](http://ci.qatools.ru/job/allure-core_master-deploy/lastSuccessfulBuild/artifact/allure-report-preview/target/allure-report/index.html#/)
+* [An example report](http://ci.qatools.ru/job/allure-core_master-deploy/Allure_report/)
 * [Documentation](https://github.com/allure-framework/allure-core/wiki)
 * [Examples](https://github.com/allure-examples)
 * [Issue Tracking](https://github.com/allure-framework/allure-core/issues?labels=&milestone=&page=1&state=open)
