@@ -13,6 +13,20 @@ class EnvironmentPluginTest {
     def plugin = new EnvironmentPlugin()
 
     @Test
+    void shouldRemoveDuplicates() {
+        def parameter1 = new Parameter(name: "pname", key: "pkey", value: "pvalue")
+        def parameter2 = new Parameter(name: "pname", key: "pkey", value: "pvalue")
+        def env = new Environment(id: "id", name: "name", parameter: [
+                parameter1,
+                parameter2
+        ])
+
+        plugin.process(env)
+
+        assert plugin.environment.parameter.size() == 1
+    }
+
+    @Test
     void shouldSaveInfo() {
         def parameter = new Parameter(name: "pname", key: "pkey", value: "pvalue")
         def env = new Environment(id: "id", name: "name", parameter: [
