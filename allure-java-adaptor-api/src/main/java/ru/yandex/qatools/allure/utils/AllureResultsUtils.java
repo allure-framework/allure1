@@ -142,10 +142,10 @@ public final class AllureResultsUtils {
      * @param testSuite to marshal
      */
     public static void writeTestSuiteResult(TestSuiteResult testSuite, File testSuiteResultFile) {
-        try {
+        try (BadXmlCharacterFilterWriter writer = new BadXmlCharacterFilterWriter(testSuiteResultFile)) {
             marshaller(TestSuiteResult.class).marshal(
                     new ObjectFactory().createTestSuite(testSuite),
-                    new BadXmlCharacterFilterWriter(testSuiteResultFile)
+                    writer
             );
         } catch (Exception e) {
             LOGGER.error("Error while marshaling testSuite", e);
