@@ -11,7 +11,10 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Validator;
 import java.io.File;
+import java.nio.file.Files;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
 
 /**
@@ -46,6 +49,18 @@ public class WriteTestSuiteResultTest {
         for (File each : listTestSuiteFiles(resultsDirectory)) {
             validator.validate(new StreamSource(each));
         }
+    }
+
+    @Test
+    public void shouldCloseResultFileTest() throws Exception {
+        File resultFile = new File(folder.getRoot(), "suite.xml");
+
+        AllureResultsUtils.writeTestSuiteResult(new TestSuiteResult(), resultFile);
+
+        assertTrue(resultFile.exists());
+
+        Files.delete(resultFile.toPath());
+        assertFalse(resultFile.exists());
     }
 
     @After
