@@ -94,6 +94,7 @@
                                     <artifactId>allure-bundle</artifactId>
                                     <version>${project.version}</version>
                                     <type>jar</type>
+                                    <classifier>standalone</classifier>
                                 </artifactItem>
                             </artifactItems>
                             <outputDirectory>${project.build.directory}/app</outputDirectory>

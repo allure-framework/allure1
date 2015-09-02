@@ -2,19 +2,18 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
-    <id>bundle</id>
+    <id>standalone</id>
     <includeBaseDirectory>false</includeBaseDirectory>
     <formats>
         <format>jar</format>
     </formats>
 
     <dependencySets>
-        <!-- Only classes from the project-->
+        <!-- Add classes from the project and all dependencies -->
         <dependencySet>
             <useProjectArtifact>true</useProjectArtifact>
-            <unpack>true</unpack>
             <outputDirectory>/</outputDirectory>
-            <scope>none</scope>
+            <unpack>true</unpack>
         </dependencySet>
 
         <!-- Add allure-report-face war to resources with prefix `allure.report.face`-->
