@@ -67,7 +67,7 @@ public class ReportGenerate extends ReportCommand {
 
     private String getClassPathArgument() {
         return String.format("%s:%s:%s/*",
-                getConfigPath().getParent().toAbsolutePath(),
+                getConfigPath().toAbsolutePath().getParent(),
                 getBundleJarPath().toAbsolutePath(),
                 getPluginsPath().toAbsolutePath()
 

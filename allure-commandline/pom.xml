@@ -98,6 +98,7 @@
                                 </artifactItem>
                             </artifactItems>
                             <outputDirectory>${project.build.directory}/app</outputDirectory>
+                            <stripClassifier>true</stripClassifier>
                             <stripVersion>true</stripVersion>
                         </configuration>
                     </execution>

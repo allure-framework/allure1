@@ -2,6 +2,7 @@ package ru.yandex.qatools.allure;
 
 import ru.qatools.properties.DefaultValue;
 import ru.qatools.properties.Property;
+import ru.qatools.properties.Required;
 import ru.qatools.properties.Resource;
 
 import java.nio.file.Path;
@@ -12,9 +13,11 @@ import java.nio.file.Path;
 @Resource.Classpath({"command.properties"})
 public interface CommandProperties {
 
+    @Required
     @Property("java.home")
     Path getJavaHome();
 
+    @Required
     @Property("allure.home")
     Path getAllureHome();
 
