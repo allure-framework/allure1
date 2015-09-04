@@ -14,6 +14,14 @@ import java.nio.file.Path;
 public interface CommandProperties {
 
     @Required
+    @Property("os.name")
+    String getOsName();
+
+    @Required
+    @Property("path.separator")
+    String getPathSeparator();
+
+    @Required
     @Property("java.home")
     Path getJavaHome();
 

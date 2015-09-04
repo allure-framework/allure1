@@ -11,7 +11,7 @@ import ru.yandex.qatools.allure.command.AllureVersion;
 import ru.yandex.qatools.allure.command.AllureHelp;
 import ru.yandex.qatools.allure.command.ExitCode;
 import ru.yandex.qatools.allure.logging.LogManager;
-import ru.yandex.qatools.allure.logging.Messages;
+import ru.yandex.qatools.allure.logging.Message;
 
 import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
 
@@ -48,7 +48,7 @@ public class CommandLine {
             command.run();      //NOSONAR
             exitCode = command.getExitCode();
         } catch (Exception e) {
-            LOGGER.error(Messages.COMMANDLINE_ERROR, e);
+            LOGGER.error(Message.COMMANDLINE_ERROR, e);
             exitCode = ExitCode.ARGUMENT_PARSING_ERROR;
         } finally {
             LogManager.shutdown();

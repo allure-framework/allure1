@@ -5,16 +5,17 @@ import io.airlift.command.Command;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.slf4j.cal10n.LocLogger;
-import ru.yandex.qatools.allure.logging.Messages;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
+import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_BUNDLE_MISSING;
+import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_REPORT_GENERATED;
+import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_RESULT_DIRECTORY_MISSING;
 
 /**
  * @author Artem Eroshenko <eroshenkoam@yandex-team.ru>
@@ -26,102 +27,114 @@ public class ReportGenerate extends ReportCommand {
 
     public static final String CLASS_PATH = "-cp";
 
+    public static final String MAIN = "ru.yandex.qatools.allure.AllureMain";
+
+    public static final String WIN = "win";
+
     @Arguments(title = "Results directories", required = true,
-            description = "A list of input directories or globs to be processed")
+            description = "A list of input directories to be processed")
     public List<String> results = new ArrayList<>();
 
     /**
      * {@inheritDoc}
      */
     @Override
-    protected void runUnsafe() throws IOException, AllureCommandException {
-        Path bundleJarPath = getBundleJarPath();
-
-        if (Files.notExists(bundleJarPath)) {
-            LOGGER.error(Messages.COMMAND_REPORT_GENERATE_BUNDLE_MISSING, bundleJarPath.toAbsolutePath());
-            return;
-        }
-
-        if (results.isEmpty()) {
-            LOGGER.error(Messages.COMMAND_REPORT_GENERATE_RESULTS_MISSING);
-            return;
-        }
-
+    protected void runUnsafe() throws Exception {
+        validateResultsDirectories();
         CommandLine commandLine = createCommandLine();
         new DefaultExecutor().execute(commandLine);
-
-        LOGGER.info(Messages.COMMAND_REPORT_GENERATE_REPORT_GENERATED, getReportDirectoryPath());
+        LOGGER.info(COMMAND_REPORT_GENERATE_REPORT_GENERATED, getReportDirectoryPath());
     }
 
-    private Path getBundleJarPath() {
-        return getProperties().getAllureHome().resolve("app").resolve("allure-bundle.jar");
+    /**
+     * Throws an exception if at least one results directory is missing.
+     */
+    protected void validateResultsDirectories() throws AllureCommandException {
+        for (String result : results) {
+            if (Files.notExists(Paths.get(result))) {
+                throw new AllureCommandException(COMMAND_REPORT_GENERATE_RESULT_DIRECTORY_MISSING, result);
+            }
+        }
     }
 
-    private Path getConfigPath() {
-        return getProperties().getAllureConfig();
-    }
-
-    private Path getPluginsPath() {
-        return getProperties().getAllureHome().resolve("plugins");
-    }
-
-    private String getClassPathArgument() {
-        return String.format("%s:%s:%s/*",
-                getConfigPath().toAbsolutePath().getParent(),
-                getBundleJarPath().toAbsolutePath(),
-                getPluginsPath().toAbsolutePath()
-
-        );
-    }
-
-    private String getMainClassArgument() {
-        return "ru.yandex.qatools.allure.AllureMain";
+    /**
+     * Format the classpath string from given classpath elements.
+     */
+    protected String formatClassPath(Path first, Path... others) {
+        String result = first.toString();
+        for (Path other : others) {
+            result += PROPERTIES.getPathSeparator() + other;
+        }
+        return result;
     }
 
     /**
      * Create a {@link CommandLine} to run bundle with needed arguments.
-     *
-     * @throws AllureCommandException if any occurs.
      */
     private CommandLine createCommandLine() throws AllureCommandException {
-        List<String> arguments = new ArrayList<>();
-        arguments.addAll(getBundleJavaOptsArgument());
-        arguments.add(getLoggerConfigurationArgument());
-        arguments.add(CLASS_PATH);
-        arguments.add(getClassPathArgument());
-        arguments.add(getMainClassArgument());
-        arguments.addAll(results);
-        arguments.add(getReportDirectoryPath().toString());
-
         return new CommandLine(getJavaExecutablePath().toString())
-                .addArguments(arguments.toArray(new String[arguments.size()]));
+                .addArguments(getBundleJavaOptsArgument())
+                .addArgument(getLoggerConfigurationArgument())
+                .addArgument(CLASS_PATH)
+                .addArgument(formatClassPath(getBundleJarPath(), getConfigPath(), getPluginsPath()), false)
+                .addArgument(MAIN)
+                .addArguments(results.toArray(new String[results.size()]), false)
+                .addArgument(getReportDirectoryPath().toString(), false);
     }
 
+    /**
+     * Returns the bundle jar classpath element.
+     */
+    protected Path getBundleJarPath() throws AllureCommandException {
+        Path path = PROPERTIES.getAllureHome().resolve("app/allure-bundle.jar").toAbsolutePath();
+
+        if (Files.notExists(path)) {
+            throw new AllureCommandException(COMMAND_REPORT_GENERATE_BUNDLE_MISSING, path);
+        }
+        return path;
+    }
+
+    /**
+     * Returns the config directory classpath element.
+     */
+    protected Path getConfigPath() {
+        return PROPERTIES.getAllureConfig().toAbsolutePath().getParent();
+    }
+
+    /**
+     * Returns the plugins directory classpath element.
+     */
+    protected Path getPluginsPath() {
+        return PROPERTIES.getAllureHome().resolve("plugins/*").toAbsolutePath();
+    }
 
     /**
      * Get argument to configure log level for bundle.
      */
-    private String getLoggerConfigurationArgument() {
+    protected String getLoggerConfigurationArgument() {
         return String.format("-Dorg.slf4j.simpleLogger.defaultLogLevel=%s",
                 isQuiet() || !isVerbose() ? "error" : "debug");
     }
 
-    private List<String> getBundleJavaOptsArgument() {
-        return Arrays.asList(getProperties().getBundleJavaOpts().split(" "));
+    /**
+     * Returns the bundle java options split by space.
+     */
+    protected String getBundleJavaOptsArgument() {
+        return PROPERTIES.getBundleJavaOpts();
     }
 
     /**
      * Returns the path to java executable.
-     *
-     * @return the path to java executable.
-     * @throws NullPointerException if java.home system variable is not set.
      */
-    private Path getJavaExecutablePath() {
-        Path javaHome = getProperties().getJavaHome();
-        if (javaHome == null) {
-            throw new NullPointerException("'java.home' is not set");
-        }
-        return getProperties().getJavaHome().resolve("bin/java");
+    protected Path getJavaExecutablePath() {
+        String executableName = isWindows() ? "bin/java.exe" : "bin/java";
+        return PROPERTIES.getJavaHome().resolve(executableName);
     }
 
+    /**
+     * Returns true if operation system is windows, false otherwise.
+     */
+    protected boolean isWindows() {
+        return PROPERTIES.getOsName().contains(WIN);
+    }
 }
