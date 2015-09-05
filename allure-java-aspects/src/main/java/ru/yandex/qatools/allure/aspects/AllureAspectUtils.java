@@ -58,7 +58,7 @@ public final class AllureAspectUtils {
     public static String getTitle(String namePattern, String methodName, Object instance, Object[] parameters) {
         String finalPattern = namePattern
                 .replaceAll("\\{method\\}", methodName)
-                .replaceAll("\\{this\\}", String.valueOf(instance));
+                .replaceAll("\\{this\\}", getMessageFormatEscapedString(String.valueOf(instance)));
         int paramsCount = parameters == null ? 0 : parameters.length;
         Object[] results = new Object[paramsCount];
         for (int i = 0; i < paramsCount; i++) {
@@ -66,6 +66,12 @@ public final class AllureAspectUtils {
         }
 
         return cutEnd(MessageFormat.format(finalPattern, results), AllureConfig.newInstance().getMaxTitleLength());
+    }
+
+    public static String getMessageFormatEscapedString(String s) {
+        return s.replace("'", "''")
+                .replace("{", "'{'")
+                .replace("}", "'}'");
     }
 
     /**

@@ -196,6 +196,15 @@ public class AllureAspectUtilsTest {
     }
 
     @Test
+    public void getTitleWithThisThatNeedsToBeEscaped() {
+        String thisObject = "{0}''";
+        String title = getTitle(NAME_PATTERN_WITH_THIS, METHOD_NAME, thisObject, new Object[]{1});
+        Object[] args = {METHOD_NAME, thisObject};
+        assertThat("Method with {this} that needs to be escaped is processed incorrectly", title,
+                equalTo(MessageFormat.format(TITLE_STRING_WITH_THIS, args)));
+    }
+
+    @Test
     public void getNameLongMethodNameTest() throws Exception {
         String name = getName(TOO_LONG_NAME, null);
         assertThat("Invalid method name short cut", name,
