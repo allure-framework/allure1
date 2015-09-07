@@ -60,9 +60,9 @@ public class ReportGenerate extends ReportCommand {
     /**
      * Format the classpath string from given classpath elements.
      */
-    protected String formatClassPath(Path first, Path... others) {
-        String result = first.toString();
-        for (Path other : others) {
+    protected String formatClassPath(String first, String... others) {
+        String result = first;
+        for (String other : others) {
             result += PROPERTIES.getPathSeparator() + other;
         }
         return result;
@@ -85,27 +85,28 @@ public class ReportGenerate extends ReportCommand {
     /**
      * Returns the bundle jar classpath element.
      */
-    protected Path getBundleJarPath() throws AllureCommandException {
+    protected String getBundleJarPath() throws AllureCommandException {
         Path path = PROPERTIES.getAllureHome().resolve("app/allure-bundle.jar").toAbsolutePath();
 
         if (Files.notExists(path)) {
             throw new AllureCommandException(COMMAND_REPORT_GENERATE_BUNDLE_MISSING, path);
         }
-        return path;
+        return path.toString();
     }
 
     /**
      * Returns the config directory classpath element.
      */
-    protected Path getConfigPath() {
-        return PROPERTIES.getAllureConfig().toAbsolutePath().getParent();
+    protected String getConfigPath() {
+        return PROPERTIES.getAllureConfig().toAbsolutePath().getParent().toString();
     }
 
     /**
      * Returns the plugins directory classpath element.
      */
-    protected Path getPluginsPath() {
-        return PROPERTIES.getAllureHome().resolve("plugins/*").toAbsolutePath();
+    protected String getPluginsPath() {
+        Path path = PROPERTIES.getAllureHome().resolve("plugins").toAbsolutePath();
+        return String.format("%s/*", path);
     }
 
     /**
