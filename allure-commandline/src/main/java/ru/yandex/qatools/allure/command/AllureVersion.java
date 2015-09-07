@@ -2,7 +2,7 @@ package ru.yandex.qatools.allure.command;
 
 import io.airlift.command.Command;
 import org.slf4j.cal10n.LocLogger;
-import ru.yandex.qatools.allure.logging.Messages;
+import ru.yandex.qatools.allure.logging.Message;
 
 import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
 
@@ -20,7 +20,7 @@ public class AllureVersion extends AbstractCommand {
     @Override
     protected void runUnsafe() {
         String toolVersion = getClass().getPackage().getImplementationVersion();
-        LOGGER.info(Messages.COMMAND_VERSION_INFO, toolVersion);
+        LOGGER.info(Message.COMMAND_VERSION_INFO, toolVersion);
     }
 
 }

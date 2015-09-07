@@ -2,23 +2,17 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
-    <id>allure-commandline-zip</id>
+    <id>standalone</id>
     <includeBaseDirectory>false</includeBaseDirectory>
     <formats>
+        <format>dir</format>
         <format>zip</format>
+        <format>tar.gz</format>
     </formats>
-
-    <files>
-        <file>
-            <source>${project.build.directory}/${project.build.finalName}.${project.packaging}</source>
-            <destName>${project.artifactId}.${project.packaging}</destName>
-            <outputDirectory>/lib</outputDirectory>
-            <fileMode>0644</fileMode>
-        </file>
-    </files>
 
     <dependencySets>
         <dependencySet>
+            <useProjectArtifact>true</useProjectArtifact>
             <outputDirectory>lib</outputDirectory>
             <outputFileNameMapping>${artifact.artifactId}.${artifact.extension}</outputFileNameMapping>
             <includes>
