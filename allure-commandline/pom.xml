@@ -127,12 +127,12 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-invoker-plugin</artifactId>
-                        <version>1.9</version>
+                        <version>2.0.0</version>
                         <configuration>
                             <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                             <localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
                             <goals>
-                                <goal>exec:exec</goal>
+                                <goal>org.codehaus.mojo:exec-maven-plugin:exec</goal>
                             </goals>
                             <streamLogs>true</streamLogs>
                             <preBuildHookScript>setup</preBuildHookScript>
