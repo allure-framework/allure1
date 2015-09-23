@@ -1,6 +1,8 @@
 package ru.yandex.qatools.allure.command;
 
 import io.airlift.command.Command;
+import io.airlift.command.Option;
+import io.airlift.command.OptionType;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
@@ -27,6 +29,10 @@ import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_OPEN_SERVE
 public class ReportOpen extends ReportCommand {
 
     private static final LocLogger LOGGER = getLogger(ReportOpen.class);
+
+    @Option(name = {"-p", "--port"}, type = OptionType.COMMAND,
+            description = "This port will be used to start web server for the report")
+    protected int port = 0;
 
     @Override
     protected void runUnsafe() throws Exception {
@@ -59,7 +65,7 @@ public class ReportOpen extends ReportCommand {
      * Set up server for report directory.
      */
     private Server setUpServer() {
-        Server server = new Server(0);
+        Server server = new Server(port);
         ResourceHandler handler = new ResourceHandler();
         handler.setDirectoriesListed(true);
         handler.setWelcomeFiles(new String[]{"index.html"});
