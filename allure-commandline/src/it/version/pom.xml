@@ -30,6 +30,7 @@
                     <arguments>
                         <argument>version</argument>
                     </arguments>
+                    <outputFile>command.log</outputFile>
                 </configuration>
             </plugin>
         </plugins>
