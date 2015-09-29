@@ -165,6 +165,13 @@
             <version>18.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
+        </dependency>
+
+
         <!-- Testing -->
         <dependency>
             <groupId>org.slf4j</groupId>

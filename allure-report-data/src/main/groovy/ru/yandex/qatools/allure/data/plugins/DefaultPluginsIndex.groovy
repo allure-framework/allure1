@@ -1,14 +1,8 @@
-package ru.yandex.qatools.allure.data.index
+package ru.yandex.qatools.allure.data.plugins
 
 import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Singleton
-import ru.yandex.qatools.allure.data.plugins.AbstractPlugin
-import ru.yandex.qatools.allure.data.plugins.Plugin
-import ru.yandex.qatools.allure.data.plugins.PluginLoader
-import ru.yandex.qatools.allure.data.plugins.PluginsIndex
-import ru.yandex.qatools.allure.data.plugins.WithPriority
-import ru.yandex.qatools.allure.data.plugins.WithResources
 
 import static java.util.Collections.unmodifiableList
 
@@ -25,7 +19,7 @@ class DefaultPluginsIndex implements PluginsIndex {
      * Creates an instance of plugin index loading plugins via given loader.
      */
     @Inject
-    DefaultPluginsIndex(PluginLoader loader, Injector injector = null) {
+    public DefaultPluginsIndex(PluginLoader loader, Injector injector = null) {
         plugins = load(loader, injector)
     }
 

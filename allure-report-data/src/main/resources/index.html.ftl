@@ -55,45 +55,21 @@
     <script src="js/charts/severityMap.js"></script>
     <script src="js/scrollfix/scrollfix.js"></script>
 
+    <#--Plugins-->
+<#list plugins as plugin>
+    <script src="plugins/${plugin}/script.js"></script>
+</#list>
+
     <script>
-        (function() {
-            function onLoad(error) {
-                $('.preloader').hide();
-                if(error) {
-                    $('.error-message [ng-bind="error|json"]').html(error);
-                }
-            }
-            window.onerror = onLoad;
-            $.getJSON('data/plugins.json').then(function(allurePlugins) {
-                var requests = allurePlugins.map(function(plugin) {
-                    var script = document.createElement('script');
-                    script.src = 'plugins/'+plugin+'/script.js';
-                    document.body.appendChild(script);
-                    var deferred = $.Deferred(),
-                        onError = window.onerror;
-                    window.onerror = function(e) {
-                        onError(e);
-                        deferred.reject();
-                    };
-                    $(script).on('load', deferred.resolve)
-                        .on('error', deferred.reject);
-                    return deferred;
-                });
-                return $.when.apply($, requests).then(function() {
-                    angular.module('allure', ['allure.core'].concat(allurePlugins.map(function(plugin) {
-                        return 'allure.'+plugin;
-                    })));
-                    angular.bootstrap($('html'), ['allure']);
-                })
-            }).then(function() {
-                onLoad();
-            }, function(error) {
-                onLoad(error)
-            });
-        })();
+        angular.module('allure', ['allure.core',
+        <#list plugins as plugin>
+            'allure.${plugin}'<#if plugin_has_next>,</#if>
+        </#list>
+        ]);
     </script>
+
 </head>
-<body class="b-page">
+<body class="b-page" ng-app="allure">
 <header class="b-page__nav navbar navbar-static-top" role="navigation" ng-controller="NavbarCtrl">
     <div class="nav navbar-header">
         <a class="navbar-brand allure-logo" href="#">Allure</a>
@@ -133,7 +109,7 @@
         </li>
     </div>
     <div class="nav navbar-text navbar-right">
-        <strong>{{'index.VERSION' | translate}}</strong> ${project.version}
+        <strong>{{'index.VERSION' | translate}}</strong> ${version}
     </div>
     <div class="nav navbar-text navbar-right">
         <strong>{{'index.DATA_SIZE' | translate}}</strong> {{report.size | filesize}}
@@ -170,12 +146,6 @@
     <p>Message: {{error.status}}</p>
     <hr/>
     <p>Debug: <span class="long-line" ng-bind="error|json"></span></p>
-</div>
-<div class="preloader">
-    <div class="alert alert-info">
-        <span class="fa fa-spinner fa-spin"></span>
-        Loading...
-    </div>
 </div>
 </body>
 </html>

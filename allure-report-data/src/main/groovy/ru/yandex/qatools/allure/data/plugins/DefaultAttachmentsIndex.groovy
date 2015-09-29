@@ -1,11 +1,10 @@
-package ru.yandex.qatools.allure.data.index
+package ru.yandex.qatools.allure.data.plugins
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import groovy.transform.CompileStatic
 import ru.yandex.qatools.allure.data.AttachmentInfo
 import ru.yandex.qatools.allure.data.io.ResultDirectories
-import ru.yandex.qatools.allure.data.plugins.AttachmentsIndex
 
 import static java.util.Collections.unmodifiableList
 import static ru.yandex.qatools.allure.commons.AllureFileUtils.listAttachmentFiles

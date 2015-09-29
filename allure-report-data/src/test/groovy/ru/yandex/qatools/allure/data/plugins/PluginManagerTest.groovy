@@ -7,7 +7,6 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.Widgets
-import ru.yandex.qatools.allure.data.index.DefaultPluginsIndex
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
 
@@ -301,8 +300,8 @@ class PluginManagerTest {
         }
     }
 
-    abstract class SomePlugin implements Plugin<SomeObject> {
-        @Override
+    abstract class SomePlugin {
+
         Class<SomeObject> getType() {
             return SomeObject
         }

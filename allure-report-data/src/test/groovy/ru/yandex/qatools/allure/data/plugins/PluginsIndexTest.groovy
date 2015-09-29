@@ -6,7 +6,6 @@ import com.google.inject.Inject
 import groovy.transform.EqualsAndHashCode
 import org.junit.Test
 import ru.yandex.qatools.allure.data.AllureGuiceModule
-import ru.yandex.qatools.allure.data.index.DefaultPluginsIndex
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -70,8 +69,7 @@ class PluginsIndexTest {
         }
     }
 
-    abstract class SomePlugin implements Plugin<SomeObject> {
-        @Override
+    abstract class SomePlugin {
         Class<SomeObject> getType() {
             return SomeObject
         }

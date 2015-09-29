@@ -1,12 +1,12 @@
 package ru.yandex.qatools.allure.data;
 
 import com.google.inject.AbstractModule;
+import com.google.inject.Key;
 import com.google.inject.TypeLiteral;
 import ru.yandex.qatools.allure.data.converters.DefaultTestCaseConverter;
 import ru.yandex.qatools.allure.data.converters.TestCaseConverter;
-import ru.yandex.qatools.allure.data.index.DefaultAttachmentsIndex;
-import ru.yandex.qatools.allure.data.index.DefaultPluginsIndex;
-import ru.yandex.qatools.allure.data.io.AttachmentReader;
+import ru.yandex.qatools.allure.data.plugins.DefaultAttachmentsIndex;
+import ru.yandex.qatools.allure.data.plugins.DefaultPluginsIndex;
 import ru.yandex.qatools.allure.data.io.EnvironmentReader;
 import ru.yandex.qatools.allure.data.io.Reader;
 import ru.yandex.qatools.allure.data.io.ResultDirectories;
@@ -49,11 +49,9 @@ public class AllureGuiceModule extends AbstractModule {
         }).to(TestCaseReader.class);
         bind(new TypeLiteral<Reader<Environment>>() {
         }).to(EnvironmentReader.class);
-        bind(new TypeLiteral<Reader<AttachmentInfo>>() {
-        }).to(AttachmentReader.class);
 
         bind(PluginLoader.class).to(PluginLoaderSpi.class);
-        bind(AttachmentsIndex.class).to(DefaultAttachmentsIndex.class);
+        bind(Key.get(AttachmentsIndex.class)).to(DefaultAttachmentsIndex.class);
         bind(PluginsIndex.class).to(DefaultPluginsIndex.class);
 
         bind(TestCaseConverter.class).to(DefaultTestCaseConverter.class);

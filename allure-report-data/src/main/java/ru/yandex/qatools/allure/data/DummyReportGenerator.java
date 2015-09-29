@@ -31,10 +31,10 @@ public final class DummyReportGenerator {
             return;
         }
         int lastIndex = args.length - 1;
-        AllureReportGenerator reportGenerator = new AllureReportGenerator(
+        AllureReportGenerator report = new AllureReportGenerator(
                 getFiles(Arrays.copyOf(args, lastIndex))
         );
-        reportGenerator.generate(new File(args[lastIndex]));
+        report.generate(new File(args[lastIndex]));
     }
 
     public static File[] getFiles(String[] paths) {

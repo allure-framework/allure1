@@ -4,7 +4,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import ru.yandex.qatools.allure.data.index.DefaultAttachmentsIndex
+import ru.yandex.qatools.allure.data.plugins.DefaultAttachmentsIndex
 import ru.yandex.qatools.allure.data.io.TestCaseReader
 import ru.yandex.qatools.allure.data.utils.TextUtils
 import ru.yandex.qatools.allure.model.Attachment
