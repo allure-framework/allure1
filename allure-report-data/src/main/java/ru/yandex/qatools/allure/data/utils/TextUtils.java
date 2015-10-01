@@ -2,7 +2,6 @@ package ru.yandex.qatools.allure.data.utils;
 
 import org.pegdown.Extensions;
 import org.pegdown.PegDownProcessor;
-import ru.yandex.qatools.allure.config.AllureConfig;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
@@ -91,14 +90,6 @@ public final class TextUtils {
 
     public static String getMessageMask(String message) {
         return message == null ? "" : message.replaceAll("\\s+", " ");
-    }
-    
-    public static String getIssueUrl(String name){
-        return String.format(AllureConfig.newInstance().getIssueTrackerPattern(), name);
-    }
-
-    public static String getTestUrl(String name){
-        return String.format(AllureConfig.newInstance().getTmsPattern(), name);
     }
 
     public static String processMarkdown(String rawText) {

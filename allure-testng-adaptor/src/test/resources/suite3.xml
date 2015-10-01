@@ -4,13 +4,13 @@
     <test name="Test tag by classes">
         <parameter name="param1" value="val1"/>
         <classes>
-            <class name="ru.yandex.qatools.allure.testng.testdata.SimpleTestngTest"/>
+            <class name="ru.yandex.qatools.allure.testdata.SimpleTestngTest"/>
         </classes>
     </test>
     <test name="Test tag by classes 2">
         <parameter name="param1" value="val1"/>
         <classes>
-            <class name="ru.yandex.qatools.allure.testng.testdata.SimpleTestngTest"/>
+            <class name="ru.yandex.qatools.allure.testdata.SimpleTestngTest"/>
         </classes>
     </test>
 </suite>

@@ -4,6 +4,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import ru.yandex.qatools.allure.data.AllureReportConfig
 import ru.yandex.qatools.allure.data.plugins.DefaultAttachmentsIndex
 import ru.yandex.qatools.allure.data.io.TestCaseReader
 import ru.yandex.qatools.allure.data.utils.TextUtils
@@ -15,7 +16,7 @@ import ru.yandex.qatools.allure.model.LabelName
 import ru.yandex.qatools.allure.model.Step
 import ru.yandex.qatools.allure.model.TestCaseResult
 
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createSeverityLabel
+import static ru.yandex.qatools.allure.AllureUtils.createSeverityLabel
 import static ru.yandex.qatools.allure.data.converters.DefaultTestCaseConverter.UNKNOWN_STEP_NAME
 import static ru.yandex.qatools.allure.data.converters.DefaultTestCaseConverter.UNKNOWN_TEST_CASE
 import static ru.yandex.qatools.allure.model.SeverityLevel.CRITICAL
@@ -40,7 +41,18 @@ class DefaultTestCaseConverterTest {
         def dir = folder.newFolder()
         new File(dir, ATTACHMENT_SOURCE).text = "some attachment content"
         converter = new DefaultTestCaseConverter()
-        converter.attachmentsIndex = new DefaultAttachmentsIndex(dir)
+        converter.attachmentsIndex = new DefaultAttachmentsIndex(dir.toPath())
+        converter.config = new AllureReportConfig() {
+            @Override
+            String getIssueTrackerPattern() {
+                return "issue-pattern-%s"
+            }
+
+            @Override
+            String getTmsPattern() {
+                return "tms-pattern-%s"
+            }
+        }
     }
 
     @Test

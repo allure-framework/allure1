@@ -8,14 +8,8 @@ import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
 import ru.yandex.qatools.allure.data.Time
 import ru.yandex.qatools.allure.data.WidgetType
-import ru.yandex.qatools.allure.data.io.TestCaseReader
-import ru.yandex.qatools.allure.data.io.TestSuiteReader
 import ru.yandex.qatools.allure.data.utils.PluginUtils
-import ru.yandex.qatools.allure.model.Failure
-import ru.yandex.qatools.allure.model.Label
 
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createLabel
 import static ru.yandex.qatools.allure.model.Status.BROKEN
 import static ru.yandex.qatools.allure.model.Status.FAILED
 import static ru.yandex.qatools.allure.model.Status.PASSED

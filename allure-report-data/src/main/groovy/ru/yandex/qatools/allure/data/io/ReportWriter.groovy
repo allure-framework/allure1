@@ -11,10 +11,12 @@ import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.plugins.PluginData
 import ru.yandex.qatools.commons.model.Environment
 
+import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 
+import static java.nio.file.Files.newBufferedWriter
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.createDirectory
 import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize
 
@@ -33,11 +35,11 @@ class ReportWriter {
 
     public static final String TESTCASE_SUFFIX = "-testcase.json"
 
-    private final File outputDataDirectory
+    private final Path outputDataDirectory
 
-    private final File outputPluginsDirectory
+    private final Path outputPluginsDirectory
 
-    private final File indexHtml
+    private final Path indexHtml
 
     private Long start
 
@@ -49,10 +51,10 @@ class ReportWriter {
 
     private String url
 
-    ReportWriter(File outputDirectory) {
+    ReportWriter(Path outputDirectory) {
         this.outputDataDirectory = createDirectory(outputDirectory, DATA_DIRECTORY_NAME)
         this.outputPluginsDirectory = createDirectory(outputDirectory, PLUGINS_DIRECTORY_NAME)
-        this.indexHtml = new File(outputDirectory, "index.html")
+        this.indexHtml = outputDirectory.resolve("index.html")
         this.start = System.currentTimeMillis()
     }
 
@@ -108,7 +110,7 @@ class ReportWriter {
         try {
             Template template = cfg.getTemplate("index.html.ftl");
 
-            new FileWriter(indexHtml).withCloseable {
+            newBufferedWriter(indexHtml, StandardCharsets.UTF_8).withCloseable {
                 template.process(["plugins": plugins, "version": "unknown"], it)
             }
         } catch (IOException e) {
@@ -150,7 +152,7 @@ class ReportWriter {
 
     /**
      * Get stream to file with given name in data directory.
-     * @see #getStream(java.io.File, java.lang.String)
+     * @see #getStream(java.nio.file.Path, java.lang.String)
      */
     private OutputStream getStreamToDataDirectory(String fileName) {
         getStream(outputDataDirectory, fileName)
@@ -158,10 +160,10 @@ class ReportWriter {
 
     /**
      * Get stream to file with given name in plugin directory with specified name.
-     * @see #getStream(java.io.File, java.lang.String)
+     * @see #getStream(java.nio.file.Path, java.lang.String)
      */
     private OutputStream getStreamToPluginDirectory(String pluginName, String fileName) {
-        def pluginDir = createDirectory(outputPluginsDirectory, pluginName);
+        def pluginDir = createDirectory(outputPluginsDirectory, pluginName)
         getStream(pluginDir, fileName)
     }
 
@@ -169,9 +171,9 @@ class ReportWriter {
      * Get output stream file with given name in specified directory.
      * @throw ReportGenerationException if can not create a file or stream.
      */
-    private static OutputStream getStream(File directory, String fileName) {
+    private static OutputStream getStream(Path directory, String fileName) {
         try {
-            new FileOutputStream(new File(directory, fileName))
+            Files.newOutputStream(directory.resolve(fileName))
         } catch (Exception e) {
             log.error("Can't create directory $fileName in data folder", e)
             throw new ReportGenerationException(e)

@@ -9,6 +9,8 @@ import ru.yandex.qatools.allure.model.Label
 import ru.yandex.qatools.allure.model.TestCaseResult
 import ru.yandex.qatools.allure.model.TestSuiteResult
 
+import java.nio.file.Paths
+
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static ru.yandex.qatools.allure.data.utils.DescriptionUtils.mergeDescriptions
@@ -132,7 +134,7 @@ class TestCaseReaderTest {
 
     @Test
     void shouldEscapeInvalidXmlCharacters() {
-        def suiteReader = new TestSuiteReader(new File(getClass().classLoader.getResource("testresults").getFile()))
+        def suiteReader = new TestSuiteReader(Paths.get(getClass().classLoader.getResource("testresults").file))
         def reader = new TestCaseReader(suiteReader)
 
         def iterator = reader.iterator()

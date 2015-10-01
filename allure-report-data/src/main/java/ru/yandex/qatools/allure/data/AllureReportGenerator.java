@@ -5,7 +5,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
 
-import java.io.File;
+import java.nio.file.Path;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -15,11 +15,11 @@ public class AllureReportGenerator {
 
     private final Injector injector;
 
-    public AllureReportGenerator(File... inputDirectories) {
+    public AllureReportGenerator(Path... inputDirectories) {
         this(AllureReportGenerator.class.getClassLoader(), inputDirectories);
     }
 
-    public AllureReportGenerator(ClassLoader pluginClassLoader, File... inputDirectories) {
+    public AllureReportGenerator(ClassLoader pluginClassLoader, Path... inputDirectories) {
         this(new AllureGuiceModule(pluginClassLoader, inputDirectories));
     }
 
@@ -30,7 +30,7 @@ public class AllureReportGenerator {
         injector = Guice.createInjector(module);
     }
 
-    public void generate(File outputDirectory) {
+    public void generate(Path outputDirectory) {
         ReportWriter writer = new ReportWriter(outputDirectory);
         generate(writer);
     }

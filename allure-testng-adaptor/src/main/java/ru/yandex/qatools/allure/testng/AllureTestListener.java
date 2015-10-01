@@ -10,7 +10,7 @@ import org.testng.ITestResult;
 import org.testng.internal.IResultListener;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.annotations.Parameter;
-import ru.yandex.qatools.allure.config.AllureModelUtils;
+import ru.yandex.qatools.allure.AllureUtils;
 import ru.yandex.qatools.allure.events.AddParameterEvent;
 import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
 import ru.yandex.qatools.allure.events.TestCaseFailureEvent;
@@ -68,7 +68,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         ).withTitle(
                 getCurrentSuiteTitle(iTestContext)
         ).withLabels(
-                AllureModelUtils.createTestFrameworkLabel("TestNG")
+                AllureUtils.createTestFrameworkLabel("TestNG")
         ));
         addPendingMethods(iTestContext);
     }
@@ -183,20 +183,18 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         return iTestResult.getInstance().getClass().getAnnotations();
     }
 
-    Allure getLifecycle() {
+    public Allure getLifecycle() {
         return lifecycle;
     }
 
-    void setLifecycle(Allure lifecycle) {
+    public void setLifecycle(Allure lifecycle) {
         this.lifecycle = lifecycle;
     }
 
     /**
-     * Package private. Used in unit test.
-     *
      * @return UID for the current suite
      */
-    String getSuiteUid(ITestContext iTestContext) {
+    public String getSuiteUid(ITestContext iTestContext) {
         String uid;
         if (iTestContext.getAttribute(SUITE_UID) != null) {
             uid = (String) iTestContext.getAttribute(SUITE_UID);
@@ -207,7 +205,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         return uid;
     }
 
-    String getCurrentSuiteTitle(ITestContext iTestContext) {
+    public String getCurrentSuiteTitle(ITestContext iTestContext) {
         String suite = iTestContext.getSuite().getName();
         String xmlTest = iTestContext.getCurrentXmlTest().getName();
         String params = "";
@@ -463,7 +461,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         return result;
     }
 
-    enum ConfigMethodType {
+    public enum ConfigMethodType {
         BEFORE_SUITE("BeforeSuite"), BEFORE_TEST("BeforeTest"), BEFORE_CLASS("BeforeClass"),
         BEFORE_GROUPS("BeforeGroups"), BEFORE_METHOD("BeforeMethod"), AFTER_SUITE("AfterSuite"),
         AFTER_TEST("AfterTest"), AFTER_CLASS("AfterClass"), AFTER_GROUPS("AfterGroups"),

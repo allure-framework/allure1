@@ -3,7 +3,7 @@ package ru.yandex.qatools.allure.data.plugins
 import ru.yandex.qatools.allure.model.Status
 import ru.yandex.qatools.allure.model.TestCaseResult
 
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createSeverityLabel
+import static ru.yandex.qatools.allure.AllureUtils.createSeverityLabel
 
 /**
  * eroshenkoam 

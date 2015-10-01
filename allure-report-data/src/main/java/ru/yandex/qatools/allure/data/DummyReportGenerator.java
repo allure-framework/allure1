@@ -3,7 +3,8 @@ package ru.yandex.qatools.allure.data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,14 +35,14 @@ public final class DummyReportGenerator {
         AllureReportGenerator report = new AllureReportGenerator(
                 getFiles(Arrays.copyOf(args, lastIndex))
         );
-        report.generate(new File(args[lastIndex]));
+        report.generate(Paths.get(args[lastIndex]));
     }
 
-    public static File[] getFiles(String[] paths) {
-        List<File> files = new ArrayList<>();
+    public static Path[] getFiles(String[] paths) {
+        List<Path> files = new ArrayList<>();
         for (String path : paths) {
-            files.add(new File(path));
+            files.add(Paths.get(path));
         }
-        return files.toArray(new File[files.size()]);
+        return files.toArray(new Path[files.size()]);
     }
 }

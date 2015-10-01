@@ -2,20 +2,22 @@ package ru.yandex.qatools.allure.data.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.commons.model.Environment;
 import ru.yandex.qatools.commons.model.Parameter;
 
 import javax.inject.Inject;
 import javax.xml.bind.JAXB;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Properties;
 
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.listFilesByRegex;
+import static ru.yandex.qatools.allure.AllureUtils.listFiles;
+
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -25,20 +27,19 @@ public class EnvironmentReader implements Reader<Environment> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EnvironmentReader.class);
 
-    private Iterator<File> xmlIterator;
+    private Iterator<Path> xmlIterator;
 
-    private Iterator<File> propertiesIterator;
+    private Iterator<Path> propertiesIterator;
 
     @Inject
-    public EnvironmentReader(@ResultDirectories File... inputDirectories) {
-        AllureConfig config = AllureConfig.newInstance();
-        xmlIterator = listFilesByRegex(
-                config.getEnvironmentXmlFileRegex(),
+    public EnvironmentReader(@ResultDirectories Path... inputDirectories) throws IOException {
+        xmlIterator = listFiles(
+                "*-environment.xml",
                 inputDirectories
         ).iterator();
 
-        propertiesIterator = listFilesByRegex(
-                config.getEnvironmentPropertiesFileRegex(),
+        propertiesIterator = listFiles(
+                "*-environment.properties",
                 inputDirectories
         ).iterator();
     }
@@ -69,24 +70,26 @@ public class EnvironmentReader implements Reader<Environment> {
         @Override
         public Environment next() {
             if (propertiesIterator.hasNext()) {
-                File file = propertiesIterator.next();
+                Path file = propertiesIterator.next();
                 Properties properties = new Properties();
-                try (FileInputStream fis = new FileInputStream(file)) {
-                    properties.load(fis);
+                try (InputStream is = Files.newInputStream(file)) {
+                    properties.load(is);
                     Environment result = new Environment();
                     result.getParameter().addAll(convertToParameters(properties));
                     return result;
                 } catch (Exception e) {
-                    LOGGER.error("Could not read environment .properties file " + file.getAbsolutePath(), e);
+                    LOGGER.error("Could not read environment .properties file " +
+                            file.toAbsolutePath().toString(), e);
                     return next();
                 }
             }
             if (xmlIterator.hasNext()) {
-                File file = xmlIterator.next();
-                try (FileInputStream fis = new FileInputStream(file)) {
-                    return JAXB.unmarshal(fis, Environment.class);
+                Path file = xmlIterator.next();
+                try (InputStream is = Files.newInputStream(file)) {
+                    return JAXB.unmarshal(is, Environment.class);
                 } catch (Exception e) {
-                    LOGGER.error("Could not read environment .xml file " + file.getAbsolutePath(), e);
+                    LOGGER.error("Could not read environment .xml file " +
+                            file.toAbsolutePath().toString(), e);
                     return next();
                 }
             }

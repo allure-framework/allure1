@@ -19,7 +19,6 @@ import ru.yandex.qatools.allure.experimental.testdata.SimpleListener;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
-import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -39,9 +38,8 @@ public class ListenersNotifierTest {
 
     @Before
     public void setUp() throws Exception {
-        allure = new Allure();
+        allure = new Allure(new DummyConfig(folder.newFolder().toPath()));
         allure.addListener(listener);
-        AllureResultsUtils.setResultsDirectory(folder.newFolder());
     }
 
     @Test

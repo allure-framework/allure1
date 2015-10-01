@@ -63,17 +63,19 @@ final class PluginUtils {
         new Time(start: testCase.start, stop: testCase.stop, duration: testCase.stop - testCase.start);
     }
 
-    static def getTestId(TestCaseResult testCase) {
-        def name = getLabelValue(testCase, LabelName.TEST_ID);
-        name ? new TestId(name: name, url: TextUtils.getTestUrl(name)) : null;
+    static def getTestId(TestCaseResult testCase, String tmsPattern) {
+        def name = getLabelValue(testCase, LabelName.TEST_ID)
+        name ? new TestId(name: name, url: String.format(tmsPattern, name)) : null
     }
 
-    static def getIssues(TestCaseResult testCase) {
+    static def getIssues(TestCaseResult testCase, String issueTrackerPattern) {
         def values = getLabelValues(testCase, ISSUE);
-        values?.collect { new Issue(name: it, url: TextUtils.getIssueUrl(it)) }
+        values?.collect {
+            new Issue(name: it, url: String.format(issueTrackerPattern, it))
+        }
     }
 
-    static def getSeverity(TestCaseResult testCase) {
+    static def getSeverityLevel(TestCaseResult testCase) {
         def value = getLabelValue(testCase, SEVERITY);
         value ? SeverityLevel.fromValue(value) : SeverityLevel.NORMAL;
     }

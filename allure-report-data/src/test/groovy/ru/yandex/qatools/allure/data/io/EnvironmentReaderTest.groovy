@@ -58,7 +58,7 @@ class EnvironmentReaderTest {
     void shouldNotRemoveFromIterator() {
         def env = new Environment(id: "id", name: "name")
 
-        def reader = getReader([env]);
+        def reader = getReader([env])
         reader.iterator().remove()
     }
 
@@ -69,7 +69,7 @@ class EnvironmentReaderTest {
         FileUtils.writeStringToFile(createFile(dir, "xml"), "first")
         FileUtils.writeStringToFile(createFile(dir, "xml"), "second")
 
-        def reader = new EnvironmentReader(dir);
+        def reader = new EnvironmentReader(dir.toPath())
         assert reader.iterator().hasNext()
 
         def next = reader.iterator().next()
@@ -86,7 +86,7 @@ class EnvironmentReaderTest {
         def env = new Environment(id: "id", name: "name")
         JAXB.marshal(new ObjectFactory().createEnvironment(env), createFile(dir, "xml"))
 
-        def reader = new EnvironmentReader(dir);
+        def reader = new EnvironmentReader(dir.toPath())
         assert reader.iterator().hasNext()
 
         FileUtils.deleteQuietly(file);
@@ -108,7 +108,7 @@ class EnvironmentReaderTest {
             }
         }
 
-        new EnvironmentReader(dir);
+        new EnvironmentReader(dir.toPath());
     }
 
     static def createFile(File dir, String ext) {

@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import ru.yandex.qatools.allure.DummyConfig;
 import ru.yandex.qatools.allure.model.Attachment;
 
 import java.io.File;
@@ -32,6 +33,8 @@ public class WriteAttachmentTest {
     public TemporaryFolder folder = new TemporaryFolder();
 
     private File resultsDirectory;
+
+    private AllureResultsHelper helper;
 
     private String type;
 
@@ -59,12 +62,12 @@ public class WriteAttachmentTest {
     @Before
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
-        AllureResultsUtils.setResultsDirectory(resultsDirectory);
+        helper = new AllureResultsHelper(new DummyConfig(resultsDirectory));
     }
 
     @Test
     public void typeTest() throws Exception {
-        Attachment attachment = AllureResultsUtils.writeAttachment(bytes, TITLE);
+        Attachment attachment = helper.writeAttachment(bytes, TITLE);
         assertThat(attachment.getTitle(), is(TITLE));
         assertThat(resultsDirectory, contains(attachment.getSource()));
         assertThat(attachment.getType(), is(type));

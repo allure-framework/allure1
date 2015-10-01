@@ -1,21 +1,15 @@
 package ru.yandex.qatools.allure.utils;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import ru.yandex.qatools.allure.config.AllureModelUtils;
+import ru.yandex.qatools.allure.DummyConfig;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Validator;
-import java.io.File;
-import java.nio.file.Files;
+import java.nio.file.Path;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.AllureUtils.validateResults;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -23,15 +17,17 @@ import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFile
  */
 public class WriteTestSuiteResultTest {
 
-    public File resultsDirectory;
+    private Path resultsDirectory;
+
+    private AllureResultsHelper helper;
 
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
     @Before
     public void setUp() throws Exception {
-        resultsDirectory = folder.newFolder();
-        AllureResultsUtils.setResultsDirectory(resultsDirectory);
+        resultsDirectory = folder.newFolder().toPath();
+        helper = new AllureResultsHelper(new DummyConfig(resultsDirectory));
     }
 
     @Test
@@ -42,29 +38,7 @@ public class WriteTestSuiteResultTest {
         String titleWithInvalidXmlCharacter = String.valueOf(Character.toChars(0x0));
         testSuiteResult.setTitle(titleWithInvalidXmlCharacter);
 
-        AllureResultsUtils.writeTestSuiteResult(testSuiteResult);
-
-        Validator validator = AllureModelUtils.getAllureSchemaValidator();
-
-        for (File each : listTestSuiteFiles(resultsDirectory)) {
-            validator.validate(new StreamSource(each));
-        }
-    }
-
-    @Test
-    public void shouldCloseResultFileTest() throws Exception {
-        File resultFile = new File(folder.getRoot(), "suite.xml");
-
-        AllureResultsUtils.writeTestSuiteResult(new TestSuiteResult(), resultFile);
-
-        assertTrue(resultFile.exists());
-
-        Files.delete(resultFile.toPath());
-        assertFalse(resultFile.exists());
-    }
-
-    @After
-    public void tearDown() {
-        AllureResultsUtils.setResultsDirectory(null);
+        helper.writeTestSuite(testSuiteResult);
+        validateResults(resultsDirectory);
     }
 }

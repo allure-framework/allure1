@@ -9,8 +9,8 @@ import ru.yandex.qatools.allure.data.Statistic
 import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createStoryLabel
+import static ru.yandex.qatools.allure.AllureUtils.createFeatureLabel
+import static ru.yandex.qatools.allure.AllureUtils.createStoryLabel
 import static ru.yandex.qatools.allure.data.utils.PluginUtils.DEFAULT_FEATURE
 import static ru.yandex.qatools.allure.data.utils.PluginUtils.DEFAULT_STORY
 import static ru.yandex.qatools.allure.model.Status.BROKEN

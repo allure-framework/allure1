@@ -5,8 +5,8 @@ import org.junit.Test
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createHostLabel
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createThreadLabel
+import static ru.yandex.qatools.allure.AllureUtils.createHostLabel
+import static ru.yandex.qatools.allure.AllureUtils.createThreadLabel
 import static ru.yandex.qatools.allure.data.utils.PluginUtils.DEFAULT_HOST
 import static ru.yandex.qatools.allure.data.utils.PluginUtils.DEFAULT_THREAD
 

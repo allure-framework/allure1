@@ -10,6 +10,8 @@ import ru.yandex.qatools.allure.data.Widgets
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
 
+import java.nio.file.Path
+
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.02.15
@@ -19,7 +21,7 @@ class PluginManagerTest {
     @ClassRule
     public static TemporaryFolder folder = new TemporaryFolder();
 
-    def writer = new DummyReportWriter(folder.newFolder())
+    def writer = new DummyReportWriter(folder.newFolder().toPath())
 
     @Test
     void shouldNotFailIfLoadNull() {
@@ -205,7 +207,7 @@ class PluginManagerTest {
         ]
     }
 
-    PluginManager createPluginManager(List<Plugin> plugins) {
+    static PluginManager createPluginManager(List<Plugin> plugins) {
         def loader = [loadPlugins: { plugins }] as PluginLoader
         def index = new DefaultPluginsIndex(loader)
         new PluginManager(index)
@@ -218,7 +220,7 @@ class PluginManagerTest {
         Map<String, List<String>> writtenResources = [:].withDefault { [] }
         Map<String, Object> writtenData = [:].withDefault { [] }
 
-        DummyReportWriter(File dir) {
+        DummyReportWriter(Path dir) {
             super(dir)
         }
 

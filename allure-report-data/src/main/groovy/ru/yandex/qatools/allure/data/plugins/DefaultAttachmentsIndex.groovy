@@ -6,8 +6,11 @@ import groovy.transform.CompileStatic
 import ru.yandex.qatools.allure.data.AttachmentInfo
 import ru.yandex.qatools.allure.data.io.ResultDirectories
 
+import java.nio.file.Files
+import java.nio.file.Path
+
 import static java.util.Collections.unmodifiableList
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.listAttachmentFiles
+import static ru.yandex.qatools.allure.AllureUtils.listAttachmentFiles
 import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
 
 /**
@@ -31,15 +34,15 @@ class DefaultAttachmentsIndex implements AttachmentsIndex {
      * Should not be empty.
      */
     @Inject
-    public DefaultAttachmentsIndex(@ResultDirectories File... directories) {
+    public DefaultAttachmentsIndex(@ResultDirectories Path... directories) {
         for (def file : listAttachmentFiles(directories)) {
             def uid = generateUid()
-            def source = file.name
+            def source = file.fileName.toString()
             def attachment = new AttachmentInfo(
                     uid: uid,
                     source: source,
-                    size: file.length(),
-                    path: file.absolutePath
+                    size: Files.size(file),
+                    path: file.toAbsolutePath().toString()
             )
             byUid[uid] = attachment
             bySource[source] = attachment
