@@ -17,8 +17,13 @@ package ru.yandex.qatools.allure.data.plugins;
 public interface WithWidget {
 
     /**
-     * Get plugin widget. You must implement {@link ProcessPlugin} to collect
+     * Name for plugin. Name should be unique and contains only latin characters.
+     */
+    String getName();
+
+    /**
+     * Get plugin widget content. You must implement {@link ProcessPlugin} to collect
      * information from test results.
      */
-    Widget getWidget();
+    Object getWidgetData();
 }

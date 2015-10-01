@@ -1,0 +1,5 @@
+<div class="list-item clickable" ng-repeat="item in data" ui-sref="defects.defect({defectUid: item.uid})">
+    <span class="label label-status-{{item.status|lowercase}}" ng-show="item.count > 0">{{item.count}}</span>
+    <span class="text-status-{{item.status|lowercase}}">{{item.message}}</span>
+</div>
+<p ng-show="data.length == 0" class="text-success">{{'defects.NO_DEFECTS' | translate}}</p>

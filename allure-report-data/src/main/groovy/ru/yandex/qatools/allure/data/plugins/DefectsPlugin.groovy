@@ -1,5 +1,4 @@
 package ru.yandex.qatools.allure.data.plugins
-
 import groovy.transform.EqualsAndHashCode
 import ru.yandex.qatools.allure.data.AllureDefect
 import ru.yandex.qatools.allure.data.AllureDefects
@@ -13,8 +12,6 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
 import static ru.yandex.qatools.allure.data.utils.TextUtils.getMessageMask
 import static ru.yandex.qatools.allure.model.Status.BROKEN
 import static ru.yandex.qatools.allure.model.Status.FAILED
-import static ru.yandex.qatools.allure.model.Status.PASSED
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
@@ -58,23 +55,19 @@ class DefectsPlugin extends DefaultTabPlugin implements WithWidget {
      * defects from {@link #defects}.
      */
     @Override
-    Widget getWidget() {
-        def widget = new DefectsWidget(name)
+    Object getWidgetData() {
         def failed = getDefect(FAILED).defects.take(DEFECTS_IN_WIDGET)
         def broken = getDefect(BROKEN).defects.take(DEFECTS_IN_WIDGET - failed.size())
 
-        widget.data = []
-        widget.data += failed.collect {
-            new DefectsWidgetItem(message: it?.failure?.message, status: FAILED, count: it.testCases.size())
+        def data = []
+        data += failed.collect {
+            new DefectsWidgetItem(uid: it.uid, message: it?.failure?.message, status: FAILED, count: it.testCases.size())
         }.sort { -it.count }
 
-        widget.data += broken.collect {
-            new DefectsWidgetItem(message: it?.failure?.message, status: BROKEN, count: it.testCases.size())
+        data += broken.collect {
+            new DefectsWidgetItem(uid: it.uid, message: it?.failure?.message, status: BROKEN, count: it.testCases.size())
         }.sort { -it.count }
-        if (widget.data.empty) {
-            widget.data.add(new DefectsWidgetItem(message: "There are no defects!", status: PASSED))
-        }
-        widget
+        data
     }
 
     /**

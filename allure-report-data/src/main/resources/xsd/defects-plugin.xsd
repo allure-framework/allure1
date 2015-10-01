@@ -40,4 +40,14 @@
             <xsd:element name="test-cases" type="alr:allure-test-cases-info"/>
         </xsd:all>
     </xsd:complexType>
+
+    <xsd:element name="defects-widget-item" type="alr:defects-widget-item"/>
+    <xsd:complexType name="defects-widget-item">
+        <xsd:all>
+            <xsd:element name="count" type="xsd:int"/>
+            <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="message" type="xsd:string"/>
+            <xsd:element name="status" type="alr:status"/>
+        </xsd:all>
+    </xsd:complexType>
 </xsd:schema>

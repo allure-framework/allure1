@@ -1,15 +1,13 @@
 package ru.yandex.qatools.allure.data.plugins
-
 import org.codehaus.groovy.runtime.InvokerHelper
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestSuite
 import ru.yandex.qatools.allure.data.AllureXUnit
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
-import ru.yandex.qatools.allure.data.StatsWidgetItem
 import ru.yandex.qatools.allure.data.Time
+import ru.yandex.qatools.allure.data.XUnitWidgetItem
 import ru.yandex.qatools.allure.data.utils.PluginUtils
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
@@ -55,12 +53,10 @@ class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
     }
 
     @Override
-    Widget getWidget() {
-        def widget = new StatsWidget(name)
+    Object getWidgetData() {
         def suites = xUnit.testSuites.take(10)
-        widget.data = suites.collect {
-            new StatsWidgetItem(title: it.title, statistic: it.statistic)
+        suites.collect {
+            new XUnitWidgetItem(uid: it.uid, title: it.title, statistic: it.statistic)
         }.sort { it.title }
-        widget
     }
 }

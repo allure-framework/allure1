@@ -2,10 +2,10 @@
 (function() {
     "use strict";
     var module = angular.module('allure.timeline', []);
-    module.config(function($stateProvider, allureTabsProvider, testcaseProvider) {
-        allureTabsProvider.addTab('timeline', {title: 'timeline.TITLE', icon: 'fa fa-clock-o'});
+    module.config(function($stateProvider, allurePluginsProvider, testcaseProvider) {
+        allurePluginsProvider.addTab('timeline', {title: 'timeline.TITLE', icon: 'fa fa-clock-o'});
         testcaseProvider.attachStates('timeline');
-        allureTabsProvider.addTranslation('timeline');
+        allurePluginsProvider.addTranslation('timeline');
     });
     module.controller('TimelineCtrl', function($scope, $state, data) {
         "use strict";

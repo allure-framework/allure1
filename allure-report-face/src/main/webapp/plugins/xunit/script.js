@@ -2,7 +2,7 @@
 (function() {
     "use strict";
     var module = angular.module('allure.xunit', []);
-    module.config(function($stateProvider, allureTabsProvider, testcaseProvider) {
+    module.config(function($stateProvider, allurePluginsProvider, testcaseProvider) {
         $stateProvider
             .state('xunit', {
                 url: "/xunit",
@@ -22,8 +22,14 @@
             .state('xunit.testsuite.expanded', {
                 url: '/expanded'
             });
-        allureTabsProvider.tabs.push({name: 'xunit', title: 'xunit.TITLE', icon: 'fa fa-briefcase'});
-        allureTabsProvider.addTranslation('xunit');
+        allurePluginsProvider.tabs.push({name: 'xunit', title: 'xunit.TITLE', icon: 'fa fa-briefcase'});
+        allurePluginsProvider.addWidget('xunit', {
+            title: 'XUnit',
+            tabLink: 'xunit',
+            templateUrl: "plugins/xunit/widget.tpl.html",
+            controller: 'XUnitWidgetCtrl'
+        });
+        allurePluginsProvider.addTranslation('xunit');
         testcaseProvider.attachStates('xunit.testsuite');
     });
     module.controller('XUnitCtrl', function($scope, $state, testsuites) {
@@ -98,5 +104,10 @@
         $scope.$watch('sorting', function() {
             $scope.list.sort($scope.sorting);
         }, true);
+    });
+    module.controller('XUnitWidgetCtrl', function($scope, percents) {
+        $scope.data.forEach(function(data) {
+            data.percents = percents(data.statistic);
+        });
     });
 })();

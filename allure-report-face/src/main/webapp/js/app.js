@@ -72,13 +72,7 @@
                     overview: function($http) {
                         return $http.get('data/environment.json').then(processResponse);
                     },
-                    defects: function($http) {
-                        return $http.get('data/defects.json').then(processResponse);
-                    },
-                    testsuites: function($http) {
-                        return $http.get('data/xunit.json').then(processResponse);
-                    },
-                    widgets: function($http) {
+                    data: function($http) {
                         return $http.get('data/widgets.json').then(processResponse);
                     }
                 }

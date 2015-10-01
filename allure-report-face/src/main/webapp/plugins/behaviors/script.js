@@ -1,7 +1,8 @@
 /*global angular*/
 (function() {
+    "use strict";
     var module = angular.module('allure.behaviors', []);
-    module.config(function($stateProvider, allureTabsProvider, testcaseProvider) {
+    module.config(function($stateProvider, allurePluginsProvider, testcaseProvider) {
         $stateProvider
             .state('behaviors', {
                 url: '/behaviors',
@@ -21,12 +22,17 @@
             .state('behaviors.story.expanded', {
                 url: '/expanded'
             });
-        allureTabsProvider.tabs.push({name: 'behaviors', title: 'features.TITLE', icon: 'fa fa-list'});
-        allureTabsProvider.addTranslation('behaviors');
+        allurePluginsProvider.tabs.push({name: 'behaviors', title: 'features.TITLE', icon: 'fa fa-list'});
+        allurePluginsProvider.addWidget('behaviors', {
+            title: 'Behaviours',
+            tabLink: 'behaviors',
+            templateUrl: "plugins/behaviors/widget.tpl.html",
+            controller: 'BehaviorsWidgetCtrl'
+        });
+        allurePluginsProvider.addTranslation('behaviors');
         testcaseProvider.attachStates('behaviors.story');
     });
     module.controller('BehaviorsCtrl', function($scope, $state, data, percents, WatchingStore, Collection) {
-        "use strict";
         function calculatePercents(item) {
             item.percents = percents(item.statistic);
         }
@@ -97,6 +103,11 @@
             if(params.testcaseUid) {
                 $scope.testcase.uid = params.testcaseUid;
             }
+        });
+    });
+    module.controller('BehaviorsWidgetCtrl', function($scope, percents) {
+        $scope.data.forEach(function(data) {
+            data.percents = percents(data.statistic);
         });
     });
 })();
