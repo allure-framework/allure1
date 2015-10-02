@@ -1,19 +1,10 @@
 package ru.yandex.qatools.allure.data;
 
-import javax.xml.bind.annotation.*;
 import java.util.Map;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "widgets", propOrder = {
-
-})
 public class Widgets {
 
-    @XmlElement(required = true)
     protected String hash;
-
-    @XmlElementWrapper(name = "plugins", required = true)
-    @XmlElement(name = "plugin")
     protected Map<String, Object> plugins;
 
     public String getHash() {
