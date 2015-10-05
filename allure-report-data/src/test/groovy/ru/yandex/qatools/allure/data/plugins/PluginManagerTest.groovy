@@ -18,7 +18,10 @@ class PluginManagerTest {
     @ClassRule
     public static TemporaryFolder folder = new TemporaryFolder();
 
-    def writer = new DummyReportWriter(folder.newFolder().toPath())
+    def writer = new DummyReportWriter(
+            folder.newFolder().toPath(),
+            new DummyEnvironement()
+    )
 
     @Test
     void shouldNotFailIfLoadNull() {
@@ -218,8 +221,8 @@ class PluginManagerTest {
         Map<String, List<String>> writtenResources = [:].withDefault { [] }
         Map<String, Object> writtenData = [:].withDefault { [] }
 
-        DummyReportWriter(Path dir) {
-            super(dir)
+        DummyReportWriter(Path dir, Environment environment) {
+            super(dir, environment)
         }
 
         @Override
@@ -231,6 +234,29 @@ class PluginManagerTest {
         @Override
         void write(String pluginName, URL resource) {
             writtenResources.get(pluginName).add(FilenameUtils.getName(resource.toString()))
+        }
+    }
+
+    class DummyEnvironement implements Environment {
+
+        @Override
+        String getName() {
+            return 'name'
+        }
+
+        @Override
+        String getUrl() {
+            return 'url'
+        }
+
+        @Override
+        String getId() {
+            return 'id'
+        }
+
+        @Override
+        Map<String, String> getParameters() {
+            return ['param':'param_value']
         }
     }
 

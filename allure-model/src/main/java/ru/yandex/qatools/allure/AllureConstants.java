@@ -38,6 +38,16 @@ public final class AllureConstants {
     public static final String VERSION = AllureConfig.class.getPackage().getImplementationVersion();
 
     /**
+     * The file name of environment file.
+     */
+    public static final String ENVIRONMENT_FILE_NAME = "environment.properties";
+
+    /**
+     * The name of report configuration file.
+     */
+    public static final String REPORT_CONFIG_FILE_NAME = "report.properties";
+
+    /**
      * Do not instantiate.
      */
     AllureConstants() {

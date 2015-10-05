@@ -1,4 +1,4 @@
-package ru.yandex.qatools.allure.data;
+package ru.yandex.qatools.allure.data.plugins;
 
 import ru.qatools.properties.DefaultValue;
 import ru.qatools.properties.Property;
@@ -7,7 +7,7 @@ import ru.qatools.properties.Property;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 01.10.15
  */
-public interface AllureReportConfig {
+public interface ReportConfig {
 
     /**
      * Pattern containing issue tracker base URL and one %s placeholder which will be replaced by issue name.

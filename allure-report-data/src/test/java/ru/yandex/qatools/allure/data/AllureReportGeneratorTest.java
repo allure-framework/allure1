@@ -42,7 +42,6 @@ public class AllureReportGeneratorTest {
         assertThat(dataDirectory, contains("timeline.json"));
         assertThat(dataDirectory, contains("behaviors.json"));
         assertThat(dataDirectory, contains("defects.json"));
-        assertThat(dataDirectory, contains("environment.json"));
         assertThat(dataDirectory, contains("graph.json"));
         assertThat(dataDirectory, contains(PluginManager.WIDGETS_JSON));
         assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));

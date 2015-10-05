@@ -129,7 +129,7 @@ class PluginManager {
      * @see ReportWriter
      */
     void writePluginData(ReportWriter writer) {
-        writer.write(pluginsData)
+        pluginsData.each { writer.write(it) }
     }
 
     /**

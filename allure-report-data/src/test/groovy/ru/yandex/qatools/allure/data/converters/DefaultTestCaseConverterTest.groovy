@@ -4,7 +4,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import ru.yandex.qatools.allure.data.AllureReportConfig
+import ru.yandex.qatools.allure.data.plugins.ReportConfig
 import ru.yandex.qatools.allure.data.plugins.DefaultAttachmentsIndex
 import ru.yandex.qatools.allure.data.io.TestCaseReader
 import ru.yandex.qatools.allure.data.utils.TextUtils
@@ -42,7 +42,7 @@ class DefaultTestCaseConverterTest {
         new File(dir, ATTACHMENT_SOURCE).text = "some attachment content"
         converter = new DefaultTestCaseConverter()
         converter.attachmentsIndex = new DefaultAttachmentsIndex(dir.toPath())
-        converter.config = new AllureReportConfig() {
+        converter.config = new ReportConfig() {
             @Override
             String getIssueTrackerPattern() {
                 return "issue-pattern-%s"

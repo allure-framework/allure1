@@ -2,14 +2,15 @@ package ru.yandex.qatools.allure.data.io
 
 import freemarker.template.Configuration
 import freemarker.template.Template
+import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.apache.commons.io.FilenameUtils
 import ru.yandex.qatools.allure.data.AllureReportInfo
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AttachmentInfo
 import ru.yandex.qatools.allure.data.ReportGenerationException
+import ru.yandex.qatools.allure.data.plugins.Environment
 import ru.yandex.qatools.allure.data.plugins.PluginData
-import ru.yandex.qatools.commons.model.Environment
 
 import java.nio.charset.StandardCharsets
 import java.nio.file.Files
@@ -25,6 +26,7 @@ import static ru.yandex.qatools.allure.data.utils.AllureReportUtils.serialize
  *         Date: 21.04.15
  */
 @Slf4j
+@CompileStatic
 class ReportWriter {
 
     public static final String DATA_DIRECTORY_NAME = "data"
@@ -41,32 +43,18 @@ class ReportWriter {
 
     private final Path indexHtml
 
-    private Long start
+    private final Long start
 
-    private Long size = 0;
+    private final Environment environment
 
-    private String name
+    private Long size = 0
 
-    private String id
-
-    private String url
-
-    ReportWriter(Path outputDirectory) {
+    ReportWriter(Path outputDirectory, Environment environment) {
         this.outputDataDirectory = createDirectory(outputDirectory, DATA_DIRECTORY_NAME)
         this.outputPluginsDirectory = createDirectory(outputDirectory, PLUGINS_DIRECTORY_NAME)
         this.indexHtml = outputDirectory.resolve("index.html")
         this.start = System.currentTimeMillis()
-    }
-
-    @SuppressWarnings("GrMethodMayBeStatic")
-    void write(Object object) {
-        if (object) {
-            throw new ReportGenerationException("Can't write object ${object.toString()}")
-        }
-    }
-
-    void write(Collection items) {
-        items.each { write(it) }
+        this.environment = environment
     }
 
     void write(AllureTestCase testCase) {
@@ -76,15 +64,6 @@ class ReportWriter {
 
     void write(PluginData data) {
         Objects.requireNonNull(data)
-
-        //TODO :(
-        if (data.data instanceof Environment) {
-            Environment environment = data.data as Environment
-            name = environment.name
-            id = environment.id
-            url = environment.url
-        }
-
         serializeToData(data.name, data.data);
     }
 
@@ -123,9 +102,15 @@ class ReportWriter {
      * data directory.
      */
     void writeReportInfo() {
-        def stop = System.currentTimeMillis();
-        def info = new AllureReportInfo(id: id, name: name, url: url, time: stop - start, size: size)
-        serialize(getStreamToDataDirectory(REPORT_JSON), info);
+        def stop = System.currentTimeMillis()
+        def info = new AllureReportInfo(
+                id: environment.id,
+                name: environment.name,
+                url: environment.url,
+                time: stop - start,
+                size: size
+        )
+        serialize(getStreamToDataDirectory(REPORT_JSON), info)
     }
 
     /**

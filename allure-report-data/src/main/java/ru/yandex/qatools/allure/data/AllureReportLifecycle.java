@@ -7,7 +7,6 @@ import ru.yandex.qatools.allure.data.io.ReportWriter;
 import ru.yandex.qatools.allure.data.plugins.AttachmentsIndex;
 import ru.yandex.qatools.allure.data.plugins.PluginManager;
 import ru.yandex.qatools.allure.model.TestCaseResult;
-import ru.yandex.qatools.commons.model.Environment;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -17,9 +16,6 @@ public class AllureReportLifecycle {
 
     @Inject
     private Reader<TestCaseResult> testCaseReader;
-
-    @Inject
-    private Reader<Environment> environmentReader;
 
     @Inject
     private TestCaseConverter converter;
@@ -46,11 +42,6 @@ public class AllureReportLifecycle {
             writer.write(testCase);
         }
 
-        for (Environment environment : environmentReader) {
-            pluginManager.prepare(environment);
-            pluginManager.process(environment);
-        }
-
         for (AttachmentInfo info : attachmentsIndex.findAll()) {
             writer.write(info);
         }
@@ -61,6 +52,5 @@ public class AllureReportLifecycle {
         pluginManager.writePluginWidgets(writer);
 
         writer.writeReportInfo();
-
     }
 }

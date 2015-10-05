@@ -4,23 +4,29 @@ import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Properties;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 31.10.13
  */
 public final class AllureReportUtils {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AllureReportUtils.class);
 
     /**
      * Don't use instance of this class
@@ -89,5 +95,26 @@ public final class AllureReportUtils {
         AnnotationIntrospector annotationInspector = new JaxbAnnotationIntrospector(TypeFactory.defaultInstance());
         mapper.getSerializationConfig().with(annotationInspector);
         return mapper;
+    }
+
+    /**
+     * Load properties from all files with given name in specified directories.
+     */
+    public static Properties loadProperties(String fileName, Path... directories) {
+        Properties properties = new Properties();
+
+        for (Path path : directories) {
+            Path env = path.resolve(fileName);
+            if (Files.notExists(env)) {
+                continue;
+            }
+            try (InputStream stream = Files.newInputStream(env)) {
+                properties.load(stream);
+            } catch (IOException e) {
+                LOGGER.debug("Could not read properties from file " + path, e);
+            }
+        }
+
+        return properties;
     }
 }

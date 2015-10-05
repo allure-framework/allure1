@@ -5,7 +5,7 @@ import org.modelmapper.Converter
 import org.modelmapper.ModelMapper
 import org.modelmapper.spi.MappingContext
 import ru.yandex.qatools.allure.data.AllureAttachment
-import ru.yandex.qatools.allure.data.AllureReportConfig
+import ru.yandex.qatools.allure.data.plugins.ReportConfig
 import ru.yandex.qatools.allure.data.AllureStep
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestSuiteInfo
@@ -31,7 +31,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
     public static final String UNKNOWN_TEST_CASE = "UnknownTestCase"
 
     @Inject
-    AllureReportConfig config
+    ReportConfig config
 
     @Inject
     AttachmentsIndex attachmentsIndex

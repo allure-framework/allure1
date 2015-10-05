@@ -4,6 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import ru.yandex.qatools.allure.data.io.ReportWriter;
+import ru.yandex.qatools.allure.data.plugins.Environment;
 
 import java.nio.file.Path;
 
@@ -31,7 +32,8 @@ public class AllureReportGenerator {
     }
 
     public void generate(Path outputDirectory) {
-        ReportWriter writer = new ReportWriter(outputDirectory);
+        Environment environment = injector.getInstance(Environment.class);
+        ReportWriter writer = new ReportWriter(outputDirectory, environment);
         generate(writer);
     }
 
