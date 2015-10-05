@@ -1,12 +1,8 @@
 package ru.yandex.qatools.allure.events;
 
-import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.Step;
 
-import java.util.Iterator;
 import java.util.regex.Pattern;
-
-import static ru.yandex.qatools.allure.utils.AllureResultsUtils.deleteAttachment;
 
 /**
  * Using to remove attachments from step.
@@ -26,23 +22,12 @@ public class RemoveAttachmentsEvent extends AbstractRemoveAttachmentEvent {
     }
 
     /**
-     * Remove attachments matches pattern from step and all step substeps
+     * Do nothing.
      *
      * @param context from which attachments will be removed
      */
     @Override
     public void process(Step context) {
-        Iterator<Attachment> iterator = context.getAttachments().listIterator();
-        while (iterator.hasNext()) {
-            Attachment attachment = iterator.next();
-            if (pattern.matcher(attachment.getSource()).matches()) {
-                deleteAttachment(attachment);
-                iterator.remove();
-            }
-        }
-
-        for (Step step : context.getSteps()) {
-            process(step);
-        }
+        //do nothing.
     }
 }

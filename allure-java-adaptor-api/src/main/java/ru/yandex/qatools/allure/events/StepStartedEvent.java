@@ -46,4 +46,9 @@ public class StepStartedEvent extends AbstractStepStartedEvent {
         setTitle(title);
         return this;
     }
+
+    @Override
+    public String toString() {
+        return String.format("StepStartedEvent{name: \"%s\", title: \"%s\"}", getName(), getTitle());
+    }
 }

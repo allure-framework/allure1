@@ -1,9 +1,7 @@
 package ru.yandex.qatools.allure.events;
 
-import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.Step;
 
-import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachmentSafely;
 
 /**
  * Using to add attachments to tests.
@@ -29,16 +27,13 @@ public class MakeAttachmentEvent extends AbstractMakeAttachmentEvent {
     }
 
     /**
-     * Write attachment from event using
-     * {@link ru.yandex.qatools.allure.utils.AllureResultsUtils#writeAttachmentSafely(byte[], String, String)}
-     * Then add attachment to step attachments.
+     * Do nothing.
      *
      * @param step to change
      */
     @Override
     public void process(Step step) {
-        Attachment attachment = writeAttachmentSafely(getAttachment(), getTitle(), getType());
-        step.getAttachments().add(attachment);
+        //do nothing.
     }
 
 }

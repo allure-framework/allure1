@@ -18,6 +18,17 @@ public class ReportGenerationException extends RuntimeException {
     }
 
     /**
+     * Constructs the {@link ru.yandex.qatools.allure.data.ReportGenerationException} from given cause
+     * and detail message.
+     *
+     * @param message the detail message.
+     * @param cause   given {@link java.lang.Throwable} cause
+     */
+    public ReportGenerationException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    /**
      * Constructs the {@link ru.yandex.qatools.allure.data.ReportGenerationException} with specified detail message
      *
      * @param message the detail message.

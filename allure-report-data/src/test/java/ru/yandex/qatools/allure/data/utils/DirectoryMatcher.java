@@ -7,16 +7,15 @@ import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
 
-import java.io.File;
-
-import static org.hamcrest.CoreMatchers.not;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 04.05.14
  */
 public class DirectoryMatcher {
-    public static class Contains extends TypeSafeMatcher<File> {
+    public static class Contains extends TypeSafeMatcher<Path> {
 
         private String fileName;
 
@@ -25,9 +24,9 @@ public class DirectoryMatcher {
         }
 
         @Override
-        protected boolean matchesSafely(File directory) {
-            return directory.isDirectory() && !FileUtils.listFiles(
-                    directory,
+        protected boolean matchesSafely(Path directory) {
+            return Files.isDirectory(directory) && !FileUtils.listFiles(
+                    directory.toFile(),
                     new NameFileFilter(fileName),
                     TrueFileFilter.INSTANCE
             ).isEmpty();

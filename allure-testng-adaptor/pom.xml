@@ -34,11 +34,6 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-commons</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
         	<groupId>com.google.inject</groupId>
         	<artifactId>guice</artifactId>
         	<scope>test</scope>

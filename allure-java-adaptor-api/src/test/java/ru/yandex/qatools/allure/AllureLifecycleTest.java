@@ -1,12 +1,9 @@
 package ru.yandex.qatools.allure;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.xml.sax.SAXException;
-import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
 import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
 import ru.yandex.qatools.allure.events.MakeAttachmentEvent;
@@ -20,17 +17,11 @@ import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
-import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
-import javax.xml.transform.stream.StreamSource;
-import javax.xml.validation.Validator;
-import java.io.File;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -46,7 +37,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.AllureUtils.validateResults;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -58,12 +49,14 @@ public class AllureLifecycleTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    public File resultsDirectory;
+    public Allure allure;
+
+    public Path resultsDirectory;
 
     @Before
     public void setUp() throws Exception {
-        resultsDirectory = folder.newFolder();
-        AllureResultsUtils.setResultsDirectory(resultsDirectory);
+        resultsDirectory = folder.newFolder().toPath();
+        allure = new Allure(new DummyConfig(resultsDirectory));
     }
 
     @Test
@@ -254,12 +247,8 @@ public class AllureLifecycleTest {
         Allure.LIFECYCLE.fire(new TestSuiteFinishedEvent(uid));
     }
 
-    public void validateTestSuite() throws SAXException, IOException {
-        Validator validator = AllureModelUtils.getAllureSchemaValidator();
-
-        for (File each : listTestSuiteFiles(resultsDirectory)) {
-            validator.validate(new StreamSource(each));
-        }
+    public void validateTestSuite() {
+        validateResults(resultsDirectory);
     }
 
     public TestCaseResult fireTestCaseStart(String uid) {
@@ -314,10 +303,4 @@ public class AllureLifecycleTest {
         assertThat(testCase.getTitle(), is("new.case.title"));
         return testCase;
     }
-
-    @After
-    public void tearDown() {
-        AllureResultsUtils.setResultsDirectory(null);
-    }
-
 }

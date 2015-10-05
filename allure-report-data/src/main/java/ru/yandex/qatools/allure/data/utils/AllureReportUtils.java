@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -27,31 +29,19 @@ public final class AllureReportUtils {
     }
 
     /**
-     * Create directory with given name in specified directory. Check created directory using
-     * {@link #checkDirectory(java.io.File)}
+     * Create directory with given name in specified directory.
      *
      * @param parent specified parent directory
      * @param name   given name for directory to create
      * @return created directory
      * @throws ReportGenerationException if can't create specified directory
      */
-    public static File createDirectory(File parent, String name) {
-        File created = new File(parent, name);
-        checkDirectory(created);
-        return created;
-    }
-
-    /**
-     * If directory doesn't exists try to create it.
-     *
-     * @param directory given directory to check
-     * @throws ReportGenerationException if can't create specified directory
-     */
-    public static void checkDirectory(File directory) {
-        if (!(directory.exists() || directory.mkdirs())) {
-            throw new ReportGenerationException(
-                    String.format("Can't create data directory <%s>", directory.getAbsolutePath())
-            );
+    public static Path createDirectory(Path parent, String name) {
+        Path created = parent.resolve(name);
+        try {
+            return Files.createDirectories(created);
+        } catch (IOException e) {
+            throw new ReportGenerationException("Can't create data directory", e);
         }
     }
 

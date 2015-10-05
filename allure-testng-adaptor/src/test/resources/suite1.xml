@@ -4,7 +4,7 @@
   <test name="SmokeTest1">
   <parameter name="param2 " value="value2"></parameter>
     <classes>
-       <class name="ru.yandex.qatools.allure.testng.testdata.TestDataClass" />
+       <class name="ru.yandex.qatools.allure.testdata.TestDataClass" />
     </classes>
   </test>
  

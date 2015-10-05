@@ -17,7 +17,7 @@ import java.util.Set;
  *         Date: 17.04.15
  * @see ProcessPlugin
  */
-public abstract class AbstractPlugin implements WithResources, WithData, WithPriority {
+public abstract class AbstractPlugin implements Plugin, WithResources, WithData, WithPriority {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPlugin.class);
 

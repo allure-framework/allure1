@@ -1,7 +1,7 @@
 package ru.yandex.qatools.allure.data.plugins
 
 import org.junit.Test
-import ru.yandex.qatools.allure.config.AllureModelUtils
+import ru.yandex.qatools.allure.AllureUtils
 import ru.yandex.qatools.allure.model.SeverityLevel
 import ru.yandex.qatools.allure.model.Status
 import ru.yandex.qatools.allure.model.TestCaseResult
@@ -22,7 +22,7 @@ class MigrationPluginTest {
         def testCase = new TestCaseResult(severity: severity)
         plugin.prepare(testCase)
 
-        assert testCase.labels.contains(AllureModelUtils.createSeverityLabel(severity))
+        assert testCase.labels.contains(AllureUtils.createSeverityLabel(severity))
         assert testCase.severity == null
 
     }

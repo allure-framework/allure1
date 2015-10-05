@@ -7,9 +7,10 @@ import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.Widgets
-import ru.yandex.qatools.allure.data.index.DefaultPluginsIndex
 import ru.yandex.qatools.allure.data.io.ReportWriter
 import ru.yandex.qatools.allure.data.testdata.SomePluginWithResources
+
+import java.nio.file.Path
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -20,7 +21,7 @@ class PluginManagerTest {
     @ClassRule
     public static TemporaryFolder folder = new TemporaryFolder();
 
-    def writer = new DummyReportWriter(folder.newFolder())
+    def writer = new DummyReportWriter(folder.newFolder().toPath())
 
     @Test
     void shouldNotFailIfLoadNull() {
@@ -206,7 +207,7 @@ class PluginManagerTest {
         ]
     }
 
-    PluginManager createPluginManager(List<Plugin> plugins) {
+    static PluginManager createPluginManager(List<Plugin> plugins) {
         def loader = [loadPlugins: { plugins }] as PluginLoader
         def index = new DefaultPluginsIndex(loader)
         new PluginManager(index)
@@ -219,7 +220,7 @@ class PluginManagerTest {
         Map<String, List<String>> writtenResources = [:].withDefault { [] }
         Map<String, Object> writtenData = [:].withDefault { [] }
 
-        DummyReportWriter(File dir) {
+        DummyReportWriter(Path dir) {
             super(dir)
         }
 
@@ -301,8 +302,8 @@ class PluginManagerTest {
         }
     }
 
-    abstract class SomePlugin implements Plugin<SomeObject> {
-        @Override
+    abstract class SomePlugin {
+
         Class<SomeObject> getType() {
             return SomeObject
         }

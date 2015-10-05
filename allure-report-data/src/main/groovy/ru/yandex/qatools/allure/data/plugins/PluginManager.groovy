@@ -26,9 +26,9 @@ class PluginManager {
     public static final String PLUGINS_JSON = "plugins.json"
     public static final String WIDGETS_JSON = "widgets.json"
 
-    protected final PluginStorage<PreparePlugin> preparePlugins
+    protected final List<PreparePlugin> preparePlugins
 
-    protected final PluginStorage<ProcessPlugin> processPlugins
+    protected final List<ProcessPlugin> processPlugins
 
     protected final List<WithResources> pluginsWithResources
 
@@ -41,8 +41,8 @@ class PluginManager {
      */
     @Inject
     PluginManager(PluginsIndex index) {
-        preparePlugins = new PluginStorage<>(index.findAll(PreparePlugin))
-        processPlugins = new PluginStorage<>(index.findAll(ProcessPlugin))
+        preparePlugins = index.findAll(PreparePlugin)
+        processPlugins = index.findAll(ProcessPlugin)
 
         pluginsWithResources = index.findAll(WithResources)
         pluginsWithWidgets = index.findAll(WithWidget)
@@ -77,7 +77,7 @@ class PluginManager {
      * each of found plugins.
      */
     public <T> void prepare(T object) {
-        def plugins = (preparePlugins.get(object?.class) ?: []) as List<PreparePlugin>
+        def plugins = preparePlugins.findAll { it.type == object?.class }
         plugins*.prepare(object)
     }
 
@@ -86,7 +86,7 @@ class PluginManager {
      * each of found plugins.
      */
     public <T> void process(T object) {
-        def plugins = (processPlugins.get(object?.class) ?: []) as List<ProcessPlugin>
+        def plugins = processPlugins.findAll { it.type == object?.class }
         for (def plugin : plugins) {
             plugin.process(PluginUtils.clone(object))
         }

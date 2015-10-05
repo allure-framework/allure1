@@ -9,7 +9,7 @@ import ru.yandex.qatools.allure.model.TestSuiteResult
 
 import javax.xml.bind.JAXB
 
-import static ru.yandex.qatools.allure.config.AllureNamingUtils.generateTestSuiteFileName
+import static ru.yandex.qatools.allure.AllureUtils.generateTestSuiteName
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -46,13 +46,13 @@ class TestSuiteReaderTest {
 
     @Test
     void shouldSkipFileIfNotFound() {
-        def dir = folder.newFolder();
+        def dir = folder.newFolder()
         def testSuite = new TestSuiteResult(name: "name")
 
-        def file = new File(dir, generateTestSuiteFileName())
+        def file = new File(dir, generateTestSuiteName())
         JAXB.marshal(new ObjectFactory().createTestSuite(testSuite), file)
 
-        def reader = new TestSuiteReader(dir);
+        def reader = new TestSuiteReader(dir.toPath())
         FileUtils.deleteQuietly(file)
 
         assert reader.iterator().hasNext()
@@ -63,9 +63,9 @@ class TestSuiteReaderTest {
     def getReader(List<TestSuiteResult> results) {
         def dir = folder.newFolder();
         for (def result : results) {
-            JAXB.marshal(new ObjectFactory().createTestSuite(result), new File(dir, generateTestSuiteFileName()))
+            JAXB.marshal(new ObjectFactory().createTestSuite(result), new File(dir, generateTestSuiteName()))
         }
 
-        new TestSuiteReader(dir);
+        new TestSuiteReader(dir.toPath())
     }
 }

@@ -1,7 +1,6 @@
 package ru.yandex.qatools.allure.aspects;
 
 import org.junit.Test;
-import ru.yandex.qatools.allure.config.AllureConfig;
 
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -40,7 +39,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithStringArray() {
         String[] firstArg = {"one string", "two string", "three string"};
         int secondArg = 2454575;
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with String[] and int arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -50,7 +49,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithLongArray() {
         long[] firstArg = {20000L, 464564L, 8798765465465465132L};
         Integer secondArg = 1546825;
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with long[] and Integer arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -59,7 +58,7 @@ public class AllureAspectUtilsTest {
     @Test
     public void getTitleWithIntArray() {
         int[] firstArg = {1, 2, 3};
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, true});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, true}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), true};
         assertThat("Method with int[] and String arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -69,7 +68,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithShortArray() {
         short[] firstArg = {32767, 0, -32768};
         String secondArg = "aaabbbbccdddd";
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with short[] and String arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -79,7 +78,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithCharArray() {
         char[] firstArg = {'a', 'b', 'z'};
         double secondArg = 25.546548946;
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with char[] and double arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -89,7 +88,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithByteArray() {
         byte[] firstArg = {1, 127, -128};
         char secondArg = 'x';
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with byte[] and char arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -99,7 +98,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithBooleanArray() {
         boolean[] firstArg = {true, false, false};
         float secondArg = 0.00005F;
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with boolean[] and float arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -109,7 +108,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithFloatArray() {
         float[] firstArg = {0.1F, 1.002F, 6.45F};
         byte secondArg = 127;
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with float[] and byte arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -119,7 +118,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithDoubleArray() {
         double[] firstArg = {4.0000006, 0.4, 6.0};
         short secondArg = -5462;
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with double[] and short arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -129,7 +128,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithoutArray() {
         double firstArg = 0.00000001;
         String secondArg = "second arg";
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, firstArg, secondArg};
         assertThat("Method with double and String arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format("{0} (first arg:{1}, second arg:{2})", args)));
@@ -139,7 +138,7 @@ public class AllureAspectUtilsTest {
     public void getTitleWithEmptyArray() {
         String[] firstArg = new String[0];
         long secondArg = 1000000000000L;
-        String title = getTitle(NAME_PATTERN_WITH_TWO_ARGS, METHOD_NAME, null, new Object[]{firstArg, secondArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg, secondArg}, NAME_PATTERN_WITH_TWO_ARGS);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg), secondArg};
         assertThat("Method with empty String[] and long arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_TWO_ARGS, args)));
@@ -147,7 +146,7 @@ public class AllureAspectUtilsTest {
 
     @Test
     public void getTitleWithoutParams() {
-        String title = getTitle("{method}", METHOD_NAME, null, null);
+        String title = getTitle(120, METHOD_NAME, null, null, "{method}");
         Object[] args = {METHOD_NAME};
         assertThat("Method without arguments is processed incorrectly", title,
                 equalTo(MessageFormat.format("{0}", args)));
@@ -155,14 +154,14 @@ public class AllureAspectUtilsTest {
 
     @Test
     public void getTitleWithTooLongTitle() {
-        String title = getTitle(TOO_LONG_NAME, METHOD_NAME, null, null);
+        String title = getTitle(120, METHOD_NAME, null, null, TOO_LONG_NAME);
         assertThat("Wrong title shortcut", title,
-                equalTo(cutEnd(TOO_LONG_NAME, AllureConfig.newInstance().getMaxTitleLength())));
+                equalTo(cutEnd(TOO_LONG_NAME, 120)));
     }
 
     @Test
     public void getTitleWithNullParam() {
-        String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, null, new Object[]{null});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{null}, NAME_PATTERN_WITH_ONE_ARG);
         Object[] args = {METHOD_NAME, null};
         assertThat("Method with null String argument is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
@@ -171,7 +170,7 @@ public class AllureAspectUtilsTest {
     @Test
     public void getTitleWithNullArgInArrayParam() {
         String[] firstArg = new String[]{null, "something"};
-        String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, null, new Object[]{firstArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg}, NAME_PATTERN_WITH_ONE_ARG);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg)};
         assertThat("Method with String[] argument that has nulls is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
@@ -180,7 +179,7 @@ public class AllureAspectUtilsTest {
     @Test
     public void getTitleWithArrayOfArrays() {
         Object[] firstArg = new Object[]{new String[]{"a", "b"}, "something", null};
-        String title = getTitle(NAME_PATTERN_WITH_ONE_ARG, METHOD_NAME, null, new Object[]{firstArg});
+        String title = getTitle(120, METHOD_NAME, null, new Object[]{firstArg}, NAME_PATTERN_WITH_ONE_ARG);
         Object[] args = {METHOD_NAME, Arrays.toString(firstArg)};
         assertThat("Method with array of arrays argument that has nulls is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_ONE_ARG, args)));
@@ -189,7 +188,7 @@ public class AllureAspectUtilsTest {
     @Test
     public void getTitleWithThis() {
         String thisObject = "something";
-        String title = getTitle(NAME_PATTERN_WITH_THIS, METHOD_NAME, thisObject, new Object[]{});
+        String title = getTitle(120, METHOD_NAME, thisObject, new Object[]{}, NAME_PATTERN_WITH_THIS);
         Object[] args = {METHOD_NAME, thisObject};
         assertThat("Method with {this} is processed incorrectly", title,
                 equalTo(MessageFormat.format(TITLE_STRING_WITH_THIS, args)));
@@ -197,7 +196,7 @@ public class AllureAspectUtilsTest {
 
     @Test
     public void getNameLongMethodNameTest() throws Exception {
-        String name = getName(TOO_LONG_NAME, null);
+        String name = getName(120, TOO_LONG_NAME, null);
         assertThat("Invalid method name short cut", name,
                 equalTo("... 150 symbols! Guys, what are you thinking for when you made so long title??? Could" +
                         " you please made it more carefully...?"));
@@ -205,7 +204,7 @@ public class AllureAspectUtilsTest {
 
     @Test
     public void getNameLongMethodNameAndParametersTest() throws Exception {
-        String name = getName(METHOD_NAME, new Object[]{TOO_LONG_NAME});
+        String name = getName(120, METHOD_NAME, new Object[]{TOO_LONG_NAME});
         assertThat("Invalid method name short cut", name,
                 equalTo("getSomethingNew[this name pattern is too long, over 150 symbols! Guys, what are you " +
                         "thinking for when you made so long t...]"));

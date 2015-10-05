@@ -1,7 +1,5 @@
 package ru.yandex.qatools.allure.aspects;
 
-import ru.yandex.qatools.allure.config.AllureConfig;
-
 import java.lang.reflect.Array;
 import java.text.MessageFormat;
 import java.util.Arrays;
@@ -22,10 +20,9 @@ public final class AllureAspectUtils {
 
     /**
      * Generate method in the following format: {methodName}[{param1}, {param2}, ...]. Cut a generated
-     * name is it over {@link ru.yandex.qatools.allure.config.AllureConfig#maxTitleLength}
+     * name is it over {@link ru.yandex.qatools.allure.AllureConfig#getMaxTitleLength()}
      */
-    public static String getName(String methodName, Object[] parameters) {
-        int maxLength = AllureConfig.newInstance().getMaxTitleLength();
+    public static String getName(int maxLength, String methodName, Object[] parameters) {
         if (methodName.length() > maxLength) {
             return cutBegin(methodName, maxLength);
         } else {
@@ -55,7 +52,7 @@ public final class AllureAspectUtils {
      * Generate title using name pattern. First step all "{method}" substrings will be replaced
      * with given method name. Then replace all "{i}" substrings with i-th parameter.
      */
-    public static String getTitle(String namePattern, String methodName, Object instance, Object[] parameters) {
+    public static String getTitle(int maxLength, String methodName, Object instance, Object[] parameters, String namePattern) {
         String finalPattern = namePattern
                 .replaceAll("\\{method\\}", methodName)
                 .replaceAll("\\{this\\}", String.valueOf(instance));
@@ -65,7 +62,7 @@ public final class AllureAspectUtils {
             results[i] = arrayToString(parameters[i]);
         }
 
-        return cutEnd(MessageFormat.format(finalPattern, results), AllureConfig.newInstance().getMaxTitleLength());
+        return cutEnd(MessageFormat.format(finalPattern, results), maxLength);
     }
 
     /**

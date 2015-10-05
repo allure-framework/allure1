@@ -19,7 +19,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
-import static ru.yandex.qatools.allure.config.AllureModelUtils.*;
+import static ru.yandex.qatools.allure.AllureUtils.*;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru

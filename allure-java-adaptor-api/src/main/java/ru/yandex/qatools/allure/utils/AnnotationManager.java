@@ -2,6 +2,7 @@ package ru.yandex.qatools.allure.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.yandex.qatools.allure.AllureUtils;
 import ru.yandex.qatools.allure.annotations.Description;
 import ru.yandex.qatools.allure.annotations.Features;
 import ru.yandex.qatools.allure.annotations.Issue;
@@ -27,13 +28,13 @@ import java.util.List;
 import java.util.Map;
 
 import static java.lang.String.format;
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel;
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createHostLabel;
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createIssueLabel;
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createSeverityLabel;
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createStoryLabel;
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createTestLabel;
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createThreadLabel;
+import static ru.yandex.qatools.allure.AllureUtils.createFeatureLabel;
+import static ru.yandex.qatools.allure.AllureUtils.createHostLabel;
+import static ru.yandex.qatools.allure.AllureUtils.createIssueLabel;
+import static ru.yandex.qatools.allure.AllureUtils.createSeverityLabel;
+import static ru.yandex.qatools.allure.AllureUtils.createStoryLabel;
+import static ru.yandex.qatools.allure.AllureUtils.createTestLabel;
+import static ru.yandex.qatools.allure.AllureUtils.createThreadLabel;
 
 /**
  * Util, using to collect information from class and method annotations
@@ -299,7 +300,7 @@ public class AnnotationManager {
 
     /**
      * Construct label for all {@link ru.yandex.qatools.allure.annotations.Stories} annotations
-     * using {@link ru.yandex.qatools.allure.config.AllureModelUtils#createStoryLabel(String)}
+     * using {@link AllureUtils#createStoryLabel(String)}
      *
      * @return {@link java.util.List} of created labels
      */
@@ -317,7 +318,7 @@ public class AnnotationManager {
 
     /**
      * Construct label for all {@link ru.yandex.qatools.allure.annotations.Features} annotations
-     * using {@link ru.yandex.qatools.allure.config.AllureModelUtils#createFeatureLabel(String)}
+     * using {@link AllureUtils#createFeatureLabel(String)}
      *
      * @return {@link java.util.List} of created labels
      */

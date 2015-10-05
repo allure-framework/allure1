@@ -11,12 +11,7 @@ import java.lang.annotation.Target;
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 09.02.15
  */
-public interface Plugin<T> {
-
-    /**
-     * Type of data needed to plugin
-     */
-    Class<T> getType();
+public interface Plugin {
 
     /**
      * Using this annotation you can specify the plugin name. This annotation

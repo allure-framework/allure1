@@ -38,11 +38,12 @@ public class AllureStepsAspects {
 
     @Before("anyMethod() && withStepAnnotation()")
     public void stepStart(JoinPoint joinPoint) {
-        String stepTitle = createTitle(joinPoint);
+        int maxLength = ALLURE.getConfig().getMaxTitleLength();
+        String stepTitle = createTitle(joinPoint, maxLength);
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         StepStartedEvent startedEvent = new StepStartedEvent(
-                getName(methodSignature.getName(), joinPoint.getArgs())
+                getName(maxLength, methodSignature.getName(), joinPoint.getArgs())
         );
 
         if (!stepTitle.isEmpty()) {
@@ -63,10 +64,13 @@ public class AllureStepsAspects {
         ALLURE.fire(new StepFinishedEvent());
     }
 
-    public String createTitle(JoinPoint joinPoint) {
+    public String createTitle(JoinPoint joinPoint, int maxLength) {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Step step = methodSignature.getMethod().getAnnotation(Step.class);
-        return step == null ? "" : getTitle(step.value(), methodSignature.getName(), joinPoint.getThis(), joinPoint.getArgs());
+        return step == null ? "" : getTitle(
+                maxLength, methodSignature.getName(),
+                joinPoint.getThis(), joinPoint.getArgs(), step.value()
+        );
     }
 
     /**

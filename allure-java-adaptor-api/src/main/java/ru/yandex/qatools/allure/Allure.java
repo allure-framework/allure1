@@ -1,9 +1,9 @@
 package ru.yandex.qatools.allure;
 
-import ru.yandex.qatools.allure.config.AllureConfig;
-import ru.yandex.qatools.allure.config.AllureModelUtils;
+import ru.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
 import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
+import ru.yandex.qatools.allure.events.MakeAttachmentEvent;
 import ru.yandex.qatools.allure.events.RemoveAttachmentsEvent;
 import ru.yandex.qatools.allure.events.StepEvent;
 import ru.yandex.qatools.allure.events.StepFinishedEvent;
@@ -15,6 +15,7 @@ import ru.yandex.qatools.allure.events.TestSuiteEvent;
 import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
 import ru.yandex.qatools.allure.experimental.LifecycleListener;
 import ru.yandex.qatools.allure.experimental.ListenersNotifier;
+import ru.yandex.qatools.allure.model.Attachment;
 import ru.yandex.qatools.allure.model.Status;
 import ru.yandex.qatools.allure.model.Step;
 import ru.yandex.qatools.allure.model.TestCaseResult;
@@ -22,9 +23,8 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 import ru.yandex.qatools.allure.storages.StepStorage;
 import ru.yandex.qatools.allure.storages.TestCaseStorage;
 import ru.yandex.qatools.allure.storages.TestSuiteStorage;
+import ru.yandex.qatools.allure.utils.AllureResultsHelper;
 import ru.yandex.qatools.allure.utils.AllureShutdownHook;
-
-import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeTestSuiteResult;
 
 /**
  * Allure Java API. Use this class to access to Allure lifecycle
@@ -46,10 +46,23 @@ public class Allure {
 
     private final ListenersNotifier notifier = new ListenersNotifier();
 
+    private final AllureConfig config;
+
+    private final AllureResultsHelper resultsHelper;
+
     /**
      * Package private. Use Allure.LIFECYCLE singleton
      */
     Allure() {
+        this(PropertyLoader.newInstance().populate(AllureConfig.class));
+    }
+
+    /**
+     * Package private. Use Allure.LIFECYCLE singleton
+     */
+    Allure(AllureConfig config) {
+        this.config = config;
+        this.resultsHelper = new AllureResultsHelper(config);
         Runtime.getRuntime().addShutdownHook(new Thread(
                 new AllureShutdownHook(testSuiteStorage.getStartedSuites())
         ));
@@ -66,6 +79,36 @@ public class Allure {
         event.process(step);
         stepStorage.put(step);
 
+        notifier.fire(event);
+    }
+
+    /**
+     * Process MakeAttachmentEvent. Attachment will be written to results
+     * directory, and information about it stored to current step.
+     *
+     * @param event to process
+     */
+    public void fire(MakeAttachmentEvent event) {
+        Step step = stepStorage.getLast();
+        Attachment attachment = resultsHelper.writeAttachmentSafely(
+                event.getAttachment(), event.getTitle(), event.getType()
+        );
+        step.getAttachments().add(attachment);
+        event.process(step);
+
+        notifier.fire(event);
+    }
+
+    /**
+     * Process RemoveAttachmentsEvent. Remove
+     *
+     * @param event to process
+     */
+    public void fire(RemoveAttachmentsEvent event) {
+        Step step = stepStorage.getLast();
+        resultsHelper.deleteAttachments(step, event.getPattern());
+
+        event.process(step);
         notifier.fire(event);
     }
 
@@ -143,7 +186,7 @@ public class Allure {
         Step root = stepStorage.pollLast();
 
         if (Status.PASSED.equals(testCase.getStatus())) {
-            new RemoveAttachmentsEvent(AllureConfig.newInstance().getRemoveAttachments()).process(root);
+            new RemoveAttachmentsEvent(config.getRemoveAttachmentsPattern()).process(root);
         }
 
         testCase.getSteps().addAll(root.getSteps());
@@ -185,9 +228,9 @@ public class Allure {
         event.process(testSuite);
 
         testSuite.setVersion(getVersion());
-        testSuite.getLabels().add(AllureModelUtils.createProgrammingLanguageLabel());
+        testSuite.getLabels().add(AllureUtils.createProgrammingLanguageLabel());
 
-        writeTestSuiteResult(testSuite);
+        resultsHelper.writeTestSuite(testSuite);
 
         notifier.fire(event);
     }
@@ -257,12 +300,22 @@ public class Allure {
     }
 
     /**
-     * Use this method to get Allure version in runtime. Supported since
-     * version 1.3.6
+     * Use this method to get Allure version in runtime.
      *
      * @return current Allure version
+     * @since 1.3.6
      */
     public String getVersion() {
-        return AllureConfig.newInstance().getVersion();
+        return AllureConstants.VERSION;
+    }
+
+    /**
+     * Get Allure configuration.
+     *
+     * @return populated Allure configuration.
+     * @since 1.5
+     */
+    public AllureConfig getConfig() {
+        return config;
     }
 }

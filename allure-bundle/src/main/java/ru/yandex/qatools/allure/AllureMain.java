@@ -1,16 +1,15 @@
 package ru.yandex.qatools.allure;
 
-import com.google.common.io.Files;
 import com.google.common.reflect.ClassPath;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.data.AllureReportGenerator;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -41,8 +40,8 @@ public class AllureMain {
         }
         int lastIndex = args.length - 1;
 
-        File[] inputDirectories = getFiles(Arrays.copyOf(args, lastIndex));
-        File outputDirectory = new File(args[lastIndex]);
+        Path[] inputDirectories = getFiles(Arrays.copyOf(args, lastIndex));
+        Path outputDirectory = Paths.get(args[lastIndex]);
 
         AllureReportGenerator reportGenerator = new AllureReportGenerator(inputDirectories);
         reportGenerator.generate(outputDirectory);
@@ -56,17 +55,16 @@ public class AllureMain {
      * @param outputDirectory the output directory to unpack face.
      * @throws IOException if any occurs.
      */
-    private static void unpackFace(File outputDirectory) throws IOException {
+    private static void unpackFace(Path outputDirectory) throws IOException {
         ClassLoader loader = AllureMain.class.getClassLoader();
         for (ClassPath.ResourceInfo info : ClassPath.from(loader).getResources()) {
             Matcher matcher = REPORT_RESOURCE_PATTERN.matcher(info.getResourceName());
             if (matcher.find()) {
                 String resourcePath = matcher.group(1);
-                File dest = new File(outputDirectory, resourcePath);
-                Files.createParentDirs(dest);
-                try (FileOutputStream output = new FileOutputStream(dest);
-                     InputStream input = info.url().openStream()) {
-                    IOUtils.copy(input, output);
+                Path dest = outputDirectory.resolve(resourcePath);
+                Files.createDirectories(dest.getParent());
+                try (InputStream input = info.url().openStream()) {
+                    Files.copy(input, dest);
                     LOGGER.debug("{} successfully copied.", resourcePath);
                 }
             }

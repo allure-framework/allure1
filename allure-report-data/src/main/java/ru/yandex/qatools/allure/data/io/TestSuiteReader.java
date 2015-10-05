@@ -2,15 +2,13 @@ package ru.yandex.qatools.allure.data.io;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.yandex.qatools.allure.commons.AllureFileUtils;
+import ru.yandex.qatools.allure.AllureUtils;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.inject.Inject;
-import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Iterator;
-
-import static ru.yandex.qatools.allure.commons.AllureFileUtils.unmarshal;
 
 /**
  * eroshenkoam
@@ -20,11 +18,11 @@ public class TestSuiteReader implements Reader<TestSuiteResult> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestSuiteReader.class);
 
-    private final Iterator<File> testSuiteResultFiles;
+    private final Iterator<Path> testSuiteResultFiles;
 
     @Inject
-    public TestSuiteReader(@ResultDirectories File... resultDirectories) {
-        testSuiteResultFiles = AllureFileUtils.listTestSuiteFiles(resultDirectories).iterator();
+    public TestSuiteReader(@ResultDirectories Path... resultDirectories) throws IOException {
+        testSuiteResultFiles = AllureUtils.listTestSuiteFiles(resultDirectories).iterator();
     }
 
     @Override
@@ -43,11 +41,11 @@ public class TestSuiteReader implements Reader<TestSuiteResult> {
             if (!hasNext()) {
                 return null;
             }
-            File next = testSuiteResultFiles.next();
+            Path next = testSuiteResultFiles.next();
             try {
-                return unmarshal(next);
+                return AllureUtils.unmarshalTestSuite(next);
             } catch (IOException e) {
-                LOGGER.warn(String.format("Could not read <%s> file", next.getAbsoluteFile()), e);
+                LOGGER.warn(String.format("Could not read <%s> file", next.toAbsolutePath().toString()), e);
                 return next();
             }
         }

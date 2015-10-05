@@ -5,14 +5,14 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import ru.yandex.qatools.allure.DummyConfig;
 import ru.yandex.qatools.allure.model.Attachment;
 
 import java.io.File;
 import java.io.IOException;
 
-import static org.junit.Assert.*;
-import static ru.yandex.qatools.allure.utils.AllureResultsUtils.deleteAttachment;
-import static ru.yandex.qatools.allure.utils.AllureResultsUtils.writeAttachment;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThat;
 import static ru.yandex.qatools.allure.utils.DirectoryMatcher.contains;
 import static ru.yandex.qatools.allure.utils.DirectoryMatcher.notContains;
 
@@ -22,19 +22,21 @@ import static ru.yandex.qatools.allure.utils.DirectoryMatcher.notContains;
  */
 public class DeleteAttachmentTest {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
-
-    public File resultsDirectory;
-
     private static final String ATTACHMENT = "simple attachment context";
 
     private static final String TITLE = "title";
 
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+
+    private File resultsDirectory;
+
+    private AllureResultsHelper resultsHelper;
+
     @Before
     public void setUp() throws Exception {
         resultsDirectory = folder.newFolder();
-        AllureResultsUtils.setResultsDirectory(resultsDirectory);
+        resultsHelper = new AllureResultsHelper(new DummyConfig(resultsDirectory));
     }
 
     @Test
@@ -47,13 +49,13 @@ public class DeleteAttachmentTest {
 
         assertThat(resultsDirectory, contains(firstSource));
 
-        deleteAttachment(first);
+        resultsHelper.deleteAttachment(first);
 
         assertThat(resultsDirectory, notContains(firstSource));
     }
 
     public Attachment save(String string) throws IOException {
-        return writeAttachment(string.getBytes(Charsets.UTF_8), TITLE);
+        return resultsHelper.writeAttachment(string.getBytes(Charsets.UTF_8), TITLE);
     }
 
 }

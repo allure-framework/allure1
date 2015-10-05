@@ -5,6 +5,7 @@ import org.modelmapper.Converter
 import org.modelmapper.ModelMapper
 import org.modelmapper.spi.MappingContext
 import ru.yandex.qatools.allure.data.AllureAttachment
+import ru.yandex.qatools.allure.data.AllureReportConfig
 import ru.yandex.qatools.allure.data.AllureStep
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestSuiteInfo
@@ -30,6 +31,9 @@ class DefaultTestCaseConverter implements TestCaseConverter {
     public static final String UNKNOWN_TEST_CASE = "UnknownTestCase"
 
     @Inject
+    AllureReportConfig config
+
+    @Inject
     AttachmentsIndex attachmentsIndex
 
     def suiteUids = [:].withDefault {
@@ -38,11 +42,11 @@ class DefaultTestCaseConverter implements TestCaseConverter {
 
     @Override
     AllureTestCase convert(TestCaseResult result) {
-        ModelMapper mapper = new ModelMapper();
+        ModelMapper mapper = new ModelMapper()
 
-        mapper.createTypeMap(TestCaseResult.class, AllureTestCase.class).postConverter = new TestCaseResultProcessor();
-        mapper.createTypeMap(Step.class, AllureStep.class).postConverter = new StepProcessor();
-        mapper.createTypeMap(Attachment.class, AllureAttachment.class).postConverter = new AttachmentProcessor();
+        mapper.createTypeMap(TestCaseResult.class, AllureTestCase.class).postConverter = new TestCaseResultProcessor()
+        mapper.createTypeMap(Step.class, AllureStep.class).postConverter = new StepProcessor()
+        mapper.createTypeMap(Attachment.class, AllureAttachment.class).postConverter = new AttachmentProcessor()
 
         mapper.map(result, AllureTestCase.class);
     }
@@ -51,25 +55,25 @@ class DefaultTestCaseConverter implements TestCaseConverter {
 
         @Override
         public AllureTestCase convert(MappingContext<TestCaseResult, AllureTestCase> context) {
-            def result = context.destination;
-            def source = context.source;
+            def result = context.destination
+            def source = context.source
 
             use([PluginUtils, SummaryCategory]) {
-                result.uid = generateUid();
+                result.uid = generateUid()
 
                 result.name = source.name ?: UNKNOWN_TEST_CASE;
-                result.title = result.title ?: TextUtils.humanize(result.name);
+                result.title = result.title ?: TextUtils.humanize(result.name)
 
-                result.description = source.convertedDescription;
-                result.time = source.time;
+                result.description = source.convertedDescription
+                result.time = source.time
 
                 result.summary = result.steps.summary.sum(new Summary(steps: 0, attachments: 0)) as Summary
-                result.summary.steps += result.steps.size();
-                result.summary.attachments += result.attachments.size();
+                result.summary.steps += result.steps.size()
+                result.summary.attachments += result.attachments.size()
 
-                result.severity = source.severity;
-                result.testId = source.testId
-                result.issues = source.issues;
+                result.severity = source.severityLevel
+                result.testId = source.getTestId(config.tmsPattern)
+                result.issues = source.getIssues(config.issueTrackerPattern)
 
                 def suiteName = source.suiteName ?: UNKNOWN_TEST_SUITE;
                 def suiteTitle = source.suiteTitle ?: TextUtils.humanize(suiteName);
@@ -88,18 +92,18 @@ class DefaultTestCaseConverter implements TestCaseConverter {
     class StepProcessor implements Converter<Step, AllureStep> {
         @Override
         public AllureStep convert(MappingContext<Step, AllureStep> context) {
-            def result = context.destination;
-            def source = context.source;
+            def result = context.destination
+            def source = context.source
 
             use([PluginUtils, SummaryCategory]) {
                 result.name = result.name ?: UNKNOWN_STEP_NAME;
-                result.title = result.title ?: TextUtils.humanize(result.name);
+                result.title = result.title ?: TextUtils.humanize(result.name)
 
-                result.time = source.time;
+                result.time = source.time
 
                 result.summary = result.steps.summary.sum(new Summary(steps: 0, attachments: 0)) as Summary
-                result.summary.steps += result.steps.size();
-                result.summary.attachments += result.attachments.size();
+                result.summary.steps += result.steps.size()
+                result.summary.attachments += result.attachments.size()
             }
 
             result;
