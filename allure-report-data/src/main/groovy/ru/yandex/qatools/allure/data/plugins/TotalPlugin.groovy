@@ -29,7 +29,7 @@ class TotalPlugin extends DefaultTabPlugin implements WithWidget {
     }
 
     @Override
-    Widget getWidget() {
-        return new TotalWidget(total.statistic, total.time)
+    Object getWidgetData() {
+        total
     }
 }

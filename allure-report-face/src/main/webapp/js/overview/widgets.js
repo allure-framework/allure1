@@ -1,56 +1,40 @@
 (function() {
     var module = angular.module('allure.core.widgets', []);
-    module.directive('widgetStatistics', ['percents', function(percents) {
-        return {
-            restrict: 'E',
-            templateUrl: 'templates/overview/statistics.html',
-            scope: {
-                data: '='
-            },
-            link: function($scope) {
-                $scope.data.forEach(function(data) {
-                    data.percents = percents(data.statistic);
-                });
-            }
-        };
-    }]);
-    module.directive('widgetMessages', [function() {
-        return {
-            restrict: 'E',
-            templateUrl: 'templates/overview/defects.html',
-            scope: {
-                data: '='
-            },
-            link: function($scope) {
-            }
-        };
-    }]);
-    module.directive('widgetTotal', ['percents', function(percents) {
-        return {
-            restrict: 'E',
-            templateUrl: 'templates/overview/total.html',
-            scope: {
-                data: '='
-            },
-            link: function($scope) {
-                $scope.percents = percents($scope.data.statistic);
-            }
-        };
-    }]);
-    module.directive('widgetKeyValue', [function() {
-        return {
-            restrict: 'E',
-            templateUrl: 'templates/overview/keyValue.html',
-            scope: {
-                data: '='
-            },
-            controllerAs: 'ctrl',
-            controller: ['$scope', function($scope) {
-                this.dataLimit = 10;
-                this.showAll = function() {
-                    this.dataLimit = $scope.data.length;
-                }
-            }]
+    module.directive('widget', function($controller, $compile) {
+        "use strict";
+       return {
+           scope: {
+               widget: '=',
+               data: '='
+           },
+           link: function(scope, elm) {
+               var template = scope.widget.templateUrl ? '<ng-include src="\'' + scope.widget.templateUrl + '\'"/>' : scope.widget.template;
+               var content;
+               if(template) {
+                   content = angular.element(template);
+                   elm.append(content);
+                   scope = scope.$new();
+                   $compile(content)(scope);
+               }
+               if(scope.widget.controller) {
+                   $controller(scope.widget.controller, {
+                       $scope: scope,
+                       $element: content,
+                       data: scope.data
+                   });
+               }
+           }
+       };
+    });
+    module.controller('TotalWidgetController', function($scope, percents) {
+        "use strict";
+        $scope.percents = percents($scope.data.statistic);
+    });
+    module.controller('KeyValueWidgetController', ['$scope', function($scope) {
+        $scope.ctrl = this;
+        this.dataLimit = 10;
+        this.showAll = function() {
+            this.dataLimit = $scope.data.length;
         };
     }]);
 })();

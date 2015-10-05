@@ -39,8 +39,8 @@
                 $provide.provider('testcase', function() {
                     return jasmine.createSpyObj('testcaseProvider', ['$get', 'attachStates']);
                 });
-                $provide.provider('allureTabs', function() {
-                    var allureTabsProvider = jasmine.createSpyObj('allureTabsProvider', ['$get', 'addTranslation', 'addTab']);
+                $provide.provider('allurePlugins', function() {
+                    var allureTabsProvider = jasmine.createSpyObj('allurePluginsProvider', ['$get', 'addTranslation', 'addTab', 'addWidget']);
                     allureTabsProvider.tabs = [];
                     allureTabsProvider.$get.andReturn(allureTabsProvider.tabs);
                     return allureTabsProvider;

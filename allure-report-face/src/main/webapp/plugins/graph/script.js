@@ -2,9 +2,9 @@
 (function() {
     "use strict";
     var module = angular.module('allure.graph', []);
-    module.config(function(allureTabsProvider) {
-        allureTabsProvider.addTab('graph', {title: 'graph.TITLE', icon: 'fa fa-bar-chart'});
-        allureTabsProvider.addTranslation('graph');
+    module.config(function(allurePluginsProvider) {
+        allurePluginsProvider.addTab('graph', {title: 'graph.TITLE', icon: 'fa fa-bar-chart'});
+        allurePluginsProvider.addTranslation('graph');
     });
     module.controller('GraphCtrl', function($scope, data, status) {
         $scope.testcases = data.testCases;

@@ -66,13 +66,6 @@ class PluginManager {
     }
 
     /**
-     * Get all plugin widgets.
-     */
-    List<Widget> getWidgets() {
-        pluginsWithWidgets*.widget
-    }
-
-    /**
      * Find all prepare plugins an process given object for
      * each of found plugins.
      */
@@ -107,10 +100,12 @@ class PluginManager {
      * @see ReportWriter
      */
     void writePluginWidgets(ReportWriter writer) {
-        def widgets = widgets
-        def widgetNames = widgets.collect { it.name }.sort().join("")
-        def hash = Hashing.sha1().hashString(widgetNames, StandardCharsets.UTF_8).toString()
-        writer.write(new PluginData(WIDGETS_JSON, new Widgets(hash: hash, data: widgets)))
+        def Map<String, Object> widgetData = (Map) pluginsWithWidgets.inject([:]) { memo, widget ->
+            memo[widget.name] = widget.widgetData
+            return memo
+        };
+        def hash = Hashing.sha1().hashString(widgetData.keySet().join(""), StandardCharsets.UTF_8).toString()
+        writer.write(new PluginData(WIDGETS_JSON, new Widgets(hash: hash, plugins: widgetData)))
     }
 
     /**

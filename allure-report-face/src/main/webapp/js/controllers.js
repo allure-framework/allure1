@@ -1,21 +1,21 @@
 /*global angular:true */
 angular.module('allure.core.controllers', [])
-    .controller('OverviewCtrl', function($scope, $storage, widgets) {
+    .controller('OverviewCtrl', function($scope, $storage, data, allurePlugins) {
         "use strict";
-
-        var store = $storage('allure-widgets-' + widgets.hash),
-            storedWidgets = store.getItem('widgets') || widgets.data.reduce(function(all, widget, index) {
+        var store = $storage('allure-widgets-' + data.hash),
+            storedWidgets = store.getItem('widgets') || allurePlugins.widgets.reduce(function(all, widget, index) {
             all[index % 2].push(widget.name);
             return all;
         }, [[], []]);
 
         $scope.widgets = storedWidgets.map(function(col) {
             return col.map(function(widgetName) {
-                return widgets.data.filter(function(widget) {
+                return allurePlugins.widgets.filter(function(widget) {
                     return widget.name === widgetName;
                 })[0];
-            })
+            });
         });
+        $scope.data = data;
 
         $scope.onSort = function() {
             store.setItem('widgets', $scope.widgets.map(function(col) {
@@ -63,11 +63,11 @@ angular.module('allure.core.controllers', [])
         });
     })
 
-    .controller('TabsController', function($scope, $state, $storage, allureTabs) {
+    .controller('TabsController', function($scope, $state, $storage, allurePlugins) {
         'use strict';
         var settings = $storage('settings');
 
-        $scope.tabs = allureTabs;
+        $scope.tabs = allurePlugins.tabs;
         $scope.isCollapsed = function() {
             return settings.getItem('collapsed');
         };

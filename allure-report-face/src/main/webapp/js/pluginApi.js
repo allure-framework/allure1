@@ -1,12 +1,13 @@
 (function() {
     "use strict";
     var module = angular.module('allure.core.pluginApi', []);
-    module.provider('allureTabs', function($stateProvider, $translatePartialLoaderProvider) {
+    module.provider('allurePlugins', function($stateProvider, $translatePartialLoaderProvider) {
         function capitalize(string) {
             return string.charAt(0).toUpperCase() + string.substring(1);
         }
         return {
             tabs: [{name: 'overview', title: 'index.OVERVIEW', icon: 'fa fa-home'}],
+            widgets: [{name: 'total', title: 'Total', templateUrl: 'templates/overview/total.html', controller: 'TotalWidgetController'}],
             addTab: function(tabName, options) {
                 $stateProvider.state(
                     tabName,
@@ -25,6 +26,9 @@
                 );
                 this.tabs.push({name: tabName, title: options.title, icon: options.icon});
             },
+            addWidget: function(pluginName, config) {
+                this.widgets.push(angular.extend({name: pluginName}, config));
+            },
             addTranslation: function(pluginName) {
                 $translatePartialLoaderProvider.addPart(this.getPluginHome(pluginName));
             },
@@ -35,7 +39,10 @@
                 return 'plugins/' + name;
             },
             $get: function() {
-                return this.tabs;
+                return {
+                    tabs: this.tabs,
+                    widgets: this.widgets
+                };
             }
         };
     });

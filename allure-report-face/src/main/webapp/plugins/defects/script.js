@@ -1,7 +1,7 @@
 /*global angular*/
 (function() {
     var module = angular.module('allure.defects', []);
-    module.config(function($stateProvider, allureTabsProvider, testcaseProvider) {
+    module.config(function($stateProvider, allurePluginsProvider, testcaseProvider) {
         $stateProvider
             .state('defects', {
                 url: '/defects',
@@ -19,8 +19,13 @@
             .state('defects.defect.expanded', {
                 url: '/expanded'
             });
-        allureTabsProvider.tabs.push({name: 'defects', title: 'defects.TITLE', icon: 'fa fa-flag'});
-        allureTabsProvider.addTranslation('defects');
+        allurePluginsProvider.tabs.push({name: 'defects', title: 'defects.TITLE', icon: 'fa fa-flag'});
+        allurePluginsProvider.addWidget('defects', {
+            title: 'defects.TITLE',
+            tabLink: 'defects',
+            templateUrl: "plugins/defects/widget.tpl.html"
+        });
+        allurePluginsProvider.addTranslation('defects');
         testcaseProvider.attachStates('defects.defect');
     });
     module.controller('DefectsCtrl', function($scope, $state, status, WatchingStore, Collection, defects) {
