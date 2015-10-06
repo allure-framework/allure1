@@ -235,17 +235,18 @@
                     <plugin>
                         <groupId>com.github.timurstrekalov</groupId>
                         <artifactId>saga-maven-plugin</artifactId>
-                        <version>1.5.3</version>
+                        <version>1.5.4</version>
                         <executions>
                             <execution>
                                 <goals>
                                     <goal>coverage</goal>
                                 </goals>
+                                <phase>verify</phase>
                             </execution>
                         </executions>
                         <configuration>
                             <reportFormats>RAW</reportFormats>
-                            <baseDir>http://0.0.0.0:${jasmine.serverPort}</baseDir>
+                            <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
                             <outputDir>${project.build.directory}/site/coverage</outputDir>
                             <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                             <noInstrumentPatterns>
