@@ -7,7 +7,7 @@ import org.junit.Test
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 07.02.15
  */
-class PluginLoaderSpiTest {
+class DefaultPluginLoaderTest {
 
     PluginLoader pluginLoader
 
@@ -15,10 +15,9 @@ class PluginLoaderSpiTest {
     void setUp() {
         URL url = getClass().classLoader.getResource("testdata/")
         URLClassLoader classLoader = new URLClassLoader(
-                [url] as URL[],
-                Thread.currentThread().contextClassLoader
+                [url] as URL[], getClass().classLoader
         )
-        pluginLoader = new PluginLoaderSpi(classLoader)
+        pluginLoader = new DefaultPluginLoader(classLoader, null)
     }
 
     @Test

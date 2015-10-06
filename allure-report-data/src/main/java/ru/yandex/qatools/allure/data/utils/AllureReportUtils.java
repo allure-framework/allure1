@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationIntrospector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.yandex.qatools.allure.data.AttachmentInfo;
 import ru.yandex.qatools.allure.data.ReportGenerationException;
 
 import java.io.DataOutputStream;
@@ -116,5 +117,29 @@ public final class AllureReportUtils {
         }
 
         return properties;
+    }
+
+    /**
+     * Creates an attachment info from the given file.
+     */
+    public static AttachmentInfo createAttachmentInfo(Path file) {
+        AttachmentInfo info = new AttachmentInfo();
+        info.setUid(TextUtils.generateUid());
+        info.setPath(file.toAbsolutePath().toString());
+        info.setSource(file.getFileName().toString());
+        info.setSize(getFileSize(file));
+        return info;
+    }
+
+    /**
+     * Returns the size of given file, or zero if any errors occurs.
+     */
+    public static long getFileSize(Path file) {
+        try {
+            return Files.size(file);
+        } catch (IOException e) {
+            LOGGER.error("Could not calculate file size", e);
+            return 0;
+        }
     }
 }

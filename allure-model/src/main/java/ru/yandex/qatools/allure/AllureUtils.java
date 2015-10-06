@@ -25,6 +25,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -93,6 +94,20 @@ public final class AllureUtils {
             if (isBadXmlCharacter(cbuf[i])) {
                 cbuf[i] = '\u0020';
             }
+        }
+    }
+
+    /**
+     * Safe wrapper for {@link #listAttachmentFiles(Path...)}.
+     *
+     * @see #listFiles(String, Path...)
+     */
+    public static List<Path> listAttachmentFilesSafe(Path... directories) {
+        try {
+            return listFiles(AllureConstants.ATTACHMENTS_FILE_GLOB, directories);
+        } catch (IOException e) {
+            LOGGER.error("Error during attachments scan", e);
+            return Collections.emptyList();
         }
     }
 

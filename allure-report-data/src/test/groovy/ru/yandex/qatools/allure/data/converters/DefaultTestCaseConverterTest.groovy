@@ -4,6 +4,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
+import ru.yandex.qatools.allure.data.AttachmentInfo
 import ru.yandex.qatools.allure.data.plugins.ReportConfig
 import ru.yandex.qatools.allure.data.plugins.DefaultAttachmentsIndex
 import ru.yandex.qatools.allure.data.io.TestCaseReader
@@ -38,10 +39,10 @@ class DefaultTestCaseConverterTest {
 
     @Before
     void setUp() throws Exception {
-        def dir = folder.newFolder()
-        new File(dir, ATTACHMENT_SOURCE).text = "some attachment content"
         converter = new DefaultTestCaseConverter()
-        converter.attachmentsIndex = new DefaultAttachmentsIndex(dir.toPath())
+        converter.attachmentsIndex = new DefaultAttachmentsIndex([
+                new AttachmentInfo(uid: "uid", source: ATTACHMENT_SOURCE, size: 23, path: "path")
+        ])
         converter.config = new ReportConfig() {
             @Override
             String getIssueTrackerPattern() {

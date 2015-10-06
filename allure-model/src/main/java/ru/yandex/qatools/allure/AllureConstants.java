@@ -48,6 +48,21 @@ public final class AllureConstants {
     public static final String REPORT_CONFIG_FILE_NAME = "report.properties";
 
     /**
+     * This property can be used to specify test run name.
+     */
+    public static final String PROPERTY_TEST_RUN_NAME = "allure.test.run.name";
+
+    /**
+     * This property can be used to specify test run id.
+     */
+    public static final String PROPERTY_TEST_RUN_ID = "allure.test.run.id";
+
+    /**
+     * This property can be used to specify test run url.
+     */
+    public static final String PROPERTY_TEST_RUN_URL = "allure.test.run.url";
+
+    /**
      * Do not instantiate.
      */
     AllureConstants() {
