@@ -246,7 +246,7 @@
                         </executions>
                         <configuration>
                             <reportFormats>RAW</reportFormats>
-                            <baseDir>http://localhost:${jasmine.serverPort}</baseDir>
+                            <baseDir>http://0.0.0.0:${jasmine.serverPort}</baseDir>
                             <outputDir>${project.build.directory}/site/coverage</outputDir>
                             <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
                             <noInstrumentPatterns>
