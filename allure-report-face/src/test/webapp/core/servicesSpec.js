@@ -80,12 +80,12 @@ describe('service', function () {
                 items: [],
                 children: [{}, {}]
             }, 'children', callbackSpy);
-            expect(callbackSpy.calls.length).toBe(3);
+            expect(callbackSpy.calls.count()).toBe(3);
         });
 
         it('should stop iteration when returned false', function() {
-            var callbackSpy = jasmine.createSpy('callbackSpy').andCallFake(function() {
-                return callbackSpy.calls.length < 5;
+            var callbackSpy = jasmine.createSpy('callbackSpy').and.callFake(function() {
+                return callbackSpy.calls.count() < 5;
             });
             treeUtils.walkAround({
                 items: [],
@@ -93,7 +93,7 @@ describe('service', function () {
                     children:[{children: [{children:[]}]}, {}]
                 }, {}]
             }, 'children', callbackSpy);
-            expect(callbackSpy.calls.length).toBe(5);
+            expect(callbackSpy.calls.count()).toBe(5);
         });
 
         it('should find items count', function() {

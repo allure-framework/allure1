@@ -41,7 +41,7 @@ describe('controllers', function () {
         }));
 
         it("should get locale from storage", function() {
-            $storage.getItem.andReturn('ru');
+            $storage.getItem.and.returnValue('ru');
             var scope = createController();
             expect(scope.selectedLang).toBe('ru');
         });

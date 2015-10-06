@@ -6,7 +6,7 @@ describe('Testcase provider', function() {
     beforeEach(module(function($provide) {
         $provide.provider('$state', function() {
             return stateProvider = {
-                state: jasmine.createSpy('stateProviderState').andCallFake(function() {
+                state: jasmine.createSpy('stateProviderState').and.callFake(function() {
                     return this;
                 }),
                 $get: angular.noop

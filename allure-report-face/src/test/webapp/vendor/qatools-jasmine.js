@@ -23,7 +23,7 @@
         mockD3Tooltip: function() {
             var tooltipsCount = 0;
             beforeEach(module(function($provide) {
-                $provide.value('d3Tooltip', jasmine.createSpy('tooltipConstructor').andCallFake(function() {
+                $provide.value('d3Tooltip', jasmine.createSpy('tooltipConstructor').and.callFake(function() {
                     tooltipsCount++;
                     return angular.extend(jasmine.createSpyObj('tooltip', ['show', 'hide']), {destroy: function() {
                         tooltipsCount--;
@@ -42,22 +42,34 @@
                 $provide.provider('allurePlugins', function() {
                     var allureTabsProvider = jasmine.createSpyObj('allurePluginsProvider', ['$get', 'addTranslation', 'addTab', 'addWidget']);
                     allureTabsProvider.tabs = [];
-                    allureTabsProvider.$get.andReturn(allureTabsProvider.tabs);
+                    allureTabsProvider.$get.and.returnValue(allureTabsProvider.tabs);
                     return allureTabsProvider;
                 });
             }));
         }
     };
     beforeEach(function() {
-        this.addMatchers({
-            toHaveClass: function(cls) {
-                this.message = function() {
-                    return "Expected '" + angular.mock.dump(this.actual) + "'"+ (this.isNot ? ' not' : '') +" to have class '" + cls + "'.";
+        jasmine.addMatchers({
+            toHaveClass: function() {
+                return {
+                    compare: function(actual, expected) {
+                        var pass = actual.hasClass(expected);
+                        return {
+                            pass: pass,
+                            message: "Expected '" + angular.mock.dump(actual) + "'" + (pass ? ' not' : '') + " to have class '" + expected + "'."
+                        };
+                    }
                 };
-                return this.actual.hasClass(cls);
             },
-            toEqualData: function(expected) {
-                return angular.equals(this.actual, expected);
+            toEqualData: function() {
+                return {
+                    compare: function(actual, expected) {
+                        return {
+                            pass: angular.equals(actual, expected)
+                        };
+                    }
+                };
+
             }
         });
     });

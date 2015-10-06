@@ -12,11 +12,11 @@ describe('uiScrollfix', function () {
 
   describe('compiling this directive', function () {
     it('should bind and unbind to window "scroll" event in the absence of a uiScrollfixTarget', function () {
-      spyOn($.fn, 'on').andCallThrough();
+      spyOn($.fn, 'on').and.callThrough();
       $compile('<div ui-scrollfix="100"></div>')(scope);
       expect($.fn.on).toHaveBeenCalled();
-      expect($.fn.on.mostRecentCall.args[0]).toBe('scroll');
-      spyOn($.fn, 'off').andCallThrough();
+      expect($.fn.on.calls.mostRecent().args[0]).toBe('scroll');
+      spyOn($.fn, 'off').and.callThrough();
       scope.$destroy();
       expect($.fn.off).toHaveBeenCalled();
     });
