@@ -69,9 +69,6 @@
                 templateUrl: "templates/overview.html",
                 controller: 'OverviewCtrl',
                 resolve: {
-                    overview: function($http) {
-                        return $http.get('data/environment.json').then(processResponse);
-                    },
                     data: function($http) {
                         return $http.get('data/widgets.json').then(processResponse);
                     }
