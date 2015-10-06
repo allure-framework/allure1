@@ -1,0 +1,3 @@
+ru.yandex.qatools.allure.testdata.SomePlugin
+ru.yandex.qatools.allure.testdata.SomePreparePlugin
+ru.yandex.qatools.allure.testdata.SomeProcessPlugin
