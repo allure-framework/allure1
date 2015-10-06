@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-            xmlns:alr="urn:data.allure.qatools.yandex.ru"
-            targetNamespace="urn:data.allure.qatools.yandex.ru">
+            xmlns:alr="urn:allure.qatools.yandex.ru"
+            targetNamespace="urn:allure.qatools.yandex.ru">
 
     <xsd:complexType name="allure-report-info">
         <xsd:sequence>

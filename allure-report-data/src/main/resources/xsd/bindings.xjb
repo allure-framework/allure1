@@ -5,15 +5,15 @@
                jaxb:version="2.1">
 
     <jaxb:bindings node="//xsd:complexType[@name='allure-test-case-info']">
-        <jaxb:class ref="ru.yandex.qatools.allure.data.AllureTestCaseInfo"/>
+        <jaxb:class ref="ru.yandex.qatools.allure.AllureTestCaseInfo"/>
     </jaxb:bindings>
 
     <jaxb:bindings node="//xsd:complexType[@name='statistic']">
-        <jaxb:class ref="ru.yandex.qatools.allure.data.Statistic"/>
+        <jaxb:class ref="ru.yandex.qatools.allure.Statistic"/>
     </jaxb:bindings>
 
     <jaxb:bindings node="//xsd:complexType[@name='time']">
-        <jaxb:class ref="ru.yandex.qatools.allure.data.Time"/>
+        <jaxb:class ref="ru.yandex.qatools.allure.Time"/>
     </jaxb:bindings>
 
     <jaxb:bindings node="//xsd:complexType[@name='status']">

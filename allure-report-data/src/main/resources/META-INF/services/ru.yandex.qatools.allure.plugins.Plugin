@@ -1,0 +1,8 @@
+ru.yandex.qatools.allure.plugins.MigrationPlugin
+ru.yandex.qatools.allure.plugins.XUnitPlugin
+ru.yandex.qatools.allure.plugins.TimelinePlugin
+ru.yandex.qatools.allure.plugins.BehaviorsPlugin
+ru.yandex.qatools.allure.plugins.DefectsPlugin
+ru.yandex.qatools.allure.plugins.GraphPlugin
+ru.yandex.qatools.allure.plugins.EnvironmentPlugin
+ru.yandex.qatools.allure.plugins.TotalPlugin
