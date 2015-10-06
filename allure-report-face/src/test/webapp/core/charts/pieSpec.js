@@ -60,7 +60,7 @@ describe('PieChart', function() {
             {name: 'test2', value: 1, part: 0.25}
         ]});
         inject(function(d3Tooltip) {
-            expect(d3Tooltip.mostRecentCall.args[1]).toBeDefined();
+            expect(d3Tooltip.calls.mostRecent().args[1]).toBeDefined();
         });
     });
 
@@ -70,7 +70,7 @@ describe('PieChart', function() {
             tooltipTpl: 'test tooltip'
         });
         inject(function(d3Tooltip) {
-            expect(d3Tooltip.mostRecentCall.args[1]).toBe('test tooltip');
+            expect(d3Tooltip.calls.mostRecent().args[1]).toBe('test tooltip');
         });
     });
 

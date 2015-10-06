@@ -5,7 +5,7 @@ describe('DurationChart', function () {
 
     beforeEach(module('allure.core.charts.duration', function($filterProvider) {
         $filterProvider.register('d3time', function() {
-            return filterSpy = jasmine.createSpy('filterSpy').andCallFake(angular.identity);
+            return filterSpy = jasmine.createSpy('filterSpy').and.callFake(angular.identity);
         });
     }));
     jasmine.qatools.mockD3Tooltip();

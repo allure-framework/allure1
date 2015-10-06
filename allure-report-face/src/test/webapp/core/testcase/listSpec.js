@@ -11,8 +11,8 @@ describe('Testcases list', function () {
         });
         $provide.value('Collection', function() {
             Collection = jasmine.createSpyObj('Collection', ['filter', 'sort', 'limitTo', 'indexOf', 'getIndexBy', 'getNext', 'getPrevious']);
-            Collection.getNext.andReturn({uid:2});
-            Collection.getPrevious.andReturn({uid:0});
+            Collection.getNext.and.returnValue({uid:2});
+            Collection.getPrevious.and.returnValue({uid:0});
             return Collection;
         });
         $provide.value('status', {});
@@ -45,7 +45,7 @@ describe('Testcases list', function () {
 
         it('should bind sort settings to storage', function () {
             createController();
-            expect(WatchingStore.bindProperty.calls.length).toBe(2);
+            expect(WatchingStore.bindProperty.calls.count()).toBe(2);
         });
 
         it('should filter testcases by status', function() {
@@ -84,9 +84,9 @@ describe('Testcases list', function () {
                 {uid: 6, time:{start: 55}, status: 'BROKEN'},
                 {uid: 7, time:{start: 64}, status: 'PASSED'}
             ];
-            Collection.filter.reset();
-            Collection.sort.reset();
-            Collection.limitTo.reset();
+            Collection.filter.calls.reset();
+            Collection.sort.calls.reset();
+            Collection.limitTo.calls.reset();
             scope.$apply();
             expect(Collection.filter).toHaveBeenCalled();
             expect(Collection.sort).toHaveBeenCalled();

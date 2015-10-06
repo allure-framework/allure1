@@ -7,8 +7,8 @@ describe('Testcase controllers', function() {
     beforeEach(module('allure.core.testcase.controllers', function($provide) {
         $provide.value('Collection', function() {
             collection = jasmine.createSpyObj('Collection', ['filter', 'sort', 'limitTo', 'indexOf', 'getNext', 'getPrevious']);
-            collection.getNext.andReturn({source:'log'});
-            collection.getPrevious.andReturn({source:'log'});
+            collection.getNext.and.returnValue({source:'log'});
+            collection.getPrevious.and.returnValue({source:'log'});
             return collection;
         });
     }));
@@ -153,14 +153,14 @@ describe('Testcase controllers', function() {
             function createExpanedStateTests(expanded, stateName) {
                 it('should detect expanded state ['+expanded+']', function() {
                     var scope = createController({type: 'image/png', name: 'picture', source:'pic'});
-                    stateMock.is.andReturn(expanded);
+                    stateMock.is.and.returnValue(expanded);
                     expect(scope.isExpanded()).toBe(expanded);
                 });
                 it('should toggle expanded state ['+expanded+']', function() {
                     var scope = createController({type: 'image/png', name: 'picture', source:'pic'});
-                    stateMock.is.andReturn(expanded);
+                    stateMock.is.and.returnValue(expanded);
                     scope.toggleExpanded();
-                    expect(stateMock.go.calls.length).toBe(1);
+                    expect(stateMock.go.calls.count()).toBe(1);
                     expect(stateMock.go).toHaveBeenCalledWith(stateName);
 
                 });
@@ -190,7 +190,7 @@ describe('Testcase controllers', function() {
                     go: jasmine.createSpy('gotoStateSpy'),
                     is: jasmine.createSpy('isStateSpy')
                 },
-                treeUtils: treeUtils = {walkAround: jasmine.createSpy('treeWalkSpy').andCallFake(function(testcase, prop, callback) {
+                treeUtils: treeUtils = {walkAround: jasmine.createSpy('treeWalkSpy').and.callFake(function(testcase, prop, callback) {
                     callback(testcase);
                 })}
             });

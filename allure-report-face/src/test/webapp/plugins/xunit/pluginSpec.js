@@ -29,8 +29,8 @@ describe('xUnit controllers', function () {
                 },
                 Collection: function() {
                     collection = jasmine.createSpyObj('Collection', ['filter', 'sort', 'limitTo', 'indexOf', 'getIndexBy', 'getNext', 'getPrevious']);
-                    collection.getNext.andReturn({uid:2});
-                    collection.getPrevious.andReturn({uid:0});
+                    collection.getNext.and.returnValue({uid:2});
+                    collection.getPrevious.and.returnValue({uid:0});
                     return collection;
                 }
             });
@@ -41,7 +41,7 @@ describe('xUnit controllers', function () {
 
         it('should bind sort settings to storage', function () {
             createController();
-            expect(watchingStoreSpy.bindProperty.calls.length).toBe(2);
+            expect(watchingStoreSpy.bindProperty.calls.count()).toBe(2);
         });
 
         it('should filter testsuites by status', function() {
