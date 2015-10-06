@@ -149,6 +149,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.4</version>
                 <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                     <webResources>
                         <resource>
                             <directory>src/main/webapp</directory>
@@ -362,33 +363,6 @@
                                 <version>1.7.12</version>
                             </dependency>
                         </dependencies>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.eclipse.jetty</groupId>
-                        <artifactId>jetty-maven-plugin</artifactId>
-                        <configuration>
-                            <scanIntervalSeconds>3</scanIntervalSeconds>
-                            <contextHandlers>
-                                <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
-                                    <contextPath>/data</contextPath>
-                                    <resourceBase>target/allure-report/data/</resourceBase>
-                                    <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
-                                </contextHandler>
-                                <contextHandler implementation="org.eclipse.jetty.server.handler.ContextHandler">
-                                    <contextPath>/webjars</contextPath>
-                                    <resourceBase>target/webjars/META-INF/resources/webjars/</resourceBase>
-                                    <handler implementation="org.eclipse.jetty.server.handler.ResourceHandler" />
-                                </contextHandler>
-                            </contextHandlers>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <phase>compile</phase>
-                                <goals>
-                                    <goal>run</goal>
-                                </goals>
-                            </execution>
-                        </executions>
                     </plugin>
                 </plugins>
             </build>
