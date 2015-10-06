@@ -7,7 +7,7 @@
         }
         return {
             tabs: [{name: 'overview', title: 'index.OVERVIEW', icon: 'fa fa-home'}],
-            widgets: [{name: 'total', title: 'Total', templateUrl: 'templates/overview/total.html', controller: 'TotalWidgetController'}],
+            widgets: [{name: 'total', title: 'total.TITLE', templateUrl: 'templates/overview/total.html', controller: 'TotalWidgetController'}],
             addTab: function(tabName, options) {
                 $stateProvider.state(
                     tabName,

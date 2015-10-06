@@ -24,7 +24,7 @@
             });
         allurePluginsProvider.tabs.push({name: 'xunit', title: 'xunit.TITLE', icon: 'fa fa-briefcase'});
         allurePluginsProvider.addWidget('xunit', {
-            title: 'XUnit',
+            title: 'xunit.TITLE',
             tabLink: 'xunit',
             templateUrl: "plugins/xunit/widget.tpl.html",
             controller: 'XUnitWidgetCtrl'
