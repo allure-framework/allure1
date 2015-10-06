@@ -8,5 +8,8 @@ import java.util.List;
  */
 public interface PluginLoader {
 
+    /**
+     * Load plugins.
+     */
     List<Plugin> loadPlugins();
 }

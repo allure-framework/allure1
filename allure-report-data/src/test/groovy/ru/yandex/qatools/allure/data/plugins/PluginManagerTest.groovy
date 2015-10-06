@@ -209,8 +209,7 @@ class PluginManagerTest {
     }
 
     static PluginManager createPluginManager(List<Plugin> plugins) {
-        def loader = [loadPlugins: { plugins }] as PluginLoader
-        def index = new DefaultPluginsIndex(loader)
+        def index = new DefaultPluginsIndex(plugins)
         new PluginManager(index)
     }
 

@@ -1,11 +1,6 @@
 package ru.yandex.qatools.allure.data.plugins;
 
-import com.google.common.collect.Maps;
-
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -13,30 +8,22 @@ import java.util.Properties;
  */
 public class DefaultEnvironment implements Environment {
 
-    public static final String ALLURE_TEST_RUN_NAME = "allure.test.run.name";
-
-    public static final String ALLURE_TEST_RUN_ID = "allure.test.run.id";
-
-    public static final String ALLURE_TEST_RUN_URL = "allure.test.run.url";
-
     private final String id;
 
     private final String name;
 
     private final String url;
 
-    private final Map<String, String> environment;
+    private final Map<String, String> parameters;
 
-    public DefaultEnvironment(Properties properties) {
-        this.id = properties.getProperty(ALLURE_TEST_RUN_ID);
-        this.name = properties.getProperty(ALLURE_TEST_RUN_NAME, "Allure Test Run");
-        this.url = properties.getProperty(ALLURE_TEST_RUN_URL);
-
-        Map<String, String> map = new HashMap<>(Maps.fromProperties(properties));
-        map.remove(ALLURE_TEST_RUN_ID);
-        map.remove(ALLURE_TEST_RUN_NAME);
-        map.remove(ALLURE_TEST_RUN_URL);
-        this.environment = Collections.unmodifiableMap(map);
+    /**
+     * Creates an instance of environment.
+     */
+    public DefaultEnvironment(String id, String name, String url, Map<String, String> parameters) {
+        this.id = id;
+        this.name = name != null ? name : "Allure Test Run";
+        this.url = url;
+        this.parameters = parameters;
     }
 
     /**
@@ -68,6 +55,6 @@ public class DefaultEnvironment implements Environment {
      */
     @Override
     public Map<String, String> getParameters() {
-        return environment;
+        return parameters;
     }
 }
