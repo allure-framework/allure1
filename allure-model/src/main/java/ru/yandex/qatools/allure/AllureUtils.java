@@ -35,6 +35,8 @@ import static javax.xml.bind.Marshaller.JAXB_ENCODING;
 import static javax.xml.bind.Marshaller.JAXB_FORMATTED_OUTPUT;
 import static ru.yandex.qatools.allure.AllureConstants.ATTACHMENTS_FILE_SUFFIX;
 import static ru.yandex.qatools.allure.AllureConstants.TEST_SUITE_FILE_SUFFIX;
+import static ru.yandex.qatools.allure.AllureConstants.TEST_SUITE_JSON_FILE_GLOB;
+import static ru.yandex.qatools.allure.AllureConstants.TEST_SUITE_XML_FILE_GLOB;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -65,8 +67,17 @@ public final class AllureUtils {
      *
      * @return test suite file name
      */
-    public static String generateTestSuiteName() {
+    public static String generateTestSuiteXmlName() {
         return String.format("%s%s.xml", UUID.randomUUID().toString(), TEST_SUITE_FILE_SUFFIX);
+    }
+
+    /**
+     * Generate suite file name \"{randomUid}-testsutie.json\"
+     *
+     * @return test suite file name
+     */
+    public static String generateTestSuiteJsonName() {
+        return String.format("%s%s.json", UUID.randomUUID().toString(), TEST_SUITE_FILE_SUFFIX);
     }
 
     /**
@@ -121,12 +132,21 @@ public final class AllureUtils {
     }
 
     /**
-     * Find all test suite files in specified directories.
+     * Find all xml test suite files in specified directories.
      *
      * @see #listFiles(String, Path...)
      */
-    public static List<Path> listTestSuiteFiles(Path... directories) throws IOException {
-        return listFiles(AllureConstants.TEST_SUITE_FILE_GLOB, directories);
+    public static List<Path> listTestSuiteXmlFiles(Path... directories) throws IOException {
+        return listFiles(TEST_SUITE_XML_FILE_GLOB, directories);
+    }
+
+    /**
+     * Find all json test suite files in specified directories.
+     *
+     * @see #listFiles(String, Path...)
+     */
+    public static List<Path> listTestSuiteJsonFiles(Path... directories) throws IOException {
+        return listFiles(TEST_SUITE_JSON_FILE_GLOB, directories);
     }
 
     /**
@@ -170,7 +190,7 @@ public final class AllureUtils {
     /**
      * Marshal {@link ru.yandex.qatools.allure.model.TestSuiteResult} to specified file
      * uses {@link BadXmlCharacterFilterWriter}. Name of file generated uses
-     * {@link #generateTestSuiteName()}
+     * {@link #generateTestSuiteXmlName()}
      *
      * @param testSuite to marshal
      */
@@ -267,7 +287,7 @@ public final class AllureUtils {
     public static void validateResults(Path... directories) {
         try {
             Validator validator = getSchemaValidator();
-            for (Path suite : listTestSuiteFiles(directories)) {
+            for (Path suite : listTestSuiteXmlFiles(directories)) {
                 validator.validate(new StreamSource(suite.toFile()));
             }
         } catch (SAXException | IOException e) {

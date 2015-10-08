@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 
 import static org.apache.tika.mime.MimeTypes.getDefaultMimeTypes;
 import static ru.yandex.qatools.allure.AllureUtils.generateAttachmentName;
-import static ru.yandex.qatools.allure.AllureUtils.generateTestSuiteName;
+import static ru.yandex.qatools.allure.AllureUtils.generateTestSuiteXmlName;
 import static ru.yandex.qatools.allure.AllureUtils.marshalTestSuite;
 
 /**
@@ -161,7 +161,7 @@ public class AllureResultsHelper {
      * Shortcut for #writeTestSuiteResult(TestSuiteResult, File)
      */
     public void writeTestSuite(TestSuiteResult testSuite) {
-        marshalTestSuite(testSuite, resultsDirectory.resolve(generateTestSuiteName()));
+        marshalTestSuite(testSuite, resultsDirectory.resolve(generateTestSuiteXmlName()));
     }
 
     /**

@@ -15,7 +15,7 @@ import java.nio.file.Path;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static ru.yandex.qatools.allure.AllureUtils.generateTestSuiteName;
+import static ru.yandex.qatools.allure.AllureUtils.generateTestSuiteXmlName;
 import static ru.yandex.qatools.allure.AllureUtils.marshalTestSuite;
 import static ru.yandex.qatools.allure.AllureUtils.validateResults;
 import static ru.yandex.qatools.allure.Matchers.exists;
@@ -44,7 +44,7 @@ public class AllureUtilsTest {
 
     @Test
     public void shouldEscapeBadCharactersWhileMarshal() throws Exception {
-        Path suite = resultsDirectory.resolve(generateTestSuiteName());
+        Path suite = resultsDirectory.resolve(generateTestSuiteXmlName());
         marshalTestSuite(new TestSuiteResult().withName("hi\uFFFEme"), suite);
         validateResults(resultsDirectory);
         TestSuiteResult result = JAXB.unmarshal(suite.toFile(), TestSuiteResult.class);
@@ -53,7 +53,7 @@ public class AllureUtilsTest {
 
     @Test
     public void shouldCloseTestSuiteFile() throws Exception {
-        Path suite = resultsDirectory.resolve(generateTestSuiteName());
+        Path suite = resultsDirectory.resolve(generateTestSuiteXmlName());
         marshalTestSuite(new TestSuiteResult(), suite);
 
         assertThat(suite, exists());

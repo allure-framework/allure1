@@ -1,8 +1,6 @@
 package ru.yandex.qatools.allure;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
 import org.testng.TestNG;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
@@ -17,7 +15,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assume.assumeThat;
-import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteXmlFiles;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -38,7 +36,7 @@ public class AllureTestListenerSuiteNameTest extends BasicListenerTest {
 
     @Test
     public void shouldContainsBothSuitesWithDifferentNames() throws Exception {
-        Collection<Path> files = listTestSuiteFiles(resultsDirectory);
+        Collection<Path> files = listTestSuiteXmlFiles(resultsDirectory);
         assumeThat(files, hasSize(2));
         List<String> names = new ArrayList<>();
         for (Path file : files) {

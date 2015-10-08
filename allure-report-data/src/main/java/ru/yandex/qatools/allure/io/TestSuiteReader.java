@@ -1,8 +1,9 @@
 package ru.yandex.qatools.allure.io;
 
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Iterators;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.yandex.qatools.allure.AllureUtils;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.inject.Inject;
@@ -11,48 +12,30 @@ import java.nio.file.Path;
 import java.util.Iterator;
 
 /**
- * eroshenkoam
- * 02/02/15
+ * @author Dmitry Baev charlie@yandex-team.ru
+ *         Date: 08.10.15
  */
 public class TestSuiteReader implements Reader<TestSuiteResult> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestSuiteReader.class);
 
-    private final Iterator<Path> testSuiteResultFiles;
+    private final Path[] resultDirectories;
 
     @Inject
-    public TestSuiteReader(@ResultDirectories Path... resultDirectories) throws IOException {
-        testSuiteResultFiles = AllureUtils.listTestSuiteFiles(resultDirectories).iterator();
+    public TestSuiteReader(@ResultDirectories Path... resultDirectories) {
+        this.resultDirectories = resultDirectories;
     }
 
     @Override
     public Iterator<TestSuiteResult> iterator() {
-        return new TestSuiteResultIterator();
-    }
-
-    private class TestSuiteResultIterator implements Iterator<TestSuiteResult> {
-        @Override
-        public boolean hasNext() {
-            return testSuiteResultFiles.hasNext();
-        }
-
-        @Override
-        public TestSuiteResult next() {
-            if (!hasNext()) {
-                return null;
-            }
-            Path next = testSuiteResultFiles.next();
-            try {
-                return AllureUtils.unmarshalTestSuite(next);
-            } catch (IOException e) {
-                LOGGER.warn(String.format("Could not read <%s> file", next.toAbsolutePath().toString()), e);
-                return next();
-            }
-        }
-
-        @Override
-        public void remove() {
-            throw new UnsupportedOperationException();
+        try {
+            return Iterators.concat(
+                    new JsonTestSuiteResultIterator(resultDirectories),
+                    new XmlTestSuiteResultIterator(resultDirectories)
+            );
+        } catch (IOException e) {
+            LOGGER.error("Could not create iterator", e);
+            return ImmutableSet.<TestSuiteResult>of().iterator();
         }
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
-import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteXmlFiles;
 
 /**
  * Test for various TestNg configuration method skip behavior
@@ -54,7 +54,7 @@ public class AllureTestListenerConfigMethodsTest extends BasicListenerTest {
 
     @Test
     public void validateCanceledTest() throws IOException {
-        for (Path file : listTestSuiteFiles(resultsDirectory)) {
+        for (Path file : listTestSuiteXmlFiles(resultsDirectory)) {
             TestSuiteResult result = JAXB.unmarshal(file.toFile(), TestSuiteResult.class);
             validateTestSuiteResult(result);
         }
