@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
-import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteXmlFiles;
 import static ru.yandex.qatools.allure.AllureUtils.validateResults;
 
 /**
@@ -36,7 +36,7 @@ public class AllureTestListenerMultipleSuitesTest extends BasicListenerTest {
 
     @Test
     public void suiteFilesCountTest() throws Exception {
-        assertThat(listTestSuiteFiles(resultsDirectory).size(), equalTo(2));
+        assertThat(listTestSuiteXmlFiles(resultsDirectory).size(), equalTo(2));
     }
 
     @Test
@@ -47,7 +47,7 @@ public class AllureTestListenerMultipleSuitesTest extends BasicListenerTest {
     @Test
     public void validatePendingTest() throws IOException {
         TestSuiteResult testSuite = JAXB.unmarshal(
-                AllureUtils.listTestSuiteFiles(resultsDirectory).iterator().next().toFile(),
+                AllureUtils.listTestSuiteXmlFiles(resultsDirectory).iterator().next().toFile(),
                 TestSuiteResult.class
         );
 

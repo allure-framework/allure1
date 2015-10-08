@@ -6,7 +6,7 @@ import ru.yandex.qatools.allure.testdata.TestDataClass;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteFiles;
+import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteXmlFiles;
 import static ru.yandex.qatools.allure.AllureUtils.validateResults;
 
 /**
@@ -17,7 +17,7 @@ public class AllureTestListenerXmlValidationTest extends BasicListenerTest {
 
     @Test
     public void suiteFilesCountTest() throws Exception {
-        assertThat(listTestSuiteFiles(resultsDirectory).size(), is(1));
+        assertThat(listTestSuiteXmlFiles(resultsDirectory).size(), is(1));
     }
 
     @Test

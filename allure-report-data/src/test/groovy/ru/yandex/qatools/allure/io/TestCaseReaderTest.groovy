@@ -11,6 +11,7 @@ import ru.yandex.qatools.allure.utils.PluginUtils
 
 import java.nio.file.Paths
 
+import static groovy.test.GroovyAssert.shouldFail
 import static org.hamcrest.MatcherAssert.assertThat
 import static org.hamcrest.Matchers.equalTo
 import static ru.yandex.qatools.allure.utils.DescriptionUtils.mergeDescriptions
@@ -24,16 +25,26 @@ class TestCaseReaderTest {
     @Test
     void shouldNotHasNextIfNotHasSuiteResult() {
         def reader = getReader([]);
-        assert !reader.iterator().hasNext()
-        assert reader.iterator().next() == null
+
+        def iterator = reader.iterator()
+        assert !iterator.hasNext()
+
+        shouldFail(NoSuchElementException, {
+            iterator.next()
+        })
     }
 
     @Test
     void shouldNotHasNextIfNotHasTestCaseResult() {
         def testSuite = new TestSuiteResult(name: "name")
         def reader = getReader([testSuite]);
-        assert !reader.iterator().hasNext()
-        assert reader.iterator().next() == null
+
+        def iterator = reader.iterator()
+        assert !iterator.hasNext()
+
+        shouldFail(NoSuchElementException, {
+            iterator.next()
+        })
     }
 
     @Test
@@ -41,9 +52,11 @@ class TestCaseReaderTest {
         def testCase = new TestCaseResult(name: "testCase")
         def testSuite = new TestSuiteResult(name: "name", testCases: [testCase])
         def reader = getReader([testSuite]);
-        assert reader.iterator().hasNext()
-        assert reader.iterator().next() == testCase
-        assert !reader.iterator().hasNext()
+
+        def iterator = reader.iterator()
+        assert iterator.hasNext()
+        assert iterator.next() == testCase
+        assert !iterator.hasNext()
     }
 
     @Test
@@ -53,11 +66,13 @@ class TestCaseReaderTest {
         def testSuite1 = new TestSuiteResult(name: "name1", testCases: [testCase1])
         def testSuite2 = new TestSuiteResult(name: "name2", testCases: [testCase2])
         def reader = getReader([testSuite1, testSuite2]);
-        assert reader.iterator().hasNext()
-        assert reader.iterator().next() == testCase1
-        assert reader.iterator().hasNext()
-        assert reader.iterator().next() == testCase2
-        assert !reader.iterator().hasNext()
+
+        def iterator = reader.iterator()
+        assert iterator.hasNext()
+        assert iterator.next() == testCase1
+        assert iterator.hasNext()
+        assert iterator.next() == testCase2
+        assert !iterator.hasNext()
     }
 
     @Ignore("Feature don't implemented. Seems like it's redundant logic")
@@ -68,11 +83,13 @@ class TestCaseReaderTest {
         def testSuite1 = new TestSuiteResult(name: "name1", testCases: [testCase1])
         def testSuite2 = new TestSuiteResult(name: "name2", testCases: [testCase2])
         def reader = getReader([testSuite1, null, testSuite2]);
-        assert reader.iterator().hasNext()
-        assert reader.iterator().next() == testCase1
-        assert reader.iterator().hasNext()
-        assert reader.iterator().next() == testCase2
-        assert !reader.iterator().hasNext()
+
+        def iterator = reader.iterator()
+        assert iterator.hasNext()
+        assert iterator.next() == testCase1
+        assert iterator.hasNext()
+        assert iterator.next() == testCase2
+        assert !iterator.hasNext()
     }
 
     @Test
@@ -81,9 +98,11 @@ class TestCaseReaderTest {
         def testSuite1 = new TestSuiteResult(name: "name1", testCases: [])
         def testSuite2 = new TestSuiteResult(name: "name2", testCases: [testCase])
         def reader = getReader([testSuite1, testSuite2]);
-        assert reader.iterator().hasNext()
-        assert reader.iterator().next() == testCase
-        assert !reader.iterator().hasNext()
+
+        def iterator = reader.iterator()
+        assert iterator.hasNext()
+        assert iterator.next() == testCase
+        assert !iterator.hasNext()
     }
 
     @Test
@@ -95,7 +114,9 @@ class TestCaseReaderTest {
 
         def reader = getReader([testSuite]);
 
-        def next = reader.iterator().next()
+
+        def iterator = reader.iterator()
+        def next = iterator.next()
         use(PluginUtils) {
             assert next
             assert next.getSuiteName() == "name"
@@ -104,13 +125,16 @@ class TestCaseReaderTest {
         }
     }
 
-    @Test(expected = UnsupportedOperationException)
+    @Test
     void shouldNotRemoveFromIterator() {
         def testCase = new TestCaseResult(name: "testCase")
         def testSuite = new TestSuiteResult(name: "name", testCases: [testCase])
 
-        def reader = getReader([testSuite]);
-        reader.iterator().remove()
+        def reader = getReader([testSuite])
+
+        shouldFail(UnsupportedOperationException, {
+            reader.iterator().remove()
+        })
     }
 
     @Test

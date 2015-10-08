@@ -10,8 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static ru.yandex.qatools.allure.AllureUtils.listAttachmentFiles;
@@ -45,8 +44,8 @@ public class AllureReportGeneratorTest {
         assertThat(dataDirectory, contains(PluginManager.WIDGETS_JSON));
         assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));
 
-        assertThat(listAttachmentFiles(dataDirectory), not(empty()));
-        assertThat(listFiles("*-testcase.json", dataDirectory), not(empty()));
+        assertThat(listAttachmentFiles(dataDirectory), hasSize(12));
+        assertThat(listFiles("*-testcase.json", dataDirectory), hasSize(320));
     }
 
     @Test(expected = ReportGenerationException.class)

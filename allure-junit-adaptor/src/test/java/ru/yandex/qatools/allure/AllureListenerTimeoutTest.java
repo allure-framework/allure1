@@ -43,7 +43,7 @@ public class AllureListenerTimeoutTest extends BasicListenerTest {
     @Test
     public void shouldNotLoseEventsFromTestWithTimeout() throws Exception {
         TestSuiteResult result = JAXB.unmarshal(
-                AllureUtils.listTestSuiteFiles(resultsDirectory).iterator().next().toFile(),
+                AllureUtils.listTestSuiteXmlFiles(resultsDirectory).iterator().next().toFile(),
                 TestSuiteResult.class
         );
 

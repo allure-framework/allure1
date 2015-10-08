@@ -18,9 +18,14 @@ public final class AllureConstants {
     public static final String TEST_SUITE_FILE_SUFFIX = "-testsuite";
 
     /**
-     * The glob to find test suites in allure results.
+     * The glob to find xml test suites in allure results.
      */
-    public static final String TEST_SUITE_FILE_GLOB = String.format("*%s.xml", TEST_SUITE_FILE_SUFFIX);
+    public static final String TEST_SUITE_XML_FILE_GLOB = String.format("*%s.xml", TEST_SUITE_FILE_SUFFIX);
+
+    /**
+     * The glob to find json test suites in allure results.
+     */
+    public static final String TEST_SUITE_JSON_FILE_GLOB = String.format("*%s.json", TEST_SUITE_FILE_SUFFIX);
 
     /**
      * The suffix of attachment files. All attachments should has such suffix.
