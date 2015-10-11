@@ -11,6 +11,11 @@
 
     <name>Allure Bundle</name>
 
+    <properties>
+        <allure.model.test.resources.path>${project.build.directory}/allure-results</allure.model.test.resources.path>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -26,12 +31,46 @@
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-report-face</artifactId>
             <type>war</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.matchers</groupId>
+            <artifactId>nio-matchers</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-allure-model-test-resources</id>
+                        <phase>process-test-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${allure.model.test.resources.path}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>
+                                        ${project.basedir}/../allure-model/src/test/resources/allure-results
+                                    </directory>
+                                    <filtering>false</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-assembly-plugin</artifactId>
@@ -70,6 +109,43 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.18.1</version>
+                <executions>
+                    <execution>
+                        <id>it-bundle-standalone</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <classpathDependencyScopeExclude>compile</classpathDependencyScopeExclude>
+                            <additionalClasspathElements>
+                                <element>${project.build.directory}/${project.artifactId}-${project.version}-standalone.jar</element>
+                            </additionalClasspathElements>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>it-bundle</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <!-- exclude classes directory -->
+                            <classesDirectory>${project.build.directory}/invalid-classes-directory</classesDirectory>
+                            <additionalClasspathElements>
+                                <element>${project.build.directory}/${project.artifactId}-${project.version}.jar</element>
+                            </additionalClasspathElements>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <failIfNoTests>true</failIfNoTests>
+                </configuration>
             </plugin>
         </plugins>
     </build>

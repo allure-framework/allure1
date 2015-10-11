@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static ru.yandex.qatools.allure.DummyReportGenerator.getFiles;
 
 /**
@@ -63,7 +64,7 @@ public class AllureMain {
                 Path dest = outputDirectory.resolve(resourcePath);
                 Files.createDirectories(dest.getParent());
                 try (InputStream input = info.url().openStream()) {
-                    Files.copy(input, dest);
+                    Files.copy(input, dest, REPLACE_EXISTING);
                     LOGGER.debug("{} successfully copied.", resourcePath);
                 }
             }

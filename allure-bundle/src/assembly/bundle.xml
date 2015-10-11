@@ -20,7 +20,7 @@
         <!-- Add allure-report-face war to resources with prefix `allure.report.face`-->
         <dependencySet>
             <outputDirectory>allure.report.face/</outputDirectory>
-            <scope>test</scope>
+            <scope>provided</scope>
             <includes>
                 <include>ru.yandex.qatools.allure:allure-report-face</include>
             </includes>
