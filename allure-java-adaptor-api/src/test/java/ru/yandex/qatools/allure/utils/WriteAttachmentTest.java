@@ -10,15 +10,15 @@ import org.junit.runners.Parameterized;
 import ru.yandex.qatools.allure.DummyConfig;
 import ru.yandex.qatools.allure.model.Attachment;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static ru.yandex.qatools.allure.utils.DirectoryMatcher.contains;
+import static ru.yandex.qatools.matchers.nio.PathMatchers.contains;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -32,7 +32,7 @@ public class WriteAttachmentTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    private File resultsDirectory;
+    private Path resultsDirectory;
 
     private AllureResultsHelper helper;
 
@@ -61,7 +61,7 @@ public class WriteAttachmentTest {
 
     @Before
     public void setUp() throws Exception {
-        resultsDirectory = folder.newFolder();
+        resultsDirectory = folder.newFolder().toPath();
         helper = new AllureResultsHelper(new DummyConfig(resultsDirectory));
     }
 
