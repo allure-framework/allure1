@@ -183,5 +183,10 @@
             <artifactId>mockito-all</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.matchers</groupId>
+            <artifactId>nio-matchers</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

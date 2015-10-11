@@ -8,13 +8,12 @@ import org.junit.rules.TemporaryFolder;
 import ru.yandex.qatools.allure.DummyConfig;
 import ru.yandex.qatools.allure.model.Attachment;
 
-import java.io.File;
-import java.io.IOException;
+import java.nio.file.Path;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
-import static ru.yandex.qatools.allure.utils.DirectoryMatcher.contains;
-import static ru.yandex.qatools.allure.utils.DirectoryMatcher.notContains;
+import static ru.yandex.qatools.matchers.nio.PathMatchers.contains;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -29,33 +28,27 @@ public class DeleteAttachmentTest {
     @Rule
     public TemporaryFolder folder = new TemporaryFolder();
 
-    private File resultsDirectory;
+    private Path resultsDirectory;
 
     private AllureResultsHelper resultsHelper;
 
     @Before
     public void setUp() throws Exception {
-        resultsDirectory = folder.newFolder();
+        resultsDirectory = folder.newFolder().toPath();
         resultsHelper = new AllureResultsHelper(new DummyConfig(resultsDirectory));
     }
 
     @Test
     public void saveAndDeleteTest() throws Exception {
-        Attachment first = save(ATTACHMENT);
+        Attachment first = resultsHelper.writeAttachment(ATTACHMENT.getBytes(Charsets.UTF_8), TITLE);
 
         assertNotNull(first);
         String firstSource = first.getSource();
         assertNotNull(firstSource);
-
         assertThat(resultsDirectory, contains(firstSource));
 
         resultsHelper.deleteAttachment(first);
-
-        assertThat(resultsDirectory, notContains(firstSource));
-    }
-
-    public Attachment save(String string) throws IOException {
-        return resultsHelper.writeAttachment(string.getBytes(Charsets.UTF_8), TITLE);
+        assertThat(resultsDirectory, not(contains(firstSource)));
     }
 
 }

@@ -10,12 +10,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static ru.yandex.qatools.allure.AllureUtils.listAttachmentFiles;
-import static ru.yandex.qatools.allure.AllureUtils.listFiles;
-import static ru.yandex.qatools.allure.utils.DirectoryMatcher.contains;
+import static ru.yandex.qatools.allure.AllureConstants.ATTACHMENTS_FILE_GLOB;
+import static ru.yandex.qatools.matchers.nio.PathMatchers.contains;
+import static ru.yandex.qatools.matchers.nio.PathMatchers.hasFilesCount;
 
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
@@ -44,8 +43,8 @@ public class AllureReportGeneratorTest {
         assertThat(dataDirectory, contains(PluginManager.WIDGETS_JSON));
         assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));
 
-        assertThat(listAttachmentFiles(dataDirectory), hasSize(12));
-        assertThat(listFiles("*-testcase.json", dataDirectory), hasSize(320));
+        assertThat(dataDirectory, hasFilesCount(12, ATTACHMENTS_FILE_GLOB));
+        assertThat(dataDirectory, hasFilesCount(320, "*-testcase.json"));
     }
 
     @Test(expected = ReportGenerationException.class)
