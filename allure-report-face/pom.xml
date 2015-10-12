@@ -235,7 +235,7 @@
                     <plugin>
                         <groupId>com.github.timurstrekalov</groupId>
                         <artifactId>saga-maven-plugin</artifactId>
-                        <version>1.5.4</version>
+                        <version>1.5.5</version>
                         <executions>
                             <execution>
                                 <goals>
