@@ -24,8 +24,6 @@
             });
         allurePluginsProvider.tabs.push({name: 'xunit', title: 'xunit.TITLE', icon: 'fa fa-briefcase'});
         allurePluginsProvider.addWidget('xunit', {
-            title: 'xunit.TITLE',
-            tabLink: 'xunit',
             templateUrl: "plugins/xunit/widget.tpl.html",
             controller: 'XUnitWidgetCtrl'
         });
@@ -106,7 +104,7 @@
         }, true);
     });
     module.controller('XUnitWidgetCtrl', function($scope, percents) {
-        $scope.data.forEach(function(data) {
+        $scope.data.items.forEach(function(data) {
             data.percents = percents(data.statistic);
         });
     });

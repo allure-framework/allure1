@@ -3,6 +3,7 @@ import org.codehaus.groovy.runtime.InvokerHelper
 import ru.yandex.qatools.allure.AllureTestCase
 import ru.yandex.qatools.allure.AllureTestSuite
 import ru.yandex.qatools.allure.AllureXUnit
+import ru.yandex.qatools.allure.ListWidgetData
 import ru.yandex.qatools.allure.ReportGenerationException
 import ru.yandex.qatools.allure.Statistic
 import ru.yandex.qatools.allure.Time
@@ -16,6 +17,8 @@ import ru.yandex.qatools.allure.utils.PluginUtils
 @Plugin.Name("xunit")
 @Plugin.Priority(500)
 class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
+
+    public static final int SUITES_IN_WIDGET = 10
 
     @Plugin.Data
     def xUnit = new AllureXUnit(time: new Time(start: Long.MAX_VALUE, stop: Long.MIN_VALUE))
@@ -55,9 +58,11 @@ class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
 
     @Override
     Object getWidgetData() {
-        def suites = xUnit.testSuites.take(10)
-        suites.collect {
+        def suites = xUnit.testSuites.take(SUITES_IN_WIDGET)
+        def items = suites.collect {
             new XUnitWidgetItem(uid: it.uid, title: it.title, statistic: it.statistic)
         }.sort { it.title }
+
+        new ListWidgetData(totalCount: xUnit.testSuites.size(), items: items)
     }
 }

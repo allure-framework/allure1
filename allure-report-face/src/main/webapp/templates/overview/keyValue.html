@@ -1,4 +1,6 @@
-<h2>{{name}}</h2>
+<h3 class="widget_title">
+    {{widget.title | translate}}
+</h3>
 <table allure-table class="test-list table table-hover table-condensed">
     <tbody>
     <tr class="list-item" ng-repeat="item in data | limitTo: ctrl.dataLimit">

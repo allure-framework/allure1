@@ -48,9 +48,8 @@
   },
   "overview": {
     "TOP": "Top erros",
-    "ALL": "mostrar todos",
-    "NO_DEFECTS": "Nenhum erro, todos os testes passaram!",
-    "STATUS": "status: "
+    "ALL": "Mostrar todos",
+    "TOTAL": "total"
   },
   "attachment": {
     "ATTACHMENT": "Anexo",

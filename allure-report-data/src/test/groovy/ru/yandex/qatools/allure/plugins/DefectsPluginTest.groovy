@@ -2,6 +2,7 @@ package ru.yandex.qatools.allure.plugins
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.junit.Test
 import ru.yandex.qatools.allure.AllureTestCase
+import ru.yandex.qatools.allure.ListWidgetData
 import ru.yandex.qatools.allure.model.Failure
 import ru.yandex.qatools.allure.utils.PluginUtils
 
@@ -208,10 +209,11 @@ class DefectsPluginTest {
             plugin.process(testCase)
         }
 
-        def data = plugin.widgetData as List
-        assert data.size() == 10
+        def data = plugin.widgetData as ListWidgetData
+        assert data.totalCount == 20
+        assert data.items.size() == 10
 
-        assert data*.message*.startsWith("failure#")
+        assert data.items*.message*.startsWith("failure#")
     }
 
     @Test
@@ -225,10 +227,10 @@ class DefectsPluginTest {
             plugin.process(testCase)
         }
 
-        def data = plugin.widgetData as List
-        assert data.size() == 10
+        def data = plugin.widgetData as ListWidgetData
+        assert data.items.size() == 10
 
-        assert data*.message.take(6)*.startsWith("failure#")
-        assert data*.message.takeRight(4)*.startsWith("broken#")
+        assert data.items*.message.take(6)*.startsWith("failure#")
+        assert data.items*.message.takeRight(4)*.startsWith("broken#")
     }
 }

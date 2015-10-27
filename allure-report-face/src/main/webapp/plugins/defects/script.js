@@ -21,8 +21,6 @@
             });
         allurePluginsProvider.tabs.push({name: 'defects', title: 'defects.TITLE', icon: 'fa fa-flag'});
         allurePluginsProvider.addWidget('defects', {
-            title: 'defects.TITLE',
-            tabLink: 'defects',
             templateUrl: "plugins/defects/widget.tpl.html"
         });
         allurePluginsProvider.addTranslation('defects');
