@@ -104,7 +104,7 @@
         });
     });
     module.controller('BehaviorsWidgetCtrl', function($scope, percents) {
-        $scope.data.forEach(function(data) {
+        $scope.data.items.forEach(function(data) {
             data.percents = percents(data.statistic);
         });
     });

@@ -49,8 +49,7 @@
   "overview": {
     "TOP": "Top defects",
     "ALL": "Show all",
-    "NO_DEFECTS": "No defects, all tests passed!",
-    "STATUS": "status: "
+    "TOTAL": "total"
   },
   "attachment": {
     "ATTACHMENT": "Attachment",

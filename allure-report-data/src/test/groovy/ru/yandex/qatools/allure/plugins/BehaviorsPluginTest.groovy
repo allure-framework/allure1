@@ -3,6 +3,7 @@ import org.codehaus.groovy.runtime.InvokerHelper
 import org.junit.Test
 import ru.yandex.qatools.allure.AllureTestCase
 import ru.yandex.qatools.allure.AllureTestCaseInfo
+import ru.yandex.qatools.allure.ListWidgetData
 import ru.yandex.qatools.allure.ReportGenerationException
 import ru.yandex.qatools.allure.Statistic
 import ru.yandex.qatools.allure.utils.PluginUtils
@@ -199,7 +200,9 @@ class BehaviorsPluginTest {
 
     @Test
     void shouldGenerateEmptyWidget() {
-        assert (plugin.widgetData as List).empty;
+        def data = plugin.widgetData as ListWidgetData;
+        assert data.totalCount == 0;
+        assert data.items.empty;
     }
 
     @Test
@@ -209,11 +212,12 @@ class BehaviorsPluginTest {
             plugin.process(testCase)
         }
 
-        def data = plugin.widgetData as List
-        assert data.size() == 10
+        def data = plugin.widgetData as ListWidgetData
+        assert data.totalCount == 20
+        assert data.items.size() == 10
 
-        assert data*.title*.startsWith("feature ")
-        assert data*.statistic*.equals(new Statistic(total: 1, passed: 0, failed: 1,
+        assert data.items*.title*.startsWith("feature ")
+        assert data.items*.statistic*.equals(new Statistic(total: 1, passed: 0, failed: 1,
                 broken: 0, canceled: 0, pending: 0))
     }
 }

@@ -4,6 +4,7 @@ import ru.yandex.qatools.allure.AllureBehavior
 import ru.yandex.qatools.allure.AllureFeature
 import ru.yandex.qatools.allure.AllureStory
 import ru.yandex.qatools.allure.AllureTestCase
+import ru.yandex.qatools.allure.ListWidgetData
 import ru.yandex.qatools.allure.ReportGenerationException
 import ru.yandex.qatools.allure.Statistic
 import ru.yandex.qatools.allure.BehaviorsWidgetItem
@@ -96,9 +97,10 @@ class BehaviorsPlugin extends DefaultTabPlugin implements WithWidget {
     @Override
     Object getWidgetData() {
         def features = behavior.features.take(FEATURES_IN_WIDGET)
-        features.collect {
+        def items = features.collect {
             feature -> new BehaviorsWidgetItem(title: feature.title, statistic: feature.statistic)
         }.sort { it.title }
+        new ListWidgetData(totalCount: behavior.features.size(), items: items)
     }
 
     /**

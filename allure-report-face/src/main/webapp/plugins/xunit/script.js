@@ -104,7 +104,7 @@
         }, true);
     });
     module.controller('XUnitWidgetCtrl', function($scope, percents) {
-        $scope.data.forEach(function(data) {
+        $scope.data.items.forEach(function(data) {
             data.percents = percents(data.statistic);
         });
     });
