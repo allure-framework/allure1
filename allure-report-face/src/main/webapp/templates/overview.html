@@ -1,14 +1,11 @@
+<h3 class="widget_title">
+    {{widget.title | translate}}
+</h3>
 <div class="widgets">
     <div ng-sortable="sortableConfig" class="widgets_col" ng-repeat="col in widgets track by $index">
         <div ng-repeat="widget in col" class="b-island widget">
-            <div>
-                <div class="widget_handle pull-right">
-                    <span class="fa fa-lg fa-arrows"></span>
-                </div>
-                <h3 class="widget_title">
-                    {{widget.title | translate}}
-                    <a ng-if="widget.tabLink" class="widget_link" ui-sref="{{widget.tabLink}}">{{'list.MORE' | translate}}</a>
-                </h3>
+            <div class="widget_handle pull-right">
+                <span class="fa fa-lg fa-arrows"></span>
             </div>
             <div widget="widget" data="data.plugins[widget.name]"></div>
         </div>

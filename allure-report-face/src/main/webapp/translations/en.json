@@ -48,7 +48,7 @@
   },
   "overview": {
     "TOP": "Top defects",
-    "ALL": "show all",
+    "ALL": "Show all",
     "NO_DEFECTS": "No defects, all tests passed!",
     "STATUS": "status: "
   },

@@ -5,6 +5,7 @@ import ru.yandex.qatools.allure.AllureDefects
 import ru.yandex.qatools.allure.AllureTestCase
 import ru.yandex.qatools.allure.DefectItem
 import ru.yandex.qatools.allure.DefectsWidgetItem
+import ru.yandex.qatools.allure.ListWidgetData
 import ru.yandex.qatools.allure.model.Status
 import ru.yandex.qatools.allure.utils.PluginUtils
 
@@ -56,15 +57,18 @@ class DefectsPlugin extends DefaultTabPlugin implements WithWidget {
      */
     @Override
     Object getWidgetData() {
-        def failed = getDefect(FAILED).defects.take(DEFECTS_IN_WIDGET)
-        def broken = getDefect(BROKEN).defects.take(DEFECTS_IN_WIDGET - failed.size())
+        def allFailed = getDefect(FAILED).defects;
+        def allBroken = getDefect(BROKEN).defects;
+        def data = new ListWidgetData(totalCount: allFailed.size() + allBroken.size());
 
-        def data = []
-        data += failed.collect {
+        def failed = allFailed.take(DEFECTS_IN_WIDGET)
+        def broken = allBroken.take(DEFECTS_IN_WIDGET - failed.size())
+
+        data.items += failed.collect {
             new DefectsWidgetItem(uid: it.uid, message: it?.failure?.message, status: FAILED, count: it.testCases.size())
         }.sort { -it.count }
 
-        data += broken.collect {
+        data.items += broken.collect {
             new DefectsWidgetItem(uid: it.uid, message: it?.failure?.message, status: BROKEN, count: it.testCases.size())
         }.sort { -it.count }
         data

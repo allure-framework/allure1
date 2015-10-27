@@ -24,8 +24,6 @@
             });
         allurePluginsProvider.tabs.push({name: 'behaviors', title: 'features.TITLE', icon: 'fa fa-list'});
         allurePluginsProvider.addWidget('behaviors', {
-            title: 'features.TITLE',
-            tabLink: 'behaviors',
             templateUrl: "plugins/behaviors/widget.tpl.html",
             controller: 'BehaviorsWidgetCtrl'
         });

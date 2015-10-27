@@ -17,6 +17,8 @@ import ru.yandex.qatools.allure.utils.PluginUtils
 @Plugin.Priority(500)
 class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
 
+    public static final int SUITES_IN_WIDGET = 10
+
     @Plugin.Data
     def xUnit = new AllureXUnit(time: new Time(start: Long.MAX_VALUE, stop: Long.MIN_VALUE))
 
@@ -55,7 +57,7 @@ class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
 
     @Override
     Object getWidgetData() {
-        def suites = xUnit.testSuites.take(10)
+        def suites = xUnit.testSuites.take(SUITES_IN_WIDGET)
         suites.collect {
             new XUnitWidgetItem(uid: it.uid, title: it.title, statistic: it.statistic)
         }.sort { it.title }

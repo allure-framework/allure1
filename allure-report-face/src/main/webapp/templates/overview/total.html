@@ -1,3 +1,6 @@
+<h3 class="widget_title">
+    {{widget.title | translate}}
+</h3>
 <div style="padding-bottom: 5px">
     {{'testrun.TESTRUN' | translate}}
     <span class="text-muted" translate="testrun.TIMEDATE" translate-value-date="{{data.time.start | date:'mediumDate'}}" translate-value-time="{{data.time.start | date:'HH:mm:ss'}}" translate-value-duration="{{data.time.duration | time}}"></span>

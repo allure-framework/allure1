@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
             xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:alr="urn:allure.qatools.yandex.ru"
             targetNamespace="urn:allure.qatools.yandex.ru">
 
     <xsd:include schemaLocation="testcases.xsd"/>
@@ -11,4 +12,13 @@
             <xsd:element name="value" type="xsd:string"/>
         </xsd:all>
     </xsd:complexType>
+
+    <xsd:element name="list-widget-data" type="alr:list-widget-data"/>
+    <xsd:complexType name="list-widget-data">
+        <xsd:sequence>
+            <xsd:element name="totalCount" type="xsd:int"/>
+            <xsd:element name="items" type="xsd:anyType" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
 </xsd:schema>
