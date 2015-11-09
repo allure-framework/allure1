@@ -64,7 +64,7 @@ Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
             <title>&lt;script&gt;3443&lt;/script&gt;</title>
             <description type="text">Single-line description</description>
             <failure>
-                <message>AssertionError: This test should be failed</message>
+                <message>AlarmAssertionErrorAssertionErrorAssertionErrorAssertionErrorAssertionError: This test should be failed</message>
                 <stack-trace>java.lang.AssertionError: This test should be failed
 	at org.junit.Assert.fail(Assert.java:88)
 	at org.junit.Assert.assertTrue(Assert.java:41)
