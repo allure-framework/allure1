@@ -1,7 +1,8 @@
 /* import vendor libs */
-@import         "../../../target/webjars/META-INF/resources/webjars/bootstrap/3.2.0-2/less/bootstrap.less";
+@import "../../../target/webjars/META-INF/resources/webjars/bootstrap/3.2.0-2/less/bootstrap.less";
 @import (less)  "../../../target/webjars/META-INF/resources/webjars/angular-loading-bar/0.6.0/loading-bar.css";
-@import         "../../../target/webjars/META-INF/resources/webjars/font-awesome/4.2.0/less/font-awesome.less";
+@import "../../../target/webjars/META-INF/resources/webjars/font-awesome/4.2.0/less/font-awesome.less";
+
 @fa-font-path: "../webjars/font-awesome/4.2.0/fonts";
 
 @import "highlight-github";
@@ -15,10 +16,23 @@
 @import "blocks/xunit";
 @import "blocks/widget";
 
+[ng-cloak], [data-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide {
+  display: none !important;
+}
+
+.ng-animate-block-transitions {
+  transition: 0s all !important;
+  -webkit-transition: 0s all !important;
+}
+
+.ng-hide-add-active, .ng-hide-remove {
+  display: block !important;
+}
+
 .preloader {
   position: absolute;
   z-index: 1001;
-  top:0;
+  top: 0;
   bottom: 0;
   left: 0;
   right: 0;
