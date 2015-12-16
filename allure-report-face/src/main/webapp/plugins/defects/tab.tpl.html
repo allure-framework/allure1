@@ -10,7 +10,7 @@
                 <table allure-table class="test-list table table-hover table-condensed" sorting="sorting">
                     <tr class="clickable" ng-repeat="defect in type.defects | orderBy:sorting.predicate:sorting.reverse" ng-click="setDefect(defect)" ng-class="{active:defect == $parent.defect}">
                         <td allure-table-col="{heading:'Count', predicate: 'testCases.length', flex: 1, class:'text-center'}" class="text-center"><span class="label label-status-{{type.status|lowercase}}">{{defect.testCases.length}}</span></td>
-                        <td allure-table-col="{heading:'Defect', predicate: 'failure.message', flex: 20}" class="text-status-{{type.status|lowercase}}">{{defect.failure.message}}</td>
+                        <td allure-table-col="{heading:'Defect', predicate: 'failure.message', flex: 20}" class="text-status-{{type.status|lowercase}} preformated-text">{{defect.failure.message}}</td>
                     </tr>
                 </table>
             </div>
