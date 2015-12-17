@@ -2,10 +2,17 @@
 
 .panes-container {
   display: flex;
-  align-items: stretch;
+  top: 15px;
+  bottom: 15px;
+  left: 0;
+  right: 15px;
+  position: absolute;
 }
 
 .pane {
   background: #fff;
   box-shadow: 0 0 0 1px $border-accent-color;
+  &:first-child:last-child {
+    width: 100%;
+  }
 }

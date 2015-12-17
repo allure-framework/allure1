@@ -1,27 +1,24 @@
-<div class="panes-container">
-    <div class="pane">
-        {{#each defectTypes}}
-            <h3 class="pane__title">
-                {{title}}
-                <span class="defects-list__count">{{defects.length}} defects</span>
-            </h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Count</th>
-                        <th>Defect</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {{#each defects}}
-                        <tr>
-                            <td>{{testCases.length}}</td>
-                            <td>{{failure.message}}</td>
-                        </tr>
-                    {{/each}}
-                </tbody>
-            </table>
-
-        {{/each}}
-    </div>
+<div class="pane">
+    {{#each defectTypes}}
+        <h3 class="pane__title">
+            {{title}}
+            <span class="defects-list__count">{{defects.length}} defects</span>
+        </h3>
+        <table>
+            <thead>
+            <tr>
+                <th>Count</th>
+                <th>Defect</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each defects}}
+                <tr>
+                    <td>{{testCases.length}}</td>
+                    <td>{{failure.message}}</td>
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    {{/each}}
 </div>

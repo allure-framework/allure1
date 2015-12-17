@@ -2,8 +2,18 @@
 
 .app {
   background: $body-bg;
+  display: flex;
+  flex-direction: column;
   &__nav {
-    width: 80px;
+    width: 100px;
+  }
+  &__body {
+    flex: 1;
+  }
+  &__content {
+    position: relative;
+    padding: 15px 15px 15px 0;
+    flex: 1;
   }
   &__header {
     background: $heading-bg;

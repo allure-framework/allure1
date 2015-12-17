@@ -1,8 +1,6 @@
-@import "normalize-css/normalize.css";
-@import "bem-components-dist/desktop/bem-components.css";
+@import "../node_modules/normalize-css/normalize.css";
+@import "../node_modules/bem-components-dist/desktop/bem-components.css";
 @import "./variables.css";
-@import "./grid.css";
-@import "./blocks/pane/styles.css";
 
 body {
   color: $text-color;

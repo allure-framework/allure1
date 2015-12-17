@@ -1,9 +1,13 @@
 import {LayoutView} from 'backbone.marionette';
+import {className} from '../../decorators';
 import template from './DefectsListView.hbs';
 
-export default class DefectsListView extends LayoutView {
+@className('panes-container')
+class DefectsListView extends LayoutView {
     template = template;
     serializeData() {
         return { defectTypes: this.collection.toJSON() };
     }
 }
+
+export default DefectsListView;

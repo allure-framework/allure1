@@ -27,7 +27,7 @@ function makeConfig(hotload) {
                 test:   /\.css$/,
                 loader: hotload ? 'style-loader!css-loader!postcss-loader' : ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
             }, {
-                test: /\.hbs/,
+                test: /\.hbs$/,
                 loader: 'handlebars-loader',
                 query: {
                     helperDirs: [
@@ -49,7 +49,10 @@ function makeConfig(hotload) {
             ];
             return hotload ? plugins.concat(new webpack.HotModuleReplacementPlugin()) : plugins;
         })(),
-        postcss: [require('postcss-partial-import'), require('precss'), require('autoprefixer')]
+        postcss: [
+            require('precss'),
+            require('autoprefixer')
+        ]
     };
 }
 

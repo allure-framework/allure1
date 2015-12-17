@@ -2,7 +2,6 @@
 
 .header {
   border-bottom: 1px solid $border-accent-color;
-  margin-bottom: 10px;
   display: flex;
   align-items: stretch;
   & > * {
