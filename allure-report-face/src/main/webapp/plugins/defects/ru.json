@@ -1,7 +1,0 @@
-{
-  "defects": {
-    "TITLE": "Дефекты",
-    "STATISTIC": "{amount, plural, one{# дефект} few{# дефекта} other{# дефектов}}",
-    "NO_DEFECTS": "Дефектов нет, отличная работа!"
-  }
-}
