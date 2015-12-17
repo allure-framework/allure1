@@ -1,0 +1,18 @@
+@import '../../variables.css';
+
+.table {
+  width: 100%;
+  border: 1px solid $border-color;
+  thead {
+    tr {
+      text-align: left;
+      background: $heading-bg;
+    }
+  }
+  tr {
+    border-bottom: 1px solid $border-color;
+  }
+  td, th {
+    padding: 10px 15px;
+  }
+}

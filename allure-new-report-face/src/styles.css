@@ -1,0 +1,51 @@
+@import "normalize-css/normalize.css";
+@import "bem-components-dist/desktop/bem-components.css";
+@import "./variables.css";
+@import "./grid.css";
+@import "./blocks/pane/styles.css";
+
+body {
+  color: $text-color;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+#content {
+  min-height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  .app {
+    flex: 1;
+  }
+  & > .spin {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%)
+  }
+}
+
+
+.view {
+  padding: 0 15px;
+  margin: 0 auto;
+  &_narrow {
+    max-width: 1100px;
+  }
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.col-sm-shrink {
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}

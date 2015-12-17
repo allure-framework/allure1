@@ -1,0 +1,13 @@
+@import "../../variables.css";
+
+.button {
+  &_view_danger {
+    background: $brand-red;
+    color: $brand-red;
+    &.button_hovered {
+      $hover-color: color($brand-red blackness(+ 10%));
+      background: $hover-color;
+      color: $hover-color;
+    }
+  }
+}

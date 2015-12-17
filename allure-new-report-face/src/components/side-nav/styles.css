@@ -1,0 +1,30 @@
+@import "../../variables.css";
+
+.side-nav {
+  padding: 0;
+  list-style-type: none;
+  &__item {
+    display: block;
+    text-align: center;
+    margin: 1em 0;
+  }
+  &__link {
+    display: block;
+    color: $text-muted-color;
+    text-decoration: none;
+    transition: color 0.1s ease-in;
+    &:hover {
+      color: $text-color;
+      .side-nav__icon {
+        top: -3px;
+      }
+    }
+  }
+  &__icon {
+    transition: top 0.3s ease-in;
+    position: relative;
+    font-size: 30px;
+    display: block;
+    margin-bottom: 7px;
+  }
+}

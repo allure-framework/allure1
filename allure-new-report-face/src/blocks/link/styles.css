@@ -1,0 +1,10 @@
+@import "../../variables.css";
+
+.link {
+  &_type_user {
+    display: inline-block;
+    &:first-letter {
+      color: $brand-red;
+    }
+  }
+}

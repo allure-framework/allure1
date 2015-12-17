@@ -1,0 +1,17 @@
+.form-label {
+  display: inline-block;
+  font-weight: bold;
+  &_placement_top {
+    display: block;
+  }
+  &_size_m {
+    font-size: 14px;
+    padding: 7px 0;
+    margin-right: 7px;
+  }
+  &_size_l {
+    font-size: 16px;
+    margin-right: 10px;
+    padding: 7px 0;
+  }
+}

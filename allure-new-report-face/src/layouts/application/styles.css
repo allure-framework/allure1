@@ -1,0 +1,11 @@
+@import '../../variables.css';
+
+.app {
+  background: $body-bg;
+  &__nav {
+    width: 80px;
+  }
+  &__header {
+    background: $heading-bg;
+  }
+}

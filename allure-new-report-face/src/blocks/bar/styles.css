@@ -1,0 +1,14 @@
+.bar {
+  height: 16px;
+  overflow: hidden;
+  position: relative;
+  border-radius: 4px;
+  background: #eee;
+  &__fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: #6cc644;
+  }
+}

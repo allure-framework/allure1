@@ -1,0 +1,11 @@
+@import "../../variables.css";
+
+.panes-container {
+  display: flex;
+  align-items: stretch;
+}
+
+.pane {
+  background: #fff;
+  box-shadow: 0 0 0 1px $border-accent-color;
+}

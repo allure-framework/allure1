@@ -1,0 +1,7 @@
+/*this is override of modal block from bem-components. Be aware, there are extra basic styles*/
+.modal {
+  &__content {
+    padding: 0 15px;
+    min-width: 400px;
+  }
+}

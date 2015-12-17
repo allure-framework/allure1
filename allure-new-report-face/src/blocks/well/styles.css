@@ -1,0 +1,8 @@
+@import "../../variables.css";
+
+.well {
+  padding: 50px;
+  background: $heading-bg;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+}

@@ -1,0 +1,48 @@
+@import "../../variables.css";
+
+.header {
+  border-bottom: 1px solid $border-accent-color;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: stretch;
+  & > * {
+    padding: 0 10px;
+    height: 50px;
+    line-height: 50px;
+  }
+  &__brand {
+    font-size: 20px;
+    font-weight: bold;
+    background: url('allure-logo.png') no-repeat 10px center;
+    padding-left: 50px;
+  }
+  &__link, &__brand {
+    color: $text-color;
+    text-decoration: none;
+  }
+  &__link {
+    border-bottom: 4px solid transparent;
+    &:hover {
+      color: #e00;
+    }
+    &_active {
+      border-bottom-color: $brand-blue;
+    }
+  }
+  &__strut {
+    flex: 1;
+  }
+  &__logout-wrap {
+    display: inline-block;
+  }
+  &__logout {
+    border: 0;
+    position: relative;
+    top: -1px;
+    margin-left: 0.5em;
+    width: 14px;
+    height: 14px;
+    background: url(./logout.svg);
+    background-size: contain;
+  }
+}

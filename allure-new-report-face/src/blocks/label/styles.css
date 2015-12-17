@@ -1,0 +1,9 @@
+.label {
+  text-transform: uppercase;
+  color: #fff;
+  padding: 2px 5px;
+  font-size: 75%;
+  &_status_success {
+    background: #21B82C;
+  }
+}

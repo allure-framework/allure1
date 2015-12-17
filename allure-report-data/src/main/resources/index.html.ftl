@@ -11,62 +11,12 @@
     <link rel="icon" href="img/favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="css/app.css"/>
 
-    <script src="webjars/jquery/2.1.1/jquery.min.js"></script>
-    <script src="webjars/d3js/3.4.11/d3.min.js"></script>
-
-    <script src="webjars/angularjs/1.2.26/angular.min.js"></script>
-    <script src="webjars/angularjs/1.2.26/angular-animate.min.js"></script>
-    <script src="webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js"></script>
-    <script src="webjars/angular-ui-router/0.2.13/angular-ui-router.js"></script>
-    <script src="webjars/angular-loading-bar/0.6.0/loading-bar.js"></script>
-    <script src="webjars/angular-translate/2.6.0/angular-translate.js"></script>
-    <script src="webjars/angular-translate-loader-partial/2.6.0/angular-translate-loader-partial.js"></script>
-    <script src="webjars/messageformat.js/0.1.4/messageformat.js"></script>
-    <script src="webjars/angular-translate-interpolation-messageformat/0.1.2/angular-translate-interpolation-messageformat.js"></script>
-    <script src="webjars/Sortable/1.2.0/Sortable.min.js"></script>
-    <script src="webjars/Sortable/1.2.0/ng-sortable.js"></script>
-
-    <script src="vendor/messageformat/ru.js"></script>
-    <script src="vendor/messageformat/en.js"></script>
-    <script src="vendor/messageformat/ptbr.js"></script>
-
-    <script src="webjars/highlightjs/8.2-1/highlight.min.js"></script>
-
-    <script src="vendor/localstorageprovider.js"></script>
-    <script src="vendor/filesize.js"></script>
-
-    <script src="js/app.js"></script>
-    <script src="js/pluginApi.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/filters.js"></script>
-    <script src="js/directives.js"></script>
-    <script src="js/table/table.js"></script>
-    <script src="js/pane/pane.js"></script>
-    <script src="js/overview/widgets.js"></script>
-    <script src="js/testcase/statusSwitcher.js"></script>
-    <script src="js/testcase/provider.js"></script>
-    <script src="js/testcase/testcase.js"></script>
-    <script src="js/testcase/list.js"></script>
-    <script src="js/charts/charts.js"></script>
-    <script src="js/charts/pie.js"></script>
-    <script src="js/charts/timeline.js"></script>
-    <script src="js/charts/duration.js"></script>
-    <script src="js/charts/severityMap.js"></script>
-    <script src="js/scrollfix/scrollfix.js"></script>
+    <script src="allure-core.min.js"></script>
 
     <#--Plugins-->
-<#list plugins as plugin>
-    <script src="plugins/${plugin}/script.js"></script>
-</#list>
-
-    <script>
-        angular.module('allure', ['allure.core',
-        <#list plugins as plugin>
-            'allure.${plugin}'<#if plugin_has_next>,</#if>
-        </#list>
-        ]);
-    </script>
+    <#list plugins as plugin>
+        <script src="plugins/${plugin}/script.js"></script>
+    </#list>
 
 </head>
 <body class="b-page" ng-app="allure">
