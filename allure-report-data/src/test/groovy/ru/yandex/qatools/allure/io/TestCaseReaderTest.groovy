@@ -158,7 +158,7 @@ class TestCaseReaderTest {
 
     @Test
     void shouldEscapeInvalidXmlCharacters() {
-        def suiteReader = new TestSuiteReader(Paths.get(getClass().classLoader.getResource("testresults").file))
+        def suiteReader = new TestSuiteReader(Paths.get(getClass().classLoader.getResource("testresults").toURI()))
         def reader = new TestCaseReader(suiteReader)
 
         def iterator = reader.iterator()
