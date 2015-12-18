@@ -1,6 +1,6 @@
 package ru.yandex.qatools.allure.command;
 
-import io.airlift.command.Command;
+import io.airlift.airline.Command;
 import org.slf4j.cal10n.LocLogger;
 import ru.yandex.qatools.allure.logging.Message;
 
