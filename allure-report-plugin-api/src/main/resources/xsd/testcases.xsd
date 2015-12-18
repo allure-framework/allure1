@@ -34,6 +34,7 @@
             <xsd:element name="status" type="alr:status"/>
             <xsd:element name="issues" type="alr:issues"/>
             <xsd:element name="testId" type="alr:testId" minOccurs="0"/>
+            <xsd:element name="storyId" type="alr:storyId" minOccurs="0"/>
             <xsd:element name="labels" type="alr:labels" minOccurs="0"/>
             <xsd:element name="parameters" type="alr:parameters" minOccurs="0"/>
             <xsd:element name="suite" type="alr:allure-test-suite-info"/>
@@ -135,6 +136,11 @@
 
     <xsd:complexType name="testId">
         <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="url" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="storyId">
+        <xsd:attribute name="id" type="xsd:string"/>
         <xsd:attribute name="url" type="xsd:string"/>
     </xsd:complexType>
 

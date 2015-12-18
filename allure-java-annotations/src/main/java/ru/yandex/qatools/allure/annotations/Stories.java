@@ -24,6 +24,8 @@ import java.lang.annotation.Target;
  *     ...
  * }
  * </pre>
+ * There is optional id tag available to track your stories in
+ * Stories Management system.
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 25.12.13
  */
@@ -33,5 +35,7 @@ import java.lang.annotation.Target;
 public @interface Stories {
 
     String[] value();
+
+    String id() default "";
 
 }
