@@ -1,7 +1,7 @@
 package ru.yandex.qatools.allure.command;
 
-import io.airlift.command.Option;
-import io.airlift.command.OptionType;
+import io.airlift.airline.Option;
+import io.airlift.airline.OptionType;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
 import org.slf4j.cal10n.LocLogger;
