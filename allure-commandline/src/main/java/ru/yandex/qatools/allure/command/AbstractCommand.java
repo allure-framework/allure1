@@ -7,11 +7,15 @@ import org.apache.log4j.LogManager;
 import org.slf4j.cal10n.LocLogger;
 import ru.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.allure.CommandProperties;
+import ru.yandex.qatools.allure.utils.DeleteVisitor;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static ru.yandex.qatools.allure.command.ExitCode.GENERIC_ERROR;
 import static ru.yandex.qatools.allure.command.ExitCode.NO_ERROR;
 import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
-import static ru.yandex.qatools.allure.logging.Message.COMMANDLINE_ERROR;
 import static ru.yandex.qatools.allure.logging.Message.COMMAND_ALLURE_COMMAND_ABORTED;
 
 /**
@@ -25,6 +29,8 @@ public abstract class AbstractCommand implements AllureCommand {
             PropertyLoader.newInstance().populate(CommandProperties.class);
 
     private ExitCode exitCode = NO_ERROR;
+
+    private Path tempDirectory;
 
     @Option(name = {"-v", "--verbose"}, type = OptionType.GLOBAL,
             description = "Switch on the verbose mode.")
@@ -43,6 +49,7 @@ public abstract class AbstractCommand implements AllureCommand {
     public void run() {
         setLogLevel();
         try {
+            initTempDirectory();
             runUnsafe();
         } catch (AllureCommandException e) { //NOSONAR
             LOGGER.error(e.getLogMessage(), e.getLogArgs());
@@ -50,6 +57,38 @@ public abstract class AbstractCommand implements AllureCommand {
         } catch (Exception e) {
             LOGGER.error(COMMAND_ALLURE_COMMAND_ABORTED, e);
             setExitCode(GENERIC_ERROR);
+        } finally {
+            removeTempDirectory();
+        }
+    }
+
+    /**
+     * Creates an temporary directory. The created directory will be deleted when
+     * command will ended.
+     */
+    protected Path createTempDirectory(String prefix) throws IOException {
+        return Files.createTempDirectory(tempDirectory, prefix);
+    }
+
+    /**
+     * Init {@link #tempDirectory}.
+     *
+     * @throws IOException if any occurs.
+     */
+    private void initTempDirectory() throws IOException {
+        tempDirectory = Files.createTempDirectory("allure-commandline");
+    }
+
+    /**
+     * Safe remove {@link #tempDirectory}.
+     */
+    private void removeTempDirectory() {
+        try {
+            if (tempDirectory != null && Files.exists(tempDirectory)) {
+                Files.walkFileTree(tempDirectory, new DeleteVisitor());
+            }
+        } catch (IOException e) {
+            LOGGER.debug("Could not delete temp directory", e);
         }
     }
 

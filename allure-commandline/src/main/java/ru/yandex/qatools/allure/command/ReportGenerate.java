@@ -6,6 +6,7 @@ import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.slf4j.cal10n.LocLogger;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,7 +72,7 @@ public class ReportGenerate extends ReportCommand {
     /**
      * Create a {@link CommandLine} to run bundle with needed arguments.
      */
-    private CommandLine createCommandLine() throws AllureCommandException {
+    private CommandLine createCommandLine() throws AllureCommandException, IOException {
         return new CommandLine(getJavaExecutablePath().toString())
                 .addArguments(getBundleJavaOptsArgument())
                 .addArgument(getLoggerConfigurationArgument())
@@ -97,8 +98,12 @@ public class ReportGenerate extends ReportCommand {
     /**
      * Returns the config directory classpath element.
      */
-    protected String getConfigPath() {
-        return PROPERTIES.getAllureConfig().toAbsolutePath().getParent().toString();
+    protected String getConfigPath() throws IOException {
+        Path config = createTempDirectory("config");
+        if (Files.exists(PROPERTIES.getAllureConfig())) {
+            Files.copy(PROPERTIES.getAllureConfig(), config.resolve("allure.properties"));
+        }
+        return config.toAbsolutePath().toString();
     }
 
     /**
