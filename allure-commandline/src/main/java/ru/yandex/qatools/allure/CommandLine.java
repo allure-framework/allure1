@@ -1,6 +1,6 @@
 package ru.yandex.qatools.allure;
 
-import io.airlift.command.Cli;
+import io.airlift.airline.Cli;
 import org.slf4j.cal10n.LocLogger;
 import ru.yandex.qatools.allure.command.ReportClean;
 import ru.yandex.qatools.allure.command.ReportOpen;
