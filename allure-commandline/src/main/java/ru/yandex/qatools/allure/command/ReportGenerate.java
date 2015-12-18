@@ -4,7 +4,8 @@ import io.airlift.airline.Arguments;
 import io.airlift.airline.Command;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
-import org.slf4j.cal10n.LocLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,18 +14,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_BUNDLE_MISSING;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_REPORT_GENERATED;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_RESULT_DIRECTORY_MISSING;
-
 /**
  * @author Artem Eroshenko <eroshenkoam@yandex-team.ru>
  */
 @Command(name = "generate", description = "Generate report")
 public class ReportGenerate extends ReportCommand {
 
-    private static final LocLogger LOGGER = getLogger(ReportGenerate.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportGenerate.class);
 
     public static final String CLASS_PATH = "-cp";
 
@@ -44,7 +40,8 @@ public class ReportGenerate extends ReportCommand {
         validateResultsDirectories();
         CommandLine commandLine = createCommandLine();
         new DefaultExecutor().execute(commandLine);
-        LOGGER.info(COMMAND_REPORT_GENERATE_REPORT_GENERATED, getReportDirectoryPath());
+        LOGGER.info("Report successfully generated to the directory <{}>. " +
+                "Use `allure report open` command to show the report.", getReportDirectoryPath());
     }
 
     /**
@@ -53,7 +50,7 @@ public class ReportGenerate extends ReportCommand {
     protected void validateResultsDirectories() throws AllureCommandException {
         for (String result : results) {
             if (Files.notExists(Paths.get(result))) {
-                throw new AllureCommandException(COMMAND_REPORT_GENERATE_RESULT_DIRECTORY_MISSING, result);
+                throw new AllureCommandException(String.format("Report directory <%s> not found.", result));
             }
         }
     }
@@ -88,9 +85,8 @@ public class ReportGenerate extends ReportCommand {
      */
     protected String getBundleJarPath() throws AllureCommandException {
         Path path = PROPERTIES.getAllureHome().resolve("app/allure-bundle.jar").toAbsolutePath();
-
         if (Files.notExists(path)) {
-            throw new AllureCommandException(COMMAND_REPORT_GENERATE_BUNDLE_MISSING, path);
+            throw new AllureCommandException(String.format("Bundle not found by path <%s>", path));
         }
         return path.toString();
     }

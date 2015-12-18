@@ -1,14 +1,12 @@
 package ru.yandex.qatools.allure.command;
 
 import io.airlift.airline.Command;
-import org.slf4j.cal10n.LocLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.yandex.qatools.allure.utils.DeleteVisitor;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-
-import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_CLEAN_REPORT_CLEANED;
 
 /**
  * @author Artem Eroshenko <eroshenkoam@yandex-team.ru>
@@ -16,7 +14,7 @@ import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_CLEAN_REPO
 @Command(name = "clean", description = "Clean report")
 public class ReportClean extends ReportCommand {
 
-    private static final LocLogger LOGGER = getLogger(ReportClean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportClean.class);
 
     /**
      * Remove the report directory.
@@ -25,6 +23,6 @@ public class ReportClean extends ReportCommand {
     protected void runUnsafe() throws Exception {
         Path reportDirectory = getReportDirectoryPath();
         Files.walkFileTree(reportDirectory, new DeleteVisitor());
-        LOGGER.info(COMMAND_REPORT_CLEAN_REPORT_CLEANED, reportDirectory);
+        LOGGER.info("Report directory <{}> was successfully cleaned.", reportDirectory);
     }
 }
