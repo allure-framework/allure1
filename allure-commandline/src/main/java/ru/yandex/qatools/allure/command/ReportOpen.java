@@ -8,7 +8,8 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.slf4j.cal10n.LocLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.*;
 import java.io.IOException;
@@ -16,19 +17,13 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_CANT_OPEN_BROWSER;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_OPEN_REPORT_MISSING;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_OPEN_SERVER_STARTED;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_OPEN_SERVER_STARTING;
-
 /**
  * @author Artem Eroshenko <eroshenkoam@yandex-team.ru>
  */
 @Command(name = "open", description = "Open generated report")
 public class ReportOpen extends ReportCommand {
 
-    private static final LocLogger LOGGER = getLogger(ReportOpen.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportOpen.class);
 
     @Option(name = {"-p", "--port"}, type = OptionType.COMMAND,
             description = "This port will be used to start web server for the report")
@@ -38,15 +33,17 @@ public class ReportOpen extends ReportCommand {
     protected void runUnsafe() throws Exception {
         Path reportDirectory = getReportDirectoryPath();
         if (Files.notExists(reportDirectory)) {
-            throw new AllureCommandException(COMMAND_REPORT_OPEN_REPORT_MISSING, reportDirectory);
+            throw new AllureCommandException(String.format(
+                    "Can't open report: directory <%s> doesn't exist.", reportDirectory
+            ));
         }
 
-        LOGGER.info(COMMAND_REPORT_OPEN_SERVER_STARTING, reportDirectory);
+        LOGGER.info("Starting web server for report directory <{}>", reportDirectory);
         Server server = setUpServer();
         server.start();
 
         openBrowser(server.getURI());
-        LOGGER.info(COMMAND_REPORT_OPEN_SERVER_STARTED, server.getURI());
+        LOGGER.info("Server started at <{}>. Press <Ctrl+C> to exit ...", server.getURI());
         server.join();
     }
 
@@ -57,7 +54,9 @@ public class ReportOpen extends ReportCommand {
         if (Desktop.isDesktopSupported()) {
             Desktop.getDesktop().browse(url);
         } else {
-            LOGGER.error(COMMAND_REPORT_CANT_OPEN_BROWSER);
+            LOGGER.error("COMMAND_REPORT_CANT_OPEN_BROWSER=Can not open browser because this " +
+                    "capability is not supported on your platform. You can use the link below " +
+                    "to open the report manually.");
         }
     }
 

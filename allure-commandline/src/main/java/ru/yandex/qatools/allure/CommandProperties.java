@@ -29,10 +29,6 @@ public interface CommandProperties {
     @Property("allure.home")
     Path getAllureHome();
 
-    @DefaultValue("en")
-    @Property("allure.locale")
-    String getAllureLocale();
-
     @DefaultValue("allure.properties")
     @Property("allure.config")
     Path getAllureConfig();
