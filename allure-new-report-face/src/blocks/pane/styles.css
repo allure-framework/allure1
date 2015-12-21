@@ -14,7 +14,6 @@ $pane-gap: 15px;
 .pane {
   background: #fff;
   box-shadow: 0 0 0 1px $border-accent-color;
-  padding: 0 $pane-gap;
   &:first-child:last-child {
     width: 100%;
   }

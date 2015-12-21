@@ -2,7 +2,9 @@
 
 .table {
   width: 100%;
-  border: 1px solid $border-color;
+  border-color: $border-color;
+  border-style: solid;
+  border-width: 1px 0 1px 0;
   &_hover {
     tbody tr:hover td {
       cursor: pointer;

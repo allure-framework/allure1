@@ -2,8 +2,8 @@
 
 .defects-list {
   &__title {
-    padding-bottom: 10px;
-    margin-bottom: 15px;
+    padding: 0 15px 10px;
+    margin: 25px 0 15px;
     border-bottom: 1px solid $border-color;
     &_status_BROKEN {
       border-bottom-color: $broken-color;
