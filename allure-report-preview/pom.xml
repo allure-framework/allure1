@@ -17,7 +17,7 @@
         </allure.issues.tracker.pattern>
         <allure.tests.management.pattern>http://github.com/allure-framework/allure-core/tests/%s
         </allure.tests.management.pattern>
-        <allure.stories.tracker.pattern>http://unknown.com/%s
+        <allure.stories.tracker.pattern>http://github.com/allure-framework/allure-core/issues/%s
         </allure.stories.tracker.pattern>
     </properties>
 
