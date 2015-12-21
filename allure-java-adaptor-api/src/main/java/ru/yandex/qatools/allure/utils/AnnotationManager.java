@@ -309,7 +309,7 @@ public class AnnotationManager {
     private String getStoriesId() {
         Stories stories = getAnnotation(Stories.class);
 
-        if(stories == null || stories.id().isEmpty()) {
+        if(stories == null || stories.id() == null || stories.id().isEmpty()) {
             return null;
         } else {
             return stories.id();
