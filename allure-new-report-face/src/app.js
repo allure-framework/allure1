@@ -1,6 +1,4 @@
 import 'font-awesome/css/font-awesome.css';
-import './grid.css';
-import './blocks/pane/styles.css';
 import './styles.css';
 
 import 'bem-components-dist/desktop/bem-components.dev.js+bh.js';

@@ -49,8 +49,9 @@ function makeConfig(hotload) {
             ];
             return hotload ? plugins.concat(new webpack.HotModuleReplacementPlugin()) : plugins;
         })(),
-        postcss: [
-            require('precss'),
+        postcss: (webpack) => [
+            require('postcss-import')({addDependencyTo: webpack}),
+            require('precss')({'import': {disable: true}}),
             require('autoprefixer')
         ]
     };

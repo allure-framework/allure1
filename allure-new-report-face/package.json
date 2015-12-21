@@ -33,6 +33,7 @@
     "jasmine-ajax": "just-boris/jasmine-ajax#npm",
     "jasmine-core": "^2.3.4",
     "jsdom": "^7.0.2",
+    "postcss-import": "^7.1.3",
     "postcss-loader": "^0.8.0",
     "precss": "^1.2.3",
     "proxyquire": "^1.7.3",
