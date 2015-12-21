@@ -2,7 +2,7 @@
 import proxyquire from 'proxyquire';
 import {history} from 'backbone';
 
-const router = proxyquire('./routes', {});
+const router = proxyquire('./router', {});
 
 describe('router', function() {
     beforeEach(function() {

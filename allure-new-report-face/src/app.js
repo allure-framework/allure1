@@ -3,7 +3,7 @@ import './styles.css';
 
 import 'bem-components-dist/desktop/bem-components.dev.js+bh.js';
 import {Application} from 'backbone.marionette';
-import router from './routes';
+import router from './router';
 import ErrorLayout from './layouts/error/ErrorLayout';
 import OverviewLayout from './layouts/overview/OverivewLayout';
 import DefectsLayout from './layouts/defects/DefectsLayout';
