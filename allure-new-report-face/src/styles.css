@@ -1,7 +1,9 @@
 @import "../node_modules/normalize-css/normalize.css";
 @import "../node_modules/bem-components-dist/desktop/bem-components.css";
 @import "./grid.css";
+@import "./blocks/label/styles.css";
 @import "./blocks/pane/styles.css";
+@import "./blocks/table/styles.css";
 @import "./variables.css";
 
 body {
@@ -14,6 +16,7 @@ body {
 
 html, body {
   height: 100%;
+  font-size: 14px;
 }
 
 #content {

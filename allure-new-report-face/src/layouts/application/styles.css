@@ -16,6 +16,6 @@
     flex: 1;
   }
   &__header {
-    background: $heading-bg;
+    background: $header-bg;
   }
 }

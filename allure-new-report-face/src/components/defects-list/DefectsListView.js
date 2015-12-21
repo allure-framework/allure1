@@ -1,3 +1,4 @@
+import './styles.css';
 import {LayoutView} from 'backbone.marionette';
 import {className} from '../../decorators';
 import template from './DefectsListView.hbs';

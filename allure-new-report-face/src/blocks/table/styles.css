@@ -3,6 +3,12 @@
 .table {
   width: 100%;
   border: 1px solid $border-color;
+  &_hover {
+    tbody tr:hover td {
+      cursor: pointer;
+      background: $hover-color;
+    }
+  }
   thead {
     tr {
       text-align: left;

@@ -1,9 +1,18 @@
+@import "../../variables.css";
+
 .label {
   text-transform: uppercase;
   color: #fff;
   padding: 2px 5px;
   font-size: 75%;
-  &_status_success {
-    background: #21B82C;
+  border-radius: 3px;
+  &_status_PASSED {
+    background: $passed-color;
+  }
+  &_status_FAILED {
+    background: $failed-color;
+  }
+  &_status_BROKEN {
+    background: $broken-color;
   }
 }

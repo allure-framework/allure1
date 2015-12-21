@@ -1,17 +1,20 @@
 @import "../../variables.css";
 
+$pane-gap: 15px;
+
 .panes-container {
   display: flex;
-  top: 15px;
-  bottom: 15px;
+  top: $pane-gap;
+  bottom: $pane-gap;
   left: 0;
-  right: 15px;
+  right: $pane-gap;
   position: absolute;
 }
 
 .pane {
   background: #fff;
   box-shadow: 0 0 0 1px $border-accent-color;
+  padding: 0 $pane-gap;
   &:first-child:last-child {
     width: 100%;
   }

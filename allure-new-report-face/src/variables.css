@@ -1,9 +1,18 @@
 $brand-blue: #428bca;
 $brand-red: #ee0000;
-$heading-bg: #fff;
+
+$passed-color: #5cb85c;
+$failed-color: #d9534f;
+$broken-color: #f0ad4e;
+
+$header-bg: #fff;
+$heading-bg: #f6f5f3;
 $body-bg: #f3f1ed;
+
 $border-color: #eee;
 $border-accent-color: #ccc;
+
+$hover-color: #e5f4fe;
 
 $text-color: #333;
 $text-muted-color: #999;
