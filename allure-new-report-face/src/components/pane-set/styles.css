@@ -3,7 +3,6 @@
 $pane-gap: 15px;
 
 .pane-set {
-  display: flex;
   top: $pane-gap;
   bottom: $pane-gap;
   left: 0;
@@ -12,6 +11,10 @@ $pane-gap: 15px;
 }
 
 .pane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
   background: #fff;
   box-shadow: 0 0 0 1px $border-accent-color;
   width: 50%;
