@@ -21,7 +21,7 @@ App.on('start', () => {
         return (...args) => App.getRegion('content').show(factory(...args));
     }
     router.on('route:home', showView(() => new OverviewLayout()));
-    router.on('route:defects', showView(() => new DefectsLayout()));
+    router.on('route:defects', showView((...routeParams) => new DefectsLayout({routeParams})));
     router.on('route:notFound', showView(() =>
         new ErrorLayout({
             code: 404,

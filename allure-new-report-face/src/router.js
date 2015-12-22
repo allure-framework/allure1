@@ -6,7 +6,7 @@ class AppRouter extends Router {
         super({
             routes: {
                 '': 'home',
-                'defects': 'defects',
+                'defects(/:defectId)(/:testcaseId)(/:attachmentId)': 'defects',
                 '*default': 'notFound'
             }
         });

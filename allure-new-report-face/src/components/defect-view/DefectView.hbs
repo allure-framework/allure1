@@ -1,0 +1,36 @@
+<h2 class="pane__title">
+    Defect
+    <span class="pane__controls">
+        <a class="fa fa-close" title="Close" href="#defects"></a>
+    </span>
+</h2>
+
+<pre>
+    <code>{{failure.message}}</code>
+</pre>
+
+<table class="table table_hover">
+    <thead>
+    <tr>
+        <th width="5%">#</th>
+        <th>Title</th>
+        <th>Duration</th>
+        <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each testCases}}
+        <tr class="testcase-table__item {{b "table" "row" active=active}}" data-uid="{{uid}}">
+            <td>{{inc @index}}</td>
+            <td>
+                {{name}}
+            </td>
+            <td>{{time.duration}}</td>
+            <td>
+                <span class="label label_status_{{status}}">{{status}}</span>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>
+

@@ -1,26 +1,24 @@
-<div class="pane">
-    {{#each defectTypes}}
-        <h2 class="pane__title {{b "defects-list" "title" status=status}}">
-            {{title}}
-            <span class="defects-list__count">{{defects.length}} defects</span>
-        </h2>
-        <table class="table table_hover">
-            <thead>
-            <tr>
-                <th width="5%">Count</th>
-                <th>Defect</th>
+{{#each defectTypes}}
+    <h2 class="pane__title {{b "defects-list" "title" status=status}}">
+        {{title}}
+        <span class="defects-list__count">{{defects.length}} defects</span>
+    </h2>
+    <table class="{{b "table" hover=true}}">
+        <thead>
+        <tr>
+            <th width="5%" class="{{b "table" "col" right=true}}">Count</th>
+            <th>Defect</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each defects}}
+            <tr class="defects-list__item {{b "table" "row" active=active}}" data-uid="{{uid}}">
+                <td class="{{b "table" "col" right=true}}">
+                    <span class="label label_status_{{../status}}">{{testCases.length}}</span>
+                </td>
+                <td>{{failure.message}}</td>
             </tr>
-            </thead>
-            <tbody>
-            {{#each defects}}
-                <tr>
-                    <td>
-                        <span class="label label_status_{{../status}}">{{testCases.length}}</span>
-                    </td>
-                    <td>{{failure.message}}</td>
-                </tr>
-            {{/each}}
-            </tbody>
-        </table>
-    {{/each}}
-</div>
+        {{/each}}
+        </tbody>
+    </table>
+{{/each}}

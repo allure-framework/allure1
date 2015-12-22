@@ -1,0 +1,40 @@
+@import "../../variables.css";
+
+$pane-gap: 15px;
+
+.pane-set {
+  display: flex;
+  top: $pane-gap;
+  bottom: $pane-gap;
+  left: 0;
+  right: $pane-gap;
+  position: absolute;
+}
+
+.pane {
+  background: #fff;
+  box-shadow: 0 0 0 1px $border-accent-color;
+  width: 50%;
+  overflow-y: scroll;
+  &__title {
+    padding: 0 15px 10px;
+    margin: 25px 0 15px;
+    border-bottom: 1px solid $border-color;
+    font-size: 24px;
+  }
+  &__controls {
+    float: right;
+    padding-right: 0.5em;
+    a {
+      text-decoration: none;
+      color: $text-color;
+      opacity: 0.7;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  &:first-child:last-child {
+    width: 100%;
+  }
+}

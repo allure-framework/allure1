@@ -18,15 +18,15 @@ class AppLayout extends LayoutView {
 
     onRender() {
         this.header.show(new HeaderView());
+        this.nav.show(new SideNav());
         const dataPromise = this.loadData();
         if(dataPromise) {
-            dataPromise.then(() => {
+            return dataPromise.then(() => {
                 this.content.show(this.getContentView());
             });
         } else {
             this.content.show(this.getContentView());
         }
-        this.nav.show(new SideNav());
     }
 
     loadData() {}
