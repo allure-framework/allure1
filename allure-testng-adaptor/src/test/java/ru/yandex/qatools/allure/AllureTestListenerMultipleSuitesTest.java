@@ -9,6 +9,7 @@ import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.bind.JAXB;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -21,15 +22,12 @@ import static ru.yandex.qatools.allure.AllureUtils.validateResults;
  */
 public class AllureTestListenerMultipleSuitesTest extends BasicListenerTest {
 
-    private static final String SUITE1 = "suite1.xml";
-    private static final String SUITE2 = "suite2.xml";
-
     @SuppressWarnings("ConstantConditions")
     @Override
-    public void configure(TestNG testNG) {
+    public void configure(TestNG testNG) throws URISyntaxException {
         List<String> suites = Lists.newArrayList();
-        suites.add(getClass().getClassLoader().getResource(SUITE1).getFile());
-        suites.add(getClass().getClassLoader().getResource(SUITE2).getFile());
+        suites.add(getResourcePath(SUITE1));
+        suites.add(getResourcePath(SUITE2));
         testNG.setTestSuites(suites);
         testNG.setSuiteThreadPoolSize(2);
     }

@@ -5,7 +5,7 @@ import org.testng.TestNG;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
 import javax.xml.bind.JAXB;
-import java.net.URL;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +13,6 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.Assert.assertNotNull;
 import static org.junit.Assume.assumeThat;
 import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteXmlFiles;
 
@@ -23,14 +22,11 @@ import static ru.yandex.qatools.allure.AllureUtils.listTestSuiteXmlFiles;
  */
 public class AllureTestListenerSuiteNameTest extends BasicListenerTest {
 
-    @Override
-    public void configure(TestNG testNG) {
-        List<String> suites = new ArrayList<>();
-        URL resource = getClass().getClassLoader().getResource("suite3.xml");
-        assertNotNull("could not find suite3.xml", resource);
 
-        //noinspection ConstantConditions
-        suites.add(resource.getFile());
+    @Override
+    public void configure(TestNG testNG) throws URISyntaxException {
+        List<String> suites = new ArrayList<>();
+        suites.add(getResourcePath(SUITE3));
         testNG.setTestSuites(suites);
     }
 
