@@ -18,10 +18,6 @@ public interface CommandProperties {
     String getOsName();
 
     @Required
-    @Property("path.separator")
-    String getPathSeparator();
-
-    @Required
     @Property("java.home")
     Path getJavaHome();
 
