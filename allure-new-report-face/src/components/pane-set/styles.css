@@ -19,8 +19,13 @@ $pane-gap: 15px;
   box-shadow: 0 0 0 1px $border-accent-color;
   width: 50%;
   overflow-y: scroll;
-  transition-property: left, width;
-  transition-duration: 0.3s;
+  transition: left 0.3s, width 0.3s;
+  &_enter {
+    animation: pane-in 0.3s;
+  }
+  &_leave {
+    animation: pane-out 0.3s;
+  }
   &__title {
     padding: 0 15px 10px;
     margin: 25px 0 15px;
@@ -41,5 +46,31 @@ $pane-gap: 15px;
   }
   &:first-child:last-child {
     width: 100%;
+  }
+}
+
+@keyframes pane-in {
+  0% {
+    transform: translate(50px, -20px);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes pane-out {
+  0% {
+    transform: translate(0, 0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(50px, -20px);
   }
 }

@@ -17,7 +17,7 @@ class PaneSetView extends LayoutView {
     addPane(name, view) {
         if(!this.getRegion(name)) {
             const pane = $(paneTpl);
-            this.$el.append(pane);
+            this.fadeInPane(pane);
             this.panes[name] = pane;
             this.addRegion(name, {el: pane});
             this.updatePanesPositions();
@@ -28,7 +28,7 @@ class PaneSetView extends LayoutView {
     removePane(name) {
         if(this.getRegion(name)) {
             this.removeRegion(name);
-            this.panes[name].remove();
+            this.fadeOutPane(this.panes[name]);
             delete this.panes[name];
             this.updatePanesPositions();
         }
@@ -50,6 +50,21 @@ class PaneSetView extends LayoutView {
                 width = 50 - leftOffset;
             }
             pane.css({left: left + '%', width: width + '%'});
+        });
+    }
+
+    fadeInPane(pane) {
+        this.$el.append(pane);
+        pane.addClass('pane_enter');
+        pane.one('animationend', () => {
+            pane.removeClass('pane_enter');
+        });
+    }
+
+    fadeOutPane(pane) {
+        pane.addClass('pane_leave');
+        pane.one('animationend', () => {
+            pane.remove();
         });
     }
 }
