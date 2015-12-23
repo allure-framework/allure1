@@ -54,9 +54,8 @@ public class ReportOpen extends ReportCommand {
         if (Desktop.isDesktopSupported()) {
             Desktop.getDesktop().browse(url);
         } else {
-            LOGGER.error("COMMAND_REPORT_CANT_OPEN_BROWSER=Can not open browser because this " +
-                    "capability is not supported on your platform. You can use the link below " +
-                    "to open the report manually.");
+            LOGGER.error("Can not open browser because this capability is not supported on " +
+                    "your platform. You can use the link below to open the report manually.");
         }
     }
 
