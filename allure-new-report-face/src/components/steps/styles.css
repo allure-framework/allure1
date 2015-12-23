@@ -1,0 +1,38 @@
+@import "../../variables.css";
+
+.step {
+  &__arrow {
+    visibility: hidden;
+    display: inline-block;
+    vertical-align: middle;
+    width: 14px;
+    height: 14px;
+    background: url(arrow.svg) center no-repeat;
+    transition: transform 0.1s;
+    .step__title_has-content > & {
+      visibility: visible;
+    }
+  }
+  &__title {
+    padding: 10px $gap-size;
+    cursor: pointer;
+  }
+  &__time {
+    color: $text-muted-color
+  }
+  &__content {
+    margin-left: 20px;
+    display: none;
+  }
+  &:hover {
+    & > .step__title {
+      background: $hover-color;
+    }
+  }
+  &__title_expanded .step__arrow {
+    transform: rotate(90deg);
+  }
+  &__title_expanded + &__content {
+    display: block;
+  }
+}

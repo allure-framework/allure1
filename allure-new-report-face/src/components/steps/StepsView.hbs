@@ -1,0 +1,18 @@
+{{#each steps}}
+    <div class="step">
+        <div class="{{b "step" "title" has-content=hasContent}}">
+            <span class="step__arrow"></span>
+            <span class="step__time">
+                [{{time time.start}}]
+            </span>
+            {{name}}
+        </div>
+        <div class="step__content">
+            {{> StepsView . baseUrl=../baseUrl}}
+        </div>
+    </div>
+{{/each}}
+{{#each attachments}}
+    {{> ../../blocks/attachment-row/attachment-row . baseUrl=../baseUrl}}
+{{/each}}
+

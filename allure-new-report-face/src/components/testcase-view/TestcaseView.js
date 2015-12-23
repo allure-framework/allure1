@@ -2,36 +2,42 @@ import './styles.css';
 import {LayoutView} from 'backbone.marionette';
 import bemRender from '../../util/bemRender';
 import {on, region} from '../../decorators';
-import TestcaseModel from '../../data/testcase/TestcaseModel';
-import DescriptionView from '../description/DescriptionView';
+import allurePlugins from '../../pluginApi';
+import StepsView from '../steps/StepsView';
 import template from './TestcaseView.hbs';
 
 class TestcaseView extends LayoutView {
     template = template;
 
-    @region('.testcase__description')
-    description;
+    @region('.testcase__steps')
+    steps;
 
-    initialize({testcase}) {
-        this.model = new TestcaseModel({uid: testcase, fetched: false});
+    initialize() {
+        this.plugins = [];
     }
 
     onRender() {
-        if(!this.model.get('fetched')) {
-            this.model.fetch().then(() => {
-                this.model.set('fetched', true);
-                this.render();
-            });
-        } else {
-            bemRender(this.$('.testcase__trace-toggle'), {
-                block: 'button',
-                mods: {view: 'pseudo', inverse: true},
-                text: 'Show trace'
-            });
-            if(this.model.has('description')) {
-                this.description.show(new DescriptionView({description: this.model.get('description')}));
-            }
-        }
+        bemRender(this.$('.testcase__trace-toggle'), {
+            block: 'button',
+            mods: {view: 'pseudo', inverse: true},
+            text: 'Show trace'
+        });
+        this.showTestcasePlugins(this.$('.testcase__content_before'), allurePlugins.testcaseBlocks.before);
+        this.steps.show(new StepsView({model: this.model, baseUrl: this.options.baseUrl + '/' + this.model.id}));
+        this.showTestcasePlugins(this.$('.testcase__content_after'), allurePlugins.testcaseBlocks.after);
+    }
+
+    onDestroy() {
+        this.plugins.forEach(plugin => plugin.destroy());
+    }
+
+    showTestcasePlugins(container, plugins) {
+        plugins.forEach((Plugin) => {
+            const plugin = new Plugin({model: this.model});
+            plugin.$el.appendTo(container);
+            this.plugins.push(plugin);
+            plugin.render();
+        });
     }
 
     serializeData() {

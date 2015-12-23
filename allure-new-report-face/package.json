@@ -50,6 +50,7 @@
     "backbone.marionette": "^2.4.3",
     "backbone.syphon": "^0.6.3",
     "bem-components-dist": "^2.3.0",
+    "filesize": "^3.1.5",
     "flexboxgrid": "^6.3.0",
     "font-awesome": "^4.5.0",
     "jquery": "^2.1.4",

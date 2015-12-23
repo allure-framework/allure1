@@ -1,0 +1,12 @@
+@import "../../variables.css";
+
+.attachment-row {
+  padding: 10px $gap-size 10px 40px;
+  &:hover {
+    background: $hover-color;
+  }
+  &__link {
+    float: right;
+    min-width: 70px;
+  }
+}
