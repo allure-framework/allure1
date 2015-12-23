@@ -1,0 +1,8 @@
+.testcase {
+  &__trace {
+    display: none;
+    &_visible {
+      display: block;
+    }
+  }
+}

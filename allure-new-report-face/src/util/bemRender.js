@@ -1,9 +1,10 @@
 /*global modules*/
 modules.require(['BH'], function(BH) {
-    BH.match('input__control', function(ctx, json) {
-        if(json.mods.required) {
-            ctx.attr('required', true);
+    BH.match('button', function(ctx, json) {
+        if(!json.mods.size) {
+            ctx.mod('size', 'm');
         }
+        ctx.mod('theme', 'islands');
     });
 });
 

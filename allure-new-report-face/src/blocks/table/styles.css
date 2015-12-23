@@ -1,6 +1,7 @@
 @import '../../variables.css';
 
 .table {
+  margin-top: 15px;
   width: 100%;
   border-color: $border-color;
   border-style: solid;

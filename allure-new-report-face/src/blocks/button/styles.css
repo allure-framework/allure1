@@ -1,13 +1,13 @@
 @import "../../variables.css";
 
 .button {
-  &_view_danger {
-    background: $brand-red;
-    color: $brand-red;
-    &.button_hovered {
-      $hover-color: color($brand-red blackness(+ 10%));
-      background: $hover-color;
-      color: $hover-color;
+  &_inverse.button_view_pseudo {
+    &:before {
+      box-shadow: 0 0 0 1px $border-color;
     }
+    &.button_hovered:before {
+      box-shadow: 0 0 0 1px #fff;
+    }
+    color: #fff;
   }
 }

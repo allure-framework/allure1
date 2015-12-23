@@ -1,9 +1,16 @@
+import './styles.css';
 import {LayoutView} from 'backbone.marionette';
+import bemRender from '../../util/bemRender';
+import {on, region} from '../../decorators';
 import TestcaseModel from '../../data/testcase/TestcaseModel';
+import DescriptionView from '../description/DescriptionView';
 import template from './TestcaseView.hbs';
 
-export default class TestcaseView extends LayoutView {
+class TestcaseView extends LayoutView {
     template = template;
+
+    @region('.testcase__description')
+    description;
 
     initialize({testcase}) {
         this.model = new TestcaseModel({uid: testcase, fetched: false});
@@ -15,6 +22,15 @@ export default class TestcaseView extends LayoutView {
                 this.model.set('fetched', true);
                 this.render();
             });
+        } else {
+            bemRender(this.$('.testcase__trace-toggle'), {
+                block: 'button',
+                mods: {view: 'pseudo', inverse: true},
+                text: 'Show trace'
+            });
+            if(this.model.has('description')) {
+                this.description.show(new DescriptionView({description: this.model.get('description')}));
+            }
         }
     }
 
@@ -25,4 +41,11 @@ export default class TestcaseView extends LayoutView {
             }
         }, super.serializeData());
     }
+
+    @on('click .testcase__trace-toggle')
+    onStacktraceClick() {
+        this.$('.testcase__trace').toggleClass('testcase__trace_visible');
+    }
 }
+
+export default TestcaseView;

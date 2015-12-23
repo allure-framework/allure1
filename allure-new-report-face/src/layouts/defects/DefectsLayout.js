@@ -19,7 +19,12 @@ export default class DefectsLayoutView extends AppLayout {
     loadData() {
         return this.defects.fetch().then(() => {
             this.allDefects = chain(this.defects.toJSON())
-                .pluck('defects')
+                .map(type => {
+                    type.defects.forEach(defect => {
+                        defect.status = type.status;
+                    });
+                    return type.defects;
+                })
                 .flatten()
                 .value();
         });

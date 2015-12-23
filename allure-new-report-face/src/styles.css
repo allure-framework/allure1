@@ -1,6 +1,8 @@
 @import "../node_modules/normalize-css/normalize.css";
 @import "../node_modules/bem-components-dist/desktop/bem-components.css";
 @import "./grid.css";
+@import "./blocks/alert/styles.css";
+@import "./blocks/button/styles.css";
 @import "./blocks/label/styles.css";
 @import "./blocks/table/styles.css";
 @import "./variables.css";

@@ -1,0 +1,8 @@
+@import "../../variables.css";
+
+.description {
+  padding: $gap-size;
+  &__title {
+    margin: 0 0 $gap-size;
+  }
+}

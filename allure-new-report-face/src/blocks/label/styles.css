@@ -7,12 +7,12 @@
   font-size: 75%;
   border-radius: 3px;
   &_status_PASSED {
-    background: $passed-color;
+    background: $color-passed;
   }
   &_status_FAILED {
-    background: $failed-color;
+    background: $color-failed;
   }
   &_status_BROKEN {
-    background: $broken-color;
+    background: $color-broken;
   }
 }
