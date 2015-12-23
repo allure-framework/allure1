@@ -53,7 +53,7 @@ public class ReportGenerate extends ReportCommand {
     /**
      * Throws an exception if at least one results directory is missing.
      */
-    protected void validateResultsDirectories() throws AllureCommandException {
+    protected void validateResultsDirectories() {
         for (String result : results) {
             if (Files.notExists(Paths.get(result))) {
                 throw new AllureCommandException(String.format("Report directory <%s> not found.", result));
@@ -64,7 +64,7 @@ public class ReportGenerate extends ReportCommand {
     /**
      * Create a {@link CommandLine} to run bundle with needed arguments.
      */
-    private CommandLine createCommandLine() throws AllureCommandException, IOException {
+    private CommandLine createCommandLine() throws IOException {
         return new CommandLine(getJavaExecutablePath())
                 .addArguments(getBundleJavaOptsArgument())
                 .addArgument(getLoggerConfigurationArgument())
@@ -111,7 +111,7 @@ public class ReportGenerate extends ReportCommand {
     /**
      * Returns the bundle jar classpath element.
      */
-    protected String getBundleJarPath() throws AllureCommandException, MalformedURLException {
+    protected String getBundleJarPath() throws MalformedURLException {
         Path path = PROPERTIES.getAllureHome().resolve("app/allure-bundle.jar").toAbsolutePath();
         if (Files.notExists(path)) {
             throw new AllureCommandException(String.format("Bundle not found by path <%s>", path));
