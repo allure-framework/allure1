@@ -1,11 +1,16 @@
 import './styles.css';
 import {LayoutView} from 'backbone.marionette';
-import {on} from '../../decorators';
+import {on, onModel} from '../../decorators';
 import router from '../../router';
 import template from './DefectsListView.hbs';
 
 class DefectsListView extends LayoutView {
     template = template;
+
+    initialize({state}) {
+        this.state = state;
+        this.listenTo(this.state, 'change:defect', () => this.render());
+    }
 
     @on('click .defects-list__item')
     onDefectClick(e) {
@@ -14,7 +19,7 @@ class DefectsListView extends LayoutView {
     }
 
     serializeData() {
-        const currentDefect = this.options.params.defect;
+        const currentDefect = this.state.get('defect');
         return {
             defectTypes: this.collection.toJSON().map(type =>
                 Object.assign({}, type, {

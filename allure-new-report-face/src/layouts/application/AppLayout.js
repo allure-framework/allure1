@@ -21,8 +21,9 @@ class AppLayout extends LayoutView {
         this.nav.show(new SideNav());
         const dataPromise = this.loadData();
         if(dataPromise) {
-            return dataPromise.then(() => {
+            dataPromise.then(() => {
                 this.content.show(this.getContentView());
+                this.trigger('load');
             });
         } else {
             this.content.show(this.getContentView());
@@ -34,6 +35,8 @@ class AppLayout extends LayoutView {
     getContentView() {
         throw new Error('attempt to call abstract method');
     }
+
+    onRouteUpdate() {}
 }
 
 export default AppLayout;

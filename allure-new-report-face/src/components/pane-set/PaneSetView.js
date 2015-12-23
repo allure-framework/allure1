@@ -1,4 +1,5 @@
 import './styles.css';
+import {each} from 'underscore';
 import {LayoutView} from 'backbone.marionette';
 import $ from 'jquery';
 import {className} from '../../decorators';
@@ -7,30 +8,39 @@ const paneTpl = `<div class="pane"></div>`;
 
 @className('pane-set')
 class PaneSetView extends LayoutView {
-    panes = [];
+    panes = {};
 
     template() {
         return '';
     }
 
-    pushPane(view) {
-        const pane = $(paneTpl);
-        this.$el.append(pane);
-        this.addRegion(this.panes.length, {el: pane}).show(view);
-        this.panes.push(pane);
-        this.updatePanesPositions();
+    addPane(name, view) {
+        if(!this.getRegion(name)) {
+            const pane = $(paneTpl);
+            this.$el.append(pane);
+            this.panes[name] = pane;
+            this.addRegion(name, {el: pane});
+            this.updatePanesPositions();
+        }
+        this.getRegion(name).show(view);
     }
 
-    popPane() {
-        this.removeRegion(this.panes.length - 1);
-        this.panes.pop().remove();
-        this.updatePanesPositions();
+    removePane(name) {
+        if(this.getRegion(name)) {
+            this.removeRegion(name);
+            this.panes[name].remove();
+            delete this.panes[name];
+            this.updatePanesPositions();
+        }
     }
 
     updatePanesPositions() {
-        const last = this.panes.length - 1;
-        this.panes.forEach((pane, index) => {
-            var width, left;
+        const paneNames = Object.keys(this.panes);
+        const last = paneNames.length - 1;
+        paneNames.forEach((paneName, index) => {
+            const pane = this.panes[paneName];
+            var width;
+            var left;
             if(index == last) {
                 width = index === 0 ? 100 : 50;
                 left = 100 - width;

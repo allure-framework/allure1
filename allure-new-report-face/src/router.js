@@ -10,6 +10,11 @@ class AppRouter extends Router {
                 '*default': 'notFound'
             }
         });
+        this.on('route', this.onRouteChange, this);
+    }
+
+    onRouteChange() {
+        this.lastUrl = this.getCurrentUrl();
     }
 
     getCurrentUrl() {

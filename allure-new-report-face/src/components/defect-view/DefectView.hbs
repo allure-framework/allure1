@@ -14,7 +14,7 @@
     <tr>
         <th width="5%">#</th>
         <th>Title</th>
-        <th>Duration</th>
+        <th class="{{b "table" "col" right=true}}">Duration</th>
         <th>Status</th>
     </tr>
     </thead>
@@ -25,7 +25,9 @@
             <td>
                 {{name}}
             </td>
-            <td>{{time.duration}}</td>
+            <td class="{{b "table" "col" right=true}}">
+                {{time.duration}}
+            </td>
             <td>
                 <span class="label label_status_{{status}}">{{status}}</span>
             </td>

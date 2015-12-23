@@ -9,10 +9,11 @@ import TestcaseView from '../../components/testcase-view/TestcaseView';
 
 export default class DefectsLayoutView extends AppLayout {
 
-    initialize({routeParams}) {
-        const [defect, testcase, attachment] = routeParams;
-        this.params = {defect, testcase, attachment};
+    initialize() {
+        this.state = new Model();
+        this.listenTo(this.state, 'change', this.onStateChange, this);
         this.defects = new DefectsCollection();
+        this.on('load', () => this.onRouteUpdate(...this.options.routeParams));
     }
 
     loadData() {
@@ -28,21 +29,39 @@ export default class DefectsLayoutView extends AppLayout {
         return new PaneSetView();
     }
 
-    onRender() {
-        super.onRender().then(() => {
-            const params = this.params;
-            const paneView = this.content.currentView;
-            paneView.pushPane(new DefectsListView({collection: this.defects, params}));
-            if(params.defect) {
-                const model = new Model(findWhere(this.allDefects, {uid: params.defect}));
-                paneView.pushPane(new DefectView({model, params}));
+    onStateChange() {
+        const state = this.state;
+        const changed = this.state.changed;
+        const paneView = this.content.currentView;
+        if(!paneView.getRegion('defects')) {
+            paneView.addPane('defects', new DefectsListView({
+                collection: this.defects,
+                state
+            }));
+        }
+        if(changed.hasOwnProperty('defect')) {
+            if(!changed.defect) {
+                paneView.removePane('defect');
+            } else {
+                const model = new Model(findWhere(this.allDefects, {uid: changed.defect}));
+                paneView.addPane('defect', new DefectView({model, state}));
             }
-            if(params.testcase) {
-                paneView.pushPane(new TestcaseView({
-                    baseUrl: 'defects/' + params.defect,
-                    testcase: params.testcase
+        }
+        if(changed.hasOwnProperty('testcase')) {
+            if(!changed.testcase) {
+                paneView.removePane('testcase');
+            } else {
+                paneView.addPane('testcase', new TestcaseView({
+                    baseUrl: 'defects/' + this.state.get('defect'),
+                    testcase: changed.testcase,
+                    state
                 }));
             }
-        });
+        }
+    }
+
+
+    onRouteUpdate(defect, testcase, attachment) {
+        this.state.set({defect, testcase, attachment});
     }
 }

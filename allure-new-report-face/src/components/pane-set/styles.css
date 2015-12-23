@@ -19,6 +19,8 @@ $pane-gap: 15px;
   box-shadow: 0 0 0 1px $border-accent-color;
   width: 50%;
   overflow-y: scroll;
+  transition-property: left, width;
+  transition-duration: 0.3s;
   &__title {
     padding: 0 15px 10px;
     margin: 25px 0 15px;
