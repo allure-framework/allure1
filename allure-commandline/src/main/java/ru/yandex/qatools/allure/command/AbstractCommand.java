@@ -51,7 +51,7 @@ public abstract class AbstractCommand implements AllureCommand {
             initTempDirectory();
             runUnsafe();
         } catch (Exception e) {
-            LOGGER.error("Command aborted due to exception {0}.", e);
+            LOGGER.error("Command aborted due to exception {}.", e);
             setExitCode(GENERIC_ERROR);
         } finally {
             removeTempDirectory();
