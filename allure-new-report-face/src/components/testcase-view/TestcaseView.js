@@ -12,8 +12,10 @@ class TestcaseView extends LayoutView {
     @region('.testcase__steps')
     steps;
 
-    initialize() {
+    initialize({state}) {
+        this.state = state;
         this.plugins = [];
+        this.listenTo(this.state, 'change:attachment', this.highlightSelectedAttachment, this);
     }
 
     onRender() {
@@ -23,12 +25,22 @@ class TestcaseView extends LayoutView {
             text: 'Show trace'
         });
         this.showTestcasePlugins(this.$('.testcase__content_before'), allurePlugins.testcaseBlocks.before);
-        this.steps.show(new StepsView({model: this.model, baseUrl: this.options.baseUrl + '/' + this.model.id}));
+        this.steps.show(new StepsView({
+            baseUrl: this.options.baseUrl + '/' + this.model.id,
+            model: this.model
+        }));
+        this.highlightSelectedAttachment();
         this.showTestcasePlugins(this.$('.testcase__content_after'), allurePlugins.testcaseBlocks.after);
     }
 
     onDestroy() {
         this.plugins.forEach(plugin => plugin.destroy());
+    }
+
+    highlightSelectedAttachment() {
+        const currentAttachment = this.state.get('attachment');
+        this.$('.attachment-row').removeClass('attachment-row_selected');
+        this.$(`.attachment-row[data-uid="${currentAttachment}"]`).addClass('attachment-row_selected');
     }
 
     showTestcasePlugins(container, plugins) {
