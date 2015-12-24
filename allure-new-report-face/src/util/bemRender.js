@@ -1,10 +1,12 @@
 /*global modules*/
 modules.require(['BH'], function(BH) {
-    BH.match('button', function(ctx, json) {
-        if(!json.mods.size) {
-            ctx.mod('size', 'm');
+    BH.beforeEach(function(ctx, json) {
+        if(json.block && !json.elem) {
+            if(!json.mods.size) {
+                ctx.mod('size', 'm');
+            }
+            ctx.mod('theme', 'islands');
         }
-        ctx.mod('theme', 'islands');
     });
 });
 

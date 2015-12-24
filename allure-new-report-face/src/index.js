@@ -1,5 +1,3 @@
-import './util/syphon';
-import './util/behaviors';
 import App from './app';
 import $ from 'jquery';
 import Backbone from 'backbone';

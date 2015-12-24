@@ -10,7 +10,7 @@ export default class DefectsCollection extends Collection {
     updateDefects() {
         this.each(type => {
             type.get('defects').forEach(defect => {
-                defect.status = type.status;
+                defect.status = type.get('status');
             });
         });
         this.allDefects = [].concat(...this.pluck('defects'));

@@ -42,6 +42,10 @@
       }
     }
   }
+  &__section {
+    margin: $gap-size 0;
+    padding: 0 $gap-size;
+  }
   &:first-child:last-child {
     width: 100%;
   }
