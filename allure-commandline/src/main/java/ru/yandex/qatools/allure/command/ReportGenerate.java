@@ -1,21 +1,26 @@
 package ru.yandex.qatools.allure.command;
 
-import io.airlift.command.Arguments;
-import io.airlift.command.Command;
+import io.airlift.airline.Arguments;
+import io.airlift.airline.Command;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
-import org.slf4j.cal10n.LocLogger;
+import org.apache.commons.exec.util.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-
-import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_BUNDLE_MISSING;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_REPORT_GENERATED;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_RESULT_DIRECTORY_MISSING;
+import java.util.jar.Attributes;
+import java.util.jar.JarEntry;
+import java.util.jar.JarOutputStream;
+import java.util.jar.Manifest;
 
 /**
  * @author Artem Eroshenko <eroshenkoam@yandex-team.ru>
@@ -23,13 +28,11 @@ import static ru.yandex.qatools.allure.logging.Message.COMMAND_REPORT_GENERATE_R
 @Command(name = "generate", description = "Generate report")
 public class ReportGenerate extends ReportCommand {
 
-    private static final LocLogger LOGGER = getLogger(ReportGenerate.class);
-
-    public static final String CLASS_PATH = "-cp";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportGenerate.class);
 
     public static final String MAIN = "ru.yandex.qatools.allure.AllureMain";
 
-    public static final String WIN = "win";
+    public static final String JAR_FILES = "*.jar";
 
     @Arguments(title = "Results directories", required = true,
             description = "A list of input directories to be processed")
@@ -43,70 +46,95 @@ public class ReportGenerate extends ReportCommand {
         validateResultsDirectories();
         CommandLine commandLine = createCommandLine();
         new DefaultExecutor().execute(commandLine);
-        LOGGER.info(COMMAND_REPORT_GENERATE_REPORT_GENERATED, getReportDirectoryPath());
+        LOGGER.info("Report successfully generated to the directory <{}>. " +
+                "Use `allure report open` command to show the report.", getReportDirectoryPath());
     }
 
     /**
      * Throws an exception if at least one results directory is missing.
      */
-    protected void validateResultsDirectories() throws AllureCommandException {
+    protected void validateResultsDirectories() {
         for (String result : results) {
             if (Files.notExists(Paths.get(result))) {
-                throw new AllureCommandException(COMMAND_REPORT_GENERATE_RESULT_DIRECTORY_MISSING, result);
+                throw new AllureCommandException(String.format("Report directory <%s> not found.", result));
             }
         }
     }
 
     /**
-     * Format the classpath string from given classpath elements.
-     */
-    protected String formatClassPath(String first, String... others) {
-        String result = first;
-        for (String other : others) {
-            result += PROPERTIES.getPathSeparator() + other;
-        }
-        return result;
-    }
-
-    /**
      * Create a {@link CommandLine} to run bundle with needed arguments.
      */
-    private CommandLine createCommandLine() throws AllureCommandException {
-        return new CommandLine(getJavaExecutablePath().toString())
+    private CommandLine createCommandLine() throws IOException {
+        return new CommandLine(getJavaExecutablePath())
                 .addArguments(getBundleJavaOptsArgument())
                 .addArgument(getLoggerConfigurationArgument())
-                .addArgument(CLASS_PATH)
-                .addArgument(formatClassPath(getBundleJarPath(), getConfigPath(), getPluginsPath()), false)
-                .addArgument(MAIN)
+                .addArgument("-jar")
+                .addArgument(getExecutableJar())
                 .addArguments(results.toArray(new String[results.size()]), false)
                 .addArgument(getReportDirectoryPath().toString(), false);
     }
 
     /**
+     * Returns the classpath for executable jar.
+     */
+    protected String getClasspath() throws IOException {
+        List<String> classpath = new ArrayList<>();
+        classpath.add(getBundleJarPath());
+        classpath.addAll(getPluginsPath());
+        return StringUtils.toString(classpath.toArray(new String[classpath.size()]), " ");
+    }
+
+    /**
+     * Create an executable jar to generate the report. Created jar contains only
+     * allure configuration file.
+     */
+    protected String getExecutableJar() throws IOException {
+        Manifest manifest = new Manifest();
+        manifest.getMainAttributes().put(Attributes.Name.MANIFEST_VERSION, "1.0");
+        manifest.getMainAttributes().put(Attributes.Name.MAIN_CLASS, MAIN);
+        manifest.getMainAttributes().put(Attributes.Name.CLASS_PATH, getClasspath());
+
+        Path jar = createTempDirectory("exec").resolve("generate.jar");
+        try (JarOutputStream output = new JarOutputStream(Files.newOutputStream(jar), manifest)) {
+            output.putNextEntry(new JarEntry("allure.properties"));
+            Path allureConfig = PROPERTIES.getAllureConfig();
+            if (Files.exists(allureConfig)) {
+                byte[] bytes = Files.readAllBytes(allureConfig);
+                output.write(bytes);
+            }
+            output.closeEntry();
+        }
+
+        return jar.toAbsolutePath().toString();
+    }
+
+    /**
      * Returns the bundle jar classpath element.
      */
-    protected String getBundleJarPath() throws AllureCommandException {
+    protected String getBundleJarPath() throws MalformedURLException {
         Path path = PROPERTIES.getAllureHome().resolve("app/allure-bundle.jar").toAbsolutePath();
-
         if (Files.notExists(path)) {
-            throw new AllureCommandException(COMMAND_REPORT_GENERATE_BUNDLE_MISSING, path);
+            throw new AllureCommandException(String.format("Bundle not found by path <%s>", path));
         }
-        return path.toString();
+        return path.toUri().toURL().toString();
     }
 
     /**
-     * Returns the config directory classpath element.
+     * Returns the plugins classpath elements.
      */
-    protected String getConfigPath() {
-        return PROPERTIES.getAllureConfig().toAbsolutePath().getParent().toString();
-    }
+    protected List<String> getPluginsPath() throws IOException {
+        List<String> result = new ArrayList<>();
+        Path pluginsDirectory = PROPERTIES.getAllureHome().resolve("plugins").toAbsolutePath();
+        if (Files.notExists(pluginsDirectory)) {
+            return Collections.emptyList();
+        }
 
-    /**
-     * Returns the plugins directory classpath element.
-     */
-    protected String getPluginsPath() {
-        Path path = PROPERTIES.getAllureHome().resolve("plugins").toAbsolutePath();
-        return String.format("%s/*", path);
+        try (DirectoryStream<Path> plugins = Files.newDirectoryStream(pluginsDirectory, JAR_FILES)) {
+            for (Path plugin : plugins) {
+                result.add(plugin.toUri().toURL().toString());
+            }
+        }
+        return result;
     }
 
     /**
@@ -127,15 +155,15 @@ public class ReportGenerate extends ReportCommand {
     /**
      * Returns the path to java executable.
      */
-    protected Path getJavaExecutablePath() {
+    protected String getJavaExecutablePath() {
         String executableName = isWindows() ? "bin/java.exe" : "bin/java";
-        return PROPERTIES.getJavaHome().resolve(executableName);
+        return PROPERTIES.getJavaHome().resolve(executableName).toAbsolutePath().toString();
     }
 
     /**
      * Returns true if operation system is windows, false otherwise.
      */
     protected boolean isWindows() {
-        return PROPERTIES.getOsName().contains(WIN);
+        return PROPERTIES.getOsName().contains("win");
     }
 }

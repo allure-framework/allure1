@@ -28,8 +28,15 @@
                 <configuration>
                     <executable>${allure.home}/bin/allure</executable>
                     <arguments>
-                        <argument>help</argument>
+                        <argument>generate</argument>
+                        <argument>results</argument>
+                        <argument>--output</argument>
+                        <argument>report</argument>
                     </arguments>
+                    <environmentVariables>
+                        <JAVA_HOME/>
+                        <JRE_HOME/>
+                    </environmentVariables>
                 </configuration>
             </plugin>
         </plugins>

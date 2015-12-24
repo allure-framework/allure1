@@ -1,10 +1,8 @@
 package ru.yandex.qatools.allure.command;
 
-import io.airlift.command.Command;
-import org.slf4j.cal10n.LocLogger;
-import ru.yandex.qatools.allure.logging.Message;
-
-import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
+import io.airlift.airline.Command;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Artem Eroshenko <eroshenkoam@yandex-team.ru>
@@ -12,7 +10,7 @@ import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
 @Command(name = "version", description = "Display version")
 public class AllureVersion extends AbstractCommand {
 
-    private static final LocLogger LOGGER = getLogger(ReportOpen.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReportOpen.class);
 
     /**
      * {@inheritDoc}
@@ -20,7 +18,6 @@ public class AllureVersion extends AbstractCommand {
     @Override
     protected void runUnsafe() {
         String toolVersion = getClass().getPackage().getImplementationVersion();
-        LOGGER.info(Message.COMMAND_VERSION_INFO, toolVersion);
+        LOGGER.info(toolVersion);
     }
-
 }

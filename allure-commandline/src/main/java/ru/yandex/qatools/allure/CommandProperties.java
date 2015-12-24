@@ -18,20 +18,12 @@ public interface CommandProperties {
     String getOsName();
 
     @Required
-    @Property("path.separator")
-    String getPathSeparator();
-
-    @Required
     @Property("java.home")
     Path getJavaHome();
 
     @Required
     @Property("allure.home")
     Path getAllureHome();
-
-    @DefaultValue("en")
-    @Property("allure.locale")
-    String getAllureLocale();
 
     @DefaultValue("allure.properties")
     @Property("allure.config")

@@ -1,6 +1,6 @@
 package ru.yandex.qatools.allure.command;
 
-import io.airlift.command.Help;
+import io.airlift.airline.Help;
 
 /**
  * @author Artem Eroshenko <eroshenkoam@yandex-team.ru>

@@ -1,30 +1,32 @@
 package ru.yandex.qatools.allure.command;
 
-import io.airlift.command.Option;
-import io.airlift.command.OptionType;
+import io.airlift.airline.Option;
+import io.airlift.airline.OptionType;
 import org.apache.log4j.Level;
 import org.apache.log4j.LogManager;
-import org.slf4j.cal10n.LocLogger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ru.qatools.properties.PropertyLoader;
 import ru.yandex.qatools.allure.CommandProperties;
+import ru.yandex.qatools.allure.utils.DeleteVisitor;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import static ru.yandex.qatools.allure.command.ExitCode.GENERIC_ERROR;
 import static ru.yandex.qatools.allure.command.ExitCode.NO_ERROR;
-import static ru.yandex.qatools.allure.logging.LogManager.getLogger;
-import static ru.yandex.qatools.allure.logging.Message.COMMANDLINE_ERROR;
-import static ru.yandex.qatools.allure.logging.Message.COMMAND_ALLURE_COMMAND_ABORTED;
 
 /**
  * @author Artem Eroshenko <eroshenkoam@yandex-team.ru>
  */
 public abstract class AbstractCommand implements AllureCommand {
 
-    private static final LocLogger LOGGER = getLogger(AbstractCommand.class);
-
-    protected static final CommandProperties PROPERTIES =
-            PropertyLoader.newInstance().populate(CommandProperties.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractCommand.class);
 
     private ExitCode exitCode = NO_ERROR;
+
+    private Path tempDirectory;
 
     @Option(name = {"-v", "--verbose"}, type = OptionType.GLOBAL,
             description = "Switch on the verbose mode.")
@@ -33,6 +35,9 @@ public abstract class AbstractCommand implements AllureCommand {
     @Option(name = {"-q", "--quiet"}, type = OptionType.GLOBAL,
             description = "Switch on the quiet mode.")
     protected boolean quiet = false;
+
+    protected static final CommandProperties PROPERTIES =
+            PropertyLoader.newInstance().populate(CommandProperties.class);
 
     protected abstract void runUnsafe() throws Exception; //NOSONAR
 
@@ -43,13 +48,49 @@ public abstract class AbstractCommand implements AllureCommand {
     public void run() {
         setLogLevel();
         try {
+            initTempDirectory();
             runUnsafe();
-        } catch (AllureCommandException e) { //NOSONAR
-            LOGGER.error(e.getLogMessage(), e.getLogArgs());
-            setExitCode(GENERIC_ERROR);
         } catch (Exception e) {
-            LOGGER.error(COMMAND_ALLURE_COMMAND_ABORTED, e);
+            LOGGER.error("Command aborted due to exception {}.", e);
             setExitCode(GENERIC_ERROR);
+        } finally {
+            removeTempDirectory();
+        }
+    }
+
+    /**
+     * Creates an temporary directory. The created directory will be deleted when
+     * command will ended.
+     */
+    protected Path createTempDirectory(String prefix) {
+        try {
+            return Files.createTempDirectory(tempDirectory, prefix);
+        } catch (IOException e) {
+            throw new AllureCommandException(e);
+        }
+    }
+
+    /**
+     * Init {@link #tempDirectory}.
+     */
+    private void initTempDirectory() {
+        try {
+            tempDirectory = Files.createTempDirectory("allure-commandline");
+        } catch (IOException e) {
+            throw new AllureCommandException(e);
+        }
+    }
+
+    /**
+     * Safe remove {@link #tempDirectory}.
+     */
+    private void removeTempDirectory() {
+        try {
+            if (tempDirectory != null && Files.exists(tempDirectory)) {
+                Files.walkFileTree(tempDirectory, new DeleteVisitor());
+            }
+        } catch (IOException e) {
+            LOGGER.debug("Could not clean temp directory", e);
         }
     }
 
@@ -61,14 +102,25 @@ public abstract class AbstractCommand implements AllureCommand {
         return exitCode;
     }
 
+    /**
+     * Set the command exit code.
+     *
+     * @see ExitCode
+     */
     protected void setExitCode(ExitCode exitCode) {
         this.exitCode = exitCode;
     }
 
+    /**
+     * Returns true if silent mode is enabled, false otherwise.
+     */
     public boolean isQuiet() {
         return quiet;
     }
 
+    /**
+     * Returns true if verbose mode is enabled, false otherwise.
+     */
     public boolean isVerbose() {
         return verbose;
     }
