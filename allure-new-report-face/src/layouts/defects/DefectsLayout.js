@@ -2,12 +2,10 @@ import {chain, findWhere} from 'underscore';
 import {Model} from 'backbone';
 import AppLayout from '../application/AppLayout';
 import DefectsCollection from '../../data/defects/DefectsCollection';
-import TestcaseModel from '../../data/testcase/TestcaseModel';
 import PaneSetView from '../../components/pane-set/PaneSetView';
 import DefectsListView from '../../components/defects-list/DefectsListView';
 import DefectView from '../../components/defect-view/DefectView';
-import TestcaseView from '../../components/testcase-view/TestcaseView';
-import AttachmentView from '../../components/attachment/AttachmentView';
+import TestcasePanes from '../../util/TestcasePanes';
 
 export default class DefectsLayoutView extends AppLayout {
 
@@ -15,8 +13,7 @@ export default class DefectsLayoutView extends AppLayout {
         this.state = new Model();
         this.listenTo(this.state, 'change', this.onStateChange, this);
         this.defects = new DefectsCollection();
-        this.testcase = new TestcaseModel();
-        this.on('load', () => this.onRouteUpdate(...this.options.routeParams));
+        this.on('load', this.onViewReady, this);
     }
 
     loadData() {
@@ -37,6 +34,11 @@ export default class DefectsLayoutView extends AppLayout {
         return new PaneSetView();
     }
 
+    onViewReady() {
+        this.testcase = new TestcasePanes(this.state, this.content.currentView);
+        this.onRouteUpdate(...this.options.routeParams);
+    }
+
     onStateChange() {
         const state = this.state;
         const changed = Object.assign({}, this.state.changed);
@@ -55,49 +57,8 @@ export default class DefectsLayoutView extends AppLayout {
                 paneView.addPane('defect', new DefectView({model, state}));
             }
         }
-        if(changed.hasOwnProperty('testcase')) {
-            paneView.removePane('attachment');
-            if(!changed.testcase) {
-                paneView.removePane('testcase');
-            } else {
-                this.testcase.set({uid: changed.testcase});
-                this.testcase.fetch().then(() => this.renderTestcasePanes(changed));
-            }
-        } else if(changed.hasOwnProperty('attachment')) {
-            if(!changed.attachment) {
-                paneView.removePane('attachment');
-            } else {
-                paneView.addPane('attachment', new AttachmentView({
-                    baseUrl: 'defects/' + this.state.get('defect') + '/' + this.state.get('testcase'),
-                    attachment: this.testcase.getAttachment(changed.attachment),
-                    state
-                }));
-            }
-        }
+        this.testcase.updateState('defects/' + this.state.get('defect'), changed);
     }
-
-    renderTestcasePanes(changed) {
-        const paneView = this.content.currentView;
-        const state = this.state;
-        paneView.addPane('testcase', new TestcaseView({
-            baseUrl: 'defects/' + this.state.get('defect'),
-            model: this.testcase,
-            state
-        }));
-        if(changed.hasOwnProperty('attachment')) {
-            if(!changed.attachment) {
-                paneView.removePane('attachment');
-            } else {
-                paneView.addPane('attachment', new AttachmentView({
-                    baseUrl: 'defects/' + this.state.get('defect') + '/' + this.state.get('testcase'),
-                    attachment: this.testcase.getAttachment(changed.attachment),
-                    state
-                }));
-            }
-        }
-
-    }
-
 
     onRouteUpdate(defect, testcase, attachment) {
         this.state.set({defect, testcase, attachment});
