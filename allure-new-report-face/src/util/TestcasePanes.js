@@ -9,34 +9,26 @@ export default class TestcasePanes {
         this.testcase = new TestcaseModel();
     }
 
-    updateState(baseUrl, changed) {
-        if(changed.hasOwnProperty('testcase')) {
-            if(!changed.testcase) {
-                this.paneView.removePane('testcase');
-                this.testcase.clear();
-            } else if(this.testcase.id !== changed.testcase) {
-                this.testcase.set({uid: changed.testcase});
-                this.testcase.fetch().then(() => this.updateState(baseUrl, changed));
+    updatePanes(baseUrl, changed) {
+        const testcaseUid = this.state.get('testcase');
+        if(this.testcase.id !== testcaseUid) {
+            this.testcase.clear();
+            if(testcaseUid) {
+                this.testcase.set({uid: testcaseUid});
+                this.testcase.fetch().then(() => this.updatePanes(baseUrl, changed));
                 return;
-            } else {
-                this.paneView.addPane('testcase', new TestcaseView({
-                    baseUrl,
-                    state: this.state,
-                    model: this.testcase
-                }));
             }
         }
-        if(changed.hasOwnProperty('attachment')) {
-            if(!changed.attachment) {
-                this.paneView.removePane('attachment');
-            } else {
-                this.paneView.addPane('attachment', new AttachmentView({
-                    baseUrl: baseUrl + '/' + this.state.get('testcase'),
-                    attachment: this.testcase.getAttachment(changed.attachment),
-                    state: this.state
-                }));
-            }
-        }
+        this.paneView.updatePane('testcase', changed, () => new TestcaseView({
+            baseUrl,
+            state: this.state,
+            model: this.testcase
+        }));
+        this.paneView.updatePane('attachment', changed, () => new AttachmentView({
+            baseUrl: baseUrl + '/' + this.state.get('testcase'),
+            attachment: this.testcase.getAttachment(changed.attachment),
+            state: this.state
+        }));
     }
 
 }

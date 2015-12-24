@@ -14,6 +14,16 @@ class PaneSetView extends LayoutView {
         return '';
     }
 
+    updatePane(name, changed, factory) {
+        if(changed.hasOwnProperty(name)) {
+            if(changed[name]) {
+                this.addPane(name, factory());
+            } else {
+                this.removePane(name);
+            }
+        }
+    }
+
     addPane(name, view) {
         if(!this.getRegion(name)) {
             const pane = $(paneTpl);

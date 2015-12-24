@@ -29,6 +29,15 @@ export default class DefectsLayoutView extends AppLayout {
         this.onRouteUpdate(...this.options.routeParams);
     }
 
+    buildDefectView(uid) {
+        const defect = findWhere(this.defects.allDefects, {uid});
+        if(!defect) {
+            throw new Error(`Unable to find defect ${uid}`);
+        }
+        const model = new Model(defect);
+        return new DefectView({model, state: this.state});
+    }
+
     onStateChange() {
         const state = this.state;
         const changed = Object.assign({}, this.state.changed);
@@ -39,19 +48,8 @@ export default class DefectsLayoutView extends AppLayout {
                 state
             }));
         }
-        if(changed.hasOwnProperty('defect')) {
-            if(!changed.defect) {
-                paneView.removePane('defect');
-            } else {
-                const defect = findWhere(this.defects.allDefects, {uid: changed.defect});
-                if(!defect) {
-                    throw new Error(`Unable to find defect ${changed.defect}`);
-                }
-                const model = new Model(defect);
-                paneView.addPane('defect', new DefectView({model, state}));
-            }
-        }
-        this.testcase.updateState('defects/' + this.state.get('defect'), changed);
+        paneView.updatePane('defect', changed, () => this.buildDefectView(changed.defect));
+        this.testcase.updatePanes('defects/' + this.state.get('defect'), changed);
     }
 
     onRouteUpdate(defect, testcase, attachment) {
