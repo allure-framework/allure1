@@ -1,4 +1,4 @@
-import {chain, findWhere} from 'underscore';
+import {findWhere} from 'underscore';
 import {Model} from 'backbone';
 import AppLayout from '../application/AppLayout';
 import DefectsCollection from '../../data/defects/DefectsCollection';
@@ -17,17 +17,7 @@ export default class DefectsLayoutView extends AppLayout {
     }
 
     loadData() {
-        return this.defects.fetch().then(() => {
-            this.allDefects = chain(this.defects.toJSON())
-                .map(type => {
-                    type.defects.forEach(defect => {
-                        defect.status = type.status;
-                    });
-                    return type.defects;
-                })
-                .flatten()
-                .value();
-        });
+        return this.defects.fetch();
     }
 
     getContentView() {
@@ -53,7 +43,11 @@ export default class DefectsLayoutView extends AppLayout {
             if(!changed.defect) {
                 paneView.removePane('defect');
             } else {
-                const model = new Model(findWhere(this.allDefects, {uid: changed.defect}));
+                const defect = findWhere(this.defects.allDefects, {uid: changed.defect});
+                if(!defect) {
+                    throw new Error(`Unable to find defect ${changed.defect}`);
+                }
+                const model = new Model(defect);
                 paneView.addPane('defect', new DefectView({model, state}));
             }
         }
