@@ -1,7 +1,11 @@
 @import "../../variables.css";
 
 .step {
+  line-height: 1.5;
   &__arrow {
+    left: 20px;
+    top: 10px;
+    position: absolute;
     visibility: hidden;
     display: inline-block;
     vertical-align: middle;
@@ -14,14 +18,15 @@
     }
   }
   &__title {
-    padding: 10px $gap-size;
+    position: relative;
+    padding: 7px $gap-size 7px 40px;
     cursor: pointer;
   }
   &__time {
     color: $text-muted-color
   }
   &__content {
-    margin-left: 20px;
+    margin-left: 30px;
     display: none;
   }
   &:hover {
