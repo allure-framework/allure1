@@ -1,3 +1,5 @@
+import './styles.css';
+import highlight from 'highlight.js';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
 import attachmentType from '../../util/attachmentType';
@@ -15,6 +17,10 @@ export default class AttachmentView extends ItemView {
     onRender() {
         if(this.needsFetch() && !this.content) {
             this.loadContent().then(this.render);
+        } else if(this.type === 'code') {
+            const codeBlock = this.$('.attachment__code');
+            codeBlock.addClass('language-' + this.attachment.type.split('/').pop());
+            highlight.highlightBlock(codeBlock[0]);
         }
     }
 

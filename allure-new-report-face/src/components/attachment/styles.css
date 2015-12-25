@@ -1,0 +1,14 @@
+@import "../../variables.css";
+
+.attachment {
+  &__filename {
+    background: $heading-bg;
+    padding: $gap-size;
+  }
+  &__code {
+    font: 14px normal "Courier New" monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    padding: $gap-size;
+  }
+}

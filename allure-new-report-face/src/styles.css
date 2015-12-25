@@ -1,5 +1,6 @@
 @import "../node_modules/normalize-css/normalize.css";
 @import "../node_modules/bem-components-dist/desktop/bem-components.css";
+@import "../node_modules/highlight.js/styles/idea.css";
 @import "./grid.css";
 @import "./blocks/alert/styles.css";
 @import "./blocks/attachment-row/styles.css";

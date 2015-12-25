@@ -51,6 +51,7 @@
     "bem-components-dist": "^2.3.0",
     "filesize": "^3.1.5",
     "font-awesome": "^4.5.0",
+    "highlight.js": "^8.7.0",
     "jquery": "^2.1.4",
     "normalize-css": "^2.3.1",
     "underscore": "^1.8.3"

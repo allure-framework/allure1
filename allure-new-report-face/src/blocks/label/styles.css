@@ -2,6 +2,7 @@
 
 .label {
   text-transform: uppercase;
+  letter-spacing: 1px;
   color: #fff;
   padding: 2px 5px;
   font-size: 75%;

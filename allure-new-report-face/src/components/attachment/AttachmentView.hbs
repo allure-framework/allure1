@@ -5,15 +5,15 @@
     </span>
 </h2>
 
-<div class="pane__section">
+<div class="attachment__filename">
     <a href="data/{{source}}" class="link link_theme_islands">{{source}}</a>
 </div>
 
 <div class="pane__section">
     {{#if (eq type "code")}}
-        <pre class="attachment__code"><code>{{content}}</code></pre>
+        <pre class="attachment__code">{{content}}</pre>
     {{else if (eq type "text")}}
-        <pre class="attachment__code"><code>{{content}}</code></pre>
+        <pre class="attachment__code">{{content}}</pre>
     {{else if (eq type "csv")}}
         <table class="table">
             <tbody>
