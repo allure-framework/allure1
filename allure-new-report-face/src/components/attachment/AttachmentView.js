@@ -3,10 +3,12 @@ import d3 from 'd3';
 import highlight from 'highlight.js';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
+import {className} from '../../decorators';
 import attachmentType from '../../util/attachmentType';
 import template from './AttachmentView.hbs';
 
-export default class AttachmentView extends ItemView {
+@className('attachment')
+class AttachmentView extends ItemView {
     template = template;
 
     initialize({attachment}) {
@@ -51,3 +53,5 @@ export default class AttachmentView extends ItemView {
         };
     }
 }
+
+export default AttachmentView;

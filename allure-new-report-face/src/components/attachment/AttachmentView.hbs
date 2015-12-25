@@ -1,4 +1,4 @@
-<h2 class="pane__title">
+<h2 class="pane__title attachment__title">
     <a href="data/{{attachment.source}}" class="link link_theme_islands">
         <span class="{{fileicon attachment.type}}"></span>
         {{attachment.title}}
@@ -29,15 +29,14 @@
         </tbody>
     </table>
 {{else if (eq type "image")}}
-    <div class="pane__section">
-        <img src="{{sourceUrl}}"/>
+    <div class="pane__section attachment__image-container">
+        <img class="attachment__image" src="{{sourceUrl}}"/>
     </div>
 {{else if (eq type "svg")}}
     <div class="pane__section">
-        <object type="image/svg+xml" data="{{sourceUrl}}">Your browser does not support SVG</object>
+        <object class="attachment__embed" type="image/svg+xml" data="{{sourceUrl}}">Your browser does not support SVG</object>
     </div>
 {{else}}
-    <iframe style="width: 100%; min-height: 600px;" frameborder="0" src="{{sourceUrl}}"
-            on-error="onError()"></iframe>
+    <iframe class="attachment__iframe" frameborder="0" src="{{sourceUrl}}"></iframe>
 {{/if}}
 

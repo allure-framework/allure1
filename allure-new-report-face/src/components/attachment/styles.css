@@ -1,6 +1,12 @@
 @import "../../variables.css";
 
 .attachment {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  &__title {
+    flex-shrink: 0;
+  }
   &__filename {
     background: $heading-bg;
     padding: $gap-size;
@@ -9,9 +15,20 @@
     font: 14px normal "Courier New" monospace;
     white-space: pre-wrap;
     word-break: break-word;
-    padding: $gap-size;
+    margin: 0;
+    padding: 0;
   }
   &__table {
     border-top: 0;
+  }
+  &__embed, &__image {
+    max-width: 100%;
+  }
+  &__iframe {
+    width: 100%;
+    flex: 1;
+  }
+  &__image-container {
+    text-align: center;
   }
 }
