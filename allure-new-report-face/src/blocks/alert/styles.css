@@ -8,7 +8,6 @@
   }
   &_status_FAILED {
     background: $background-failed;
-    color: #fff;
   }
   &_status_BROKEN {
     background: $background-broken;

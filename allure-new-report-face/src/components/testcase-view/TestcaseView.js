@@ -21,7 +21,7 @@ class TestcaseView extends LayoutView {
     onRender() {
         bemRender(this.$('.testcase__trace-toggle'), {
             block: 'button',
-            mods: {view: 'pseudo', inverse: true},
+            mods: {view: 'pseudo'},
             text: 'Show trace'
         });
         this.showTestcasePlugins(this.$('.testcase__content_before'), allurePlugins.testcaseBlocks.before);

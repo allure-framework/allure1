@@ -7,11 +7,11 @@ $color-broken: #ffa924;
 $color-skipped: #999999;
 $color-pending: #d35ebe;
 
-$background-passed: #6cce5c;
-$background-failed: #ff5a4c;
-$background-broken: #ffbf5b;
+$background-passed: #a6e19d;
+$background-failed: #ffaca6;
+$background-broken: #ffd99d;
 $background-skipped: #cccccc;
-$background-pending: #df87cf;
+$background-pending: #ecb7e2;
 
 $header-bg: #fff;
 $heading-bg: #f6f5f3;
