@@ -1,11 +1,13 @@
 import './styles.css';
+import {className} from '../../decorators';
 import {ItemView} from 'backbone.marionette';
 import {Model} from 'backbone';
 import allurePlugins from '../../pluginApi';
 import template from './SideNavView.hbs';
 import router from '../../router';
 
-export default class SideNavView extends ItemView {
+@className('side-nav')
+class SideNavView extends ItemView {
     template = template;
 
     initialize() {
@@ -22,3 +24,5 @@ export default class SideNavView extends ItemView {
         return name ? currentUrl.indexOf(name) === 0 : currentUrl === name;
     }
 }
+
+export default SideNavView;

@@ -1,33 +1,74 @@
 @import "../../variables.css";
 
 .side-nav {
-  padding: 0;
-  list-style-type: none;
+  max-width: 160px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  &__head {
+    margin: $gap-size 0;
+    padding-bottom: $gap-size;
+    border-bottom: 1px solid $border-accent-color;
+  }
+  &__brand, &__title {
+    color: $text-color;
+    text-decoration: none;
+  }
+  &__brand {
+    display: block;
+    font-size: 20px;
+    line-height: 40px;
+    font-weight: bold;
+    background: url('allure-logo.png') no-repeat 10px center;
+    padding-left: 50px;
+    margin-bottom: 10px;
+  }
+  &__menu {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  &__footer {
+    margin-top: auto;
+    margin-bottom: $gap-size;
+  }
   &__item {
     display: block;
-    text-align: center;
-    margin: 1em 0;
+    font-size: 16px;
   }
-  &__link {
+  &__link, &__collapse {
     display: block;
     color: $text-muted-color;
     text-decoration: none;
     transition: color 0.1s ease-in;
+    padding: 1em 0;
     &_active {
       color: $text-color;
     }
     &:hover {
       color: $text-color;
-      .side-nav__icon {
-        top: -3px;
-      }
     }
   }
   &__icon {
+    font-size: 130%;
+    vertical-align: middle;
     transition: top 0.3s ease-in;
     position: relative;
-    font-size: 30px;
-    display: block;
-    margin-bottom: 7px;
+    top: -1px;
+    display: inline-block;
+    margin: 0 5px;
+  }
+  &__info {
+    line-height: 1.3;
+    dt {
+      color: $text-muted-color;
+    }
+    dd {
+      margin-left: 0;
+      margin-bottom: 0.5em;
+    }
+  }
+  &__collapse {
+    cursor: pointer;
   }
 }

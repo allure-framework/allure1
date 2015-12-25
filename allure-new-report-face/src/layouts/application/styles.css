@@ -3,12 +3,8 @@
 .app {
   background: $body-bg;
   display: flex;
-  flex-direction: column;
   &__nav {
     padding: 0 1em;
-  }
-  &__body {
-    flex: 1;
   }
   &__content {
     position: relative;
