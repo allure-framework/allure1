@@ -1,0 +1,7 @@
+@import "../../variables.css";
+
+.defect {
+  &__table {
+    margin-top: $gap-size;
+  }
+}

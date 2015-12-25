@@ -1,3 +1,4 @@
+import './styles.css';
 import {ItemView} from 'backbone.marionette';
 import {on} from '../../decorators';
 import router from '../../router';

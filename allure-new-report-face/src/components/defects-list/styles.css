@@ -13,4 +13,7 @@
     font-size: 70%;
     font-weight: normal;
   }
+  &__table {
+    margin-top: $gap-size;
+  }
 }

@@ -1,4 +1,5 @@
 import './styles.css';
+import d3 from 'd3';
 import highlight from 'highlight.js';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
@@ -26,7 +27,11 @@ export default class AttachmentView extends ItemView {
 
     loadContent() {
         return $.ajax(this.sourceUrl).then((responseText) => {
-            this.content = responseText;
+            if(this.type === 'csv') {
+                this.content = d3.csv.parseRows(responseText);
+            } else {
+                this.content = responseText;
+            }
         });
     }
 
@@ -35,13 +40,14 @@ export default class AttachmentView extends ItemView {
     }
 
     serializeData() {
-        return Object.assign({}, this.attachment, {
+        return {
             type: this.type,
             content: this.content,
             sourceUrl: this.sourceUrl,
+            attachment: this.attachment,
             route: {
                 baseUrl: this.options.baseUrl
             }
-        });
+        };
     }
 }

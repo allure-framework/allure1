@@ -49,6 +49,7 @@
     "backbone-decorators": "0.0.4",
     "backbone.marionette": "^2.4.3",
     "bem-components-dist": "^2.3.0",
+    "d3": "^3.5.12",
     "filesize": "^3.1.5",
     "font-awesome": "^4.5.0",
     "highlight.js": "^8.7.0",
