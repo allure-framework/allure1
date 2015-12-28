@@ -50,7 +50,16 @@ html, body {
   cursor: pointer;
 }
 
-.col-sm-shrink {
-  padding-right: 0.5rem;
-  padding-left: 0.5rem;
+.long-line {
+  word-break: break-all;
+}
+
+.line-nobreak {
+  white-space: nowrap;
+}
+
+.line-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
