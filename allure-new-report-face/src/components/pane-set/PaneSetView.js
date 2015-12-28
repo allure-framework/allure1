@@ -37,8 +37,7 @@ class PaneSetView extends LayoutView {
 
     removePane(name) {
         if(this.getRegion(name)) {
-            this.removeRegion(name);
-            this.fadeOutPane(this.panes[name]);
+            this.fadeOutPane(this.panes[name], () => this.removeRegion(name));
             delete this.panes[name];
             this.updatePanesPositions();
         }
@@ -66,15 +65,16 @@ class PaneSetView extends LayoutView {
     fadeInPane(pane) {
         this.$el.append(pane);
         pane.addClass('pane_enter');
-        pane.one('animationend', () => {
+        setTimeout(() => {
             pane.removeClass('pane_enter');
         });
     }
 
-    fadeOutPane(pane) {
+    fadeOutPane(pane, callback) {
         pane.addClass('pane_leave');
-        pane.one('animationend', () => {
+        pane.one('transitionend', () => {
             pane.remove();
+            callback();
         });
     }
 }
