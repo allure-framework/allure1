@@ -3,7 +3,8 @@ import d3 from 'd3';
 import highlight from 'highlight.js';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
-import {className} from '../../decorators';
+import router from '../../router';
+import {className, on} from '../../decorators';
 import attachmentType from '../../util/attachmentType';
 import template from './AttachmentView.hbs';
 
@@ -25,6 +26,12 @@ class AttachmentView extends ItemView {
             codeBlock.addClass('language-' + this.attachment.type.split('/').pop());
             highlight.highlightBlock(codeBlock[0]);
         }
+    }
+
+    @on('click .attachment__image')
+    onImageClick() {
+        const expanded = router.getUrlParams().expanded === 'true' ? null : true;
+        router.setSearch({expanded});
     }
 
     loadContent() {

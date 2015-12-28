@@ -22,6 +22,7 @@ export default class DefectView extends ItemView {
     serializeData() {
         const testcase = this.state.get('testcase');
         const data = super.serializeData();
+        data.baseUrl = this.options.baseUrl;
         data.testCases = data.testCases.map(t => {
             t.active = t.uid === testcase;
             return t;

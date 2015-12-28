@@ -1,6 +1,6 @@
 import './styles.css';
-import {each} from 'underscore';
 import {LayoutView} from 'backbone.marionette';
+import {debounce} from 'underscore';
 import $ from 'jquery';
 import {className} from '../../decorators';
 
@@ -9,6 +9,7 @@ const paneTpl = `<div class="pane"></div>`;
 @className('pane-set')
 class PaneSetView extends LayoutView {
     panes = {};
+    expanded = false;
 
     template() {
         return '';
@@ -30,7 +31,6 @@ class PaneSetView extends LayoutView {
             this.fadeInPane(pane);
             this.panes[name] = pane;
             this.addRegion(name, {el: pane});
-            this.updatePanesPositions();
         }
         this.getRegion(name).show(view);
     }
@@ -39,7 +39,6 @@ class PaneSetView extends LayoutView {
         if(this.getRegion(name)) {
             this.fadeOutPane(this.panes[name], () => this.removeRegion(name));
             delete this.panes[name];
-            this.updatePanesPositions();
         }
     }
 
@@ -51,12 +50,15 @@ class PaneSetView extends LayoutView {
             var width;
             var left;
             if(index == last) {
-                width = index === 0 ? 100 : 50;
+                const expanded = index === 0 || this.expanded;
+                width = expanded ? 100 - 5 * index : 50;
                 left = 100 - width;
+                pane.toggleClass('pane_expanded', expanded);
             } else {
                 const leftOffset = 5 * index;
                 left = leftOffset;
                 width = 50 - leftOffset;
+                pane.removeClass('pane_expanded');
             }
             pane.css({left: left + '%', width: width + '%'});
         });

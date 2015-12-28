@@ -22,7 +22,7 @@
   &__controls {
     float: right;
     padding-right: 0.5em;
-    a {
+    & > a {
       text-decoration: none;
       color: $text-color;
       opacity: 0.7;
@@ -35,7 +35,15 @@
     margin: $gap-size 0;
     padding: 0 $gap-size;
   }
-  &:first-child:last-child {
-    width: 100%;
+  &__collapse, &__expand {
+    display: none;
+  }
+  &:last-child {
+    &.pane_expanded .pane__collapse {
+      display: inline;
+    }
+    &:not(.pane_expanded) .pane__expand {
+      display: inline;
+    }
   }
 }

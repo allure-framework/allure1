@@ -29,6 +29,7 @@ export default class TestcasePanes {
             attachment: this.testcase.getAttachment(changed.attachment),
             state: this.state
         }));
+        this.paneView.updatePanesPositions();
     }
 
 }

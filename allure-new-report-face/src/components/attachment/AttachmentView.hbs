@@ -4,6 +4,8 @@
         {{attachment.title}}
     </a>
     <span class="pane__controls">
+        <a class="fa fa-expand pane__expand" title="Expand" href="#{{route.baseUrl}}/{{attachment.uid}}?expanded=true"></a>
+        <a class="fa fa-compress pane__collapse" title="Collapse" href="#{{route.baseUrl}}/{{attachment.uid}}"></a>
         <a class="fa fa-close" title="Close" href="#{{route.baseUrl}}"></a>
     </span>
 </h2>

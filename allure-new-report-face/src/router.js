@@ -1,3 +1,4 @@
+import {omit} from 'underscore';
 import {Router, history} from 'backbone';
 import urlLib from 'url';
 
@@ -22,6 +23,7 @@ class AppRouter extends Router {
     }
 
     to(pathname, query, options) {
+        query = omit(query, value => value === null);
         const url = urlLib.format({pathname, query});
         return this.toUrl(url, options);
     }
@@ -32,7 +34,7 @@ class AppRouter extends Router {
 
     setSearch(search) {
         const {pathname} = urlLib.parse(this.getCurrentUrl());
-        return this.to(pathname, search, {trigger: false});
+        return this.to(pathname, search);
     }
 
     getUrlParams() {

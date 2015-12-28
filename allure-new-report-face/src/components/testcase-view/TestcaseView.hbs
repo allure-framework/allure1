@@ -1,6 +1,8 @@
 <h2 class="pane__title">
     {{title}}
     <span class="pane__controls">
+        <a class="fa fa-expand pane__expand" title="Expand" href="#{{route.baseUrl}}/{{uid}}?expanded=true"></a>
+        <a class="fa fa-compress pane__collapse" title="Collapse" href="#{{route.baseUrl}}/{{uid}}"></a>
         <a class="fa fa-close" title="Close" href="#{{route.baseUrl}}"></a>
     </span>
 </h2>
