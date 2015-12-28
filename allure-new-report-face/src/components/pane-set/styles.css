@@ -1,13 +1,5 @@
 @import "../../variables.css";
 
-.pane-set {
-  top: $gap-size;
-  bottom: $gap-size;
-  left: 0;
-  right: $gap-size;
-  position: absolute;
-}
-
 .pane {
   position: absolute;
   top: 0;
@@ -26,7 +18,7 @@
   }
   &__title {
     padding: 0 15px 10px;
-    margin: 25px 0 0;
+    margin: 20px 0 0;
     border-bottom: 1px solid $border-color;
     font-size: 24px;
   }

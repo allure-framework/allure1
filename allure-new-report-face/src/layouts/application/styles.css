@@ -8,7 +8,6 @@
   }
   &__content {
     position: relative;
-    padding: 15px 15px 15px 0;
     flex: 1;
   }
   &__header {
