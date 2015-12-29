@@ -1,7 +1,7 @@
 @import "../../variables.css";
 
 .attachment-row {
-  padding: 10px $gap-size 10px 40px;
+  padding: 10px $gap-size 10px 20px;
   cursor: pointer;
   &:hover {
     background: $hover-color;

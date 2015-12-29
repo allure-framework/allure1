@@ -11,10 +11,10 @@ import TestcasePanes from '../../util/TestcasePanes';
 export default class DefectsLayoutView extends AppLayout {
 
     initialize() {
+        super.initialize();
         this.state = new Model();
         this.listenTo(this.state, 'change', this.onStateChange, this);
         this.defects = new DefectsCollection();
-        this.on('load', this.onViewReady, this);
     }
 
     loadData() {

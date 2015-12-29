@@ -6,10 +6,19 @@
     margin: 0;
     word-break: break-word;
   }
-  &_status_FAILED {
-    background: $background-failed;
+  &_status_PASSED {
+    background: $background-passed;
+  }
+  &_status_PENDING {
+    background: $background-pending;
+  }
+  &_status_CANCELED {
+    background: $background-canceled;
   }
   &_status_BROKEN {
     background: $background-broken;
+  }
+  &_status_FAILED {
+    background: $background-failed;
   }
 }

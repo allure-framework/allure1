@@ -3,7 +3,7 @@
 .step {
   line-height: 1.5;
   &__arrow {
-    left: 20px;
+    left: 4px;
     top: 10px;
     position: absolute;
     visibility: hidden;
@@ -19,7 +19,7 @@
   }
   &__title {
     position: relative;
-    padding: 7px $gap-size 7px 40px;
+    padding: 7px $gap-size 7px 20px;
     cursor: pointer;
   }
   &__time {

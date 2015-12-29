@@ -6,16 +6,21 @@
         <a class="fa fa-close" title="Close" href="#{{route.baseUrl}}"></a>
     </span>
 </h2>
-
-<div class="alert alert_status_{{status}}">
-    <div class="row">
-        <div class="col_flex">
-            <pre class="alert__code"><code>{{failure.message}}</code></pre>
+{{#if failure}}
+    <div class="alert alert_status_{{status}}">
+        <div class="row">
+            <div class="col_flex">
+                <pre class="alert__code"><code>{{failure.message}}</code></pre>
+            </div>
+            <div class="col testcase__trace-toggle"></div>
         </div>
-        <div class="col testcase__trace-toggle"></div>
+        <pre class="alert__code testcase__trace"><code>{{failure.stackTrace}}</code></pre>
     </div>
-    <pre class="alert__code testcase__trace"><code>{{failure.stackTrace}}</code></pre>
-</div>
+{{else}}
+    <div class="alert alert_status_{{status}}">
+        The test has been passed!
+    </div>
+{{/if}}
 
 <div class="testcase__content_before"></div>
 <div class="testcase__steps"></div>

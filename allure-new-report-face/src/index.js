@@ -7,6 +7,7 @@ import DescriptionView from './plugins/testcase/description/DescriptionView';
 
 import OverviewLayout from './layouts/overview/OverivewLayout';
 import DefectsLayout from './layouts/defects/DefectsLayout';
+import XUnitLayout from './layouts/xunit/XUnitLayout';
 
 allurePlugins.addTab('', {
     title: 'Overview', icon: 'fa fa-home',
@@ -20,7 +21,8 @@ allurePlugins.addTab('defects', {
 });
 allurePlugins.addTab('xUnit', {
     title: 'xUnit', icon: 'fa fa-briefcase',
-    route: 'xUnit(/:defectId)(/:testcaseId)(/:attachmentId)'
+    route: 'xUnit(/:defectId)(/:testcaseId)(/:attachmentId)',
+    onEnter: (...routeParams) => new XUnitLayout({routeParams})
 });
 allurePlugins.addTab('behaviors', {
     title: 'Behaviors', icon: 'fa fa-list',

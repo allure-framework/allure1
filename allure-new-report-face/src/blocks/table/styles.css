@@ -4,11 +4,17 @@
   width: 100%;
   border-color: $border-color;
   border-style: solid;
-  border-width: 1px 0 1px 0;
+  border-width: 0px 0 1px 0;
   &_hover {
     tr:hover td {
       cursor: pointer;
       background: $hover-color;
+    }
+  }
+  tr.table__row_summary {
+    td {
+      cursor: default;
+      background: #f6f5f3;
     }
   }
   tr.table__row_active {
@@ -19,7 +25,7 @@
   thead {
     tr {
       text-align: left;
-      background: $heading-bg;
+      border-bottom: 1px solid $border-accent-color;
     }
   }
   tr {
@@ -29,6 +35,9 @@
     padding: 10px 15px;
   }
   &__col {
+    &_center {
+      text-align: center;
+    }
     &_right {
       text-align: right;
     }

@@ -13,18 +13,22 @@ class AppLayout extends LayoutView {
     @region('.app__nav')
     nav;
 
+    initialize() {}
+
     onRender() {
         this.nav.show(new SideNav());
         const dataPromise = this.loadData();
         if(dataPromise) {
             dataPromise.then(() => {
                 this.content.show(this.getContentView());
-                this.trigger('load');
+                this.onViewReady();
             });
         } else {
             this.content.show(this.getContentView());
         }
     }
+
+    onViewReady() {}
 
     loadData() {}
 

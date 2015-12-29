@@ -4,11 +4,17 @@
   text-transform: uppercase;
   letter-spacing: 1px;
   color: #fff;
-  padding: 2px 5px;
-  font-size: 75%;
+  padding: 2px 4px 2px 5px;
+  font-size: 80%;
   border-radius: 3px;
   &_status_PASSED {
     background: $color-passed;
+  }
+  &_status_CANCELED {
+    background: $color-canceled;
+  }
+  &_status_PENDING {
+    background: $color-pending;
   }
   &_status_FAILED {
     background: $color-failed;

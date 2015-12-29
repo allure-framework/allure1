@@ -4,13 +4,13 @@ $brand-red: #ff0000;
 $color-passed: #3bbd25;
 $color-failed: #ff0000;
 $color-broken: #ffa924;
-$color-skipped: #999999;
+$color-canceled: #999999;
 $color-pending: #d35ebe;
 
 $background-passed: #a6e19d;
 $background-failed: #ffaca6;
 $background-broken: #ffd99d;
-$background-skipped: #cccccc;
+$background-canceled: #cccccc;
 $background-pending: #ecb7e2;
 
 $header-bg: #fff;
