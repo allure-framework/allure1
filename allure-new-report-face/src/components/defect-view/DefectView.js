@@ -1,32 +1,35 @@
 import './styles.css';
-import {ItemView} from 'backbone.marionette';
-import {on} from '../../decorators';
-import router from '../../router';
+import {LayoutView} from 'backbone.marionette';
+import {region} from '../../decorators';
+import TestcaseTableView from '../testcase-table/TestcaseTableView';
 import template from './DefectView.hbs';
 
-export default class DefectView extends ItemView {
+export default class DefectView extends LayoutView {
     template = template;
+
+    @region('.defect__table')
+    testcases;
 
     initialize({state}) {
         this.state = state;
-        this.listenTo(this.state, 'change:testcase', () => this.render());
+        this.listenTo(this.state, 'change:testcase', this.showTestcases, this);
     }
 
-    @on('click .testcase-table__item')
-    onTestcaseClick(e) {
-        const defect = this.state.get('defect');
-        const testcase = this.$(e.currentTarget).data('uid');
-        router.to(['defects', defect, testcase].join('/'));
+    onRender() {
+        this.showTestcases();
+    }
+
+    showTestcases() {
+        this.testcases.show(new TestcaseTableView({
+            testCases: this.model.get('testCases'),
+            currentCase: this.state.get('testcase'),
+            baseUrl: 'defects/' + this.state.get('defect')
+        }));
     }
 
     serializeData() {
-        const testcase = this.state.get('testcase');
-        const data = super.serializeData();
-        data.baseUrl = this.options.baseUrl;
-        data.testCases = data.testCases.map(t => {
-            t.active = t.uid === testcase;
-            return t;
-        });
-        return data;
+        return Object.assign({
+            baseUrl: this.options.baseUrl
+        }, super.serializeData());
     }
 }

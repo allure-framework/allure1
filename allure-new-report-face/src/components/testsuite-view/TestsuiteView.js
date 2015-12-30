@@ -1,30 +1,35 @@
 import {LayoutView} from 'backbone.marionette';
-import {on} from '../../decorators';
-import router from '../../router';
+import {region} from '../../decorators';
 import template from './TestsuiteView.hbs';
+import TestcaseTableView from '../testcase-table/TestcaseTableView';
 
 export default class TestsuiteView extends LayoutView {
     template = template;
 
+    @region('.testsuite__testcases')
+    testcases;
+
     initialize({testsuite, state}) {
         this.state = state;
-        this.listenTo(this.state, 'change:testcase', this.render);
+        this.listenTo(this.state, 'change:testcase', this.showTestcases, this);
         this.model = testsuite;
     }
 
-    @on('click .testcase-table__item')
-    onTestcaseClick(e) {
-        const testsuite = this.state.get('testsuite');
-        const testcase = this.$(e.currentTarget).data('uid');
-        router.to(['xUnit', testsuite, testcase].join('/'));
+    onRender() {
+        this.showTestcases();
+    }
+
+    showTestcases() {
+        this.testcases.show(new TestcaseTableView({
+            testCases: this.model.get('testCases'),
+            currentCase: this.state.get('testcase'),
+            baseUrl: 'xUnit/' + this.state.get('testsuite')
+        }));
     }
 
     serializeData() {
         return Object.assign({
-            route: {
-                baseUrl: this.options.baseUrl,
-                currentCase: this.state.get('testcase')
-            }
+            baseUrl: this.options.baseUrl
         }, super.serializeData());
     }
 }
