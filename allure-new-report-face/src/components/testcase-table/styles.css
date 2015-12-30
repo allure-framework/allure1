@@ -1,0 +1,13 @@
+@import "../../variables.css";
+
+.testcase-table {
+  &__title {
+    white-space: nowrap;
+    float: left;
+    line-height: 28px;
+    margin: 0;
+  }
+  &__statuses {
+    float: right;
+  }
+}

@@ -1,4 +1,3 @@
-import './styles.css';
 import {LayoutView} from 'backbone.marionette';
 import {region} from '../../decorators';
 import TestcaseTableView from '../testcase-table/TestcaseTableView';

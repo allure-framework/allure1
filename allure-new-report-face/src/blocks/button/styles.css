@@ -1,0 +1,19 @@
+@import "../../variables.css";
+
+.button {
+  .checkbox_status_PASSED & {
+    color: $color-passed;
+  }
+  .checkbox_status_PENDING & {
+    color: $color-pending;
+  }
+  .checkbox_status_CANCELLED & {
+    color: $color-canceled;
+  }
+  .checkbox_status_BROKEN & {
+    color: $color-broken;
+  }
+  .checkbox_status_FAILED & {
+    color: $color-failed;
+  }
+}
