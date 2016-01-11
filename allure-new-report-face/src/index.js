@@ -6,6 +6,7 @@ import allurePlugins from './pluginApi';
 import DescriptionView from './plugins/testcase-description/DescriptionView';
 import DefectsLayout from './plugins/tab-defects/DefectsLayout';
 import XUnitLayout from './plugins/tab-xunit/XUnitLayout';
+import BehaviorsLayout from './plugins/tab-behaviors/BehaviorsLayout';
 
 import OverviewLayout from './layouts/overview/OverivewLayout';
 
@@ -26,7 +27,8 @@ allurePlugins.addTab('xUnit', {
 });
 allurePlugins.addTab('behaviors', {
     title: 'Behaviors', icon: 'fa fa-list',
-    route: 'behaviors(/:defectId)(/:testcaseId)(/:attachmentId)'
+    route: 'behaviors(/:defectId)(/:testcaseId)(/:attachmentId)',
+    onEnter: (...routeParams) => new BehaviorsLayout({routeParams})
 });
 allurePlugins.addTab('graph', {
     title: 'Graph', icon: 'fa fa-bar-chart',

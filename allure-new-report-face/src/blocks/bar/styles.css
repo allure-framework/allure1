@@ -1,14 +1,21 @@
+@import "../../variables.css";
+@import "../../mixins.css";
+
 .bar {
-  height: 16px;
+  height: 18px;
   overflow: hidden;
   position: relative;
   border-radius: 4px;
   background: #eee;
   &__fill {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background: #6cc644;
+    display: inline-block;
+    overflow: hidden;
+    height: 18px;
+    background: $brand-blue;
+    text-align: center;
+    color: #fff;
+    font-size: 12px;
+    line-height: 18px;
+    @mixin status-bg;
   }
 }

@@ -7,8 +7,6 @@
     top: 10px;
     position: absolute;
     visibility: hidden;
-    display: inline-block;
-    vertical-align: middle;
     width: 14px;
     height: 14px;
     background: url(arrow.svg) center no-repeat;
