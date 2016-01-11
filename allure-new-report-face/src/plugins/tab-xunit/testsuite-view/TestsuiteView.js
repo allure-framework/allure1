@@ -1,7 +1,7 @@
 import {LayoutView} from 'backbone.marionette';
-import {region} from '../../decorators';
+import {region} from '../../../decorators';
 import template from './TestsuiteView.hbs';
-import TestcaseTableView from '../testcase-table/TestcaseTableView';
+import TestcaseTableView from '../../../components/testcase-table/TestcaseTableView';
 
 export default class TestsuiteView extends LayoutView {
     template = template;

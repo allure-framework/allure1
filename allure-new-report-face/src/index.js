@@ -3,11 +3,11 @@ import $ from 'jquery';
 import Backbone from 'backbone';
 import allurePlugins from './pluginApi';
 
-import DescriptionView from './plugins/testcase/description/DescriptionView';
+import DescriptionView from './plugins/testcase-description/DescriptionView';
+import DefectsLayout from './plugins/tab-defects/DefectsLayout';
+import XUnitLayout from './plugins/tab-xunit/XUnitLayout';
 
 import OverviewLayout from './layouts/overview/OverivewLayout';
-import DefectsLayout from './layouts/defects/DefectsLayout';
-import XUnitLayout from './layouts/xunit/XUnitLayout';
 
 allurePlugins.addTab('', {
     title: 'Overview', icon: 'fa fa-home',

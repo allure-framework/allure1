@@ -1,11 +1,11 @@
 import {findWhere} from 'underscore';
 import {Model} from 'backbone';
-import AppLayout from '../application/AppLayout';
+import AppLayout from '../../layouts/application/AppLayout';
 import router from '../../router';
-import DefectsCollection from '../../data/defects/DefectsCollection';
+import DefectsCollection from './defects-collection/DefectsCollection';
 import PaneSetView from '../../components/pane-set/PaneSetView';
-import DefectsListView from '../../components/defects-list/DefectsListView';
-import DefectView from '../../components/defect-view/DefectView';
+import DefectsListView from './defects-list/DefectsListView';
+import DefectView from './defect-view/DefectView';
 import TestcasePanes from '../../util/TestcasePanes';
 
 export default class DefectsLayoutView extends AppLayout {

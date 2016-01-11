@@ -1,7 +1,7 @@
 import './styles.css';
 import {ItemView} from 'backbone.marionette';
 import {Model} from 'backbone';
-import {className} from '../../../decorators';
+import {className} from '../../decorators';
 import template from './DescriptionView.hbs';
 
 @className('pane__section')

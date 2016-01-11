@@ -1,11 +1,11 @@
-import AppLayout from '../application/AppLayout';
+import AppLayout from '../../layouts/application/AppLayout';
 import {Model} from 'backbone';
-import XUnitCollection from '../../data/xunit/XUnitCollection';
+import XUnitCollection from './xunit-collection/XUnitCollection';
 import router from '../../router';
 import TestcasePanes from '../../util/TestcasePanes';
 import PaneSetView from '../../components/pane-set/PaneSetView';
-import TestsuitesListView from '../../components/testsuites-list/TestsuitesListView';
-import TestsuiteView from '../../components/testsuite-view/TestsuiteView';
+import TestsuitesListView from './testsuites-list/TestsuitesListView';
+import TestsuiteView from './testsuite-view/TestsuiteView';
 
 export default class XUnitLayout extends AppLayout {
 

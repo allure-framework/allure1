@@ -30,15 +30,13 @@ App.showView = (factory) => {
     };
 };
 
-App.tabNotFound = App.showView(() =>
-    new ErrorLayout({
-        code: 404,
-        message: 'Not Found'
-    })
-);
+App.tabNotFound = () => new ErrorLayout({
+    code: 404,
+    message: 'Not Found'
+});
 
 App.on('start', () => {
-    router.on('route:notFound', App.tabNotFound);
+    router.on('route:notFound', App.showView(App.tabNotFound));
 });
 
 export default App;

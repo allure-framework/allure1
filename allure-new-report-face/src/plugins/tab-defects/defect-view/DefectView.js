@@ -1,6 +1,6 @@
 import {LayoutView} from 'backbone.marionette';
-import {region} from '../../decorators';
-import TestcaseTableView from '../testcase-table/TestcaseTableView';
+import {region} from '../../../decorators';
+import TestcaseTableView from '../../../components/testcase-table/TestcaseTableView';
 import template from './DefectView.hbs';
 
 export default class DefectView extends LayoutView {

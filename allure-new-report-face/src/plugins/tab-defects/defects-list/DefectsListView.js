@@ -1,7 +1,7 @@
 import './styles.css';
 import {LayoutView} from 'backbone.marionette';
-import {on} from '../../decorators';
-import router from '../../router';
+import {on} from '../../../decorators';
+import router from '../../../router';
 import template from './DefectsListView.hbs';
 
 class DefectsListView extends LayoutView {

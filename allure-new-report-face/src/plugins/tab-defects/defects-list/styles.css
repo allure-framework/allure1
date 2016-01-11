@@ -1,4 +1,4 @@
-@import "../../variables.css";
+@import "../../../variables.css";
 
 .defects-list {
   &__title {
