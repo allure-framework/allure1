@@ -1,7 +1,7 @@
 @import "../../variables.css";
 
 .label {
-  text-transform: uppercase;
+  vertical-align: baseline;
   letter-spacing: 1px;
   color: #fff;
   padding: 2px 4px 2px 5px;
