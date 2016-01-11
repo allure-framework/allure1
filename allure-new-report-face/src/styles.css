@@ -11,6 +11,7 @@
 
 body {
   color: $text-color;
+  font-family: -apple-system, Helvetica, Arial, sans-serif;
 }
 
 * {
