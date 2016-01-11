@@ -13,7 +13,7 @@ class StatusToggleView extends ItemView {
         const statuses = settings.get('visibleStatuses');
         bemRender(this.$el, {
             block: 'control-group',
-            content: ['Failed', 'Broken', 'Cancelled', 'Pending', 'Passed'].map(status => ({
+            content: ['Failed', 'Broken', 'Canceled', 'Pending', 'Passed'].map(status => ({
                 block: 'checkbox',
                 name: status.toUpperCase(),
                 text: status,

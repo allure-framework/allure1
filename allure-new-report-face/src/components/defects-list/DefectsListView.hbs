@@ -3,22 +3,18 @@
         {{title}}
         <span class="defects-list__count">{{defects.length}} defects</span>
     </h2>
-    <table class="{{b "table" hover=true}} defects-list__table">
-        <thead>
-        <tr>
-            <th width="5%" class="{{b "table" "col" right=true}}">Count</th>
-            <th>Defect</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="{{b "table" hover=true}} defects-list__table">
+        <div class="{{b "table" "head"}}">
+            <div class="{{b "table" "col" right=true}} {{b "defects-list" "count-col"}}">Count</div>
+            <div class="{{b "table" "col"}}">Defect</div>
+        </div>
         {{#each defects}}
-            <tr class="defects-list__item {{b "table" "row" active=active}}" data-uid="{{uid}}">
-                <td class="{{b "table" "col" right=true}}">
+            <a class="{{b "table" "row" active=active}}" href="#defects/{{uid}}">
+                <div class="{{b "table" "col" right=true}} {{b "defects-list" "count-col"}}">
                     <span class="label label_status_{{../status}}">{{testCases.length}}</span>
-                </td>
-                <td class="long-line">{{failure.message}}</td>
-            </tr>
+                </div>
+                <div class="{{b "table" "col"}} long-line">{{failure.message}}</div>
+            </a>
         {{/each}}
-        </tbody>
-    </table>
+    </div>
 {{/each}}

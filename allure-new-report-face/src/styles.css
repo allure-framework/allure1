@@ -52,7 +52,7 @@ html, body {
 }
 
 .long-line {
-  word-break: break-all;
+  word-break: break-word;
 }
 
 .line-nobreak {

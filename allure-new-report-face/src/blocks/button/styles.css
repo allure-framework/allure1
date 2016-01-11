@@ -7,7 +7,7 @@
   .checkbox_status_PENDING & {
     color: $color-pending;
   }
-  .checkbox_status_CANCELLED & {
+  .checkbox_status_CANCELED & {
     color: $color-canceled;
   }
   .checkbox_status_BROKEN & {

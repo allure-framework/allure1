@@ -1,45 +1,37 @@
 @import '../../variables.css';
 
 .table {
-  width: 100%;
-  border-color: $border-color;
-  border-style: solid;
-  border-width: 0px 0 1px 0;
-  &_hover {
-    tr:hover td {
-      cursor: pointer;
-      background: $hover-color;
-    }
+  &__row, &__head {
+    display: flex;
   }
-  tr.table__row_summary {
-    td {
-      cursor: default;
-      background: #f6f5f3;
-    }
-  }
-  tr.table__row_active {
-    td {
-      background: $selected-color;
-    }
-  }
-  thead {
-    tr {
-      text-align: left;
-      border-bottom: 1px solid $border-accent-color;
-    }
-  }
-  tr {
+  &__row {
     border-bottom: 1px solid $border-color;
+    text-decoration: none;
+    color: $text-color;
   }
-  td, th {
-    padding: 10px 15px;
+  &__head {
+    border-bottom: 1px solid $border-accent-color;
+    font-weight: bold;
   }
   &__col {
+    padding: 10px 15px;
+    flex: 1;
     &_center {
       text-align: center;
     }
     &_right {
       text-align: right;
     }
+  }
+  &_hover {
+    .table__row:not([disabled]):hover {
+      background: $hover-color;
+    }
+  }
+  .table__row_summary {
+    background: #f6f5f3;
+  }
+  .table__row_active {
+    background: $selected-color;
   }
 }

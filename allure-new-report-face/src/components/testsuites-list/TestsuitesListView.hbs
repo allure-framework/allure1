@@ -1,30 +1,29 @@
-<h2 class="pane__title {{b "defects-list" "title" status=status}}">
+<h2 class="pane__title {{b "testsuites-list" "title"}}">
     xUnit results
 </h2>
-<table class="{{b "table" hover=true}}">
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Duration</th>
-        <th>Failed</th>
-        <th>Broken</th>
-        <th>Cancelled</th>
-        <th>Pending</th>
-        <th>Total</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr class="{{b "table" "row" summary=true}}" disabled>
-        <td>
+
+<div class="{{b "table" hover=true}}">
+    <div class="{{b "table" "head"}}">
+        <div class="{{b "table" "col"}} {{b "testsuites-list" "name"}}">Title</div>
+        <div class="{{b "table" "col"}}">Duration</div>
+        <div class="{{b "table" "col"}}">Failed</div>
+        <div class="{{b "table" "col"}}">Broken</div>
+        <div class="{{b "table" "col"}}">Cancelled</div>
+        <div class="{{b "table" "col"}}">Pending</div>
+        <div class="{{b "table" "col"}}">Total</div>
+    </div>
+    <div class="{{b "table" "row" summary=true}}" disabled>
+        <div class="{{b "table" "col"}} {{b "testsuites-list" "name"}} long-line">
             Total {{suites.length}} suites
-        </td>
+        </div>
         {{> suite-table-row}}
-    </tr>
+    </div>
     {{#each suites}}
-        <tr class="{{b "table" "row" active=(eq uid ../currentSuite)}} testsuite-list__row" data-uid="{{uid}}">
-            <td class="long-line">{{title}}</td>
+        <a class="{{b "table" "row" active=(eq uid ../currentSuite)}}" href="#{{../baseUrl}}/{{uid}}">
+            <div class="{{b "table" "col"}} {{b "testsuites-list" "name"}} long-line">
+                {{title}}
+            </div>
             {{> suite-table-row}}
-        </tr>
+        </a>
     {{/each}}
-    </tbody>
-</table>
+</div>

@@ -1,24 +1,24 @@
-<td>{{time.duration}}</td>
-<td>
+<div class="{{b "table" "col"}}">{{time.duration}}</div>
+<div class="{{b "table" "col"}}">
     {{#if statistic.failed}}
         <span class="{{b "label" status="FAILED"}}">{{statistic.failed}}</span>
     {{/if}}
-</td>
-<td>
+</div>
+<div class="{{b "table" "col"}}">
     {{#if statistic.broken}}
         <span class="{{b "label" status="BROKEN"}}">{{statistic.broken}}</span>
     {{/if}}
-</td>
-<td>
+</div>
+<div class="{{b "table" "col"}}">
     {{#if statistic.canceled}}
         <span class="{{b "label" status="CANCELED"}}">{{statistic.canceled}}</span>
     {{/if}}
-</td>
-<td>
+</div>
+<div class="{{b "table" "col"}}">
     {{#if statistic.pending}}
         <span class="{{b "label" status="PENDING"}}">{{statistic.pending}}</span>
     {{/if}}
-</td>
-<td>
+</div>
+<div class="{{b "table" "col"}}">
     {{statistic.total}}
-</td>
+</div>

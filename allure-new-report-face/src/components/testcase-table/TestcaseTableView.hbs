@@ -2,29 +2,21 @@
     <h3 class="testcase-table__title">{{totalCount}} test cases</h3>
     <div class="testcase-table__statuses"></div>
 </div>
-<table class="table table_hover">
-    <thead>
-    <tr>
-        <th width="5%">#</th>
-        <th>Title</th>
-        <th class="{{b "table" "col" right=true}}">Duration</th>
-        <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
+<div class="{{b "table" hover=true}} testcase-table__table">
+    <div class="{{b "table" "head"}}">
+        <div class="{{b "table" "col" right=true}} {{b "testcase-table" "index"}}">#</div>
+        <div class="{{b "table" "col"}} {{b "testcase-table" "name"}}">Title</div>
+        <div class="{{b "table" "col"}}">Duration</div>
+        <div class="{{b "table" "col"}}">Status</div>
+    </div>
     {{#each testCases}}
-        <tr class="testcase-table__item {{b "table" "row" active=(eq uid ../currentCase)}}" data-uid="{{uid}}">
-            <td>{{inc @index}}</td>
-            <td>
-                {{name}}
-            </td>
-            <td class="{{b "table" "col" right=true}}">
-                {{time.duration}}
-            </td>
-            <td>
+        <a class="{{b "table" "row" active=(eq uid ../currentCase)}}" href="#{{../baseUrl}}/{{uid}}">
+            <div class="{{b "table" "col" right=true}} {{b "testcase-table" "index"}}">{{inc @index}}</div>
+            <div class="{{b "table" "col"}} {{b "testcase-table" "name"}} long-line">{{name}}</div>
+            <div class="{{b "table" "col"}}">{{time.duration}}</div>
+            <div class="{{b "table" "col"}}">
                 <span class="label label_status_{{status}}">{{status}}</span>
-            </td>
-        </tr>
+            </div>
+        </a>
     {{/each}}
-    </tbody>
-</table>
+</div>
