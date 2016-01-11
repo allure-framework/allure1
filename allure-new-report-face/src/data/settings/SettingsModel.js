@@ -4,7 +4,13 @@ import {protoprop} from '../../decorators';
 export default class SettingsModel extends Model {
     @protoprop
     defaults = {
-        visibleStatuses: {}
+        visibleStatuses: {
+            FAILED: true,
+            BROKEN: true,
+            CANCELED: true,
+            PENDING: true,
+            PASSED: true
+        }
     };
 
     fetch() {
