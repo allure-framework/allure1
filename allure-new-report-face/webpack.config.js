@@ -8,7 +8,7 @@ function makeConfig(hotload) {
     return {
         entry: ['./src/index.js'],
         output: {
-            path: path.join(__dirname, 'target/www'),
+            path: path.join(__dirname, 'target/allure-report'),
             pathinfo: true,
             filename: 'app.js'
         },

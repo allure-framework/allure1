@@ -1,7 +1,7 @@
 import {Collection} from 'backbone';
 
 export default class DefectsCollection extends Collection {
-    url = '/data/defects.json';
+    url = 'data/defects.json';
 
     initialize() {
         this.on('sync', this.updateDefects, this);

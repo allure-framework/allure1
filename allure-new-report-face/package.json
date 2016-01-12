@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "prestart": "mvn -Pdev -P!common compile",
+    "prestart": "mvn -Pdev -P!common clean compile",
     "start": "node tools/serve",
     "pretest": "eslint --ignore-path=.gitignore .",
     "test": "npm run jasmine",

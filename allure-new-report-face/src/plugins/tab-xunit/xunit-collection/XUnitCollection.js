@@ -1,7 +1,7 @@
 import {Collection} from 'backbone';
 
 export default class XUnitCollection extends Collection {
-    url = '/data/xUnit.json';
+    url = 'data/xunit.json';
 
     parse({time, testSuites}) {
         this.time = time;
