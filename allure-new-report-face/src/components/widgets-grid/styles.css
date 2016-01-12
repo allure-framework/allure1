@@ -1,0 +1,20 @@
+@import "../../variables.css";
+
+.widgets-grid {
+  padding: $gap-size $gap-size 0 0;
+  width: 50%;
+}
+
+.widget {
+  background: #fff;
+  border: 1px solid $border-accent-color;
+  padding: $gap-size;
+  margin-bottom: $gap-size;
+  &__title {
+    margin-top: 0;
+  }
+  &__subtitle {
+    color: $text-muted-color;
+    font-size: 16px;
+  }
+}

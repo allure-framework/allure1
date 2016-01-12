@@ -1,4 +1,3 @@
-import Handlebars from 'handlebars/runtime';
 import pad from 'underscore.string/pad';
 
 export default function (date) {

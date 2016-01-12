@@ -1,6 +1,5 @@
 import './styles.css';
 import {LayoutView} from 'backbone.marionette';
-import {debounce} from 'underscore';
 import $ from 'jquery';
 import {className} from '../../decorators';
 
