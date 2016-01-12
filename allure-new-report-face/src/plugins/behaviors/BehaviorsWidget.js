@@ -5,4 +5,3 @@ export default class BehaviorsWidget extends WidgetStatusView {
     baseUrl = 'behaviors';
     showAllText = 'Show all user features';
 }
-

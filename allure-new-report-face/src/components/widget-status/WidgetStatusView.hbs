@@ -2,7 +2,7 @@
     {{title}}
     <span class="widget__subtitle">{{totalCount}} items total</span>
 </h2>
-<div class="table table_hover widget-status__table">
+<div class="table table_hover widget__table">
     {{#each items}}
         <a class="table__row" href="#{{baseUrl}}/{{uid}}">
             <div class="table__col">{{title}}</div>
@@ -11,11 +11,11 @@
             </div>
         </a>
     {{/each}}
-    {{#unless (gt totalCount items.length)}}
+    {{#if (gt totalCount items.length)}}
         <a class="table__row" href="#{{baseUrl}}">
             <div class="table__col table__col_center">
                 {{showAllText}}
             </div>
         </a>
-    {{/unless}}
+    {{/if}}
 </div>
