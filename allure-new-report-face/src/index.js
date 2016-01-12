@@ -4,6 +4,7 @@ import Backbone from 'backbone';
 import allurePlugins from './pluginApi';
 import './plugins/default';
 import './plugins/defects';
+import './plugins/environment';
 import './plugins/xunit';
 import './plugins/behaviors';
 
