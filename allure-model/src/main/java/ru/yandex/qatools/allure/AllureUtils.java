@@ -115,7 +115,7 @@ public final class AllureUtils {
      */
     public static List<Path> listAttachmentFilesSafe(Path... directories) {
         try {
-            return listFiles(AllureConstants.ATTACHMENTS_FILE_GLOB, directories);
+            return listAttachmentFiles(directories);
         } catch (IOException e) {
             LOGGER.error("Error during attachments scan", e);
             return Collections.emptyList();
@@ -270,12 +270,13 @@ public final class AllureUtils {
      * your Allure results.
      */
     public static Validator getSchemaValidator() {
-        try {
-            InputStream schemaFile = AllureUtils.class.getClassLoader()
-                    .getResourceAsStream(AllureConstants.SCHEMA_FILE_NAME);
+        try (InputStream schemaFile = AllureUtils.class.getClassLoader()
+                .getResourceAsStream(AllureConstants.SCHEMA_FILE_NAME)) {
             SchemaFactory schemaFactory = SchemaFactory.newInstance(W3C_XML_SCHEMA_NS_URI);
             Schema schema = schemaFactory.newSchema(new StreamSource(schemaFile));
             return schema.newValidator();
+        } catch (IOException e) {
+            throw new AllureException("Could not find " + AllureConstants.SCHEMA_FILE_NAME, e);
         } catch (SAXException e) {
             throw new AllureException("Could not create schema validator", e);
         }
@@ -290,8 +291,10 @@ public final class AllureUtils {
             for (Path suite : listTestSuiteXmlFiles(directories)) {
                 validator.validate(new StreamSource(suite.toFile()));
             }
-        } catch (SAXException | IOException e) {
+        } catch (IOException e) {
             throw new AllureException("Could not validate results", e);
+        } catch (SAXException e) {
+            throw new AllureException("Error during results validation", e);
         }
     }
 
