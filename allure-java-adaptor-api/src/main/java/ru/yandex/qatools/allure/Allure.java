@@ -38,13 +38,13 @@ public class Allure {
 
     private static final Object TEST_SUITE_ADD_CHILD_LOCK = new Object();
 
-    private final StepStorage stepStorage = new StepStorage();
+    private final StepStorage stepStorage;
 
-    private final TestCaseStorage testCaseStorage = new TestCaseStorage();
+    private final TestCaseStorage testCaseStorage;
 
-    private final TestSuiteStorage testSuiteStorage = new TestSuiteStorage();
+    private final TestSuiteStorage testSuiteStorage;
 
-    private final ListenersNotifier notifier = new ListenersNotifier();
+    private final ListenersNotifier notifier;
 
     private final AllureConfig config;
 
@@ -58,11 +58,37 @@ public class Allure {
     }
 
     /**
-     * Package private. Use Allure.LIFECYCLE singleton
+     * Do not instance. Use Allure.LIFECYCLE singleton.
+     *
+     * @since 1.5
      */
     Allure(AllureConfig config) {
+        this(config, new AllureResultsHelper(config));
+
+    }
+
+    /**
+     * Do not instance. Use Allure.LIFECYCLE singleton.
+     *
+     * @since 1.5
+     */
+    Allure(AllureConfig config, AllureResultsHelper helper) {
         this.config = config;
-        this.resultsHelper = new AllureResultsHelper(config);
+        this.resultsHelper = helper;
+        this.stepStorage = new StepStorage();
+        this.testSuiteStorage = new TestSuiteStorage();
+        this.testCaseStorage = new TestCaseStorage();
+        this.notifier = new ListenersNotifier();
+
+        init();
+    }
+
+    /**
+     * The initialization method. Do not call.
+     *
+     * @since 1.5
+     */
+    private void init() {
         Runtime.getRuntime().addShutdownHook(new Thread(
                 new AllureShutdownHook(testSuiteStorage.getStartedSuites())
         ));
@@ -181,13 +207,13 @@ public class Allure {
      */
     public void fire(TestCaseFinishedEvent event) {
         TestCaseResult testCase = testCaseStorage.get();
+        if (Status.PASSED.equals(testCase.getStatus())) {
+            fire(new RemoveAttachmentsEvent(config.getRemoveAttachmentsPattern()));
+        }
+
         event.process(testCase);
 
         Step root = stepStorage.pollLast();
-
-        if (Status.PASSED.equals(testCase.getStatus())) {
-            new RemoveAttachmentsEvent(config.getRemoveAttachmentsPattern()).process(root);
-        }
 
         testCase.getSteps().addAll(root.getSteps());
         testCase.getAttachments().addAll(root.getAttachments());
