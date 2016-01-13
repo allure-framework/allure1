@@ -15,7 +15,7 @@ class GraphsView extends LayoutView {
     addChart(name, Chart) {
         const container = $(`<div class="chart__wrap">
             <div class="chart island">
-                <div class="chart__title">${name}</div>
+                <h2 class="chart__title">${name}</h2>
                 <div class="chart__body"></div>
             </div>
         </div>`);

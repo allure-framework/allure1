@@ -3,7 +3,7 @@ import d3 from 'd3';
 import duration from '../../../helpers/duration';
 
 const PAD_LEFT = 30;
-const PAD_TOP = 15;
+const PAD_TOP = 7;
 const PAD_BOTTOM = 30;
 
 export default class DurationChart extends BaseChart {

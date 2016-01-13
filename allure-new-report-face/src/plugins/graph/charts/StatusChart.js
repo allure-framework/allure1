@@ -1,6 +1,14 @@
 import BaseChart from './BaseChart';
 import d3 from 'd3';
 
+const legendTpl = `<div class="chart__legend">
+    <p><div class="chart__legend-icon chart__legend-icon_status_FAILED"></div> Failed</p>
+    <p><div class="chart__legend-icon chart__legend-icon_status_BROKEN"></div> Broken</p>
+    <p><div class="chart__legend-icon chart__legend-icon_status_CANCELED"></div> Canceled</p>
+    <p><div class="chart__legend-icon chart__legend-icon_status_PENDING"></div> Pending</p>
+    <p><div class="chart__legend-icon chart__legend-icon_status_PASSED"></div> Passed</p>
+</div>`;
+
 export default class StatusChart extends BaseChart {
 
     initialize() {
@@ -26,6 +34,13 @@ export default class StatusChart extends BaseChart {
         }));
     }
 
+
+    setupViewport() {
+        const svg = super.setupViewport();
+        this.$el.append(legendTpl);
+        return svg;
+    }
+
     onShow() {
         const data = this.getChartData();
         const width = this.$el.width();
@@ -36,14 +51,14 @@ export default class StatusChart extends BaseChart {
         this.svg = this.setupViewport();
 
         var sectors = this.svg.select('.chart__plot')
-            .attr({transform: `translate(${width/2},${radius})`})
+            .attr({transform: `translate(${width / 2 - 70},${radius})`})
             .selectAll('.chart__arc').data(this.pie(data))
             .enter()
             .append('path')
             .attr('class', d => 'chart__arc chart__fill_status_' + d.data.name);
 
         if(this.firstRender) {
-             sectors.transition().duration(750).attrTween('d', d => {
+            sectors.transition().duration(750).attrTween('d', d => {
                 const radiusFn = d3.interpolate(10, radius);
                 const startAngleFn = d3.interpolate(0, d.startAngle);
                 const endAngleFn = d3.interpolate(0, d.endAngle);

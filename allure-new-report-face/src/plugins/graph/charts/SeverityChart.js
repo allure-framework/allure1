@@ -2,7 +2,7 @@ import BaseChart from './BaseChart';
 import d3 from 'd3';
 
 const PAD_LEFT = 30;
-const PAD_TOP = 15;
+const PAD_TOP = 7;
 const PAD_BOTTOM = 30;
 
 const severities = ['BLOCKER', 'CRITICAL', 'NORMAL', 'MINOR', 'TRIVIAL'];
