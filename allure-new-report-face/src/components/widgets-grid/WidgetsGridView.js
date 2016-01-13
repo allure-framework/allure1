@@ -4,7 +4,7 @@ import $ from 'jquery';
 import {className} from '../../decorators';
 import allurePlugins from '../../pluginApi';
 
-const widgetTpl = `<div class="widget"></div>`;
+const widgetTpl = `<div class="widget island"></div>`;
 const colTpl = `<div class="widgets-grid__col"></div>`;
 
 @className('widgets-grid')

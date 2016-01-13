@@ -19,9 +19,6 @@
 }
 
 .widget {
-  background: #fff;
-  border: 1px solid $border-accent-color;
-  padding: $gap-size;
   margin-bottom: $gap-size;
   &__title {
     margin-top: 0;

@@ -27,3 +27,5 @@ $text-color: #000;
 $text-muted-color: #999;
 
 $gap-size: 15px;
+
+$small-screen: 1000px;

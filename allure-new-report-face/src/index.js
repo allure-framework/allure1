@@ -7,13 +7,9 @@ import './plugins/defects';
 import './plugins/environment';
 import './plugins/xunit';
 import './plugins/behaviors';
+import './plugins/graph';
 
 import DescriptionView from './plugins/testcase-description/DescriptionView';
-
-allurePlugins.addTab('graph', {
-    title: 'Graph', icon: 'fa fa-bar-chart',
-    route: 'graph'
-});
 allurePlugins.addTestcaseBlock(DescriptionView, {position: 'before'});
 
 App.start();
