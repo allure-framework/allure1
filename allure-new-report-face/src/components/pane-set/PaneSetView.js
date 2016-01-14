@@ -64,9 +64,9 @@ class PaneSetView extends LayoutView {
     }
 
     fadeInPane(pane) {
-        this.$el.append(pane);
         pane.addClass('pane_enter');
-        setTimeout(() => {
+        this.$el.append(pane);
+        window.requestAnimationFrame(() => {
             pane.removeClass('pane_enter');
         });
     }
