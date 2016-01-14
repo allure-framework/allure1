@@ -1,32 +1,17 @@
-import {Model} from 'backbone';
+import PaneLayout from '../../layouts/pane/PaneLayout';
 import BehaviorsModel from './data/BehaviorsModel';
-import AppLayout from '../../layouts/application/AppLayout';
 import router from '../../router';
-import PaneSetView from '../../components/pane-set/PaneSetView';
 import BehaviorsTreeView from './behaviors-tree/BehaviorsTreeView';
 import BehaviorView from './behavior-view/BehaviorView';
-import TestcasePanes from '../../util/TestcasePanes';
-
-export default class BehaviorsLayout extends AppLayout {
+export default class BehaviorsLayout extends PaneLayout {
 
     initialize() {
         super.initialize();
-        this.state = new Model();
-        this.listenTo(this.state, 'change', this.onStateChange, this);
         this.behaviors = new BehaviorsModel();
     }
 
     loadData() {
         return this.behaviors.fetch();
-    }
-
-    getContentView() {
-        return new PaneSetView();
-    }
-
-    onViewReady() {
-        this.testcase = new TestcasePanes(this.state, this.content.currentView);
-        this.onRouteUpdate(...this.options.routeParams);
     }
 
     onStateChange() {

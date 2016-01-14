@@ -1,32 +1,18 @@
-import AppLayout from '../../layouts/application/AppLayout';
-import {Model} from 'backbone';
+import PaneLayout from '../../layouts/pane/PaneLayout';
 import XUnitCollection from './xunit-collection/XUnitCollection';
 import router from '../../router';
-import TestcasePanes from '../../util/TestcasePanes';
-import PaneSetView from '../../components/pane-set/PaneSetView';
 import TestsuitesListView from './testsuites-list/TestsuitesListView';
 import TestsuiteView from './testsuite-view/TestsuiteView';
 
-export default class XUnitLayout extends AppLayout {
+export default class XUnitLayout extends PaneLayout {
 
     initialize() {
         super.initialize();
-        this.state = new Model();
-        this.listenTo(this.state, 'change', this.onStateChange, this);
         this.suites = new XUnitCollection();
     }
 
     loadData() {
         return this.suites.fetch();
-    }
-
-    getContentView() {
-        return new PaneSetView();
-    }
-
-    onViewReady() {
-        this.testcase = new TestcasePanes(this.state, this.content.currentView);
-        this.onRouteUpdate(...this.options.routeParams);
     }
 
     onStateChange() {
@@ -48,7 +34,6 @@ export default class XUnitLayout extends AppLayout {
         this.testcase.updatePanes('xUnit/' + this.state.get('testsuite'), changed);
         paneView.updatePanesPositions();
     }
-
 
     onRouteUpdate(testsuite, testcase, attachment) {
         const expanded = router.getUrlParams().expanded === 'true';

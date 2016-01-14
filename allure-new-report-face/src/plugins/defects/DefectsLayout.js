@@ -1,33 +1,20 @@
 import {findWhere} from 'underscore';
 import {Model} from 'backbone';
-import AppLayout from '../../layouts/application/AppLayout';
+import PaneLayout from '../../layouts/pane/PaneLayout';
 import router from '../../router';
 import DefectsCollection from './defects-collection/DefectsCollection';
-import PaneSetView from '../../components/pane-set/PaneSetView';
 import DefectsListView from './defects-list/DefectsListView';
 import DefectView from './defect-view/DefectView';
-import TestcasePanes from '../../util/TestcasePanes';
 
-export default class DefectsLayoutView extends AppLayout {
+export default class DefectsLayoutView extends PaneLayout {
 
     initialize() {
         super.initialize();
-        this.state = new Model();
-        this.listenTo(this.state, 'change', this.onStateChange, this);
         this.defects = new DefectsCollection();
     }
 
     loadData() {
         return this.defects.fetch();
-    }
-
-    getContentView() {
-        return new PaneSetView();
-    }
-
-    onViewReady() {
-        this.testcase = new TestcasePanes(this.state, this.content.currentView);
-        this.onRouteUpdate(...this.options.routeParams);
     }
 
     buildDefectView(uid) {
