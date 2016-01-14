@@ -28,8 +28,8 @@ export default function(timeInt, count) {
     if(!timeInt) {
         return '0s';
     }
-    var time = new Date(timeInt);
-    return dateTokens.map(({method, suffix}) => ({
+    const time = new Date(timeInt);
+    const res = dateTokens.map(({method, suffix}) => ({
             value: isFunction(method) ? method(time) : time[method](),
             suffix
         }))
@@ -44,5 +44,9 @@ export default function(timeInt, count) {
         .map(function(token, index) {
             const value = index === 0 ? token.value : pad(token.value, 2);
             return value + token.suffix;
-        }).slice(0, count).join(' ');
+        });
+    if(typeof count === 'number') {
+        res.splice(0, count)
+    }
+    return res.join(' ');
 }

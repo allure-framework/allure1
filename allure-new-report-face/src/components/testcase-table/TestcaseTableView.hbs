@@ -13,7 +13,7 @@
         <a class="{{b "table" "row" active=(eq uid ../currentCase)}}" href="#{{../baseUrl}}/{{uid}}">
             <div class="{{b "table" "col" right=true}} {{b "testcase-table" "index"}}">{{inc @index}}</div>
             <div class="{{b "table" "col"}} {{b "testcase-table" "name"}} long-line">{{name}}</div>
-            <div class="{{b "table" "col"}}">{{time.duration}}</div>
+            <div class="{{b "table" "col"}}">{{duration time.duration}}</div>
             <div class="{{b "table" "col"}}">
                 <span class="label label_status_{{status}}">{{status}}</span>
             </div>
