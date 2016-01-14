@@ -1,5 +1,6 @@
 import './styles.css';
 import BaseChartView from '../../components/chart/BaseChartView';
+import {once} from 'underscore';
 import {className} from '../../decorators';
 import duration from '../../helpers/duration';
 import d3 from 'd3';
@@ -17,11 +18,11 @@ class TimelineView extends BaseChartView {
         this.x = d3.scale.linear();
     }
 
-    onShow() {
-        if(this.firstRender) {
-            this.$el.parent().one('transitionend', () => {
-                this.doShow();
-            });
+    onShow(waitTransition) {
+        if(waitTransition || this.firstRender) {
+            const callback = once(() => this.doShow());
+            this.$el.parent().one('transitionend', callback);
+            setTimeout(callback, 500);
         } else {
             this.doShow();
         }
@@ -94,6 +95,10 @@ class TimelineView extends BaseChartView {
 
         var bars = group.selectAll('.timeline__item')
             .data(testcases).enter()
+            .append('a')
+            .attr({
+                'xlink:href': d => '#timeline/' + d.uid
+            })
             .append('rect')
             .attr({
                 'class': d => 'timeline__item chart__fill_status_' + d.status,

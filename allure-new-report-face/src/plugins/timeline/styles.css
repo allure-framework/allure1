@@ -2,6 +2,9 @@
 
 .timeline {
   padding: $gap-size;
+  &__item:hover {
+    opacity: 0.7;
+  }
   &__host {
     font-size: 18px;
   }
