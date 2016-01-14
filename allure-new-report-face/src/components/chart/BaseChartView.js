@@ -1,3 +1,4 @@
+import './styles.css';
 import {View} from 'backbone';
 import d3 from 'd3';
 
@@ -29,14 +30,12 @@ export default class BaseChart extends View {
         return d3.select(this.$el[0]).select('svg');
     }
 
-    makeAxis(element, {scale, orient, format, left, top} = {}) {
-        return element.call(
-            d3.svg.axis()
-                .scale(scale)
-                .orient(orient)
-                .tickFormat(format)
-        ).attr({
+    makeAxis(element, options, {left = 0, top = 0} = {}) {
+        const axis = d3.svg.axis();
+        Object.keys(options).forEach(option => axis[option](options[option]));
+        element.call(axis).attr({
             transform: `translate(${left},${top})`
         });
+        return axis;
     }
 }

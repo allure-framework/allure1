@@ -21,4 +21,6 @@ export default class PaneLayout extends AppLayout {
     }
 
     onStateChange() {}
+
+    onRouteUpdate() {}
 }

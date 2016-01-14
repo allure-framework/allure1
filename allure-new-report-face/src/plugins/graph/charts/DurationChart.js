@@ -1,4 +1,4 @@
-import BaseChart from './BaseChart';
+import BaseChartView from '../../../components/chart/BaseChartView';
 import d3 from 'd3';
 import duration from '../../../helpers/duration';
 
@@ -6,7 +6,7 @@ const PAD_LEFT = 30;
 const PAD_TOP = 7;
 const PAD_BOTTOM = 30;
 
-export default class DurationChart extends BaseChart {
+export default class DurationChart extends BaseChartView {
 
     initialize() {
         this.x = d3.time.scale.utc();
@@ -44,15 +44,17 @@ export default class DurationChart extends BaseChart {
 
         this.svg = this.setupViewport();
         this.makeAxis(this.svg.select('.chart__axis_x'), {
-            format: time => duration(time, 1),
+            tickFormat: time => duration(time, 1),
             scale: this.x,
-            orient: 'bottom',
+            orient: 'bottom'
+        }, {
             top: PAD_TOP + height,
             left: PAD_LEFT
         });
         this.makeAxis(this.svg.select('.chart__axis_y'), {
             scale: this.y,
-            orient: 'left',
+            orient: 'left'
+        }, {
             left: PAD_LEFT,
             top: PAD_TOP
         });

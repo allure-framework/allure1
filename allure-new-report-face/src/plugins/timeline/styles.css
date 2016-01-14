@@ -1,0 +1,11 @@
+@import "../../variables.css";
+
+.timeline {
+  padding: $gap-size;
+  &__host {
+    font-size: 18px;
+  }
+  &__host-bg {
+    fill: $heading-bg;
+  }
+}

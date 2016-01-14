@@ -1,4 +1,4 @@
-import BaseChart from './BaseChart';
+import BaseChartView from '../../../components/chart/BaseChartView';
 import d3 from 'd3';
 
 const PAD_LEFT = 30;
@@ -8,7 +8,7 @@ const PAD_BOTTOM = 30;
 const severities = ['BLOCKER', 'CRITICAL', 'NORMAL', 'MINOR', 'TRIVIAL'];
 const statuses = ['FAILED', 'BROKEN', 'CANCELED', 'PENDING', 'PASSED'];
 
-export default class SeverityChart extends BaseChart {
+export default class SeverityChart extends BaseChartView {
 
     initialize() {
         this.x = d3.scale.ordinal().domain(severities);
@@ -44,17 +44,19 @@ export default class SeverityChart extends BaseChart {
         this.svg = this.setupViewport();
 
         this.makeAxis(this.svg.select('.chart__axis_x'), {
-            format: d => d.toLowerCase(),
-            top: height + PAD_TOP,
-            left: PAD_LEFT,
+            tickFormat: d => d.toLowerCase(),
             orient: 'bottom',
             scale: this.x
+        }, {
+            top: height + PAD_TOP,
+            left: PAD_LEFT
         });
         this.makeAxis(this.svg.select('.chart__axis_y'), {
-            left: PAD_LEFT,
-            top: PAD_TOP,
             orient: 'left',
             scale: this.y
+        }, {
+            left: PAD_LEFT,
+            top: PAD_TOP
         });
         this.svg.select('.chart__plot').attr({transform: `translate(${PAD_LEFT},${PAD_TOP})`});
 

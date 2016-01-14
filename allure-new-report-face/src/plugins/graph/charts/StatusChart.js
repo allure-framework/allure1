@@ -1,4 +1,4 @@
-import BaseChart from './BaseChart';
+import BaseChartView from '../../../components/chart/BaseChartView';
 import d3 from 'd3';
 
 const legendTpl = `<div class="chart__legend">
@@ -9,7 +9,7 @@ const legendTpl = `<div class="chart__legend">
     <p><div class="chart__legend-icon chart__legend-icon_status_PASSED"></div> Passed</p>
 </div>`;
 
-export default class StatusChart extends BaseChart {
+export default class StatusChart extends BaseChartView {
 
     initialize() {
         this.arc = d3.svg.arc().innerRadius(0);

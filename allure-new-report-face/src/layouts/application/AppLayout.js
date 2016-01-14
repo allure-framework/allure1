@@ -35,8 +35,6 @@ class AppLayout extends LayoutView {
     getContentView() {
         throw new Error('attempt to call abstract method');
     }
-
-    onRouteUpdate() {}
 }
 
 export default AppLayout;

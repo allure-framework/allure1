@@ -8,6 +8,7 @@ import './plugins/environment';
 import './plugins/xunit';
 import './plugins/behaviors';
 import './plugins/graph';
+import './plugins/timeline';
 
 import DescriptionView from './plugins/testcase-description/DescriptionView';
 allurePlugins.addTestcaseBlock(DescriptionView, {position: 'before'});
