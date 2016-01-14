@@ -19,7 +19,13 @@
     padding: 0;
   }
   &__table {
-    border-top: 0;
+    width: 100%;
+    tr {
+      border-bottom: 1px solid $border-color;
+    }
+    td {
+      padding: 10px 15px;
+    }
   }
   &__embed, &__image {
     max-width: 100%;
