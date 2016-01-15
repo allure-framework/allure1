@@ -9,6 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <name>Allure Report Face</name>
     <artifactId>allure-report-face</artifactId>
     <packaging>war</packaging>
 
