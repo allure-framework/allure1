@@ -28,4 +28,4 @@ export default function typeByMime(type) {
             return 'svg';
         default:
     }
-};
+}

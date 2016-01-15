@@ -2,7 +2,7 @@ import BaseChartView from '../../../components/chart/BaseChartView';
 import d3 from 'd3';
 import duration from '../../../helpers/duration';
 
-const PAD_LEFT = 30;
+const PAD_LEFT = 35;
 const PAD_TOP = 7;
 const PAD_BOTTOM = 30;
 

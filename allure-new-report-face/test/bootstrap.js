@@ -1,25 +1,33 @@
-/*eslint-env node*/
-const jsdom = require('jsdom').jsdom;
-require('handlebars');
-//require.cache[require.resolve('handlebars/runtime')] = {exports: Handlebars};
+/* eslint-env node */
 
-global.dump = require('debug')('allure-server:test');
+//add extra modules root
+process.env.NODE_PATH = 'src';
+module.constructor._initPaths();
+
+const jsdom = require('jsdom').jsdom;
+const Handlebars = require('handlebars');
+require.cache[require.resolve('handlebars/runtime')] = {exports: Handlebars};
+
+//jasmine addons
+global.joc = jasmine.objectContaining;
+global.jany = jasmine.any;
+
+//debug log
+global.dump = require('debug')('allure-face:test');
+
+//jsdom
 global.document = jsdom('<html><head></head><body></body></html>', {
     url: 'http://localhost'
 });
 global.window = global.document.defaultView;
 global.navigator = global.window.navigator;
 global.location = global.window.location;
-global.FormData = global.window.FormData;
-global.XMLHttpRequest = global.window.XMLHttpRequest;
 
-require.extensions['.css'] = function() {};
-
+//TODO: get rid of BEM
+//bem-components
 global.jQuery = require('jquery');
 require('bem-components-dist/desktop/bem-components.dev.js+bh.js');
 
-const MockAjax = require('jasmine-ajax');
-jasmine.Ajax = new MockAjax(global);
-
+//require hooks
+require.extensions['.css'] = function () {};
 require('babel-core/register');
-

@@ -19,6 +19,7 @@ const dateTokens = [
         method: 'getUTCSeconds'
     },
     {
+        pad: 3,
         suffix: 'ms',
         method: 'getUTCMilliseconds'
     }
@@ -29,9 +30,9 @@ export default function(timeInt, count) {
         return '0s';
     }
     const time = new Date(timeInt);
-    const res = dateTokens.map(({method, suffix}) => ({
+    const res = dateTokens.map(({method, suffix, pad}) => ({
             value: isFunction(method) ? method(time) : time[method](),
-            suffix
+            suffix, pad
         }))
         .reduce(({hasValue, out}, token) => {
             hasValue = hasValue || token.value > 0;
@@ -42,11 +43,11 @@ export default function(timeInt, count) {
         }, {hasValue: false, out: []})
         .out
         .map(function(token, index) {
-            const value = index === 0 ? token.value : pad(token.value, 2);
+            const value = index === 0 ? token.value : pad(token.value, token.pad || 2, '0');
             return value + token.suffix;
         });
-    if(typeof count === 'number') {
-        res.splice(0, count)
+    if(typeof count !== 'number') {
+        count = 3;
     }
-    return res.join(' ');
+    return res.slice(0, count).join(' ');
 }

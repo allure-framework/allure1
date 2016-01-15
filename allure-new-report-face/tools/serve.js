@@ -1,7 +1,7 @@
 /*eslint-env node*/
 const webpack = require('webpack');
 const config = require('../webpack.config').factory(true);
-const express = require('express');
+//const express = require('express');
 const WebpackDevServer = require('webpack-dev-server');
 const port = process.env.PORT || 3000;
 

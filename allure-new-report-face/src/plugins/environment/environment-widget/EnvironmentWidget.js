@@ -1,5 +1,5 @@
 import {ItemView} from 'backbone.marionette';
-import {on} from '../../../decorators'
+import {on} from '../../../decorators';
 import template from './EnvironmentWidget.hbs';
 
 export default class EnvironmentWidget extends ItemView {
