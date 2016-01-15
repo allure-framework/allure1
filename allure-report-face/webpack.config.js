@@ -2,7 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 function makeConfig(hotload) {
     return {
@@ -24,7 +24,7 @@ function makeConfig(hotload) {
                     limit: 10000
                 }
             }, {
-                test:   /\.css$/,
+                test: /\.css$/,
                 loader: hotload ? 'style-loader!css-loader!postcss-loader' : ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
             }, {
                 test: /\.hbs$/,
@@ -40,11 +40,7 @@ function makeConfig(hotload) {
         devtool: 'source-map',
         plugins: (() => {
             const plugins = [
-                new HtmlWebpackPlugin({
-                    template: './src/index.html',
-                    inject: 'body',
-                    favicon: './src/favicon.ico'
-                }),
+                new CopyWebpackPlugin([{from: './src/favicon.ico'}]),
                 new ExtractTextPlugin('styles.css')
             ];
             return hotload ? plugins.concat(new webpack.HotModuleReplacementPlugin()) : plugins;
