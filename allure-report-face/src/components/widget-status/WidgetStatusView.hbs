@@ -4,12 +4,12 @@
 </h2>
 <div class="table table_hover widget__table">
     {{#each items}}
-        <a class="table__row" href="#{{baseUrl}}/{{uid}}">
+        <{{../rowTag}} class="table__row" href="#{{../baseUrl}}/{{uid}}">
             <div class="table__col">{{title}}</div>
             <div class="table__col">
                 {{status-bar statistic}}
             </div>
-        </a>
+        </{{../rowTag}}>
     {{/each}}
     {{#if (gt totalCount items.length)}}
         <a class="table__row" href="#{{baseUrl}}">
