@@ -1,4 +1,3 @@
-@import "../../variables.css";
 @import "../../mixins.css";
 
 .charts-grid {
@@ -25,14 +24,5 @@
     height: 16px;
     margin-right: 5px;
     @mixin status-bg;
-  }
-}
-
-@media (max-width: $small-screen) {
-  .chart__wrap {
-    width: 100%;
-    &:nth-child(2) .chart {
-      margin-top: 0;
-    }
   }
 }
