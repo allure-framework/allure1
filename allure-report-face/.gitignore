@@ -1,1 +1,4 @@
-src/main/webapp/css/
+target
+node_modules
+node
+etc

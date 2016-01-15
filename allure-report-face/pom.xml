@@ -1,280 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
         <version>1.5.0-SNAPSHOT</version>
     </parent>
+    <modelVersion>4.0.0</modelVersion>
 
     <artifactId>allure-report-face</artifactId>
     <packaging>war</packaging>
 
-    <name>Allure Report Face</name>
-
     <properties>
         <sonar.language>js</sonar.language>
-        <sonar.sources>src/main/webapp/js,src/main/webapp/plugins</sonar.sources>
-        <sonar.tests>src/test/webapp/core,src/test/webapp/plugins</sonar.tests>
+        <sonar.sources>src/</sonar.sources>
+        <sonar.tests>test/</sonar.tests>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.javascript.jstestdriver.reportsPath>
-            ${project.build.directory}/surefire-reports/
-        </sonar.javascript.jstestdriver.reportsPath>
-        <sonar.javascript.lcov.reportPath>${project.build.directory}/site/coverage/total-coverage.dat</sonar.javascript.lcov.reportPath>
-
-        <sonar.exclusions>vendor/**</sonar.exclusions>
-        <sonar.tests.exclusions>vendor/**</sonar.tests.exclusions>
+        <sonar.exclusions>node_modules/**</sonar.exclusions>
+        <sonar.tests.exclusions>node_modules/**</sonar.tests.exclusions>
     </properties>
 
     <build>
-        <sourceDirectory>src/main/webapp</sourceDirectory>
-        <testSourceDirectory>src/test/webapp</testSourceDirectory>
-
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>2.9</version>
-                <executions>
-                    <execution>
-                        <id>copy</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>unpack</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/webjars</outputDirectory>
-
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>font-awesome</artifactId>
-                                    <version>4.2.0</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>bootstrap</artifactId>
-                                    <version>3.2.0-2</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>d3js</artifactId>
-                                    <version>3.4.11</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>jquery</artifactId>
-                                    <version>2.1.1</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>angularjs</artifactId>
-                                    <version>1.2.26</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>angular-ui-router</artifactId>
-                                    <version>0.2.13</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>angular-ui-bootstrap</artifactId>
-                                    <version>0.11.2</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>angular-loading-bar</artifactId>
-                                    <version>0.6.0</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>angular-translate</artifactId>
-                                    <version>2.6.0</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>angular-translate-interpolation-messageformat</artifactId>
-                                    <version>0.1.2</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>angular-translate-loader-partial</artifactId>
-                                    <version>2.6.0</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>messageformat.js</artifactId>
-                                    <version>0.1.4</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars</groupId>
-                                    <artifactId>highlightjs</artifactId>
-                                    <version>8.2-1</version>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>org.webjars.bower</groupId>
-                                    <artifactId>Sortable</artifactId>
-                                    <version>1.2.0</version>
-                                </artifactItem>
-                            </artifactItems>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.lesscss</groupId>
-                <artifactId>lesscss-maven-plugin</artifactId>
-                <version>1.7.0.1.1</version>
-                <configuration>
-                    <sourceDirectory>${project.basedir}/src/main/less</sourceDirectory>
-                    <outputDirectory>${project.basedir}/src/main/webapp/css</outputDirectory>
-                    <compress>true</compress>
-                    <includes>
-                        <include>app.less</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>build-styles</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.4</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <webResources>
-                        <resource>
-                            <directory>src/main/webapp</directory>
-                            <includes>
-                                <include>index.html</include>
-                            </includes>
-                            <filtering>true</filtering>
-                        </resource>
-                        <resource>
-                            <includes>
-                                <include>webjars/jquery/2.1.1/jquery.min.js</include>
-                                <include>webjars/d3js/3.4.11/d3.min.js</include>
-                                <include>webjars/angularjs/1.2.26/angular.min.js</include>
-                                <include>webjars/angularjs/1.2.26/angular-animate.min.js</include>
-                                <include>webjars/angular-ui-bootstrap/0.11.2/ui-bootstrap-tpls.min.js</include>
-                                <include>webjars/angular-ui-router/0.2.13/angular-ui-router.js</include>
-                                <include>webjars/angular-loading-bar/0.6.0/loading-bar.js</include>
-                                <include>webjars/angular-translate/2.6.0/angular-translate.js</include>
-                                <include>webjars/angular-translate-loader-partial/2.6.0/angular-translate-loader-partial.js</include>
-                                <include>webjars/messageformat.js/0.1.4/messageformat.js</include>
-                                <include>webjars/angular-translate-interpolation-messageformat/0.1.2/angular-translate-interpolation-messageformat.js</include>
-                                <include>webjars/highlightjs/8.2-1/highlight.min.js</include>
-                                <include>webjars/font-awesome/4.2.0/fonts/**</include>
-                                <include>webjars/Sortable/1.2.0/ng-sortable.js</include>
-                                <include>webjars/Sortable/1.2.0/Sortable.min.js</include>
-                            </includes>
-                            <directory>${project.build.directory}/webjars/META-INF/resources</directory>
-                            <filtering>false</filtering>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>com.github.searls</groupId>
-                <artifactId>jasmine-maven-plugin</artifactId>
-                <version>2.0</version>
-                <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <id>unit-test-running</id>
-                        <goals>
-                            <goal>test</goal>
-                        </goals>
-                        <phase>test</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <keepServerAlive>true</keepServerAlive>
-                    <jsSrcDir>src/main/webapp</jsSrcDir>
-                    <sourceIncludes>
-                        <sourceInclude>js/**/*.js</sourceInclude>
-                        <sourceInclude>plugins/**/*.js</sourceInclude>
-                    </sourceIncludes>
-                    <jsTestSrcDir>src/test/webapp</jsTestSrcDir>
-                    <specIncludes>
-                        <specInclude>vendor/**/*.js</specInclude>
-                        <specInclude>core/**/*.js</specInclude>
-                        <specInclude>plugins/**/*.js</specInclude>
-                    </specIncludes>
-                    <jasmineTargetDir>${project.build.directory}/surefire-reports</jasmineTargetDir>
-                    <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
-                    <preloadSources>
-                        <source>target/webjars/META-INF/resources/webjars/jquery/2.1.1/jquery.js</source>
-                        <source>target/webjars/META-INF/resources/webjars/d3js/3.4.11/d3.min.js</source>
-                        <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular.js</source>
-                        <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular-animate.js</source>
-                        <source>target/webjars/META-INF/resources/webjars/angularjs/1.2.26/angular-mocks.js</source>
-                    </preloadSources>
-                </configuration>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.2.1</version>
             </plugin>
         </plugins>
     </build>
 
     <profiles>
         <profile>
-            <id>coverage</id>
+            <id>call-npm</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
-
             <build>
                 <plugins>
                     <plugin>
-                        <groupId>com.github.timurstrekalov</groupId>
-                        <artifactId>saga-maven-plugin</artifactId>
-                        <version>1.5.5</version>
-                        <executions>
-                            <execution>
-                                <goals>
-                                    <goal>coverage</goal>
-                                </goals>
-                                <phase>verify</phase>
-                            </execution>
-                        </executions>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>2.4</version>
                         <configuration>
-                            <reportFormats>RAW</reportFormats>
-                            <baseDir>http://0.0.0.0:${jasmine.serverPort}</baseDir>
-                            <outputDir>${project.build.directory}/site/coverage</outputDir>
-                            <webDriverClassName>org.openqa.selenium.phantomjs.PhantomJSDriver</webDriverClassName>
-                            <noInstrumentPatterns>
-                                <pattern>.*/test/.*</pattern>
-                                <pattern>.*/vendor/.*</pattern>
-                                <pattern>.*/webjars/.*</pattern>
-                            </noInstrumentPatterns>
+                            <warSourceDirectory>target/allure-report</warSourceDirectory>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
                         </configuration>
                     </plugin>
                     <plugin>
-                        <groupId>com.google.code.maven-replacer-plugin</groupId>
-                        <artifactId>replacer</artifactId>
-                        <version>1.5.3</version>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>0.0.27</version>
                         <executions>
                             <execution>
+                                <id>install node and npm</id>
                                 <goals>
-                                    <goal>replace</goal>
+                                    <goal>install-node-and-npm</goal>
                                 </goals>
-                                <phase>verify</phase>
                                 <configuration>
-                                    <ignoreMissingFile>true</ignoreMissingFile>
-                                    <file>${project.build.directory}/site/coverage/total-coverage.dat</file>
-                                    <replacements>
-                                        <replacement>
-                                            <token>SF:*src/</token>
-                                            <value>SF:${project.basedir}/src/main/webapp/</value>
-                                        </replacement>
-                                    </replacements>
+                                    <nodeVersion>v5.0.0</nodeVersion>
+                                    <npmVersion>3.5.1</npmVersion>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npm-install</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>install</arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npm-build</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run build</arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npm-test</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>test</arguments>
                                 </configuration>
                             </execution>
                         </executions>
@@ -287,8 +100,10 @@
             <properties>
                 <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                 <allure.report.directory>${project.build.directory}/allure-report</allure.report.directory>
-                <allure.issues.tracker.pattern>http://github.com/allure-framework/allure-core/issues/%s</allure.issues.tracker.pattern>
-                <allure.tests.management.pattern>http://github.com/allure-framework/allure-core/tests/%s</allure.tests.management.pattern>
+                <allure.issues.tracker.pattern>http://github.com/allure-framework/allure-core/issues/%s
+                </allure.issues.tracker.pattern>
+                <allure.tests.management.pattern>http://github.com/allure-framework/allure-core/tests/%s
+                </allure.tests.management.pattern>
             </properties>
 
             <dependencies>
