@@ -10,7 +10,7 @@
     padding-bottom: $gap-size;
     border-bottom: 1px solid $border-accent-color;
   }
-  &__brand, &__title {
+  &__brand {
     color: $text-color;
     text-decoration: none;
   }

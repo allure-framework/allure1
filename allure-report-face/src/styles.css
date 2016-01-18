@@ -7,6 +7,7 @@
 @import "./blocks/button/styles.css";
 @import "./blocks/island/styles.css";
 @import "./blocks/label/styles.css";
+@import "./blocks/link/styles.css";
 @import "./blocks/table/styles.css";
 @import "./blocks/text/styles.css";
 @import "./variables.css";
