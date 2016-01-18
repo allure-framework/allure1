@@ -1,34 +1,29 @@
 import {ItemView} from 'backbone.marionette';
-import {className, on} from '../../decorators';
-import bemRender from '../../util/bemRender';
+import {capitalize} from 'underscore.string';
+import {on} from '../../decorators';
 import settings from '../../util/settings';
+import template from './StatusToggleView.hbs';
 
-@className('status-toggle')
 class StatusToggleView extends ItemView {
-    template() {
-        return '';
-    }
+    template = template;
 
-    onRender() {
+    serializeData() {
         const statuses = settings.get('visibleStatuses');
-        bemRender(this.$el, {
-            block: 'control-group',
-            content: ['Failed', 'Broken', 'Canceled', 'Pending', 'Passed'].map(status => ({
-                block: 'checkbox',
-                name: status.toUpperCase(),
-                text: status,
-                mods: {
-                    checked: statuses[status.toUpperCase()],
-                    type: 'button',
-                    status: status.toUpperCase()
-                }
+        return {
+            statuses: ['FAILED', 'BROKEN', 'CANCELED', 'PENDING', 'PASSED'].map(status => ({
+                status,
+                active: !!statuses[status],
+                title: capitalize(status.toLowerCase())
             }))
-        });
+        };
     }
 
-    @on('click .checkbox')
+    @on('click .button')
     onCheckChange(e) {
-        const {name, checked} = e.currentTarget.querySelector('.checkbox__control');
+        const el = this.$(e.currentTarget);
+        el.toggleClass('button_active');
+        const name = el.data('status');
+        const checked = el.hasClass('button_active');
         const statuses = settings.get('visibleStatuses');
         settings.save('visibleStatuses', Object.assign({}, statuses, {[name]: checked}));
     }

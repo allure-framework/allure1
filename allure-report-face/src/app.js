@@ -1,7 +1,6 @@
 import 'font-awesome/css/font-awesome.css';
 import './styles.css';
 
-import 'bem-components-dist/desktop/bem-components.dev.js+bh.js';
 import {Application} from 'backbone.marionette';
 import router from './router';
 import ErrorLayout from './layouts/error/ErrorLayout';

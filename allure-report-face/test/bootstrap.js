@@ -23,11 +23,6 @@ global.window = global.document.defaultView;
 global.navigator = global.window.navigator;
 global.location = global.window.location;
 
-//TODO: get rid of BEM
-//bem-components
-global.jQuery = require('jquery');
-require('bem-components-dist/desktop/bem-components.dev.js+bh.js');
-
 //require hooks
 require.extensions['.css'] = function () {};
 require('babel-core/register');

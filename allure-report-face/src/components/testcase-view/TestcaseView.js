@@ -1,6 +1,5 @@
 import './styles.css';
 import {LayoutView} from 'backbone.marionette';
-import bemRender from '../../util/bemRender';
 import {on, region} from '../../decorators';
 import allurePlugins from '../../pluginApi';
 import StepsView from '../steps/StepsView';
@@ -19,11 +18,6 @@ class TestcaseView extends LayoutView {
     }
 
     onRender() {
-        bemRender(this.$('.testcase__trace-toggle'), {
-            block: 'button',
-            mods: {view: 'pseudo'},
-            text: 'Show trace'
-        });
         this.showTestcasePlugins(this.$('.testcase__content_before'), allurePlugins.testcaseBlocks.before);
         this.steps.show(new StepsView({
             baseUrl: this.options.baseUrl + '/' + this.model.id,

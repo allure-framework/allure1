@@ -12,7 +12,9 @@
             <div class="col_flex">
                 <pre class="alert__code"><code>{{failure.message}}</code></pre>
             </div>
-            <div class="col testcase__trace-toggle"></div>
+            <div class="col">
+                <button class="testcase__trace-toggle button">Show trace</button>
+            </div>
         </div>
         <pre class="alert__code testcase__trace"><code>{{failure.stackTrace}}</code></pre>
     </div>
