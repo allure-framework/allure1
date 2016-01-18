@@ -4,7 +4,7 @@ $button-border-radius: 3px;
 $button-border-color: rgba(0, 0, 0, 0.2);
 $button-border-hover: rgba(0, 0, 0, 0.3);
 $button-bg-pressed: rgba(0, 0, 0, 0.05);
-$button-bg-checked: #fff4dc;
+$button-bg-checked: #e8e8e8;
 
 .button {
   padding: 0 13px;
