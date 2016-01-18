@@ -1,7 +1,6 @@
 import './styles.css';
 import {className} from '../../decorators';
 import {ItemView} from 'backbone.marionette';
-import {Model} from 'backbone';
 import ReportModel from '../../data/report/ReportModel';
 import allurePlugins from '../../pluginApi';
 import template from './SideNavView.hbs';
@@ -19,14 +18,14 @@ class SideNavView extends ItemView {
             tabName, icon, title,
             active: this.isTabActive(tabName)
         }));
-        this.model.fetch().then(() => this.render())
+        this.model.fetch().then(() => this.render());
     }
 
     serializeData() {
         return {
             tabs: this.tabs,
             report: this.model.toJSON()
-        }
+        };
     }
 
     isTabActive(name) {

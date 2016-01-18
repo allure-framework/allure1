@@ -7,6 +7,6 @@ export default class ReportModel extends Model {
         if(!this.fetchPromise) {
             this.fetchPromise = super.fetch(...args);
         }
-        return new Promise((res, rej) => this.fetchPromise.then(res, rej))
+        return new Promise((res, rej) => this.fetchPromise.then(res, rej));
     }
 }

@@ -9,7 +9,7 @@ function makeConfig(hotload) {
         entry: ['./src/index.js'],
         output: {
             path: path.join(__dirname, 'target/allure-report'),
-            pathinfo: true,
+            pathinfo: hotload,
             filename: 'app.js'
         },
         module: {
@@ -40,7 +40,11 @@ function makeConfig(hotload) {
                 new CopyWebpackPlugin([{from: './src/favicon.ico'}]),
                 new ExtractTextPlugin('styles.css')
             ];
-            return hotload ? plugins.concat(new webpack.HotModuleReplacementPlugin()) : plugins;
+            if(hotload) {
+                return [...plugins, new webpack.HotModuleReplacementPlugin()];
+            } else {
+                return [...plugins, new webpack.optimize.UglifyJsPlugin({minimize: true})];
+            }
         })(),
         postcss: (webpack) => [
             require('postcss-import')({addDependencyTo: webpack}),
