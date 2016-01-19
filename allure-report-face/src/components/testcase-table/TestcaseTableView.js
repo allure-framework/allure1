@@ -25,7 +25,9 @@ export default class TestcaseTableView extends LayoutView {
             baseUrl: this.options.baseUrl,
             totalCount: this.options.testCases.length,
             currentCase: this.options.currentCase,
-            testCases: this.options.testCases.filter(({status}) => statuses[status])
+            testCases: this.options.testCases
+                .map((testcase, index) => Object.assign(testcase, {index: index + 1}))
+                .filter(({status}) => statuses[status])
         };
     }
 }
