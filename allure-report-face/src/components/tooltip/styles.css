@@ -7,6 +7,7 @@ $tooltip-color: #fff;
   color: $tooltip-color;
   padding: 0 8px;
   line-height: 24px;
+  font-size: 12px;
   &:before {
     content: ' ';
     position: absolute;
@@ -16,5 +17,11 @@ $tooltip-color: #fff;
     border-right-color: $tooltip-bg;
     top: 4px;
     left: -16px;
+  }
+  &_position_bottom:before {
+    border-bottom-color: $tooltip-bg;
+    top: -16px;
+    left: 50%;
+    margin-left: -8px;
   }
 }

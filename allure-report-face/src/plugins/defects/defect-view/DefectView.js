@@ -1,9 +1,10 @@
 import {LayoutView} from 'backbone.marionette';
-import {region} from '../../../decorators';
+import {region, behavior} from '../../../decorators';
 import TestcaseTableView from '../../../components/testcase-table/TestcaseTableView';
 import template from './DefectView.hbs';
 
-export default class DefectView extends LayoutView {
+@behavior('TooltipBehavior', {position: 'bottom'})
+class DefectView extends LayoutView {
     template = template;
 
     @region('.defect__table')
@@ -32,3 +33,5 @@ export default class DefectView extends LayoutView {
         }, super.serializeData());
     }
 }
+
+export default DefectView;

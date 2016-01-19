@@ -10,6 +10,12 @@ export const POSITION = {
             top: top + height / 2 - tipSize.height / 2,
             left: left + width + offset
         };
+    },
+    'bottom': function({top, left, height, width}, {offset}, tipSize) {
+        return {
+            top: top + height + offset,
+            left: left + width / 2 - tipSize.width / 2
+        };
     }
 };
 

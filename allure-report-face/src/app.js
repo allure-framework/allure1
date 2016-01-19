@@ -1,13 +1,18 @@
 import 'font-awesome/css/font-awesome.css';
 import './styles.css';
 
-import {Application} from 'backbone.marionette';
+import {Application, Behaviors} from 'backbone.marionette';
 import router from './router';
+import TooltipBehavior from './util/TooltipBehavior';
 import ErrorLayout from './layouts/error/ErrorLayout';
 
 function rootPath(path) {
     return path.split('/')[0];
 }
+
+Behaviors.behaviorsLookup = {
+    TooltipBehavior
+};
 
 const App = new Application({
     regions: {

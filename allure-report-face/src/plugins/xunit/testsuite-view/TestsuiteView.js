@@ -1,9 +1,10 @@
 import {LayoutView} from 'backbone.marionette';
-import {region} from '../../../decorators';
+import {region, behavior} from '../../../decorators';
 import template from './TestsuiteView.hbs';
 import TestcaseTableView from '../../../components/testcase-table/TestcaseTableView';
 
-export default class TestsuiteView extends LayoutView {
+@behavior('TooltipBehavior', {position: 'bottom'})
+class TestsuiteView extends LayoutView {
     template = template;
 
     @region('.testsuite__testcases')
@@ -33,3 +34,5 @@ export default class TestsuiteView extends LayoutView {
         }, super.serializeData());
     }
 }
+
+export default TestsuiteView;

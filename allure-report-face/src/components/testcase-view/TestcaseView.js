@@ -1,10 +1,11 @@
 import './styles.css';
 import {LayoutView} from 'backbone.marionette';
-import {on, region} from '../../decorators';
+import {on, region, behavior} from '../../decorators';
 import allurePlugins from '../../pluginApi';
 import StepsView from '../steps/StepsView';
 import template from './TestcaseView.hbs';
 
+@behavior('TooltipBehavior', {position: 'bottom'})
 class TestcaseView extends LayoutView {
     template = template;
 

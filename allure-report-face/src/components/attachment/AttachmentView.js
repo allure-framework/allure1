@@ -4,11 +4,12 @@ import highlight from 'highlight.js';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
 import router from '../../router';
-import {className, on} from '../../decorators';
+import {className, on, behavior} from '../../decorators';
 import attachmentType from '../../util/attachmentType';
 import template from './AttachmentView.hbs';
 
 @className('attachment')
+@behavior('TooltipBehavior', {position: 'bottom'})
 class AttachmentView extends ItemView {
     template = template;
 
