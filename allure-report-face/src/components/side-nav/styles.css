@@ -48,7 +48,7 @@ $sidebar-collapsed: 30px;
     color: $text-muted-color;
     text-decoration: none;
     transition: color 0.1s ease-in;
-    padding: 1em 0;
+    padding: 0.8em 0;
     &_active {
       color: $text-color;
     }
@@ -58,10 +58,9 @@ $sidebar-collapsed: 30px;
   }
   &__icon {
     font-size: 22px;
+    line-height: 24px;
     vertical-align: middle;
     transition: top 0.3s ease-in;
-    position: relative;
-    top: -1px;
     display: inline-block;
     margin: 0 5px;
   }
@@ -90,6 +89,8 @@ $sidebar-collapsed: 30px;
   &__collapse {
     cursor: pointer;
     .side-nav__icon {
+      position: relative;
+      top: -1px;
       transition: transform 0.1s;
     }
   }
@@ -102,6 +103,13 @@ $sidebar-collapsed: 30px;
       background-size: contain;
       background-position: 0;
     }
+    .side-nav__icon {
+      margin: 0;
+      overflow: hidden;
+      display: block;
+      width: $sidebar-collapsed;
+      text-align: center;
+    }
     .side-nav__collapse .side-nav__icon {
       transform: rotate(180deg);
     }
@@ -109,7 +117,7 @@ $sidebar-collapsed: 30px;
       display: none;
     }
     .side-nav__report {
-      display: block;
+      display: inline-block;
       margin-top: 1em;
     }
     .side-nav__info:after {

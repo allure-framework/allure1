@@ -11,7 +11,7 @@
     </span>
     {{#if report.url}}
         <a class="{{b 'side-nav' 'icon'}} {{b 'side-nav' 'report'}} fa fa-file-text-o link"
-           title="Open report"
+           data-tooltip="Open report"
            href="{{report.url}}"></a>
     {{/if}}
 </div>
@@ -19,7 +19,7 @@
     {{#each tabs}}
         <li class="side-nav__item">
             <a href="#{{tabName}}" class="{{b 'side-nav' 'link' active=active}}">
-                <span class="side-nav__icon {{icon}}"></span>
+                <span class="side-nav__icon {{icon}}" data-tooltip="{{title}}"></span>
                 <span class="side-nav__text">{{title}}</span>
             </a>
         </li>
@@ -40,7 +40,7 @@
         {{/if}}
     </dl>
     <div class="{{b 'side-nav' 'item'}} {{b 'side-nav' 'collapse'}}">
-        <span class="{{b 'side-nav' 'icon'}} fa fa-angle-double-left"></span>
+        <span class="{{b 'side-nav' 'icon'}} fa fa-angle-double-left" data-tooltip="Expand"></span>
         <span class="side-nav__text">Collapse</span>
     </div>
 </div>
