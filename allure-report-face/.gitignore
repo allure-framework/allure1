@@ -1,4 +1,5 @@
-target
+coverage
+etc
 node_modules
 node
-etc
+target

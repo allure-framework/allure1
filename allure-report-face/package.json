@@ -9,7 +9,8 @@
     "start": "node tools/serve",
     "pretest": "eslint --ignore-path=.gitignore .",
     "test": "npm run jasmine",
-    "jasmine": "JASMINE_CONFIG_PATH=jasmine.json DEBUG=allure-face:test jasmine"
+    "jasmine": "JASMINE_CONFIG_PATH=jasmine.json DEBUG=allure-face:test jasmine",
+    "coverage": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover jasmine"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,7 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "handlebars-loader": "^1.1.4",
+    "istanbul": "github:gotwarlost/istanbul#source-map",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
     "jsdom": "^7.0.2",
