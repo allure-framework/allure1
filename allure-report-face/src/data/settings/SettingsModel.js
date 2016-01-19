@@ -4,6 +4,7 @@ import {protoprop} from '../../decorators';
 export default class SettingsModel extends Model {
     @protoprop
     defaults = {
+        sidebarCollapsed: false,
         visibleStatuses: {
             FAILED: true,
             BROKEN: true,

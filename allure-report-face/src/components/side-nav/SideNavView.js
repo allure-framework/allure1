@@ -1,8 +1,9 @@
 import './styles.css';
-import {className} from '../../decorators';
+import {className, on} from '../../decorators';
 import {ItemView} from 'backbone.marionette';
 import ReportModel from '../../data/report/ReportModel';
 import allurePlugins from '../../pluginApi';
+import settings from '../../util/settings';
 import template from './SideNavView.hbs';
 import router from '../../router';
 
@@ -21,6 +22,10 @@ class SideNavView extends ItemView {
         this.model.fetch().then(() => this.render());
     }
 
+    onRender() {
+        this.$el.toggleClass('side-nav_collapsed', settings.get('sidebarCollapsed'));
+    }
+
     serializeData() {
         return {
             tabs: this.tabs,
@@ -31,6 +36,12 @@ class SideNavView extends ItemView {
     isTabActive(name) {
         var currentUrl = router.getCurrentUrl();
         return name ? currentUrl.indexOf(name) === 0 : currentUrl === name;
+    }
+
+    @on('click .side-nav__collapse')
+    onCollapseClick() {
+        this.$el.toggleClass('side-nav_collapsed');
+        settings.save('sidebarCollapsed', this.$el.hasClass('side-nav_collapsed'));
     }
 }
 

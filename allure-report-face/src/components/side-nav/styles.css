@@ -1,10 +1,17 @@
 @import "../../variables.css";
 
+$sidebar-full-width: 160px;
+$sidebar-collapsed: 30px;
+
 .side-nav {
-  max-width: 160px;
+  width: $sidebar-full-width;
   display: flex;
   flex-direction: column;
   height: 100vh;
+  transition: width 0.3s;
+  & > * {
+    width: $sidebar-full-width;
+  }
   &__head {
     margin: $gap-size 0;
     padding-bottom: $gap-size;
@@ -50,7 +57,7 @@
     }
   }
   &__icon {
-    font-size: 130%;
+    font-size: 22px;
     vertical-align: middle;
     transition: top 0.3s ease-in;
     position: relative;
@@ -58,8 +65,20 @@
     display: inline-block;
     margin: 0 5px;
   }
+  &__report {
+    display: none;
+  }
   &__info {
     line-height: 1.3;
+    position: relative;
+    &:after {
+      position: absolute;
+      content: ' ';
+      left: 0;
+      right: 0;
+      background: linear-gradient(to left, $body-bg, color($body-bg a(0)));
+      transition: right 0.3s;
+    }
     dt {
       color: $text-muted-color;
     }
@@ -70,5 +89,33 @@
   }
   &__collapse {
     cursor: pointer;
+    .side-nav__icon {
+      transition: transform 0.1s;
+    }
+  }
+  &_collapsed {
+    overflow: hidden;
+    width: $sidebar-collapsed;
+    .side-nav__brand {
+      width: 30px;
+      height: 30px;
+      background-size: contain;
+      background-position: 0;
+    }
+    .side-nav__collapse .side-nav__icon {
+      transform: rotate(180deg);
+    }
+    .side-nav__text {
+      display: none;
+    }
+    .side-nav__report {
+      display: block;
+      margin-top: 1em;
+    }
+    .side-nav__info:after {
+      top: 0;
+      bottom: 0;
+      right: calc($sidebar-full-width - $sidebar-collapsed);
+    }
   }
 }
