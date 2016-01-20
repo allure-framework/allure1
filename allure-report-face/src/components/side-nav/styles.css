@@ -61,7 +61,6 @@ $sidebar-collapsed: 30px;
     line-height: 24px;
     vertical-align: middle;
     transition: top 0.3s ease-in;
-    display: inline-block;
     margin: 0 5px;
   }
   &__report {
