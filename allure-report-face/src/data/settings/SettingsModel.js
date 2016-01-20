@@ -4,6 +4,10 @@ import {protoprop} from '../../decorators';
 export default class SettingsModel extends Model {
     @protoprop
     defaults = {
+        testCaseSorting: {
+            field: 'index',
+            order: 'asc'
+        },
         sidebarCollapsed: false,
         visibleStatuses: {
             FAILED: true,

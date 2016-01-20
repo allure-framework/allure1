@@ -4,9 +4,12 @@
 </div>
 <div class="{{b "table" hover=true}} testcase-table__table">
     <div class="{{b "table" "head"}}">
-        <div class="{{b "table" "col" right=true}} {{b "testcase-table" "index"}}">#</div>
-        <div class="{{b "table" "col"}} {{b "testcase-table" "name"}}">Title</div>
-        <div class="{{b "table" "col"}}">Duration</div>
+        <div class="{{b "table" "col" right=true sortable=true sorted=(sort-class "index" sorting)}} {{b "testcase-table" "index"}}"
+            data-sort="index">#</div>
+        <div class="{{b "table" "col" sortable=true sorted=(sort-class "name" sorting)}} {{b "testcase-table" "name"}}"
+            data-sort="name">Title</div>
+        <div class="{{b "table" "col" sortable=true sorted=(sort-class "time.duration" sorting)}}"
+            data-sort="time.duration">Duration</div>
         <div class="{{b "table" "col"}}">Status</div>
     </div>
     {{#each testCases}}

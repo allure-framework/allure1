@@ -13,10 +13,6 @@ Handlebars.registerHelper('helperMissing', function() {
     return helper.apply(this, arguments);
 });
 
-//jasmine addons
-global.joc = jasmine.objectContaining;
-global.jany = jasmine.any;
-
 //debug log
 global.dump = require('debug')('allure-face:test');
 
@@ -26,8 +22,14 @@ global.document = jsdom('<html><head></head><body></body></html>', {
 });
 global.window = global.document.defaultView;
 global.window.localStorage = jasmine.createSpyObj('localStorage', ['getItem', 'setItem']);
+global.window.jQuery = require('jquery');
 global.navigator = global.window.navigator;
 global.location = global.window.location;
+
+//jasmine addons
+global.joc = jasmine.objectContaining;
+global.jany = jasmine.any;
+require('jasmine-jquery');
 
 //require hooks
 require.extensions['.css'] = function() {};

@@ -1,5 +1,6 @@
 import 'font-awesome/css/font-awesome.css';
 import './styles.css';
+import './blocks/table/styles.css';
 
 import {Application, Behaviors} from 'backbone.marionette';
 import router from './router';

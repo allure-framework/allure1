@@ -22,6 +22,25 @@
     &_right {
       text-align: right;
     }
+    &_sortable {
+      cursor: pointer;
+      &:after {
+        vertical-align: middle;
+        content: ' ';
+        display: inline-block;
+        width: 12px;
+        height: 18px;
+        margin-left: 5px;
+        background: url(./sort-icon.svg) center no-repeat;
+        background-size: contain;
+      }
+    }
+    &_sorted_down:after {
+      background-image: url(./sort-down-icon.svg);
+    }
+    &_sorted_up:after {
+      background-image: url(./sort-up-icon.svg);
+    }
   }
   &_hover {
     .table__row:not([disabled]):hover {
