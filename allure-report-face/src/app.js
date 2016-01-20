@@ -4,16 +4,14 @@ import './blocks/table/styles.css';
 
 import {Application, Behaviors} from 'backbone.marionette';
 import router from './router';
-import TooltipBehavior from './util/TooltipBehavior';
+import * as behaviors from './behaviors';
 import ErrorLayout from './layouts/error/ErrorLayout';
 
 function rootPath(path) {
     return path.split('/')[0];
 }
 
-Behaviors.behaviorsLookup = {
-    TooltipBehavior
-};
+Behaviors.behaviorsLookup = behaviors;
 
 const App = new Application({
     regions: {

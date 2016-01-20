@@ -3,15 +3,15 @@
     <span class="testsuites-list__statuses"></span>
 </h2>
 
-<div class="{{b "table" hover=true}}">
+<div class="{{b "table" hover=true}} testsuites-list__table">
     <div class="{{b "table" "head"}}">
-        <div class="{{b "table" "col"}} {{b "testsuites-list" "name"}}">Title</div>
-        <div class="{{b "table" "col"}}">Duration</div>
-        <div class="{{b "table" "col"}}">Failed</div>
-        <div class="{{b "table" "col"}}">Broken</div>
-        <div class="{{b "table" "col"}}">Canceled</div>
-        <div class="{{b "table" "col"}}">Pending</div>
-        <div class="{{b "table" "col"}}">Total</div>
+        {{> ../../../blocks/table/sortable-col field="title" title="Title" class=(b "testsuites-list" "name")}}
+        {{> ../../../blocks/table/sortable-col field="time.duration" title="Duration"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.failed" title="Failed"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.broken" title="Broken"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.canceled" title="Canceled"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.pending" title="Pending"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.total" title="Total"}}
     </div>
     <div class="{{b "table" "row" summary=true}}" disabled>
         <div class="{{b "table" "col"}} {{b "testsuites-list" "name"}} long-line">

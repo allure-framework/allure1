@@ -21,16 +21,22 @@
     }
     &_right {
       text-align: right;
+      justify-content: flex-end;
     }
     &_sortable {
       cursor: pointer;
+      display: flex;
+      & > span {
+        overflow: hidden;
+        padding-right: 5px;
+      }
       &:after {
+        flex-shrink: 0;
         vertical-align: middle;
         content: ' ';
         display: inline-block;
         width: 12px;
         height: 18px;
-        margin-left: 5px;
         background: url(./sort-icon.svg) center no-repeat;
         background-size: contain;
       }

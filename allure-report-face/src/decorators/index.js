@@ -4,7 +4,7 @@ export function protoprop(target, name, descriptor) {
     target[name] = descriptor.initializer();
 }
 
-export function behavior(name, config) {
+export function behavior(name, config = {}) {
     return function({prototype}) {
         if(!prototype.behaviors) {
             prototype.behaviors = {};

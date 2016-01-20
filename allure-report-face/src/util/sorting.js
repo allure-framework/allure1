@@ -6,7 +6,7 @@ function getByPath(obj, path) {
 
 export function updateSort(sortField, {field, order}) {
     if(sortField === field) {
-        order = order == 'asc' ? 'desc' : 'asc';
+        order = order === 'asc' ? 'desc' : 'asc';
         return {field, order};
     }
     return {field: sortField, order: 'asc'};

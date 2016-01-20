@@ -4,19 +4,11 @@
 process.env.NODE_PATH = 'src';
 module.constructor._initPaths();
 
-const jsdom = require('jsdom').jsdom;
-const Handlebars = require('handlebars');
-require.cache[require.resolve('handlebars/runtime')] = {exports: Handlebars};
-Handlebars.registerHelper('helperMissing', function() {
-    const options = Array.from(arguments).pop();
-    const helper = require('helpers/' + options.name);
-    return helper.apply(this, arguments);
-});
-
 //debug log
 global.dump = require('debug')('allure-face:test');
 
 //jsdom
+const jsdom = require('jsdom').jsdom;
 global.document = jsdom('<html><head></head><body></body></html>', {
     url: 'http://localhost'
 });
@@ -32,5 +24,6 @@ global.jany = jasmine.any;
 require('jasmine-jquery');
 
 //require hooks
+require('./handlebars-loader');
 require.extensions['.css'] = function() {};
 require('babel-core/register');

@@ -2,10 +2,12 @@ import './styles.css';
 import {LayoutView} from 'backbone.marionette';
 import {reduce} from 'underscore';
 import StatusToggleView from '../../../components/status-toggle/StatusToggleView';
-import {region} from '../../../decorators';
+import {region, behavior} from '../../../decorators';
+import {doSort} from '../../../util/sorting';
 import settings from '../../../util/settings';
 import template from './TestsuitesListView.hbs';
 
+@behavior('SortBehavior')
 class TestsuitesListView extends LayoutView {
     template = template;
 
@@ -22,20 +24,33 @@ class TestsuitesListView extends LayoutView {
         this.statuses.show(new StatusToggleView());
     }
 
+    getSettings() {
+        return settings.get('xUnitSettings');
+    }
+
+    setSettings(sorting) {
+        settings.set('xUnitSettings', sorting);
+    }
+
     serializeData() {
         const statuses = settings.get('visibleStatuses');
+        const sorting = this.getSettings();
         return {
             baseUrl: 'xUnit',
             currentSuite: this.state.get('testsuite'),
+            sorting: sorting,
             time: this.collection.time,
             statistic: this.collection.statistic,
-            suites: this.collection.toJSON().filter(suite => {
-                return reduce(
-                    suite.statistic,
-                    (visible, value, status) => visible || (statuses[status.toUpperCase()] && value > 0),
-                    false
-                );
-            })
+            suites: doSort(
+                this.collection.toJSON().filter(suite => {
+                    return reduce(
+                        suite.statistic,
+                        (visible, value, status) => visible || (statuses[status.toUpperCase()] && value > 0),
+                        false
+                    );
+                }),
+                sorting
+            )
         };
     }
 }

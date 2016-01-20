@@ -48,7 +48,7 @@ class PaneSetView extends LayoutView {
             const pane = this.panes[paneName];
             var width;
             var left;
-            if(index == last) {
+            if(index === last) {
                 const expanded = index === 0 || this.expanded;
                 width = expanded ? 100 - 5 * index : 50;
                 left = 100 - width;

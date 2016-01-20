@@ -1,12 +1,13 @@
 import './styles.css';
 import {LayoutView} from 'backbone.marionette';
-import {region, on} from '../../decorators';
+import {region, behavior} from '../../decorators';
 import settings from '../../util/settings';
-import {doSort, updateSort} from '../../util/sorting';
+import {doSort} from '../../util/sorting';
 import StatusToggleView from '../status-toggle/StatusToggleView';
 import template from './TestcaseTableView.hbs';
 
-export default class TestcaseTableView extends LayoutView {
+@behavior('SortBehavior')
+class TestcaseTableView extends LayoutView {
     template = template;
 
     @region('.testcase-table__statuses')
@@ -20,17 +21,17 @@ export default class TestcaseTableView extends LayoutView {
         this.statuses.show(new StatusToggleView());
     }
 
-    @on('click [data-sort]')
-    onSortClick(e) {
-        const el = this.$(e.currentTarget);
-        const sorting = settings.get('testCaseSorting');
-        settings.save('testCaseSorting', updateSort(el.data('sort'), sorting));
-        this.render();
+    getSettings() {
+        return settings.get('testCaseSorting');
+    }
+
+    setSettings(sorting) {
+        settings.save('testCaseSorting', sorting);
     }
 
     serializeData() {
         const statuses = settings.get('visibleStatuses');
-        const sorting = settings.get('testCaseSorting');
+        const sorting = this.getSettings();
         return {
             baseUrl: this.options.baseUrl,
             sorting: sorting,
@@ -43,3 +44,5 @@ export default class TestcaseTableView extends LayoutView {
         };
     }
 }
+
+export default TestcaseTableView;

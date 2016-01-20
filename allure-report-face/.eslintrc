@@ -8,6 +8,7 @@
   "rules": {
     "quotes": [2, "single"],
     "one-var": [2, "never"],
-    "semi": [2, "always"]
+    "semi": [2, "always"],
+    "eqeqeq": [2]
   }
 }
