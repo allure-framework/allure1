@@ -12,20 +12,21 @@ class TestsuiteView extends LayoutView {
 
     initialize({testsuite, state}) {
         this.state = state;
-        this.listenTo(this.state, 'change:testcase', this.showTestcases, this);
+        this.listenTo(this.state, 'change:testcase', (m, testcase) => this.showTestcase(testcase));
         this.model = testsuite;
     }
 
     onRender() {
-        this.showTestcases();
-    }
-
-    showTestcases() {
-        this.testcases.show(new TestcaseTableView({
+        this.testcaseTable = new TestcaseTableView({
             testCases: this.model.get('testCases'),
             currentCase: this.state.get('testcase'),
             baseUrl: 'xUnit/' + this.state.get('testsuite')
-        }));
+        });
+        this.testcases.show(this.testcaseTable);
+    }
+
+    showTestcase(testcase) {
+        this.testcaseTable.highlightItem(testcase);
     }
 
     serializeData() {

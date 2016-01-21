@@ -15,12 +15,13 @@ class TestsuitesListView extends DataGridView {
 
     initialize({state}) {
         this.state = state;
-        this.listenTo(this.state, 'change:testsuite', this.render);
+        this.listenTo(this.state, 'change:testsuite', (m, suite) => this.highlightItem(suite));
         this.listenTo(settings, 'change:visibleStatuses', this.render);
     }
 
     onRender() {
         this.statuses.show(new StatusToggleView());
+        this.highlightItem(this.state.get('testsuite'));
     }
 
     serializeData() {
@@ -28,7 +29,6 @@ class TestsuitesListView extends DataGridView {
         const sorting = this.getSettings();
         return {
             baseUrl: 'xUnit',
-            currentSuite: this.state.get('testsuite'),
             sorting: sorting,
             time: this.collection.time,
             statistic: this.collection.statistic,

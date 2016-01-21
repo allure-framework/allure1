@@ -12,19 +12,20 @@ class DefectView extends LayoutView {
 
     initialize({state}) {
         this.state = state;
-        this.listenTo(this.state, 'change:testcase', this.showTestcases, this);
+        this.listenTo(this.state, 'change:testcase', (m, testcase) => this.showTestcase(testcase));
     }
 
     onRender() {
-        this.showTestcases();
-    }
-
-    showTestcases() {
-        this.testcases.show(new TestcaseTableView({
+        this.testcaseTable = new TestcaseTableView({
             testCases: this.model.get('testCases'),
             currentCase: this.state.get('testcase'),
             baseUrl: 'defects/' + this.state.get('defect')
-        }));
+        });
+        this.testcases.show(this.testcaseTable);
+    }
+
+    showTestcase(testcase) {
+        this.testcaseTable.highlightItem(testcase);
     }
 
     serializeData() {

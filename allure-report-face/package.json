@@ -7,7 +7,7 @@
     "build": "webpack",
     "prestart": "mvn -Pdev -P!common clean compile",
     "start": "node tools/serve",
-    "pretest": "eslint --ignore-path=.gitignore .",
+    "-pretest": "eslint --ignore-path=.gitignore .",
     "test": "npm run jasmine",
     "jasmine": "JASMINE_CONFIG_PATH=jasmine.json DEBUG=allure-face:test jasmine",
     "coverage": "JASMINE_CONFIG_PATH=jasmine.json istanbul cover jasmine"

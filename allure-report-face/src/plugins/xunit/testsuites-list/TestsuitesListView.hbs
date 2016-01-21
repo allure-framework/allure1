@@ -20,7 +20,7 @@
         {{> suite-table-row}}
     </div>
     {{#each suites}}
-        <a class="{{b "table" "row" active=(eq uid ../currentSuite)}}" href="#{{../baseUrl}}/{{uid}}">
+        <a class="{{b "table" "row"}}" data-uid="{{uid}}" href="#{{../baseUrl}}/{{uid}}">
             <div class="{{b "table" "col"}} {{b "testsuites-list" "name"}} long-line">
                 {{title}}
             </div>

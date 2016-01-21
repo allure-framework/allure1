@@ -12,7 +12,7 @@
             {{> ../../../blocks/table/sortable-col field="failure.message" title="Defect" sorting=../sorting}}
         </div>
         {{#each defects}}
-            <a class="{{b "table" "row" active=(eq uid ../../currentDefect)}}" href="#defects/{{uid}}">
+            <a class="{{b "table" "row"}}" data-uid={{uid}} href="#defects/{{uid}}">
                 <div class="{{b "table" "col" right=true}} {{b "defects-list" "count-col"}}">
                     <span class="label label_status_{{../status}}">{{testCases.length}}</span>
                 </div>

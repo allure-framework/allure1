@@ -10,7 +10,11 @@ class DefectsListView extends DataGridView {
 
     initialize({state}) {
         this.state = state;
-        this.listenTo(this.state, 'change:defect', () => this.render());
+        this.listenTo(this.state, 'change:defect', (model, defect) => this.highlightItem(defect));
+    }
+
+    onRender() {
+        this.highlightItem(this.state.get('defect'));
     }
 
     @on('click .defects-list__item')
@@ -22,7 +26,6 @@ class DefectsListView extends DataGridView {
     serializeData() {
         return {
             sorting: this.getSettings(),
-            currentDefect: this.state.get('defect'),
             defectTypes: this.collection.toJSON().map(type =>
                 Object.assign({}, type, {
                     defects: this.applySort(type.defects)

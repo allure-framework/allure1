@@ -18,6 +18,7 @@ class TestcaseTableView extends DataGridView {
     }
 
     onRender() {
+        this.highlightItem(this.options.currentCase);
         this.statuses.show(new StatusToggleView());
     }
 
@@ -28,7 +29,6 @@ class TestcaseTableView extends DataGridView {
             baseUrl: this.options.baseUrl,
             sorting: sorting,
             totalCount: this.options.testCases.length,
-            currentCase: this.options.currentCase,
             testCases: this.applySort(this.testCases).filter(({status}) => statuses[status])
         };
     }

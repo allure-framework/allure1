@@ -11,7 +11,7 @@
         <div class="{{b "table" "col"}}">Status</div>
     </div>
     {{#each testCases}}
-        <a class="{{b "table" "row" active=(eq uid ../currentCase)}}" href="#{{../baseUrl}}/{{uid}}">
+        <a class="{{b "table" "row" active=(eq uid ../currentCase)}}" data-uid="{{uid}}" href="#{{../baseUrl}}/{{uid}}">
             <div class="{{b "table" "col" right=true}} {{b "testcase-table" "index"}}">{{index}}</div>
             <div class="{{b "table" "col"}} {{b "testcase-table" "name"}} long-line">{{name}}</div>
             <div class="{{b "table" "col"}}">{{duration time.duration}}</div>
