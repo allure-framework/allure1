@@ -6,13 +6,9 @@ export function protoprop(target, name, descriptor) {
 
 export function behavior(name, config = {}) {
     return function({prototype}) {
-        if(!prototype.behaviors) {
-            prototype.behaviors = {};
-        }
-        if(!prototype.hasOwnProperty('behaviours')) {
-            prototype.behaviors = Object.assign({}, prototype.behaviors);
-        }
-        prototype.behaviors[name] = config;
+        prototype.behaviors = Object.assign({
+            [name]: config
+        }, prototype.behaviors);
     };
 }
 

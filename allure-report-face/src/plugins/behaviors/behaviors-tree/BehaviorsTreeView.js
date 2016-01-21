@@ -1,11 +1,12 @@
 import './styles.css';
-import {ItemView} from 'backbone.marionette';
+import DataGridView from '../../../components/data-grid/DataGridView';
 import {on, className} from '../../../decorators';
 import template from './BehaviorsTreeView.hbs';
 
 @className('behaviors-list')
-class BehaviorsTreeView extends ItemView {
+class BehaviorsTreeView extends DataGridView {
     template = template;
+    settingsKey = 'behaviorsSettings';
 
     initialize({state}) {
         this.listenTo(state, 'change:behavior', this.highlightBehavior, this);
@@ -29,6 +30,14 @@ class BehaviorsTreeView extends ItemView {
     @on('click .behaviors-list__feature-row')
     onFeatureClick(e) {
         this.$(e.currentTarget).toggleClass('behaviors-list__feature-row_expanded');
+    }
+
+    serializeData() {
+        const {features} = super.serializeData();
+        return {
+            sorting: this.getSettings(),
+            features: this.applySort(features)
+        };
     }
 }
 

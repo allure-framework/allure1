@@ -1,11 +1,12 @@
 import './styles.css';
-import {LayoutView} from 'backbone.marionette';
+import DataGridView from '../../../components/data-grid/DataGridView';
 import {on} from '../../../decorators';
 import router from '../../../router';
 import template from './DefectsListView.hbs';
 
-class DefectsListView extends LayoutView {
+class DefectsListView extends DataGridView {
     template = template;
+    settingsKey = 'defectsSettings';
 
     initialize({state}) {
         this.state = state;
@@ -15,17 +16,16 @@ class DefectsListView extends LayoutView {
     @on('click .defects-list__item')
     onDefectClick(e) {
         const defectId = this.$(e.currentTarget).data('uid');
-        router.to('defects/'+defectId);
+        router.to('defects/' + defectId);
     }
 
     serializeData() {
-        const currentDefect = this.state.get('defect');
         return {
+            sorting: this.getSettings(),
+            currentDefect: this.state.get('defect'),
             defectTypes: this.collection.toJSON().map(type =>
                 Object.assign({}, type, {
-                    defects: type.defects.map(defect =>
-                        Object.assign({}, defect, {active: defect.uid === currentDefect})
-                    )
+                    defects: this.applySort(type.defects)
                 })
             )
         };

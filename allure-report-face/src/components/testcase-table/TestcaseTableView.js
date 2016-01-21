@@ -1,32 +1,24 @@
 import './styles.css';
-import {LayoutView} from 'backbone.marionette';
-import {region, behavior} from '../../decorators';
+import DataGridView from '../data-grid/DataGridView';
+import {region} from '../../decorators';
 import settings from '../../util/settings';
-import {doSort} from '../../util/sorting';
 import StatusToggleView from '../status-toggle/StatusToggleView';
 import template from './TestcaseTableView.hbs';
 
-@behavior('SortBehavior')
-class TestcaseTableView extends LayoutView {
+class TestcaseTableView extends DataGridView {
     template = template;
+    settingsKey = 'testCaseSorting';
 
     @region('.testcase-table__statuses')
     statuses;
 
     initialize() {
         this.listenTo(settings, 'change:visibleStatuses', this.render);
+        this.testCases = this.options.testCases.map((testcase, index) => Object.assign(testcase, {index: index + 1}));
     }
 
     onRender() {
         this.statuses.show(new StatusToggleView());
-    }
-
-    getSettings() {
-        return settings.get('testCaseSorting');
-    }
-
-    setSettings(sorting) {
-        settings.save('testCaseSorting', sorting);
     }
 
     serializeData() {
@@ -37,10 +29,7 @@ class TestcaseTableView extends LayoutView {
             sorting: sorting,
             totalCount: this.options.testCases.length,
             currentCase: this.options.currentCase,
-            testCases: doSort(
-                this.options.testCases.map((testcase, index) => Object.assign(testcase, {index: index + 1})),
-                sorting
-            ).filter(({status}) => statuses[status])
+            testCases: this.applySort(this.testCases).filter(({status}) => statuses[status])
         };
     }
 }

@@ -5,11 +5,14 @@
     </h2>
     <div class="{{b "table" hover=true}} defects-list__table">
         <div class="{{b "table" "head"}}">
-            <div class="{{b "table" "col" right=true}} {{b "defects-list" "count-col"}}">Count</div>
-            <div class="{{b "table" "col"}}">Defect</div>
+            <div class="{{b "table" "col" right=true sortable=true sorted=(sort-class "testCases.length" ../sorting)}} {{b "defects-list" "count-col"}}"
+                data-sort="testCases.length">
+                <span>Count</span>
+            </div>
+            {{> ../../../blocks/table/sortable-col field="failure.message" title="Defect" sorting=../sorting}}
         </div>
         {{#each defects}}
-            <a class="{{b "table" "row" active=active}}" href="#defects/{{uid}}">
+            <a class="{{b "table" "row" active=(eq uid ../../currentDefect)}}" href="#defects/{{uid}}">
                 <div class="{{b "table" "col" right=true}} {{b "defects-list" "count-col"}}">
                     <span class="label label_status_{{../status}}">{{testCases.length}}</span>
                 </div>

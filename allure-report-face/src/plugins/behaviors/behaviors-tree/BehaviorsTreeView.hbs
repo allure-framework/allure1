@@ -4,13 +4,13 @@
 
 <div class="{{b "table" hover=true}}">
     <div class="{{b "table" "head"}}">
-        <div class="{{b "table" "col"}} behaviors-list__title">Title</div>
-        <div class="{{b "table" "col"}}">Failed</div>
-        <div class="{{b "table" "col"}}">Broken</div>
-        <div class="{{b "table" "col"}}">Canceled</div>
-        <div class="{{b "table" "col"}}">Pending</div>
-        <div class="{{b "table" "col"}}">Passed</div>
-        <div class="{{b "table" "col"}} behaviors-list__total">Total</div>
+        {{> ../../../blocks/table/sortable-col field="title" title="Title" class="behaviors-list__title"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.failed" title="Failed"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.broken" title="Broken"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.canceled" title="Canceled"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.pending" title="Pending"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.passed" title="Passed"}}
+        {{> ../../../blocks/table/sortable-col field="statistic.total" title="Total" class="behaviors-list__total"}}
     </div>
     {{#each features}}
         <div class="behaviors-list__feature">

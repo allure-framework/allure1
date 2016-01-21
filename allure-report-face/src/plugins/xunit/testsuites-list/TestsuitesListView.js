@@ -1,15 +1,14 @@
 import './styles.css';
-import {LayoutView} from 'backbone.marionette';
+import DataGridView from '../../../components/data-grid/DataGridView';
 import {reduce} from 'underscore';
 import StatusToggleView from '../../../components/status-toggle/StatusToggleView';
-import {region, behavior} from '../../../decorators';
-import {doSort} from '../../../util/sorting';
+import {region} from '../../../decorators';
 import settings from '../../../util/settings';
 import template from './TestsuitesListView.hbs';
 
-@behavior('SortBehavior')
-class TestsuitesListView extends LayoutView {
+class TestsuitesListView extends DataGridView {
     template = template;
+    settingsKey = 'xUnitSettings';
 
     @region('.testsuites-list__statuses')
     statuses;
@@ -24,14 +23,6 @@ class TestsuitesListView extends LayoutView {
         this.statuses.show(new StatusToggleView());
     }
 
-    getSettings() {
-        return settings.get('xUnitSettings');
-    }
-
-    setSettings(sorting) {
-        settings.set('xUnitSettings', sorting);
-    }
-
     serializeData() {
         const statuses = settings.get('visibleStatuses');
         const sorting = this.getSettings();
@@ -41,15 +32,14 @@ class TestsuitesListView extends LayoutView {
             sorting: sorting,
             time: this.collection.time,
             statistic: this.collection.statistic,
-            suites: doSort(
+            suites: this.applySort(
                 this.collection.toJSON().filter(suite => {
                     return reduce(
                         suite.statistic,
                         (visible, value, status) => visible || (statuses[status.toUpperCase()] && value > 0),
                         false
                     );
-                }),
-                sorting
+                })
             )
         };
     }
