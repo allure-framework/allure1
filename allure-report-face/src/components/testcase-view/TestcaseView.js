@@ -64,6 +64,7 @@ class TestcaseView extends LayoutView {
         }, super.serializeData());
     }
 
+    @on('dblclick .testcase__failure')
     @on('click .testcase__trace-toggle')
     onStacktraceClick() {
         this.$('.testcase__trace').toggleClass('testcase__trace_visible');
