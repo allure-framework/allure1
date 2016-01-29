@@ -17,6 +17,8 @@ export default class StepsView extends ItemView {
 
     serializeData() {
         return {
+            status: this.model.get('status'),
+            time: this.model.get('time'),
             steps: this.model.get('steps').map(this.fillStep, this),
             baseUrl: this.options.baseUrl,
             attachments: this.model.get('attachments')

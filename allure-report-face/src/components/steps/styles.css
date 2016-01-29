@@ -1,5 +1,11 @@
 @import "../../variables.css";
 
+.steps {
+  &__title {
+    margin: $gap-size $gap-size 0.3em;
+  }
+}
+
 .step {
   line-height: 1.5;
   &__arrow {
