@@ -8,6 +8,7 @@ $tooltip-color: #fff;
   padding: 0 8px;
   line-height: 24px;
   font-size: 12px;
+  z-index: 5;
   &:before {
     content: ' ';
     position: absolute;

@@ -1,4 +1,13 @@
-{{> ../../blocks/pane-header/pane-header baseUrl=route.baseUrl uid=uid title=title}}
+<a class="pane__overlay" href="#{{route.baseUrl}}/{{uid}}"></a>
+<h2 class="pane__title">
+    <span class="{{b 'testcase' 'severity'}}  {{severityIcon}}" data-tooltip="Severity: {{severity}}"></span>
+    {{title}}
+    <span class="pane__controls">
+        <a class="fa fa-expand pane__expand" data-tooltip="Expand" href="#{{route.baseUrl}}/{{uid}}?expanded=true"></a>
+        <a class="fa fa-compress pane__collapse" data-tooltip="Collapse" href="#{{route.baseUrl}}/{{uid}}"></a>
+        <a class="fa fa-close" data-tooltip="Close" href="#{{route.baseUrl}}"></a>
+    </span>
+</h2>
 
 {{#if failure}}
     <div class="alert alert_status_{{status}}">

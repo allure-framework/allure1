@@ -5,6 +5,14 @@ import allurePlugins from '../../pluginApi';
 import StepsView from '../steps/StepsView';
 import template from './TestcaseView.hbs';
 
+const SEVERITY_ICONS = {
+    BLOCKER: 'fa fa-exclamation-triangle',
+    CRITICAL: 'fa fa-exclamation',
+    NORMAL: 'fa fa-file-o',
+    MINOR: 'fa fa-arrow-down',
+    TRIVIAL: 'fa fa-long-arrow-down'
+};
+
 @behavior('TooltipBehavior', {position: 'bottom'})
 class TestcaseView extends LayoutView {
     template = template;
@@ -49,6 +57,7 @@ class TestcaseView extends LayoutView {
 
     serializeData() {
         return Object.assign({
+            severityIcon: SEVERITY_ICONS[this.model.get('severity')],
             route: {
                 baseUrl: this.options.baseUrl
             }

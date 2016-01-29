@@ -57,6 +57,9 @@ Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
                 <parameter name="OS_NAME" value="Mac OS X" kind="environment-variable"/>
                 <parameter name="OS_VERSION" value="10.9.4" kind="environment-variable"/>
                 <parameter name="JAVA_VERSION" value="1.7.0_21" kind="environment-variable"/>
+                <parameter name="index" value="1" kind="argument"/>
+                <parameter name="value" value="some value" kind="argument"/>
+                <parameter name="isOk" value="false" kind="argument"/>
             </parameters>
         </test-case>
         <test-case start="1412949539801" stop="1412949540559" status="failed">

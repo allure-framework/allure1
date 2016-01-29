@@ -1,4 +1,3 @@
-import './styles.css';
 import {ItemView} from 'backbone.marionette';
 import {className} from '../../decorators';
 import template from './DescriptionView.hbs';
