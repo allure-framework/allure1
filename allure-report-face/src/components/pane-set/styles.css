@@ -13,6 +13,18 @@
   &_leave, &_enter {
     left: 100% !important;
   }
+  &_overlaid &__overlay {
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.4);
+    &:hover {
+      background: rgba(255, 255, 255, 0.6);
+    }
+  }
   &__title {
     padding: 0 15px 10px;
     margin: 20px 0 0;

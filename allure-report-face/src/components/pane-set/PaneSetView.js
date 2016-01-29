@@ -48,6 +48,7 @@ class PaneSetView extends LayoutView {
             const pane = this.panes[paneName];
             var width;
             var left;
+            pane.toggleClass('pane_overlaid', this.expanded ? index < last : index < last - 1);
             if(index === last) {
                 const expanded = index === 0 || this.expanded;
                 width = expanded ? 100 - 5 * index : 50;
