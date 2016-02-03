@@ -4,12 +4,12 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
-function makeConfig(hotload) {
+function makeConfig(development) {
     return {
         entry: ['./src/index.js'],
         output: {
             path: path.join(__dirname, 'target/allure-report'),
-            pathinfo: hotload,
+            pathinfo: development,
             filename: 'app.js'
         },
         module: {
@@ -22,7 +22,7 @@ function makeConfig(hotload) {
                 loader: 'file-loader'
             }, {
                 test: /\.css$/,
-                loader: hotload ? 'style-loader!css-loader!postcss-loader' : ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+                loader: development ? 'style-loader!css-loader!postcss-loader' : ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
             }, {
                 test: /\.hbs$/,
                 loader: 'handlebars-loader',
@@ -34,13 +34,13 @@ function makeConfig(hotload) {
                 }
             }]
         },
-        devtool: 'source-map',
+        devtool: development ? 'source-map' : null,
         plugins: (() => {
             const plugins = [
                 new CopyWebpackPlugin([{from: './src/favicon.ico'}]),
                 new ExtractTextPlugin('styles.css')
             ];
-            if(hotload) {
+            if(development) {
                 return [...plugins, new webpack.HotModuleReplacementPlugin()];
             } else {
                 return [...plugins, new webpack.optimize.UglifyJsPlugin({minimize: true})];
