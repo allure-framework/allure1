@@ -3,12 +3,12 @@
     {{#if testId}}
         <span class="testcase-link">
             <span class="fa fa-database"></span>
-            <a class="link" href="{{testId.url}}">{{testId.name}}</a></span>
+            <a class="link" href="{{testId.url}}" target="_blank">{{testId.name}}</a></span>
     {{/if}}
     {{#each issues}}
         <span class="testcase-link">
             <span class="fa fa-bug"></span>
-            <a class="link" href="{{this.url}}">{{name}}</a></span>
+            <a class="link" href="{{this.url}}" target="_blank">{{name}}</a></span>
     {{/each}}
 
 {{/if}}
