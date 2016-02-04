@@ -57,6 +57,7 @@
     "highlight.js": "^8.7.0",
     "jquery": "^2.1.4",
     "normalize-css": "^2.3.1",
+    "sortablejs": "^1.4.2",
     "underscore": "^1.8.3",
     "handlebars": "^4.0.5",
     "backbone.wreqr": "^1.0.0"
