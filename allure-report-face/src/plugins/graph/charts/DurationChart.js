@@ -1,5 +1,7 @@
 import BaseChartView from '../../../components/chart/BaseChartView';
 import d3 from 'd3';
+import PopoverView from '../../../components/popover/PopoverView';
+import escape from '../../../util/escape';
 import duration from '../../../helpers/duration';
 
 const PAD_LEFT = 35;
@@ -11,6 +13,7 @@ export default class DurationChart extends BaseChartView {
     initialize() {
         this.x = d3.time.scale.utc();
         this.y = d3.scale.sqrt();
+        this.tooltip = new PopoverView({position: 'right'});
     }
 
     onShow() {
@@ -72,6 +75,8 @@ export default class DurationChart extends BaseChartView {
             height: height - median
         });
 
+        this.bindTooltip(bars);
+
         if(this.firstRender) {
             bars = bars.transition().duration(500);
         }
@@ -81,5 +86,17 @@ export default class DurationChart extends BaseChartView {
             height: d => height - this.y(d.y)
         });
         super.onShow();
+    }
+
+
+    getTooltipContent({testcases}) {
+        const LIST_LIMIT = 10;
+        const items = testcases.slice(0, LIST_LIMIT);
+        const overLimit = testcases.length - items.length;
+        return `<b>${testcases.length} test cases</b><br>` +
+            `<ul class="popover__list">` +
+            items.map(testcase => escape`<li>${testcase.title}</li>`).join('') +
+            `</ul>` +
+            (overLimit ? `...and ${overLimit} more` : '');
     }
 }

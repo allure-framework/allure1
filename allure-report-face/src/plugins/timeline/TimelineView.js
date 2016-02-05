@@ -4,6 +4,8 @@ import {once} from 'underscore';
 import {className} from '../../decorators';
 import duration from '../../helpers/duration';
 import d3 from 'd3';
+import escape from '../../util/escape';
+import TooltipView from '../../components/tooltip/TooltipView';
 
 const BAR_HEIGHT = 30;
 const BAR_GAP = 1;
@@ -16,6 +18,7 @@ const PAD_RIGHT = 10;
 class TimelineView extends BaseChartView {
     initialize() {
         this.x = d3.scale.linear();
+        this.tooltip = new TooltipView({position: 'bottom'});
     }
 
     onShow(waitTransition) {
@@ -108,6 +111,8 @@ class TimelineView extends BaseChartView {
                 x: this.x(0),
                 y: d => y(d.thread) + BAR_GAP
             });
+        this.bindTooltip(bars);
+        bars.on('click', this.hideTooltip.bind(this));
         if(this.firstRender) {
             bars = bars.transition().duration(500);
         }
@@ -122,6 +127,10 @@ class TimelineView extends BaseChartView {
             orient: 'left'
         });
         return height;
+    }
+
+    getTooltipContent(d) {
+        return escape`${d.title}<br>${duration(d.start)} — ${duration(d.stop)}`;
     }
 }
 

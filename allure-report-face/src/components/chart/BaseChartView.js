@@ -2,7 +2,7 @@ import './styles.css';
 import {View} from 'backbone';
 import d3 from 'd3';
 
-export default class BaseChart extends View {
+export default class BaseChartView extends View {
 
     constructor(options) {
         super(options);
@@ -37,5 +37,24 @@ export default class BaseChart extends View {
             transform: `translate(${left},${top})`
         });
         return axis;
+    }
+
+    getTooltipContent() {}
+
+    onItemOver(d) {
+        this.showTooltip(d, d3.event.target);
+    }
+
+    showTooltip(d, element) {
+        this.tooltip.show(this.getTooltipContent(d), this.$(element));
+    }
+
+    hideTooltip() {
+        this.tooltip.hide();
+    }
+
+    bindTooltip(selection) {
+        selection.on('mouseenter', this.onItemOver.bind(this))
+            .on('mouseleave', this.hideTooltip.bind(this));
     }
 }

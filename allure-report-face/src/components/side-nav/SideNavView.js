@@ -6,6 +6,7 @@ import TooltipView from '../tooltip/TooltipView';
 import allurePlugins from '../../pluginApi';
 import settings from '../../util/settings';
 import template from './SideNavView.hbs';
+import {escapeExpression as escape} from 'handlebars/runtime';
 import router from '../../router';
 
 @className('side-nav')
@@ -48,7 +49,7 @@ class SideNavView extends ItemView {
     onSidelinkHover(e) {
         if(this.$el.hasClass('side-nav_collapsed')) {
             const el = this.$(e.currentTarget);
-            this.tooltip.show(el.data('tooltip'), el);
+            this.tooltip.show(escape(el.data('tooltip')), el);
         }
     }
 

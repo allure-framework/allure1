@@ -1,4 +1,6 @@
 import BaseChartView from '../../../components/chart/BaseChartView';
+import PopoverView from '../../../components/popover/PopoverView';
+import escape from '../../../util/escape';
 import d3 from 'd3';
 
 const PAD_LEFT = 30;
@@ -14,6 +16,7 @@ export default class SeverityChart extends BaseChartView {
         this.x = d3.scale.ordinal().domain(severities);
         this.y = d3.scale.sqrt();
         this.status = d3.scale.ordinal().domain(statuses);
+        this.tooltip = new PopoverView({position: 'right'});
     }
 
     getChartData() {
@@ -76,6 +79,8 @@ export default class SeverityChart extends BaseChartView {
             'class': d => 'chart__bar chart__fill_status_' + d.status
         });
 
+        this.bindTooltip(bars);
+
         if(this.firstRender) {
             bars = bars.transition().duration(500);
         }
@@ -85,5 +90,17 @@ export default class SeverityChart extends BaseChartView {
             height: d => height - this.y(d.value)
         });
         super.onShow();
+    }
+
+
+    getTooltipContent({value, severity, status, testcases}) {
+        const LIST_LIMIT = 10;
+        const items = testcases.slice(0, LIST_LIMIT);
+        const overLimit = testcases.length - items.length;
+        return `<b>${value} ${severity.toLowerCase()} test cases ${status.toLowerCase()}</b><br>` +
+            `<ul class="popover__list">` +
+                items.map(testcase => escape`<li>${testcase.title}</li>`).join('') +
+            `</ul>` +
+            (overLimit ? `...and ${overLimit} more` : '');
     }
 }

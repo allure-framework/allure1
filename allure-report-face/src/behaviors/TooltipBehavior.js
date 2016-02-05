@@ -15,7 +15,7 @@ export default class TooltipBehavior extends Behavior {
     @on('mouseenter [data-tooltip]')
     onTipHover(e) {
         const el = this.$(e.currentTarget);
-        this.tooltip.show(el.data('tooltip'), el);
+        this.tooltip.show(escape(el.data('tooltip')), el);
     }
 
     @on('mouseleave [data-tooltip]')

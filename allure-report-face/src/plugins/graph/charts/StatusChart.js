@@ -1,12 +1,13 @@
 import BaseChartView from '../../../components/chart/BaseChartView';
+import TooltipView from '../../../components/tooltip/TooltipView';
+import {on} from '../../../decorators';
 import d3 from 'd3';
+import escape from '../../../util/escape';
 
 const legendTpl = `<div class="chart__legend">
-    <p><div class="chart__legend-icon chart__legend-icon_status_FAILED"></div> Failed</p>
-    <p><div class="chart__legend-icon chart__legend-icon_status_BROKEN"></div> Broken</p>
-    <p><div class="chart__legend-icon chart__legend-icon_status_CANCELED"></div> Canceled</p>
-    <p><div class="chart__legend-icon chart__legend-icon_status_PENDING"></div> Pending</p>
-    <p><div class="chart__legend-icon chart__legend-icon_status_PASSED"></div> Passed</p>
+    ${['Failed', 'Broken', 'Canceled', 'Pending', 'Passed'].map((status) =>
+        `<p class="chart__legend-row" data-status="${status.toUpperCase()}"><span class="chart__legend-icon chart__legend-icon_status_${status.toUpperCase()}"></span> ${status}</p>`
+    ).join('')}
 </div>`;
 
 export default class StatusChart extends BaseChartView {
@@ -14,6 +15,7 @@ export default class StatusChart extends BaseChartView {
     initialize() {
         this.arc = d3.svg.arc().innerRadius(0);
         this.pie = d3.layout.pie().sort(null).value(d => d.value);
+        this.tooltip = new TooltipView({position: 'center'});
     }
 
     getChartData() {
@@ -57,6 +59,8 @@ export default class StatusChart extends BaseChartView {
             .append('path')
             .attr('class', d => 'chart__arc chart__fill_status_' + d.data.name);
 
+        this.bindTooltip(sectors);
+
         if(this.firstRender) {
             sectors.transition().duration(750).attrTween('d', d => {
                 const radiusFn = d3.interpolate(10, radius);
@@ -69,5 +73,26 @@ export default class StatusChart extends BaseChartView {
             sectors.attr('d', d => this.arc(d));
         }
         super.onShow();
+    }
+
+    getTooltipContent({data}) {
+        return escape`
+            ${data.value} tests (${(data.part * 100).toFixed(0)}%)<br>
+            ${data.name}
+        `;
+    }
+
+    @on('mouseleave .chart__legend-row')
+    onLegendOut() {
+        this.hideTooltip();
+    }
+
+    @on('mouseenter .chart__legend-row')
+    onLegendHover(e) {
+        const el = this.$(e.currentTarget);
+        const status = el.data('status');
+        const sector = this.$('.chart__fill_status_' + status)[0];
+        const data = d3.select(sector).datum();
+        this.showTooltip(data, sector);
     }
 }

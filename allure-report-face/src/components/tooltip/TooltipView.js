@@ -1,10 +1,17 @@
 import './styles.css';
 import {View} from 'backbone';
+import {className} from '../../decorators';
 import bem from 'b_';
 import $ from 'jquery';
 import {defaults} from 'underscore';
 
 export const POSITION = {
+    'center': function({top, left, height, width}, {offset}, tipSize) {
+        return {
+            top: top + height / 2,
+            left: left + width / 2 - tipSize.width / 2
+        };
+    },
     'right': function({top, left, height, width}, {offset}, tipSize) {
         return {
             top: top + height / 2 - tipSize.height / 2,
@@ -19,7 +26,8 @@ export const POSITION = {
     }
 };
 
-export default class TooltipView extends View {
+@className('tooltip')
+class TooltipView extends View {
     static container = $(document.body);
 
     initialize(options) {
@@ -34,8 +42,8 @@ export default class TooltipView extends View {
 
     show(text, anchor) {
         const {position} = this.options;
-        this.$el.text(text);
-        this.$el.addClass(bem('tooltip', {position}));
+        this.$el.html(text);
+        this.$el.addClass(bem(this.className, {position}));
         this.render();
         this.$el.css(POSITION[position](
             anchor[0].getBoundingClientRect(),
@@ -48,3 +56,5 @@ export default class TooltipView extends View {
         this.$el.remove();
     }
 }
+
+export default TooltipView;
