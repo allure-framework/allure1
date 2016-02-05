@@ -140,6 +140,14 @@ final class PluginUtils {
         stats.total++;
     }
 
+    static int cmp(Statistic first, Statistic second) {
+        (first.failed <=> second.failed) ?:
+                (first.broken <=> second.broken) ?:
+                        (first.canceled <=> second.canceled) ?:
+                                (first.passed <=> second.passed) ?:
+                                        (first.pending <=> second.pending)
+    }
+
 //    Other
 
     static <T> boolean eq(T stats, T other) {

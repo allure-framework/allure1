@@ -57,10 +57,10 @@ class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
     @Override
     Widget getWidget() {
         def widget = new StatsWidget(name)
-        def suites = xUnit.testSuites.take(10)
-        widget.data = suites.collect {
-            new StatsWidgetItem(title: it.title, statistic: it.statistic)
-        }.sort { it.title }
+        widget.data = xUnit.testSuites
+                .sort({ a, b -> PluginUtils.cmp(b.statistic, a.statistic) })
+                .take(10)
+                .collect({ new StatsWidgetItem(title: it.title, statistic: it.statistic) })
         widget
     }
 }

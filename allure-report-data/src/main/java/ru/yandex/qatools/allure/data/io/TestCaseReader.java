@@ -1,12 +1,15 @@
 package ru.yandex.qatools.allure.data.io;
 
 import com.google.inject.Inject;
+import ru.yandex.qatools.allure.model.Description;
 import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
-import ru.yandex.qatools.allure.model.Description;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import static ru.yandex.qatools.allure.data.utils.DescriptionUtils.mergeDescriptions;
 
@@ -61,9 +64,13 @@ public class TestCaseReader implements Reader<TestCaseResult> {
 
             TestCaseResult result = testCases.next();
 
-            result.getLabels().add(new Label().withName(SUITE_NAME).withValue(currentSuite.getName()));
-            result.getLabels().add(new Label().withName(SUITE_TITLE).withValue(currentSuite.getTitle()));
-            result.getLabels().addAll(currentSuite.getLabels());
+            Set<Label> labels = new HashSet<>(currentSuite.getLabels());
+            labels.add(new Label().withName(SUITE_NAME).withValue(currentSuite.getName()));
+            labels.add(new Label().withName(SUITE_TITLE).withValue(currentSuite.getTitle()));
+            labels.addAll(result.getLabels());
+
+            result.setLabels(new ArrayList<>(labels));
+
             Description description = mergeDescriptions(currentSuite, result);
             result.setDescription(description);
 
