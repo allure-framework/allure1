@@ -114,7 +114,6 @@ class TestCaseReaderTest {
 
         def reader = getReader([testSuite]);
 
-
         def iterator = reader.iterator()
         def next = iterator.next()
         use(PluginUtils) {
@@ -122,6 +121,24 @@ class TestCaseReaderTest {
             assert next.getSuiteName() == "name"
             assert next.getSuiteTitle() == "title"
             assert next.getLabels().contains(label)
+        }
+    }
+
+    @Test
+    void shouldRemoveDuplicateLabels() {
+        def label = new Label(name: "someName", value: "someValue")
+        def testCase = new TestCaseResult(name: "testCase", labels: [label])
+
+        def testSuite = new TestSuiteResult(name: "name", title: "title", testCases: [testCase], labels: [label])
+
+        def reader = getReader([testSuite]);
+
+        def iterator = reader.iterator()
+        def next = iterator.next()
+        use(PluginUtils) {
+            assert next.labels.size() == 3
+            assert next.labels.contains(label)
+            assert next.labels.findAll { it.equals(label) }.size() == 1
         }
     }
 

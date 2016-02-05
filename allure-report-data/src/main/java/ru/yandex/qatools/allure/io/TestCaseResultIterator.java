@@ -4,8 +4,11 @@ import ru.yandex.qatools.allure.model.Label;
 import ru.yandex.qatools.allure.model.TestCaseResult;
 import ru.yandex.qatools.allure.model.TestSuiteResult;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Set;
 
 import static ru.yandex.qatools.allure.io.TestCaseReader.SUITE_NAME;
 import static ru.yandex.qatools.allure.io.TestCaseReader.SUITE_TITLE;
@@ -50,10 +53,11 @@ public class TestCaseResultIterator implements Iterator<TestCaseResult> {
         }
 
         TestCaseResult result = iterator.next();
-
-        result.getLabels().add(suiteNameLabel);
-        result.getLabels().add(suiteTitleLabel);
-        result.getLabels().addAll(testSuite.getLabels());
+        Set<Label> labels = new HashSet<>(testSuite.getLabels());
+        labels.add(suiteNameLabel);
+        labels.add(suiteTitleLabel);
+        labels.addAll(result.getLabels());
+        result.setLabels(new ArrayList<>(labels));
         result.setDescription(mergeDescriptions(testSuite, result));
 
         return result;
