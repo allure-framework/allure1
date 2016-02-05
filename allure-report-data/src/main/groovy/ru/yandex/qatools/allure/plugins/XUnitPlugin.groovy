@@ -1,4 +1,5 @@
 package ru.yandex.qatools.allure.plugins
+
 import org.codehaus.groovy.runtime.InvokerHelper
 import ru.yandex.qatools.allure.AllureTestCase
 import ru.yandex.qatools.allure.AllureTestSuite
@@ -58,10 +59,10 @@ class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
 
     @Override
     Object getWidgetData() {
-        def suites = xUnit.testSuites.take(SUITES_IN_WIDGET)
-        def items = suites.collect {
-            new XUnitWidgetItem(uid: it.uid, title: it.title, statistic: it.statistic)
-        }.sort { it.title }
+        def items = xUnit.testSuites
+                .sort({ a, b -> PluginUtils.cmp(b.statistic, a.statistic) })
+                .take(SUITES_IN_WIDGET)
+                .collect({ new XUnitWidgetItem(uid: it.uid, title: it.title, statistic: it.statistic) })
 
         new ListWidgetData(totalCount: xUnit.testSuites.size(), items: items)
     }
