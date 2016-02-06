@@ -53,6 +53,11 @@ class DefaultTestCaseConverterTest {
             String getTmsPattern() {
                 return "tms-pattern-%s"
             }
+
+            @Override
+            String getStoryPattern() {
+                return "story-pattern-%s"
+            }
         }
     }
 

@@ -33,6 +33,7 @@ import static ru.yandex.qatools.allure.AllureUtils.createHostLabel;
 import static ru.yandex.qatools.allure.AllureUtils.createIssueLabel;
 import static ru.yandex.qatools.allure.AllureUtils.createSeverityLabel;
 import static ru.yandex.qatools.allure.AllureUtils.createStoryLabel;
+import static ru.yandex.qatools.allure.AllureUtils.createStoryId;
 import static ru.yandex.qatools.allure.AllureUtils.createTestLabel;
 import static ru.yandex.qatools.allure.AllureUtils.createThreadLabel;
 
@@ -159,6 +160,13 @@ public class AnnotationManager {
 
         if (isTestCaseIdAnnotationPresent()) {
             event.getLabels().add(createTestLabel(getTestCaseId()));
+        }
+
+        if (isStoriesAnnotationPresent()){
+            String storyId = getStoriesId();
+            if (storyId != null){
+                event.getLabels().add(createStoryId(storyId));
+            }
         }
 
         event.getLabels().addAll(getStoryLabels());
@@ -296,6 +304,16 @@ public class AnnotationManager {
     private String getTestCaseId() {
         TestCaseId testCaseId = getAnnotation(TestCaseId.class);
         return testCaseId == null ? null : testCaseId.value();
+    }
+
+    private String getStoriesId() {
+        Stories stories = getAnnotation(Stories.class);
+
+        if(stories == null || stories.id() == null || stories.id().isEmpty()) {
+            return null;
+        } else {
+            return stories.id();
+        }
     }
 
     /**

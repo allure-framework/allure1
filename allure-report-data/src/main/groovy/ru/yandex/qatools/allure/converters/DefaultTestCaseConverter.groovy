@@ -73,6 +73,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
 
                 result.severity = source.severityLevel
                 result.testId = source.getTestId(config.tmsPattern)
+                result.storyId = source.getStoryId(config.storyPattern)
                 result.issues = source.getIssues(config.issueTrackerPattern)
 
                 def suiteName = source.suiteName ?: UNKNOWN_TEST_SUITE;

@@ -362,6 +362,13 @@ public final class AllureUtils {
     }
 
     /**
+     * Create story id label with given value.
+     */
+    public static Label createStoryId(String storyId) {
+        return createLabel(LabelName.STORY_ID, storyId);
+    }
+
+    /**
      * Create label with given {@link LabelName} and value.
      */
     public static Label createLabel(LabelName name, String value) {

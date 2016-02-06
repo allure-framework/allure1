@@ -162,6 +162,7 @@
             <xs:enumeration value="testId"/>
             <xs:enumeration value="host"/>
             <xs:enumeration value="thread"/>
+            <xs:enumeration value="storyId"/>
         </xs:restriction>
     </xs:simpleType>
 

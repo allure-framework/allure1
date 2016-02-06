@@ -25,4 +25,12 @@ public interface ReportConfig {
     @DefaultValue("%s")
     @Property("allure.tests.management.pattern")
     String getTmsPattern();
+
+    /**
+     * Pattern containing stories tracker base URL and one %s placeholder which will be replaced by story id.
+     * Example: http://example.com/%s and @Stories(value = "story name" id = "SOME-123") will give you http://example.com/SOME-123
+     */
+    @DefaultValue("%s")
+    @Property("allure.stories.tracker.pattern")
+    String getStoryPattern();
 }

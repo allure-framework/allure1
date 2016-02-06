@@ -39,6 +39,11 @@
             {{'testcase.TEST_ID' | translate}}
             <a ng-href="{{testcase.testId.url}}" target="_blank">{{testcase.testId.name}}</a>
         </span>
+        <span class="testId" ng-show="testcase.storyId">
+            <span class="fa fa-book"/>
+            {{'testcase.STORY_ID' | translate}}
+            <a ng-href="{{testcase.storyId.url}}" target="_blank">{{testcase.storyId.id}}</a>
+        </span>
     </div>
 </div>
 <div class="testcase__content" on-keynav="select($direction)">

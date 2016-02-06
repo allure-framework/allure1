@@ -5,6 +5,7 @@ import ru.yandex.qatools.allure.AllureTestCase
 import ru.yandex.qatools.allure.AllureTestCaseInfo
 import ru.yandex.qatools.allure.Issue
 import ru.yandex.qatools.allure.Statistic
+import ru.yandex.qatools.allure.StoryId
 import ru.yandex.qatools.allure.TestId
 import ru.yandex.qatools.allure.Time
 import ru.yandex.qatools.allure.io.TestCaseReader
@@ -66,6 +67,11 @@ final class PluginUtils {
     static def getTestId(TestCaseResult testCase, String tmsPattern) {
         def name = getLabelValue(testCase, LabelName.TEST_ID)
         name ? new TestId(name: name, url: String.format(tmsPattern, name)) : null
+    }
+
+    static def getStoryId(TestCaseResult testCase, String storyPattern) {
+        def id = getLabelValue(testCase, LabelName.STORY_ID)
+        id ? new StoryId(id: id, url: String.format(storyPattern, id)) : null
     }
 
     static def getIssues(TestCaseResult testCase, String issueTrackerPattern) {
