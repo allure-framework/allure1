@@ -1,4 +1,4 @@
-import {pad} from 'underscore.string';
+import pad from 'underscore.string/pad';
 import {isFunction} from 'underscore';
 
 const dateTokens = [

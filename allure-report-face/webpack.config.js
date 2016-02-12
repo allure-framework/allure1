@@ -43,7 +43,7 @@ function makeConfig(development) {
             if(development) {
                 return [...plugins, new webpack.HotModuleReplacementPlugin()];
             } else {
-                return [...plugins, new webpack.optimize.UglifyJsPlugin({minimize: true})];
+                return [...plugins, new webpack.optimize.UglifyJsPlugin({compress: {unsafe: true}, comments: false})];
             }
         })(),
         postcss: (webpack) => [

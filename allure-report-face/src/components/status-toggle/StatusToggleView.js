@@ -1,5 +1,5 @@
 import {ItemView} from 'backbone.marionette';
-import {capitalize} from 'underscore.string';
+import capitalize from 'underscore.string/capitalize';
 import {on} from '../../decorators';
 import settings from '../../util/settings';
 import template from './StatusToggleView.hbs';
