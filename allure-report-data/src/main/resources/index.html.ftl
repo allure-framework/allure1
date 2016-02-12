@@ -9,7 +9,9 @@
 <body>
 <div id="alert"></div>
 <div id="content">
-    <span class="spin spin_theme_islands spin_size_xl spin_visible"></span>
+    <span class="spinner">
+        <span class="spinner__circle"></span>
+    </span>
 </div>
 <div id="popup"></div>
 <script src="app.js"></script>
