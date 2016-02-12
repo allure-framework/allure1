@@ -1,6 +1,6 @@
 import './styles.css';
 import d3 from 'd3';
-import highlight from 'highlight.js';
+import highlight from '../../util/highlight';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
 import router from '../../router';
@@ -36,7 +36,7 @@ class AttachmentView extends ItemView {
     }
 
     loadContent() {
-        return $.ajax(this.sourceUrl).then((responseText) => {
+        return $.ajax(this.sourceUrl, {dataType: 'text'}).then((responseText) => {
             if(this.type === 'csv') {
                 this.content = d3.csv.parseRows(responseText);
             } else {
