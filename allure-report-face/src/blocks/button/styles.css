@@ -24,21 +24,6 @@ $button-bg-checked: #e8e8e8;
   &_active {
     background: $button-bg-checked;
   }
-  &_status_PASSED {
-    color: $color-passed;
-  }
-  &_status_PENDING {
-    color: $color-pending;
-  }
-  &_status_CANCELED {
-    color: $color-canceled;
-  }
-  &_status_BROKEN {
-    color: $color-broken;
-  }
-  &_status_FAILED {
-    color: $color-failed;
-  }
 }
 
 .button-group {
