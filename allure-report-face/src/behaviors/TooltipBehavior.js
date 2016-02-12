@@ -1,5 +1,6 @@
 import {Behavior} from 'backbone.marionette';
 import TooltipView from '../components/tooltip/TooltipView';
+import {escapeExpression as escape} from 'handlebars/runtime';
 import {on} from '../decorators';
 
 export default class TooltipBehavior extends Behavior {
