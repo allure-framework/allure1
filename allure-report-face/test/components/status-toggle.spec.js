@@ -15,7 +15,7 @@ describe('StatusToggle', function() {
     });
 
     it('should update model on click', function() {
-        const passsed = this.el.find('.button_status_PASSED');
+        const passsed = this.el.find('.status-toggle__button_status_PASSED');
         passsed.click();
         expect(settings.get('visibleStatuses')).toEqual({FAILED: true, BROKEN: true, PASSED: true});
 

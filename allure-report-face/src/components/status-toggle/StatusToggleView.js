@@ -1,3 +1,4 @@
+import './styles.css';
 import {ItemView} from 'backbone.marionette';
 import capitalize from 'underscore.string/capitalize';
 import {on} from '../../decorators';
