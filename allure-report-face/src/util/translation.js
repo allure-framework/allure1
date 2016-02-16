@@ -1,5 +1,5 @@
 import i18next from 'i18next/lib';
-import intervalPlural from 'i18next-intervalPlural-postProcessor/lib';
+import intervalPlural from 'i18next-intervalplural-postProcessor/lib';
 import settings from './settings';
 
 export const LANGUAGES = [
