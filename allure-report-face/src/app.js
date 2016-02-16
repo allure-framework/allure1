@@ -6,6 +6,7 @@ import {Application, Behaviors} from 'backbone.marionette';
 import router from './router';
 import * as behaviors from './behaviors';
 import ErrorLayout from './layouts/error/ErrorLayout';
+import i18next, { init as initTranslations } from './util/translation';
 
 function rootPath(path) {
     return path.split('/')[0];
@@ -13,33 +14,42 @@ function rootPath(path) {
 
 Behaviors.behaviorsLookup = behaviors;
 
-const App = new Application({
-    regions: {
-        'error': '#alert',
-        'content': '#content',
-        'popup': '#popup'
+class App extends Application {
+    constructor() {
+        super({
+            regions: {
+                'error': '#alert',
+                'content': '#content',
+                'popup': '#popup'
+            }
+        });
+        this.on('start', () => {
+            initTranslations();
+            router.on('route:notFound', this.showView(this.tabNotFound));
+            i18next.on('languageChanged', () => {
+                this.getRegion('content').reset();
+                router.reload();
+            });
+        });
     }
-});
 
-App.showView = (factory) => {
-    var view;
-    return (...args) => {
-        if(view && rootPath(router.getCurrentUrl()) === rootPath(router.lastUrl)) {
-            view.onRouteUpdate(...args);
-        } else {
-            view = factory(...args);
-            App.getRegion('content').show(view);
-        }
-    };
-};
+    showView(factory) {
+        return (...args) => {
+            const view = this.getRegion('content').currentView;
+            if(view && rootPath(router.getCurrentUrl()) === rootPath(router.lastUrl)) {
+                view.onRouteUpdate(...args);
+            } else {
+                this.getRegion('content').show(factory(...args));
+            }
+        };
+    }
 
-App.tabNotFound = () => new ErrorLayout({
-    code: 404,
-    message: 'Not Found'
-});
+    tabNotFound() {
+        return new ErrorLayout({
+            code: 404,
+            message: 'Not Found'
+        });
+    }
+}
 
-App.on('start', () => {
-    router.on('route:notFound', App.showView(App.tabNotFound));
-});
-
-export default App;
+export default new App();

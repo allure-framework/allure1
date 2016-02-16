@@ -1,8 +1,10 @@
 import './styles.css';
 import {className, on} from '../../decorators';
+import {findWhere} from 'underscore';
 import {ItemView} from 'backbone.marionette';
 import ReportModel from '../../data/report/ReportModel';
 import TooltipView from '../tooltip/TooltipView';
+import LanguageSelectView from '../language-select/LanguageSelectView';
 import allurePlugins from '../../pluginApi';
 import settings from '../../util/settings';
 import template from './SideNavView.hbs';
@@ -23,6 +25,7 @@ class SideNavView extends ItemView {
         }));
         this.model.fetch().then(() => this.render());
         this.tooltip = new TooltipView({position: 'right'});
+        this.langSelect = new LanguageSelectView();
     }
 
     onRender() {
@@ -35,6 +38,7 @@ class SideNavView extends ItemView {
 
     serializeData() {
         return {
+            language: findWhere(LanguageSelectView.LOCALES, {id: settings.get('language')}),
             tabs: this.tabs,
             report: this.model.toJSON()
         };
@@ -62,6 +66,17 @@ class SideNavView extends ItemView {
     onCollapseClick() {
         this.$el.toggleClass('side-nav_collapsed');
         settings.save('sidebarCollapsed', this.$el.hasClass('side-nav_collapsed'));
+        this.tooltip.hide();
+    }
+
+    @on('click .side-nav__language')
+    @on('click .side-nav__language-small')
+    onLanguageClick(e) {
+        if(this.langSelect.isVisible()) {
+            this.langSelect.hide();
+        } else {
+            this.langSelect.show(this.$(e.currentTarget));
+        }
         this.tooltip.hide();
     }
 }

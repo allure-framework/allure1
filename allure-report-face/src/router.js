@@ -20,6 +20,10 @@ class AppRouter extends Router {
         return history.getFragment();
     }
 
+    reload() {
+        history.loadUrl(this.getCurrentUrl());
+    }
+
     to(pathname, query, options) {
         query = omit(query, value => value === null);
         const url = urlLib.format({pathname, query});

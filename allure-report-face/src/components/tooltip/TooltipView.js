@@ -33,16 +33,23 @@ class TooltipView extends View {
     initialize(options) {
         this.options = options;
         defaults(this.options, {offset: 10});
-
     }
 
     render() {
         this.constructor.container.append(this.$el);
     }
 
+    isVisible() {
+        return this.$el.is(':visible');
+    }
+
+    setContent(text) {
+        this.$el.html(text);
+    }
+
     show(text, anchor) {
         const {position} = this.options;
-        this.$el.html(text);
+        this.setContent(text);
         this.$el.addClass(bem(this.className, {position}));
         this.render();
         this.$el.css(POSITION[position](

@@ -4,7 +4,7 @@
   position: absolute;
   background: #fff;
   color: $text-color;
-  border: 1px solid $border-color;
+  border: 1px solid $border-accent-color;
   padding: 8px;
   font-size: 14px;
   &::before, &::after {
@@ -17,7 +17,7 @@
   &_position_right {
     &::before {
       left: -16px;
-      border-right-color: $border-color;
+      border-right-color: $border-accent-color;
     }
     &::after {
       left: -15px;

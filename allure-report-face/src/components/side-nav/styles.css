@@ -85,6 +85,36 @@ $sidebar-collapsed: 30px;
       margin-bottom: 0.5em;
     }
   }
+  &__flag {
+    display: inline-block;
+    width: 16px;
+    height: 12px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    top: -2px;
+    vertical-align: middle;
+    &_lang_en {
+      background-image: url(~flag-icon-css/flags/4x3/gb.svg);
+    }
+    &_lang_ru {
+      background-image: url(~flag-icon-css/flags/4x3/ru.svg);
+    }
+    &_lang_ptbr {
+      background-image: url(~flag-icon-css/flags/4x3/br.svg);
+    }
+  }
+  &__language {
+    display: block;
+    width: 100%;
+  }
+  &__language-small {
+    display: none;
+    text-transform: capitalize;
+    padding: 0 5px;
+    text-overflow: '.';
+    max-width: 30px;
+  }
   &__collapse {
     cursor: pointer;
     .side-nav__icon {
@@ -108,6 +138,12 @@ $sidebar-collapsed: 30px;
       display: block;
       width: $sidebar-collapsed;
       text-align: center;
+    }
+    .side-nav__language {
+      display: none;
+    }
+    .side-nav__language-small {
+      display: block;
     }
     .side-nav__collapse .side-nav__icon {
       transform: rotate(180deg);
