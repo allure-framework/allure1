@@ -1,1 +1,5 @@
-src/main/webapp/css/
+coverage
+etc
+node_modules
+node
+target

@@ -54,8 +54,8 @@ public class AllureMainIT {
 
     @Test
     public void shouldCopyResources() throws Exception {
-        Path overview = output.resolve("templates/overview.html");
-        assertThat(overview, exists());
+        assertThat(output.resolve("app.js"), exists());
+        assertThat(output.resolve("styles.css"), exists());
     }
 
     @Test
