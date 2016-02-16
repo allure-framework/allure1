@@ -1,10 +1,6 @@
 {
-  "Report started at": "Генерация отчета запущена в",
-  "Report finished at": "Генерация отчета завершена в",
-  "Browser": "Браузер",
-  "Test stand": "Тестовый стенд",
-  "Product defects": "Дефекты продукта",
-  "Test defects": "Дефекты тестов",
+  "TEST_RUN": "Тестовый прогон",
+  "STARTED_AT": "Старт {{date}} в {{time}}",
   "Title": "Название",
   "Duration": "Длительность",
   "Status": "Статус",

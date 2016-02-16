@@ -2,18 +2,12 @@ import './styles.css';
 import PopoverView from '../popover/PopoverView';
 import {className, on} from '../../decorators';
 import template from './LanguageSelectView.hbs';
-import i18next from '../../util/translation';
+import i18next, { LANGUAGES } from '../../util/translation';
 import settings from '../../util/settings';
 import $ from 'jquery';
 
 @className('language-select popover')
 class LanguageSelectView extends PopoverView {
-    static LOCALES = [
-        {id: 'en', title: 'English'},
-        {id: 'ru', title: 'Русский'},
-        {id: 'ptbr', title: 'Português'}
-    ];
-
 
     initialize() {
         super.initialize({position: 'right'});
@@ -21,7 +15,7 @@ class LanguageSelectView extends PopoverView {
 
     setContent() {
         this.$el.html(template({
-            languages: this.constructor.LOCALES,
+            languages: LANGUAGES,
             currentLang: settings.get('language')
         }));
     }

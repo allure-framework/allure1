@@ -1,22 +1,35 @@
-/*eslint-env commonjs*/
 import i18next from 'i18next/lib';
+import intervalPlural from 'i18next-intervalPlural-postProcessor/lib';
 import settings from './settings';
 
-export default class I18NextBackend {
-    static type = 'backend';
+export const LANGUAGES = [
+    {id: 'en', title: 'English'},
+    {id: 'ru', title: 'Русский'},
+    {id: 'ptbr', title: 'Português'}
+];
 
-    init() {}
-
-    read(language, namespace, callback) {
-        callback(null, require('../translations/' + language + '.json'));
-    }
-}
+LANGUAGES
+    .map(lang => lang.id)
+    .forEach(lang => addTranslation(lang, require('../translations/' + lang)));
 
 export function init() {
-    i18next.use(I18NextBackend);
-    i18next.init({
-        lng: settings.get('language'),
-        fallbackLng: 'en'
+    Object.assign(intervalPlural.options, {
+        intervalRegex: /^\((\S*)\)\((.*)\)$/
+    });
+    i18next
+        .use(intervalPlural)
+        .init({
+            lng: settings.get('language'),
+            interpolation: {
+                escapeValue: false
+            },
+            fallbackLng: 'en'
+        });
+}
+
+export function addTranslation(lang, json) {
+    i18next.on('initialized', () => {
+        i18next.services.resourceStore.addResourceBundle(lang, i18next.options.ns[0], json);
     });
 }
 

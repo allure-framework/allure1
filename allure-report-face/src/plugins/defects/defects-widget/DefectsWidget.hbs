@@ -1,6 +1,6 @@
 <h2 class="widget__title">
     Defects
-    <span class="widget__subtitle">{{totalCount}} defects total</span>
+    <span class="widget__subtitle">{{t 'defects.STATISTIC' postProcess='interval' count=totalCount}} {{t 'overview.TOTAL'}}</span>
 </h2>
 <div class="table table_hover widget__table">
     {{#each items}}
@@ -13,7 +13,7 @@
     {{/each}}
     {{#if (gt totalCount items.length)}}
         <a class="{{b "table" "row"}}" href="#defects">
-            <div class="{{b "table" "col" center=true}}">Show all defects</div>
+            <div class="{{b "table" "col" center=true}}">{{t "defects.SHOW_ALL"}}</div>
         </a>
     {{/if}}
 </div>

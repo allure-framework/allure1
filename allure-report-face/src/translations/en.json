@@ -1,10 +1,6 @@
 {
-  "Report started at": "Report started at",
-  "Report finished at": "Report finished at",
-  "Browser": "Browser",
-  "Test stand": "Test stand",
-  "Product defects": "Product defects",
-  "Test defects": "Test defects",
+  "TEST_RUN": "Test run",
+  "STARTED_AT": "Started {{date}} at {{time}}",
   "Title": "Title",
   "Duration": "Duration",
   "Status": "Status",

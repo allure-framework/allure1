@@ -1,10 +1,6 @@
 {
-  "Report started at": "Relatório iniciou em",
-  "Report finished at": "Relatório terminou em",
-  "Browser": "Navegador",
-  "Test stand": "Test stand",
-  "Product defects": "Erros do produto",
-  "Test defects": "Erros dos testes",
+  "TEST_RUN": "Execução do teste",
+  "STARTED_AT": "Inicio {{date}} às {{time}}",
   "Title": "Titulo",
   "Duration": "Duração",
   "Status": "Status",

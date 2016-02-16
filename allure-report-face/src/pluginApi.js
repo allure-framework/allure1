@@ -1,5 +1,6 @@
 import router from './router';
 import App from './app';
+import { addTranslation } from './util/translation';
 
 class AllurePluginApi {
     tabs = [];
@@ -18,6 +19,10 @@ class AllurePluginApi {
 
     addWidget(name, Widget) {
         this.widgets[name] = Widget;
+    }
+
+    addTranslation(lang, json) {
+        addTranslation(lang, json);
     }
 
     addTestcaseBlock(view, {position}) {

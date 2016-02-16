@@ -5,6 +5,7 @@ import {ItemView} from 'backbone.marionette';
 import ReportModel from '../../data/report/ReportModel';
 import TooltipView from '../tooltip/TooltipView';
 import LanguageSelectView from '../language-select/LanguageSelectView';
+import { LANGUAGES } from '../../util/translation';
 import allurePlugins from '../../pluginApi';
 import settings from '../../util/settings';
 import template from './SideNavView.hbs';
@@ -38,7 +39,7 @@ class SideNavView extends ItemView {
 
     serializeData() {
         return {
-            language: findWhere(LanguageSelectView.LOCALES, {id: settings.get('language')}),
+            language: findWhere(LANGUAGES, {id: settings.get('language')}),
             tabs: this.tabs,
             report: this.model.toJSON()
         };
