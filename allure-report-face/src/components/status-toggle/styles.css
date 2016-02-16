@@ -2,6 +2,7 @@
 
 .status-toggle {
   &__button {
+    white-space: nowrap;
     &::before {
       position: relative;
       top: -1px;
