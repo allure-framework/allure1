@@ -30,6 +30,7 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "handlebars-loader": "^1.1.4",
+    "i18next-intervalplural-postprocessor": "0.0.8",
     "istanbul": "^0.4.1",
     "jasmine": "^2.3.2",
     "jasmine-core": "^2.3.4",
