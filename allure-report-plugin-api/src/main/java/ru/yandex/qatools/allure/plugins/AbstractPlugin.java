@@ -21,10 +21,10 @@ public abstract class AbstractPlugin implements Plugin, WithResources, WithData,
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPlugin.class);
 
-    private String name = getClass().isAnnotationPresent(Plugin.Name.class) ?
+    private final String name = getClass().isAnnotationPresent(Plugin.Name.class) ?
             getClass().getAnnotation(Plugin.Name.class).value() : null;
 
-    private int priority = getClass().isAnnotationPresent(Plugin.Priority.class) ?
+    private final int priority = getClass().isAnnotationPresent(Plugin.Priority.class) ?
             getClass().getAnnotation(Plugin.Priority.class).value() : 0;
 
     /**
