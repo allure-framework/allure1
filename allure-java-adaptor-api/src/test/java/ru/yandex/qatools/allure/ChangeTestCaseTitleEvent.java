@@ -8,7 +8,7 @@ import ru.yandex.qatools.allure.model.TestCaseResult;
  *         Date: 15.12.13
  */
 public class ChangeTestCaseTitleEvent implements TestCaseEvent {
-    private String title;
+    private final String title;
 
     public ChangeTestCaseTitleEvent(String title) {
         this.title = title;

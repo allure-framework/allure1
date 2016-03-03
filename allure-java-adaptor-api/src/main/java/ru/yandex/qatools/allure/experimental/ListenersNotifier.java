@@ -35,7 +35,7 @@ public class ListenersNotifier extends LifecycleListener {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ListenersNotifier.class);
 
-    private List<LifecycleListener> listeners = new ArrayList<>();
+    private final List<LifecycleListener> listeners = new ArrayList<>();
 
     /**
      * Create instance of {@link ru.yandex.qatools.allure.experimental.ListenersNotifier}

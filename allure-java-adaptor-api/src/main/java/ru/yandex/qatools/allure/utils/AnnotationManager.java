@@ -47,7 +47,7 @@ public class AnnotationManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AnnotationManager.class);
 
-    private Map<Class<? extends Annotation>, Annotation> annotations = new HashMap<>();
+    private final Map<Class<? extends Annotation>, Annotation> annotations = new HashMap<>();
 
     /**
      * Construct AnnotationManager using given annotations

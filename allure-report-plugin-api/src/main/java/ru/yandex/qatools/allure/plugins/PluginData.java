@@ -6,9 +6,9 @@ package ru.yandex.qatools.allure.plugins;
  */
 public class PluginData {
 
-    private String name;
+    private final String name;
 
-    private Object data;
+    private final Object data;
 
     public PluginData(String name, Object data) {
         this.name = name;
