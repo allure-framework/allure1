@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 import org.testng.internal.IResultListener;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.annotations.Parameter;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.AddParameterEvent;
 import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
@@ -140,7 +141,10 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         am.update(event);
 
         getLifecycle().fire(event);
-        fireAddParameterEvents(iTestResult);
+
+        if (AllureConfig.newInstance().areTestNgParametersEnabled()) {
+            fireAddParameterEvents(iTestResult);
+        }
     }
 
     @Override
@@ -212,7 +216,8 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         String xmlTest = iTestContext.getCurrentXmlTest().getName();
         String params = "";
 
-        if (!iTestContext.getCurrentXmlTest().getLocalParameters().isEmpty()) {
+        if (!iTestContext.getCurrentXmlTest().getLocalParameters().isEmpty() &&
+                AllureConfig.newInstance().areTestNgParametersEnabled()) {
             params = iTestContext.getCurrentXmlTest().getLocalParameters()
                     .toString().replace("{", "[").replace("}", "]");
         }
@@ -224,14 +229,18 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         String suitePrefix = getCurrentSuitePrefix(iTestResult);
         StringBuilder sb = new StringBuilder(suitePrefix);
         sb.append(iTestResult.getName());
-        Object[] parameters = iTestResult.getParameters();
-        if (parameters != null && parameters.length > 0) {
-            sb.append("[");
-            for (Object parameter : parameters) {
-                sb.append(parameter).append(",");
+
+        if (AllureConfig.newInstance().areTestNgParametersEnabled()) {
+            Object[] parameters = iTestResult.getParameters();
+            if (parameters != null && parameters.length > 0) {
+                sb.append("[");
+                for (Object parameter : parameters) {
+                    sb.append(parameter).append(",");
+                }
+                sb.replace(sb.length() - 1, sb.length(), "]");
             }
-            sb.replace(sb.length() - 1, sb.length(), "]");
         }
+
         return sb.toString();
     }
 
