@@ -1,4 +1,4 @@
-import i18next from 'i18next/lib';
+import i18next from 'i18next';
 import intervalPlural from 'i18next-intervalplural-postprocessor/lib';
 import settings from './settings';
 
