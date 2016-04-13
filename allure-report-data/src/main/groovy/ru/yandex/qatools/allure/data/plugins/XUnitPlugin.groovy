@@ -4,10 +4,11 @@ import org.codehaus.groovy.runtime.InvokerHelper
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestSuite
 import ru.yandex.qatools.allure.data.AllureXUnit
+import ru.yandex.qatools.allure.data.ListWidgetData
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
-import ru.yandex.qatools.allure.data.StatsWidgetItem
 import ru.yandex.qatools.allure.data.Time
+import ru.yandex.qatools.allure.data.XUnitWidgetItem
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
 /**
@@ -17,6 +18,8 @@ import ru.yandex.qatools.allure.data.utils.PluginUtils
 @Plugin.Name("xunit")
 @Plugin.Priority(500)
 class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
+
+    public static final int SUITES_IN_WIDGET = 10
 
     @Plugin.Data
     def xUnit = new AllureXUnit(time: new Time(start: Long.MAX_VALUE, stop: Long.MIN_VALUE))
@@ -55,12 +58,12 @@ class XUnitPlugin extends DefaultTabPlugin implements WithWidget {
     }
 
     @Override
-    Widget getWidget() {
-        def widget = new StatsWidget(name)
-        widget.data = xUnit.testSuites
-                .sort({ a, b -> PluginUtils.cmp(b.statistic, a.statistic) })
-                .take(10)
-                .collect({ new StatsWidgetItem(title: it.title, statistic: it.statistic) })
-        widget
+    Object getWidgetData() {
+        def items = xUnit.testSuites
+                .sort { a, b -> PluginUtils.cmp(b.statistic, a.statistic) }
+                .take(SUITES_IN_WIDGET)
+                .collect { new XUnitWidgetItem(uid: it.uid, title: it.title, statistic: it.statistic) }
+                .sort { it.title }
+        new ListWidgetData(totalCount: xUnit.testSuites.size(), items: items)
     }
 }

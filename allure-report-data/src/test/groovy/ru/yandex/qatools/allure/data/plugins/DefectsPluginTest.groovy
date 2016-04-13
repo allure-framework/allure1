@@ -3,7 +3,7 @@ package ru.yandex.qatools.allure.data.plugins
 import org.codehaus.groovy.runtime.InvokerHelper
 import org.junit.Test
 import ru.yandex.qatools.allure.data.AllureTestCase
-import ru.yandex.qatools.allure.data.WidgetType
+import ru.yandex.qatools.allure.data.ListWidgetData
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 import ru.yandex.qatools.allure.model.Failure
 
@@ -205,25 +205,17 @@ class DefectsPluginTest {
     }
 
     @Test
-    void shouldGenerateEmptyWidget() {
-        plugin.widget.name == plugin.name
-        plugin.widget.type == WidgetType.DEFECTS
-        def widget = plugin.widget as DefectsWidget
-        assert widget.data.size() == 1
-        assert widget.data.iterator().next().status == PASSED
-    }
-
-    @Test
     void shouldGenerateWidget() {
         for (int i = 0; i < 20; i++) {
             def testCase = new AllureTestCase(status: FAILED, failure: new Failure(message: "failure#$i"))
             plugin.process(testCase)
         }
 
-        def widget = plugin.widget as DefectsWidget
-        assert widget.data.size() == 10
+        def data = plugin.widgetData as ListWidgetData
+        assert data.totalCount == 20
+        assert data.items.size() == 10
 
-        assert widget.data*.message*.startsWith("failure#")
+        assert data.items*.message*.startsWith("failure#")
     }
 
     @Test
@@ -237,10 +229,10 @@ class DefectsPluginTest {
             plugin.process(testCase)
         }
 
-        def widget = plugin.widget as DefectsWidget
-        assert widget.data.size() == 10
+        def data = plugin.widgetData as ListWidgetData
+        assert data.items.size() == 10
 
-        assert widget.data*.message.take(6)*.startsWith("failure#")
-        assert widget.data*.message.takeRight(4)*.startsWith("broken#")
+        assert data.items*.message.take(6)*.startsWith("failure#")
+        assert data.items*.message.takeRight(4)*.startsWith("broken#")
     }
 }

@@ -1,17 +1,16 @@
 package ru.yandex.qatools.allure.data.plugins
-
 import groovy.transform.EqualsAndHashCode
 import ru.yandex.qatools.allure.data.AllureBehavior
 import ru.yandex.qatools.allure.data.AllureFeature
 import ru.yandex.qatools.allure.data.AllureStory
 import ru.yandex.qatools.allure.data.AllureTestCase
+import ru.yandex.qatools.allure.data.ListWidgetData
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
-import ru.yandex.qatools.allure.data.StatsWidgetItem
+import ru.yandex.qatools.allure.data.BehaviorsWidgetItem
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
 import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
-
 /**
  * Behaviors plugin add "Behaviors" tab to your report. This tab will
  * sort your test cases by features and stories.
@@ -96,18 +95,16 @@ class BehaviorsPlugin extends DefaultTabPlugin implements WithWidget {
      * features and their statistics.
      */
     @Override
-    Widget getWidget() {
-        def widget = new StatsWidget(name)
+    Object getWidgetData() {
         def features = behavior.features.take(FEATURES_IN_WIDGET)
-        widget.data = features.collect {
-            feature -> new StatsWidgetItem(title: feature.title, statistic: feature.statistic)
+        def items = features.collect {
+            feature -> new BehaviorsWidgetItem(title: feature.title, statistic: feature.statistic)
         }.sort { it.title }
-        widget
+        new ListWidgetData(totalCount: behavior.features.size(), items: items)
     }
 
     /**
      * Feature - story pair.
-     * @see #stories
      */
     @EqualsAndHashCode
     private static class Key {

@@ -41,4 +41,12 @@
             <xsd:element name="test-cases" type="alr:allure-test-cases-info" minOccurs="0"/>
         </xsd:all>
     </xsd:complexType>
+
+    <xsd:element name="behaviors-widget-item" type="alr:behaviors-widget-item"/>
+    <xsd:complexType name="behaviors-widget-item">
+        <xsd:all>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="statistic" type="alr:statistic"/>
+        </xsd:all>
+    </xsd:complexType>
 </xsd:schema>

@@ -4,9 +4,9 @@ import org.codehaus.groovy.runtime.InvokerHelper
 import org.junit.Test
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestCaseInfo
+import ru.yandex.qatools.allure.data.ListWidgetData
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
-import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 
 import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel
@@ -202,10 +202,9 @@ class BehaviorsPluginTest {
 
     @Test
     void shouldGenerateEmptyWidget() {
-        plugin.widget.name == plugin.name
-        plugin.widget.type == WidgetType.TITLE_STATISTICS
-        def widget = plugin.widget as StatsWidget
-        assert widget.data.empty
+        def data = plugin.widgetData as ListWidgetData
+        assert data.totalCount == 0;
+        assert data.items.empty;
     }
 
     @Test
@@ -215,11 +214,12 @@ class BehaviorsPluginTest {
             plugin.process(testCase)
         }
 
-        def widget = plugin.widget as StatsWidget
-        assert widget.data.size() == 10
+        def data = plugin.widgetData as ListWidgetData
+        assert data.totalCount == 20
+        assert data.items.size() == 10
 
-        assert widget.data*.title*.startsWith("feature ")
-        assert widget.data*.statistic*.equals(new Statistic(total: 1, passed: 0, failed: 1,
+        assert data.items*.title*.startsWith("feature ")
+        assert data.items*.statistic*.equals(new Statistic(total: 1, passed: 0, failed: 1,
                 broken: 0, canceled: 0, pending: 0))
     }
 }
