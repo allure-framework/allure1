@@ -58,6 +58,8 @@ public class AllureReportGenerator {
             throw new ReportGenerationException("Could not find any allure results");
         }
 
+        writer.writeIndexHtml(pluginManager.getPluginsNames());
+
         for (TestCaseResult result : testCaseReader) {
             pluginManager.prepare(result);
 

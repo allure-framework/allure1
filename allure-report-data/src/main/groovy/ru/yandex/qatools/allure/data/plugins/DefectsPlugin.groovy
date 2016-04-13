@@ -6,6 +6,7 @@ import ru.yandex.qatools.allure.data.AllureDefects
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.DefectItem
 import ru.yandex.qatools.allure.data.DefectsWidgetItem
+import ru.yandex.qatools.allure.data.ListWidgetData
 import ru.yandex.qatools.allure.data.utils.PluginUtils
 import ru.yandex.qatools.allure.model.Status
 
@@ -13,8 +14,6 @@ import static ru.yandex.qatools.allure.data.utils.TextUtils.generateUid
 import static ru.yandex.qatools.allure.data.utils.TextUtils.getMessageMask
 import static ru.yandex.qatools.allure.model.Status.BROKEN
 import static ru.yandex.qatools.allure.model.Status.FAILED
-import static ru.yandex.qatools.allure.model.Status.PASSED
-
 /**
  * @author Dmitry Baev charlie@yandex-team.ru
  *         Date: 06.02.15
@@ -58,23 +57,22 @@ class DefectsPlugin extends DefaultTabPlugin implements WithWidget {
      * defects from {@link #defects}.
      */
     @Override
-    Widget getWidget() {
-        def widget = new DefectsWidget(name)
-        def failed = getDefect(FAILED).defects.take(DEFECTS_IN_WIDGET)
-        def broken = getDefect(BROKEN).defects.take(DEFECTS_IN_WIDGET - failed.size())
+    Object getWidgetData() {
+        def allFailed = getDefect(FAILED).defects;
+        def allBroken = getDefect(BROKEN).defects;
+        def data = new ListWidgetData(totalCount: allFailed.size() + allBroken.size());
 
-        widget.data = []
-        widget.data += failed.collect {
-            new DefectsWidgetItem(message: it?.failure?.message, status: FAILED, count: it.testCases.size())
+        def failed = allFailed.take(DEFECTS_IN_WIDGET)
+        def broken = allBroken.take(DEFECTS_IN_WIDGET - failed.size())
+
+        data.items += failed.collect {
+            new DefectsWidgetItem(uid: it.uid, message: it?.failure?.message, status: FAILED, count: it.testCases.size())
         }.sort { -it.count }
 
-        widget.data += broken.collect {
-            new DefectsWidgetItem(message: it?.failure?.message, status: BROKEN, count: it.testCases.size())
+        data.items += broken.collect {
+            new DefectsWidgetItem(uid: it.uid, message: it?.failure?.message, status: BROKEN, count: it.testCases.size())
         }.sort { -it.count }
-        if (widget.data.empty) {
-            widget.data.add(new DefectsWidgetItem(message: "There are no defects!", status: PASSED))
-        }
-        widget
+        data
     }
 
     /**
