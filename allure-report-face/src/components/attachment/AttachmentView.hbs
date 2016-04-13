@@ -38,6 +38,13 @@
     <div class="pane__section">
         <object class="attachment__embed" type="image/svg+xml" data="{{sourceUrl}}">Your browser does not support SVG</object>
     </div>
+{{else if (eq type "video")}}
+    <div class="pane__section">
+        <video controls>
+            <source src="{{sourceUrl}}" type="{{attachment.type}}">
+            Your browser does not support video tag
+        </video>
+    </div>
 {{else}}
     <iframe class="attachment__iframe" frameborder="0" src="{{sourceUrl}}"></iframe>
 {{/if}}
