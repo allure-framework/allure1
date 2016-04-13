@@ -1,5 +1,7 @@
 package ru.yandex.qatools.allure.data.io
 
+import freemarker.template.Configuration
+import freemarker.template.Template
 import groovy.util.logging.Slf4j
 import org.apache.commons.io.FilenameUtils
 import ru.yandex.qatools.allure.data.AllureReportInfo
@@ -35,6 +37,8 @@ class ReportWriter {
 
     private final File outputPluginsDirectory
 
+    private final File indexHtml
+
     private Long start
 
     private Long size = 0;
@@ -48,6 +52,7 @@ class ReportWriter {
     ReportWriter(File outputDirectory) {
         this.outputDataDirectory = createDirectory(outputDirectory, DATA_DIRECTORY_NAME)
         this.outputPluginsDirectory = createDirectory(outputDirectory, PLUGINS_DIRECTORY_NAME)
+        this.indexHtml = new File(outputDirectory, "index.html")
         this.start = System.currentTimeMillis()
     }
 
@@ -95,6 +100,20 @@ class ReportWriter {
 
     void write(String pluginName, URL resource) {
         copyResource(pluginName, resource)
+    }
+
+    void writeIndexHtml(List<String> plugins) {
+        Configuration cfg = new Configuration(Configuration.VERSION_2_3_23)
+        cfg.setClassLoaderForTemplateLoading(getClass().classLoader, "")
+        try {
+            Template template = cfg.getTemplate("index.html.ftl");
+
+            new FileWriter(indexHtml).withCloseable {
+                template.process(["plugins": plugins, "version": "unknown"], it)
+            }
+        } catch (IOException e) {
+            throw new ReportGenerationException(e)
+        }
     }
 
     /**
