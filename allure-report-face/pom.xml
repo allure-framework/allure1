@@ -152,7 +152,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <mainClass>ru.yandex.qatools.allure.DummyReportGenerator</mainClass>
+                            <mainClass>ru.yandex.qatools.allure.data.DummyReportGenerator</mainClass>
                             <arguments>
                                 <argument>${allure.results.directory}</argument>
                                 <argument>${allure.report.directory}</argument>
