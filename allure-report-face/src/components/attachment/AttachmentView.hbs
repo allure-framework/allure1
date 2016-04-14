@@ -45,6 +45,16 @@
             Your browser does not support video tag
         </video>
     </div>
+{{else if (eq type "uri")}}
+    <table class="table attachment__table">
+        <tbody>
+        {{#each content}}
+            <tr>
+                <td><a href="{{.}}" target="_blank">{{.}}</a></td>
+            </tr>
+        {{/each}}
+        </tbody>
+    </table>
 {{else}}
     <iframe class="attachment__iframe" frameborder="0" src="{{sourceUrl}}"></iframe>
 {{/if}}
