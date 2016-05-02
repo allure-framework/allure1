@@ -5,6 +5,7 @@
   display: flex;
   &__nav {
     padding: 0 1em;
+    background: $app-nav-bg;
   }
   &__content {
     position: relative;
