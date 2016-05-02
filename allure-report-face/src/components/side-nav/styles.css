@@ -18,7 +18,7 @@ $sidebar-collapsed: 30px;
     border-bottom: 1px solid $border-accent-color;
   }
   &__brand {
-    color: $text-color;
+    color: $sidebar-brand-color;
     text-decoration: none;
   }
   &__brand {
@@ -26,7 +26,7 @@ $sidebar-collapsed: 30px;
     font-size: 20px;
     line-height: 40px;
     font-weight: bold;
-    background: url('allure-logo.png') no-repeat 10px center;
+    background: url('https://avatars2.githubusercontent.com/u/16917155?v=3&s=40') no-repeat 10px center;
     padding-left: 50px;
     margin-bottom: 10px;
   }
@@ -50,10 +50,10 @@ $sidebar-collapsed: 30px;
     transition: color 0.1s ease-in;
     padding: 0.8em 0;
     &_active {
-      color: $text-color;
+      color: $sidebar-active-text-color;
     }
     &:hover {
-      color: $text-color;
+      color: $sidebar-hover-text-color;
     }
   }
   &__icon {
@@ -62,28 +62,6 @@ $sidebar-collapsed: 30px;
     vertical-align: middle;
     transition: top 0.3s ease-in;
     margin: 0 5px;
-  }
-  &__report {
-    display: none;
-  }
-  &__info {
-    line-height: 1.3;
-    position: relative;
-    &:after {
-      position: absolute;
-      content: ' ';
-      left: 0;
-      right: 0;
-      background: linear-gradient(to left, $body-bg, color($body-bg a(0)));
-      transition: right 0.3s;
-    }
-    dt {
-      color: $text-muted-color;
-    }
-    dd {
-      margin-left: 0;
-      margin-bottom: 0.5em;
-    }
   }
   &__flag {
     display: inline-block;
@@ -150,15 +128,6 @@ $sidebar-collapsed: 30px;
     }
     .side-nav__text {
       display: none;
-    }
-    .side-nav__report {
-      display: inline-block;
-      margin-top: 1em;
-    }
-    .side-nav__info:after {
-      top: 0;
-      bottom: 0;
-      right: calc($sidebar-full-width - $sidebar-collapsed);
     }
   }
 }
