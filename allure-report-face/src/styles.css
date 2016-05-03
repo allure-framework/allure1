@@ -13,10 +13,11 @@
 @import "./blocks/text/styles.css";
 @import "./blocks/widget/styles.css";
 @import "./variables.css";
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,cyrillic);
 
 body {
   color: $text-color;
-  font-family: -apple-system, Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -58,6 +59,7 @@ html, body {
 }
 
 .long-line {
+  line-height: 1.5em;
   word-break: break-word;
 }
 
