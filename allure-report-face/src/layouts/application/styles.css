@@ -4,8 +4,7 @@
   background: $body-bg;
   display: flex;
   &__nav {
-    padding: 0 1em;
-    background: $app-nav-bg;
+    padding: 0 0;
   }
   &__content {
     position: relative;

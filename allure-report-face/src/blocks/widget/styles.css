@@ -35,6 +35,7 @@
     cursor: move;
     right: $gap-size;
     top: $gap-size;
+    color: $text-muted-color;
     .widget:hover & {
       display: block;
     }
