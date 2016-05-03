@@ -3,13 +3,14 @@
 .widget {
   &__title {
     margin-top: 0;
-    font-weight: normal;
-    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    text-transform: uppercase;
   }
 
   &__subtitle {
     color: $text-muted-color;
     font-size: 16px;
+    text-transform: lowercase;
   }
 
   &__flex-line {
