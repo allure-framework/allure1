@@ -19,9 +19,20 @@ export default class OverviewWidget extends ItemView {
     }
 
     onRender() {
-        const statuses = ['failed', 'broken', 'canceled', 'pending', 'passed'];
-        const fill = statuses.map(status => [status, this.model.get('statistic')[status]]);
-        const colors = ['#fd5a3e', '#ffd963', '#ccc', '#d35ebe', '#97cc64'];
+        const statuses = {
+            failed: '#fd5a3e',
+            broken: '#ffd963',
+            canceled: '#ccc',
+            pending: '#d35ebe',
+            passed: '#97cc64'
+        };
+
+        let fill = [];
+        let colors = [];
+        for (let status in statuses) {
+            fill.push([status, this.model.get('statistic')[status]]);
+            colors.push(statuses[status]);
+        }
 
         this.chart = c3.generate({
             bindto: '.overview-widget-graph',

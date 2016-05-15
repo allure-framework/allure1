@@ -8,16 +8,14 @@
   height: 100vh;
   transition: width 0.3s;
   overflow: hidden;
-  & > * {
-    width: $sidebar-full-width;
-  }
+
   &__head {
     margin: $gap-size 0;
     padding-bottom: $gap-size;
-    padding-left: $gap-size;
     border-bottom: 1px solid $sidebar-separator-color;
     transition: width 0.3s;
   }
+
   &__brand {
     color: $sidebar-brand-color;
     text-decoration: none;
@@ -30,30 +28,36 @@
     margin-bottom: 10px;
     transition: all 0.3s;
   }
+  
+  &__brand-text {
+    padding-left: $gap-size;
+    transition: opacity .2s .1s;
+  }
+
   &__menu {
     margin: 0;
     left: 0;
-    padding: 0 0 0 $gap-size;
+    padding: 0;
     list-style-type: none;
     transition: width 0.3s;
     text-shadow: 1px 1px 2px $sidebar-text-shadow-color;
   }
+
   &__footer {
     margin-top: auto;
     margin-bottom: $gap-size;
-    padding-left: $gap-size;
-    padding-right: $gap-size;
+    padding-left: 0;
+    padding-right: 0;
   }
-  
+
   &__item {
-    
-    overflow: hidden;
     display: block;
     font-size: 14px;
   }
+
   &__link, &__collapse {
-    overflow: hidden;
     display: block;
+    line-height: 24px;
     color: $text-muted-color;
     text-decoration: none;
     transition: color 0.1s ease-in;
@@ -67,12 +71,18 @@
     }
   }
   &__icon {
+    position: absolute;
+    left: $gap-size;
     font-size: 22px;
-    line-height: 24px;
     vertical-align: middle;
     transition: top 0.3s ease-in;
     margin: 0 5px;
   }
+  &__text {
+    padding-left: 55px;
+    transition: opacity .2s .1s;
+  }
+
   &__flag {
     display: inline-block;
     width: 16px;
@@ -92,58 +102,32 @@
       background-image: url(~flag-icon-css/flags/4x3/br.svg);
     }
   }
-  &__language {
-    display: block;
-    width: 100%;
-  }
+
   &__language-small {
-    display: none;
+    display: block;
     text-transform: capitalize;
     padding: 0 5px;
     text-overflow: '.';
     max-width: 30px;
+    margin: 0 auto;
   }
   &__collapse {
     cursor: pointer;
     .side-nav__icon {
-      position: relative;
-      top: -1px;
+      left: calc($gap-size + 5px);
       transition: transform 0.1s;
     }
   }
   &_collapsed {
     width: $sidebar-collapsed;
-    & > * {
-      width: $sidebar-collapsed;
-    }
-    .side-nav__menu {
-      padding: 0;
-    }
-
-    .side-nav__brand {
-      width: 30px;
-      height: 40px;
-      background-size: contain;
-      background-position: 0;
-      padding-left: 30px;
-    }
-    .side-nav__icon {
-      margin: 0;
-      overflow: hidden;
-      display: block;
-      text-align: center;
-    }
-    .side-nav__language {
-      display: none;
-    }
-    .side-nav__language-small {
-      display: block;
-    }
+    
     .side-nav__collapse .side-nav__icon {
       transform: rotate(180deg);
     }
-    .side-nav__text {
-      display: none;
+    
+    .side-nav__text, .side-nav__brand-text {
+      visibility: hidden;
+      opacity: 0;
     }
   }
 }
