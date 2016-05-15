@@ -1,7 +1,7 @@
 import './styles.css';
 import {ItemView} from 'backbone.marionette';
 import template from './ReportStatsWidget.hbs';
-import ReportWidgetModel from '../../data/widgets/ReportWidgetModel';
+import ReportWidgetModel from './ReportWidgetModel';
 
 export default class ReportStatsWidget extends ItemView {
     template = template;

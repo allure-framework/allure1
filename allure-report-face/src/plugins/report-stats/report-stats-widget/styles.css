@@ -1,4 +1,4 @@
-@import "../../variables.css";
+@import "../../../variables.css";
 
 .report-stats-widget {
   margin-top: $gap-size;

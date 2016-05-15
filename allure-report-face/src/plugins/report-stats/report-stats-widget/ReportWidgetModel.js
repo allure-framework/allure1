@@ -1,4 +1,4 @@
-import WidgetsModel from './WidgetsModel';
+import WidgetsModel from './../../../data/widgets/WidgetsModel';
 
 export default class ReportWidgetModel extends WidgetsModel {
     url = 'data/report.json';
