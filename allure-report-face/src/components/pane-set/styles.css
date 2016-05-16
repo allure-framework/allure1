@@ -63,3 +63,7 @@
     }
   }
 }
+
+.pane + .pane {
+  box-shadow: 0 0 3px #eee;
+}

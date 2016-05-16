@@ -2,37 +2,13 @@ import './styles.css';
 import {ItemView} from 'backbone.marionette';
 import template from './OverviewWidget.hbs';
 import c3 from 'c3';
+import {colors, states} from '../../util/statuses'
 
 export default class OverviewWidget extends ItemView {
     template = template;
 
-    initialize() {
-        setTimeout(() => {
-            if (!this.isDestroyed) {
-                this.render();
-            }
-        }, 200);
-    }
-
-    onDestroy() {
-        this.chart = this.chart.destroy();
-    }
-
-    onRender() {
-        const statuses = {
-            failed: '#fd5a3e',
-            broken: '#ffd963',
-            canceled: '#ccc',
-            pending: '#d35ebe',
-            passed: '#97cc64'
-        };
-
-        let fill = [];
-        let colors = [];
-        for (let status in statuses) {
-            fill.push([status, this.model.get('statistic')[status]]);
-            colors.push(statuses[status]);
-        }
+    onAttach() {
+        let fill = states.map((state) => [state, this.model.get('statistic')[state]]);
 
         this.chart = c3.generate({
             bindto: '.overview-widget-graph',
@@ -60,7 +36,7 @@ export default class OverviewWidget extends ItemView {
                 width: 10,
                 title: `${(this.model.get('statistic')['passed'] / this.model.get('statistic')['total'] * 100).toFixed(1)}%`,
                 label: {
-                    threshold: 0.0,
+                    threshold: 0.00000001,
                     show: false
                 }
             },
@@ -72,6 +48,6 @@ export default class OverviewWidget extends ItemView {
                     }
                 }
             }
-        });
+        }); 
     }
 }
