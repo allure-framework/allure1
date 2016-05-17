@@ -2,7 +2,7 @@ import './styles.css';
 import {ItemView} from 'backbone.marionette';
 import template from './OverviewWidget.hbs';
 import c3 from 'c3';
-import {colors, states} from '../../util/statuses'
+import {colors, states} from '../../util/statuses';
 
 export default class OverviewWidget extends ItemView {
     template = template;

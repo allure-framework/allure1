@@ -83,26 +83,6 @@
     transition: opacity .2s .1s;
   }
 
-  &__flag {
-    display: inline-block;
-    width: 16px;
-    height: 12px;
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    top: -2px;
-    vertical-align: middle;
-    &_lang_en {
-      background-image: url(~flag-icon-css/flags/4x3/gb.svg);
-    }
-    &_lang_ru {
-      background-image: url(~flag-icon-css/flags/4x3/ru.svg);
-    }
-    &_lang_ptbr {
-      background-image: url(~flag-icon-css/flags/4x3/br.svg);
-    }
-  }
-
   &__language-small {
     display: block;
     text-transform: capitalize;

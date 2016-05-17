@@ -45,6 +45,7 @@
     "proxyquire": "^1.7.3",
     "style-loader": "^0.12.4",
     "underscore.string": "^3.2.2",
+    "url-loader": "^0.5.7",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.1"
   },
