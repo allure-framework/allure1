@@ -18,7 +18,7 @@
 
     <groupId>ru.yandex.qatools.allure</groupId>
     <artifactId>allure-core</artifactId>
-    <version>1.4.24-LANWEN-SNAPSHOT</version>
+    <version>1.4.24-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
@@ -58,19 +58,6 @@
         <connection>scm:git@github.com:allure-framework/allure-core.git</connection>
         <developerConnection>scm:git:git@github.com:allure-framework/allure-core.git</developerConnection>
     </scm>
-
-    <distributionManagement>
-        <repository>
-            <id>yandex_qa_releases</id>
-            <name>Releases</name>
-            <url>${releases-repo}</url>
-        </repository>
-        <snapshotRepository>
-            <id>yandex_qa_snapshots</id>
-            <name>Snapshots</name>
-            <url>${snapshots-repo}</url>
-        </snapshotRepository>
-    </distributionManagement>
 
     <issueManagement>
         <system>GitHub Issues</system>
