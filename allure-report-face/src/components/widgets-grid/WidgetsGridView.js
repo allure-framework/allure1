@@ -7,7 +7,9 @@ import {className} from '../../decorators';
 import allurePlugins from '../../pluginApi';
 
 const widgetTpl = (id) => `<div class="widget island" data-id="${id}">
-    <div class="widget__handle fa fa-ellipsis-v"></div>
+    <div class="widget__handle">
+        <span class="fa fa-ellipsis-v"></span> <span class="fa fa-ellipsis-v"></span>
+    </div>
     <div class="widget__body"></div>
 </div>`;
 const colTpl = `<div class="widgets-grid__col"></div>`;

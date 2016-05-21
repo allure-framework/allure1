@@ -13,7 +13,7 @@
 @import "./blocks/text/styles.css";
 @import "./blocks/widget/styles.css";
 @import "./variables.css";
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,700&subset=latin,cyrillic);
+@import "./fonts/open-sans.css";
 
 body {
   color: $text-color;

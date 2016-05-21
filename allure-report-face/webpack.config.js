@@ -22,7 +22,7 @@ function makeConfig(development) {
                 loader: 'json-loader'
             }, {
                 test: /\.(png|svg|woff2?|ttf|eot)(\?.*)?$/,
-                loader: 'url-loader?limit=10000'
+                loader: 'file-loader'
             }, {
                 test: /\.css$/,
                 loader: development ? 'style-loader!css-loader!postcss-loader' : ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
