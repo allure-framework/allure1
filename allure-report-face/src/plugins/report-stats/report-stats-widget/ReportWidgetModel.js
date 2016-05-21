@@ -1,12 +1,5 @@
-import WidgetsModel from './../../../data/widgets/WidgetsModel';
+import {Model} from 'backbone';
 
-export default class ReportWidgetModel extends WidgetsModel {
+export default class ReportWidgetModel extends Model {
     url = 'data/report.json';
-
-    fetch(...args) {
-        if (!this.fetchPromise) {
-            this.fetchPromise = super.fetch(...args);
-        }
-        return new Promise((res, rej) => this.fetchPromise.then(res, rej));
-    }
 }
