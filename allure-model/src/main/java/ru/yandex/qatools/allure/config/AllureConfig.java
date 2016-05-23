@@ -25,6 +25,9 @@ public class AllureConfig {
     @Property("allure.report.remove.attachments")
     protected String removeAttachments = "a^";
 
+    @Property("allure.report.remove.attachments.by.title")
+    protected String removeAttachmentsByTitle = null;
+
     @Property("allure.results.testsuite.file.regex")
     protected String testSuiteFileRegex = ".*-testsuite\\.xml";
 
@@ -86,6 +89,10 @@ public class AllureConfig {
 
     public String getRemoveAttachments() {
         return removeAttachments;
+    }
+
+    public String getRemoveAttachmentsByTitle() {
+        return removeAttachmentsByTitle;
     }
 
     public String getTestSuiteFileRegex() {
