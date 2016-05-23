@@ -3,10 +3,11 @@ import './styles.css';
 import './blocks/table/styles.css';
 
 import {Application, Behaviors} from 'backbone.marionette';
+import {history} from 'backbone';
 import router from './router';
 import * as behaviors from './behaviors';
 import ErrorLayout from './layouts/error/ErrorLayout';
-import i18next, { init as initTranslations } from './util/translation';
+import i18next, { initTranslations } from './util/translation';
 
 function rootPath(path) {
     return path.split('/')[0];
@@ -24,11 +25,13 @@ class App extends Application {
             }
         });
         this.on('start', () => {
-            initTranslations();
             router.on('route:notFound', this.showView(this.tabNotFound));
-            i18next.on('languageChanged', () => {
-                this.getRegion('content').reset();
-                router.reload();
+            initTranslations().then(() => {
+                history.start();
+                i18next.on('languageChanged', () => {
+                    this.getRegion('content').reset();
+                    router.reload();
+                });
             });
         });
     }
