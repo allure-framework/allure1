@@ -23,7 +23,7 @@
     {{#each suites}}
         <a class="{{b "table" "row"}}" data-uid="{{uid}}" href="#{{../baseUrl}}/{{uid}}">
             <div class="{{b "table" "col"}} {{b "testsuites-list" "name"}} long-line">
-                <span class="inlinesparkline">{{statistic.failed}},{{statistic.broken}},{{statistic.canceled}},{{statistic.pending}},{{statistic.passed}}</span> {{title}}  
+                {{title}}  
             </div>
             {{> suite-table-row}}
         </a>
