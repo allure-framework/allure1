@@ -54,6 +54,6 @@ $link-color-hover: #f00;
 /* Pane set */
 
 $pane-bg-color: #fff;
-$pane-shadow-color: #999;
+$pane-border-color: #cdd0d2;
 $pane-overlay-bg: rgba(240, 240, 240, 0.4); 
 $pane-overlay-bg-hover: rgba(240, 240, 240, 0.2); 

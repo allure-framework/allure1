@@ -65,5 +65,5 @@
 }
 
 .pane + .pane {
-  box-shadow: 0 0 3px $pane-shadow-color;
+  border-left: 1px solid $pane-border-color;
 }
