@@ -13,11 +13,10 @@
 @import "./blocks/text/styles.css";
 @import "./blocks/widget/styles.css";
 @import "./variables.css";
-@import "./fonts/open-sans.css";
 
 body {
   color: $text-color;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: -apple-system, Helvetica, Arial, sans-serif;
 }
 
 * {
