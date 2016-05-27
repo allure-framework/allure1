@@ -5,8 +5,7 @@
   top: 0;
   left: 0;
   height: 100%;
-  background: #fff;
-  box-shadow: 0 0 0 1px $border-accent-color;
+  background: $pane-bg-color;
   width: 50%;
   overflow-y: scroll;
   transition: left 0.3s, width 0.3s;
@@ -21,10 +20,10 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.4);
+    background: $pane-overlay-bg;
     z-index: 1;
     &:hover {
-      background: rgba(255, 255, 255, 0.6);
+      background: $pane-overlay-bg-hover;
     }
   }
   &__title {
@@ -63,4 +62,8 @@
       display: inline;
     }
   }
+}
+
+.pane + .pane {
+  border-left: 1px solid $pane-border-color;
 }
