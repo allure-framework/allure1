@@ -59,13 +59,3 @@
     }
   }
 }
-
-.draggable-icon {
-  position: absolute;
-  width: 10px;
-  height: 15px;
-  right: 0;
-  
-  background-image: url("./blocks/widget/draggable.svg");
-  z-index: 1;
-}
