@@ -1,6 +1,7 @@
 import './styles.css';
 import d3 from 'd3';
 import highlight from '../../util/highlight';
+import splitUriList from '../../helpers/splitUriList';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
 import router from '../../router';
@@ -39,6 +40,8 @@ class AttachmentView extends ItemView {
         return $.ajax(this.sourceUrl, {dataType: 'text'}).then((responseText) => {
             if(this.type === 'csv') {
                 this.content = d3.csv.parseRows(responseText);
+            } else if(this.type === 'uri') {
+                this.content = splitUriList(responseText);
             } else {
                 this.content = responseText;
             }
@@ -46,7 +49,7 @@ class AttachmentView extends ItemView {
     }
 
     needsFetch() {
-        return ['text', 'code', 'csv'].indexOf(this.type) > -1;
+        return ['text', 'code', 'csv', 'uri'].indexOf(this.type) > -1;
     }
 
     serializeData() {
