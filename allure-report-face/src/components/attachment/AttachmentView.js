@@ -1,7 +1,6 @@
 import './styles.css';
 import d3 from 'd3';
 import highlight from '../../util/highlight';
-import splitUriList from '../../helpers/splitUriList';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
 import router from '../../router';
@@ -41,7 +40,13 @@ class AttachmentView extends ItemView {
             if(this.type === 'csv') {
                 this.content = d3.csv.parseRows(responseText);
             } else if(this.type === 'uri') {
-                this.content = splitUriList(responseText);
+                this.content = responseText.split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line.length > 0)
+                    .map(line => ({
+                         comment: line.startsWith('#'),
+                         text: line
+                    }));
             } else {
                 this.content = responseText;
             }
