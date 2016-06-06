@@ -6,7 +6,6 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import org.testng.*;
 import org.testng.internal.ConstructorOrMethod;
-import org.testng.xml.XmlClass;
 import org.testng.xml.XmlTest;
 
 import ru.yandex.qatools.allure.Allure;
@@ -41,8 +40,8 @@ public class AllureTestListenerTest {
     private static final String DEFAULT_TEST_NAME = "test";
     private static final String DEFAULT_SUITE_NAME = "suite";
     private static final String DEFAULT_XML_TEST_NAME = "testxml";
-	private static final String DEFAULT_CLASS_NAME = "class";
-    
+    private static final String DEFAULT_CLASS_NAME = "class";
+
     private AllureTestListener testngListener;
     private Allure allure;
     private ITestContext testContext;
@@ -55,14 +54,14 @@ public class AllureTestListenerTest {
         allure = mock(Allure.class);
 
         testngListener.setLifecycle(allure);
-        
+
         ISuite suite = mock(ISuite.class);
-    	when(suite.getName()).thenReturn(DEFAULT_SUITE_NAME);
-    	XmlTest xmlTest = mock(XmlTest.class);
-    	when(xmlTest.getName()).thenReturn(DEFAULT_XML_TEST_NAME);
-    	testContext = mock(ITestContext.class);
-    	when(testContext.getSuite()).thenReturn(suite);
-    	when(testContext.getCurrentXmlTest()).thenReturn(xmlTest);
+        when(suite.getName()).thenReturn(DEFAULT_SUITE_NAME);
+        XmlTest xmlTest = mock(XmlTest.class);
+        when(xmlTest.getName()).thenReturn(DEFAULT_XML_TEST_NAME);
+        testContext = mock(ITestContext.class);
+        when(testContext.getSuite()).thenReturn(suite);
+        when(testContext.getCurrentXmlTest()).thenReturn(xmlTest);
 
         // mocking test method parameters
         ConstructorOrMethod constructorOrMethod = mock(ConstructorOrMethod.class);
@@ -72,30 +71,30 @@ public class AllureTestListenerTest {
         testResult = mock(ITestResult.class);
         when(testResult.getMethod()).thenReturn(method);
         when(testResult.getParameters()).thenReturn(new Object[]{});
-	    IClass iClass = mock(IClass.class);
-	    when(testResult.getTestClass()).thenReturn(iClass);
+        IClass iClass = mock(IClass.class);
+        when(testResult.getTestClass()).thenReturn(iClass);
     }
 
     @Test
     public void skipTestFireTestCaseStartedEvent() {
-	    when(testResult.getTestContext()).thenReturn(testContext);
+        when(testResult.getTestContext()).thenReturn(testContext);
         when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
-	    when(testResult.getTestContext().getSuite().getName()).thenReturn(DEFAULT_SUITE_NAME);
-	    when(testResult.getTestContext().getCurrentXmlTest().getName()).thenReturn(DEFAULT_XML_TEST_NAME);
-	    when(testResult.getTestClass().getName()).thenReturn(DEFAULT_CLASS_NAME);
-	    when(testResult.getMethod().getMethodName()).thenReturn(DEFAULT_TEST_NAME);
+        when(testResult.getTestContext().getSuite().getName()).thenReturn(DEFAULT_SUITE_NAME);
+        when(testResult.getTestContext().getCurrentXmlTest().getName()).thenReturn(DEFAULT_XML_TEST_NAME);
+        when(testResult.getTestClass().getName()).thenReturn(DEFAULT_CLASS_NAME);
+        when(testResult.getMethod().getMethodName()).thenReturn(DEFAULT_TEST_NAME);
         doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
-        
+
         String uid = UUID.randomUUID().toString();
         when(testContext.getAttribute("SUITE_UID")).thenReturn(uid);
         testngListener.onTestSkipped(testResult);
 
         String suiteUid = testngListener.getSuiteUid(testContext);
-	    verify(allure).fire(eq(withExecutorInfo(new TestCaseStartedEvent(suiteUid, DEFAULT_TEST_NAME).withLabels(
-			    AllureModelUtils.createTestSuiteLabel(DEFAULT_SUITE_NAME),
-			    AllureModelUtils.createTestGroupLabel(DEFAULT_XML_TEST_NAME),
-			    AllureModelUtils.createTestClassLabel(DEFAULT_CLASS_NAME),
-			    AllureModelUtils.createTestMethodLabel(DEFAULT_TEST_NAME)))));
+        verify(allure).fire(eq(withExecutorInfo(new TestCaseStartedEvent(suiteUid, DEFAULT_TEST_NAME).withLabels(
+                AllureModelUtils.createTestSuiteLabel(DEFAULT_SUITE_NAME),
+                AllureModelUtils.createTestGroupLabel(DEFAULT_XML_TEST_NAME),
+                AllureModelUtils.createTestClassLabel(DEFAULT_CLASS_NAME),
+                AllureModelUtils.createTestMethodLabel(DEFAULT_TEST_NAME)))));
     }
 
     @Test
@@ -133,14 +132,14 @@ public class AllureTestListenerTest {
         String anotherStringParameter = "anotherString";
         when(testResult.getTestContext()).thenReturn(testContext);
         when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
-	    when(testResult.getTestContext().getSuite().getName()).thenReturn(DEFAULT_SUITE_NAME);
-	    when(testResult.getTestContext().getCurrentXmlTest().getName()).thenReturn(DEFAULT_XML_TEST_NAME);
-	    when(testResult.getTestClass().getName()).thenReturn(DEFAULT_CLASS_NAME);
-	    when(testResult.getMethod().getMethodName()).thenReturn(DEFAULT_TEST_NAME);
-        when(testResult.getParameters()).thenReturn(new Object[] { doubleParameter, stringParameter, anotherStringParameter});
+        when(testResult.getTestContext().getSuite().getName()).thenReturn(DEFAULT_SUITE_NAME);
+        when(testResult.getTestContext().getCurrentXmlTest().getName()).thenReturn(DEFAULT_XML_TEST_NAME);
+        when(testResult.getTestClass().getName()).thenReturn(DEFAULT_CLASS_NAME);
+        when(testResult.getMethod().getMethodName()).thenReturn(DEFAULT_TEST_NAME);
+        when(testResult.getParameters()).thenReturn(new Object[]{doubleParameter, stringParameter, anotherStringParameter});
 
         doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
-        
+
         String uid = UUID.randomUUID().toString();
         when(testContext.getAttribute("SUITE_UID")).thenReturn(uid);
         testngListener.onTestStart(testResult);
@@ -149,10 +148,10 @@ public class AllureTestListenerTest {
         String testName = String.format("%s[%s,%s,%s]",
                 DEFAULT_TEST_NAME, Double.toString(doubleParameter), stringParameter, anotherStringParameter);
         verify(allure).fire(eq(withExecutorInfo(new TestCaseStartedEvent(suiteUid, testName).withLabels(
-		        AllureModelUtils.createTestSuiteLabel(DEFAULT_SUITE_NAME),
-		        AllureModelUtils.createTestGroupLabel(DEFAULT_XML_TEST_NAME),
-		        AllureModelUtils.createTestClassLabel(DEFAULT_CLASS_NAME),
-		        AllureModelUtils.createTestMethodLabel(DEFAULT_TEST_NAME)))));
+                AllureModelUtils.createTestSuiteLabel(DEFAULT_SUITE_NAME),
+                AllureModelUtils.createTestGroupLabel(DEFAULT_XML_TEST_NAME),
+                AllureModelUtils.createTestClassLabel(DEFAULT_CLASS_NAME),
+                AllureModelUtils.createTestMethodLabel(DEFAULT_TEST_NAME)))));
 
         ArgumentCaptor<AddParameterEvent> captor = ArgumentCaptor.forClass(AddParameterEvent.class);
         verify(allure, times(2)).fire(captor.capture());
