@@ -124,6 +124,10 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
     @Override
     public void onTestStart(ITestResult iTestResult) {
         ITestNGMethod method = iTestResult.getMethod();
+	    String testSuiteLabel = iTestResult.getTestContext().getSuite().getName();
+	    String testGroupLabel = iTestResult.getTestContext().getCurrentXmlTest().getName();
+	    String testClassLabel = iTestResult.getTestClass().getName();
+	    String testMethodLabel = method.getMethodName();
         String suitePrefix = getCurrentSuitePrefix(iTestResult);
         String testName = getName(iTestResult);
         startedTestNames.add(testName);
@@ -132,7 +136,11 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         String invoc = getMethodInvocationsAndSuccessPercentage(iTestResult);
         Description description = new Description().withValue(method.getDescription());
         String suiteUid = getSuiteUid(iTestResult.getTestContext());
-        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, testName + invoc);
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, testName + invoc).withLabels(
+		        AllureModelUtils.createTestSuiteLabel(testSuiteLabel),
+		        AllureModelUtils.createTestGroupLabel(testGroupLabel),
+		        AllureModelUtils.createTestClassLabel(testClassLabel),
+		        AllureModelUtils.createTestMethodLabel(testMethodLabel));
         if (description.getValue() != null) {
             event.setDescription(description);
         }

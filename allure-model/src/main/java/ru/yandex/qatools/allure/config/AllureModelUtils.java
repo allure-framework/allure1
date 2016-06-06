@@ -67,6 +67,22 @@ public final class AllureModelUtils {
         return createLabel(LabelName.THREAD, thread);
     }
 
+    public static Label createTestSuiteLabel(String testSuite) {
+        return createLabel(LabelName.TEST_SUITE, testSuite);
+    }
+
+    public static Label createTestGroupLabel(String testGroup) {
+        return createLabel(LabelName.TEST_GROUP, testGroup);
+    }
+
+    public static Label createTestClassLabel(String testClass) {
+        return createLabel(LabelName.TEST_CLASS, testClass);
+    }
+
+    public static Label createTestMethodLabel(String testMethod) {
+        return createLabel(LabelName.TEST_METHOD, testMethod);
+    }
+
     public static Label createLabel(LabelName name, String value) {
         return new Label().withName(name.value()).withValue(value);
     }
