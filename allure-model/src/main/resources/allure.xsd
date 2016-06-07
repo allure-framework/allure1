@@ -162,6 +162,10 @@
             <xs:enumeration value="testId"/>
             <xs:enumeration value="host"/>
             <xs:enumeration value="thread"/>
+            <xs:enumeration value="testSuite"/>
+            <xs:enumeration value="testGroup"/>
+            <xs:enumeration value="testClass"/>
+            <xs:enumeration value="testMethod"/>
         </xs:restriction>
     </xs:simpleType>
 
