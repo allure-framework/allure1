@@ -447,7 +447,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
      */
     private boolean canGetMethodParameterNames() {
         try {
-            Class.forName("java.lang.reflect.Parameter", false, getClass().getClassLoader());
+            Class.forName("java.lang.reflect.Parameter", false, Thread.currentThread().getContextClassLoader());
             return true;
         } catch (ClassNotFoundException e) { //NOSONAR
             return false;
