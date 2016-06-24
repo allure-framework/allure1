@@ -14,8 +14,10 @@
     </h3>
     <div class="external-system-references">
         <span ng-show="testcaseArguments.length > 0">
-            <span class="fa fa-sliders"/>
-            <span>{{'testcase.PARAMETERS' | translate}}: [</span>
+            <span class="fa fa-sliders">
+                {{'testcase.PARAMETERS' | translate}}:
+            </span>
+            <span>[</span>
             <span ng-repeat="argument in testcaseArguments">
                 <span class="line-nobreak">
                     <span>{{argument.name}} = "
@@ -28,15 +30,17 @@
             <span>]</span>
         </span>
         <span class="issues" ng-show="testcase.issues">
-            <span class="fa fa-bug"/>
-            {{'testcase.ISSUES' | translate}}
+            <span class="fa fa-bug">
+                {{'testcase.ISSUES' | translate}}
+            </span>
             <span class="issue" ng-repeat="issue in testcase.issues">
                 <a ng-href="{{issue.url}}" target="_blank">{{issue.name}}</a><span ng-show="!$last">,</span>
             </span>
         </span>
         <span class="testId" ng-show="testcase.testId">
-            <span class="fa fa-database"/>
-            {{'testcase.TEST_ID' | translate}}
+            <span class="fa fa-database">
+                {{'testcase.TEST_ID' | translate}}
+            </span>
             <a ng-href="{{testcase.testId.url}}" target="_blank">{{testcase.testId.name}}</a>
         </span>
     </div>
