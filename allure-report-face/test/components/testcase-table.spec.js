@@ -20,9 +20,9 @@ describe('TestcaseTable', function() {
         settings.set('visibleStatuses', {PASSED: true, FAILED: true});
         this.view = new TestcaseTableView({
             testCases: [
-                {uid: 1, name: 'case 1', time: {duration: 432}, status: 'PASSED'},
-                {uid: 2, name: 'case 2', time: {duration: 145}, status: 'PASSED'},
-                {uid: 3, name: 'case 3', time: {duration: 370}, status: 'FAILED'}
+                {uid: 1, title: 'case 1', time: {duration: 432}, status: 'PASSED'},
+                {uid: 2, title: 'case 2', time: {duration: 145}, status: 'PASSED'},
+                {uid: 3, title: 'case 3', time: {duration: 370}, status: 'FAILED'}
             ],
             baseUrl: 'xUnit/56'
         }).render();
