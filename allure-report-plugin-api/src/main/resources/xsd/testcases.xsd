@@ -33,6 +33,7 @@
             <xsd:element name="severity" type="alr:severity-level"/>
             <xsd:element name="status" type="alr:status"/>
             <xsd:element name="issues" type="alr:issues"/>
+            <xsd:element name="stories" type="alr:stories"/>
             <xsd:element name="testId" type="alr:testId" minOccurs="0"/>
             <xsd:element name="labels" type="alr:labels" minOccurs="0"/>
             <xsd:element name="parameters" type="alr:parameters" minOccurs="0"/>
@@ -129,6 +130,17 @@
     </xsd:complexType>
 
     <xsd:complexType name="issue">
+        <xsd:attribute name="name" type="xsd:string"/>
+        <xsd:attribute name="url" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="stories">
+        <xsd:sequence>
+            <xsd:element name="story" type="alr:story" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="story">
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="url" type="xsd:string"/>
     </xsd:complexType>

@@ -9,29 +9,33 @@ import java.lang.annotation.Target;
 /**
  * In order to group your tests by stories simply annotate test suite
  * or test case with {@link ru.yandex.qatools.allure.annotations.Stories}
- * annotation. This annotation can take either one string or a string
+ * annotation. This annotation can take {@link ru.yandex.qatools.allure.annotations.Story}
  * array because one test case can relate to several stories:
  * <pre>
- * &#064;Stories({"Story1", "Story2"})
+ * &#064;Stories({
+ *     &#064;Story("MYPROJECT-1"),
+ *     &#064;Story("MYPROJECT-2")
+ * })
  * &#064;Test
  * public void myTest() {
  *     ...
  * }
  *
- * &#064;Stories("Story")
+ * &#064;Story("Story")
  * &#064;Test
  * public void myTest() {
  *     ...
  * }
  * </pre>
  * @author Dmitry Baev charlie@yandex-team.ru
- *         Date: 25.12.13
+ * @author Sergey Korol serhii.s.korol@gmail.com
+ *         Date: 10.07.16
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface Stories {
 
-    String[] value();
+    Story[] value();
 
 }

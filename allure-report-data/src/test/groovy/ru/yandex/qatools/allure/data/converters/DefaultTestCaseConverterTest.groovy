@@ -62,6 +62,7 @@ class DefaultTestCaseConverterTest {
 
         assert modify.attachments.empty
         assert modify.issues.empty
+        assert modify.stories.empty
         assert modify.labels.empty
         assert modify.parameters.empty
         assert modify.steps.empty

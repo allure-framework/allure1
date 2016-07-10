@@ -11,7 +11,7 @@ import ru.yandex.qatools.allure.model.SeverityLevel;
 @Title("default.title")
 @Description("default.description")
 @Features("default.feature")
-@Stories("default.story")
+@Story("default.story")
 @Issue("default.issue")
 public class SimpleClass {
 
@@ -19,7 +19,11 @@ public class SimpleClass {
     @Description("some.description")
     @Severity(SeverityLevel.BLOCKER)
     @Features("some.feature")
-    @Stories("some.story")
+	@Story("some.simple.story")
+    @Stories({
+        @Story("some.nested.story.1"),
+        @Story("some.nested.story.2"),
+    })
     @Issue("some.simple.issue")
     @Issues({
         @Issue("some.nested.issue.1"),
@@ -28,14 +32,12 @@ public class SimpleClass {
     @TestCaseId("test.case.id")
     public void simpleMethod() {
     }
-    
-    public void defaultMethod(){	
+
+    public void defaultMethod(){
     }
-    
+
     @Severity(SeverityLevel.CRITICAL)
     @Issue("initial.issue")
     public void combinedMethod(){
     }
-    
-    
 }
