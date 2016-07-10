@@ -153,16 +153,6 @@ public class AnnotationManager {
             event.getLabels().add(createTestLabel(getTestCaseId()));
         }
 
-        if (isStoryAnnotationPresent()) {
-            event.getLabels().add(createStoryLabel(getStoryKey()));
-        }
-
-        if (isStoriesAnnotationPresent()) {
-            for (String storyKey : getStoryKeys()) {
-                event.getLabels().add(createStoryLabel(storyKey));
-            }
-        }
-
         event.getLabels().addAll(getStoryLabels());
         event.getLabels().addAll(getFeatureLabels());
         withExecutorInfo(event);
@@ -310,13 +300,14 @@ public class AnnotationManager {
      * @return {@link java.util.List} of created labels
      */
     public List<Label> getStoryLabels() {
-        if (!isAnnotationPresent(Stories.class)) {
-            return Collections.emptyList();
-        }
-
         List<Label> result = new ArrayList<>();
-        for (Story story : getAnnotation(Stories.class).value()) {
-            result.add(createStoryLabel(story.value()));
+        if (isStoryAnnotationPresent()) {
+            result.add(createStoryLabel(getStoryKey()));
+        }
+        if (isStoriesAnnotationPresent()) {
+            for (String storyKey : getStoryKeys()) {
+                result.add(createStoryLabel(storyKey));
+            }
         }
         return result;
     }

@@ -10,6 +10,7 @@ import java.lang.annotation.*;
  *     ...
  * }
  * </pre>
+ *
  * @author Sergey Korol serhii.s.korol@gmail.com
  *         Date: 10.07.16
  */
@@ -18,6 +19,6 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface Story {
 
-	String value();
+    String value();
 
 }

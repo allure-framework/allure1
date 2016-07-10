@@ -76,8 +76,8 @@ public class AnnotationManagerTest {
     @Test
     public void testStoryLabelsGetter() throws Exception {
         List<Label> labels = annotationManager.getStoryLabels();
-        assertThat(labels, hasSize(2));
-        assertEquals(labels.get(0), createLabel(LabelName.STORY, "some.nested.story.1"));
+        assertThat(labels, hasSize(3));
+        assertEquals(labels.get(0), createLabel(LabelName.STORY, "some.simple.story"));
     }
 
     @Test
