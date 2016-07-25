@@ -18,7 +18,7 @@
 
     <groupId>ru.yandex.qatools.allure</groupId>
     <artifactId>allure-core</artifactId>
-    <version>1.4.23.HOTFIX1</version>
+    <version>1.4.23.HOTFIX2-SNAPSHOT</version>
 
     <packaging>pom</packaging>
 
