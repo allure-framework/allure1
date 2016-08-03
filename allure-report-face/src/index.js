@@ -1,6 +1,5 @@
 import App from './app';
 import $ from 'jquery';
-import Backbone from 'backbone';
 import './plugins/default';
 import './plugins/defects';
 import './plugins/environment';
@@ -15,6 +14,5 @@ import './plugins/testcase-description';
 import './plugins/testcase-links';
 
 App.start();
-Backbone.history.start();
 
 window.jQuery = $;
