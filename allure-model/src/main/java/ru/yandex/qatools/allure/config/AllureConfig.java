@@ -70,6 +70,9 @@ public class AllureConfig {
     @Property("allure.tests.management.pattern")
     protected String tmsPattern = "%s";
 
+    @Property("allure.testng.parameters.enabled")
+    protected boolean testNgParametersEnabled = true;
+
     protected String version = getClass().getPackage().getImplementationVersion();
 
     public AllureConfig() {
@@ -134,6 +137,10 @@ public class AllureConfig {
 
     public String getTmsPattern() {
         return tmsPattern;
+    }
+
+    public boolean areTestNgParametersEnabled() {
+        return testNgParametersEnabled;
     }
 
     public String getVersion() {
