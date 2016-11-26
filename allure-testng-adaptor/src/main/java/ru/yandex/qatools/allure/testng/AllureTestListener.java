@@ -290,35 +290,43 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
             if (excludeGroups.isEmpty()) {
                 return true; // no group restriction
             } else {
-                if (method.getGroups() != null) {
-                    for (String group : method.getGroups()) {
-                        if (excludeGroups.contains(group)) {
-                            return false; // a group of the method is excluded
-                        }
-                    }
-                }
-                return true; // no groups of the method are excluded
+                return isInActiveGroupWithoutIncludes(method, excludeGroups);
             }
         } else {
-            if (method.getGroups() != null) {
-                boolean included = false;
-                boolean excluded = false;
-                for (String group : method.getGroups()) {
-                    if (includeGroups.contains(group)) {
-                        included = true;
-                    }
-                    if (excludeGroups.contains(group)) {
-                        excluded = true;
-                    }
-                }
-                if (included && !excluded) {
-                    return true; // a group of the method is included and not excluded
-                }
-            }
-            return false; // no groups of the method are included
+            return isInActiveGroupWithIncludes(method, includeGroups, excludeGroups);
         }
     }
-    
+
+    private boolean isInActiveGroupWithoutIncludes(ITestNGMethod method, List<String> excludeGroups) {
+        if (method.getGroups() != null) {
+            for (String group : method.getGroups()) {
+                if (excludeGroups.contains(group)) {
+                    return false; // a group of the method is excluded
+                }
+            }
+        }
+        return true; // no groups of the method are excluded
+    }
+
+    private boolean isInActiveGroupWithIncludes(ITestNGMethod method, List<String> includeGroups, List<String> excludeGroups) {
+        if (method.getGroups() != null) {
+            boolean included = false;
+            boolean excluded = false;
+            for (String group : method.getGroups()) {
+                if (includeGroups.contains(group)) {
+                    included = true;
+                }
+                if (excludeGroups.contains(group)) {
+                    excluded = true;
+                }
+            }
+            if (included && !excluded) {
+                return true; // a group of the method is included and not excluded
+            }
+        }
+        return false; // no groups of the method are included
+    }
+
     private String getMethodInvocationsAndSuccessPercentage(ITestResult iTestResult) {
         int percentage = iTestResult.getMethod().getSuccessPercentage();
         int curCount = iTestResult.getMethod().getCurrentInvocationCount() + 1;
