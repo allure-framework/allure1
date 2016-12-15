@@ -46,6 +46,9 @@ public class TextUtilsHumanizeTest {
                 new Object[]{"another...", "Another..."},
                 new Object[]{"my.company.another...", "Another..."},
                 new Object[]{"my.company.params[1.2, 1.3]", "Params [1.2, 1.3]"},
+                new Object[]{"params[1.2, 1.3]", "Params [1.2, 1.3]"},
+                new Object[]{"my.company.params[1.2, [1.3, 1.4]]", "Params [1.2, [1.3, 1.4]]"},
+                new Object[]{"params[1.2, [1.3, 1.4]]", "Params [1.2, [1.3, 1.4]]"},
                 new Object[]{"e1.e2", "E 2"},
                 new Object[]{"withParams[1]", "With params [1]"}
         );

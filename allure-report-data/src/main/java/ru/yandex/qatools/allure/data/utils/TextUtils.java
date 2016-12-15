@@ -31,7 +31,7 @@ public final class TextUtils {
     public static String humanize(String text) {
         String result = text.trim();
 
-        Pattern pattern = Pattern.compile("(.*)(\\[.*\\])");
+        Pattern pattern = Pattern.compile("(.*?)(\\[.*\\])");
         Matcher matcher = pattern.matcher(result);
 
         String params = "";
