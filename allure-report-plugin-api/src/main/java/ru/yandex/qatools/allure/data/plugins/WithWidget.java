@@ -10,15 +10,17 @@ package ru.yandex.qatools.allure.data.plugins;
  *         Date: 22.04.15
  * @see ProcessPlugin
  * @see ru.yandex.qatools.allure.data.WidgetType
- * @see KeyValueWidget
- * @see StatsWidget
- * @see DefectsWidget
  */
 public interface WithWidget {
 
     /**
-     * Get plugin widget. You must implement {@link ProcessPlugin} to collect
+     * Name for plugin. Name should be unique and contains only latin characters.
+     */
+    String getName();
+
+    /**
+     * Get plugin widget content. You must implement {@link ProcessPlugin} to collect
      * information from test results.
      */
-    Widget getWidget();
+    Object getWidgetData();
 }

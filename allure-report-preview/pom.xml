@@ -3,7 +3,7 @@
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.4.17-SNAPSHOT</version>
+        <version>1.4.24-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -22,11 +22,7 @@
     <dependencies>
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
-            <artifactId>allure-report-data</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
+            <artifactId>allure-bundle</artifactId>
         </dependency>
     </dependencies>
 
@@ -54,24 +50,6 @@
                             </resources>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>copy-allure-report-face</id>
-                        <phase>generate-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${allure.report.directory}</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>
-                                        ${project.parent.basedir}/allure-report-face/target/allure-report-face-${project.version}
-                                    </directory>
-                                    <filtering>false</filtering>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -86,7 +64,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>ru.yandex.qatools.allure.data.DummyReportGenerator</mainClass>
+                    <mainClass>ru.yandex.qatools.allure.AllureMain</mainClass>
                     <longClasspath>true</longClasspath>
                     <arguments>
                         <argument>${allure.results.directory}</argument>

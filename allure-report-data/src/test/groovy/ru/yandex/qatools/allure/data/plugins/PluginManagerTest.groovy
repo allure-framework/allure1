@@ -5,7 +5,6 @@ import org.apache.commons.io.FilenameUtils
 import org.junit.ClassRule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import ru.yandex.qatools.allure.data.WidgetType
 import ru.yandex.qatools.allure.data.Widgets
 import ru.yandex.qatools.allure.data.index.DefaultPluginsIndex
 import ru.yandex.qatools.allure.data.io.ReportWriter
@@ -20,7 +19,9 @@ class PluginManagerTest {
     @ClassRule
     public static TemporaryFolder folder = new TemporaryFolder();
 
-    def writer = new DummyReportWriter(folder.newFolder())
+    def writer = new DummyReportWriter(
+            folder.newFolder()
+    )
 
     @Test
     void shouldNotFailIfLoadNull() {
@@ -176,12 +177,13 @@ class PluginManagerTest {
         assert object instanceof Widgets
         assert object.hash instanceof String
         assert !object.hash.empty
-        assert object.data instanceof List<Widget>
-        assert object.data.size() == 1
+        assert object.plugins instanceof Map<String, Object>
+        assert object.plugins.size() == 1
 
-        def widget = object.data.iterator().next()
-        assert widget.name == "name"
-        assert widget.type == WidgetType.TITLE_STATISTICS
+        def data = object.plugins.get("somePlugin") as List
+        assert data.size() == 2
+        assert data.contains('a')
+        assert data.contains('b')
     }
 
     @Test
@@ -206,9 +208,8 @@ class PluginManagerTest {
         ]
     }
 
-    PluginManager createPluginManager(List<Plugin> plugins) {
-        def loader = [loadPlugins: { plugins }] as PluginLoader
-        def index = new DefaultPluginsIndex(loader)
+    static PluginManager createPluginManager(List<Plugin> plugins) {
+        def index = new DefaultPluginsIndex(plugins)
         new PluginManager(index)
     }
 
@@ -257,8 +258,13 @@ class PluginManagerTest {
     class SomePluginWithWidget extends SomeProcessPlugin implements WithWidget {
 
         @Override
-        Widget getWidget() {
-            return new StatsWidget("name")
+        String getName() {
+            return "somePlugin";
+        }
+
+        @Override
+        Object getWidgetData() {
+            return ['a', 'b']
         }
     }
 
@@ -301,8 +307,8 @@ class PluginManagerTest {
         }
     }
 
-    abstract class SomePlugin implements Plugin<SomeObject> {
-        @Override
+    abstract class SomePlugin {
+
         Class<SomeObject> getType() {
             return SomeObject
         }

@@ -21,7 +21,12 @@ class EnvironmentPlugin extends AbstractPlugin implements ProcessPlugin<Environm
         environment.name = data.name ?: environment.name
         environment.url = data.url ?: environment.url
 
-        environment.parameter.addAll(data.parameter)
+        for (def parameter : data.parameter) {
+            if (!environment.parameter.count { it.key == parameter.key }) {
+                environment.parameter.add(parameter)
+            }
+
+        }
     }
 
     @Override
@@ -30,11 +35,9 @@ class EnvironmentPlugin extends AbstractPlugin implements ProcessPlugin<Environm
     }
 
     @Override
-    Widget getWidget() {
-        def widget = new KeyValueWidget(name)
-        widget.data = environment.parameter.collect {
+    Object getWidgetData() {
+        environment.parameter.collect {
             new KeyValueWidgetItem(key: it.key, value: it.value)
         }.sort { it.key }
-        widget
     }
 }

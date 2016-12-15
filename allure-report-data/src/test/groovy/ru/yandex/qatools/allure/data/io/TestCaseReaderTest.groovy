@@ -102,6 +102,25 @@ class TestCaseReaderTest {
         }
     }
 
+    @Test
+    void shouldRemoveDuplicateLabels() {
+        def first = new Label(name: "someName", value: "someValue")
+        def second = new Label(name: "someName", value: "someValue")
+        def testCase = new TestCaseResult(name: "testCase", labels: [first, second])
+
+        def testSuite = new TestSuiteResult(name: "name", title: "title", testCases: [testCase], labels: [first, second])
+
+        def reader = getReader([testSuite]);
+
+        def iterator = reader.iterator()
+        def next = iterator.next()
+        use(PluginUtils) {
+            assert next.labels.size() == 3
+            assert next.labels.contains(first)
+            assert next.labels.findAll { it.equals(first) }.size() == 1
+        }
+    }
+
     @Test(expected = UnsupportedOperationException)
     void shouldNotRemoveFromIterator() {
         def testCase = new TestCaseResult(name: "testCase")

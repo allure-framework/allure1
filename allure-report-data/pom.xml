@@ -4,7 +4,7 @@
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.4.17-SNAPSHOT</version>
+        <version>1.4.24-SNAPSHOT</version>
     </parent>
 
     <artifactId>allure-report-data</artifactId>
@@ -165,6 +165,12 @@
             <version>18.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>2.3.23</version>
+        </dependency>
+
         <!-- Testing -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -184,6 +190,11 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.qatools.matchers</groupId>
+            <artifactId>nio-matchers</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>

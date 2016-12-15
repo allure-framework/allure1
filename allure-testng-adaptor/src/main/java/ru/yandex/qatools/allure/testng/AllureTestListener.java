@@ -10,6 +10,7 @@ import org.testng.ITestResult;
 import org.testng.internal.IResultListener;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.annotations.Parameter;
+import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
 import ru.yandex.qatools.allure.events.AddParameterEvent;
 import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
@@ -123,6 +124,10 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
     @Override
     public void onTestStart(ITestResult iTestResult) {
         ITestNGMethod method = iTestResult.getMethod();
+        String testSuiteLabel = iTestResult.getTestContext().getSuite().getName();
+        String testGroupLabel = iTestResult.getTestContext().getCurrentXmlTest().getName();
+        String testClassLabel = iTestResult.getTestClass().getName();
+        String testMethodLabel = method.getMethodName();
         String suitePrefix = getCurrentSuitePrefix(iTestResult);
         String testName = getName(iTestResult);
         startedTestNames.add(testName);
@@ -131,7 +136,11 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         String invoc = getMethodInvocationsAndSuccessPercentage(iTestResult);
         Description description = new Description().withValue(method.getDescription());
         String suiteUid = getSuiteUid(iTestResult.getTestContext());
-        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, testName + invoc);
+        TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, testName + invoc).withLabels(
+                AllureModelUtils.createTestSuiteLabel(testSuiteLabel),
+                AllureModelUtils.createTestGroupLabel(testGroupLabel),
+                AllureModelUtils.createTestClassLabel(testClassLabel),
+                AllureModelUtils.createTestMethodLabel(testMethodLabel));
         if (description.getValue() != null) {
             event.setDescription(description);
         }
@@ -140,7 +149,10 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         am.update(event);
 
         getLifecycle().fire(event);
-        fireAddParameterEvents(iTestResult);
+
+        if (AllureConfig.newInstance().areTestNgParametersEnabled()) {
+            fireAddParameterEvents(iTestResult);
+        }
     }
 
     @Override
@@ -151,7 +163,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
     @Override
     public void onTestFailure(ITestResult iTestResult) {
         getLifecycle().fire(new TestCaseFailureEvent()
-                        .withThrowable(iTestResult.getThrowable())
+                .withThrowable(iTestResult.getThrowable())
         );
         fireFinishTest();
     }
@@ -212,7 +224,8 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         String xmlTest = iTestContext.getCurrentXmlTest().getName();
         String params = "";
 
-        if (!iTestContext.getCurrentXmlTest().getLocalParameters().isEmpty()) {
+        if (!iTestContext.getCurrentXmlTest().getLocalParameters().isEmpty() &&
+                AllureConfig.newInstance().areTestNgParametersEnabled()) {
             params = iTestContext.getCurrentXmlTest().getLocalParameters()
                     .toString().replace("{", "[").replace("}", "]");
         }
@@ -224,14 +237,18 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
         String suitePrefix = getCurrentSuitePrefix(iTestResult);
         StringBuilder sb = new StringBuilder(suitePrefix);
         sb.append(iTestResult.getName());
-        Object[] parameters = iTestResult.getParameters();
-        if (parameters != null && parameters.length > 0) {
-            sb.append("[");
-            for (Object parameter : parameters) {
-                sb.append(parameter).append(",");
+
+        if (AllureConfig.newInstance().areTestNgParametersEnabled()) {
+            Object[] parameters = iTestResult.getParameters();
+            if (parameters != null && parameters.length > 0) {
+                sb.append("[");
+                for (Object parameter : parameters) {
+                    sb.append(parameter).append(",");
+                }
+                sb.replace(sb.length() - 1, sb.length(), "]");
             }
-            sb.replace(sb.length() - 1, sb.length(), "]");
         }
+
         return sb.toString();
     }
 
@@ -430,7 +447,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
      */
     private boolean canGetMethodParameterNames() {
         try {
-            Class.forName("java.lang.reflect.Parameter", false, getClass().getClassLoader());
+            Class.forName("java.lang.reflect.Parameter", false, Thread.currentThread().getContextClassLoader());
             return true;
         } catch (ClassNotFoundException e) { //NOSONAR
             return false;

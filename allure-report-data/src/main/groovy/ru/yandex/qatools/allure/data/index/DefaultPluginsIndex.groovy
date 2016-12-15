@@ -1,6 +1,5 @@
 package ru.yandex.qatools.allure.data.index
 
-import com.google.inject.Inject
 import com.google.inject.Injector
 import com.google.inject.Singleton
 import ru.yandex.qatools.allure.data.plugins.AbstractPlugin
@@ -22,11 +21,15 @@ class DefaultPluginsIndex implements PluginsIndex {
     List<Plugin> plugins
 
     /**
-     * Creates an instance of plugin index loading plugins via given loader.
+     * Creates an instance of plugin index from given plugins. Plugins were
+     * sorted by priority. Plugins with higher priority will be first,
+     * if some plugins have equals priority then they will be ordered alphabetically.
      */
-    @Inject
-    DefaultPluginsIndex(PluginLoader loader, Injector injector = null) {
-        plugins = load(loader, injector)
+    DefaultPluginsIndex(List<Plugin> plugins) {
+        this.plugins = plugins ? unmodifiableList(plugins
+                .findAll { it }
+                .sort(false, sortClosure)
+        ) : []
     }
 
     /**
@@ -107,5 +110,15 @@ class DefaultPluginsIndex implements PluginsIndex {
         plugins.findAll {
             type.isAssignableFrom((it as Object).class)
         } as List<T>
+    }
+
+    /**
+     * Returns the closure to sort plugins by priority and alphabetically in case equals priority.
+     */
+    protected static Closure<Integer> getSortClosure() {
+        { first, second ->
+            getPriority(second as Plugin) <=> getPriority(first as Plugin) ?:
+                    first.class.simpleName <=> second.class.simpleName
+        }
     }
 }

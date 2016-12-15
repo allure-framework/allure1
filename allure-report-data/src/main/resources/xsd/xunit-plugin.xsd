@@ -31,4 +31,13 @@
             <xsd:element name="test-cases" type="alr:allure-test-cases-info" minOccurs="0"/>
         </xsd:all>
     </xsd:complexType>
+
+    <xsd:element name="x-unit-widget-item" type="alr:x-unit-widget-item"/>
+    <xsd:complexType name="x-unit-widget-item">
+        <xsd:all>
+            <xsd:element name="uid" type="xsd:string"/>
+            <xsd:element name="title" type="xsd:string"/>
+            <xsd:element name="statistic" type="alr:statistic"/>
+        </xsd:all>
+    </xsd:complexType>
 </xsd:schema>

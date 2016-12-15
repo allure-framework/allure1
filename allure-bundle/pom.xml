@@ -3,7 +3,7 @@
     <parent>
         <artifactId>allure-core</artifactId>
         <groupId>ru.yandex.qatools.allure</groupId>
-        <version>1.4.17-SNAPSHOT</version>
+        <version>1.4.24-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -15,16 +15,18 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.2</version>
         </dependency>
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-report-data</artifactId>
         </dependency>
+
+        <!-- Add face with test scope to avoid it when using bundle in deps -->
         <dependency>
             <groupId>ru.yandex.qatools.allure</groupId>
             <artifactId>allure-report-face</artifactId>
             <type>war</type>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -36,7 +38,21 @@
                 <version>2.5.3</version>
                 <executions>
                     <execution>
-                        <id>allure-bundle-zip</id>
+                        <id>allure-bundle</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>allure-bundle-${project.version}</finalName>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>src/assembly/bundle.xml</descriptor>
+                            </descriptors>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>allure-bundle-standalone</id>
                         <phase>package</phase>
                         <goals>
                             <goal>single</goal>
@@ -44,9 +60,8 @@
                         <configuration>
                             <finalName>allure-bundle-${project.version}</finalName>
                             <descriptors>
-                                <descriptor>src/assembly/bundle.xml</descriptor>
+                                <descriptor>src/assembly/standalone-bundle.xml</descriptor>
                             </descriptors>
-                            <appendAssemblyId>false</appendAssemblyId>
                             <archive>
                                 <manifest>
                                     <mainClass>ru.yandex.qatools.allure.AllureMain</mainClass>

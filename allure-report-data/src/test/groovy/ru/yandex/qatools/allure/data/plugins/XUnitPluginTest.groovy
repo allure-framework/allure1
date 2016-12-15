@@ -4,18 +4,12 @@ import org.codehaus.groovy.runtime.InvokerHelper
 import org.junit.Test
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestSuiteInfo
+import ru.yandex.qatools.allure.data.ListWidgetData
 import ru.yandex.qatools.allure.data.ReportGenerationException
 import ru.yandex.qatools.allure.data.Statistic
 import ru.yandex.qatools.allure.data.Time
-import ru.yandex.qatools.allure.data.WidgetType
-import ru.yandex.qatools.allure.data.io.TestCaseReader
-import ru.yandex.qatools.allure.data.io.TestSuiteReader
 import ru.yandex.qatools.allure.data.utils.PluginUtils
-import ru.yandex.qatools.allure.model.Failure
-import ru.yandex.qatools.allure.model.Label
 
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createFeatureLabel
-import static ru.yandex.qatools.allure.config.AllureModelUtils.createLabel
 import static ru.yandex.qatools.allure.model.Status.BROKEN
 import static ru.yandex.qatools.allure.model.Status.FAILED
 import static ru.yandex.qatools.allure.model.Status.PASSED
@@ -150,10 +144,7 @@ class XUnitPluginTest {
 
     @Test
     void shouldGenerateEmptyWidget() {
-        plugin.widget.name == plugin.name
-        plugin.widget.type == WidgetType.TITLE_STATISTICS
-        def widget = plugin.widget as StatsWidget
-        assert widget.data.empty
+        assert (plugin.widgetData as ListWidgetData).totalCount == 0;
     }
 
     @Test
@@ -167,11 +158,11 @@ class XUnitPluginTest {
             plugin.process(testCase)
         }
 
-        def widget = plugin.widget as StatsWidget
-        assert widget.data.size() == 10
+        def data = plugin.widgetData as ListWidgetData
+        assert data.items.size() == 10
 
-        assert widget.data*.title*.startsWith("suite#")
-        assert widget.data*.statistic*.equals(new Statistic(total: 1, passed: 0, failed: 1,
+        assert data.items*.title*.startsWith("suite#")
+        assert data.items*.statistic*.equals(new Statistic(total: 1, passed: 0, failed: 1,
                 broken: 0, canceled: 0, pending: 0))
     }
 }
