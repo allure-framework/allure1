@@ -33,7 +33,7 @@
             <xsd:element name="severity" type="alr:severity-level"/>
             <xsd:element name="status" type="alr:status"/>
             <xsd:element name="issues" type="alr:issues"/>
-            <xsd:element name="testId" type="alr:testId" minOccurs="0"/>
+            <xsd:element name="testIds" type="alr:testIds"/>
             <xsd:element name="labels" type="alr:labels" minOccurs="0"/>
             <xsd:element name="parameters" type="alr:parameters" minOccurs="0"/>
             <xsd:element name="suite" type="alr:allure-test-suite-info"/>
@@ -131,6 +131,12 @@
     <xsd:complexType name="issue">
         <xsd:attribute name="name" type="xsd:string"/>
         <xsd:attribute name="url" type="xsd:string"/>
+    </xsd:complexType>
+
+    <xsd:complexType name="testIds">
+        <xsd:sequence>
+            <xsd:element name="testId" type="alr:testId" minOccurs="0" maxOccurs="unbounded"/>
+        </xsd:sequence>
     </xsd:complexType>
 
     <xsd:complexType name="testId">

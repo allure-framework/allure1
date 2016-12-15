@@ -68,7 +68,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
                 result.summary.attachments += result.attachments.size();
 
                 result.severity = source.severity;
-                result.testId = source.testId
+                result.testIds = source.testIds;
                 result.issues = source.issues;
 
                 def suiteName = source.suiteName ?: UNKNOWN_TEST_SUITE;
