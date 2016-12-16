@@ -1,0 +1,11 @@
+{
+  "defects": {
+    "TITLE": "缺陷列表",
+    "Product defects": "产品缺陷",
+    "Test defects": "用例缺陷",
+    "STATISTIC": "{{count}} 个缺陷",
+    "SHOW_ALL": "查看所有缺陷",
+    "COUNT": "个数",
+    "DEFECT": "缺陷"
+  }
+}

@@ -1,0 +1,73 @@
+{
+  "TEST_RUN": "测试执行",
+  "STARTED_AT": "开始于 {{date}} {{time}}",
+  "Title": "标题",
+  "Duration": "用时",
+  "Status": "状态",
+  "Count": "数量",
+  "Defect": "缺陷",
+  "FAILED": "失败",
+  "BROKEN": "异常",
+  "CANCELED": "取消",
+  "PENDING": "挂起",
+  "PASSED": "成功",
+  "Failed": "失败",
+  "Broken": "异常",
+  "Canceled": "取消",
+  "Pending": "挂起",
+  "Passed": "成功",
+  "Total": "总共 {{statistic}}",
+  "failed": "失败 {{statistic}}",
+  "broken": "异常 {{statistic}}",
+  "canceled": "取消 {{statistic}}",
+  "pending": "挂起 {{statistic}}",
+  "passed": "成功 {{statistic}}",
+  "BLOCKER": "阻塞",
+  "CRITICAL": "核心",
+  "NORMAL": "正常",
+  "MINOR": "次要",
+  "TRIVIAL": "不重要",
+  "tooltip": {
+    "EXPAND": "展开",
+    "COLLAPSE": "收缩",
+    "CLOSE": "关闭",
+    "ATTACHMENT_IMAGE": "附件图片"
+  },
+  "index": {
+    "FEEDBACK": "反馈",
+    "MAIL": "邮件列表",
+    "DATA_SIZE": "报告大小:",
+    "GENERATED": "生成用时:",
+    "VERSION": "版本:",
+    "COLLAPSE": "收缩",
+    "OVERVIEW": "总览"
+  },
+  "overview": {
+    "TOP": "顶级缺陷",
+    "ALL": "显示所有",
+    "TOTAL": "总共"
+  },
+  "attachment": {
+    "ATTACHMENT": "附件",
+    "NOT_FOUND": "未找到附近"
+  },
+  "list": {
+    "TEST_CASES": "测试用例 (总共 {{amount}}{{visible == amount ? '个)' : '个, 显示 ' + visible + '个)'}}",
+    "MORE": "更多..."
+  },
+  "testcase": {
+    "TESTCASE": "用例",
+    "SEVERITY": "重要性: {{severity}}",
+    "ISSUES": "已知缺陷:",
+    "TEST_ID": "用例ID:",
+    "TEST_PASSED": "测试通过!",
+    "RAW": "原格式",
+    "STACKTRACE": "缺陷详情",
+    "SUBSTEPS": "{substeps, plural, one{# sub-step} other{# sub-steps}}",
+    "ATTACHMENTS": "{attachments, plural, one{# attachment} other{# attachments}}",
+    "PARAMETERS": "用例参数"
+  },
+  "total": {
+    "TITLE": "总共"
+  }
+}

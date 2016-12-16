@@ -9,5 +9,6 @@ allurePlugins.addTab('defects', {
 });
 allurePlugins.addWidget('defects', DefectsWidget);
 allurePlugins.addTranslation('en', require('./translations/en.json'));
+allurePlugins.addTranslation('zh', require('./translations/zh.json'));
 allurePlugins.addTranslation('ru', require('./translations/ru.json'));
 allurePlugins.addTranslation('ptbr', require('./translations/ptbr.json'));
