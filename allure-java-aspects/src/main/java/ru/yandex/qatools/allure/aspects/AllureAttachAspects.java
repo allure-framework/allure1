@@ -58,7 +58,7 @@ public class AllureAttachAspects {
         );
 
         Charset charset = AllureConfig.newInstance().getAttachmentsEncoding();
-        byte[] bytes = (result instanceof byte[]) ? (byte[]) result : result.toString().getBytes(charset);
+        byte[] bytes = (result instanceof byte[]) ? (byte[]) result : String.valueOf(result).getBytes(charset);
         ALLURE.fire(new MakeAttachmentEvent(bytes, attachTitle, attachment.type()));
     }
 
