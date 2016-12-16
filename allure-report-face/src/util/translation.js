@@ -4,6 +4,7 @@ import settings from './settings';
 
 export const LANGUAGES = [
     {id: 'en', title: 'English'},
+    {id: 'zh', title: '简体中文'},
     {id: 'ru', title: 'Русский'},
     {id: 'ptbr', title: 'Português'}
 ];
