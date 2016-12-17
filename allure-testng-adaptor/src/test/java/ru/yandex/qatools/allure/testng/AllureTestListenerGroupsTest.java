@@ -16,35 +16,35 @@ import ru.yandex.qatools.allure.utils.AllureResultsUtils;
 
 public class AllureTestListenerGroupsTest {
 
-  @Rule
-  public TemporaryFolder folder = new TemporaryFolder();
-  private File resultsDir;
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
+    private File resultsDir;
 
-  @Before
-  public void setUp() throws IOException {
-    resultsDir = folder.newFolder();
-    AllureResultsUtils.setResultsDirectory(resultsDir);
-  }
-
-  @Test // see https://github.com/allure-framework/allure-core/issues/880
-  public void reportContainsTestForGroups() {
-    // GIVEN: an TestNG suite with groups 
-    TestNG testNG = new TestNG(false);
-    testNG.setTestSuites(singletonList(getClass().getClassLoader().getResource("suite-groups.xml").getFile()));
-
-    // WHEN: executing
-    testNG.run();
-
-    // THEN: report only contains results for included groups
-    List<File> files = listTestSuiteFiles(resultsDir);
-    assertThat(files, hasSize(1));
-    File file = files.get(0);
-    TestSuiteResult result = unmarshal(file, TestSuiteResult.class);
-    assertThat(result.getTestCases(), hasSize(2));
-    List<String> status = new ArrayList<>();
-    for (TestCaseResult test : result.getTestCases()) {
-      status.add(test.getName() + ":" + test.getStatus());
+    @Before
+    public void setUp() throws IOException {
+        resultsDir = folder.newFolder();
+        AllureResultsUtils.setResultsDirectory(resultsDir);
     }
-    assertThat(status, containsInAnyOrder("inactiveIncludedTest:PENDING", "activeIncludedTest:PASSED"));
-  }
+
+    @Test // see https://github.com/allure-framework/allure-core/issues/880
+    public void reportContainsTestForGroups() {
+        // GIVEN: an TestNG suite with groups 
+        TestNG testNG = new TestNG(false);
+        testNG.setTestSuites(singletonList(getClass().getClassLoader().getResource("suite-groups.xml").getFile()));
+
+        // WHEN: executing
+        testNG.run();
+
+        // THEN: report only contains results for included groups
+        List<File> files = listTestSuiteFiles(resultsDir);
+        assertThat(files, hasSize(1));
+        File file = files.get(0);
+        TestSuiteResult result = unmarshal(file, TestSuiteResult.class);
+        assertThat(result.getTestCases(), hasSize(2));
+        List<String> status = new ArrayList<>();
+        for (TestCaseResult test : result.getTestCases()) {
+            status.add(test.getName() + ":" + test.getStatus());
+        }
+        assertThat(status, containsInAnyOrder("inactiveIncludedTest:PENDING", "activeIncludedTest:PASSED"));
+    }
 }
