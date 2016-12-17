@@ -2,14 +2,7 @@ package ru.yandex.qatools.allure.utils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.yandex.qatools.allure.annotations.Description;
-import ru.yandex.qatools.allure.annotations.Features;
-import ru.yandex.qatools.allure.annotations.Issue;
-import ru.yandex.qatools.allure.annotations.Issues;
-import ru.yandex.qatools.allure.annotations.Severity;
-import ru.yandex.qatools.allure.annotations.Stories;
-import ru.yandex.qatools.allure.annotations.TestCaseId;
-import ru.yandex.qatools.allure.annotations.Title;
+import ru.yandex.qatools.allure.annotations.*;
 import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
 import ru.yandex.qatools.allure.events.TestSuiteStartedEvent;
 import ru.yandex.qatools.allure.model.Label;
@@ -248,6 +241,9 @@ public class AnnotationManager {
         return isAnnotationPresent(TestCaseId.class);
     }
 
+    public boolean isStoryAnnotationPresent() {
+        return isAnnotationPresent(Story.class);
+    }
     /**
      * Find first {@link ru.yandex.qatools.allure.annotations.Title} annotation
      *
@@ -304,15 +300,33 @@ public class AnnotationManager {
      * @return {@link java.util.List} of created labels
      */
     public List<Label> getStoryLabels() {
-        if (!isAnnotationPresent(Stories.class)) {
-            return Collections.emptyList();
-        }
-
         List<Label> result = new ArrayList<>();
-        for (String story : getAnnotation(Stories.class).value()) {
-            result.add(createStoryLabel(story));
+        if (isStoryAnnotationPresent()) {
+            result.add(createStoryLabel(getStoryKey()));
+        }
+        if (isStoriesAnnotationPresent()) {
+            for (String storyKey : getStoryKeys()) {
+                result.add(createStoryLabel(storyKey));
+            }
         }
         return result;
+    }
+
+    public String getStoryKey() {
+        Story story = getAnnotation(Story.class);
+        return story == null ? null : story.value();
+    }
+
+    public String[] getStoryKeys() {
+        Stories stories = getAnnotation(Stories.class);
+        if (stories == null) {
+            return new String[0];
+        }
+        List<String> keys = new ArrayList<>();
+        for (Story story : stories.value()) {
+            keys.add(story.value());
+        }
+        return keys.toArray(new String[keys.size()]);
     }
 
     /**

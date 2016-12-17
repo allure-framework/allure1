@@ -70,6 +70,7 @@ class DefaultTestCaseConverter implements TestCaseConverter {
                 result.severity = source.severity;
                 result.testId = source.testId
                 result.issues = source.issues;
+                result.stories = source.stories;
 
                 def suiteName = source.suiteName ?: UNKNOWN_TEST_SUITE;
                 def suiteTitle = source.suiteTitle ?: TextUtils.humanize(suiteName);

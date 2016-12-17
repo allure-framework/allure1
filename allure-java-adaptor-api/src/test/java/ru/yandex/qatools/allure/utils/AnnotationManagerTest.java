@@ -76,8 +76,8 @@ public class AnnotationManagerTest {
     @Test
     public void testStoryLabelsGetter() throws Exception {
         List<Label> labels = annotationManager.getStoryLabels();
-        assertThat(labels, hasSize(1));
-        assertEquals(labels.get(0), createLabel(LabelName.STORY, "some.story"));
+        assertThat(labels, hasSize(3));
+        assertEquals(labels.get(0), createLabel(LabelName.STORY, "some.simple.story"));
     }
 
     @Test
@@ -102,8 +102,9 @@ public class AnnotationManagerTest {
                 createSeverityLabel(SeverityLevel.BLOCKER)
         )));
         assertThat(event.getLabels(), hasItems(
-                createStoryLabel("some.story"), 
                 createFeatureLabel("some.feature"),
+                createStoryLabel("some.nested.story.1"),
+                createStoryLabel("some.nested.story.2"),
                 createIssueLabel("some.simple.issue"),
                 createIssueLabel("some.nested.issue.1"),
                 createIssueLabel("some.nested.issue.2")
@@ -122,9 +123,10 @@ public class AnnotationManagerTest {
         assertThat(description.getType(), is(DescriptionType.TEXT));
 
         assertThat(event.getLabels(), hasItems(
-                createStoryLabel("some.story"), 
                 createFeatureLabel("some.feature"),
                 createSeverityLabel(SeverityLevel.BLOCKER),
+                createStoryLabel("some.nested.story.1"),
+                createStoryLabel("some.nested.story.2"),
                 createIssueLabel("some.simple.issue"),
                 createIssueLabel("some.nested.issue.1"),
                 createIssueLabel("some.nested.issue.2")
@@ -145,9 +147,11 @@ public class AnnotationManagerTest {
         assertThat(description.getType(), is(DescriptionType.TEXT));
 
         assertThat(event.getLabels(), hasItems(
-                createStoryLabel("some.story"), 
                 createFeatureLabel("some.feature"),
                 createSeverityLabel(SeverityLevel.BLOCKER),
+                createStoryLabel("some.simple.story"),
+                createStoryLabel("some.nested.story.1"),
+                createStoryLabel("some.nested.story.2"),
                 createIssueLabel("some.simple.issue"),
                 createIssueLabel("some.nested.issue.1"),
                 createIssueLabel("some.nested.issue.2"),

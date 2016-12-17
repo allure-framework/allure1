@@ -4,6 +4,7 @@ import org.codehaus.groovy.runtime.InvokerHelper
 import ru.yandex.qatools.allure.data.AllureTestCase
 import ru.yandex.qatools.allure.data.AllureTestCaseInfo
 import ru.yandex.qatools.allure.data.Issue
+import ru.yandex.qatools.allure.data.Story
 import ru.yandex.qatools.allure.data.Statistic
 import ru.yandex.qatools.allure.data.TestId
 import ru.yandex.qatools.allure.data.Time
@@ -71,6 +72,11 @@ final class PluginUtils {
     static def getIssues(TestCaseResult testCase) {
         def values = getLabelValues(testCase, ISSUE);
         values?.collect { new Issue(name: it, url: TextUtils.getIssueUrl(it)) }
+    }
+
+    static def getStories(TestCaseResult testCase) {
+        def values = getLabelValues(testCase, STORY);
+        values?.collect { new Story(name: it, url: TextUtils.getIssueUrl(it)) }
     }
 
     static def getSeverity(TestCaseResult testCase) {

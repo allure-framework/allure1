@@ -12,6 +12,8 @@
                 <label name="issue" value="JIRA-1"/>
                 <label name="issue" value="JIRA-2"/>
                 <label name="testId" value="TMS-1"/>
+                <label name="story" value="JIRA-3"/>
+                <label name="story" value="JIRA-4"/>
             </labels>
         </test-case>
         <test-case start="1412949539363" stop="1412949539715" status="passed">
