@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Test suite with groups">
+    <test name="Test with groups">
+        <groups>
+            <run>
+                <include name="include"/>
+                <exclude name="exclude"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="ru.yandex.qatools.allure.testng.testdata.GroupTest"/>
+        </classes>
+    </test>
+</suite>

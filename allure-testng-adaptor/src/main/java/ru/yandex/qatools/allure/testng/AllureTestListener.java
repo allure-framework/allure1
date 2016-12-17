@@ -1,5 +1,7 @@
 package ru.yandex.qatools.allure.testng;
 
+import static java.util.Arrays.asList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ISuite;
@@ -258,7 +260,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
 
     private void addPendingMethods(ITestContext iTestContext) {
         for (ITestNGMethod method : iTestContext.getExcludedMethods()) {
-            if (method.isTest() && !method.getEnabled()) {
+            if (method.isTest() && !method.getEnabled() && isInActiveGroup(method, iTestContext)) {
                 Description description = new Description().withValue(method.getDescription());
                 String suiteUid = getSuiteUid(iTestContext);
                 TestCaseStartedEvent event = new TestCaseStartedEvent(suiteUid, method.getMethodName());
@@ -274,6 +276,55 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
                 fireFinishTest();
             }
         }
+    }
+
+    /**
+     * Checks if the given test method is part of the current test run in matters of the include/exclude group filtering 
+     */
+    private boolean isInActiveGroup(ITestNGMethod method, ITestContext context) {
+        String[] includedGroupsArray = context.getIncludedGroups();
+        List<String> includeGroups = includedGroupsArray != null ? asList(includedGroupsArray) : Collections.<String>emptyList();
+        String[] excludedGroupsArray = context.getExcludedGroups();
+        List<String> excludeGroups = excludedGroupsArray != null ? asList(excludedGroupsArray) : Collections.<String>emptyList();
+        if (includeGroups.isEmpty()) {
+            if (excludeGroups.isEmpty()) {
+                return true; // no group restriction
+            } else {
+                return isInActiveGroupWithoutIncludes(method, excludeGroups);
+            }
+        } else {
+            return isInActiveGroupWithIncludes(method, includeGroups, excludeGroups);
+        }
+    }
+
+    private boolean isInActiveGroupWithoutIncludes(ITestNGMethod method, List<String> excludeGroups) {
+        if (method.getGroups() != null) {
+            for (String group : method.getGroups()) {
+                if (excludeGroups.contains(group)) {
+                    return false; // a group of the method is excluded
+                }
+            }
+        }
+        return true; // no groups of the method are excluded
+    }
+
+    private boolean isInActiveGroupWithIncludes(ITestNGMethod method, List<String> includeGroups, List<String> excludeGroups) {
+        if (method.getGroups() != null) {
+            boolean included = false;
+            boolean excluded = false;
+            for (String group : method.getGroups()) {
+                if (includeGroups.contains(group)) {
+                    included = true;
+                }
+                if (excludeGroups.contains(group)) {
+                    excluded = true;
+                }
+            }
+            if (included && !excluded) {
+                return true; // a group of the method is included and not excluded
+            }
+        }
+        return false; // no groups of the method are included
     }
 
     private String getMethodInvocationsAndSuccessPercentage(ITestResult iTestResult) {
