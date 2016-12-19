@@ -63,9 +63,9 @@ final class PluginUtils {
         new Time(start: testCase.start, stop: testCase.stop, duration: testCase.stop - testCase.start);
     }
 
-    static def getTestId(TestCaseResult testCase) {
-        def name = getLabelValue(testCase, LabelName.TEST_ID);
-        name ? new TestId(name: name, url: TextUtils.getTestUrl(name)) : null;
+    static def getTestIds(TestCaseResult testCase) {
+        def values = getLabelValues(testCase, LabelName.TEST_ID);
+        values?.collect { new TestId(name: it, url: TextUtils.getTestUrl(it)) }
     }
 
     static def getIssues(TestCaseResult testCase) {

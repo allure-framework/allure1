@@ -8,10 +8,10 @@ class IssuesView extends ItemView {
     template = template;
 
     serializeData() {
-        const {testId, issues} = this.model.attributes;
+        const {testIds, issues} = this.model.attributes;
         return {
-            hasLinks: testId || issues.length > 0,
-            testId, issues
+            hasLinks: testIds.length > 0 || issues.length > 0,
+            testIds, issues
         };
     }
 }

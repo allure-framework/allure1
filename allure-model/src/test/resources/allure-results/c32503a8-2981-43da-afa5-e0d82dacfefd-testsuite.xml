@@ -189,6 +189,19 @@ Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
                 <label name="testId" value="TMS-1"/>
             </labels>
         </test-case>
+        <test-case start="1412949539804" stop="1412949539830" status="passed">
+            <name>mapToMultiTestIds</name>
+            <description type="text">one test implement for several Tests in TMS</description>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="severity" value="blocker"/>
+                <label name="host" value="my.cool.host.com"/>
+                <label name="thread" value="pool-1-thread-7"/>
+                <label name="testId" value="TMS-1a"/>
+                <label name="testId" value="TMS-1b"/>
+            </labels>
+        </test-case>
     </test-cases>
     <labels>
         <label name="framework" value="JUnit"/>
