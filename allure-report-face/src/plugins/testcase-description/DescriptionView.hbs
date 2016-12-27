@@ -1,7 +1,7 @@
 {{#if value}}
     <h3 class="pane__section-title">Description</h3>
     {{#if (eq type "TEXT")}}
-        <p class="description__text">{{value}}</p>
+        <p class="description__text">{{nl2br value}}</p>
     {{/if}}
     {{#if (eq type "MARKDOWN")}}
         {{{value}}}
