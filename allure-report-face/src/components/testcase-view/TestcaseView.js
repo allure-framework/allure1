@@ -69,6 +69,11 @@ class TestcaseView extends LayoutView {
     onStacktraceClick() {
         this.$('.testcase__trace').toggleClass('testcase__trace_visible');
     }
+
+    @on('click .pane__subtitle')
+    onSubtitleClick() {
+        this.$('.pane__subtitle').toggleClass('line-ellipsis', false);
+    }
 }
 
 export default TestcaseView;
