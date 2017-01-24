@@ -20,7 +20,7 @@ class TestsuitesListView extends DataGridView {
     }
 
     onRender() {
-        this.statuses.show(new StatusToggleView());
+        this.statuses.show(new StatusToggleView({statistics: this.collection.statistic}));
         this.highlightItem(this.state.get('testsuite'));
     }
 

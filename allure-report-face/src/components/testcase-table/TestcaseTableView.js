@@ -4,6 +4,7 @@ import {region} from '../../decorators';
 import settings from '../../util/settings';
 import StatusToggleView from '../status-toggle/StatusToggleView';
 import template from './TestcaseTableView.hbs';
+import {countBy} from 'underscore';
 
 class TestcaseTableView extends DataGridView {
     template = template;
@@ -15,11 +16,13 @@ class TestcaseTableView extends DataGridView {
     initialize() {
         this.listenTo(settings, 'change:visibleStatuses', this.render);
         this.testCases = this.options.testCases.map((testcase, index) => Object.assign(testcase, {index: index + 1}));
+        this.statistics = countBy(this.testCases, testCase => testCase.status);
     }
 
     onRender() {
+        const statistics = this.statistics;
         this.highlightItem(this.options.currentCase);
-        this.statuses.show(new StatusToggleView());
+        this.statuses.show(new StatusToggleView({statistics}));
     }
 
     serializeData() {
