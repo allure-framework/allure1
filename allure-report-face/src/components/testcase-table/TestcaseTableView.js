@@ -16,7 +16,7 @@ class TestcaseTableView extends DataGridView {
     initialize() {
         this.listenTo(settings, 'change:visibleStatuses', this.render);
         this.testCases = this.options.testCases.map((testcase, index) => Object.assign(testcase, {index: index + 1}));
-        this.statistics = countBy(this.testCases, testCase => testCase.status);
+        this.statistics = countBy(this.testCases, testCase => testCase.status.toLowerCase());
     }
 
     onRender() {

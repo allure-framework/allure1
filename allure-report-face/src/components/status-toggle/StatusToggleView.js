@@ -16,9 +16,9 @@ class StatusToggleView extends ItemView {
         const statuses = settings.get('visibleStatuses');
         return {
             statistics: Object.keys(this.statistics).map( status => ({
-                status,
+                status: status,
                 active: !!statuses[status],
-                title: capitalize(status.toString().toLowerCase()),
+                title: capitalize(status.toString()),
                 count: this.statistics[status]
             }))
         };

@@ -6,11 +6,11 @@ export default class XUnitCollection extends Collection {
     parse({time, testSuites}) {
         this.time = time;
         this.statistic = testSuites.reduce((statistic, testsuite) => {
-            ['PASSED', 'PENDING', 'CANCELED', 'BROKEN', 'FAILED', 'TOTAL'].forEach(function(status) {
+            ['passed', 'pending', 'canceled', 'broken', 'failed', 'total'].forEach(function(status) {
                 if(!statistic[status]) {
                     statistic[status] = 0;
                 }
-                statistic[status] += testsuite.statistic[status.toLowerCase()];
+                statistic[status] += testsuite.statistic[status];
             });
             return statistic;
         }, {});
