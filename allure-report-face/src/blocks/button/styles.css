@@ -41,6 +41,8 @@ $button-inverse-border-hover: #737373;
 
 .button-group {
   display: flex;
+  flex-flow: row-reverse wrap;
+  align-content: space-between;
   .button {
     border-radius: 0;
     border-right-width: 0;
