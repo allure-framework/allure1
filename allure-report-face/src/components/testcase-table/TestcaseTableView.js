@@ -14,9 +14,11 @@ class TestcaseTableView extends DataGridView {
     statuses;
 
     initialize() {
+        const defaultStats = {failed: 0, broken: 0, canceled: 0, pending: 0, passed: 0};
         this.listenTo(settings, 'change:visibleStatuses', this.render);
         this.testCases = this.options.testCases.map((testcase, index) => Object.assign(testcase, {index: index + 1}));
-        this.statistics = countBy(this.testCases, testCase => testCase.status.toLowerCase());
+        this.statistics = Object.assign({}, defaultStats,
+            countBy(this.testCases, testCase => testCase.status.toLowerCase()));
     }
 
     onRender() {
