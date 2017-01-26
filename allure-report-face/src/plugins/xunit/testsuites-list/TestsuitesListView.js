@@ -36,7 +36,7 @@ class TestsuitesListView extends DataGridView {
                 this.collection.toJSON().filter(suite => {
                     return reduce(
                         suite.statistic,
-                        (visible, value, status) => visible || (statuses[status.toUpperCase()] && value > 0),
+                        (visible, value, status) => visible || (statuses[status] && value > 0),
                         false
                     );
                 })

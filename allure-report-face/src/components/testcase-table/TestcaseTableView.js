@@ -34,7 +34,7 @@ class TestcaseTableView extends DataGridView {
             baseUrl: this.options.baseUrl,
             sorting: sorting,
             totalCount: this.options.testCases.length,
-            testCases: this.applySort(this.testCases).filter(({status}) => statuses[status])
+            testCases: this.applySort(this.testCases).filter(({status}) => statuses[status.toLowerCase()])
         };
     }
 }
