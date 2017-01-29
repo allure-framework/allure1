@@ -1,5 +1,5 @@
 <div class="button-group">
-    {{#each statuses}}
-        <button class="{{b 'button' active=active}} {{b 'status-toggle' 'button' status=status}}" data-status="{{status}}">{{title}}</button>
+    {{#each statistics}}
+        <button class="{{b 'button' active=active}} {{b 'status-toggle' 'button' status=status}}" data-status="{{status}}">{{title}} ({{count}})</button>
     {{/each}}
 </div>

@@ -8,13 +8,18 @@ import template from './StatusToggleView.hbs';
 class StatusToggleView extends ItemView {
     template = template;
 
+    initialize({statistics}) {
+        this.statistics = statistics;
+    }
+
     serializeData() {
         const statuses = settings.get('visibleStatuses');
         return {
-            statuses: ['FAILED', 'BROKEN', 'CANCELED', 'PENDING', 'PASSED'].map(status => ({
-                status,
+            statistics: ['failed', 'broken', 'canceled', 'pending', 'passed'].map( status => ({
+                status: status,
                 active: !!statuses[status],
-                title: capitalize(status.toLowerCase())
+                title: capitalize(status.toString()),
+                count: this.statistics[status]
             }))
         };
     }

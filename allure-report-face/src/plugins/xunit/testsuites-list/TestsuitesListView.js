@@ -20,7 +20,7 @@ class TestsuitesListView extends DataGridView {
     }
 
     onRender() {
-        this.statuses.show(new StatusToggleView());
+        this.statuses.show(new StatusToggleView({statistics: this.collection.statistic}));
         this.highlightItem(this.state.get('testsuite'));
     }
 
@@ -36,7 +36,7 @@ class TestsuitesListView extends DataGridView {
                 this.collection.toJSON().filter(suite => {
                     return reduce(
                         suite.statistic,
-                        (visible, value, status) => visible || (statuses[status.toUpperCase()] && value > 0),
+                        (visible, value, status) => visible || (statuses[status] && value > 0),
                         false
                     );
                 })
