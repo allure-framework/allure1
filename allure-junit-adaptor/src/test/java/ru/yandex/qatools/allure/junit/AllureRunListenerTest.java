@@ -1,7 +1,6 @@
 package ru.yandex.qatools.allure.junit;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.internal.AssumptionViolatedException;
@@ -20,9 +19,10 @@ import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
 import java.lang.annotation.Annotation;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
@@ -185,7 +185,7 @@ public class AllureRunListenerTest {
         runListener.getSuiteUid(description);
 
         verify(runListener).testSuiteStarted(generatedDescription.capture());
-        Assert.assertEquals(className, generatedDescription.getValue().getClassName());
+        assertThat(generatedDescription.getValue().getClassName(), equalTo(className));
 
     }
 
