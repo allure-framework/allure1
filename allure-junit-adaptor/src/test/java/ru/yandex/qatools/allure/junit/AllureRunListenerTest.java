@@ -7,6 +7,7 @@ import org.junit.internal.AssumptionViolatedException;
 import org.junit.runner.Description;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
+import org.mockito.ArgumentCaptor;
 import ru.yandex.qatools.allure.Allure;
 import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
 import ru.yandex.qatools.allure.events.TestCaseCanceledEvent;
@@ -20,6 +21,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyString;
@@ -162,6 +165,28 @@ public class AllureRunListenerTest {
         runListener.getSuiteUid(description);
 
         verify(fakeSuites).get("some.suite.name");
+    }
+
+    @Test
+    public void testNaughtyClassFieldOfDescription() throws Exception {
+        Description description = mock(Description.class);
+        String className = "Illegal Class Name!"; // It might happen when using some framework on top of junit
+        when(description.getClassName()).thenReturn(className);
+
+        Map<String, String> fakeSuites = mock(Map.class);
+        when(fakeSuites.containsKey(anyString())).thenReturn(false);
+
+        when(runListener.getSuites()).thenReturn(fakeSuites);
+
+        ArgumentCaptor<Description> generatedDescription = ArgumentCaptor.forClass(Description.class);
+
+        doNothing().when(runListener).testSuiteStarted(any(Description.class));
+
+        runListener.getSuiteUid(description);
+
+        verify(runListener).testSuiteStarted(generatedDescription.capture());
+        assertThat(generatedDescription.getValue().getClassName(), equalTo(className));
+
     }
 
     @After

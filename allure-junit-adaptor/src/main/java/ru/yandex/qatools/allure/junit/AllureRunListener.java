@@ -107,7 +107,13 @@ public class AllureRunListener extends RunListener {
     public String getSuiteUid(Description description) {
         String suiteName = description.getClassName();
         if (!getSuites().containsKey(suiteName)) {
-            Description suiteDescription = Description.createSuiteDescription(description.getTestClass());
+            Class testClass = description.getTestClass();
+            Description suiteDescription;
+            if (testClass != null) {
+                suiteDescription = Description.createSuiteDescription(testClass);
+            } else {
+                suiteDescription = Description.createSuiteDescription(description.getClassName());
+            }
             testSuiteStarted(suiteDescription);
         }
         return getSuites().get(suiteName);
