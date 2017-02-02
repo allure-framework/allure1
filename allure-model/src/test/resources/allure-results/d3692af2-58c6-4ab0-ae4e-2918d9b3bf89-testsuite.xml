@@ -47,6 +47,16 @@
                 <label name="thread" value="pool-1-thread-9"/>
             </labels>
         </test-case>
+        <test-case start="1412949540572" stop="1412949540575" status="passed">
+            <name>test_multiline_description</name>
+            <description type="text">Descriptions \n can be \n multiline</description>
+            <steps/>
+            <attachments/>
+            <labels>
+                <label name="host" value="my.cool.host.com"/>
+                <label name="thread" value="pool-1-thread-9"/>
+            </labels>
+        </test-case>
     </test-cases>
     <labels>
         <label name="framework" value="JUnit"/>
