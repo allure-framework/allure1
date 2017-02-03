@@ -66,7 +66,7 @@ html, body {
   white-space: nowrap;
 }
 
-.preformated-text {
+.preformatted-text {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
