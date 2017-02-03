@@ -43,7 +43,7 @@ public class AllureReportGeneratorTest {
         assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));
 
         assertThat(dataDirectory, hasFilesCount(14, "*-attachment*"));
-        assertThat(dataDirectory, hasFilesCount(320, "*-testcase.json"));
+        assertThat(dataDirectory, hasFilesCount(321, "*-testcase.json"));
     }
 
     @Test(expected = ReportGenerationException.class)
