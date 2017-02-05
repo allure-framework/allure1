@@ -107,14 +107,16 @@ public class AnnotationManager {
      * @return hostname as String
      */
     private static String getHostname() {
-        if (Hostname == null) {
-            try {
-                Hostname = InetAddress.getLocalHost().getHostName();
-            } catch (UnknownHostException e) {
-                Hostname = "default";
-                LOGGER.warn("Can not get current hostname", e);
-            }
+        if (Hostname != null)
+            return Hostname;
+
+        try {
+            Hostname = InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            Hostname = "default";
+            LOGGER.warn("Can not get current hostname", e);
         }
+        
         return Hostname;
     }
 
