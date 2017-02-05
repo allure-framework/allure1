@@ -48,6 +48,8 @@ public class AnnotationManager {
 
     private Map<Class<? extends Annotation>, Annotation> annotations = new HashMap<>();
 
+    private static String Hostname = null;
+
     /**
      * Construct AnnotationManager using given annotations
      *
@@ -96,6 +98,23 @@ public class AnnotationManager {
                 annotations.put(key, each);
             }
         }
+    }
+
+    /**
+     * Save current hostname and reuse it.
+     *
+     * @return hostname as String
+     */
+    private static String getHostname() {
+        if (Hostname == null) {
+            try {
+                Hostname = InetAddress.getLocalHost().getHostName();
+            } catch (Exception e) {
+                Hostname = "default";
+                LOGGER.warn("Can not get current hostname", e);
+            }
+        }
+        return Hostname;
     }
 
     /**
@@ -172,14 +191,7 @@ public class AnnotationManager {
      * @return updated event
      */
     public static TestCaseStartedEvent withExecutorInfo(TestCaseStartedEvent event) {
-        try {
-            event.getLabels().add(createHostLabel(InetAddress.getLocalHost().getHostName()));
-        } catch (Exception e) {
-            LOGGER.warn("Can not get current hostname", e);
-            //create a default host if can't get current hostname
-            event.getLabels().add(createHostLabel("default"));
-        }
-
+        event.getLabels().add(createHostLabel(getHostname()));
         event.getLabels().add(createThreadLabel(format("%s.%s(%s)",
                         ManagementFactory.getRuntimeMXBean().getName(),
                         Thread.currentThread().getName(),
