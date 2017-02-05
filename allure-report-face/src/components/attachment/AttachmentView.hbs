@@ -18,7 +18,9 @@
     <div class="pane__section">
         <pre class="attachment__code">{{content}}</pre>
     </div>
-{{else if (eq type "csv")}}
+{{else if (or
+             (eq type "csv")
+             (eq type "tab-separated-values"))}}
     <table class="table attachment__table">
         <tbody>
         {{#each content}}

@@ -24,6 +24,8 @@ export default function typeByMime(type) {
             return 'html';
         case 'text/csv':
             return 'csv';
+        case 'text/tab-separated-values':
+            return 'tab-separated-values';
         case 'image/svg+xml':
             return 'svg';
         case 'video/mp4':

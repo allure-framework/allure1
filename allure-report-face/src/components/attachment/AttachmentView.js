@@ -39,6 +39,8 @@ class AttachmentView extends ItemView {
         return $.ajax(this.sourceUrl, {dataType: 'text'}).then((responseText) => {
             if(this.type === 'csv') {
                 this.content = d3.csv.parseRows(responseText);
+            } else if(this.type === 'tab-separated-values') {
+                this.content = d3.tsv.parseRows(responseText);
             } else if(this.type === 'uri') {
                 this.content = responseText.split('\n')
                     .map(line => line.trim())
@@ -54,7 +56,7 @@ class AttachmentView extends ItemView {
     }
 
     needsFetch() {
-        return ['text', 'code', 'csv', 'uri'].indexOf(this.type) > -1;
+        return ['text', 'code', 'csv', 'uri', 'tab-separated-values'].indexOf(this.type) > -1;
     }
 
     serializeData() {

@@ -10,6 +10,7 @@ export default function(type) {
         case 'code':
             return 'fa fa-file-code-o';
         case 'csv':
+        case 'tab-separated-values':
             return 'fa fa-table';
         default:
             return 'fa fa-file-o';
