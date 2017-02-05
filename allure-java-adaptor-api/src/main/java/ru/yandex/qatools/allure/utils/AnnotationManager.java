@@ -18,7 +18,6 @@ import ru.yandex.qatools.allure.model.SeverityLevel;
 import java.lang.annotation.Annotation;
 import java.lang.management.ManagementFactory;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -107,16 +106,14 @@ public class AnnotationManager {
      * @return hostname as String
      */
     private static String getHostname() {
-        if (Hostname != null)
-            return Hostname;
-
-        try {
-            Hostname = InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            Hostname = "default";
-            LOGGER.warn("Can not get current hostname", e);
+        if (Hostname == null) {
+            try {
+                Hostname = InetAddress.getLocalHost().getHostName();
+            } catch (Exception e) {
+                Hostname = "default";
+                LOGGER.warn("Can not get current hostname", e);
+            }
         }
-        
         return Hostname;
     }
 
