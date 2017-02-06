@@ -37,10 +37,9 @@ class AttachmentView extends ItemView {
 
     loadContent() {
         return $.ajax(this.sourceUrl, {dataType: 'text'}).then((responseText) => {
-            if(this.type === 'csv') {
-                this.content = d3.csv.parseRows(responseText);
-            } else if(this.type === 'tab-separated-values') {
-                this.content = d3.tsv.parseRows(responseText);
+            if(this.type === 'csv' || this.type === 'tab-separated-values') {
+                this.isTable = true;
+                this.content = (this.type === 'csv' ? d3.csv : d3.tsv).parseRows(responseText);
             } else if(this.type === 'uri') {
                 this.content = responseText.split('\n')
                     .map(line => line.trim())
@@ -56,7 +55,10 @@ class AttachmentView extends ItemView {
     }
 
     needsFetch() {
-        return ['text', 'code', 'csv', 'uri', 'tab-separated-values'].indexOf(this.type) > -1;
+        if(this.isTable) {
+            return true;
+        }
+        return ['text', 'code', 'uri'].indexOf(this.type) > -1;
     }
 
     serializeData() {
@@ -65,6 +67,7 @@ class AttachmentView extends ItemView {
             content: this.content,
             sourceUrl: this.sourceUrl,
             attachment: this.attachment,
+            isTable: this.isTable,
             route: {
                 baseUrl: this.options.baseUrl
             }
