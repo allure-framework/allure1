@@ -15,6 +15,9 @@
             {{#if (eq status "SKIPPED")}}
                 <span class="{{b "text" status="CANCELED"}} fa fa-question-circle" title="Cancelled step"></span>
             {{/if}}
+            {{#if time.duration}}
+                <span class="step__duration "> {{time.duration}} ms </span>
+            {{/if}}
         </div>
         <div class="step__content">
             {{> steps-list steps=steps baseUrl=../baseUrl}}
