@@ -9,7 +9,6 @@
         <a class="fa fa-close" data-tooltip="Close" href="#{{route.baseUrl}}"></a>
     </span>
 </h2>
-
 {{#if (eq type "code")}}
     <div class="pane__section">
         <pre class="attachment__code">{{content}}</pre>
@@ -18,7 +17,7 @@
     <div class="pane__section">
         <pre class="attachment__code">{{content}}</pre>
     </div>
-{{else if (eq type "csv")}}
+{{else if (eq type "table")}}
     <table class="table attachment__table">
         <tbody>
         {{#each content}}
