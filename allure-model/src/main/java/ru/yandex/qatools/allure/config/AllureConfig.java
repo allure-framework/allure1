@@ -1,8 +1,8 @@
 package ru.yandex.qatools.allure.config;
 
-import ru.yandex.qatools.properties.PropertyLoader;
-import ru.yandex.qatools.properties.annotations.Property;
-import ru.yandex.qatools.properties.annotations.Resource;
+import ru.qatools.properties.Property;
+import ru.qatools.properties.PropertyLoader;
+import ru.qatools.properties.Resource;
 
 import java.io.File;
 import java.nio.charset.Charset;
@@ -76,7 +76,7 @@ public class AllureConfig {
     protected String version = getClass().getPackage().getImplementationVersion();
 
     public AllureConfig() {
-        PropertyLoader.populate(this);
+        PropertyLoader.newInstance().populate(this);
     }
 
     public static AllureConfig newInstance() { // NOSONAR
