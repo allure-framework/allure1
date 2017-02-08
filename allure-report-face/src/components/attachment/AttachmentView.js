@@ -1,5 +1,4 @@
 import './styles.css';
-//import d3 from 'd3';
 import highlight from '../../util/highlight';
 import {ItemView} from 'backbone.marionette';
 import $ from 'jquery';
