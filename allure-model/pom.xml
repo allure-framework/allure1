@@ -69,8 +69,8 @@
             <artifactId>jaxb2-basics-runtime</artifactId>
         </dependency>
         <dependency>
-            <groupId>ru.yandex.qatools.properties</groupId>
-            <artifactId>properties-loader</artifactId>
+            <groupId>ru.qatools.commons</groupId>
+            <artifactId>properties</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
