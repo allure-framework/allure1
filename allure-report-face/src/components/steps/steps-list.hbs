@@ -2,7 +2,7 @@
     <div class="step">
         <div class="{{b "step" "title" has-content=hasContent}}">
             <span class="step__arrow"></span>
-            <span class="step__time">
+            <span class="step__time" data-tooltip="{{duration time.duration}}">
                 [{{time time.start}}]
             </span>
             {{title}}
@@ -14,9 +14,6 @@
             {{/if}}
             {{#if (eq status "SKIPPED")}}
                 <span class="{{b "text" status="CANCELED"}} fa fa-question-circle" title="Cancelled step"></span>
-            {{/if}}
-            {{#if time.duration}}
-                <span class="step__duration "> {{time.duration}} ms </span>
             {{/if}}
         </div>
         <div class="step__content">

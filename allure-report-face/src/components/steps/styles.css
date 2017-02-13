@@ -29,12 +29,6 @@
   &__time {
     color: $text-muted-color
   }
-  &__duration {
-    color: $text-muted-color;
-    position: absolute;
-    right: 0;
-    margin-right: 30px;
-  }
   &__content {
     margin-left: 30px;
     display: none;
