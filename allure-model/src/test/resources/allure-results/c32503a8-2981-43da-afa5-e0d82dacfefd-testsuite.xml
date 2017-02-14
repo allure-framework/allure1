@@ -109,6 +109,7 @@ Expected: "{\n\"name\": \"test\",\n\"value\": \"ok value\"\n}"
                 <attachment title="CSV Attachment" source="b81da3c0-1b9d-4219-9e35-87e139ec446c-attachment.csv" type="text/csv"/>
                 <attachment title="WEBM Attachment" source="aae99fa5-af39-461f-b218-b1e4f2a88e56-attachment.webm" type="video/webm"/>
                 <attachment title="URI Attachment" source="00a0bc5a-6372-4e66-8088-1571966a056b-attachment.uri" type="text/uri-list"/>
+                <attachment title="TAR.GZIP Attachment" source="00a0bc5a-6372-4e66-8088-1571966a156b-attachment.tar.gz" type="application/x-gtar"/>
             </attachments>
             <labels>
                 <label name="severity" value="critical"/>
