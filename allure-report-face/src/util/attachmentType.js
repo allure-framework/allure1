@@ -41,13 +41,13 @@ export default function typeByMime(type) {
             return {
                 type: 'table',
                 icon: 'fa fa-table',
-                parser: d => d3.csv.parseRows(d) 
+                parser: d => d3.csv.parseRows(d)
             };
         case 'text/tab-separated-values':
             return {
                 type: 'table',
                 icon: 'fa fa-table',
-                parser: d => d3.tsv.parseRows(d) 
+                parser: d => d3.tsv.parseRows(d)
             };
         case 'image/svg+xml':
             return {
