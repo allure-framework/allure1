@@ -79,7 +79,7 @@ export default function typeByMime(type) {
         case 'application/gzip':
         case 'application/zip':
             return {
-                type: null,
+                type: 'archive',
                 icon: 'fa fa-file-archive-o'
             };
         default:
