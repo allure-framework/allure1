@@ -4,7 +4,7 @@
     <parent>
         <groupId>ru.yandex.qatools.allure</groupId>
         <artifactId>allure-core</artifactId>
-        <version>1.5.2</version>
+        <version>1.5.3-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
