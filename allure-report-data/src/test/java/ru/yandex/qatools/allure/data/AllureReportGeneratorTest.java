@@ -42,7 +42,7 @@ public class AllureReportGeneratorTest {
         assertThat(dataDirectory, contains(PluginManager.WIDGETS_JSON));
         assertThat(dataDirectory, contains(ReportWriter.REPORT_JSON));
 
-        assertThat(dataDirectory, hasFilesCount(14, "*-attachment*"));
+        assertThat(dataDirectory, hasFilesCount(15, "*-attachment*"));
         assertThat(dataDirectory, hasFilesCount(321, "*-testcase.json"));
     }
 

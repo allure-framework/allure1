@@ -10,7 +10,8 @@ export default function typeByMime(type) {
         case 'image/png':
         case 'image/*':
             return {
-                type: 'image'
+                type: 'image',
+                icon: 'fa fa-file-image-o'
             };
         case 'text/xml':
         case 'application/xml':
@@ -22,12 +23,14 @@ export default function typeByMime(type) {
         case 'text/x-yaml':
             return {
                 type: 'code',
+                icon: 'fa fa-file-code-o',
                 parser: d => d
             };
         case 'text/plain':
         case 'text/*':
             return {
                 type: 'text',
+                icon: 'fa fa-file-text-o',
                 parser: d => d
             };
         case 'text/html':
@@ -37,34 +40,52 @@ export default function typeByMime(type) {
         case 'text/csv':
             return {
                 type: 'table',
+                icon: 'fa fa-table',
                 parser: d => d3.csv.parseRows(d)
             };
         case 'text/tab-separated-values':
             return {
                 type: 'table',
+                icon: 'fa fa-table',
                 parser: d => d3.tsv.parseRows(d)
             };
         case 'image/svg+xml':
             return {
-                type: 'svg'
+                type: 'svg',
+                icon: 'fa fa-file-image-o'
             };
         case 'video/mp4':
         case 'video/ogg':
         case 'video/webm':
             return {
-                type: 'video'
+                type: 'video',
+                icon: 'fa fa-file-video-o'
             };
         case 'text/uri-list':
             return {
                 type: 'uri',
+                icon: 'fa fa-list-alt',
                 parser: d => d.split('\n')
-                                 .map(line => line.trim())
-                                 .filter(line => line.length > 0)
-                                 .map(line => ({
-                                      comment: line.startsWith('#'),
-                                      text: line
-                                 }))
+                                .map(line => line.trim())
+                                .filter(line => line.length > 0)
+                                .map(line => ({
+                                    comment: line.startsWith('#'),
+                                    text: line
+                                }))
+            };
+        case 'application/x-tar':
+        case 'application/x-gtar':
+        case 'application/x-bzip2':
+        case 'application/gzip':
+        case 'application/zip':
+            return {
+                type: 'archive',
+                icon: 'fa fa-file-archive-o'
             };
         default:
+            return {
+                type: null,
+                icon: 'fa fa-file-o'
+            };
     }
 }
