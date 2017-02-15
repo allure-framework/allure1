@@ -19,6 +19,6 @@
   &__count-col {
     flex: none;
     width: 5%;
-    min-width: 70px;
+    min-width: 100px;
   }
 }
