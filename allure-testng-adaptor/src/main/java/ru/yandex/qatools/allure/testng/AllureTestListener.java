@@ -457,7 +457,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
             }
 
             String name = getNameForParameter(parameter.value(), methodParameterNames, i);
-            String value = parameters[i].toString();
+            String value = parameters[i] != null ? parameters[i].toString() : "null";
 
             getLifecycle().fire(new AddParameterEvent(name, value, ParameterKind.ARGUMENT));
         }
