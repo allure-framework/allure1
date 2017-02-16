@@ -28,12 +28,7 @@ import ru.yandex.qatools.allure.utils.AnnotationManager;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -457,7 +452,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
             }
 
             String name = getNameForParameter(parameter.value(), methodParameterNames, i);
-            String value = parameters[i] != null ? parameters[i].toString() : "null";
+            String value = Objects.toString(parameters[i]);
 
             getLifecycle().fire(new AddParameterEvent(name, value, ParameterKind.ARGUMENT));
         }
