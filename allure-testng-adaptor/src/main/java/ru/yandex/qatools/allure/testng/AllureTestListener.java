@@ -30,6 +30,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -457,7 +458,7 @@ public class AllureTestListener implements IResultListener, ISuiteListener {
             }
 
             String name = getNameForParameter(parameter.value(), methodParameterNames, i);
-            String value = parameters[i].toString();
+            String value = Objects.toString(parameters[i]);
 
             getLifecycle().fire(new AddParameterEvent(name, value, ParameterKind.ARGUMENT));
         }

@@ -65,7 +65,7 @@ public class AllureTestListenerTest {
 
         // mocking test method parameters
         ConstructorOrMethod constructorOrMethod = mock(ConstructorOrMethod.class);
-        when(constructorOrMethod.getMethod()).thenReturn(parametrizedTestMethod(0, null, null));
+        when(constructorOrMethod.getMethod()).thenReturn(parametrizedTestMethod(0, null, null, null));
         method = mock(ITestNGMethod.class);
         when(method.getConstructorOrMethod()).thenReturn(constructorOrMethod);
         testResult = mock(ITestResult.class);
@@ -130,13 +130,14 @@ public class AllureTestListenerTest {
         double doubleParameter = 10.0;
         String stringParameter = "string";
         String anotherStringParameter = "anotherString";
+        String nullValueParameter = null;
         when(testResult.getTestContext()).thenReturn(testContext);
         when(testResult.getName()).thenReturn(DEFAULT_TEST_NAME);
         when(testResult.getTestContext().getSuite().getName()).thenReturn(DEFAULT_SUITE_NAME);
         when(testResult.getTestContext().getCurrentXmlTest().getName()).thenReturn(DEFAULT_XML_TEST_NAME);
         when(testResult.getTestClass().getName()).thenReturn(DEFAULT_CLASS_NAME);
         when(testResult.getMethod().getMethodName()).thenReturn(DEFAULT_TEST_NAME);
-        when(testResult.getParameters()).thenReturn(new Object[]{doubleParameter, stringParameter, anotherStringParameter});
+        when(testResult.getParameters()).thenReturn(new Object[]{doubleParameter, stringParameter, anotherStringParameter, nullValueParameter});
 
         doReturn(new Annotation[0]).when(testngListener).getMethodAnnotations(testResult);
 
@@ -145,8 +146,8 @@ public class AllureTestListenerTest {
         testngListener.onTestStart(testResult);
 
         String suiteUid = testngListener.getSuiteUid(testContext);
-        String testName = String.format("%s[%s,%s,%s]",
-                DEFAULT_TEST_NAME, Double.toString(doubleParameter), stringParameter, anotherStringParameter);
+        String testName = String.format("%s[%s,%s,%s,%s]",
+                DEFAULT_TEST_NAME, Double.toString(doubleParameter), stringParameter, anotherStringParameter, nullValueParameter);
         verify(allure).fire(eq(withExecutorInfo(new TestCaseStartedEvent(suiteUid, testName).withLabels(
                 AllureModelUtils.createTestSuiteLabel(DEFAULT_SUITE_NAME),
                 AllureModelUtils.createTestGroupLabel(DEFAULT_XML_TEST_NAME),
@@ -154,11 +155,12 @@ public class AllureTestListenerTest {
                 AllureModelUtils.createTestMethodLabel(DEFAULT_TEST_NAME)))));
 
         ArgumentCaptor<AddParameterEvent> captor = ArgumentCaptor.forClass(AddParameterEvent.class);
-        verify(allure, times(2)).fire(captor.capture());
+        verify(allure, times(3)).fire(captor.capture());
 
         Iterator<AddParameterEvent> addParameterEvents = captor.getAllValues().iterator();
         assertParameterEvent("doubleParameter", doubleParameter + "", addParameterEvents.next(), false);
         assertParameterEvent("valueFromAnnotation", anotherStringParameter, addParameterEvents.next(), true);
+        assertParameterEvent("valueFromAnnotation", "null", addParameterEvents.next(), true);
         assertFalse(addParameterEvents.hasNext());
     }
 
@@ -175,9 +177,9 @@ public class AllureTestListenerTest {
     }
 
     @SuppressWarnings("UnusedParameters")
-    public Method parametrizedTestMethod(@Parameter double doubleParameter, String notParameter, @Parameter("valueFromAnnotation") String stringParameter) {
+    public Method parametrizedTestMethod(@Parameter double doubleParameter, String notParameter, @Parameter("valueFromAnnotation") String stringParameter, @Parameter("valueFromAnnotation") String nullStringParameter) {
         try {
-            return getClass().getDeclaredMethod("parametrizedTestMethod", double.class, String.class, String.class);
+            return getClass().getDeclaredMethod("parametrizedTestMethod", double.class, String.class, String.class, String.class);
         } catch (NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
