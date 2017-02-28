@@ -18,6 +18,6 @@ Initially Allure Framework was widely used in internal testing of [Yandex](http:
 * [Releases and Changelog](https://github.com/allure-framework/allure-core/releases)
 
 ## Contact us
-* Mailing list: [allure@yandex-team.ru](mailto:allure@yandex-team.ru)
+* Mailing list: [allure@qameta.io](mailto:allure@qameta.io)
 * Gitter chat room: [https://gitter.im/allure-framework/allure-core](https://gitter.im/allure-framework/allure-core)
 * StackOverflow tag: [Allure](http://stackoverflow.com/questions/tagged/allure)
