@@ -5,6 +5,8 @@ import ru.yandex.qatools.allure.config.AllureConfig;
 import java.lang.reflect.Array;
 import java.text.MessageFormat;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Some utils that help process steps and attachments names and titles.
@@ -52,14 +54,50 @@ public final class AllureAspectUtils {
     }
 
     /**
-     * Generate title using name pattern. First step all "{method}" substrings will be replaced
-     * with given method name. Then replace all "{i}" substrings with i-th parameter.
+     * Generate title using name pattern:
+     * 1) {i-j}, where i = start index, j = end index.
+     * 2) {i+}, where i = start index, '+' means that it's required to loop till the end.
+     * 3) All "{method}" substrings will be replaced with given method name.
+     * 4) Then replace all "{i}" substrings with i-th parameter.
      */
     public static String getTitle(String namePattern, String methodName, Object instance, Object[] parameters) {
-        String finalPattern = namePattern
+        final int paramsCount = parameters == null ? 0 : parameters.length;
+        final String rangePattern = "\\{([0-9])\\+\\}|\\{([0-9])\\-([0-9])\\}";
+        final Matcher matcher = Pattern.compile(rangePattern).matcher(namePattern);
+        String finalPattern = namePattern;
+
+        while (matcher.find()) {
+            final StringBuilder expandedParameters = new StringBuilder();
+            // First group is for {i+} pattern, second and third - for {i-j}.
+            final int startWith = matcher.group(1) != null ? Integer.parseInt(matcher.group(1)) :
+                    (matcher.group(2) != null ? Integer.parseInt(matcher.group(2)) : 0);
+            final int endWith = matcher.group(3) != null ? Integer.parseInt(matcher.group(3)) + 1 : paramsCount;
+
+            // Transform range patterns into sequence.
+            for (int i = startWith; i < (endWith < paramsCount ? endWith : paramsCount); i++) {
+                expandedParameters.append("{").append(i).append("}").append(",").append(" ");
+            }
+
+            if (expandedParameters.length() > 0 && expandedParameters.lastIndexOf(",") >= 0) {
+                expandedParameters.deleteCharAt(expandedParameters.lastIndexOf(","));
+            }
+
+            // Replace handled pattern with common {i} values to avoid further concatenation.
+            finalPattern = finalPattern.replaceFirst(rangePattern, expandedParameters.toString().trim());
+        }
+
+        finalPattern = finalPattern
                 .replaceAll("\\{method\\}", methodName)
                 .replaceAll("\\{this\\}", String.valueOf(instance));
-        int paramsCount = parameters == null ? 0 : parameters.length;
+
+        if (finalPattern.startsWith(",")) {
+            finalPattern = finalPattern.replaceFirst(",", "").trim();
+        }
+
+        if (finalPattern.endsWith(",")) {
+            finalPattern = finalPattern.substring(0, finalPattern.length() - 1).trim();
+        }
+
         Object[] results = new Object[paramsCount];
         for (int i = 0; i < paramsCount; i++) {
             results[i] = arrayToString(parameters[i]);

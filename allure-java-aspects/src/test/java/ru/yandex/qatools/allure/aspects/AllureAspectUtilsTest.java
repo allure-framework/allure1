@@ -33,7 +33,15 @@ public class AllureAspectUtilsTest {
 
     private final static String TITLE_STRING_WITH_THIS = "{0} this:{1} ()";
 
-    public static final String TOO_LONG_NAME = "this name pattern is too long, over 150 symbols! Guys, what are" +
+    private static final String TITLE_STRING_WITH_UNBOUND_RANGE = "{6+}, {0}, {2}";
+
+    private static final String TITLE_STRING_WITH_MULTIPLE_UNBOUND_RANGES = "{1+}, {0}, {2+}";
+
+    private static final String TITLE_STRING_WITH_WRONG_UNBOUND_RANGE = "{2+}, {0}, {3+}";
+
+    private static final String TITLE_STRING_WITH_MIXED_RANGES = "{0-2}, {2+}, {0}";
+
+    private static final String TOO_LONG_NAME = "this name pattern is too long, over 150 symbols! Guys, what are" +
             " you thinking for when you made so long title??? Could you please made it more carefully...?";
 
     @Test
@@ -209,5 +217,40 @@ public class AllureAspectUtilsTest {
         assertThat("Invalid method name short cut", name,
                 equalTo("getSomethingNew[this name pattern is too long, over 150 symbols! Guys, what are you " +
                         "thinking for when you made so long t...]"));
+    }
+
+    @Test
+    public void getTitleWithUnboundRangeValues() {
+        String[] firstArg = {"first string", "second string", "third string", "fourth string", "fifth string",
+                "sixth string", "seventh string", "eighth string", "ninth string"};
+        String title = getTitle(TITLE_STRING_WITH_UNBOUND_RANGE, METHOD_NAME, null, firstArg);
+        String[] expectedOutput = {"seventh string", "eighth string", "ninth string", "first string", "third string"};
+        assertThat("Unbound arguments' range is processed incorrectly", title,
+                equalTo(Arrays.toString(expectedOutput).replace("[", "").replace("]", "")));
+    }
+
+    @Test
+    public void getTitleWithMultipleUnboundRangeValues() {
+        String[] firstArg = {"first string", "second string", "third string", "fourth string"};
+        String title = getTitle(TITLE_STRING_WITH_MULTIPLE_UNBOUND_RANGES, METHOD_NAME, null, firstArg);
+        String[] expectedOutput = {"second string", "third string", "fourth string", "first string", "third string", "fourth string"};
+        assertThat("Unbound arguments' range is processed incorrectly", title,
+                equalTo(Arrays.toString(expectedOutput).replace("[", "").replace("]", "")));
+    }
+
+    @Test
+    public void getTitleWithWrongUnboundRangeValues() {
+        String firstArg = "first string";
+        String title = getTitle(TITLE_STRING_WITH_WRONG_UNBOUND_RANGE, METHOD_NAME, null, new Object[]{firstArg});
+        assertThat("Unbound arguments' range is processed incorrectly", title, equalTo(firstArg));
+    }
+
+    @Test
+    public void getTitleWithMixedRangeValues() {
+        String[] firstArg = new String[] {"first string", "second string", "third string", "fourth string"};
+        String title = getTitle(TITLE_STRING_WITH_MIXED_RANGES, METHOD_NAME, null, firstArg);
+        String[] expectedOutput = {"first string", "second string", "third string","third string", "fourth string", "first string"};
+        assertThat("Mixed arguments' range is processed incorrectly", title,
+                equalTo(Arrays.toString(expectedOutput).replace("[", "").replace("]", "")));
     }
 }
