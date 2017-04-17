@@ -43,7 +43,7 @@ public class TestCaseFailureEvent extends TestCaseStatusChangeEvent {
      * @param value to set
      * @return modified instance
      */
-    public TestCaseStatusChangeEvent withThrowable(Throwable value) {
+    public TestCaseFailureEvent withThrowable(Throwable value) {
         setThrowable(value);
         return this;
     }

@@ -1,15 +1,6 @@
 package ru.yandex.qatools.allure.experimental;
 
-import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
-import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
-import ru.yandex.qatools.allure.events.StepEvent;
-import ru.yandex.qatools.allure.events.StepFinishedEvent;
-import ru.yandex.qatools.allure.events.StepStartedEvent;
-import ru.yandex.qatools.allure.events.TestCaseEvent;
-import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
-import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
-import ru.yandex.qatools.allure.events.TestSuiteEvent;
-import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.events.*;
 
 /**
  * Warning: Experimental Allure feature. Can be removed in next releases.
@@ -57,11 +48,19 @@ public abstract class LifecycleListener {
     }
 
     /**
+     * Called when a step failed
+     */
+    public void fire(StepFailureEvent event) { // NOSONAR
+    }
+
+
+    /**
      * Called when Allure process any custom step event, such as
      * {@link ru.yandex.qatools.allure.events.MakeAttachmentEvent}
      */
     public void fire(StepEvent event) { // NOSONAR
     }
+
 
     /**
      * Called when a step finished
@@ -86,6 +85,12 @@ public abstract class LifecycleListener {
      * Called when a test case finished
      */
     public void fire(TestCaseFinishedEvent event) { // NOSONAR
+    }
+
+    /**
+     * Called when TestCase Failed
+     */
+    public void fire(TestCaseFailureEvent event) { // NOSONAR
     }
 
     /**

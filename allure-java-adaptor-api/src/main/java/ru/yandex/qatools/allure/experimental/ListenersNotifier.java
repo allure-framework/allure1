@@ -2,16 +2,7 @@ package ru.yandex.qatools.allure.experimental;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
-import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
-import ru.yandex.qatools.allure.events.StepEvent;
-import ru.yandex.qatools.allure.events.StepFinishedEvent;
-import ru.yandex.qatools.allure.events.StepStartedEvent;
-import ru.yandex.qatools.allure.events.TestCaseEvent;
-import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
-import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
-import ru.yandex.qatools.allure.events.TestSuiteEvent;
-import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.events.*;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -129,6 +120,19 @@ public class ListenersNotifier extends LifecycleListener {
     }
 
     /**
+     * Invoke to tell listeners that an custom step event processed
+     */
+    @Override
+    public void fire(StepFailureEvent event) {
+        for (LifecycleListener listener : listeners) {
+            try {
+                listener.fire(event);
+            } catch (Exception e) {
+                logError(listener, e);
+            }
+        }
+    }
+    /**
      * Invoke to tell listeners that an step finished event processed
      */
     @Override
@@ -175,6 +179,20 @@ public class ListenersNotifier extends LifecycleListener {
      */
     @Override
     public void fire(TestCaseFinishedEvent event) {
+        for (LifecycleListener listener : listeners) {
+            try {
+                listener.fire(event);
+            } catch (Exception e) {
+                logError(listener, e);
+            }
+        }
+    }
+
+    /**
+     * Invoke to tell listeners that an test case failure event processed
+     */
+    @Override
+    public void fire(TestCaseFailureEvent event) {
         for (LifecycleListener listener : listeners) {
             try {
                 listener.fire(event);

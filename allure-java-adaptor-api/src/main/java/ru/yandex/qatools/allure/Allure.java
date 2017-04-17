@@ -2,17 +2,7 @@ package ru.yandex.qatools.allure;
 
 import ru.yandex.qatools.allure.config.AllureConfig;
 import ru.yandex.qatools.allure.config.AllureModelUtils;
-import ru.yandex.qatools.allure.events.ClearStepStorageEvent;
-import ru.yandex.qatools.allure.events.ClearTestStorageEvent;
-import ru.yandex.qatools.allure.events.RemoveAttachmentsEvent;
-import ru.yandex.qatools.allure.events.StepEvent;
-import ru.yandex.qatools.allure.events.StepFinishedEvent;
-import ru.yandex.qatools.allure.events.StepStartedEvent;
-import ru.yandex.qatools.allure.events.TestCaseEvent;
-import ru.yandex.qatools.allure.events.TestCaseFinishedEvent;
-import ru.yandex.qatools.allure.events.TestCaseStartedEvent;
-import ru.yandex.qatools.allure.events.TestSuiteEvent;
-import ru.yandex.qatools.allure.events.TestSuiteFinishedEvent;
+import ru.yandex.qatools.allure.events.*;
 import ru.yandex.qatools.allure.experimental.LifecycleListener;
 import ru.yandex.qatools.allure.experimental.ListenersNotifier;
 import ru.yandex.qatools.allure.model.Status;
@@ -83,6 +73,19 @@ public class Allure {
     }
 
     /**
+     * Process StepFailureEvent. Change last added to stepStorage step
+     * and add it as child of previous step.
+     *
+     * @param event to process
+     */
+    public void fire(StepFailureEvent event) {
+        Step step = stepStorage.getLast();
+        event.process(step);
+
+        notifier.fire(event);
+    }
+
+    /**
      * Process StepFinishedEvent. Change last added to stepStorage step
      * and add it as child of previous step.
      *
@@ -122,6 +125,19 @@ public class Allure {
      * @param event to process
      */
     public void fire(TestCaseEvent event) {
+        TestCaseResult testCase = testCaseStorage.get();
+        event.process(testCase);
+
+        notifier.fire(event);
+    }
+
+    /**
+     * Process TestCaseFailureEvent. You can change current testCase context
+     * using this method.
+     *
+     * @param event to process
+     */
+    public void fire(TestCaseFailureEvent event) {
         TestCaseResult testCase = testCaseStorage.get();
         event.process(testCase);
 
