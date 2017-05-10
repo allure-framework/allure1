@@ -25,6 +25,7 @@ import java.lang.annotation.*;
  *         Date: 25.12.13
  */
 @Documented
+@Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.TYPE})
 public @interface Features {
