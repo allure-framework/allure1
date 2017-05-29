@@ -11,7 +11,7 @@ const PAD_BOTTOM = 30;
 export default class DurationChart extends BaseChartView {
 
     initialize() {
-        this.x = d3.time.scale.utc();
+        this.x = d3.scale.linear();
         this.y = d3.scale.sqrt();
         this.tooltip = new PopoverView({position: 'right'});
     }
