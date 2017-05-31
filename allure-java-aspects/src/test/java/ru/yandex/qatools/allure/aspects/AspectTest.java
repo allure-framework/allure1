@@ -1,7 +1,6 @@
 package ru.yandex.qatools.allure.aspects;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InOrder;
 import ru.yandex.qatools.allure.Allure;
@@ -32,6 +31,7 @@ public class AspectTest {
     public void setUp() throws Exception {
         AllureStepsAspects.setAllure(allure);
         AllureAttachAspects.setAllure(allure);
+        AllureTitlesAspects.setAllure(allure);
     }
 
     @Test
