@@ -1,3 +1,6 @@
+# [DEPRICATED]
+## Please follow https://github.com/allure-framework/allure2
+
 # Allure 1
 
 [![release](http://github-release-version.herokuapp.com/github/allure-framework/allure-core/release.svg?style=flat)](https://github.com/allure-framework/allure-core/releases/latest) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core/badge.svg?style=flat)](https://maven-badges.herokuapp.com/maven-central/ru.yandex.qatools.allure/allure-core) [![build](https://img.shields.io/jenkins/s/http/ci.qatools.ru/allure1_master-deploy.svg?style=flat)](http://ci.qatools.ru/job/allure1_master-deploy/lastBuild/)
